@@ -11,5 +11,6 @@
 <dependencies>
 		<php min-version="5.4" max-version="5.6"/>
 		<owncloud min-version="8.1" max-version="8.2"/>
-</dependencies>	
+</dependencies>
+<ocsid>170562</ocsid>	
 </info>
