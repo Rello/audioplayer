@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<info>
+	<id>audios</id>
+	<name>MP3 Player</name>
+	<licence>AGPL</licence>
+	<author>Sebastian Döll</author>
+	<description>MP3 Player for your MP3 files</description>
+<version>1.2.2</version>
+<namespace>Audios</namespace>
+<category>multimedia</category>
+<dependencies>
+		<php min-version="5.4" max-version="5.6"/>
+		<owncloud min-version="8.1" max-version="8.1.99"/>
+</dependencies>	
+</info>

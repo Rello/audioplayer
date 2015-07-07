@@ -1,0 +1,20 @@
+{"translations":{
+"MP3 Player" : "MP3 Player",
+"Albums" : "Alben",
+"Create new playlist" : "Neue Wiedergabeliste erstellen",
+"GO" : "Los",
+"Scan for new audio files" : "Nach neuen Musikdateien suchen",
+"Nr" : "Nr",
+"Title" : "Name",
+"Interpret" : "Künstler",
+"Album" : "Album",
+"Length" : "Dauer",
+"Opt" : "Opt",
+"Sorting Playlist success! Playlist reloaded!" : "Sortierung der Wiedergabeliste erfolgreich! Wiedergabeliste wird neu geladen!",
+"Various Artists" :"Verschiedene Künstler",
+"Various" : "Verschiedene",
+"Repeat playlist" :"Wiederholen",
+"Shuffle playlist" :"Zufällige Wiedergabe",
+"Playlists" : "Wiedergabelisten",
+"Music" : "Musik"
+},"pluralForm":""}
