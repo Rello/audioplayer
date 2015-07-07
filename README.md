@@ -17,7 +17,7 @@ The Musicplayer only supports mp3 files, no ampache backend etc, just simple!
 
 Installation:
 =============
-Download the zip file and rename folder from audios-master to audios! Upload the app to your apps directory and activate it on the apps settings!
+Download the zip file and rename folder from audios-master to audios! Upload the app to your apps directory and activate it on the apps settings page!
 
 Features:
 =============
