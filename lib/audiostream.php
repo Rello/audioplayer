@@ -147,7 +147,7 @@ class AudioStream {
 	            $data = fread($this->stream, $bytesToRead);
 	            echo $data;
 	            flush();
-	            $curPos += $bytesToRead;
+	            $curPos += strlen($data);
 	        }
 		}else{
 			 \OC\Files\Filesystem::readfile($this -> path);
