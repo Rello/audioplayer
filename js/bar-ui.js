@@ -1368,7 +1368,7 @@
 	  },	
 			
       play: function(eventOrOffset) {
-
+			
         /**
          * This is an overloaded function that takes mouse/touch events or offset-based item indices.
          * Remember, "auto-play" will not work on mobile devices unless this function is called immediately from a touch or click event.

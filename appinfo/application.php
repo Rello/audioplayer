@@ -30,6 +30,7 @@ use \OCA\Audios\Controller\PageController;
 use \OCA\Audios\Controller\PlaylistController;
 use \OCA\Audios\Controller\ScannerController;
 use \OCA\Audios\Controller\MusicController;
+use \OCA\Audios\Controller\PhotoController;
 
 class Application extends App {
 	
@@ -65,7 +66,13 @@ class Application extends App {
 			$c->query('L10N')
 			);
 		});
-		
+		$container->registerService('PhotoController', function(IContainer $c) {
+			return new PhotoController(
+			$c->query('AppName'),
+			$c->query('Request'),
+			$c->query('L10N')
+			);
+		});
 		$container->registerService('ScannerController', function(IContainer $c) {
 			return new ScannerController(
 			$c->query('AppName'),

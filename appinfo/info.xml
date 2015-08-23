@@ -5,7 +5,7 @@
 	<licence>AGPL</licence>
 	<author>Sebastian Döll</author>
 	<description>MP3 Player for your MP3 files</description>
-<version>1.2.2</version>
+<version>1.2.4</version>
 <namespace>Audios</namespace>
 <category>multimedia</category>
 <dependencies>

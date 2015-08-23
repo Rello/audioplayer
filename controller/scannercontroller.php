@@ -48,7 +48,7 @@ class ScannerController extends Controller {
 	 * 
 	 */
 	public function editAudioFile() {
-		$songFileId=$this->params('songFileId');
+		$songFileId=(int)$this->params('songFileId');
 		$resultData=[];
 		
 		if(!class_exists('getid3_exception')) {
@@ -58,45 +58,143 @@ class ScannerController extends Controller {
 		
 		
 		$userView =  new View('/' . $this -> userId. '/files');
-		$path= $userView->getPath($songFileId);
-		$localFile = $userView->getLocalFile($path);
+		$path = $userView->getPath($songFileId);
+		$fileInfo = $userView -> getFileInfo($path);
 		
-		$getID3 = new \getID3;
-		$ThisFileInfo = $getID3->analyze($localFile);
-		\getid3_lib::CopyTagsToComments($ThisFileInfo);
-		$resultData['localPath'] = $localPath;
-		$resultData['title'] = '';
-		if(isset($ThisFileInfo['comments']['title'][0])){
-			$resultData['title']=$ThisFileInfo['comments']['title'][0];
-		}
-		$resultData['album'] = '';
-		if(isset($ThisFileInfo['comments']['album'][0])){
-			$resultData['album'] = $ThisFileInfo['comments']['album'][0];
-		}
-		$resultData['genre'] = '';
-		if(isset($ThisFileInfo['comments']['genre'][0])){
-			$resultData['genre'] = $ThisFileInfo['comments']['genre'][0];
-		}
-		$resultData['artist'] = '';
-		if(isset($ThisFileInfo['comments']['artist'][0])){
-			$resultData['artist'] = $ThisFileInfo['comments']['artist'][0];
-		}
+		if($fileInfo['permissions'] & \OCP\PERMISSION_UPDATE){
 		
-		$resultData['year'] = '';
-		if(isset($ThisFileInfo['comments']['year'][0])){
-			$resultData['year'] = $ThisFileInfo['comments']['year'][0];
+			$localFile = $userView->getLocalFile($path);
+			//\OCP\Util::writeLog('audios','local: '.$path,\OCP\Util::DEBUG);
+			$getID3 = new \getID3;
+			$ThisFileInfo = $getID3->analyze($localFile);
+			\getid3_lib::CopyTagsToComments($ThisFileInfo);
+			$resultData['localPath'] = $localPath;
+			$resultData['title'] = $fileInfo['name'];
+			if(isset($ThisFileInfo['comments']['title'][0])){
+				$resultData['title']=$ThisFileInfo['comments']['title'][0];
+			}
+			$resultData['album'] = '';
+			if(isset($ThisFileInfo['comments']['album'][0])){
+				$resultData['album'] = $ThisFileInfo['comments']['album'][0];
+			}
+			$resultData['genre'] = '';
+			if(isset($ThisFileInfo['comments']['genre'][0])){
+				$resultData['genre'] = $ThisFileInfo['comments']['genre'][0];
+			}
+			$resultData['artist'] = '';
+			if(isset($ThisFileInfo['comments']['artist'][0])){
+				$resultData['artist'] = $ThisFileInfo['comments']['artist'][0];
+			}
+			
+			$resultData['year'] = '';
+			if(isset($ThisFileInfo['comments']['year'][0])){
+				$resultData['year'] = $ThisFileInfo['comments']['year'][0];
+			}
+			$resultData['track'] = '';
+			if(isset($ThisFileInfo['comments']['track_number'][0])){
+				$resultData['track'] = $ThisFileInfo['comments']['track_number'][0];
+			}
+			
+			$resultData['tracktotal'] = '';
+			$resultData['track'] = '';
+			
+			if (!empty($ThisFileInfo['comments']['track_number']) && is_array($ThisFileInfo['comments']['track_number'])) {
+				$RawTrackNumberArray = $ThisFileInfo['comments']['track_number'];
+			} elseif (!empty($ThisFileInfo['comments']['track']) && is_array($ThisFileInfo['comments']['track'])) {
+				$RawTrackNumberArray = $ThisFileInfo['comments']['track'];
+			} else {
+				$RawTrackNumberArray = array();
+			}
+			
+			foreach ($RawTrackNumberArray as $key => $value) {
+				if (strlen($value) > strlen($resultData['track'])) {
+					// ID3v1 may store track as "3" but ID3v2/APE would store as "03/16"
+					$resultData['track'] = $value;
+				}
+			}
+			if (strstr($resultData['track'], '/')) {
+				list($resultData['track'], $resultData['tracktotal']) = explode('/', $resultData['track']);
+			}
+			
+			$resultData['poster'] = '';
+			$resultData['isPhoto'] = '0';
+			$resultData['mimeType'] = '';
+			if(isset($ThisFileInfo['comments']['picture'])){
+				$resultData['isPhoto'] = '1';	
+				$data = $ThisFileInfo['comments']['picture'][0]['data'];
+				$image = new \OCP\Image();
+				if($image->loadFromdata($data)) {
+					if(($image->width() <= 150 && $image->height() <= 150) || $image->resize(150)) {
+						\OC::$server->getCache()->set('edit-audios-foto-' . $songFileId, $image -> data(), 600);	
+						$imgString = $image->__toString();
+						$resultData['mimeType'] = $ThisFileInfo['comments']['picture'][0]['image_mime'];
+						$resultData['poster'] = $imgString;
+					}
+				}
+				
+			}
+			
+			$resultData['tmpkey'] = 'edit-audios-foto-' . $songFileId;
+			
+			$SQL="SELECT  `AA`.`id`,`AA`.`name` FROM `*PREFIX*audios_albums` `AA`
+				 			WHERE  `AA`.`user_id` = ?
+				 			ORDER BY `AA`.`name` ASC
+				 			";
+				
+			$stmt = \OCP\DB::prepare($SQL);
+			$result = $stmt->execute(array($this->userId));
+			
+			$rowAlbums = $result->fetchAll();
+			array_unshift($rowAlbums,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
+			 $resultData['albums']=$rowAlbums;
+			 
+			 $SQL1="SELECT  `id`,`name` FROM `*PREFIX*audios_artists` 
+				 			WHERE  `user_id` = ? 
+				 			ORDER BY `name` ASC
+				 			";
+				
+			$stmt1 = \OCP\DB::prepare($SQL1);
+			$result1 = $stmt1->execute(array($this->userId));
+			
+			$rowArtists = $result1->fetchAll();
+			array_unshift($rowArtists,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
+			$resultData['artists'] = $rowArtists;
+			 
+			 //Genre
+			 $ArrayOfGenresTemp = \getid3_id3v1::ArrayOfGenres();   // get the array of genres
+			$ArrayOfGenres[] = ['name' =>(string)$this->l10n->t('- choose -')];
+			foreach ($ArrayOfGenresTemp as $key => $value) {      // change keys to match displayed value
+				$ArrayOfGenres[] = ['name' => $value];
+			}
+			
+			unset($ArrayOfGenresTemp);                            // remove temporary array
+			
+			usort($ArrayOfGenres,array('OCA\Audios\Controller\ScannerController','compareGenreNames'));   
+			                   
+			 $resultData['genres'] = $ArrayOfGenres;
+			 
+			$result = [
+				'status' => 'success',
+				'data' => $resultData,
+			];
+			$response = new JSONResponse();		
+			$response -> setData($result);
+			return $response;
+		}else{
+			$result = [
+				'status' => 'error',
+			];
+			$response = new JSONResponse();		
+			$response -> setData($result);
+			return $response;
 		}
-		
-		$result = [
-			'status' => 'success',
-			'data' => $resultData,
-		];
-		$response = new JSONResponse();		
-		$response -> setData($result);
-		return $response;
 		
 	}
-
+	
+	public static function compareGenreNames($a, $b) {
+			return \OCP\Util::naturalSortCompare($a['name'], $b['name']);
+	}
+	
 	/**
 	 * @NoAdminRequired
 	 * 
@@ -104,11 +202,28 @@ class ScannerController extends Controller {
 	public function saveAudioFileData() {
 		
 		$songFileId=$this->params('songFileId');
-		$pYear=$this->params('year');
+		$pTrackId = $this->params('trackId');
 		
-		$resultData=[
-			'year' => [$pYear]
-		];
+		$pYear=$this->params('year');
+		$pTitle=$this->params('title');
+		$pArtist=$this->params('artist');
+		$pExistArtist = $this->params('existartist');
+		
+		$pAlbum=$this->params('album');
+		$pExistAlbum=$this->params('existalbum');
+		$pTrack=$this->params('track');
+		$pTrackTotal=$this->params('tracktotal');
+		$pGenre = $this->params('genre');
+		
+		$addCoverToAlbum = $this->params('addcover');
+		
+		$pImgSrc=$this->params('imgsrc');
+		$pImgMime=$this->params('imgmime');
+
+		$trackNumber = '';
+		if (!empty($pTrack)) {
+			$trackNumber = $pTrack.(!empty($pTrackTotal) ? '/'.$pTrackTotal : '');
+		}
 		
 		if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
@@ -119,8 +234,38 @@ class ScannerController extends Controller {
 		$TextEncoding = 'UTF-8';
 		$userView =  new View('/' . $this -> userId. '/files');
 		$path= $userView->getPath($songFileId);
+		
 		if(\OC\Files\Filesystem::isUpdatable($path)){
+			$addAlbum = $pExistAlbum;
+			if($pAlbum != ''){
+				$addAlbum =  $pAlbum;
+			}
 			
+			$addArtist = $pExistArtist;
+			if($pArtist != ''){
+				$addArtist =  $pArtist;
+			}
+				
+			$resultData=[
+				'year' => [$pYear],
+				'title' => [$pTitle],
+				'artist' => [$addArtist],
+				'album' => [$addAlbum],
+				'track_number' => [$trackNumber],
+				'genre' => [$pGenre]
+				
+			];
+			$imgString = '';
+			if($pImgSrc != ''){
+				$image = new \OCP\Image();
+				if($image->loadFromBase64($pImgSrc)) {
+					$imgString = $image ->__toString();	
+					$resultData['attached_picture'][0]['data']          = $image -> data();
+					$resultData['attached_picture'][0]['picturetypeid'] = 3;
+					$resultData['attached_picture'][0]['description']   = 'Cover Image';
+					$resultData['attached_picture'][0]['mime']          = $pImgMime;
+				}
+			}
 			$getID3 = new \getID3;
 			$getID3->setOption(array('encoding'=>$TextEncoding));
 			
@@ -133,11 +278,7 @@ class ScannerController extends Controller {
 			$tagwriter->remove_other_tags = true;
 			$tagwriter->tag_encoding      = $TextEncoding;
 			
-			$TagData = array(
-				'year'          => array('2004'),
-			);
-			
-			$tagwriter->tag_data = $TagData;
+			$tagwriter->tag_data = $resultData;
 			
 			if ($tagwriter->WriteTags()) {
 				if (!empty($tagwriter->warnings)) {
@@ -146,9 +287,81 @@ class ScannerController extends Controller {
 						'msg' => (string) $tagwriter->warnings,
 					];
 				}else{
+						
+					$albumId = 0;
+					$artistId = 0;
+					
+						$SQL="SELECT `AT`.`album_id`,`AT`.`artist_id`,`AA`.`name`,`AR`.`name` AS artistname FROM `*PREFIX*audios_tracks` `AT`
+									LEFT JOIN  `*PREFIX*audios_albums` `AA` ON `AT`.`album_id`= `AA`.`id`
+									LEFT JOIN  `*PREFIX*audios_artists` `AR` ON `AT`.`artist_id`= `AR`.`id`
+						  			WHERE `AT`.`id` = ? AND `AT`.`user_id` = ?";	
+						$stmt = \OCP\DB::prepare($SQL);
+						$result = $stmt->execute(array($pTrackId, $this->userId));
+						$row = $result->fetchRow()	;
+						
+						$albumName = $row['name'];
+						$albumId = $row['album_id'];
+						$artistName = $row['artistname'];
+						$artistId = $row['artist_id'];
+						$newAlbumId = $albumId;
+						
+						$iGenreId=0;
+						if($pGenre != (string)$this->l10n->t('- choose -')){
+							$iGenreId = $this->writeGenreToDB($pGenre);
+						}
+						
+						if($addAlbum != '' && $addAlbum != (string)$this->l10n->t('- choose -') && $addAlbum != $albumName){
+							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$iGenreId);
+							
+							//check for other songs if not then delete album
+							$stmtCountAlbum = \OCP\DB::prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audios_tracks` WHERE `album_id` = ?' );
+							$resultAlbumCount = $stmtCountAlbum->execute(array($albumId));
+							$rowAlbum = $resultAlbumCount->fetchRow();
+							if((int)$rowAlbum['ALBUMCOUNT'] === 1){
+								$stmt2 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audios_albums` WHERE `id` = ? AND `user_id` = ?' );
+								$stmt2->execute(array($albumId, $this->userId));
+								
+								$SQL1="DELETE FROM `*PREFIX*audios_album_artists` WHERE `album_id` = ?";
+								$stmt3 = \OCP\DB::prepare($SQL1);
+								$stmt3->execute(array($albumId));
+							}
+							
+							
+						}
+						
+						if($addAlbum == $albumName && $iGenreId > 0){
+							$stmt = \OCP\DB::prepare( 'UPDATE `*PREFIX*audios_albums` SET `genre_id` = ? WHERE `id` = ? and `user_id` = ?' );
+							$result = $stmt->execute(array($iGenreId, $newAlbumId, $this->userId));
+						}
+						
+						if($addArtist != '' && $addArtist != (string)$this->l10n->t('- choose -') && $addArtist != $artistName){
+							$artistId = $this->writeArtistToDB($pArtist);
+						}	
+						
+						if($albumId > 0 && $artistId > 0){
+							$this->writeArtistToAlbum($newAlbumId,$artistId);
+						}
+						$returnData['imgsrc']='';
+						$returnData['prefcolor'] = '';
+						if($pImgMime != '' && $addCoverToAlbum == 'true'){
+							$getDominateColor = $this->getDominateColorOfImage($imgString);
+							$this->writeCoverToAlbum($newAlbumId,$imgString,$getDominateColor);
+							
+							$returnData['prefcolor'] = 'rgba('.$getDominateColor['red'].','.$getDominateColor['green'].','.$getDominateColor['blue'].',0.7)';
+							$returnData['imgsrc'] = 'data:image/jpg;base64,'.$imgString;
+						}
+					
+					$returnData['albumname'] = $addAlbum;
+					$returnData['albumid'] = $newAlbumId;
+					$returnData['oldalbumid'] = $albumId;
+					
+					$SQL="UPDATE `*PREFIX*audios_tracks` SET `title`= ?, `album_id`= ?, `artist_id`= ?, `number`= ? WHERE `id` = ? AND `user_id` = ?";	
+					$stmt = \OCP\DB::prepare($SQL);
+					$result = $stmt->execute(array($pTitle, $newAlbumId, $artistId,(int)$pTrack, $pTrackId, $this->userId));
+						
 					$result = [
 						'status' => 'success',
-						'msg' => 'all good',
+						'data' => $returnData,
 					];
 				}
 			}else {
@@ -216,7 +429,7 @@ class ScannerController extends Controller {
 					$year=$ThisFileInfo['comments']['year'][0];
 				}
 				
-				$iAlbumId= $this->writeAlbumToDB($album,$year,$iGenreId);
+				$iAlbumId = $this->writeAlbumToDB($album,$year,$iGenreId);
 				
 				$artist = (string) $this->l10n->t('Various Artists');
 				if(isset($ThisFileInfo['comments']['artist'][0])){
@@ -267,14 +480,18 @@ class ScannerController extends Controller {
 					}
 					
 				}
-			
+				
+				$playTimeString = $ThisFileInfo['playtime_string'];
+				if($playTimeString == null){
+					$playTimeString = '';
+				}
 				
 				$aTrack = [
 					'title' => $name,
 					'number' =>(int)$cleanTrackNumber,
 					'artist_id' => (int)$iArtistId,
 					'album_id' =>(int) $iAlbumId,
-					'length' => $ThisFileInfo['playtime_string'],
+					'length' => $playTimeString,
 					'file_id' => (int)$audio['fileid'],
 					'bitrate' => (int)$bitrate,
 					'mimetype' => $audio['mimetype'],

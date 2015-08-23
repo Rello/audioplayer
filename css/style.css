@@ -33,6 +33,7 @@
 	border:none;
 	padding:5px;
 	border-radius:8px;
+	z-index:160;
 }
 .ui-dialog-titlebar.ui-widget-header{
 	border:none;
@@ -72,6 +73,22 @@
 	margin-top:0;	
 	
 }
+
+.ui-dialog-content.ui-widget-content#edit_photo_dialog{
+	padding:5px;
+	
+}
+
+.ui-dialog-titlebar.ui-widget-header .ui-dialog-titlebar-close .ui-icon-closethick{
+	background-repeat: no-repeat;
+	background-position: center;
+	top:2px;
+	width: 26px;
+	height: 26px;
+	background-size:24px 24px;
+	background-image: url('../../../core/img/actions/close.svg');
+}
+
 
 .app-audios #searchresults {
 	background-color:rgba(255,255,255,0.9);
@@ -197,6 +214,8 @@ input#newPlaylistTxt{
 	color:#A9302A;
 }
 
+
+
 #myPlayList li:hover, 
 #myPlayList li.activeIndiPlaylist, 
 #alben:hover, 
@@ -305,7 +324,7 @@ padding-left:10px;
 	display:block;
 	width:10%;
 	text-align:right;
-	right:35px;
+	right:65px;
 }
 #individual-playlist-header  span.header-opt{
 	position:absolute;
@@ -378,7 +397,7 @@ padding-left:10px;
 	width:10%;
 	text-align:right;
 	
-	right:35px;
+	right:65px;
 }
 
 #individual-playlist li span.ioc-delete{
@@ -400,6 +419,17 @@ padding-left:10px;
  	color:#A9302A;
  }
 
+#individual-playlist li a.edit-song{
+	float:right;
+	position:absolute;
+	right:25px;
+	width:30px;
+	height:20px;
+	opacity:0;
+}
+#individual-playlist li:hover a.edit-song{
+	opacity:1;
+}
 
 #app-content{
 	padding-left:0px;
@@ -429,6 +459,13 @@ padding-left:10px;
 	float:right;
 	padding-right:10px;
 	cursor:pointer;
+}
+
+#resetAudios{
+	float:right;
+	padding-right:10px;
+	cursor:pointer;
+	
 }
 
 .rowlist{
@@ -654,6 +691,25 @@ padding-left:10px;
 	float:left;
 	
 }
+.songcontainer .albumSelect li a.link-full{
+	float:left;
+	position:relative;
+	width:80%;
+	
+	
+}
+.songcontainer .albumSelect li a.edit-song{
+	float:left;
+	position:relative;
+	right:0px;
+	width:30px;
+	height:20px;
+	opacity:0;
+}
+.songcontainer .albumSelect li:hover a.edit-song{
+	opacity:1;
+}
+
 .songcontainer span.actionsSong{
 	float:left;
 	position:relative;
@@ -1003,3 +1059,70 @@ li.dropHover{
 	width:300px;
 }
 
+/*edit*/
+.editDescr{
+	float:left;
+	width:160px;
+	display:block;
+	font-weight:bold;
+	line-height:28px;
+	height:28px;
+}
+
+.edit-left, .edit-right{
+	position:relative;
+	display:block;
+	float:left;
+	width:60%;
+}
+
+.edit-right{
+	width:35%;
+	text-align:center;
+}
+.labelPhoto{
+	width:120px;
+	display:block;
+	float:left;
+	padding-top:10px;
+	height:110px;
+	
+}
+
+#noimage{
+	border:4px dotted #ccc;
+	height:70px;
+	border-radius:8px;
+	line-height:30px;
+	width:100%;
+}
+
+#edit_photo_dialog_img { display: block; min-width: 150; min-height: 200; }
+#file_upload_form { width: 0; height: 0; }
+#file_upload_target, #import_upload_target, #crop_target { display:none; }
+#file_upload_start, #import_upload_start { -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; filter:alpha(opacity=0); opacity:0; z-index:1001; width:0; height:0;}
+
+.transparent{ opacity: 0.6; }
+
+.add,.delete,.mail, .globe, .upload, .download, .cloud, .share { cursor: pointer; width: 40px; height: 40px; margin: 0;-webkit-background-size: 32px 32px; background-size:32px 32px; float: left; position:relative; opacity: 0.1; }
+.add:hover,.delete:hover,.mail:hover, .globe:hover, .upload:hover, .download:hover, .cloud:hover,.share:hover { opacity: 1.0 }
+
+#cropbox { margin: auto; }
+#pin_details_photo_wrapper { width: 95%; }
+#pin_details_photo_wrapper.wait { opacity: 0.6; filter:alpha(opacity=0.6); z-index:1000; background: url('%webroot%/core/img/loading.gif') no-repeat center center; cursor: wait; }
+.pin_details_photo { border-radius: 0.5em; border: thin solid #bbb; margin: 0.3em; background: url('%webroot%/core/img/loading.gif') no-repeat center center; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; opacity: 1; }
+.pin_details_photo:hover { background: #fff; cursor: default; }
+
+#phototools { position:absolute;top:20px; margin: 5px 0px 0px 5px; width:auto; padding:4px; background-color:#fff; list-style-type:none; border-radius: 0.5em; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; }
+#phototools li { display: inline; }
+#phototools li a { float:left; cursor:pointer; width:30px; height:30px; opacity: 0.6; }
+#phototools li a:hover { opacity: 0.8; }
+#pinPhoto{
+	
+	width:80%;
+	display:block;
+	min-height:120px;
+	
+	font-size:18px;
+	color:#888;
+}

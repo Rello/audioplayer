@@ -51,11 +51,19 @@ class PageController extends Controller {
 		
 		
 		$csp = new \OCP\AppFramework\Http\ContentSecurityPolicy();
-		$csp->addAllowedImageDomain('data:');
+		$csp->addAllowedStyleDomain('data:');
+		$csp->addAllowedImageDomain('*');
 		
+		$csp->addAllowedFrameDomain('*');	
+		
+		$maxUploadFilesize = \OCP\Util::maxUploadFilesize('/');
+		 
 		$response = new TemplateResponse('audios', 'index');
 		$response->setContentSecurityPolicy($csp);
-		$response->setParams(array());
+		$response->setParams(array(
+			'uploadMaxFilesize' => $maxUploadFilesize,
+			'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),
+		));
 
 		return $response;
 	}

@@ -94,7 +94,7 @@
 			</field>
 
 			<index>
-				<name>maa_artist_id_album_id_idx</name>
+				<name>a_artist_id_album_id_idx</name>
 				<unique>true</unique>
 				<field>
 					<name>artist_id</name>
@@ -182,14 +182,14 @@
 			    <length>1</length>
 			</field>
 			<index>
-				<name>music_playlist_tracks_idx</name>
+				<name>aa_playlist_tracks_idx</name>
 				<field>
 					<name>playlist_id</name>
 				</field>
 			</index>
 
 			<index>
-				<name>music_playlist_tracks_unique_idx</name>
+				<name>aa_playlist_tracks_unique_idx</name>
 				<unique>true</unique>
 				<field>
 					<name>playlist_id</name>
@@ -266,20 +266,20 @@
 			</field>
 
 			<index>
-				<name>music_tracks_artist_id_idx</name>
+				<name>aa_tracks_artist_id_idx</name>
 				<field>
 					<name>artist_id</name>
 				</field>
 			</index>
 			<index>
-				<name>music_tracks_album_id_idx</name>
+				<name>aa_tracks_album_id_idx</name>
 				<field>
 					<name>album_id</name>
 				</field>
 			</index>
 
 			<index>
-				<name>music_tracks_file_user_id_idx</name>
+				<name>aa_tracks_file_user_id_idx</name>
 				<unique>true</unique>
 				<field>
 					<name>file_id</name>

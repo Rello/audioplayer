@@ -269,6 +269,56 @@ class MusicController extends Controller {
 		}
 	}
 	
+	/**
+	 * @NoAdminRequired
+	 * 
+	 */
+	public function resetMediaLibrary(){
+			
+		$stmt = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audios_tracks` WHERE `user_id` = ?' );
+		$stmt->execute(array($this->userId));
+		
+		$stmt2 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audios_artists` WHERE `user_id` = ?' );
+		$stmt2->execute(array($this->userId));	
+		
+		$stmt2 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audios_genre` WHERE `user_id` = ?' );
+		$stmt2->execute(array($this->userId));
+		
+		$SQL1="SELECT `id` FROM `*PREFIX*audios_albums` WHERE `user_id` = ?";
+		$stmt5 = \OCP\DB::prepare($SQL1);
+		$result5 = $stmt5->execute(array($this->userId));
+		if(!is_null($result5)) {
+			while($row = $result5->fetchRow()) {
+				$stmt6 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audios_album_artists` WHERE `album_id` = ?' );
+				$stmt6->execute(array($row['id']));
+			}
+		}
+		
+		$stmt2 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audios_albums` WHERE `user_id` = ?' );
+		$stmt2->execute(array($this->userId));
+		
+		$SQL="SELECT `id` FROM `*PREFIX*audios_playlists` WHERE `user_id` = ?";
+		$stmt3 = \OCP\DB::prepare($SQL);
+		$result = $stmt3->execute(array($this->userId));
+		if(!is_null($result)) {
+			while( $row = $result->fetchRow()) {
+				$stmt4 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audios_playlist_tracks` WHERE `playlist_id` = ?' );
+				$stmt4->execute(array($row['id']));
+			}
+		}
+		
+		$result=[
+					'status' => 'success',
+					'msg' =>'all good'
+				];
+		
+		
+		$response = new JSONResponse();
+		$response -> setData($result);
+		return $response;
+		
+	}
+	
 	private function deleteFromDB($Id,$iAlbumId,$iArtistId,$fileId){
 		
 		//DELETE FROM MATRIX album_artists

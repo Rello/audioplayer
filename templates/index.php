@@ -1,15 +1,25 @@
 <?php 
 	style('audios', '3rdparty/fontello/css/animation');	
-	style('audios', '3rdparty/fontello/css/fontello');	
+	style('audios', '3rdparty/fontello/css/fontello');
+	style('audios', 'jquery.Jcrop');	
 	style('audios','bar-ui');
 	style('audios', 'style');
-	
+	script('files', 'jquery.fileupload');
+	script('audios', 'jquery.Jcrop');
 	script('core','tags');
 	script( 'audios', 'soundmanager2'); 
 	script( 'audios', 'bar-ui');
 	script( 'audios', 'app' );
 	
 ?>
+<form style="display:none;" class="float" id="file_upload_form" action="<?php print_unescaped(\OCP\Util::linkToRoute('audios.photo.uploadPhoto')); ?>" method="post" enctype="multipart/form-data" target="file_upload_target">
+	<input type="hidden" name="id" value="">
+	<input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>">
+	<input type="hidden" name="MAX_FILE_SIZE" value="<?php p($_['uploadMaxFilesize']) ?>" id="max_upload">
+	<input type="hidden" class="max_human_file_size" value="(max <?php p($_['uploadMaxHumanFilesize']); ?>)">
+	<input id="pinphoto_fileupload" type="file" accept="image/*" name="imagefile" />
+</form>
+<iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>
 <div id="searchresults" class="hidden" data-appfilter="audios"></div>
 <div id="loading">
 	<i class="ioc-spinner ioc-spin"></i>
@@ -19,7 +29,7 @@
 <input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> <button class="button" id="newPlaylist"><?php p($l->t('GO'));?></button>
 	<h3><?php p($l->t('Music'));?></h3>
 	<ul id="albenoverview">
-		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  <i class="ioc ioc-refresh" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i></li>
+		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  <i class="ioc ioc-delete" title="<?php p($l->t('Reset media library'));?>" id="resetAudios"></i><i class="ioc ioc-refresh" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i></li>
 	</ul>
 	<h3><?php p($l->t('Playlists'));?></h3>
 	<ul id="myPlayList"></ul>	
@@ -138,3 +148,6 @@
   </div>
  </div>
  <div id="dialogSmall" style="width:0;height:0;top:0;left:0;display:none;"></div>
+ <div id="edit_photo_dialog" title="Edit photo">
+		<div id="edit_photo_dialog_img"></div>
+</div>
