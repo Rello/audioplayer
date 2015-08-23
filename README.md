@@ -7,7 +7,7 @@ Sebastian Döll
 
 Version Info:
 ============
-1.2.2
+1.2.4
 
 Setup Info:
 ===========
@@ -27,6 +27,8 @@ Features:
 - Scanning on web UI
 - mobil view support
 - repeat of playlists or album
+- Editing ID3 Tag Infos of MP3 (incl. picture)
+- Resetfunction to delete mp3 library
 
 Demo:
 =====
