@@ -21,6 +21,7 @@ OC.L10N.register(
 	"Interpret" : "Künstler",
 	"Year" : "Jahr",
 	"Album" : "Album",
+	"Edit Song from Playlist" : "Musikdatei bearbeiten",
 	"Edit Song Information (ID3)" : "Song Informationen (ID3) bearbeiten",
 	"Missing Permissions for editing ID3 Tags of song!" : "Fehlende Berechtigungen zum Bearbeiten für ID3 Tags des Liedes!",
 	"Existing Interprets" : "Vorhandene Künstler",

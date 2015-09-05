@@ -24,6 +24,7 @@ namespace OCA\Audios\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
+use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
 use \OC\Files\View;
 
@@ -35,7 +36,11 @@ class ScannerController extends Controller {
 	private $userId;
 	private $l10n;
 	private $path;
-	
+	private $abscount = 0;
+	private $progress;
+	private $progresskey;
+	private $currentSong;
+	private $numOfSongs;
 
 	public function __construct($appName, IRequest $request, $userId, $l10n) {
 		parent::__construct($appName, $request);
@@ -383,22 +388,75 @@ class ScannerController extends Controller {
 		
 	}
 
-
-
+	/**
+	 * @NoAdminRequired
+	 * 
+	 */
+	public function getImportTpl(){
+		
+		$params = [];	
+		$response = new TemplateResponse('audios', 'part.import',$params, '');  
+        
+        return $response;
+	}
+	
 	/**
 	 * @NoAdminRequired
 	 * 
 	 */
 	public function scanForAudios() {
 	
+		$pProgresskey = $this -> params('progresskey');
+		$pGetprogress = $this -> params('getprogress');
+		\OC::$server->getSession()->close();
+		
+		
+		if (isset($pProgresskey) && isset($pGetprogress)) {
+				
+				
+				$aCurrent = \OC::$server->getCache()->get($pProgresskey);
+				$aCurrent = json_decode($aCurrent);
+				
+				$numSongs = $aCurrent->{'all'};
+				$currentSongCount = $aCurrent->{'current'};
+				$currentSong = $aCurrent->{'currentsong'};
+				$percent = (int)$aCurrent->{'percent'};
+				//\OCP\Util::writeLog('audios','PROCESS: '.$percent,\OCP\Util::DEBUG);
+				if($percent ==''){
+					$percent = 0;
+				}
+				$params = [
+					'status' => 'success',
+					'percent' =>$percent ,
+					'currentmsg' => $currentSong.' '.$percent.'% ('.$currentSongCount.'/'.$numSongs.')'
+				];
+				$response = new JSONResponse($params);
+				return $response;	
+		}
+		
 		if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getID3/getid3/getid3.php';
 		}
 		
 		
+		
         $userView =  new View('/' . $this -> userId . '/files');
 		$audios = $userView->searchByMime('audio/mpeg');
 		$tempArray=array();
+		
+		
+		$this->numOfSongs = count($audios);
+		
+		$this->progresskey = $pProgresskey;
+		$currentIntArray=[
+			'percent' => 0,
+			'all' => $this->numOfSongs,
+			'current' => 0,
+			'currentsong' => ''
+		];
+		
+		$currentIntArray = json_encode($currentIntArray);
+		\OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
 		$counter = 0;
 		foreach($audios as $audio) {
 		  	
@@ -445,7 +503,7 @@ class ScannerController extends Controller {
 					$name=$ThisFileInfo['comments']['title'][0];
 					
 				}
-				
+				$this->currentSong = $name.' - '.$artist;
 				$trackNumber = '';
 				if(isset($ThisFileInfo['comments']['track_number'][0])){
 					$trackNumber=$ThisFileInfo['comments']['track_number'][0];
@@ -500,14 +558,19 @@ class ScannerController extends Controller {
 				$trackId=$this->writeTrackToDB($aTrack);
 				
 				$counter++;
+				$this->abscount++;
+				
+				$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
 			}
  			
 			
 		}
-
+		
+		\OC::$server->getCache()->remove($this->progresskey);
+		
 		$result=[
 				'status' => 'success',
-				'counter' => $counter
+				'message' => (string)$this->l10n->t('Scanning finished! Audios found: ').$counter
 			];
 			
 		$response = new JSONResponse();
@@ -613,7 +676,7 @@ class ScannerController extends Controller {
 	}
 	
 	private function checkIfTrackDbExists($fileid){
-		$stmtCount = \OCP\DB::prepare( 'SELECT `id`, COUNT(`id`)  AS COUNTID FROM `*PREFIX*audios_tracks` WHERE `user_id` = ? AND `file_id` = ?' );
+		$stmtCount = \OCP\DB::prepare( 'SELECT COUNT(`id`)  AS COUNTID FROM `*PREFIX*audios_tracks` WHERE `user_id` = ? AND `file_id` = ?' );
 		$resultCount = $stmtCount->execute(array($this->userId, $fileid));
 		$row = $resultCount->fetchRow();
 		if($row['COUNTID'] > 0){
@@ -621,6 +684,24 @@ class ScannerController extends Controller {
 		}else{
 			return false;
 		}
+	}
+	/*
+	 * @brief updates the progress var
+	 * @param integer $percentage
+	 * @return boolean
+	 */
+	private function updateProgress($percentage) {
+		$this->progress = $percentage;
+		$currentIntArray=[
+			'percent' => $this->progress,
+			'all' => $this->numOfSongs,
+			'current' => $this->abscount,
+			'currentsong' => $this->currentSong
+		];
+		$currentIntArray = json_encode($currentIntArray);
+		\OC::$server->getCache()->set($this->progresskey,$currentIntArray, 300);
+		
+		return true;
 	}
 	
 	private function getDominateColorOfImage($img){

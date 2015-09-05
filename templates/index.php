@@ -21,22 +21,22 @@
 </form>
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>
 <div id="searchresults" class="hidden" data-appfilter="audios"></div>
-<div id="loading">
-	<i class="ioc-spinner ioc-spin"></i>
-</div>
+
 <div id="app-navigation">
 <div class="innerNav">
 <input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> <button class="button" id="newPlaylist"><?php p($l->t('GO'));?></button>
 	<h3><?php p($l->t('Music'));?></h3>
 	<ul id="albenoverview">
-		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  <i class="ioc ioc-delete" title="<?php p($l->t('Reset media library'));?>" id="resetAudios"></i><i class="ioc ioc-refresh" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i></li>
+		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  <i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i><i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i></li>
 	</ul>
 	<h3><?php p($l->t('Playlists'));?></h3>
 	<ul id="myPlayList"></ul>	
 	</div>
 </div>	
 <div id="app-content">
-
+<div id="loading">
+	<i class="ioc-spinner ioc-spin"></i>
+</div>
 
 <div class="sm2-bar-ui full-width fixed">
 
@@ -47,19 +47,19 @@
   
 <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-    <a href="#prev" title="Previous" class="sm2-inline-button previous">prev</a>
+    <a href="#prev" title="<?php p($l->t('previous song'));?>" class="toolTip sm2-inline-button previous"><?php p($l->t('previous song'));?></a>
    </div>
   </div>
   
   <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-    <a href="#play" class="sm2-inline-button play-pause">Play / pause</a>
+    <a href="#play" title="<?php p($l->t('play/ pause'));?>" class="toolTip sm2-inline-button play-pause"><?php p($l->t('play/ pause'));?></a>
    </div>
   </div>
   
   <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-    <a href="#next" title="Next" class="sm2-inline-button next">next</a>
+    <a href="#next" title="<?php p($l->t('next song'));?>" class="toolTip sm2-inline-button next"><?php p($l->t('next song'));?></a>
    </div>
   </div>
   
@@ -97,18 +97,18 @@
   <div class="sm2-inline-element sm2-button-element sm2-volume">
    <div class="sm2-button-bd">
     <span class="sm2-inline-button sm2-volume-control volume-shade"></span>
-    <a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
+    <a href="#volume" title="<?php p($l->t('Volume'));?>" class="toolTip sm2-inline-button sm2-volume-control">volume</a>
    </div>
   </div>
  
  <div class="sm2-inline-element sm2-button-element sm2-repeat">
       <div class="sm2-button-bd">
-     <a href="#repeat" title="<?php p($l->t('Repeat playlist'));?>" class="sm2-inline-button repeat">&infin; repeat</a>
+     <a href="#repeat" title="<?php p($l->t('Repeat playlist'));?>" class="toolTip sm2-inline-button repeat">&infin; repeat</a>
      </div>
     </div>
 <div class="sm2-inline-element sm2-button-element sm2-shuffle">
       <div class="sm2-button-bd">
-     <a href="#shuffle" title="<?php p($l->t('Shuffle playlist'));?>" class="sm2-inline-button shuffle">shuffle</a>
+     <a href="#shuffle" title="<?php p($l->t('Shuffle playlist'));?>" class="toolTip sm2-inline-button shuffle">shuffle</a>
      </div>
     </div>
  

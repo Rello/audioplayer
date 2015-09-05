@@ -691,24 +691,14 @@ padding-left:10px;
 	float:left;
 	
 }
+
 .songcontainer .albumSelect li a.link-full{
 	float:left;
 	position:relative;
-	width:80%;
+	width:63%;
 	
-	
 }
-.songcontainer .albumSelect li a.edit-song{
-	float:left;
-	position:relative;
-	right:0px;
-	width:30px;
-	height:20px;
-	opacity:0;
-}
-.songcontainer .albumSelect li:hover a.edit-song{
-	opacity:1;
-}
+
 
 .songcontainer span.actionsSong{
 	float:left;
@@ -734,202 +724,42 @@ padding-left:10px;
 }
 .songcontainer span.title{
 	position:relative;
-	width:58%;
+	width:100%;
 	float:left;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow:hidden;
+	
 }
 
 .songcontainer span.time{
 	position:relative;
-	float:right;
+	float:left;
 	right:5px;
 	width:60px;
 	text-align:right;
+	
 }
+.songcontainer .albumSelect li a.edit-song{
+	float:left;
+	position:relative;
+	right:0px;
+	width:30px;
+	height:20px;
+	text-align:right;
+	opacity:0;
+	display:inline-block;
+	
+}
+.songcontainer .albumSelect li:hover a.edit-song{
+	opacity:1;
+}
+
+
 .isActive{
 	font-weight:bold;
 }
-@media only screen and (max-width: 768px){
-	#app-navigation-toggle{
-		position:fixed;
-		background-color:#fff;
-		opacity:1;
-		height:62px;
-		width:45px;
-	}
-	#app-content{
-		background:#fff;
-	}
-	
-	.sm2-bar-ui.fixed {
-		margin-left:45px;
-		 left: 0px;
-		
-	}
-	.sm2-inline-element.sm2-button-element.sm2-shuffle{
-		display:none;
-	}
-	
-	#individual-playlist-header span span.header-interpret,
-	#individual-playlist-header span span.header-album,
-	#individual-playlist-header span span.header-opt,
-	#individual-playlist li span.interpret,
-	#individual-playlist li span.album-indi,
-	#individual-playlist li span.ioc-trash
-	{
-		display:none;
-	}
-	#individual-playlist li span.title{
-		width:80%;
-		
-	}
-	#individual-playlist li{
-		font-family:"Helvetica Neue",verdana;
-		font-weight:200;
-		font-size:16px;
-		height:24px;
-		line-height:24px;
-	}
-	
-	#individual-playlist li .actionsSong{
-		height:20px;
-		line-height:20px;
-	}
-	#individual-playlist li .actionsSong i.ioc{
-		font-size:20px;
-		height:20px;
-		line-height:20px;
-	}
-	
-}
 
-@media only screen and (max-width: 480px) {
-	
-	
-	#app-navigation-toggle{
-		position:fixed;
-		background-color:#fff;
-		opacity:1;
-		height:62px;
-		width:45px;
-	}
-	#app-content{
-		background:#fff;
-	}
-	
-	.sm2-bar-ui.fixed {
-		margin-left:45px;
-		 left: 0px;
-		 width:80%;
-	}
-	.sm2-inline-element.sm2-button-element.sm2-menu{
-		display:none;
-	}
-	.sm2-inline-element.sm2-button-element.sm2-volume{
-		display:none;
-	}
-	.sm2-inline-element.sm2-button-element.sm2-shuffle{
-		display:none;
-	}
-	.sm2-inline-button.next,
-	.sm2-inline-button.previous{
-		background-size:70%;
-	}
-	.playing .play-pause {
-		background-size:50%;
-	}
-	.play-pause{
-		background-size:50%;
-	}
-	#audios-audioscontainer{
-		padding:0;
-		
-	}
-	
-	.album{
-		width:140px;
-		
-	}
-	.album .albumcover{
-		width:140px;
-		height:140px;
-	}
-	
-	.album .albumdescr{
-		display:none;
-	}
-	
-	.songcontainer{
-		
-	}
-	.songcontainer h3,.songcontainer h2{
-		padding-left:30px;
-	}
-	.songcontainer .songlist.albumwrapper {
-		-webkit-column-count: 1;
-		-moz-column-count: 1;
-		column-count: 1;
-		padding:0;
-		margin:0;
-		width:96%;
-		float:left;
-		display:block;
-	}
-	.songcontainer .songlist.albumwrapper .albumSelect{
-		padding:0;
-		margin:0;
-	}
-	.songcontainer .songlist.albumwrapper .albumSelect li{
-		font-size:15px;
-		font-weight:200;
-		line-height:24px;
-		height:24px;
-	}
-	.songcontainer .songcontainer-cover{
-		display:none;
-	}
-	
-	.album span.number{
-		width:22px;
-		
-	}
-	.songcontainer span.title{
-		width:174px;
-	}
-	.songcontainer span.time{
-		width:56px;
-	}
-	.songcontainer span.actionsSong{
-		height:24px;
-	}
-	.songcontainer span.actionsSong i.ioc{
-		margin-left:0px;
-		margin-top:2px;
-		line-height:20px;
-	}
-	.albumSelect li:hover{
-		background-color:rgba(255,255,255,0.2);
-	}
-	
-	#individual-playlist-header span span.header-interpret,
-	#individual-playlist-header span span.header-album,
-	#individual-playlist-header span span.header-opt,
-	#individual-playlist li span.interpret,
-	#individual-playlist li span.album-indi,
-	#individual-playlist li span.ioc-trash
-	{
-		display:none;
-	}
-	#individual-playlist li span.title{
-		width:60%;
-	}
-	#individual-playlist li{
-		font-family:"Helvetica Neue",verdana;
-			font-weight:200;
-	}
-}
 
 
 .outer-audioplayer{
@@ -1125,4 +955,217 @@ li.dropHover{
 	
 	font-size:18px;
 	color:#888;
+}
+
+
+#audios_import_process, 
+#audios_import_done{
+	display:none;
+}
+#audios_import_process_message, 
+#audios_import_status, 
+#audios_import_form_message{
+	text-align:center;
+}
+#audios_import_form_message{font-weight: bold;}
+.contacts_import_warning{border-color: #fc3333;}
+#audios_import_dialog{
+	padding:0;
+	margin:0;
+}
+
+@media only screen and (max-width: 768px){
+	#app-navigation-toggle{
+		position:fixed;
+		background-color:#fff;
+		opacity:1;
+		height:62px;
+		width:45px;
+	}
+	#app-content{
+		background:#fff;
+	}
+	
+	.sm2-bar-ui.fixed {
+		margin-left:45px;
+		 left: 0px;
+		
+	}
+	.sm2-inline-element.sm2-button-element.sm2-shuffle{
+		display:none;
+	}
+	
+	#individual-playlist-header span span.header-interpret,
+	#individual-playlist-header span span.header-album,
+	#individual-playlist-header span span.header-opt,
+	#individual-playlist li span.interpret,
+	#individual-playlist li span.album-indi,
+	#individual-playlist li span.ioc-trash
+	{
+		display:none;
+	}
+	#individual-playlist li span.title{
+		width:80%;
+		
+	}
+	#individual-playlist li{
+		font-family:"Helvetica Neue",verdana;
+		font-weight:200;
+		font-size:16px;
+		height:24px;
+		line-height:24px;
+	}
+	
+	#individual-playlist li .actionsSong{
+		height:20px;
+		line-height:20px;
+	}
+	#individual-playlist li .actionsSong i.ioc{
+		font-size:20px;
+		height:20px;
+		line-height:20px;
+	}
+	.songcontainer .albumSelect li a.link-full{
+		width:60%;
+		
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	
+	
+	#app-navigation-toggle{
+		position:fixed;
+		background-color:#fff;
+		opacity:1;
+		height:62px;
+		width:45px;
+	}
+	#app-content{
+		background:#fff;
+	}
+	
+	.sm2-bar-ui.fixed {
+		margin-left:45px;
+		 left: 0px;
+		 width:80%;
+	}
+	.sm2-inline-element.sm2-button-element.sm2-menu{
+		display:none;
+	}
+	.sm2-inline-element.sm2-button-element.sm2-volume{
+		display:none;
+	}
+	.sm2-inline-element.sm2-button-element.sm2-shuffle{
+		display:none;
+	}
+	.sm2-inline-button.next,
+	.sm2-inline-button.previous{
+		background-size:70%;
+	}
+	.playing .play-pause {
+		background-size:50%;
+	}
+	.play-pause{
+		background-size:50%;
+	}
+	#audios-audioscontainer{
+		padding:0;
+		
+	}
+	
+	.album{
+		width:140px;
+		
+	}
+	.album .albumcover{
+		width:140px;
+		height:140px;
+	}
+	
+	.album .albumdescr{
+		display:none;
+	}
+	
+	.songcontainer{
+		
+	}
+	.songcontainer h3,.songcontainer h2{
+		padding-left:30px;
+	}
+	.songcontainer .songlist.albumwrapper {
+		-webkit-column-count: 1;
+		-moz-column-count: 1;
+		column-count: 1;
+		padding:0;
+		margin:0;
+		width:96%;
+		float:left;
+		display:block;
+	}
+	.songcontainer .songlist.albumwrapper .albumSelect{
+		padding:0;
+		margin:0;
+	}
+	.songcontainer .songlist.albumwrapper .albumSelect li{
+		font-size:15px;
+		font-weight:200;
+		line-height:24px;
+		height:24px;
+	}
+	.songcontainer .songcontainer-cover{
+		display:none;
+	}
+	
+	.album span.number{
+		width:22px;
+		
+	}
+	.songcontainer .albumSelect li a.link-full{
+		width:65%;
+		
+	}
+	
+	.songcontainer .albumSelect li a.edit-song{
+		display:none;
+		
+	}
+	
+	.songcontainer span.time{
+		width:56px;
+	}
+	.songcontainer span.actionsSong{
+		height:24px;
+	}
+	.songcontainer span.actionsSong i.ioc{
+		margin-left:0px;
+		margin-top:2px;
+		line-height:20px;
+	}
+	.albumSelect li:hover{
+		background-color:rgba(255,255,255,0.2);
+	}
+	
+	#individual-playlist-header span span.header-interpret,
+	#individual-playlist-header span span.header-album,
+	#individual-playlist-header span span.header-opt,
+	#individual-playlist li span.interpret,
+	#individual-playlist li span.album-indi,
+	#individual-playlist li span.ioc.ioc-delete,
+	#individual-playlist li a.edit-song
+	{
+		display:none;
+	}
+	#individual-playlist li span.title{
+		width:70%;
+	}
+	
+	#individual-playlist li span.time{
+		right:10px;
+	}
+	
+	#individual-playlist li{
+		font-family:"Helvetica Neue",verdana;
+			font-weight:200;
+	}
 }

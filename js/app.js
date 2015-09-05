@@ -27,6 +27,8 @@ var Audios = function(){
 	 this.albums=[];
 	 this.imgSrc = false;
 	 this.imgMimeType = 'image/jpeg';
+	 this.percentage = 0;
+	 this.progresskey = '';
 };
 
 Audios.prototype.init = function() {
@@ -35,7 +37,9 @@ Audios.prototype.init = function() {
    
 	this.initKeyListener();
 	this.initPhotoDialog();
-	
+	$('.toolTip').tipsy({
+		html : true
+	});
 	
 };
 
@@ -176,7 +180,6 @@ Audios.prototype.PlaylistSongs = function(){
 			}
 			if(!$(this).closest('li').hasClass('isActive')){
 				$(this).closest('li').addClass('isActive');
-				
 				$this.AudioPlayer.actions.play($(this).closest('li').index());
 			}else{
 				if($('.sm2-bar-ui').hasClass('playing')){
@@ -573,14 +576,15 @@ Audios.prototype.loadSongsRow = function(elem,albumName){
 				var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
 				li.append(spanAction);
 				
-				var link = $('<a/>').addClass('link-full').attr('href',elem.link);
+				
 				var spanNr = $('<span/>').addClass('number').text(elem.number);
-				link.append(spanNr);
+				li.append(spanNr);
+				var link = $('<a/>').addClass('link-full').attr('href',elem.link);
 				var spanTitle = $('<span/>').attr({'data-title':elem.title,'title':elem.title}).addClass('title').text(elem.title);
 				link.append(spanTitle);
-				var spanTime = $('<span/>').addClass('time').text(elem.length);
-				link.append(spanTime);
 				li.append(link);
+				var spanTime = $('<span/>').addClass('time').text(elem.length);
+				li.append(spanTime);
 				var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':elem.id,'data-fileid':elem.file_id,'title':t('audios','Edit Song from Playlist')}).click(this.editSong.bind(this));
 				li.append(spanEdit);
 				
@@ -629,9 +633,9 @@ Audios.prototype.loadPlaylists = function(){
 								.click($this.loadIndividualPlaylist.bind($this));
 								
 								var span=$('<span/>').attr('class','counter').text(el.songids.length);
-								var iSort=$('<i/>').attr({'class':'ioc ioc-sort','data-sortid':el.info.id,'title':t('audios','Sort Playlist')}).click($this.sortPlaylist.bind($this));
+								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.info.id,'title':t('audios','Sort Playlist')}).click($this.sortPlaylist.bind($this));
 	
-								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete','data-deleteid':el.info.id,'title':t('audios','Delete Playlist')}).click($this.deletePlaylist.bind($this));
+								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.info.id,'title':t('audios','Delete Playlist')}).click($this.deletePlaylist.bind($this));
 			
 								li.append(spanPlaylistInfo);
 								li.append(spanName);
@@ -644,6 +648,9 @@ Audios.prototype.loadPlaylists = function(){
 							
 							
 							$('#myPlayList').append(aPlaylists);
+							$('.toolTip').tipsy({
+								html : true
+							});
 						}
 						
 					}
@@ -1356,6 +1363,108 @@ Audios.prototype.deletePhoto = function() {
 	
 };
 
+Audios.prototype.openImportDialog = function() {
+			
+		$('body').append('<div id="audios_import"></div>');
+			$('#audios_import').load(OC.generateUrl('apps/audios/getimporttpl'),function(){
+					this.scanInit();
+			}.bind(this));
+	
+};
+Audios.prototype.scanInit = function() {
+	
+	var $this = this;
+	$('#audios_import_dialog').dialog({
+		width : 500,
+		resizable: false,
+		close : function() {
+			//OC.ContactsPlus.Import.Dialog.close();
+			$this.progresskey = '';
+			$this.percentage = 0;
+			$('#audios_import_dialog').dialog('destroy').remove();
+			$('#audios_import_dialog').remove();
+		}
+	});
+	
+	$('#audios_import_done').click(function(){
+		$this.progresskey = '';
+		$this.percentage = 0;
+		$('#audios_import_dialog').dialog('destroy');
+		$('#audios_import_dialog').remove();
+	});
+	
+	$('#audios_import_submit').click(function(){
+		$this.processScan();
+	});
+	$('#audios_import_progressbar').progressbar({value:0});
+	this.progresskey = $('#audios_import_progresskey').val();
+	
+};
+
+Audios.prototype.processScan = function() {
+	$('#audios_import_form').css('display', 'none');
+	$('#audios_import_process').css('display', 'block');
+	
+	this.scanSend();
+	window.setTimeout('myAudios.scanUpdate()', 100);
+};
+Audios.prototype.scanSend = function() {
+	
+	$.post(OC.generateUrl('apps/audios/scanforaudiofiles'),
+		{progresskey: this.progresskey},  function(data){
+			if(data.status == 'success'){
+				$('#audios_import_progressbar').progressbar('option', 'value', 100);
+				$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+				this.percentage = 100;
+				$('#audios_import_progressbar').hide();
+				$('#audios_import_done').css('display', 'block');
+				$('#audios_import_status').html(data.message);
+				$('#audios_import_process_message').text('').hide();
+				this.loadAlbums();
+			}else{
+				$('#audios_import_progressbar').progressbar('option', 'value', 100);
+				$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+				$('#audios_import_status').html(data.message);
+			}
+		}.bind(this));
+};
+Audios.prototype.scanUpdate = function() {
+	if(this.percentage === 100){
+		
+		return false;
+	}
+	
+	$.post(OC.generateUrl('apps/audios/scanforaudiofiles'),
+	 {progresskey: this.progresskey, getprogress: true}, function(data){
+		if(data.status == 'success'){
+			if(data.percent === null){
+				return false;
+			}
+			
+			this.percentage = parseInt(data.percent);
+			$('#audios_import_progressbar').progressbar('option', 'value', parseInt(data.percent));
+			$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+			$('#audios_import_process_message').text(data.currentmsg);
+			if(data.percent < 100 ){
+				window.setTimeout('myAudios.scanUpdate()', 100);
+				
+			}else{
+				$('#audios_import_progressbar').progressbar('option', 'value', 100);
+				$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+				$('#audios_import_done').css('display', 'block');
+				
+			}
+		}else{
+		
+			$('#audios_import_progressbar').progressbar('option', 'value', 100);
+			$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+			$('#audios_import_status').html(data.message);
+			
+		}
+	}.bind(this));
+	return 0;
+};
+
 var resizeTimeout = null;
 $(window).resize(_.debounce(function() {
 	if (resizeTimeout)
@@ -1575,10 +1684,11 @@ $(document).ready(function() {
 		$('#activePlaylist').html('');
 		$('.sm2-playlist-target').html('');
 		$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-		$('#notification').text(t('audios','Start scanning ...'));
-		$('#notification').slideDown();
+		//$('#notification').text(t('audios','Start scanning ...'));
+		//$('#notification').slideDown();
 		
-		
+		myAudios.openImportDialog();
+		/*
 		$.ajax({
 				type : 'GET',
 				url : OC.generateUrl('apps/audios/scanforaudiofiles'),
@@ -1590,7 +1700,7 @@ $(document).ready(function() {
 						window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 					}
 				}
-		});
+		});*/
 		
 		return false;
 	});
