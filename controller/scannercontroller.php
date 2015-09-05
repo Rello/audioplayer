@@ -417,11 +417,11 @@ class ScannerController extends Controller {
 				$aCurrent = \OC::$server->getCache()->get($pProgresskey);
 				$aCurrent = json_decode($aCurrent);
 				
-				$numSongs = $aCurrent->{'all'};
-				$currentSongCount = $aCurrent->{'current'};
-				$currentSong = $aCurrent->{'currentsong'};
-				$percent = (int)$aCurrent->{'percent'};
-				//\OCP\Util::writeLog('audios','PROCESS: '.$percent,\OCP\Util::DEBUG);
+				$numSongs = (isset($aCurrent->{'all'})?$aCurrent->{'all'}:0);
+				$currentSongCount = (isset($aCurrent->{'current'})?$aCurrent->{'current'}:0);
+				$currentSong = (isset($aCurrent->{'currentsong'})?$aCurrent->{'currentsong'}:'');
+				$percent = (isset($aCurrent->{'percent'})?$aCurrent->{'percent'}:'');
+			
 				if($percent ==''){
 					$percent = 0;
 				}
