@@ -24,7 +24,16 @@
 
 <div id="app-navigation">
 <div class="innerNav">
-<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> <button class="button" id="newPlaylist"><?php p($l->t('GO'));?></button>
+<!--my playlist clone -->	
+<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
+<input type="text" name="playlist" id="playlist" value=""  />
+<button class="icon-checkmark"></button>
+</li>	
+<!--my playlist clone -->
+<div class="app-navigation-entry-edit">
+<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
+<button  class="icon-checkmark" id="newPlaylist"></button>
+</div>
 	<h3><?php p($l->t('Music'));?></h3>
 	<ul id="albenoverview">
 		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  <i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i><i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i></li>

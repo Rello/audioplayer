@@ -11,6 +11,7 @@ OC.L10N.register(
 	"No Playlist selected!" : "Keine Wiedergabeliste ausgewählt!",
 	"Sort modus active" : "Bearbeitung aktiviert",
 	"Delete playlist success!" : "Wiedergabeliste wurde erfolgreich gelöscht!",
+	"Rename Playlist" : "Wiedergabeliste umbennen",
 	"Start scanning ..." : "Starte Suche nach neuen Musikdateien",
 	"Scanning finished! New Audios found!" :"Suche beendet! Es wurden neue Musikdateien gefunden!",
 	"Yes" : "Ja",

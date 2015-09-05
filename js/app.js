@@ -596,12 +596,14 @@ Audios.prototype.loadPlaylists = function(){
 
 	var $this = this;
 	$('#myPlayList').html('');
+	$('.toolTip').tipsy('hide');
 	$.ajax({
 				type : 'GET',
 				url : OC.generateUrl('apps/audios/getplaylists'),
 				data : {},
 				success : function(jsondata) {
 					if(jsondata.status == 'success'){
+						
 						var playlistsdata=jsondata.data;
 						
 						if(playlistsdata !== 'nodata'){
@@ -634,12 +636,14 @@ Audios.prototype.loadPlaylists = function(){
 								
 								var span=$('<span/>').attr('class','counter').text(el.songids.length);
 								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.info.id,'title':t('audios','Sort Playlist')}).click($this.sortPlaylist.bind($this));
+								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.info.name,'data-editid':el.info.id,'title':t('audios','Rename Playlist')}).click($this.renamePlaylist.bind($this));
 	
 								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.info.id,'title':t('audios','Delete Playlist')}).click($this.deletePlaylist.bind($this));
 			
 								li.append(spanPlaylistInfo);
 								li.append(spanName);
 								li.append(span);
+								li.append(iEdit);
 								li.append(iSort);
 								li.append(iDelete);
 								
@@ -1077,6 +1081,7 @@ Audios.prototype.addSongToPlaylist = function(plId,songId) {
 		sorting : (sort + 1)
 	}).then(function(data) {
 		$('#myPlayList').html('');
+		$('.toolTip').tipsy('hide');
 		this.loadPlaylists();
 	}.bind(this));
 	
@@ -1100,6 +1105,77 @@ Audios.prototype.newPlaylist = function(plName){
 				}
 		}
 });
+};
+
+Audios.prototype.renamePlaylist = function(evt){
+	var eventTarget=$(evt.target);
+	if($('.plclone').length === 1){
+		var plId = eventTarget.data('editid');
+		var plistName = eventTarget.data('name');
+		var myClone = $('#pl-clone').clone();
+		var $this = this;
+		
+		$('#myPlayList li[data-id="'+plId+'"]').after(myClone);
+		myClone.attr('data-pl',plId).show();
+		$('#myPlayList li[data-id="'+plId+'"]').hide();
+		
+		myClone.find('input[name="playlist"]')
+		.bind('keydown', function(event){
+			if (event.which == 13){
+				if(myClone.find('input[name="playlist"]').val()!==''){
+					var saveForm = $('.plclone[data-pl="'+plId+'"]');
+					var plname = saveForm.find('input[name="playlist"]').val();
+					
+					$.getJSON(OC.generateUrl('apps/audios/updateplaylist'), {
+						plId:plId,
+						newname:plname
+					}, function(jsondata) {
+						if(jsondata.status == 'success'){
+							$this.loadPlaylists();
+							myClone.remove();
+						}
+						if(jsondata.status == 'error'){
+							alert('could not update playlist');
+						}
+						
+						});
+					
+				}else{
+					myClone.remove();
+					$('#myPlayList li[data-id="'+plId+'"]').show();
+				}
+			}
+		})
+		.val(plistName).focus();
+		
+		
+		myClone.on('keyup',function(evt){
+			if (evt.keyCode===27){
+				myClone.remove();
+				$('#myPlayList li[data-id="'+plId+'"]').show();
+			}
+		});
+		myClone.find('button.icon-checkmark').on('click',function(){
+			var saveForm = $('.plclone[data-pl="'+plId+'"]');
+			var plname = saveForm.find('input[name="playlist"]').val();
+			if(myClone.find('input[name="playlist"]').val()!==''){
+				$.getJSON(OC.generateUrl('apps/audios/updateplaylist'), {
+					plId:plId,
+					newname:plname
+				}, function(jsondata) {
+					if(jsondata.status == 'success'){
+						$this.loadPlaylists();
+						myClone.remove();
+					}
+					if(jsondata.status == 'error'){
+						alert('could not update playlist');
+					}
+					
+				});
+			}
+			
+		});
+	}
 };
 
 Audios.prototype.sortPlaylist = function(evt){

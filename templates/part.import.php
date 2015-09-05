@@ -7,10 +7,8 @@
 	<form>
 </div>
 <div id="audios_import_process">
-	
-	<div  id="audios_import_progressbar"></div>
-	<br>
 	<div id="audios_import_process_message"></div>
+	<div  id="audios_import_progressbar"></div>
 	<br>
 	<div id="audios_import_status" class="hint"></div>
 	<br>

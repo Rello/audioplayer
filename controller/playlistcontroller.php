@@ -101,7 +101,29 @@ class PlaylistController extends Controller {
 			 return $response;
 		 }
 	}
-
+	
+	 /**
+     * @NoAdminRequired
+	   * 
+	   * @param $plId tag id
+	   * @param $newname new name for tag
+     */
+	public function updatePlaylist($plId,$newname){
+			
+		if($this->updatePlaylistToDB($plId,$newname)){
+			$params = [
+			'status' => 'success',
+			];
+		}else{
+			$params = [
+				'status' => 'error',
+			];
+		}
+		
+		$response = new JSONResponse($params);
+		return $response;
+	}
+	
 	private function writePlaylistToDB($sName){
 		//Test If exist
 		$stmtCount = \OCP\DB::prepare( 'SELECT `id`, COUNT(`id`)  AS COUNTID FROM `*PREFIX*audios_playlists` WHERE `user_id` = ? AND `name` = ?' );
@@ -121,7 +143,14 @@ class PlaylistController extends Controller {
 			return $result;
 		}
 	}
-
+	
+	private function updatePlaylistToDB($id,$sName){
+		$stmt = \OCP\DB::prepare( 'UPDATE `*PREFIX*audios_playlists` SET `name` = ? WHERE `user_id`= ? AND `id`= ?' );
+		$result = $stmt->execute(array($sName, $this->userId, $id));
+		
+		return true;
+	}
+	
 	private function getPlaylistsforUser(){
 		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audios_playlists`
 			 			WHERE  `user_id` = ?
