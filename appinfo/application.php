@@ -54,7 +54,8 @@ class Application extends App {
 			$c->query('AppName'),
 			$c->query('Request'),
 			$c->query('UserId'),
-			$c->query('L10N')
+			$c->query('L10N'),
+			$c->query('ServerContainer')->getDb()
 			);
 		});
 		
@@ -63,7 +64,8 @@ class Application extends App {
 			$c->query('AppName'),
 			$c->query('Request'),
 			$c->query('UserId'),
-			$c->query('L10N')
+			$c->query('L10N'),
+			$c->query('ServerContainer')->getDb()
 			);
 		});
 		$container->registerService('PhotoController', function(IContainer $c) {
@@ -78,7 +80,8 @@ class Application extends App {
 			$c->query('AppName'),
 			$c->query('Request'),
 			$c->query('UserId'),
-			$c->query('L10N')
+			$c->query('L10N'),
+			$c->query('ServerContainer')->getDb()
 			);
 		});
 		

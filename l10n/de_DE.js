@@ -18,6 +18,7 @@ OC.L10N.register(
 	"No" : "Nein",
 	"Are you sure?" : "Sind Sie sicher?",
 	"Track" : "Nr",
+	"File" : "Datei",
 	"Title" : "Name",
 	"Interpret" : "Künstler",
 	"Year" : "Jahr",

@@ -52,6 +52,8 @@ class PageController extends Controller {
 		
 		$csp = new \OCP\AppFramework\Http\ContentSecurityPolicy();
 		$csp->addAllowedStyleDomain('data:');
+		$csp->addAllowedImageDomain('\'self\'');
+		$csp->addAllowedImageDomain('data:');
 		$csp->addAllowedImageDomain('*');
 		
 		$csp->addAllowedFrameDomain('*');	

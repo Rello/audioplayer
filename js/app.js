@@ -878,6 +878,7 @@ Audios.prototype.editSong = function(evt){
 			   +'<textarea id="imgsrc" name="imgsrc" style="display:none;">'+jsondata.data.poster+'</textarea>'
 			   +'<input type="hidden" name="imgmimetype" id="imgmimetype" value="'+jsondata.data.mimeType+'" />'	
 				+'<div class="edit-left"><label class="editDescr">'+t('audios','Title')+'</label> <input type="text" placeholder="'+t('audios','Title')+'" id="sTitle" style="width:45%;" value="' + jsondata.data.title + '" /><br />' 
+				+'<label class="editDescr">'+t('audios','File')+'</label> <input type="text" placeholder="'+t('audios','File')+'"  style="width:45%;" value="' + jsondata.data.localPath + '" readonly /><br />' 
 				+'<label class="editDescr">'+t('audios','Track')+'</label> <input type="text" placeholder="'+t('audios','Track')+'" id="sTrack" maxlength="2" style="width:10%;" value="' + jsondata.data.track + '" /> '+t('audios','of')+' <input type="text" placeholder="'+t('audios','Total')+'" id="sTracktotal" maxlength="2" style="width:10%;" value="' + jsondata.data.tracktotal + '" /><br />' 
 				+'<label class="editDescr">'+t('audios','Existing Interprets')+'</label><select style="width:45%;" id="eArtist"></select>' 
 				+'<label class="editDescr">'+t('audios','New Interpret')+'</label> <input type="text" placeholder="'+t('audios','Interpret')+'" id="sArtist" style="width:45%;" value="" />' 
