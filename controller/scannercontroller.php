@@ -724,50 +724,19 @@ class ScannerController extends Controller {
 	 */
 	private function writeTrackToDB($aTrack){
 			
-		$params = [
-			'user_id' => $this->userId,
-			'title' => $aTrack['title'],
-			'number' => $aTrack['number'],
-			'artist_id' => $aTrack['artist_id'],
-			'album_id' => $aTrack['album_id'],
-			'length' => $aTrack['length'],
-			'bitrate' => $aTrack['bitrate'],
-			'mimetype' => $aTrack['mimetype'],
-		];
-		
-		if ($this->db->insertIfNotExist('*PREFIX*audios_tracks',$params)) {
-					
-			$insertid = $this->db->getInsertId('*PREFIX*audios_tracks');
-			
-			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audios_tracks` SET `file_id`= ? WHERE `id` = ? AND `user_id` = ?' );
-			$stmt->execute(array($aTrack['file_id'], $insertid, $this->userId));
-		
-			return $insertid;
-		
-		}else{
-			
+		$SQL='SELECT id FROM *PREFIX*audios_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ?';
+		$stmt = $this->db->prepareQuery($SQL);
+		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype']));
+		$row = $result->fetchRow();
+		if(isset($row['id'])){
 			$this->iDublicate++;
-			 /*	
-			$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audios_tracks` WHERE `user_id` = ? AND `file_id` = ?' );
-			$result = $stmt->execute(array($this->userId, $aTrack['file_id']));
-			$row = $result->fetchRow();
-			
-			return $row['id'];*/
-		}	
-		/*	
-		//Test If exist
-		$stmtCount = \OCP\DB::prepare( 'SELECT `id`, COUNT(`id`)  AS COUNTID FROM `*PREFIX*audios_tracks` WHERE `user_id` = ? AND `file_id` = ?  GROUP BY `id`' );
-		$resultCount = $stmtCount->execute(array($this->userId, $aTrack['file_id']));
-		$row = $resultCount->fetchRow();
-		if($row['COUNTID'] > 0){
-			return $row['id'];
-		}else{		
+		}else{
 			$stmt = \OCP\DB::prepare( 'INSERT INTO `*PREFIX*audios_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`) VALUES(?,?,?,?,?,?,?,?,?)' );
 			$result = $stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype']));
 			$insertid = \OCP\DB::insertid('*PREFIX*audios_tracks');
-			
 			return $insertid;
-		}*/
+		}
+		
 		
 	}
 	
@@ -775,7 +744,7 @@ class ScannerController extends Controller {
 		$stmtCount = \OCP\DB::prepare( 'SELECT  COUNT(`id`)  AS COUNTID FROM `*PREFIX*audios_tracks` WHERE `user_id` = ? AND `file_id` = ? ' );
 		$resultCount = $stmtCount->execute(array($this->userId, $fileid));
 		$row = $resultCount->fetchRow();
-		if($row['COUNTID'] > 0){
+		if(isset($row['COUNTID']) && $row['COUNTID'] > 0){
 			return true;
 		}else{
 			return false;

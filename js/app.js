@@ -1384,6 +1384,7 @@ Audios.prototype.editPhoto = function(id, tmpkey) {
 					maxSize : [500, 500],
 					bgColor : 'black',
 					bgOpacity : .4,
+					aspectRatio: 1,
 					boxWidth : 500,
 					boxHeight : 500,
 					setSelect : [150, 150, 50, 50]//,
