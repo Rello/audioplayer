@@ -64,7 +64,15 @@ Audios.prototype.initPhotoDialog = function(){
 Audios.prototype.initKeyListener=function(){
 	$(document).keyup( function(evt) {
 		if(this.AudioPlayer!== null && $('#activePlaylist li').length > 0){
-			
+
+			if (evt.target) {
+				var nodeName=evt.target.nodeName.toUpperCase();
+				//don't activate shortcuts when the user is in an input, textarea or select element
+				if (nodeName === "INPUT" || nodeName === "TEXTAREA" || nodeName == "SELECT"){
+					return;
+				}
+			}
+
 			if (evt.keyCode === 32) {//Space pause/play
 				 if($('.sm2-bar-ui').hasClass('playing')){
 					this.AudioPlayer.actions.stop();
