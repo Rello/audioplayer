@@ -499,9 +499,13 @@ Audios.prototype.loadAlbums = function(){
 			 		divSongsContainer.append(listAlbumSelect);
 			 		
 			 		var aSongs=[];
-			 		$.each(songs[album.id],function(ii,songs){
-			 			aSongs[ii] = $this.loadSongsRow(songs, album.name);
-			 		});
+			 		if(songs[album.id]){
+				 		$.each(songs[album.id],function(ii,songs){
+				 			aSongs[ii] = $this.loadSongsRow(songs, album.name);
+				 		});
+			 		}else{
+			 			console.warn('Could not find songs for album:', album.name, album);
+			 		}
 			 		
 			 		listAlbumSelect.append(aSongs);
 			 		var br = $('<br />').css('clear','both');
