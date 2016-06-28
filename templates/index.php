@@ -7,7 +7,7 @@
 	script('files', 'jquery.fileupload');
 	script('audios', 'jquery.Jcrop');
 	script('core','tags');
-	script( 'audios', 'soundmanager2'); 
+	script( 'audios', 'soundmanager2-nodebug-jsmin'); 
 	script( 'audios', 'bar-ui');
 	script( 'audios', 'app' );
 	
@@ -56,19 +56,19 @@
   
 <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-    <a href="#prev" title="<?php p($l->t('previous song'));?>" class="toolTip sm2-inline-button previous"><?php p($l->t('previous song'));?></a>
+    <a href="#prev" class="sm2-inline-button previous"><?php p($l->t('previous song'));?></a>
    </div>
   </div>
   
   <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-    <a href="#play" title="<?php p($l->t('play/ pause'));?>" class="toolTip sm2-inline-button play-pause"><?php p($l->t('play/ pause'));?></a>
+    <a href="#play" class="sm2-inline-button play-pause"><?php p($l->t('play/ pause'));?></a>
    </div>
   </div>
   
   <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-    <a href="#next" title="<?php p($l->t('next song'));?>" class="toolTip sm2-inline-button next"><?php p($l->t('next song'));?></a>
+    <a href="#next" class="sm2-inline-button next"><?php p($l->t('next song'));?></a>
    </div>
   </div>
   
