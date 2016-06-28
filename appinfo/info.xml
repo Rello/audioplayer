@@ -6,7 +6,7 @@
 	<author>Sebastian Döll</author>
 	<description>MP3 Player for your MP3 files</description>
 <version>1.3.0</version>
-<namespace>Audios</namespace>
+<namespace>Audios2</namespace>
 <category>multimedia</category>
 <dependencies>
 		<php min-version="5.4" max-version="7.0"/>
