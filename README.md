@@ -4,10 +4,11 @@ MP3 Player App
 Maintainer:
 ===========
 Sebastian Döll
+z000ao8q
 
 Version Info:
 ============
-1.2.5
+1.3.0
 
 Setup Info:
 ===========
@@ -32,7 +33,3 @@ Features:
 
 Demo:
 =====
-https://ssl.webpack.de/demo81.libasyscloud.de/
-
-
-
