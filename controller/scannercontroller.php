@@ -445,7 +445,7 @@ class ScannerController extends Controller {
 		
 		
         $userView =  new View('/' . $this -> userId . '/files');
-		$audios = $userView->searchByMime('audio/mpeg');
+		$audios = $userView->searchByMime('audio');
 		$tempArray=array();
 		
 		
