@@ -1,10 +1,17 @@
 MP3 Player App
 =============
 
+I am trying to continue this app.
+Availability in the app-store sill come soon.
+please support me with the efforts.
+check back soon for updates
+
+
 Maintainer:
 ===========
-Sebastian Döll
-z000ao8q
+(formally Sebastian Döll)
+
+now: z000ao8q
 
 Version Info:
 ============
@@ -12,8 +19,6 @@ Version Info:
 
 Setup Info:
 ===========
-This version of the MP3 Player app is only compatible with upcoming ownCloud Version 8.1 or later!
-Tested with browser: Firefox, Safari, Chrome, IE 11
 The Musicplayer only supports mp3 files, no ampache backend etc, just simple!
 
 Installation:
