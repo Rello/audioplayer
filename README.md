@@ -9,7 +9,7 @@ check back soon for updates
 
 Maintainer:
 ===========
-(formally Sebastian Döll)
+(before: Sebastian Döll)
 
 now: z000ao8q
 
