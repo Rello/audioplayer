@@ -439,7 +439,7 @@ class ScannerController extends Controller {
 		}
 		
 		if(!class_exists('getid3_exception')) {
-			require_once __DIR__ . '/../3rdparty/getID3/getid3/getid3.php';
+			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
 		}
 		
 		
@@ -462,6 +462,7 @@ class ScannerController extends Controller {
 		$currentIntArray = json_encode($currentIntArray);
 		\OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
 		$counter = 0;
+		$counter_new = 0;
 		foreach($audios as $audio) {
 		  	
 			//new Audio Found
@@ -471,6 +472,16 @@ class ScannerController extends Controller {
 				$getID3 = new \getID3;
 				$ThisFileInfo = $getID3->analyze($userView->getLocalFile($audio['path']));
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
+
+				# catch issue when getID3 does not bring a result
+				# => write to Log and stop
+				# if the error occors after a rescan, it is more serious => open issue
+				# if the restart works, its probably related to the PHP-FPM Timeout between NGINX & PHP
+				# fastcgi_read_timeout can be raised as a test
+				if (!isset($ThisFileInfo['comments'])) {
+					\OCP\Util::writeLog('audios', 'Error with getID3 of '.$audio['path'], \OCP\Util::DEBUG);
+				break;
+				}
 					
 				$album = (string) $this->l10n->t('Various');
 				if(isset($ThisFileInfo['comments']['album'][0])){
@@ -543,11 +554,11 @@ class ScannerController extends Controller {
 					
 				}
 				
-				$playTimeString = $ThisFileInfo['playtime_string'];
-				if($playTimeString == null){
-					$playTimeString = '';
+				$playTimeString = '';
+				if(isset($ThisFileInfo['playtime_string'])){
+					$playTimeString=$ThisFileInfo['playtime_string'];
 				}
-				
+
 				$aTrack = [
 					'title' => $name,
 					'number' =>(int)$cleanTrackNumber,
@@ -560,12 +571,12 @@ class ScannerController extends Controller {
 				];
 				
 				$this->writeTrackToDB($aTrack);
+				$counter_new++;
 				
-				$counter++;
-				$this->abscount++;
-				
-				$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
 			}
+			$counter++;
+			$this->abscount++;
+			$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
  			
 			
 		}
@@ -575,7 +586,7 @@ class ScannerController extends Controller {
 		$message=(string)$this->l10n->t('Scanning finished!').'<br />';
 		$message.=(string)$this->l10n->t('Audios found: ').$counter.'<br />';
 		$message.=(string)$this->l10n->t('Duplicates found: ').$this->iDublicate.'<br />';
-		$message.=(string)$this->l10n->t('Written to music library: ').($counter - $this->iDublicate).'<br />';
+		$message.=(string)$this->l10n->t('Written to music library: ').($counter_new - $this->iDublicate).'<br />';
 		$message.=(string)$this->l10n->t('Albums found: ').$this->iAlbumCount.'<br />';
 		
 		$result=[
