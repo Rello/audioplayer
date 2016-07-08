@@ -1,9 +1,9 @@
 MP3 Player App
 =============
 
-I am trying to continue this app.
-Availability in the app-store sill come soon.
-please support me with the efforts.
+I am trying to continue this app.<br>
+Availability in the app-store still come soon.
+Please support me with the efforts.
 check back soon for updates
 
 
