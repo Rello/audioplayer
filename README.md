@@ -2,8 +2,7 @@ MP3 Player App
 =============
 
 I am trying to continue this app.<br>
-Availability in the app-store still come soon.
-Please support me with the efforts.
+Availability in the app-store will come soon.<br>
 check back soon for updates
 
 
