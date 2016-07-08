@@ -444,10 +444,14 @@ class ScannerController extends Controller {
 		
 		
 		
-        $userView =  new View('/' . $this -> userId . '/files');
-		$audios = $userView->searchByMime('audio');
+        	$userView =  new View('/' . $this -> userId . '/files');
+		$audios_mp3 = $userView->searchByMime('audio/mpeg');
+		$audios_m4a = $userView->searchByMime('audio/mp4');
+		$audios_ogg = $userView->searchByMime('audio/ogg');
+		$audios_wav = $userView->searchByMime('audio/wav');
+		$audios = array_merge($audios_mp3, $audios_m4a, $audios_ogg, $audios_wav);
+
 		$tempArray=array();
-		
 		
 		$this->numOfSongs = count($audios);
 		
