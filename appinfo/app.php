@@ -28,11 +28,11 @@ $request = \OC::$server->getRequest();
 	if (isset($request->server['REQUEST_URI'])) {
 		$url = $request->server['REQUEST_URI'];
 		if (preg_match('%index.php/apps/files(/.*)?%', $url)	|| preg_match('%index.php/s/(/.*)?%', $url)) {
-			\OCP\Util::addStyle('audios', '3rdparty/fontello/css/fontello');		
-			\OCP\Util::addStyle( 'audios', 'style');
+			\OCP\Util::addStyle('mp3_player', '3rdparty/fontello/css/fontello');		
+			\OCP\Util::addStyle( 'mp3_player', 'style');
 			
-			\OCP\Util::addScript( 'audios', 'soundmanager2' );
-			\OCP\Util::addScript( 'audios', 'viewer' );
+			\OCP\Util::addScript( 'mp3_player', 'soundmanager2' );
+			\OCP\Util::addScript( 'mp3_player', 'viewer' );
 		}
 	}
 
@@ -44,12 +44,12 @@ $navigationEntry = function () use ($c) {
 		'id' => $c->getAppName(),
 		'order' => 22,
 		'name' => $c->query('L10N')->t('MP3 Player'),
-		'href' => $c->query('URLGenerator')->linkToRoute('audios.page.index'),
-		'icon' => $c->query('URLGenerator')->imagePath('audios', 'app.svg'),
+		'href' => $c->query('URLGenerator')->linkToRoute('mp3_player.page.index'),
+		'icon' => $c->query('URLGenerator')->imagePath('mp3_player', 'app.svg'),
 	];
 };
 $c->getServer()->getNavigationManager()->add($navigationEntry);
 
-$c->getServer()->getSearch()->registerProvider('OCA\Audios\Search\Provider', array('app'=>'audios','apps' => array('files')));	
+$c->getServer()->getSearch()->registerProvider('OCA\mp3_player\Search\Provider', array('app'=>'mp3_player','apps' => array('files')));	
 
 
