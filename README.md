@@ -33,6 +33,3 @@ Features:
 - repeat of playlists or album
 - Editing ID3 Tag Infos of MP3 (incl. picture)
 - Resetfunction to delete mp3 library
-
-Demo:
-=====
