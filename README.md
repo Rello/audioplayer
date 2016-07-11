@@ -1,12 +1,10 @@
 #MP3 Player App
-=============
 Play mp3 & m4a files within a nice, animated cover-art navigation.<br>
 A pure player. No backends or other overhead...
 
 (This is the rework of the old "Audios"/"MP3 Player" app which is not maintained anymore. Thank you Sebastian Döll for the first version)
 
 ##Features:
-
 - Album view inspired by http://thomaspark.co/project/expandingalbums/ 
 - Creating Playlist
 - Add songs per Drag & Drop to playlist
