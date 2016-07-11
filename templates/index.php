@@ -1,18 +1,18 @@
 <?php 
-	style('audios', '3rdparty/fontello/css/animation');	
-	style('audios', '3rdparty/fontello/css/fontello');
-	style('audios', 'jquery.Jcrop');	
-	style('audios','bar-ui');
-	style('audios', 'style');
+	style('mp3_player', '3rdparty/fontello/css/animation');	
+	style('mp3_player', '3rdparty/fontello/css/fontello');
+	style('mp3_player', 'jquery.Jcrop');	
+	style('mp3_player','bar-ui');
+	style('mp3_player', 'style');
 	script('files', 'jquery.fileupload');
-	script('audios', 'jquery.Jcrop');
+	script('mp3_player', 'jquery.Jcrop');
 	script('core','tags');
-	script( 'audios', 'soundmanager2-nodebug-jsmin'); 
-	script( 'audios', 'bar-ui');
-	script( 'audios', 'app' );
+	script( 'mp3_player', 'soundmanager2-nodebug-jsmin'); 
+	script( 'mp3_player', 'bar-ui');
+	script( 'mp3_player', 'app' );
 	
 ?>
-<form style="display:none;" class="float" id="file_upload_form" action="<?php print_unescaped(\OCP\Util::linkToRoute('audios.photo.uploadPhoto')); ?>" method="post" enctype="multipart/form-data" target="file_upload_target">
+<form style="display:none;" class="float" id="file_upload_form" action="<?php print_unescaped(\OCP\Util::linkToRoute('mp3_player.photo.uploadPhoto')); ?>" method="post" enctype="multipart/form-data" target="file_upload_target">
 	<input type="hidden" name="id" value="">
 	<input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>">
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php p($_['uploadMaxFilesize']) ?>" id="max_upload">
@@ -20,7 +20,7 @@
 	<input id="pinphoto_fileupload" type="file" accept="image/*" name="imagefile" />
 </form>
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>
-<div id="searchresults" class="hidden" data-appfilter="audios"></div>
+<div id="searchresults" class="hidden" data-appfilter="mp3_player"></div>
 
 <div id="app-navigation">
 <div class="innerNav">
