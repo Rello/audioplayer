@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Audios
+ * ownCloud - mp3_player
  *
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
@@ -21,7 +21,7 @@
  *
  */
  
- namespace OCA\Audios\AppInfo;
+ namespace OCA\mp3_player\AppInfo;
  
 $request = \OC::$server->getRequest();
 	

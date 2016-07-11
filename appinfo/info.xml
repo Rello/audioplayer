@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <info>
 	<id>mp3_player</id>
-	<name>MP3 Player (new)</name>
+	<name>MP3 Player (next)</name>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<description>MP3 Player</description>
 <version>1.3.0</version>
-<namespace>Audios</namespace>
+<namespace>mp3_player</namespace>
 <category>multimedia</category>
 <dependencies>
 		<php min-version="5.4"/>
