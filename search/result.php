@@ -17,7 +17,7 @@
  *
  */
 
-namespace OCA\Audios\Search;
+namespace OCA\mp3_player\Search;
 
 /**
  * A found file
@@ -28,7 +28,7 @@ class Result extends \OCP\Search\Result {
 	 * Type name; translated in templates
 	 * @var string 
 	 */
-	public $type = 'audios';
+	public $type = 'mp3_player';
 
 
 	/**
