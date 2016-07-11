@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <info>
 	<id>mp3_player</id>
-	<name>MP3 Player (new)</name>
+	<name>MP3 Player (New Edition)</name>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
-	<description>MP3 Player</description>
+	<description>Play mp3, m4a files within a nice cover-art navigation</description>
 <version>2.0.0</version>
 <namespace>mp3_player</namespace>
 <category>multimedia</category>
 <dependencies>
 		<php min-version="5.4"/>
-		<owncloud min-version="8.1" max-version="9.2/>
+		<owncloud min-version="8.1" max-version="9.2"/>
 </dependencies>
 <bugs>https://github.com/z000ao8w/mp3_player/issues</bugs>
 </info>
