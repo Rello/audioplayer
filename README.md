@@ -8,18 +8,20 @@ A pure player. No backends or other overhead...
 ##Features:
 - Album view inspired by http://thomaspark.co/project/expandingalbums/ 
 - Creating Playlist
-- Add songs per Drag & Drop to playlist
-- Scanning on web UI
+- Scanning in UI
 - mobil view support
-- repeat of playlists or album
-- Editing ID3 Tag Infos of MP3 (incl. picture)
-- Resetfunction to delete mp3 library
+- Editing ID3 Tags (incl. picture)
+- Reset library in UI
 
 ##Maintainer:
 Marcel Scherello
 
 ##Version Info:
 2.0.0
+- complete rebranding from "Audios" to "mp3_player"
+- update of 3rd party libraries
+- scanner stabilization (continution after errors)
+- mobile usability
 
 (This is the rework of the old "Audios"/"MP3 Player" app which is not maintained anymore. <br>
 Thank you Sebastian Döll for the first version)
