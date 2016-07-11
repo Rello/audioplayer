@@ -2,7 +2,7 @@
 Play mp3 & m4a files within a nice, animated cover-art navigation.<br>
 A pure player. No backends or other overhead...
 
-https://github.com/z000ao8q/screenshots/blob/master/mp3_player.png
+![](https://github.com/z000ao8q/screenshots/blob/master/mp3_player.png)
 
 (This is the rework of the old "Audios"/"MP3 Player" app which is not maintained anymore. Thank you Sebastian Döll for the first version)
 
