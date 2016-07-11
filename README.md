@@ -1,20 +1,18 @@
 MP3 Player App
 =============
 
-I am trying to continue this app.<br>
+The rework and continuation of the unmaintained "Audios" App!<br>
 Availability in the app-store will come soon.<br>
 check back soon for updates
 
 
 Maintainer:
 ===========
-(before: Sebastian Döll)
-
-now: z000ao8q
+Marcel Scherello
 
 Version Info:
 ============
-1.3.0
+2.0.0
 
 Setup Info:
 ===========
@@ -22,7 +20,8 @@ The Musicplayer only supports mp3 files, no ampache backend etc, just simple!
 
 Installation:
 =============
-Download the zip file and rename folder from audios-master to audios! Upload the app to your apps directory and activate it on the apps settings page!
+Download the zip file and rename folder from mp3_player-master to "mp3_player"!<br>
+Upload the app to your apps directory and activate it on the apps settings page!
 
 Features:
 =============
