@@ -1,5 +1,5 @@
 /**
- * ownCloud - Audios
+ * ownCloud - mp3_player
  *
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
@@ -36,9 +36,9 @@ var audioPlayer = {
 			dirLoad=dirLoad+'/';
 		}
 		if(token !== ''){
-			audioPlayer.location = OC.generateUrl('apps/audios/getpublicaudiostream{file}?token={token}',{'file':dirLoad+file,'token':token},{escape:false});
+			audioPlayer.location = OC.generateUrl('apps/mp3_player/getpublicaudiostream{file}?token={token}',{'file':dirLoad+file,'token':token},{escape:false});
 		}else{
-			audioPlayer.location = OC.generateUrl('apps/audios/getaudiostream?file={file}',{'file':dirLoad+file},{escape:false});
+			audioPlayer.location = OC.generateUrl('apps/mp3_player/getaudiostream?file={file}',{'file':dirLoad+file},{escape:false});
 
 		}
 		audioPlayer.mime = data.$file.attr('data-mime');
@@ -46,7 +46,7 @@ var audioPlayer = {
 			
 		if(audioPlayer.player == null){
 			soundManager.setup({
-			  url:OC.filePath('audios', 'js', 'soundmanager2.swf'),
+			  url:OC.filePath('mp3_player', 'js', 'soundmanager2.swf'),
 		  onready: function() {
 			    audioPlayer.player = soundManager.createSound({
 			      id:data.$file.attr('data-id'),
@@ -83,8 +83,8 @@ $(document).ready(function() {
 			var mimeType=$('#mimetype').val();
 			if(mimeType === 'audio/mpeg'){
 			
-			OC.addStyle('audios','360player');
-			OC.addStyle('audios','360player-visualization');	
+			OC.addStyle('mp3_player','360player');
+			OC.addStyle('mp3_player','360player-visualization');	
 			
 				
 			$('#imgframe').css({'width':'250px'});
@@ -93,7 +93,7 @@ $(document).ready(function() {
 			}
 			//$('#imgframe').append($('<br style="clear:both;" />'));
 			var fileName=$('#filename').val();
-			var audioUrl= OC.generateUrl('apps/audios/getpublicaudiostream{file}?token={token}',{'file':fileName,'token':token},{escape:false});
+			var audioUrl= OC.generateUrl('apps/mp3_player/getpublicaudiostream{file}?token={token}',{'file':fileName,'token':token},{escape:false});
 			var audioContainer=$('<div/>').attr('id','sm2-container');
 			
 			$('#preview').before(audioContainer);
@@ -105,10 +105,10 @@ $(document).ready(function() {
 			audioInnerDiv.append(audioLink);
 			audioOuterDiv.append(audioInnerDiv);
 			audioContainer.append(audioOuterDiv);
-			OC.addScript('audios','berniecode-animator',function(){
-				OC.addScript('audios','360player',function(){
+			OC.addScript('mp3_player','berniecode-animator',function(){
+				OC.addScript('mp3_player','360player',function(){
 					soundManager.setup({
-					  url:'./apps/audios/js/',
+					  url:'./apps/mp3_player/js/',
 					 });
 					 
 				});

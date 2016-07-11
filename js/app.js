@@ -1,5 +1,5 @@
 /**
- * ownCloud - Audios
+ * ownCloud - mp3_player
  *
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
@@ -48,7 +48,7 @@ Audios.prototype.initPhotoDialog = function(){
 	
 	$('input#pinphoto_fileupload').fileupload({
 		dataType : 'json',
-		url : OC.generateUrl('apps/audios/uploadphoto'),
+		url : OC.generateUrl('apps/mp3_player/uploadphoto'),
 		done : function(e, data) {
 			
 			this.imgSrc = data.result.imgdata;
@@ -396,7 +396,7 @@ Audios.prototype.loadAlbums = function(){
 	  $('#loading').show();
 	$.ajax({
 		type : 'GET',
-		url : OC.generateUrl('apps/audios/getmusic'),
+		url : OC.generateUrl('apps/mp3_player/getmusic'),
 		success : function(jsondata) {
 			$('#loading').hide();
 			if(jsondata.status === 'success' && jsondata.data !== 'nodata'){
@@ -538,7 +538,7 @@ Audios.prototype.loadAlbums = function(){
 				
 			}else{
 				  $this.AlbumContainer.show();
-				  $this.AlbumContainer.html('<span class="no-songs-found"><i class="ioc ioc-refresh" title="'+t('audios','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audios','Add new Songs to playlist')+'</span>');
+				  $this.AlbumContainer.html('<span class="no-songs-found"><i class="ioc ioc-refresh" title="'+t('mp3_player','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('mp3_player','Add new Songs to playlist')+'</span>');
 			}
 		
 		
@@ -597,7 +597,7 @@ Audios.prototype.loadSongsRow = function(elem,albumName){
 				li.append(link);
 				var spanTime = $('<span/>').addClass('time').text(elem.length);
 				li.append(spanTime);
-				var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':elem.id,'data-fileid':elem.file_id,'title':t('audios','Edit Song from Playlist')}).click(this.editSong.bind(this));
+				var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':elem.id,'data-fileid':elem.file_id,'title':t('mp3_player','Edit Song from Playlist')}).click(this.editSong.bind(this));
 				li.append(spanEdit);
 				
 				return li;
@@ -611,7 +611,7 @@ Audios.prototype.loadPlaylists = function(){
 	$('.toolTip').tipsy('hide');
 	$.ajax({
 				type : 'GET',
-				url : OC.generateUrl('apps/audios/getplaylists'),
+				url : OC.generateUrl('apps/mp3_player/getplaylists'),
 				data : {},
 				success : function(jsondata) {
 					if(jsondata.status == 'success'){
@@ -647,10 +647,10 @@ Audios.prototype.loadPlaylists = function(){
 								.click($this.loadIndividualPlaylist.bind($this));
 								
 								var span=$('<span/>').attr('class','counter').text(el.songids.length);
-								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.info.id,'title':t('audios','Sort Playlist')}).click($this.sortPlaylist.bind($this));
-								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.info.name,'data-editid':el.info.id,'title':t('audios','Rename Playlist')}).click($this.renamePlaylist.bind($this));
+								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.info.id,'title':t('mp3_player','Sort Playlist')}).click($this.sortPlaylist.bind($this));
+								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.info.name,'data-editid':el.info.id,'title':t('mp3_player','Rename Playlist')}).click($this.renamePlaylist.bind($this));
 	
-								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.info.id,'title':t('audios','Delete Playlist')}).click($this.deletePlaylist.bind($this));
+								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.info.id,'title':t('mp3_player','Delete Playlist')}).click($this.deletePlaylist.bind($this));
 			
 								li.append(spanPlaylistInfo);
 								li.append(spanName);
@@ -777,10 +777,10 @@ Audios.prototype.loadIndividualPlaylist = function(evt) {
 				return false;
 				});
 				
-				var span=$('<span/>').attr({'class':'ioc ioc-delete', 'data-id':myClone.attr('data-id'),'title':t('audios','Delete Song from Playlist')}).click($this.removeSongFromPlaylist.bind($this));
+				var span=$('<span/>').attr({'class':'ioc ioc-delete', 'data-id':myClone.attr('data-id'),'title':t('mp3_player','Delete Song from Playlist')}).click($this.removeSongFromPlaylist.bind($this));
 				myClone.append(span);
 				
-				var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':myClone.attr('data-id'),'data-fileid':myClone.attr('data-fileid'),'title':t('audios','Edit Song from Playlist')}).click($this.editSong.bind($this));
+				var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':myClone.attr('data-id'),'data-fileid':myClone.attr('data-fileid'),'title':t('mp3_player','Edit Song from Playlist')}).click($this.editSong.bind($this));
 				myClone.append(spanEdit);
 				
 				
@@ -790,7 +790,7 @@ Audios.prototype.loadIndividualPlaylist = function(evt) {
 			var actPlid = $('#myPlayList li.activeIndiPlaylist').attr('data-id');
 			var actCounter=parseInt($('#myPlayList li.activeIndiPlaylist span.counter').text());
 			$('#myPlayList li.activeIndiPlaylist span.counter').text(actCounter-1);
-			//OC.Tags.unTag(el,actPl,'audios');
+			//OC.Tags.unTag(el,actPl,'mp3_player');
 			var evt={};
 			evt.target = el;
 			
@@ -825,7 +825,7 @@ Audios.prototype.loadIndividualPlaylist = function(evt) {
 		}
 	
  	}else{
- 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audios','No Songs found in current Playlist! Add new Songs per Drag & Drop from album view')+'</span>');
+ 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('mp3_player','No Songs found in current Playlist! Add new Songs per Drag & Drop from album view')+'</span>');
  	}
 	}else{
 		$this.AlbumContainer.hide();
@@ -857,12 +857,12 @@ Audios.prototype.editSong = function(evt){
 	}
 	//var plId = $('#myPlayList li.activeIndiPlaylist').attr('data-id');
 	$this = this;
-	$.getJSON(OC.generateUrl('apps/audios/editaudiofile'), {
+	$.getJSON(OC.generateUrl('apps/mp3_player/editaudiofile'), {
 		songFileId: fileId
 	},function(jsondata){
 		if(jsondata.status === 'success'){
 			
-			var posterImg='<div id="noimage">'+t('audios', 'Drag Image Here!')+'</div>';
+			var posterImg='<div id="noimage">'+t('mp3_player', 'Drag Image Here!')+'</div>';
 		
 			if(jsondata.data.isPhoto === '1'){
 					
@@ -873,12 +873,12 @@ Audios.prototype.editSong = function(evt){
 			}
 			
 			var posterAction='<span class="labelPhoto" id="pinPhoto">'+posterImg
-  							+'<div class="tip" id="pin_details_photo_wrapper" title="'+t('audios','Drop Photo')+'" data-element="PHOTO">'
+  							+'<div class="tip" id="pin_details_photo_wrapper" title="'+t('mp3_player','Drop Photo')+'" data-element="PHOTO">'
 							+'<ul id="phototools" class="transparent hidden">'
-							+'<li><a class="delete" title="'+t('audios','Delete')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/delete.svg')+'"></a></li>'
-							+'<li><a class="edit" title="'+t('audios','Edit')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/rename.svg')+'"></a></li>'
-							+'<li><a class="svg upload" title="'+t('audios','Upload')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/upload.svg')+'"></a></li>'
-							+'<li><a class="svg cloud" title="'+t('audios','Select from cloud')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/public.svg')+'"></a></li>'
+							+'<li><a class="delete" title="'+t('mp3_player','Delete')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/delete.svg')+'"></a></li>'
+							+'<li><a class="edit" title="'+t('mp3_player','Edit')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/rename.svg')+'"></a></li>'
+							+'<li><a class="svg upload" title="'+t('mp3_player','Upload')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/upload.svg')+'"></a></li>'
+							+'<li><a class="svg cloud" title="'+t('mp3_player','Select from cloud')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/public.svg')+'"></a></li>'
 							+'</ul></div>'
 							+'<iframe name="file_upload_target" id="file_upload_target" src=""></iframe>'
 						 	+'</span>';
@@ -889,16 +889,16 @@ Audios.prototype.editSong = function(evt){
 			   +'<input type="hidden" name="tmpkey" id="tmpkey" value="'+jsondata.data.tmpkey+'" />'
 			   +'<textarea id="imgsrc" name="imgsrc" style="display:none;">'+jsondata.data.poster+'</textarea>'
 			   +'<input type="hidden" name="imgmimetype" id="imgmimetype" value="'+jsondata.data.mimeType+'" />'	
-				+'<div class="edit-left"><label class="editDescr">'+t('audios','Title')+'</label> <input type="text" placeholder="'+t('audios','Title')+'" id="sTitle" style="width:45%;" value="' + jsondata.data.title + '" /><br />' 
-				+'<label class="editDescr">'+t('audios','File')+'</label> <input type="text" placeholder="'+t('audios','File')+'"  style="width:45%;" value="' + jsondata.data.localPath + '" readonly /><br />' 
-				+'<label class="editDescr">'+t('audios','Track')+'</label> <input type="text" placeholder="'+t('audios','Track')+'" id="sTrack" maxlength="2" style="width:10%;" value="' + jsondata.data.track + '" /> '+t('audios','of')+' <input type="text" placeholder="'+t('audios','Total')+'" id="sTracktotal" maxlength="2" style="width:10%;" value="' + jsondata.data.tracktotal + '" /><br />' 
-				+'<label class="editDescr">'+t('audios','Existing Interprets')+'</label><select style="width:45%;" id="eArtist"></select>' 
-				+'<label class="editDescr">'+t('audios','New Interpret')+'</label> <input type="text" placeholder="'+t('audios','Interpret')+'" id="sArtist" style="width:45%;" value="" />' 
-				+'<label class="editDescr">'+t('audios','Existing Albums')+'</label><select style="width:45%;" id="eAlbum"></select>' 
-				+'<label class="editDescr">'+t('audios','New Album')+'</label> <input type="text" placeholder="'+t('audios','Album')+'" id="sAlbum" style="width:45%;" value="" />' 
-				+'<label class="editDescr">'+t('audios','Genre')+'</label><select style="width:45%;" id="sGenre"></select>' 
-				+'<label class="editDescr">'+t('audios','Year')+'</label> <input type="text" placeholder="'+t('audios','Year')+'" id="sYear" maxlength="4" style="width:10%;" value="' + jsondata.data.year + '" /><br />' 
-				+'<label class="editDescr" style="width:190px;">'+t('audios','Add as Albumcover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' 
+				+'<div class="edit-left"><label class="editDescr">'+t('mp3_player','Title')+'</label> <input type="text" placeholder="'+t('mp3_player','Title')+'" id="sTitle" style="width:45%;" value="' + jsondata.data.title + '" /><br />' 
+				+'<label class="editDescr">'+t('mp3_player','File')+'</label> <input type="text" placeholder="'+t('mp3_player','File')+'"  style="width:45%;" value="' + jsondata.data.localPath + '" readonly /><br />' 
+				+'<label class="editDescr">'+t('mp3_player','Track')+'</label> <input type="text" placeholder="'+t('mp3_player','Track')+'" id="sTrack" maxlength="2" style="width:10%;" value="' + jsondata.data.track + '" /> '+t('mp3_player','of')+' <input type="text" placeholder="'+t('mp3_player','Total')+'" id="sTracktotal" maxlength="2" style="width:10%;" value="' + jsondata.data.tracktotal + '" /><br />' 
+				+'<label class="editDescr">'+t('mp3_player','Existing Interprets')+'</label><select style="width:45%;" id="eArtist"></select>' 
+				+'<label class="editDescr">'+t('mp3_player','New Interpret')+'</label> <input type="text" placeholder="'+t('mp3_player','Interpret')+'" id="sArtist" style="width:45%;" value="" />' 
+				+'<label class="editDescr">'+t('mp3_player','Existing Albums')+'</label><select style="width:45%;" id="eAlbum"></select>' 
+				+'<label class="editDescr">'+t('mp3_player','New Album')+'</label> <input type="text" placeholder="'+t('mp3_player','Album')+'" id="sAlbum" style="width:45%;" value="" />' 
+				+'<label class="editDescr">'+t('mp3_player','Genre')+'</label><select style="width:45%;" id="sGenre"></select>' 
+				+'<label class="editDescr">'+t('mp3_player','Year')+'</label> <input type="text" placeholder="'+t('mp3_player','Year')+'" id="sYear" maxlength="4" style="width:10%;" value="' + jsondata.data.year + '" /><br />' 
+				+'<label class="editDescr" style="width:190px;">'+t('mp3_player','Add as Albumcover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' 
 				+'</div><div class="edit-right">'+posterAction+'</div>'
 			);
 			$("#dialogSmall").html(html);
@@ -962,23 +962,23 @@ Audios.prototype.editSong = function(evt){
 				
 			$("#dialogSmall").dialog({
 				resizable : false,
-				title : t('audios', 'Edit Song Information (ID3)'),
+				title : t('mp3_player', 'Edit Song Information (ID3)'),
 				width : 600,
 				modal : true,
 				buttons : [{
-					text : t('audios', 'Close'),
+					text : t('mp3_player', 'Close'),
 				click : function() {
 						$("#dialogSmall").html('');
 						$(this).dialog("close");
 					}
 				}, {
-					text : t('audios', 'Save'),
+					text : t('mp3_player', 'Save'),
 					click : function() {
 						var oDialog = $(this);
 					
 						$.ajax({
 								type : 'POST',
-								url : OC.generateUrl('apps/audios/saveaudiofiledata'),
+								url : OC.generateUrl('apps/mp3_player/saveaudiofiledata'),
 								data : {
 									songFileId:fileId,
 									trackId:songId,
@@ -1053,7 +1053,7 @@ Audios.prototype.editSong = function(evt){
 			return false;
 		}
 		if(jsondata.status === 'error'){
-			$('#notification').text(t('audios','Missing Permissions for editing ID3 Tags of song!'));
+			$('#notification').text(t('mp3_player','Missing Permissions for editing ID3 Tags of song!'));
 			 $('#notification').slideDown();
 			window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 		}
@@ -1069,7 +1069,7 @@ Audios.prototype.removeSongFromPlaylist=function(evt){
 	}
 	var plId = $('#myPlayList li.activeIndiPlaylist').attr('data-id');
 	
-	return $.getJSON(OC.generateUrl('apps/audios/removetrackfromplaylist'), {
+	return $.getJSON(OC.generateUrl('apps/mp3_player/removetrackfromplaylist'), {
 		playlistid : plId,
 		songid: songId
 	}).then(function(data) {
@@ -1088,7 +1088,7 @@ Audios.prototype.removeSongFromPlaylist=function(evt){
 Audios.prototype.addSongToPlaylist = function(plId,songId) {
 	
 	var sort = parseInt($('#myPlayList li[data-id="'+plId+'"]').find('.counter').text());
-	return $.getJSON(OC.generateUrl('apps/audios/addtracktoplaylist'), {
+	return $.getJSON(OC.generateUrl('apps/mp3_player/addtracktoplaylist'), {
 		playlistid : plId,
 		songid: songId,
 		sorting : (sort + 1)
@@ -1105,14 +1105,14 @@ Audios.prototype.newPlaylist = function(plName){
 	$this=this;
 	$.ajax({
 		type : 'GET',
-		url : OC.generateUrl('apps/audios/addplaylist'),
+		url : OC.generateUrl('apps/mp3_player/addplaylist'),
 		data : {'playlist':plName},
 		success : function(jsondata) {
 				if(jsondata.status === 'success'){
 					$this.loadPlaylists();
 				}
 				if(jsondata.status === 'error'){
-					 $('#notification').text(t('audios','No Playlist selected!'));
+					 $('#notification').text(t('mp3_player','No Playlist selected!'));
 					 $('#notification').slideDown();
 					window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 				}
@@ -1139,7 +1139,7 @@ Audios.prototype.renamePlaylist = function(evt){
 					var saveForm = $('.plclone[data-pl="'+plId+'"]');
 					var plname = saveForm.find('input[name="playlist"]').val();
 					
-					$.getJSON(OC.generateUrl('apps/audios/updateplaylist'), {
+					$.getJSON(OC.generateUrl('apps/mp3_player/updateplaylist'), {
 						plId:plId,
 						newname:plname
 					}, function(jsondata) {
@@ -1172,7 +1172,7 @@ Audios.prototype.renamePlaylist = function(evt){
 			var saveForm = $('.plclone[data-pl="'+plId+'"]');
 			var plname = saveForm.find('input[name="playlist"]').val();
 			if(myClone.find('input[name="playlist"]').val()!==''){
-				$.getJSON(OC.generateUrl('apps/audios/updateplaylist'), {
+				$.getJSON(OC.generateUrl('apps/mp3_player/updateplaylist'), {
 					plId:plId,
 					newname:plname
 				}, function(jsondata) {
@@ -1199,7 +1199,7 @@ Audios.prototype.sortPlaylist = function(evt){
 		   
 			var idsInOrder = $("#individual-playlist").sortable('toArray', {attribute: 'data-id'});
 			this.aSongIdsPlaylist[plId]=idsInOrder;
-			 $.getJSON(OC.generateUrl('apps/audios/sortplaylist'), {
+			 $.getJSON(OC.generateUrl('apps/mp3_player/sortplaylist'), {
 					playlistid : plId,
 					songids: idsInOrder.join(';')
 				},function(jsondata){
@@ -1216,7 +1216,7 @@ Audios.prototype.sortPlaylist = function(evt){
 			
 		}else{
 			
-			 $('#notification').text(t('audios','Sort modus active'));
+			 $('#notification').text(t('mp3_player','Sort modus active'));
 			 $('#notification').slideDown();
 			window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 					
@@ -1237,30 +1237,30 @@ Audios.prototype.sortPlaylist = function(evt){
 Audios.prototype.deletePlaylist = function(evt){
 	$this=this;
 	var plId = $(evt.target).attr('data-deleteid');
-	$("#dialogSmall").text(t('audios', 'Are you sure?'));
+	$("#dialogSmall").text(t('mp3_player', 'Are you sure?'));
 	$("#dialogSmall").dialog({
 		resizable : false,
-		title : t('audios', 'Delete Playlist'),
+		title : t('mp3_player', 'Delete Playlist'),
 		width : 210,
 		modal : true,
 		buttons : [{
-			text : t('audios', 'No'),
+			text : t('mp3_player', 'No'),
 		click : function() {
 				$("#dialogSmall").html('');
 				$(this).dialog("close");
 			}
 		}, {
-			text : t('audios', 'Yes'),
+			text : t('mp3_player', 'Yes'),
 			click : function() {
 				var oDialog = $(this);
 				$.ajax({
 						type : 'GET',
-						url : OC.generateUrl('apps/audios/removeplaylist'),
+						url : OC.generateUrl('apps/mp3_player/removeplaylist'),
 						data : {'playlistid':plId},
 						success : function(jsondata) {
 								if(jsondata.status === 'success'){
 									$this.loadPlaylists();
-									 $('#notification').text(t('audios','Delete playlist success!'));
+									 $('#notification').text(t('mp3_player','Delete playlist success!'));
 									 $('#notification').slideDown();
 									window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 								}
@@ -1336,13 +1336,13 @@ Audios.prototype.loadActionPhotoHandlers= function() {
 			$(this).tipsy('hide');
 			//$('#pinContainer').addClass('forceOpen');
 			var mimeparts = ['image/jpeg', 'httpd/unix-directory'];
-			OC.dialogs.filepicker(t('audios', 'Select photo'), this.cloudPhotoSelected.bind(this), false, mimeparts, true);
+			OC.dialogs.filepicker(t('mp3_player', 'Select photo'), this.cloudPhotoSelected.bind(this), false, mimeparts, true);
 		}.bind(this));
 			
 };
 
 Audios.prototype.cloudPhotoSelected = function(path) {
-	$.getJSON(OC.generateUrl('apps/audios/getimagefromcloud'), {
+	$.getJSON(OC.generateUrl('apps/mp3_player/getimagefromcloud'), {
 			'path' : path,
 			'id' : $('#photoId').val()
 		}, function(jsondata) {
@@ -1357,7 +1357,7 @@ Audios.prototype.cloudPhotoSelected = function(path) {
 				$('#imgmimetype').val(this.imgMimeType);
 				$('#edit_photo_dialog_img').html(jsondata.page);
 			} else {
-				OC.dialogs.alert(jsondata.message, t('audios', 'Error'));
+				OC.dialogs.alert(jsondata.message, t('mp3_player', 'Error'));
 			}
 		}.bind(this));
 };
@@ -1378,7 +1378,7 @@ Audios.prototype.editCurrentPhoto = function() {
 Audios.prototype.editPhoto = function(id, tmpkey) {
 	 $.ajax({
 			type : 'POST',
-			url : OC.generateUrl('apps/audios/cropphoto'),
+			url : OC.generateUrl('apps/mp3_player/cropphoto'),
 			data : {
 				'tmpkey' : tmpkey,
 				'id' : id,
@@ -1422,7 +1422,7 @@ Audios.prototype.savePhoto = function() {
 		form.submit();
 		
 		target.load(function() {
-            $('#noimage').text(t('audios', 'Picture generating, wait ...')).addClass('icon-loading');
+            $('#noimage').text(t('mp3_player', 'Picture generating, wait ...')).addClass('icon-loading');
 			var response = jQuery.parseJSON(target.contents().text());
 			if (response != undefined) {
 				$('#isphoto').val('1');
@@ -1436,7 +1436,7 @@ Audios.prototype.savePhoto = function() {
 				this.loadPhotoHandlers();
 
 			} else {
-				OC.dialogs.alert(response.message, t('audios', 'Error'));
+				OC.dialogs.alert(response.message, t('mp3_player', 'Error'));
 				wrapper.removeClass('wait');
 			}
 		}.bind(this));
@@ -1447,7 +1447,7 @@ Audios.prototype.deletePhoto = function() {
 		$('#isphoto').val('0');
 		this.imgSrc = false;
 		$('#pin_details_photo').remove();
-		$('<div/>').attr('id', 'noimage').text(t('audios', 'Drag Image Here!')).prependTo($(' #pinPhoto'));
+		$('<div/>').attr('id', 'noimage').text(t('mp3_player', 'Drag Image Here!')).prependTo($(' #pinPhoto'));
 		$('#imgsrc').val('');
 		this.loadPhotoHandlers();
 	
@@ -1456,7 +1456,7 @@ Audios.prototype.deletePhoto = function() {
 Audios.prototype.openImportDialog = function() {
 			
 		$('body').append('<div id="audios_import"></div>');
-			$('#audios_import').load(OC.generateUrl('apps/audios/getimporttpl'),function(){
+			$('#audios_import').load(OC.generateUrl('apps/mp3_player/getimporttpl'),function(){
 					this.scanInit();
 			}.bind(this));
 	
@@ -1500,7 +1500,7 @@ Audios.prototype.processScan = function() {
 };
 Audios.prototype.scanSend = function() {
 	
-	$.post(OC.generateUrl('apps/audios/scanforaudiofiles'),
+	$.post(OC.generateUrl('apps/mp3_player/scanforaudiofiles'),
 		{progresskey: this.progresskey},  function(data){
 			if(data.status == 'success'){
 				$('#audios_import_progressbar').progressbar('option', 'value', 100);
@@ -1524,7 +1524,7 @@ Audios.prototype.scanUpdate = function() {
 		return false;
 	}
 	
-	$.post(OC.generateUrl('apps/audios/scanforaudiofiles'),
+	$.post(OC.generateUrl('apps/mp3_player/scanforaudiofiles'),
 	 {progresskey: this.progresskey, getprogress: true}, function(data){
 		if(data.status == 'success'){
 			if(data.percent === null){
@@ -1661,7 +1661,7 @@ $(document).ready(function() {
 			//$('#coords input').val('');
 			$.ajax({
 			type : 'POST',
-			url : OC.generateUrl('apps/audios/clearphotocache'),
+			url : OC.generateUrl('apps/mp3_player/clearphotocache'),
 			data : {
 				'tmpkey' : $('#tmpkey').val(),
 			},
@@ -1705,20 +1705,20 @@ $(document).ready(function() {
 		window.location.href='#';
 	});
 	$(document).on('click', '#resetAudios', function () {
-		$("#dialogSmall").text(t('audios', 'Are you sure? All music database entries will be deleted!'));
+		$("#dialogSmall").text(t('mp3_player', 'Are you sure? All music database entries will be deleted!'));
 		$("#dialogSmall").dialog({
 			resizable : false,
-			title : t('audios', 'Reset Media Library'),
+			title : t('mp3_player', 'Reset Media Library'),
 			width : 250,
 			modal : true,
 			buttons : [{
-				text : t('audios', 'No'),
+				text : t('mp3_player', 'No'),
 			click : function() {
 					$("#dialogSmall").html('');
 					$(this).dialog("close");
 				}
 			}, {
-				text : t('audios', 'Yes'),
+				text : t('mp3_player', 'Yes'),
 				click : function() {
 					var oDialog = $(this);
 					
@@ -1736,16 +1736,16 @@ $(document).ready(function() {
 					$('#activePlaylist').html('');
 					$('.sm2-playlist-target').html('');
 					$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-					$('#notification').text(t('audios','Start deleting and resetting media library ...'));
+					$('#notification').text(t('mp3_player','Start deleting and resetting media library ...'));
 					$('#notification').slideDown();
 					
 					$.ajax({
 							type : 'GET',
-							url : OC.generateUrl('apps/audios/resetmedialibrary'),
+							url : OC.generateUrl('apps/mp3_player/resetmedialibrary'),
 							success : function(jsondata) {
 									if(jsondata.status === 'success'){
 										myAudios.loadAlbums();
-										$('#notification').text(t('audios','Resetting finished!'));
+										$('#notification').text(t('mp3_player','Resetting finished!'));
 										window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 									}
 							}
@@ -1774,19 +1774,19 @@ $(document).ready(function() {
 		$('#activePlaylist').html('');
 		$('.sm2-playlist-target').html('');
 		$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-		//$('#notification').text(t('audios','Start scanning ...'));
+		//$('#notification').text(t('mp3_player','Start scanning ...'));
 		//$('#notification').slideDown();
 		
 		myAudios.openImportDialog();
 		/*
 		$.ajax({
 				type : 'GET',
-				url : OC.generateUrl('apps/audios/scanforaudiofiles'),
+				url : OC.generateUrl('apps/mp3_player/scanforaudiofiles'),
 				success : function(jsondata) {
 					 if(jsondata.status === 'success'){
 						 var count = jsondata.counter;
 						 myAudios.loadAlbums();
-						 $('#notification').text(t('audios','Scanning finished! New Audios found!'+' ('+count+')'));
+						 $('#notification').text(t('mp3_player','Scanning finished! New Audios found!'+' ('+count+')'));
 						window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 					}
 				}
