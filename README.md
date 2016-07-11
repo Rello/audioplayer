@@ -4,7 +4,6 @@ A pure player. No backends or other overhead...
 
 ![](https://github.com/z000ao8q/screenshots/blob/master/mp3_player.png)
 
-(This is the rework of the old "Audios"/"MP3 Player" app which is not maintained anymore. Thank you Sebastian Döll for the first version)
 
 ##Features:
 - Album view inspired by http://thomaspark.co/project/expandingalbums/ 
@@ -16,16 +15,16 @@ A pure player. No backends or other overhead...
 - Editing ID3 Tag Infos of MP3 (incl. picture)
 - Resetfunction to delete mp3 library
 
-Maintainer:
-===========
+##Maintainer:
 Marcel Scherello
 
-Version Info:
-============
+##Version Info:
 2.0.0
 
-Installation:
-=============
+(This is the rework of the old "Audios"/"MP3 Player" app which is not maintained anymore. <br>
+Thank you Sebastian Döll for the first version)
+
+##Installation:
 Download the zip file and rename folder to "mp3_player"<br>
 Upload the app to your apps directory and activate it on the apps settings page
 
