@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Audios
+ * ownCloud - mp3_player
  *
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
@@ -20,7 +20,7 @@
  *
  */
 
-namespace OCA\Audios\Controller;
+namespace OCA\mp3_player\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
@@ -72,7 +72,7 @@ class MusicController extends Controller {
 			
 			\OC::$server->getSession()->close();
 			
-			$stream = new \OCA\Audios\AudioStream($filenameAudio,$user);
+			$stream = new \OCA\mp3_player\AudioStream($filenameAudio,$user);
 			$stream -> start();
 		} 
 	}
@@ -94,7 +94,7 @@ class MusicController extends Controller {
 			
 		\OC::$server->getSession()->close();
 
-		$stream = new \OCA\Audios\AudioStream($filename,$user);
+		$stream = new \OCA\mp3_player\AudioStream($filename,$user);
 		$stream -> start();
 			
 	}
@@ -199,7 +199,7 @@ class MusicController extends Controller {
 			$path = \OC\Files\Filesystem::getPath($row['file_id']);
 			
 			if(\OC\Files\Filesystem::file_exists($path)){
-				$row['link'] = \OCP\Util::linkToRoute('audios.music.getAudioStream',array('file'=>$path));
+				$row['link'] = \OCP\Util::linkToRoute('mp3_player.music.getAudioStream',array('file'=>$path));
 				$aSongs[$row['album_id']][] = $row;
 			}else{
 				$this->deleteFromDB($row['id'],$row['album_id'],$row['artist_id'],$row['file_id']);
@@ -262,7 +262,7 @@ class MusicController extends Controller {
 			return $aAlbum;
 		}
 		if(is_array($aTrack) && !is_array($aAlbum)){
-				//\OCP\Util::writeLog('audios','COUNTARRAYALBUM:'.count($aAlbum),\OCP\Util::DEBUG);		
+				//\OCP\Util::writeLog('mp3_player','COUNTARRAYALBUM:'.count($aAlbum),\OCP\Util::DEBUG);		
 			return $aTrack;
 		}
 		if(!is_array($aTrack) && !is_array($aAlbum)){
@@ -348,7 +348,7 @@ class MusicController extends Controller {
 	 public static function sortAlbums($files, $sortAttribute = 'name', $sortDescending = false) {
 		$sortFunc = 'compareAlbumNames';
 		self::$sortType=$sortAttribute;
-		usort($files, array('\OCA\Audios\Controller\MusicController', $sortFunc));
+		usort($files, array('\OCA\mp3_player\Controller\MusicController', $sortFunc));
 		if ($sortDescending) {
 			$files = array_reverse($files);
 		}

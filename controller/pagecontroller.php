@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Audios
+ * ownCloud - mp3_player
  *
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
@@ -20,7 +20,7 @@
  *
  */
 
-namespace OCA\Audios\Controller;
+namespace OCA\mp3_player\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
@@ -60,7 +60,7 @@ class PageController extends Controller {
 		
 		$maxUploadFilesize = \OCP\Util::maxUploadFilesize('/');
 		 
-		$response = new TemplateResponse('audios', 'index');
+		$response = new TemplateResponse('mp3_player', 'index');
 		$response->setContentSecurityPolicy($csp);
 		$response->setParams(array(
 			'uploadMaxFilesize' => $maxUploadFilesize,

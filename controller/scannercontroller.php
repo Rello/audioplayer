@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Audios
+ * ownCloud - mp3_player
  *
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
@@ -20,7 +20,7 @@
  *
  */
 
-namespace OCA\Audios\Controller;
+namespace OCA\mp3_player\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
@@ -73,7 +73,7 @@ class ScannerController extends Controller {
 		if($fileInfo['permissions'] & \OCP\PERMISSION_UPDATE){
 		
 			$localFile = $userView->getLocalFile($path);
-			//\OCP\Util::writeLog('audios','local: '.$path,\OCP\Util::DEBUG);
+			//\OCP\Util::writeLog('mp3_player','local: '.$path,\OCP\Util::DEBUG);
 			$getID3 = new \getID3;
 			$ThisFileInfo = $getID3->analyze($localFile);
 			\getid3_lib::CopyTagsToComments($ThisFileInfo);
@@ -134,7 +134,7 @@ class ScannerController extends Controller {
 				$image = new \OCP\Image();
 				if($image->loadFromdata($data)) {
 					if(($image->width() <= 150 && $image->height() <= 150) || $image->resize(150)) {
-						\OC::$server->getCache()->set('edit-audios-foto-' . $songFileId, $image -> data(), 600);	
+						\OC::$server->getCache()->set('edit-mp3_player-foto-' . $songFileId, $image -> data(), 600);	
 						$imgString = $image->__toString();
 						$resultData['mimeType'] = $ThisFileInfo['comments']['picture'][0]['image_mime'];
 						$resultData['poster'] = $imgString;
@@ -143,7 +143,7 @@ class ScannerController extends Controller {
 				
 			}
 			
-			$resultData['tmpkey'] = 'edit-audios-foto-' . $songFileId;
+			$resultData['tmpkey'] = 'edit-mp3_player-foto-' . $songFileId;
 			
 			$SQL="SELECT  `AA`.`id`,`AA`.`name` FROM `*PREFIX*audios_albums` `AA`
 				 			WHERE  `AA`.`user_id` = ?
@@ -178,7 +178,7 @@ class ScannerController extends Controller {
 			
 			unset($ArrayOfGenresTemp);                            // remove temporary array
 			
-			usort($ArrayOfGenres,array('OCA\Audios\Controller\ScannerController','compareGenreNames'));   
+			usort($ArrayOfGenres,array('OCA\mp3_player\Controller\ScannerController','compareGenreNames'));   
 			                   
 			 $resultData['genres'] = $ArrayOfGenres;
 			 
@@ -280,7 +280,7 @@ class ScannerController extends Controller {
 			
 			$tagwriter = new \getid3_writetags;
 			$localFile = $userView->getLocalFile($path);
-			//\OCP\Util::writeLog('audios','local: '.$localFile,\OCP\Util::DEBUG);
+			//\OCP\Util::writeLog('mp3_player','local: '.$localFile,\OCP\Util::DEBUG);
 			$tagwriter->filename = $localFile;
 			$tagwriter->tagformats = array('id3v2.3');
 			$tagwriter->overwrite_tags    = true;
@@ -399,7 +399,7 @@ class ScannerController extends Controller {
 	public function getImportTpl(){
 		
 		$params = [];	
-		$response = new TemplateResponse('audios', 'part.import',$params, '');  
+		$response = new TemplateResponse('mp3_player', 'part.import',$params, '');  
         
         return $response;
 	}
@@ -483,7 +483,7 @@ class ScannerController extends Controller {
 				# if the restart works, its probably related to the PHP-FPM Timeout between NGINX & PHP
 				# fastcgi_read_timeout can be raised as a test
 				if (!isset($ThisFileInfo['comments'])) {
-					\OCP\Util::writeLog('audios', 'Error with getID3 of '.$audio['path'], \OCP\Util::DEBUG);
+					\OCP\Util::writeLog('mp3_player', 'Error with getID3 of '.$audio['path'], \OCP\Util::DEBUG);
 				break;
 				}
 					
