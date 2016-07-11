@@ -6,7 +6,7 @@
 	<charset>utf8</charset>
 
 	<table>
-		<name>*dbprefix*audios_artists</name>
+		<name>*dbprefix*mp3_player_artists</name>
 		<declaration>
 			<field>
 				<name>id</name>
@@ -32,7 +32,7 @@
 	</table>
 
 	<table>
-		<name>*dbprefix*audios_albums</name>
+		<name>*dbprefix*mp3_player_albums</name>
 		<declaration>
 			<field>
 				<name>id</name>
@@ -80,7 +80,7 @@
 	</table>
 
 	<table>
-		<name>*dbprefix*audios_album_artists</name>
+		<name>*dbprefix*mp3_player_album_artists</name>
 		<declaration>
 			<field>
 				<name>artist_id</name>
@@ -107,7 +107,7 @@
 	</table>
 	
 	<table>
-		<name>*dbprefix*audios_genre</name>
+		<name>*dbprefix*mp3_player_genre</name>
 		<declaration>
 			<field>
 				<name>id</name>
@@ -133,7 +133,7 @@
 	</table>
 	
 	<table>
-		<name>*dbprefix*audios_playlists</name>
+		<name>*dbprefix*mp3_player_playlists</name>
 		<declaration>
 			<field>
 				<name>id</name>
@@ -159,7 +159,7 @@
 	</table>
 	
 	<table>
-		<name>*dbprefix*audios_playlist_tracks</name>
+		<name>*dbprefix*mp3_player_playlist_tracks</name>
 		<declaration>
 			<field>
 				<name>playlist_id</name>
@@ -202,7 +202,7 @@
 	</table>
 
 	<table>
-		<name>*dbprefix*audios_tracks</name>
+		<name>*dbprefix*mp3_player_tracks</name>
 		<declaration>
 			<field>
 				<name>id</name>
