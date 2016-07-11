@@ -1,10 +1,20 @@
-MP3 Player App
+#MP3 Player App
 =============
+Play mp3 & m4a files within a nice, animated cover-art navigation.<br>
+A pure player. No backends or other overhead...
 
-The rework and continuation of the unmaintained "Audios" App!<br>
-Availability in the app-store will come soon.<br>
-check back soon for updates
+(This is the rework of the old "Audios"/"MP3 Player" app which is not maintained anymore. Thank you Sebastian Döll for the first version)
 
+##Features:
+
+- Album view inspired by http://thomaspark.co/project/expandingalbums/ 
+- Creating Playlist
+- Add songs per Drag & Drop to playlist
+- Scanning on web UI
+- mobil view support
+- repeat of playlists or album
+- Editing ID3 Tag Infos of MP3 (incl. picture)
+- Resetfunction to delete mp3 library
 
 Maintainer:
 ===========
@@ -14,22 +24,9 @@ Version Info:
 ============
 2.0.0
 
-Setup Info:
-===========
-The Musicplayer only supports mp3 files, no ampache backend etc, just simple!
-
 Installation:
 =============
-Download the zip file and rename folder from mp3_player-master to "mp3_player"!<br>
-Upload the app to your apps directory and activate it on the apps settings page!
+Download the zip file and rename folder to "mp3_player"<br>
+Upload the app to your apps directory and activate it on the apps settings page
 
-Features:
-=============
-- Album view inspired by http://thomaspark.co/project/expandingalbums/ 
-- Creating Playlist
-- Add songs per Drag & Drop to playlist
-- Scanning on web UI
-- mobil view support
-- repeat of playlists or album
-- Editing ID3 Tag Infos of MP3 (incl. picture)
-- Resetfunction to delete mp3 library
+Availability in the app-store will come soon.
