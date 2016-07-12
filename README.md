@@ -1,6 +1,9 @@
 MP3 Player App
 =============
 
+Attention: a new version is available for testing in the "rebranding" branch
+https://github.com/z000ao8q/audios/tree/rebranding
+
 I am trying to continue this app.<br>
 Availability in the app-store will come soon.<br>
 check back soon for updates
@@ -9,7 +12,6 @@ check back soon for updates
 Maintainer:
 ===========
 (before: Sebastian Döll)
-
 now: z000ao8q
 
 Version Info:
@@ -34,6 +36,3 @@ Features:
 - repeat of playlists or album
 - Editing ID3 Tag Infos of MP3 (incl. picture)
 - Resetfunction to delete mp3 library
-
-Demo:
-=====
