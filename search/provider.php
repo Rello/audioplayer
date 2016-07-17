@@ -17,11 +17,11 @@
  *
  */
 
-namespace OCA\Audios\Search;
-use OCA\Audios\AppInfo\Application;
+namespace OCA\audioplayer\Search;
+use OCA\audioplayer\AppInfo\Application;
 
 /**
- * Provide search results from the 'audios' app
+ * Provide search results from the 'audioplayer' app
  */
 class Provider extends \OCP\Search\Provider {
 
@@ -59,7 +59,7 @@ class Provider extends \OCP\Search\Provider {
 			$returnData['description']=$result['name'];
 			$returnData['link']='#show-album-' . $result['id'];
 			
-		     $results[] = new \OCA\Audios\Search\Result($returnData);
+		     $results[] = new \OCA\audioplayer\Search\Result($returnData);
 			
 			
 		}
