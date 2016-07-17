@@ -1,7 +1,8 @@
 <?php
 /**
- * ownCloud - Audios
+ * ownCloud - Audio Player
  *
+ * @author Marcel Scherello
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
  *
@@ -19,10 +20,10 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-namespace OCA\Audios\AppInfo;
+namespace OCA\audioplayer\AppInfo;
 
 
-use \OCA\Audios\AppInfo\Application;
+use \OCA\audioplayer\AppInfo\Application;
 
 $application = new Application();
 

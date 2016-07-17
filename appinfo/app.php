@@ -1,8 +1,9 @@
 <?php
 
 /**
- * ownCloud - Audios
+ * ownCloud - Audio Player
  *
+ * @author Marcel Scherello
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
  *
@@ -21,18 +22,18 @@
  *
  */
  
- namespace OCA\Audios\AppInfo;
+ namespace OCA\audioplayer\AppInfo;
  
 $request = \OC::$server->getRequest();
 	
 	if (isset($request->server['REQUEST_URI'])) {
 		$url = $request->server['REQUEST_URI'];
 		if (preg_match('%index.php/apps/files(/.*)?%', $url)	|| preg_match('%index.php/s/(/.*)?%', $url)) {
-			\OCP\Util::addStyle('audios', '3rdparty/fontello/css/fontello');		
-			\OCP\Util::addStyle( 'audios', 'style');
+			\OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');		
+			\OCP\Util::addStyle( 'audioplayer', 'style');
 			
-			\OCP\Util::addScript( 'audios', 'soundmanager2' );
-			\OCP\Util::addScript( 'audios', 'viewer' );
+			\OCP\Util::addScript( 'audioplayer', 'soundmanager2' );
+			\OCP\Util::addScript( 'audioplayer', 'viewer' );
 		}
 	}
 
@@ -43,13 +44,13 @@ $navigationEntry = function () use ($c) {
 	return [
 		'id' => $c->getAppName(),
 		'order' => 22,
-		'name' => $c->query('L10N')->t('MP3 Player'),
-		'href' => $c->query('URLGenerator')->linkToRoute('audios.page.index'),
-		'icon' => $c->query('URLGenerator')->imagePath('audios', 'app.svg'),
+		'name' => $c->query('L10N')->t('Audio Player'),
+		'href' => $c->query('URLGenerator')->linkToRoute('audioplayer.page.index'),
+		'icon' => $c->query('URLGenerator')->imagePath('audioplayer', 'app.svg'),
 	];
 };
 $c->getServer()->getNavigationManager()->add($navigationEntry);
 
-$c->getServer()->getSearch()->registerProvider('OCA\Audios\Search\Provider', array('app'=>'audios','apps' => array('files')));	
+$c->getServer()->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app'=>'audioplayer','apps' => array('files')));	
 
 

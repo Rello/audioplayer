@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <info>
-	<id>audios</id>
-	<name>MP3 Player</name>
+	<id>audioplayer</id>
+	<name>Audio Player</name>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
-	<description>MP3 Player for your MP3 files</description>
-<version>1.3.0</version>
-<namespace>Audios</namespace>
+	<description>Play mp3, m4a files within a nice cover-art navigation</description>
+<version>2.0.0</version>
+<namespace>audioplayer</namespace>
 <category>multimedia</category>
 <dependencies>
-		<php min-version="5.4" max-version="7.0"/>
+		<php min-version="5.4"/>
 		<owncloud min-version="8.1" max-version="9.2"/>
 </dependencies>
+<bugs>https://github.com/z000ao8w/audioplayer/issues</bugs>
 </info>

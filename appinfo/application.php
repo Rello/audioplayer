@@ -1,7 +1,8 @@
 <?php
 /**
- * ownCloud - Audios
+ * ownCloud - Audio Player
  *
+ * @author Marcel Scherello
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
  *
@@ -20,23 +21,23 @@
  *
  */
  
-namespace OCA\Audios\AppInfo;
+namespace OCA\audioplayer\AppInfo;
 
 use \OCP\AppFramework\App;
 use OCP\IContainer;
 use OCP\AppFramework\IAppContainer;
 
-use \OCA\Audios\Controller\PageController;
-use \OCA\Audios\Controller\PlaylistController;
-use \OCA\Audios\Controller\ScannerController;
-use \OCA\Audios\Controller\MusicController;
-use \OCA\Audios\Controller\PhotoController;
+use \OCA\audioplayer\Controller\PageController;
+use \OCA\audioplayer\Controller\PlaylistController;
+use \OCA\audioplayer\Controller\ScannerController;
+use \OCA\audioplayer\Controller\MusicController;
+use \OCA\audioplayer\Controller\PhotoController;
 
 class Application extends App {
 	
 	public function __construct (array $urlParams=array()) {
 		
-		parent::__construct('audios', $urlParams);
+		parent::__construct('audioplayer', $urlParams);
         $container = $this->getContainer();
 	
 	
