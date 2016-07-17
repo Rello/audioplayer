@@ -27,9 +27,9 @@ A pure player. No backends or other overhead...
 - playlist-section conditional display
 
 ##Installation
-Download the zip file and rename folder to "mp3_player"<br>
-Upload the app to your apps directory and activate it on the apps settings page
-Availability in the app-store will come soon.
+Download the zip file and rename folder to "audioplayer"<br>
+Upload the app to your apps directory and activate it on the apps settings page<br>
+Availability in the app-store is in progress
 
 ##Maintainer
 Marcel Scherello<br>
@@ -37,4 +37,4 @@ Marcel Scherello<br>
 
 ##Note
 This is the rework of the original "Audios"/"MP3 Player" app which is not maintained anymore. <br>
-Thank you Sebastian Döll for the first version
+Thanks to Sebastian Döll for the awesome initial work
