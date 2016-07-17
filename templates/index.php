@@ -1,18 +1,18 @@
 <?php 
-	style('audios', '3rdparty/fontello/css/animation');	
-	style('audios', '3rdparty/fontello/css/fontello');
-	style('audios', 'jquery.Jcrop');	
-	style('audios','bar-ui');
-	style('audios', 'style');
+	style('audioplayer', '3rdparty/fontello/css/animation');	
+	style('audioplayer', '3rdparty/fontello/css/fontello');
+	style('audioplayer', 'jquery.Jcrop');	
+	style('audioplayer','bar-ui');
+	style('audioplayer', 'style');
 	script('files', 'jquery.fileupload');
-	script('audios', 'jquery.Jcrop');
+	script('audioplayer', 'jquery.Jcrop');
 	script('core','tags');
-	script( 'audios', 'soundmanager2-nodebug-jsmin'); 
-	script( 'audios', 'bar-ui');
-	script( 'audios', 'app' );
+	script( 'audioplayer', 'soundmanager2-nodebug-jsmin'); 
+	script( 'audioplayer', 'bar-ui');
+	script( 'audioplayer', 'app' );
 	
 ?>
-<form style="display:none;" class="float" id="file_upload_form" action="<?php print_unescaped(\OCP\Util::linkToRoute('audios.photo.uploadPhoto')); ?>" method="post" enctype="multipart/form-data" target="file_upload_target">
+<form style="display:none;" class="float" id="file_upload_form" action="<?php print_unescaped(\OCP\Util::linkToRoute('audioplayer.photo.uploadPhoto')); ?>" method="post" enctype="multipart/form-data" target="file_upload_target">
 	<input type="hidden" name="id" value="">
 	<input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>">
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php p($_['uploadMaxFilesize']) ?>" id="max_upload">
@@ -20,9 +20,9 @@
 	<input id="pinphoto_fileupload" type="file" accept="image/*" name="imagefile" />
 </form>
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>
-<div id="searchresults" class="hidden" data-appfilter="audios"></div>
+<div id="searchresults" class="hidden" data-appfilter="audioplayer"></div>
 
-<div id="app-navigation">
+<div id="app-navigation" class="mp3_hide">
 <div class="innerNav">
 <!--my playlist clone -->	
 <li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
@@ -36,9 +36,13 @@
 </div>
 	<h3><?php p($l->t('Music'));?></h3>
 	<ul id="albenoverview">
-		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  <i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i><i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i></li>
+		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  
+		<i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i>
+		<i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i>
+		</li>
 	</ul>
-	<h3><?php p($l->t('Playlists'));?></h3>
+	<br><br>
+	<h3 class="mp3_hide" id="playlist_header"><?php p($l->t('Playlists'));?></h3>
 	<ul id="myPlayList"></ul>	
 	</div>
 </div>	
@@ -47,14 +51,14 @@
 	<i class="ioc-spinner ioc-spin"></i>
 </div>
 
-<div class="sm2-bar-ui full-width fixed">
+<div class="sm2-bar-ui full-width">
 
  <div class="bd sm2-main-controls">
 
   <div class="sm2-inline-texture"></div>
   <div class="sm2-inline-gradient"></div>
   
-<div class="sm2-inline-element sm2-button-element">
+  <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
     <a href="#prev" class="sm2-inline-button previous"><?php p($l->t('previous song'));?></a>
    </div>
