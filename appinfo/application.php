@@ -32,6 +32,7 @@ use \OCA\audioplayer\Controller\PlaylistController;
 use \OCA\audioplayer\Controller\ScannerController;
 use \OCA\audioplayer\Controller\MusicController;
 use \OCA\audioplayer\Controller\PhotoController;
+use \OCA\audioplayer\Controller\GenreController;
 
 class Application extends App {
 	
@@ -60,6 +61,15 @@ class Application extends App {
 			);
 		});
 		
+		$container->registerService('GenreController', function(IContainer $c) {
+			return new GenreController(
+			$c->query('AppName'),
+			$c->query('Request'),
+			$c->query('UserId'),
+			$c->query('L10N'),
+			$c->query('ServerContainer')->getDb()
+			);
+		});
 		$container->registerService('MusicController', function(IContainer $c) {
 			return new MusicController(
 			$c->query('AppName'),

@@ -49,4 +49,5 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'photo#cropPhoto',	'url' => '/cropphoto',	'verb' => 'POST'],
 	['name' => 'photo#saveCropPhoto',	'url' => '/savecropphoto',	'verb' => 'POST'],
 	['name' => 'photo#clearPhotoCache',	'url' => '/clearphotocache',	'verb' => 'POST'],
+	['name' => 'genre#getGenres', 'url' => '/getgenres', 'verb' => 'GET'],
 	]]);
