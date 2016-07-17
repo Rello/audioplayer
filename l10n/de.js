@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "audios",
+    "audioplayer",
     {
  
 	"Add new Songs to playlist" : "Neue Musikdateien hinzufügen",
