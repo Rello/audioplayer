@@ -56,6 +56,11 @@
 .sm2-bar-ui.full-width {
  max-width: 100%;
  z-index: 5;
+ padding-top: 10px;
+ left: 45px;
+ width: -moz-calc(100% - 45px);
+ width: -webkit-calc(100% - 45px);
+ width: calc(100% - 45px);
 }
 
 .sm2-bar-ui.fixed {
