@@ -20,7 +20,7 @@
  *
  */
  
-namespace OCA\Audios\Controller;
+namespace OCA\audioplayer\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
@@ -55,7 +55,7 @@ class PhotoController extends Controller {
 		$csp = new \OCP\AppFramework\Http\ContentSecurityPolicy();
 		$csp->addAllowedImageDomain('data:');
 		
-		$response = new TemplateResponse('audios', 'part.cropphoto', $params, '');
+		$response = new TemplateResponse('audioplayer', 'part.cropphoto', $params, '');
 	 	$response->setContentSecurityPolicy($csp);
 	  
 	   return $response;
@@ -89,7 +89,7 @@ class PhotoController extends Controller {
 		
 		$image = null;
 		
-		//\OCP\Util::writeLog('audios','MIMI'.$tmpkey,\OCP\Util::DEBUG);	
+		//\OCP\Util::writeLog('audioplayer','MIMI'.$tmpkey,\OCP\Util::DEBUG);	
 		$data = \OC::$server->getCache()->get($tmpkey);
 		if($data) {
 			
@@ -133,7 +133,7 @@ class PhotoController extends Controller {
 		$path = $this -> params('path');	
 		
 		$localpath = \OC\Files\Filesystem::getLocalFile($path);
-		$tmpkey = 'audios-photo-' . $id;
+		$tmpkey = 'audioplayer-photo-' . $id;
 		$size = getimagesize($localpath, $info);
 		$exif = @exif_read_data($localpath);
 		$image = new \OCP\Image();
@@ -182,11 +182,11 @@ class PhotoController extends Controller {
 				4=>$this->l10n->t("No file was uploaded"),
 				6=>$this->l10n->t("Missing a temporary folder")
 			);
-			\OCP\Util::writeLog('audios','Uploaderror: '.$errors[$error],\OCP\Util::DEBUG);	
+			\OCP\Util::writeLog('audioplayer','Uploaderror: '.$errors[$error],\OCP\Util::DEBUG);	
 		}
 
 		if(file_exists($file['tmp_name'])) {
-			$tmpkey = 'audios-photo-'.md5(basename($file['tmp_name']));
+			$tmpkey = 'audioplayer-photo-'.md5(basename($file['tmp_name']));
 			$size = getimagesize($file['tmp_name'], $info);
 		    $exif = @exif_read_data($file['tmp_name']);
 			$image = new \OCP\Image();
@@ -196,7 +196,7 @@ class PhotoController extends Controller {
 					$image->resize(300); // Prettier resizing than with browser and saves bandwidth.
 				}
 				if(!$image->fixOrientation()) { // No fatal error so we don't bail out.
-					\OCP\Util::writeLog('audios','Couldn\'t save correct image orientation: '.$tmpkey,\OCP\Util::DEBUG);
+					\OCP\Util::writeLog('audioplayer','Couldn\'t save correct image orientation: '.$tmpkey,\OCP\Util::DEBUG);
 				}
 				
 					if(\OC::$server->getCache()->set($tmpkey, $image->data(), 600)) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Audios
+ * ownCloud - Audio Player
  *
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
@@ -20,7 +20,7 @@
  *
  */
 
-namespace OCA\Audios\Controller;
+namespace OCA\audioplayer\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
@@ -128,16 +128,16 @@ class PlaylistController extends Controller {
 	private function writePlaylistToDB($sName){
 			
 		
-		if ($this->db->insertIfNotExist('*PREFIX*audios_playlists', ['user_id' => $this->userId, 'name' => $sName])) {
+		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_playlists', ['user_id' => $this->userId, 'name' => $sName])) {
 					
-			$insertid = $this->db->getInsertId('*PREFIX*audios_playlists');
+			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_playlists');
 			
 			$result = ['msg'=>'new','id' => $insertid];
 			
 			return $result;
 			
 		}else{
-			$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audios_playlists` WHERE `user_id` = ? AND `name` = ?' );
+			$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ? AND `name` = ?' );
 			$result = $stmt->execute(array($this->userId, $sName));
 			$row = $result->fetchRow();
 			
@@ -148,14 +148,14 @@ class PlaylistController extends Controller {
 	}
 	
 	private function updatePlaylistToDB($id,$sName){
-		$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audios_playlists` SET `name` = ? WHERE `user_id`= ? AND `id`= ?' );
+		$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_playlists` SET `name` = ? WHERE `user_id`= ? AND `id`= ?' );
 		$result = $stmt->execute(array($sName, $this->userId, $id));
 		
 		return true;
 	}
 	
 	private function getPlaylistsforUser(){
-		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audios_playlists`
+		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_playlists`
 			 			WHERE  `user_id` = ?
 			 			ORDER BY `name` ASC
 			 			";
@@ -175,7 +175,7 @@ class PlaylistController extends Controller {
 	}
 	
 	private function getSongIdsForPlaylist($iPlaylistId){
-		$SQL="SELECT  `track_id` FROM `*PREFIX*audios_playlist_tracks`
+		$SQL="SELECT  `track_id` FROM `*PREFIX*audioplayer_playlist_tracks`
 			 			WHERE  `playlist_id` = ?
 			 			ORDER BY `sortorder` ASC
 			 			";
@@ -201,7 +201,7 @@ class PlaylistController extends Controller {
 		$iTrackId = $this->params('songid');
 		$iSortOrder = $this->params('sorting');
 		try {
-			$this->db->insertIfNotExist('*PREFIX*audios_playlist_tracks',
+			$this->db->insertIfNotExist('*PREFIX*audioplayer_playlist_tracks',
 				array(
 					'playlist_id' => $iPlaylistId,
 					'track_id' => $iTrackId,
@@ -225,7 +225,7 @@ class PlaylistController extends Controller {
 			
 		$counter = 1;	
 		foreach($iTrackIds as $trackId){
-			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audios_playlist_tracks` SET `sortorder` = ? WHERE `playlist_id` = ? AND `track_id` = ?' );
+			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_playlist_tracks` SET `sortorder` = ? WHERE `playlist_id` = ? AND `track_id` = ?' );
 		    $result = $stmt->execute(array($counter, $iPlaylistId,$trackId));
 			$counter++;
 		}
@@ -248,7 +248,7 @@ class PlaylistController extends Controller {
 		$iTrackId = $this->params('songid');
 		
 		try {
-			$sql = 'DELETE FROM `*PREFIX*audios_playlist_tracks` '
+			$sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
 					. 'WHERE `playlist_id` = ? AND `track_id` = ?';
 			$stmt = $this->db->prepareQuery($sql);
 			$stmt->execute(array($iPlaylistId, $iTrackId));
@@ -271,12 +271,12 @@ class PlaylistController extends Controller {
 		 
 		 
 		 try {
-			$sql = 'DELETE FROM `*PREFIX*audios_playlists` '
+			$sql = 'DELETE FROM `*PREFIX*audioplayer_playlists` '
 					. 'WHERE `id` = ? AND `user_id` = ?';
 			$stmt = $this->db->prepareQuery($sql);
 			$result = $stmt->execute(array($iPlaylistId, $this->userId));	
 				
-			$sql = 'DELETE FROM `*PREFIX*audios_playlist_tracks` '
+			$sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
 					. 'WHERE `playlist_id` = ?';
 			$stmt = $this->db->prepareQuery($sql);
 			$result = $stmt->execute(array($iPlaylistId));
@@ -310,12 +310,12 @@ class PlaylistController extends Controller {
 	*/
 	public static function post_deleteUser($arguments) {
 		/*
-		$stmt = \OCP\DB::prepare('SELECT `id` FROM `*PREFIX*audios_playlists` '
+		$stmt = \OCP\DB::prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlists` '
 				. 'WHERE `user_id` = ?');
 		$result = $stmt->execute(array($arguments['uid']));	
 			
 			
-		$sql = 'DELETE FROM `*PREFIX*audios_playlists` '
+		$sql = 'DELETE FROM `*PREFIX*audioplayer_playlists` '
 					. 'WHERE `id` = ? AND `user_id` = ?';
 		$stmt = \OCP\DB::prepare($sql);
 		$result = $stmt->execute(array($arguments['uid']));	*/
