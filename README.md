@@ -2,29 +2,30 @@
 Albums and Playlists for mp3 & m4a files within a nice, animated cover-art navigation.<br>
 A pure player. No backends or other overhead...
 
-![](https://github.com/z000ao8q/screenshots/blob/master/mp3_player.png)
+![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_main.png)<br>
+![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_lists.png)
 
 
 ##Features
 - Album view inspired by http://thomaspark.co/project/expandingalbums/ 
-- Scanning & Resetting Library & Playlists in UI
+- Genre view
+- Playlist view
+- Scanning & Resetting Library & Playlist editing in UI
 - Editing ID3 Tags (incl. picture)
 - mobil view support
 
 ###Filetypes
-- mp3
-- m4a
-- ogg
-- wav
+- mp3, m4a, ogg, wav
 
 ##Changelog
 2.0.0
 - rebranding from "Audios" to "Audio Player"
 - update of 3rd party libraries
-- scanner stabilization (continuation after errors)
-- mobile usability (tooltip issue on touch)
-- fulscreen mode as default (hide app-navigation)
-- playlist-section conditional display
+- fix: scanner stabilization (continuation after errors)
+- fix: mobile usability (tooltip issue on touch)
+- enhancement: fullscreen mode as default (hide app-navigation)
+- enhancement: playlist-section conditional display
+- enhancement: genre view (besides albums & custom playlists)
 
 ##Installation
 Download the zip file and rename folder to "audioplayer"<br>
