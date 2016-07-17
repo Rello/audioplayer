@@ -44,6 +44,9 @@
 	<br><br>
 	<h3 class="mp3_hide" id="playlist_header"><?php p($l->t('Playlists'));?></h3>
 	<ul id="myPlayList"></ul>	
+	<br><br>
+	<h3 class="mp3_hide" id="genre_header"><?php p($l->t('Genres'));?></h3>
+	<ul id="myGenre"></ul>	
 	</div>
 </div>	
 <div id="app-content">
