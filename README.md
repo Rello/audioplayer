@@ -1,38 +1,36 @@
-MP3 Player App
-=============
+#MP3 Player App
+![](https://github.com/z000ao8q/screenshots/blob/master/Audioplayer_icon.png)
+Albums and Playlists for mp3 & m4a files within a nice, animated cover-art navigation.<br>
+A pure player. No backends or other overhead...
 
-Attention: a new version is available for testing in the "rebranding" branch
-https://github.com/z000ao8q/audios/tree/rebranding
-
-I am trying to continue this app.<br>
-Availability in the app-store will come soon.<br>
-check back soon for updates
+![](https://github.com/z000ao8q/screenshots/blob/master/mp3_player.png)
 
 
-Maintainer:
-===========
-(before: Sebastian Döll)
-now: z000ao8q
-
-Version Info:
-============
-1.3.0
-
-Setup Info:
-===========
-The Musicplayer only supports mp3 files, no ampache backend etc, just simple!
-
-Installation:
-=============
-Download the zip file and rename folder from audios-master to audios! Upload the app to your apps directory and activate it on the apps settings page!
-
-Features:
-=============
+##Features
 - Album view inspired by http://thomaspark.co/project/expandingalbums/ 
+- Scanning & Resetting Library in UI
+- Editing ID3 Tags (incl. picture)
 - Creating Playlist
-- Add songs per Drag & Drop to playlist
-- Scanning on web UI
 - mobil view support
-- repeat of playlists or album
-- Editing ID3 Tag Infos of MP3 (incl. picture)
-- Resetfunction to delete mp3 library
+
+##Maintainer
+Marcel Scherello<br>
+(Initial Developer Sebastian Döll)
+
+##Version Info
+2.0.0
+- rebranding from "Audios" to "mp3_player"
+- update of 3rd party libraries
+- scanner stabilization (continuation after errors)
+- mobile usability (tooltip issue on touch)
+- fulscreen mode as default (hide app-navigation)
+- playlist-section conditional display
+
+##Installation
+Download the zip file and rename folder to "mp3_player"<br>
+Upload the app to your apps directory and activate it on the apps settings page
+Availability in the app-store will come soon.
+
+##Note
+This is the rework of the original "Audios"/"MP3 Player" app which is not maintained anymore. <br>
+Thank you Sebastian Döll for the first version
