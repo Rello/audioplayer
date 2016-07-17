@@ -1,5 +1,4 @@
-#MP3 Player App
-![](https://github.com/z000ao8q/screenshots/blob/master/Audioplayer_Icon.png)
+#![](https://github.com/z000ao8q/screenshots/blob/master/Audioplayer_Icon.png)MP3 Player App
 Albums and Playlists for mp3 & m4a files within a nice, animated cover-art navigation.<br>
 A pure player. No backends or other overhead...
 
