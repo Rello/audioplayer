@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Audios App
+ * ownCloud - Audio Player App
  *
  * @author Sebastian Doell
  * @copyright 2015 Sebastian Doell sebastian.doell@owncms.de
@@ -21,7 +21,7 @@
  * INSPIRED BY http://codesamplez.com/programming/php-html5-video-streaming-tutorial
  */
  
-namespace OCA\Audios;
+namespace OCA\audioplayer;
 use \OC\Files\View;
  
 class AudioStream {
@@ -109,7 +109,7 @@ class AudioStream {
 			header('HTTP/1.1 206 Partial Content');
 			header("Content-Length: " . $length);
 			header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
-			//\OCP\Util::writeLog('audios','SEQ:'.$this->iStart."-".$this->iEnd."/".$this->iSize.'length:'.$length,\OCP\Util::DEBUG);
+			//\OCP\Util::writeLog('audioplayer','SEQ:'.$this->iStart."-".$this->iEnd."/".$this->iSize.'length:'.$length,\OCP\Util::DEBUG);
 		} else {
 			header("Content-Length: " . $this -> iSize);
 			$this->isStream = false;
@@ -137,7 +137,7 @@ class AudioStream {
 	        set_time_limit(0);
 	        while(!feof($this->stream) && $curPos <= $this->iEnd) {
 	           if( connection_aborted() || connection_status() !== 0 ) {
-	           	\OCP\Util::writeLog('audios','Connection aborted',\OCP\Util::DEBUG);
+	           	\OCP\Util::writeLog('audioplayer','Connection aborted',\OCP\Util::DEBUG);
 				   $this->closeStream();
 			  	}
 			    $bytesToRead = $this->buffer;
