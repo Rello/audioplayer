@@ -30,9 +30,7 @@ A pure player. No backends or other overhead...
 - enhancement: genre view (besides albums & custom playlists)
 
 ##Installation
-Download the zip file and rename folder to "audioplayer"<br>
-Upload the app to your apps directory and activate it on the apps settings page<br>
-Availability in the app-store is in progress
+Use the App-Store or download the zip file and copy it into your apps directory
 
 ##Maintainer
 Marcel Scherello<br>
