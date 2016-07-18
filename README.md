@@ -31,6 +31,7 @@ A pure player. No backends or other overhead...
 
 ##Installation
 Use the App-Store or download the zip file and copy it into your apps directory
+https://github.com/z000ao8q/audioplayer/releases/download/v1.0.0/audioplayer-1.0.0.zip
 
 ##Maintainer
 Marcel Scherello<br>
