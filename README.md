@@ -18,7 +18,7 @@ A pure player. No backends or other overhead...
 - mp3, m4a, ogg, wav
 
 ##Changelog
-2.0.0
+1.0.0
 - rebranding from "Audios" to "Audio Player"
 - update of 3rd party libraries
 - fix: scanner stabilization (continuation after errors)
