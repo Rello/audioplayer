@@ -5,7 +5,7 @@
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<description>Play mp3, m4a files within a nice cover-art navigation. Different views available: Album view, custom playlists, genres view.</description>
-<version>2.0.0</version>
+<version>1.0.0</version>
 <namespace>audioplayer</namespace>
 <category>multimedia</category>
 <dependencies>
