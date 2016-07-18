@@ -25,7 +25,7 @@ use OCA\audioplayer\AppInfo\Application;
  */
 class Provider extends \OCP\Search\Provider {
 
-    private $playlistController;
+    #private $playlistController;
 	private $musicController;
 	
 	private $l10N;
@@ -34,7 +34,7 @@ class Provider extends \OCP\Search\Provider {
 		$app = new Application();
 		$container = $app->getContainer();
 		$this->app = $app;
-		$this->playlistController = $container->query('PlaylistController');
+		#$this->playlistController = $container->query('PlaylistController');
 		$this->musicController = $container->query('MusicController');
 		$this->l10N = $container->query('L10N');
 	}
@@ -55,14 +55,13 @@ class Provider extends \OCP\Search\Provider {
 		
 		foreach($results as $result) {
 				
-			$returnData['id']=$result['id'];
-			$returnData['description']=$result['name'];
-			$returnData['link']='#show-album-' . $result['id'];
+			$returnData['id'] = $result['id'];
+			$returnData['description'] = $result['name'];
+			$returnData['link'] = '../audioplayer/#show-album-' . $result['id'];
+			$returnData['icon'] = '../audioplayer/img/app.svg';
 			
-		     $results[] = new \OCA\audioplayer\Search\Result($returnData);
-			
-			
+		    $searchresults[] = new \OCA\audioplayer\Search\Result($returnData);
 		}
-		return $results;
+		return $searchresults;
 	}
 }
