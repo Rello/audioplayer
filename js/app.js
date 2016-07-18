@@ -550,38 +550,28 @@ Audios.prototype.loadAlbums = function(){
 		var PlaylistId='';
 		if(locHash !== ''){
 			var locHashTemp = locHash.split('playlist-');
-			if(locHashTemp[1] !== undefined){
+			if(locHashTemp[1] !== undefined && locHashTemp[1] > 0){
 				PlaylistId = locHashTemp[1];
-			} 
-			
-			var locHashTemp = locHash.split('album-');
-			if(locHashTemp[1] !== undefined){
-				AlbumId = 'album-'+locHashTemp[1];
+				$('#myPlayList li[data-id="'+PlaylistId+'"]').addClass('activeIndiPlaylist');
+				$this.loadIndividualPlaylist();
+			} else {
+				var locHashTemp = locHash.split('album-');
+				if(locHashTemp[1] !== undefined && locHashTemp[1] > 0){
+					AlbumId = 'album-'+locHashTemp[1];
+					evt={};
+					evt.albumId = AlbumId;
+					$this.AlbumClickHandler(evt);
+				} else {
+					var locHashTemp = locHash.split('genre-');
+					if(locHashTemp[1] !== undefined && locHashTemp[1] > 0){
+						GenreId = locHashTemp[1];
+						$('#myGenre li[data-id="'+GenreId+'"]').addClass('activeIndiPlaylist');
+						$this.loadIndividualGenre();
+					}
+				}
 			}
+		}
 			
-			var locHashTemp = locHash.split('genre-');
-			if(locHashTemp[1] !== undefined){
-				GenreId = locHashTemp[1];
-			}
-		}
-		
-		if(PlaylistId !=='' && PlaylistId > 0){
-			$('#myPlayList li[data-id="'+PlaylistId+'"]').addClass('activeIndiPlaylist');
-			$this.loadIndividualPlaylist();
-		}
-
-		if(GenreId !=='' && GenreId > 0){
-			$('#myGenre li[data-id="'+GenreId+'"]').addClass('activeIndiPlaylist');
-			$this.loadIndividualGenre();
-		}
-		
-		if(AlbumId !== ''){
-			evt={};
-			evt.albumId = AlbumId;
-			$this.AlbumClickHandler(evt);
-			
-		}
-		
 		
 		}
 	});
@@ -1827,33 +1817,33 @@ window.onhashchange = function() {
 	var locHash = decodeURI(location.hash).substr(1);
 	var AlbumId='';
 	var PlaylistId='';
-	if(locHash !== ''){
-		var locHashTemp = locHash.split('show-playlist-');
-		if(locHashTemp[1] !== undefined){
-			PlaylistId = locHashTemp[1];
-		}else{
-			locHashTemp = locHash.split('show-album-');
-			if(locHashTemp[1] !== undefined){
-				AlbumId = 'album-'+locHashTemp[1];
+
+		if(locHash !== ''){
+			var locHashTemp = locHash.split('show-playlist-');
+			if(locHashTemp[1] !== undefined && locHashTemp[1] > 0){
+				PlaylistId = locHashTemp[1];
+				$('#myPlayList li').removeClass('activeIndiPlaylist');
+				$('#myPlayList li[data-id="'+PlaylistId+'"]').addClass('activeIndiPlaylist');
+				myAudios.loadIndividualPlaylist();
+			} else {
+				var locHashTemp = locHash.split('show-album-');
+				if(locHashTemp[1] !== undefined && locHashTemp[1] > 0){
+					AlbumId = 'album-'+locHashTemp[1];
+					evt={};
+					evt.albumId = AlbumId;
+					myAudios.AlbumContainer.show();
+					myAudios.PlaylistContainer.hide();
+					myAudios.AlbumClickHandler(evt);
+				} else {
+					var locHashTemp = locHash.split('show-genre-');
+					if(locHashTemp[1] !== undefined && locHashTemp[1] > 0){
+						$('#myGenre li').removeClass('activeIndiPlaylist');
+						$('#myGenre li[data-id="'+GenreId+'"]').addClass('activeIndiPlaylist');
+						myAudios.loadIndividualGenre();
+					}
+				}
 			}
 		}
-	}
-	
-	if(PlaylistId !=='' && PlaylistId > 0){
-		$('#myPlayList li').removeClass('activeIndiPlaylist');
-		$('#myPlayList li[data-id="'+PlaylistId+'"]').addClass('activeIndiPlaylist');
-			myAudios.loadIndividualPlaylist();
-	
-	}
-	
-	if(AlbumId !== ''){
-		evt={};
-		evt.albumId = AlbumId;
-		myAudios.AlbumContainer.show();
-		myAudios.PlaylistContainer.hide();
-		myAudios.AlbumClickHandler(evt);
-		
-	}
 
 };	
 
