@@ -38,5 +38,5 @@ Marcel Scherello<br>
 (Initial Developer Sebastian Döll)
 
 ##Note
-This is the rework of the original "Audios"/"MP3 Player" app which is not maintained anymore. <br>
+This is the rework of the former "MP3 Player" app which is not maintained anymore. <br>
 Thanks to Sebastian Döll for the awesome initial work
