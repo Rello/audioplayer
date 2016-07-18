@@ -23,6 +23,8 @@ A pure player. No backends or other overhead...
 - update of 3rd party libraries
 - fix: scanner stabilization (continuation after errors)
 - fix: mobile usability (tooltip issue on touch)
+- fix: search provider returning correct result set
+- fix: search is not case sensitive anymore
 - enhancement: fullscreen mode as default (hide app-navigation)
 - enhancement: playlist-section conditional display
 - enhancement: genre view (besides albums & custom playlists)
