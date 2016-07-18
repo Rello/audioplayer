@@ -219,10 +219,8 @@ class MusicController extends Controller {
 	public  function searchProperties($searchquery){
 		
 	 
-		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE   (`name` LIKE ? OR `year` LIKE ?) AND `user_id` = ?";
-				 
-		 $stmt = $this->db->prepareQuery($SQL);
-		
+		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?) OR `year` LIKE ?) AND `user_id` = ?";
+		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', '%'.addslashes($searchquery).'%', $this->userId));
 		$aAlbum ='';
 		if(!is_null($result)) {
@@ -230,7 +228,7 @@ class MusicController extends Controller {
 			
 				$aAlbum[] = [
 					'id' => $row['id'],
-					'name' => $row['name'],
+					'name' => 'Album: '.$row['name'],
 				];
 			}
 		}
@@ -238,10 +236,9 @@ class MusicController extends Controller {
 		$SQL="SELECT  `AT`.`title`,`AA`.`name`,`AA`.`id`,`AR`.`name` AS artistname FROM `*PREFIX*audioplayer_tracks` `AT` 
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AA` ON `AT`.`album_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AR` ON `AT`.`artist_id` = `AR`.`id`
-					WHERE   (`AT`.`title` LIKE ?  OR `AR`.`name` LIKE ? ) AND `AT`.`user_id` = ?";
+					WHERE   (LOWER(`AT`.`title`) LIKE LOWER(?)  OR LOWER(`AR`.`name`) LIKE LOWER(?) ) AND `AT`.`user_id` = ?";
 				 
-		 $stmt = $this->db->prepareQuery($SQL);
-		
+		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', '%'.addslashes($searchquery).'%', $this->userId));
 		$aTrack ='';
 		if(!is_null($result)) {
@@ -249,7 +246,7 @@ class MusicController extends Controller {
 			
 				$aTrack[] = [
 					'id' => $row['id'],
-					'name' => $row['title'].' - '.$row['artistname'].'  ('.$row['name'].')',
+					'name' => 'Track: '.$row['title'].' - '.$row['artistname'].'  ('.$row['name'].')',
 				];
 			}
 		}
@@ -257,15 +254,12 @@ class MusicController extends Controller {
 		if(is_array($aAlbum) && is_array($aTrack)){
 			$result=array_merge($aAlbum,$aTrack);
 			return $result;
-		}
-		if(is_array($aAlbum) && !is_array($aTrack)){
+		}elseif(is_array($aAlbum) && !is_array($aTrack)){
 			return $aAlbum;
-		}
-		if(is_array($aTrack) && !is_array($aAlbum)){
+		}elseif(is_array($aTrack) && !is_array($aAlbum)){
 				//\OCP\Util::writeLog('audioplayer','COUNTARRAYALBUM:'.count($aAlbum),\OCP\Util::DEBUG);		
 			return $aTrack;
-		}
-		if(!is_array($aTrack) && !is_array($aAlbum)){
+		}elseif(!is_array($aTrack) && !is_array($aAlbum)){
 			return array();
 		}
 	}
