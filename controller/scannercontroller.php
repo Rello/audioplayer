@@ -533,6 +533,15 @@ class ScannerController extends Controller {
 				
 				$this->writeArtistToAlbum($iAlbumId,$iArtistId);
 				
+				# if Album Artist is maintained
+				if(isset($ThisFileInfo['comments']['band'][0])){
+					$album_artist=$ThisFileInfo['comments']['band'][0];
+					$iAlbumArtistId= $this->writeArtistToDB($album_artist);
+					$this->writeArtistToAlbum($iAlbumId,$iAlbumArtistId);
+				} else {
+					$this->writeArtistToAlbum($iAlbumId,$iArtistId);
+				}
+
 				$name = $audio['name'];
 				if(isset($ThisFileInfo['comments']['title'][0])){
 					$name=$ThisFileInfo['comments']['title'][0];
