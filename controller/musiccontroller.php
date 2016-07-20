@@ -169,14 +169,14 @@ class MusicController extends Controller {
 	}
 	
 	private function loadArtistsToAlbum($iAlbumId){
-    	$stmtCount = \OCP\DB::prepare( 'SELECT `artist_id`, COUNT(`artist_id`) AS `ARTISTSCOUNT`  FROM `*PREFIX*audioplayer_album_artists` WHERE  `album_id` = ? GROUP BY `artist_id` ' );
-		$resultCount = $stmtCount->execute(array($iAlbumId));
-		$rowCount = $resultCount->fetchRow();
+    		$stmt = \OCP\DB::prepare( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_album_artists` WHERE  `album_id` = ?' );
+		$result = $stmt->execute(array($iAlbumId));
+		$Artist = $result->fetchRow();
+		$rowCount = $result->rowCount();
 	
-		if((int)$rowCount['ARTISTSCOUNT'] === 1){
+		if($rowCount === 1){
 			$stmt = \OCP\DB::prepare( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
-			$result = $stmt->execute(array($rowCount['artist_id']));
-			$row = $result->fetchRow();
+			$result = $stmt->execute(array($Artist['artist_id']));
 			
 			return $row['name'];
 		}else{
