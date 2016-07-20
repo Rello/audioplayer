@@ -469,14 +469,13 @@ class ScannerController extends Controller {
 
 		foreach($audios as $audio) {
 		  	
-			if ($debug_detail == true AND $counter == 0) {
-				\OCP\Util::writeLog('audioplayer', 'mp3 detail - first file-id: '.$audio['fileid'], \OCP\Util::DEBUG);
-				\OCP\Util::writeLog('audioplayer', 'mp3 detail - track path: '.$audio['path'], \OCP\Util::DEBUG);
+			if ($debug_detail == true) {
+				\OCP\Util::writeLog('audioplayer', 'file-id: '.$audio['fileid'].' track path : '.$audio['path'], \OCP\Util::DEBUG);
 			}
 			
 			if($this->checkIfTrackDbExists($audio['fileid']) === false){
 				
-				if ($debug_detail == true AND $counter == 0) {
+				if ($debug_detail == true) {
 					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track not in DB', \OCP\Util::DEBUG);
 				}
 
@@ -495,7 +494,7 @@ class ScannerController extends Controller {
 				break;
 				}
 				
-				if ($debug_detail == true AND $counter == 0) {
+				if ($debug_detail == true) {
 					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track name: '.$audio['name'], \OCP\Util::DEBUG);
 					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track year: '.$ThisFileInfo['comments']['year'][0], \OCP\Util::DEBUG);
 					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track album: '.$ThisFileInfo['comments']['album'][0], \OCP\Util::DEBUG);
