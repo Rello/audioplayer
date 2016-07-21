@@ -30,5 +30,7 @@
 "Shuffle playlist" :"Zufällige Wiedergabe",
 "Playlists" : "Wiedergabelisten",
 "Music" : "Musik",
-"- choose -" : "- auswählen -"
+"- choose -" : "- auswählen -",
+"Errors: " : "Fehler",
+"If rescan does not solve this problem the files are broken" : "Wenn ein erneuter Scan das Problem nicht behebt, sind die folgenden Dateien defekt",
 },"pluralForm":""}
