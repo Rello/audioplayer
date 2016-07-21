@@ -465,6 +465,7 @@ class ScannerController extends Controller {
 		\OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
 		$counter = 0;
 		$counter_new = 0;
+		$error_count = 0;
 		$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
 
 		foreach($audios as $audio) {
@@ -484,24 +485,17 @@ class ScannerController extends Controller {
 				$ThisFileInfo = $getID3->analyze($userView->getLocalFile($audio['path']));
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
 
-				# catch issue when getID3 does not bring a result
-				# => write to Log and stop
-				# if the error occors after a rescan, it is more serious => open issue
-				# if the restart works, its probably related to the PHP-FPM Timeout between NGINX & PHP
-				# fastcgi_read_timeout can be raised as a test
-				if (!isset($ThisFileInfo['comments'])) {
-					\OCP\Util::writeLog('audioplayer', 'Error with getID3 of '.$audio['path'], \OCP\Util::DEBUG);
-				break;
+				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
+				if (!isset($ThisFileInfo['bitrate']) AND !isset($ThisFileInfo['playtime_string'])) {
+					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio['path'], \OCP\Util::DEBUG);
+					$counter++;
+					$this->abscount++;
+					$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
+					$error_file.=$audio['name'].'<br />';
+					$error_count++;
+					continue;
 				}
-				
-				if ($debug_detail == true) {
-					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track name: '.$audio['name'], \OCP\Util::DEBUG);
-					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track year: '.$ThisFileInfo['comments']['year'][0], \OCP\Util::DEBUG);
-					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track album: '.$ThisFileInfo['comments']['album'][0], \OCP\Util::DEBUG);
-					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track genre: '.$ThisFileInfo['comments']['genre'][0], \OCP\Util::DEBUG);
-					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track artist: '.$ThisFileInfo['comments']['artist'][0], \OCP\Util::DEBUG);
-				}
-					
+
 				$album = (string) $this->l10n->t('Various');
 				if(isset($ThisFileInfo['comments']['album'][0])){
 					$album=$ThisFileInfo['comments']['album'][0];
@@ -613,9 +607,14 @@ class ScannerController extends Controller {
 		
 		$message=(string)$this->l10n->t('Scanning finished!').'<br />';
 		$message.=(string)$this->l10n->t('Audios found: ').$counter.'<br />';
-		$message.=(string)$this->l10n->t('Duplicates found: ').$this->iDublicate.'<br />';
+		#$message.=(string)$this->l10n->t('Duplicates found: ').$this->iDublicate.'<br />';
 		$message.=(string)$this->l10n->t('Written to music library: ').($counter_new - $this->iDublicate).'<br />';
 		$message.=(string)$this->l10n->t('Albums found: ').$this->iAlbumCount.'<br />';
+		if ($error_count>>0) {
+			$message.='<br /><b>'.(string)$this->l10n->t('Errors: ').$error_count.'<br />';
+			$message.=(string)$this->l10n->t('If rescan does not solve this problem the files are broken').'</b>';
+			$message.='<br />'.$error_file.'<br />';
+		}
 		
 		$result=[
 				'status' => 'success',
