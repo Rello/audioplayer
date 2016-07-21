@@ -177,7 +177,7 @@ class MusicController extends Controller {
 		if($rowCount === 1){
 			$stmt = \OCP\DB::prepare( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
 			$result = $stmt->execute(array($Artist['artist_id']));
-			
+			$row = $result->fetchRow();
 			return $row['name'];
 		}else{
 			return (string) $this->l10n->t('Various Artists');
