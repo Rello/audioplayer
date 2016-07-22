@@ -497,7 +497,8 @@ Audios.prototype.loadAlbums = function(){
 			 			aGenre= ' /' +album.genrename;
 			 		}
 			 		var h3SongSubHeader=$('<h3/>').text(album.artist+aYear+aGenre);
-			 		divSongContainerInner.append(h3SongSubHeader);
+			 		divSongContainerInner.append('<br/>');
+			 		//divSongContainerInner.append(h3SongSubHeader);
 			 		var divSongsContainer = $('<div/>').addClass('songlist albumwrapper');
 			 		if($this.AlbumContainer.width() < 850){
 				 		divSongsContainer.addClass('one-column');
@@ -1731,7 +1732,7 @@ Audios.prototype.scanSend = function() {
 		{progresskey: this.progresskey},  function(data){
 			if(data.status == 'success'){
 				$('#audios_import_progressbar').progressbar('option', 'value', 100);
-				$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+				//$('#audios_import_progressbar > div').css('background-color', '#FF2626');
 				this.percentage = 100;
 				$('#audios_import_progressbar').hide();
 				$('#audios_import_done').css('display', 'block');
@@ -1740,7 +1741,7 @@ Audios.prototype.scanSend = function() {
 				this.loadAlbums();
 			}else{
 				$('#audios_import_progressbar').progressbar('option', 'value', 100);
-				$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+				//$('#audios_import_progressbar > div').css('background-color', '#FF2626');
 				$('#audios_import_status').html(data.message);
 			}
 		}.bind(this));
@@ -1760,21 +1761,21 @@ Audios.prototype.scanUpdate = function() {
 			
 			this.percentage = parseInt(data.percent);
 			$('#audios_import_progressbar').progressbar('option', 'value', parseInt(data.percent));
-			$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+			//$('#audios_import_progressbar > div').css('background-color', '#FF2626');
 			$('#audios_import_process_message').text(data.currentmsg);
 			if(data.percent < 100 ){
 				window.setTimeout('myAudios.scanUpdate()', 100);
 				
 			}else{
 				$('#audios_import_progressbar').progressbar('option', 'value', 100);
-				$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+				//$('#audios_import_progressbar > div').css('background-color', '#FF2626');
 				$('#audios_import_done').css('display', 'block');
 				
 			}
 		}else{
 		
 			$('#audios_import_progressbar').progressbar('option', 'value', 100);
-			$('#audios_import_progressbar > div').css('background-color', '#FF2626');
+			//$('#audios_import_progressbar > div').css('background-color', '#FF2626');
 			$('#audios_import_status').html(data.message);
 			
 		}
