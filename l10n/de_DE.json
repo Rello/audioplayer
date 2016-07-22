@@ -31,6 +31,6 @@
 "Playlists" : "Wiedergabelisten",
 "Music" : "Musik",
 "- choose -" : "- auswählen -",
-"Errors: " : "Fehler",
+"Errors: " : "Fehler: ",
 "If rescan does not solve this problem the files are broken" : "Wenn ein erneuter Scan das Problem nicht behebt,<br>sind die folgenden Dateien defekt"
 },"pluralForm":""}
