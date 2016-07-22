@@ -194,11 +194,18 @@ class MusicController extends Controller {
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId));
 		$aSongs='';
+		
 		while( $row = $result->fetchRow()) {
-				
-			$path = \OC\Files\Filesystem::getPath($row['file_id']);
 			
-			if(\OC\Files\Filesystem::file_exists($path)){
+			$file_not_found = false;
+				
+			try {
+				$path = \OC\Files\Filesystem::getPath($row['file_id']);
+			} catch (\Exception $e) {
+				$file_not_found = true;
+       		}
+			
+			if($file_not_found === false){
 				$row['link'] = \OCP\Util::linkToRoute('audioplayer.music.getAudioStream',array('file'=>$path));
 				$aSongs[$row['album_id']][] = $row;
 			}else{
