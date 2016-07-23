@@ -2,7 +2,7 @@ OC.L10N.register(
     "audioplayer",
     {
  
-	"Add new Songs to playlist" : "加入播放清單",
+	"Add new Songs to playlist" : "搜尋音樂",
 	"Scan for new audio files" : "搜尋新的音樂",
 	"Sort Playlist" : "播放清單排序",
 	"Delete Playlist" : "刪除播放清單",
@@ -31,9 +31,9 @@ OC.L10N.register(
 	"Existing Albums" : "現有的專輯",
 	"New Album" : "新專輯",
 	"Genre" : "曲風",
-	"Add as Albumcover" : "添加專輯封面",
+	"Add as Albumcover" : "設定為專輯封面",
 	"of" : "之",
-	"Total" : "共",
+	"Total" : "全數",
 	"Select from cloud" : "由雲端選擇",
 	"Edit" : "編輯",
 	"Delete" : "刪除",
