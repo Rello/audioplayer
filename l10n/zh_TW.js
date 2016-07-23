@@ -12,7 +12,7 @@ OC.L10N.register(
 	"Sort modus active" : "排序",
 	"Delete playlist success!" : "成功刪除播放清單",
 	"Rename Playlist" : "重新命名播放清單",
-	"Start scanning ..." : "搜尋中...",
+	"Start scanning ..." : "開始搜尋",
 	"Scanning finished! New Audios found!" :"搜尋完成，找到新的音樂!",
 	"Yes" : "是",
 	"No" : "否",
