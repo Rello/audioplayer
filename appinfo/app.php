@@ -28,11 +28,11 @@ $request = \OC::$server->getRequest();
 	
 	if (isset($request->server['REQUEST_URI'])) {
 		$url = $request->server['REQUEST_URI'];
-		if (preg_match('%index.php/apps/files(/.*)?%', $url)	|| preg_match('%index.php/s/(/.*)?%', $url)) {
+		if (preg_match('%/apps/files(/.*)?%', $url)	|| preg_match('%index.php/s/(/.*)?%', $url)) {
 			\OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');		
 			\OCP\Util::addStyle( 'audioplayer', 'style');
 			
-			\OCP\Util::addScript( 'audioplayer', 'soundmanager2' );
+			\OCP\Util::addScript( 'audioplayer', 'soundmanager2-nodebug-jsmin' );
 			\OCP\Util::addScript( 'audioplayer', 'viewer' );
 		}
 	}
