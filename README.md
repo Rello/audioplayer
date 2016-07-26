@@ -1,5 +1,6 @@
 #![](https://github.com/z000ao8q/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
 Albums and Playlists for mp3 & m4a files within a nice, animated cover-art navigation.<br>
+Alternatively playing audio files from the file-browser or a shared link.<br>
 A pure player. No backends or other overhead...
 
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_main.png)<br>
@@ -13,11 +14,26 @@ A pure player. No backends or other overhead...
 - Scanning & Resetting Library & Playlist editing in UI
 - Editing ID3 Tags (incl. picture)
 - mobil view support
+- One-Click-Play from files browser
+- Play shared audiofiles directly
 
 ###Filetypes
 - mp3, m4a, ogg, wav
 
 ##Changelog
+1.0.2 (in progress)
+- fix: one-click-play #22
+- enhancement: add file-option-dropdown-entry
+- enhancement: use reduced soundmanager-js for one-click-play
+
+1.0.1
+- note: please reindex files after upgrade
+- fix: Spinning wheel when file was deleted #19
+- fix: red progress bar with nextcloud #18
+- fix: issue with filesearch (missing ID3 Tags) #14 
+- fix: wrong album artist shown when different track-artists available #13 
+- enhancement: Taiwanese localization (thanks to sbr9150)
+ 
 1.0.0
 - rebranding from "Audios" to "Audio Player"
 - update of 3rd party libraries
