@@ -1,6 +1,6 @@
 #![](https://github.com/z000ao8q/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
 Albums and Playlists for mp3 & m4a files within a nice, animated cover-art navigation.<br>
-Alternatively playing audio files from the file-browser or a shared link.<br>
+Alternative One-Click-Play from the file-browser or shared link.<br>
 A pure player. No backends or other overhead...
 
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_main.png)<br>
@@ -10,12 +10,12 @@ Share-Player:<br>
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_share.png)<br>
 
 ##Features
-- Album view inspired by http://thomaspark.co/project/expandingalbums/ 
+- Animated Album view
 - Genre view
 - Playlist view
 - Scanning & Resetting Library & Playlist editing in UI
 - Editing ID3 Tags (incl. picture)
-- mobil view support
+- Mobil view support
 - One-Click-Play from files browser
 - Play shared audiofiles directly
 
