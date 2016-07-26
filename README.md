@@ -4,10 +4,10 @@ Alternatively playing audio files from the file-browser or a shared link.<br>
 A pure player. No backends or other overhead...
 
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_main.png)<br>
-Playlists & Genres:
+Playlists & Genres:<br>
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_lists.png)<br>
-Share-Player
-![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_share.png)
+Share-Player:<br>
+![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_share.png)<br>
 
 ##Features
 - Album view inspired by http://thomaspark.co/project/expandingalbums/ 
