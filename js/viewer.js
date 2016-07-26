@@ -1,6 +1,7 @@
 /**
  * ownCloud - Audio Player
  *
+ * @author Marcel Scherello
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
  *
@@ -74,6 +75,15 @@ var audioPlayer = {
 $(document).ready(function() {	
 	if (OCA.Files && OCA.Files.fileActions) {
 		
+		OCA.Files.fileActions.registerAction({
+			name: 'audioplayer play',
+			displayName: t('audioplayer', 'Play'),
+			mime: 'audio/mpeg',
+			permissions: OC.PERMISSION_READ,
+			icon: function () {return OC.imagePath('core', 'actions/sound');},
+			actionHandler: audioPlayer.onView
+		});
+
 		OCA.Files.fileActions.register('audio/mpeg', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
 		OCA.Files.fileActions.setDefault('audio/mpeg', 'View');
 		
