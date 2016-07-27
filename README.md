@@ -6,8 +6,9 @@ A pure player. No backends or other overhead...
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_main.png)<br>
 Playlists & Genres:<br>
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_lists.png)<br>
-Share-Player:<br>
-![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_share.png)<br>
+
+Share-Player & Action Menu:<br>
+![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_share.png)![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_actions.png)<br>
 
 ##Features
 - Animated Album view
