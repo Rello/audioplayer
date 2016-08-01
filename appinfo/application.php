@@ -33,6 +33,7 @@ use \OCA\audioplayer\Controller\ScannerController;
 use \OCA\audioplayer\Controller\MusicController;
 use \OCA\audioplayer\Controller\PhotoController;
 use \OCA\audioplayer\Controller\GenreController;
+use \OCA\audioplayer\Controller\TimerController;
 
 class Application extends App {
 	
@@ -88,6 +89,15 @@ class Application extends App {
 		});
 		$container->registerService('ScannerController', function(IContainer $c) {
 			return new ScannerController(
+			$c->query('AppName'),
+			$c->query('Request'),
+			$c->query('UserId'),
+			$c->query('L10N'),
+			$c->query('ServerContainer')->getDb()
+			);
+		});
+		$container->registerService('TimerController', function(IContainer $c) {
+			return new TimerController(
 			$c->query('AppName'),
 			$c->query('Request'),
 			$c->query('UserId'),
