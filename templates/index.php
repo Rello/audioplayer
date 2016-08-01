@@ -62,6 +62,11 @@
   <div class="sm2-inline-gradient"></div>
   
   <div class="sm2-inline-element sm2-button-element">
+   <div class="sm2-button-bd" id="toggle_alternative">
+   </div>
+  </div>
+
+  <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
     <a href="#prev" class="sm2-inline-button previous"><?php p($l->t('previous song'));?></a>
    </div>
