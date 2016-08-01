@@ -148,7 +148,7 @@ i#scanAudiosFirst{
 		position:fixed;
 		background-color:#fff;
 		opacity:1;
-		height:62px;
+		height:40px;
 		width:45px;
 	}
 	
@@ -303,7 +303,7 @@ margin:0;
 width:100%;
 position:relative;
 padding:0;
-top:40px;
+top:70px;
 float:left;
 display:block;
 height:auto;
@@ -1050,7 +1050,7 @@ li.dropHover{
 		position:fixed;
 		background-color:#fff;
 		opacity:1;
-		height:62px;
+		height:40px;
 		width:45px;
 	}
 	#app-navigation-toggle_alternative{
@@ -1116,7 +1116,7 @@ li.dropHover{
 		position:fixed;
 		background-color:#fff;
 		opacity:1;
-		height:62px;
+		height:40px;
 		width:45px;
 	}
 	#app-content{
