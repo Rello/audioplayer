@@ -2023,7 +2023,7 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$('#app-content').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
+	$('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
 	$('#app-navigation-toggle_alternative').click(function(){
 		if(	$('#app-navigation').hasClass('mp3_hide')){
 			$('#app-navigation').removeClass('mp3_hide');
@@ -2031,6 +2031,35 @@ $(document).ready(function() {
 			$('#app-navigation').addClass('mp3_hide');
 		}
 	});
+	
+	function check_timer() {
+		//alert("go");
+    	$.ajax({
+			type : 'GET',
+			url : OC.generateUrl('apps/audioplayer/gettimer'),
+			success : function(ajax_data) {
+					ajax_data = parseInt(ajax_data);
+					ajax_data2 = ajax_data + (1*3600*1000);
+					timer_time = new Date(ajax_data);
+					timer_time2 = new Date(ajax_data2);
+					//alert(timer_time + 'xxx' + timer_time2);
+					//alert(timer_time.toLocaleString());
+					if (new Date > ajax_data && new Date < ajax_data2 && $('.sm2-bar-ui').hasClass('playing')) {
+						$('#notification').text('Timer Done!');
+						$('#notification').slideDown();
+						window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
+						$this.AudioPlayer.actions.stop();
+					} else if (new Date < ajax_data && $('.sm2-bar-ui').hasClass('playing')){
+						$('#notification').text('Timer set: ' + timer_time.toLocaleString());
+						$('#notification').slideDown();
+						window.setTimeout(function(){$('#notification').slideUp();}, 3000);						
+					}
+			}
+		});
+	};
+
+	var timer = window.setInterval(check_timer, 10000);
+
 	
 });
 
