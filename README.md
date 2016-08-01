@@ -1,6 +1,6 @@
 #![](https://github.com/z000ao8q/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
 Albums and Playlists for mp3 & m4a files within a nice, animated cover-art navigation.<br>
-Alternative One-Click-Play from the file-browser or shared link.<br>
+One-Click-Play from the file-browser or shared link.<br>
 A pure player. No backends or other overhead...
 
 ![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_main.png)<br>
@@ -26,6 +26,7 @@ Share-Player & Action Menu:<br>
 ##Changelog
 1.0.2 (in progress)
 - fix: one-click-play #22
+- fix: special characters in filenames #26
 - enhancement: add file-option-dropdown-entry
 - enhancement: use reduced soundmanager-js for one-click-play
 
