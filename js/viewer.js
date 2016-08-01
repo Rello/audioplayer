@@ -27,6 +27,7 @@ var audioPlayer = {
 	player : null,
 	dir: null,
 	onView : function(file, data) {
+		file = encodeURIComponent(file);
 		audioPlayer.file = file;
 		audioPlayer.dir = data.dir;
 		//sharingToken
@@ -103,6 +104,7 @@ $(document).ready(function() {
 			}
 			//$('#imgframe').append($('<br style="clear:both;" />'));
 			var fileName=$('#filename').val();
+			fileName = encodeURIComponent(fileName);
 			var audioUrl= OC.generateUrl('apps/audioplayer/getpublicaudiostream{file}?token={token}',{'file':fileName,'token':token},{escape:false});
 			var audioContainer=$('<div/>').attr('id','sm2-container');
 			
