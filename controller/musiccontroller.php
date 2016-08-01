@@ -67,7 +67,7 @@ class MusicController extends Controller {
 		  	if((string)$linkItem['item_type'] === 'file'){
 				$filenameAudio=$startPath;
 			}else{
-				$filenameAudio=$startPath.'/'.urldecode($file);
+				$filenameAudio=$startPath.'/'.rawurldecode($file);
 			}
 			
 			\OC::$server->getSession()->close();
@@ -88,7 +88,7 @@ class MusicController extends Controller {
 		
 		$pFile = $this->params('file');
 			
-		$filename = urldecode($pFile);
+		$filename = rawurldecode($pFile);
 		\OCP\JSON::checkLoggedIn();
 		$user = $this->userId;
 			
@@ -206,7 +206,7 @@ class MusicController extends Controller {
        		}
 			
 			if($file_not_found === false){
-				$row['link'] = \OCP\Util::linkToRoute('audioplayer.music.getAudioStream',array('file'=>$path));
+				$row['link'] = \OCP\Util::linkToRoute('audioplayer.music.getAudioStream').'?file='.rawurlencode($path);
 				$aSongs[$row['album_id']][] = $row;
 			}else{
 				$this->deleteFromDB($row['id'],$row['album_id'],$row['artist_id'],$row['file_id']);
