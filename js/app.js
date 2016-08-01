@@ -1,6 +1,7 @@
 /**
  * ownCloud - Audio Player
  *
+ * @author Marcel Scherello
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
  *
@@ -2031,34 +2032,6 @@ $(document).ready(function() {
 			$('#app-navigation').addClass('mp3_hide');
 		}
 	});
-	
-	function check_timer() {
-		//alert("go");
-    	$.ajax({
-			type : 'GET',
-			url : OC.generateUrl('apps/audioplayer/gettimer'),
-			success : function(ajax_data) {
-					ajax_data = parseInt(ajax_data);
-					ajax_data2 = ajax_data + (1*3600*1000);
-					timer_time = new Date(ajax_data);
-					timer_time2 = new Date(ajax_data2);
-					//alert(timer_time + 'xxx' + timer_time2);
-					//alert(timer_time.toLocaleString());
-					if (new Date > ajax_data && new Date < ajax_data2 && $('.sm2-bar-ui').hasClass('playing')) {
-						$('#notification').text('Timer Done!');
-						$('#notification').slideDown();
-						window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
-						$this.AudioPlayer.actions.stop();
-					} else if (new Date < ajax_data && $('.sm2-bar-ui').hasClass('playing')){
-						$('#notification').text('Timer set: ' + timer_time.toLocaleString());
-						$('#notification').slideDown();
-						window.setTimeout(function(){$('#notification').slideUp();}, 3000);						
-					}
-			}
-		});
-	};
-
-	var timer = window.setInterval(check_timer, 10000);
 
 	
 });
