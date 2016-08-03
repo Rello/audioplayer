@@ -309,7 +309,10 @@ class MusicController extends Controller {
 				$stmt4->execute(array($row['id']));
 			}
 		}
-		
+
+		$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?' );
+		$stmt2->execute(array($this->userId));
+
 		$result=[
 					'status' => 'success',
 					'msg' =>'all good'
