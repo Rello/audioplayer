@@ -27,6 +27,7 @@ Share-Player & Action Menu:<br>
 1.0.2 (in progress)
 - fix: one-click-play #22
 - fix: special characters in filenames #26
+- fix: library reset does not remove playlists #30
 - enhancement: fix soundbar when scrolling #25
 - enhancement: add file-option-dropdown-entry
 - enhancement: use reduced soundmanager-js for one-click-play
