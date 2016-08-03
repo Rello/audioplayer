@@ -2,6 +2,7 @@
 /**
  * ownCloud - Audio Player
  *
+ * @author Marcel Scherello
  * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
  *
