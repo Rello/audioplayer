@@ -543,6 +543,7 @@ Audios.prototype.loadAlbums = function(){
 			}else{
 				  $this.AlbumContainer.show();
 				  $this.AlbumContainer.html('<span class="no-songs-found"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new Songs to playlist')+'</span>');
+				  $('#app-navigation').removeClass('mp3_hide');
 			}
 		
 		
