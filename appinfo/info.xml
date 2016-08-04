@@ -4,13 +4,12 @@
 	<name>Audio Player</name>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
-	<description>Play mp3, m4a files within a nice cover-art navigation. 
+	<description>Albums and Playlists for mp3 & m4a files within a nice, animated cover-art navigation.
 	
-	Different views available: Album view, custom playlists, genres view.
-	
-	
-	when upgrading to 1.0.1, please delete and rescan your library!</description>
-<version>1.0.1</version>
+One-Click-Play from the file-browser or shared link.
+
+A pure player. No backends or other overhead...</description>
+<version>1.0.2</version>
 <namespace>audioplayer</namespace>
 <category>multimedia</category>
 <ocsid>174738</ocsid>
