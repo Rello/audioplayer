@@ -1740,7 +1740,9 @@ Audios.prototype.scanSend = function() {
 				$('#audios_import_done').css('display', 'block');
 				$('#audios_import_status').html(data.message);
 				$('#audios_import_process_message').text('').hide();
-				this.loadAlbums();
+				this.loadAlbums();				
+				this.loadPlaylists();
+				this.loadGenres();
 			}else{
 				$('#audios_import_progressbar').progressbar('option', 'value', 100);
 				//$('#audios_import_progressbar > div').css('background-color', '#FF2626');
