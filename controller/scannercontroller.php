@@ -505,12 +505,12 @@ class ScannerController extends Controller {
 					$genre=$ThisFileInfo['comments']['genre'][0];
 				}
 				
-				$iGenreId=0;
-				if($genre!=''){
+				$iGenreId = 0;
+				if($genre != ''){
 					$iGenreId= $this->writeGenreToDB($genre);
 				}
 				
-				$year = '';
+				$year = 0;
 				if(isset($ThisFileInfo['comments']['year'][0])){
 					$year=$ThisFileInfo['comments']['year'][0];
 				}
