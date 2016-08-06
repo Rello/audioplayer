@@ -845,19 +845,6 @@ Audios.prototype.loadIndividualGenre = function(evt) {
 				});				
 				
 			 aPlaylistOutput[i]=myClone;
-		}else{
-			
-			var actPlid = $('#myGenre li.activeIndiPlaylist').attr('data-id');
-			var actCounter=parseInt($('#myGenre li.activeIndiPlaylist span.counter').text());
-			$('#myGenre li.activeIndiPlaylist span.counter').text(actCounter-1);
-			//OC.Tags.unTag(el,actPl,'audioplayer');
-			var evt={};
-			evt.target = el;
-			
-			aPlayList = jQuery.grep(aPlayList, function(value) {
-			  	return value != el;
-			});
-			$this.removeSongFromPlaylist(evt);
 		}
 	});
 	
