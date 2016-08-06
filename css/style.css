@@ -1070,7 +1070,7 @@ li.dropHover{
 		
 	}
 	.sm2-inline-element.sm2-button-element.sm2-shuffle{
-		display:none;
+		/*display:none;*/
 	}
 	
 	#individual-playlist-header span span.header-interpret,
@@ -1134,7 +1134,7 @@ li.dropHover{
 	.sm2-inline-element.sm2-button-element.sm2-volume{
 		display:none;
 	}
-	.sm2-inline-element.sm2-button-element.sm2-shuffle{
+	.sm2-inline-element.sm2-inline-status{
 		display:none;
 	}
 	.sm2-inline-button.next,
