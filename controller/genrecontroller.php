@@ -98,10 +98,10 @@ class GenreController extends Controller {
 	}
 	
 	private function getSongIdsForGenre($iPlaylistId){
-		$SQL="SELECT TR.`id` AS `track_id` FROM `oc_audioplayer_tracks` AS TR 
-					join `oc_audioplayer_albums` AS AB 
+		$SQL="SELECT TR.`id` AS `track_id` FROM `*PREFIX*audioplayer_tracks` AS TR 
+					join `*PREFIX*audioplayer_albums` AS AB 
 					on TR.`album_id` = AB.`id` 
-					join `oc_audioplayer_genre` AS GE 
+					join `*PREFIX*audioplayer_genre` AS GE 
 					on AB.`genre_id` = GE.`id` 
 					WHERE GE.`id` = ?
 					ORDER BY TR.`album_id`, TR.`number` ASC";
