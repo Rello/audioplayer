@@ -544,6 +544,7 @@ Audios.prototype.loadAlbums = function(){
 				  $this.AlbumContainer.show();
 				  $this.AlbumContainer.html('<span class="no-songs-found"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new Songs to playlist')+'</span>');
 				  $('#app-navigation').removeClass('mp3_hide');
+
 			}
 		
 		
@@ -1727,7 +1728,7 @@ Audios.prototype.scanSend = function() {
 				$('#audios_import_done').css('display', 'block');
 				$('#audios_import_status').html(data.message);
 				$('#audios_import_process_message').text('').hide();
-				this.loadAlbums();				
+				this.loadAlbums();
 				this.loadPlaylists();
 				this.loadGenres();
 			}else{
@@ -1779,11 +1780,11 @@ $(window).resize(_.debounce(function() {
 	if (resizeTimeout)
 		clearTimeout(resizeTimeout);
 	resizeTimeout = setTimeout(function() {
-		if($(window).width()>768){
-			$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width());
-		}else{
-			$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width()-45);
-		}
+		//if($(window).width()>768){
+			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
+		//}else{
+		//	$('.sm2-bar-ui').width(myAudios.AlbumContainer.width()-45);
+		//}
 		
 		if(myAudios.AlbumContainer.width() < 850){
 			$('.songcontainer .songlist').addClass('one-column');
@@ -1847,9 +1848,9 @@ $(document).ready(function() {
 		myAudios.init();
 		
 		//if($(window).width()>768){
-		//	$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width());
+			$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width());
 		//}else{
-			$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width()-45);
+		//	$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width()-45);
 		//}
 	
 	
@@ -2015,11 +2016,18 @@ $(document).ready(function() {
 	});
 	
 	$('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
+	
 	$('#app-navigation-toggle_alternative').click(function(){
 		if(	$('#app-navigation').hasClass('mp3_hide')){
 			$('#app-navigation').removeClass('mp3_hide');
+			$('#audios-audioscontainer .rowlist').remove();
+			myAudios.buildAlbumRows(myAudios.albums);
+			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
 		} else {
 			$('#app-navigation').addClass('mp3_hide');
+			$('#audios-audioscontainer .rowlist').remove();
+			myAudios.buildAlbumRows(myAudios.albums);
+			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
 		}
 	});
 	function check_timer() {
