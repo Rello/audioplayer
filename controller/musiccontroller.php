@@ -90,7 +90,6 @@ class MusicController extends Controller {
 		$pFile = $this->params('file');
 			
 		$filename = rawurldecode($pFile);
-		\OCP\JSON::checkLoggedIn();
 		$user = $this->userId;
 			
 		\OC::$server->getSession()->close();
@@ -170,13 +169,13 @@ class MusicController extends Controller {
 	}
 	
 	private function loadArtistsToAlbum($iAlbumId){
-    		$stmt = \OCP\DB::prepare( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_album_artists` WHERE  `album_id` = ?' );
+    		$stmt = $this->db->prepareQuery( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_album_artists` WHERE  `album_id` = ?' );
 		$result = $stmt->execute(array($iAlbumId));
 		$Artist = $result->fetchRow();
 		$rowCount = $result->rowCount();
 	
 		if($rowCount === 1){
-			$stmt = \OCP\DB::prepare( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
+			$stmt = $this->db->prepareQuery( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
 			$result = $stmt->execute(array($Artist['artist_id']));
 			$row = $result->fetchRow();
 			return $row['name'];
@@ -207,7 +206,7 @@ class MusicController extends Controller {
        		}
 			
 			if($file_not_found === false){
-				$row['link'] = \OCP\Util::linkToRoute('audioplayer.music.getAudioStream').'?file='.rawurlencode($path);
+				$row['link'] = \OC::$server->getURLGenerator()->linkToRoute('audioplayer.music.getAudioStream').'?file='.rawurlencode($path);
 				$aSongs[$row['album_id']][] = $row;
 			}else{
 				$this->deleteFromDB($row['id'],$row['album_id'],$row['artist_id'],$row['file_id']);
@@ -372,7 +371,7 @@ class MusicController extends Controller {
 	 */
 	private function generateTextColor($calendarcolor,$isRgb=false) {
 		if($isRgb === false){	
-			if(substr_count($calendarcolor, '#') == 1) {
+			if(substr_count($calendarcolor, '#') === 1) {
 				$calendarcolor = substr($calendarcolor,1);
 			}
 			$red = hexdec(substr($calendarcolor,0,2));
