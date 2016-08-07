@@ -87,6 +87,30 @@ $(document).ready(function() {
 
 		OCA.Files.fileActions.register('audio/mpeg', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
 		OCA.Files.fileActions.setDefault('audio/mpeg', 'View');
+
+		OCA.Files.fileActions.registerAction({
+			name: 'audioplayer play',
+			displayName: t('audioplayer', 'Play'),
+			mime: 'audio/mp4',
+			permissions: OC.PERMISSION_READ,
+			icon: function () {return OC.imagePath('core', 'actions/sound');},
+			actionHandler: audioPlayer.onView
+		});
+
+		OCA.Files.fileActions.register('audio/mp4', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
+		OCA.Files.fileActions.setDefault('audio/mp4', 'View');
+
+		OCA.Files.fileActions.registerAction({
+			name: 'audioplayer play',
+			displayName: t('audioplayer', 'Play'),
+			mime: 'audio/m4b',
+			permissions: OC.PERMISSION_READ,
+			icon: function () {return OC.imagePath('core', 'actions/sound');},
+			actionHandler: audioPlayer.onView
+		});
+
+		OCA.Files.fileActions.register('audio/m4b', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
+		OCA.Files.fileActions.setDefault('audio/m4b', 'View');
 		
 		if($('#header').hasClass('share-file')){
 			
