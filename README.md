@@ -16,7 +16,7 @@ Share-Player & Action Menu:<br>
 - Playlist view
 - Scanning & Resetting Library & Playlist editing in UI
 - Editing ID3 Tags (incl. picture)
-- Mobil view support
+- Mobile view support
 - One-Click-Play from file browser
 - Play shared audiofiles directly
 
