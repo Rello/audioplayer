@@ -121,8 +121,9 @@ $(document).ready(function() {
 			OC.addStyle('audioplayer','360player');
 			OC.addStyle('audioplayer','360player-visualization');	
 			
-				
 			$('#imgframe').css({'width':'250px'});
+			setTimeout(function(){ $('#imgframe').children().first().css({'width':'250px'}); }, 2000);	
+			
 			if( $('#previewSupported').val() !== 'true'){
 				$('#imgframe').hide();
 			}
@@ -137,7 +138,7 @@ $(document).ready(function() {
 			var audioInnerDiv=$('<div>').addClass('ui360 ui360-vis');
 			var audioLink=$('<a/>').attr({
 				'href':audioUrl
-			}).text(fileName);
+			}).text($('#filename').val());
 			audioInnerDiv.append(audioLink);
 			audioOuterDiv.append(audioInnerDiv);
 			audioContainer.append(audioOuterDiv);
