@@ -9,7 +9,7 @@
 	method="post"
 	enctype="multipart/form-data"
 	target="crop_target"
-	action="<?php print_unescaped(\OCP\Util::linkToRoute('audioplayer.photo.saveCropPhoto')); ?>">
+	action="<?php print_unescaped(\OC::$server->getURLGenerator()->linkToRoute('audioplayer.photo.saveCropPhoto')); ?>">
 
 	<input type="hidden" id="id" name="id" value="<?php p($_['id']); ?>" />
 	<input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']); ?>">
