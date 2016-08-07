@@ -45,6 +45,7 @@ OC.L10N.register(
 	"Resetting finished!" : "Zurücksetzen Musikbibliothek beendet!",
 	"Are you sure? All music database entries will be deleted!" : "Sind Sie sicher? Alle Musikeinträge in der Datenbank werden gelöscht!",
 	"Close" : "Abbrechen",
+	"Play" : "Abspielen",
 	"Save" : "Speichern"
 },
 "");
