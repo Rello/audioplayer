@@ -69,7 +69,7 @@ class TimerController extends Controller {
 			$result = $stmt->execute(array($timer_user));
 			
 				
-			if ($timer_time != 0 AND $this->db->insertIfNotExist('*PREFIX*audioplayer_timer', ['user_id' => $timer_user, 'time' => $timer_time])) {
+			if ($timer_time !== 0 AND $this->db->insertIfNotExist('*PREFIX*audioplayer_timer', ['user_id' => $timer_user, 'time' => $timer_time])) {
 				$insertid = $this->db->getInsertId('*PREFIX*audioplayer_timer');
 				$result = ['msg'=>'new','id' => $insertid];
 			
