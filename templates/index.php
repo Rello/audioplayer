@@ -41,12 +41,16 @@
 		<i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i>
 		</li>
 	</ul>
-	<br><br>
-	<h3 class="mp3_hide" id="playlist_header"><?php p($l->t('Playlists'));?></h3>
-	<ul id="myPlayList"></ul>	
-	<br><br>
-	<h3 class="mp3_hide" id="genre_header"><?php p($l->t('Genres'));?></h3>
-	<ul id="myGenre"></ul>	
+	<div class="mp3_hide" id="playlist_header">
+		<h3>&nbsp;</h3>
+		<h3><?php p($l->t('Playlists'));?></h3>
+		<ul id="myPlayList"></ul>	
+	</div>
+	<div class="mp3_hide" id="genre_header">
+		<h3>&nbsp;</h3>
+		<h3><?php p($l->t('Genres'));?></h3>
+		<ul id="myGenre"></ul>	
+	</div>
 	</div>
 </div>	
 <div id="app-content">
