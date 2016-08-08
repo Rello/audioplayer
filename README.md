@@ -24,10 +24,12 @@ Share-Player & Action Menu:<br>
 - mp3, m4a, ogg, wav
 
 ##Changelog
-1.0.3 (in progress)
+1.0.3
 - fix: Genre not always shown #35
 - fix: Album not rearranged on navigation show/hide #36
 - fix: display issues on small (phone) screens #36
+- fix: cover art on sharing screen #37
+- fix: various display improvements
 
 1.0.2
 - fix: one-click-play #22
