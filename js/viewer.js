@@ -112,6 +112,18 @@ $(document).ready(function() {
 		OCA.Files.fileActions.register('audio/m4b', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
 		OCA.Files.fileActions.setDefault('audio/m4b', 'View');
 		
+		OCA.Files.fileActions.registerAction({
+			name: 'audioplayer play',
+			displayName: t('audioplayer', 'Play'),
+			mime: 'audio/ogg',
+			permissions: OC.PERMISSION_READ,
+			icon: function () {return OC.imagePath('core', 'actions/sound');},
+			actionHandler: audioPlayer.onView
+		});
+
+		OCA.Files.fileActions.register('audio/ogg', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
+		OCA.Files.fileActions.setDefault('audio/ogg', 'View');
+		
 		if($('#header').hasClass('share-file')){
 			
 			var token = ($('#sharingToken').val() !== undefined) ? $('#sharingToken').val() : '';
