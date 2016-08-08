@@ -9,7 +9,7 @@
 One-Click-Play from the file-browser or shared link.
 
 A pure player. No backends or other overhead...</description>
-<version>1.0.2</version>
+<version>1.0.3</version>
 <namespace>audioplayer</namespace>
 <category>multimedia</category>
 <ocsid>174738</ocsid>
