@@ -169,18 +169,32 @@ class MusicController extends Controller {
 	}
 	
 	private function loadArtistsToAlbum($iAlbumId){
-    		$stmt = $this->db->prepareQuery( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_album_artists` WHERE  `album_id` = ?' );
+    	$stmt = $this->db->prepareQuery( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ?' );
 		$result = $stmt->execute(array($iAlbumId));
-		$Artist = $result->fetchRow();
-		$rowCount = $result->rowCount();
-	
-		if($rowCount === 1){
+		$AArtist = $result->fetchRow();
+					\OCP\Util::writeLog('audioplayer', $iAlbumId.'AArtist: '.$AArtist['artist_id'], \OCP\Util::DEBUG);
+		if ((int)$AArtist['artist_id'] !== 0){
 			$stmt = $this->db->prepareQuery( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
-			$result = $stmt->execute(array($Artist['artist_id']));
+			$result = $stmt->execute(array($AArtist['artist_id']));
 			$row = $result->fetchRow();
 			return $row['name'];
-		}else{
-			return (string) $this->l10n->t('Various Artists');
+		} else {
+    		$stmt = $this->db->prepareQuery( 'SELECT distinct(`artist_id`) FROM `*PREFIX*audioplayer_tracks` WHERE  `album_id` = ?' );
+			$result = $stmt->execute(array($iAlbumId));
+			$TArtist = $result->fetchRow();
+			$rowCount = $result->rowCount();
+
+					\OCP\Util::writeLog('audioplayer', $iAlbumId.'rows: '.$rowCount, \OCP\Util::DEBUG);
+	
+			if($rowCount === 1){
+					\OCP\Util::writeLog('audioplayer', $iAlbumId.'TArtist: '-$TArtist['artist_id'], \OCP\Util::DEBUG);
+				$stmt = $this->db->prepareQuery( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
+				$result = $stmt->execute(array($TArtist['artist_id']));
+				$row = $result->fetchRow();
+				return $row['name'];
+			}else{
+				return (string) $this->l10n->t('Various Artists');
+			}
 		}
     }
 	

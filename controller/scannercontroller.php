@@ -61,9 +61,9 @@ class ScannerController extends Controller {
 		$songFileId=(int)$this->params('songFileId');
 		$resultData=[];
 		
-		if(!class_exists('getid3_exception')) {
+		#if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
-		}
+		#}
 		
 		
 		
@@ -235,9 +235,9 @@ class ScannerController extends Controller {
 			$trackNumber = $pTrack.(!empty($pTrackTotal) ? '/'.$pTrackTotal : '');
 		}
 		
-		if(!class_exists('getid3_exception')) {
+		#if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
-		}
+		#}
 		
 		require_once __DIR__ . '/../3rdparty/getid3/write.php';
 		
@@ -301,7 +301,7 @@ class ScannerController extends Controller {
 					$albumId = 0;
 					$artistId = 0;
 					
-						$SQL="SELECT `AT`.`album_id`,`AT`.`artist_id`,`AA`.`name`,`AR`.`name` AS artistname FROM `*PREFIX*audioplayer_tracks` `AT`
+						$SQL="SELECT `AT`.`album_id`,`AT`.`artist_id`,`AA`.`name`,`AR`.`name` AS artistname,`AT`.`genre_id` FROM `*PREFIX*audioplayer_tracks` `AT`
 									LEFT JOIN  `*PREFIX*audioplayer_albums` `AA` ON `AT`.`album_id`= `AA`.`id`
 									LEFT JOIN  `*PREFIX*audioplayer_artists` `AR` ON `AT`.`artist_id`= `AR`.`id`
 						  			WHERE `AT`.`id` = ? AND `AT`.`user_id` = ?";	
@@ -313,6 +313,7 @@ class ScannerController extends Controller {
 						$albumId = $row['album_id'];
 						$artistName = $row['artistname'];
 						$artistId = $row['artist_id'];
+						$genreId = $row['genre_id'];
 						$newAlbumId = $albumId;
 						
 						$iGenreId=0;
@@ -320,8 +321,12 @@ class ScannerController extends Controller {
 							$iGenreId = $this->writeGenreToDB($pGenre);
 						}
 						
+						if($addArtist != '' && $addArtist != (string)$this->l10n->t('- choose -') && $addArtist != $artistName){
+							$artistId = $this->writeArtistToDB($pArtist);
+						}	
+
 						if($addAlbum != '' && $addAlbum != (string)$this->l10n->t('- choose -') && $addAlbum != $albumName){
-							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$iGenreId);
+							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$iGenreId,$iArtistId);
 							
 							//check for other songs if not then delete album
 							$stmtCountAlbum = \OCP\DB::prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ?' );
@@ -339,18 +344,16 @@ class ScannerController extends Controller {
 							
 						}
 						
-						if($addAlbum == $albumName && $iGenreId > 0){
-							$stmt = \OCP\DB::prepare( 'UPDATE `*PREFIX*audioplayer_albums` SET `genre_id` = ? WHERE `id` = ? and `user_id` = ?' );
-							$result = $stmt->execute(array($iGenreId, $newAlbumId, $this->userId));
-						}
+						#if($addAlbum == $albumName && $iGenreId > 0){
+						#	$stmt = \OCP\DB::prepare( 'UPDATE `*PREFIX*audioplayer_albums` SET `genre_id` = ? WHERE `id` = ? and `user_id` = ?' );
+						#	$result = $stmt->execute(array($iGenreId, $newAlbumId, $this->userId));
+						#}
 						
-						if($addArtist != '' && $addArtist != (string)$this->l10n->t('- choose -') && $addArtist != $artistName){
-							$artistId = $this->writeArtistToDB($pArtist);
-						}	
 						
-						if($albumId > 0 && $artistId > 0){
-							$this->writeArtistToAlbum($newAlbumId,$artistId);
-						}
+						#if($albumId > 0 && $artistId > 0){
+						#	$this->writeArtistToAlbum($newAlbumId,$artistId);
+						#}
+						
 						$returnData['imgsrc']='';
 						$returnData['prefcolor'] = '';
 						if($pImgMime != '' && $addCoverToAlbum == 'true'){
@@ -438,9 +441,9 @@ class ScannerController extends Controller {
 				return $response;	
 		}
 		
-		if(!class_exists('getid3_exception')) {
+#		if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
-		}
+#		}
 				
         $userView =  new View('/' . $this -> userId . '/files');
 		$audios_mp3 = $userView->searchByMime('audio/mpeg');
@@ -471,13 +474,13 @@ class ScannerController extends Controller {
 		foreach($audios as $audio) {
 		  	
 			if ($debug_detail == true) {
-				\OCP\Util::writeLog('audioplayer', 'file-id: '.$audio['fileid'].' track path : '.$audio['path'], \OCP\Util::DEBUG);
+				#\OCP\Util::writeLog('audioplayer', 'file-id: '.$audio['fileid'].' track path : '.$audio['path'], \OCP\Util::DEBUG);
 			}
 			
 			if($this->checkIfTrackDbExists($audio['fileid']) === false){
 				
 				if ($debug_detail == true) {
-					\OCP\Util::writeLog('audioplayer', 'mp3 detail - track not in DB', \OCP\Util::DEBUG);
+					#\OCP\Util::writeLog('audioplayer', 'mp3 detail - track not in DB', \OCP\Util::DEBUG);
 				}
 
 				$TextEncoding = 'UTF-8';
@@ -496,41 +499,35 @@ class ScannerController extends Controller {
 					continue;
 				}
 
-				$album = (string) $this->l10n->t('Various');
+				$album = (string) $this->l10n->t('Unknown');
 				if(isset($ThisFileInfo['comments']['album'][0])){
 					$album=$ThisFileInfo['comments']['album'][0];
 				}
-				$genre = '';
+
+				$genre = (string) $this->l10n->t('Unknown');
 				if(isset($ThisFileInfo['comments']['genre'][0])){
 					$genre=$ThisFileInfo['comments']['genre'][0];
-				}
-				
-				$iGenreId = 0;
-				if($genre != ''){
-					$iGenreId= $this->writeGenreToDB($genre);
-				}
+				}				
+				$iGenreId= $this->writeGenreToDB($genre);
 				
 				$year = 0;
 				if(isset($ThisFileInfo['comments']['year'][0])){
 					$year=$ThisFileInfo['comments']['year'][0];
 				}
-				
-				$iAlbumId = $this->writeAlbumToDB($album,$year,$iGenreId);
-				
-				$artist = (string) $this->l10n->t('Various Artists');
+								
+				$artist = (string) $this->l10n->t('Unknown');
 				if(isset($ThisFileInfo['comments']['artist'][0])){
 					$artist=$ThisFileInfo['comments']['artist'][0];
 				}
-				
 				$iArtistId= $this->writeArtistToDB($artist);
 				
 				# if Album Artist is maintained
 				if(isset($ThisFileInfo['comments']['band'][0])){
 					$album_artist=$ThisFileInfo['comments']['band'][0];
 					$iAlbumArtistId= $this->writeArtistToDB($album_artist);
-					$this->writeArtistToAlbum($iAlbumId,$iAlbumArtistId);
+					$iAlbumId = $this->writeAlbumToDB($album,$year,'',$iAlbumArtistId);
 				} else {
-					$this->writeArtistToAlbum($iAlbumId,$iArtistId);
+					$iAlbumId = $this->writeAlbumToDB($album,$year,'','');
 				}
 
 				$name = $audio['name'];
@@ -588,6 +585,8 @@ class ScannerController extends Controller {
 					'file_id' => (int)$audio['fileid'],
 					'bitrate' => (int)$bitrate,
 					'mimetype' => $audio['mimetype'],
+					'genre' => (int)$iGenreId,
+					'year' => (int)$year,
 				];
 				
 				$this->writeTrackToDB($aTrack);
@@ -651,15 +650,15 @@ class ScannerController extends Controller {
 	 * @return int id
 	 */
 	
-	private function writeAlbumToDB($sAlbum,$sYear,$iGenreId){
+	private function writeAlbumToDB($sAlbum,$sYear,$iGenreId,$iArtistId){
 		
 			
 			if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $this->userId, 'name' => $sAlbum])) {
 					
 				$insertid = $this->db->getInsertId('*PREFIX*audioplayer_albums');
 				
-				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `genre_id`= ? WHERE `id` = ? AND `user_id` = ?' );
-				$stmt->execute(array($sYear, $iGenreId, $insertid, $this->userId));
+				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `genre_id`= ? , `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );
+				$stmt->execute(array($sYear, '', $iArtistId, $insertid, $this->userId));
 				
 				$this->iAlbumCount++;
 				
@@ -760,15 +759,15 @@ class ScannerController extends Controller {
 	 */
 	private function writeTrackToDB($aTrack){
 			
-		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ?';
+		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?';
 		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype']));
+		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype'],$aTrack['genre'],$aTrack['year']));
 		$row = $result->fetchRow();
 		if(isset($row['id'])){
 			$this->iDublicate++;
 		}else{
-			$stmt = \OCP\DB::prepare( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`) VALUES(?,?,?,?,?,?,?,?,?)' );
-			$result = $stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype']));
+			$stmt = $this->db->prepareQuery( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`) VALUES(?,?,?,?,?,?,?,?,?,?,?)' );
+			$result = $stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype'],$aTrack['genre'],$aTrack['year']));
 			$insertid = \OCP\DB::insertid('*PREFIX*audioplayer_tracks');
 			return $insertid;
 		}
