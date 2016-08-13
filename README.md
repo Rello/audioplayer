@@ -12,8 +12,7 @@ Share-Player & Action Menu:<br>
 
 ##Features
 - Animated Album view
-- Genre view (! Currently Genres are stored per Album - not Song; will be fixed soon!)
-- Playlist view
+- Various dynamic views (Playlists, Artist, Genre, Year, All)
 - Scanning & Resetting Library & Playlist editing in UI
 - Editing ID3 Tags (incl. picture)
 - Mobile view support
@@ -27,6 +26,12 @@ Share-Player & Action Menu:<br>
 - de, de_DE, ru, zh_TW
 
 ##Changelog
+1.1.0 (in progress)
+- new navigation sidebar: dynamic lists for Artists, Genres, Years (more to come)
+- redesign of backend table structures
+- proper handling of artists, album artists, ...
+- RU localization
+
 1.0.3
 - fix: Genre not always shown #35
 - fix: Album not rearranged on navigation show/hide #36
