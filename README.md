@@ -23,6 +23,9 @@ Share-Player & Action Menu:<br>
 ###Filetypes
 - mp3, m4a, ogg, wav
 
+###Languages
+- de, de_DE, ru, zh_TW
+
 ##Changelog
 1.0.3
 - fix: Genre not always shown #35
