@@ -32,8 +32,9 @@ use \OCA\audioplayer\Controller\PlaylistController;
 use \OCA\audioplayer\Controller\ScannerController;
 use \OCA\audioplayer\Controller\MusicController;
 use \OCA\audioplayer\Controller\PhotoController;
-use \OCA\audioplayer\Controller\GenreController;
 use \OCA\audioplayer\Controller\TimerController;
+use \OCA\audioplayer\Controller\CategoryController;
+use \OCA\audioplayer\Controller\SettingController;
 
 class Application extends App {
 	
@@ -52,6 +53,17 @@ class Application extends App {
 			);
 		});
 		
+		$container->registerService('SettingController', function(IContainer $c) {
+			return new SettingController(
+			$c->query('AppName'),
+			$c->query('Request'),
+			$c->query('UserId'),
+			$c->query('L10N'),
+			$c->query('ServerContainer')->getDb(),
+			$c->query('Config')
+			);
+		});
+
 		$container->registerService('PlaylistController', function(IContainer $c) {
 			return new PlaylistController(
 			$c->query('AppName'),
@@ -62,8 +74,8 @@ class Application extends App {
 			);
 		});
 		
-		$container->registerService('GenreController', function(IContainer $c) {
-			return new GenreController(
+		$container->registerService('CategoryController', function(IContainer $c) {
+			return new CategoryController(
 			$c->query('AppName'),
 			$c->query('Request'),
 			$c->query('UserId'),
@@ -123,6 +135,10 @@ class Application extends App {
 		
 		$container -> registerService('L10N', function(IContainer $c) {
 			return $c -> query('ServerContainer') -> getL10N($c -> query('AppName'));
+		});
+
+		$container->registerService('Config', function($c){
+			return $c->getServer()->getConfig();
 		});
 		
 		

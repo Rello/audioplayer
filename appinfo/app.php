@@ -40,6 +40,7 @@ $request = \OC::$server->getRequest();
 $app = new Application();
 $c = $app->getContainer();
 // add an navigation entry
+
 $navigationEntry = function () use ($c) {
 	return [
 		'id' => $c->getAppName(),
@@ -53,4 +54,4 @@ $c->getServer()->getNavigationManager()->add($navigationEntry);
 
 $c->getServer()->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app'=>'audioplayer','apps' => array('files')));	
 
-
+\OCP\App::registerPersonal($c->query('AppName'), 'settings/user');
