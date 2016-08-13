@@ -46,11 +46,16 @@
 		<h3><?php p($l->t('Playlists'));?></h3>
 		<ul id="myPlayList"></ul>	
 	</div>
-	<div class="mp3_hide" id="genre_header">
 		<h3>&nbsp;</h3>
-		<h3><?php p($l->t('Genres'));?></h3>
-		<ul id="myGenre"></ul>	
-	</div>
+		<h3><?php p($l->t('Selection'));?></h3>
+		<select id="category_selector">
+  			<option value=""selected><?php p($l->t('- choose -'));?></option>
+  			<option value="Artist"><?php p($l->t('Interpret'));?></option>
+  			<option value="Genre"><?php p($l->t('Genres'));?></option>
+  			<option value="Year"><?php p($l->t('Year'));?></option>
+  			<option value="All"><?php p($l->t('All'));?></option>
+		</select>
+		<ul id="myCategory"></ul>	
 	</div>
 </div>	
 <div id="app-content">
