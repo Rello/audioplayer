@@ -42,17 +42,16 @@
 		</li>
 	</ul>
 	<div class="mp3_hide" id="playlist_header">
-		<h3>&nbsp;</h3>
+		<br>&nbsp;<br>
 		<h3><?php p($l->t('Playlists'));?></h3>
 		<ul id="myPlayList"></ul>	
 	</div>
-		<h3>&nbsp;</h3>
-		<h3><?php p($l->t('Selection'));?></h3>
+		<br>&nbsp;<br>
 		<select id="category_selector">
-  			<option value=""selected><?php p($l->t('- choose -'));?></option>
-  			<option value="Artist"><?php p($l->t('Interpret'));?></option>
+  			<option value=""selected><?php p($l->t('Selection'));?></option>
+  			<option value="Artist"><?php p($l->t('Artists'));?></option>
   			<option value="Genre"><?php p($l->t('Genres'));?></option>
-  			<option value="Year"><?php p($l->t('Year'));?></option>
+  			<option value="Year"><?php p($l->t('Years'));?></option>
   			<option value="All"><?php p($l->t('All'));?></option>
 		</select>
 		<ul id="myCategory"></ul>	
@@ -167,7 +166,7 @@
   		<span class="header-indi">
   		<span class="header-num"><?php p($l->t('Nr'));?></span>
   		<span class="header-title"><?php p($l->t('Title'));?></span>
-  		<span class="header-interpret"><?php p($l->t('Interpret'));?></span>
+  		<span class="header-interpret"><?php p($l->t('Artist'));?></span>
   		<span class="header-album"><?php p($l->t('Album'));?></span>
   		<span class="header-time"><?php p($l->t('Length'));?></span>
   		<span class="header-opt">&nbsp;</span>
