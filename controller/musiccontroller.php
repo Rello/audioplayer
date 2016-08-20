@@ -78,6 +78,40 @@ class MusicController extends Controller {
 		} 
 	}
 
+	/**
+	*@PublicPage
+	 * @NoCSRFRequired
+	 * 
+	 */
+	public function getPublicAudioInfo(){
+		$file  = $this->params('file');	
+		$pToken  = $this->params('token');	
+		if (!empty($pToken)) {
+			$linkItem = \OCP\Share::getShareByToken($pToken);
+			if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
+				exit;
+			}
+			// seems to be a valid share
+			$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
+			$user = $rootLinkItem['uid_owner'];
+		   
+			// Setup filesystem
+			\OCP\JSON::checkUserExists($user);
+			\OC_Util::tearDownFS();
+			\OC_Util::setupFS($user);
+			$startPath = \OC\Files\Filesystem::getPath($linkItem['file_source']) ;
+		  	if((string)$linkItem['item_type'] === 'file'){
+				$filenameAudio=$startPath;
+			}else{
+				$filenameAudio=$startPath.'/'.rawurldecode($file);
+			}
+			
+			\OC::$server->getSession()->close();
+			\OCP\Util::writeLog('audioplayer', $filenameAudio.' '.$user, \OCP\Util::DEBUG);
+			#$stream = new \OCA\audioplayer\AudioStream($filenameAudio,$user);
+			#$stream -> start();
+		} 
+	}
 
 	/**
 	*@NoAdminRequired
@@ -172,7 +206,6 @@ class MusicController extends Controller {
     	$stmt = $this->db->prepareQuery( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ?' );
 		$result = $stmt->execute(array($iAlbumId));
 		$AArtist = $result->fetchRow();
-					\OCP\Util::writeLog('audioplayer', $iAlbumId.'AArtist: '.$AArtist['artist_id'], \OCP\Util::DEBUG);
 		if ((int)$AArtist['artist_id'] !== 0){
 			$stmt = $this->db->prepareQuery( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
 			$result = $stmt->execute(array($AArtist['artist_id']));
@@ -184,10 +217,7 @@ class MusicController extends Controller {
 			$TArtist = $result->fetchRow();
 			$rowCount = $result->rowCount();
 
-					\OCP\Util::writeLog('audioplayer', $iAlbumId.'rows: '.$rowCount, \OCP\Util::DEBUG);
-	
 			if($rowCount === 1){
-					\OCP\Util::writeLog('audioplayer', $iAlbumId.'TArtist: '-$TArtist['artist_id'], \OCP\Util::DEBUG);
 				$stmt = $this->db->prepareQuery( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
 				$result = $stmt->execute(array($TArtist['artist_id']));
 				$row = $result->fetchRow();

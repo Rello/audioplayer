@@ -28,6 +28,7 @@ use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
 use \OC\Files\View;
+use \OCP\IConfig;
 
 /**
  * Controller class for main page.
@@ -45,12 +46,15 @@ class ScannerController extends Controller {
 	private $iAlbumCount = 0;
 	private $numOfSongs;
 	private $db;
+	private $configManager;
 
-	public function __construct($appName, IRequest $request, $userId, $l10n, $db) {
+	public function __construct($appName, IRequest $request, $userId, $l10n, $db, IConfig $configManager) {
 		parent::__construct($appName, $request);
+		$this->appname = $appName;
 		$this -> userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
+		$this->configManager = $configManager;
 	}
 
 	/**
@@ -64,8 +68,6 @@ class ScannerController extends Controller {
 		#if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
 		#}
-		
-		
 		
 		$userView =  new View('/' . $this -> userId. '/files');
 		$path = $userView->getPath($songFileId);
@@ -169,19 +171,31 @@ class ScannerController extends Controller {
 			$rowArtists = $result1->fetchAll();
 			array_unshift($rowArtists,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
 			$resultData['artists'] = $rowArtists;
+
+			$SQL2="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_genre` 
+				 			WHERE  `user_id` = ? 
+				 			ORDER BY `name` ASC
+				 			";
+				
+			$stmt2 = $this->db->prepareQuery($SQL2);
+			$result2 = $stmt2->execute(array($this->userId));
+			
+			$rowGenre = $result2->fetchAll();
+			array_unshift($rowGenre,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
+			$resultData['genres'] = $rowGenre;
 			 
 			 //Genre
-			 $ArrayOfGenresTemp = \getid3_id3v1::ArrayOfGenres();   // get the array of genres
-			$ArrayOfGenres[] = ['name' =>(string)$this->l10n->t('- choose -')];
-			foreach ($ArrayOfGenresTemp as $key => $value) {      // change keys to match displayed value
-				$ArrayOfGenres[] = ['name' => $value];
-			}
-			
-			unset($ArrayOfGenresTemp);                            // remove temporary array
-			
-			usort($ArrayOfGenres,array('OCA\audioplayer\Controller\ScannerController','compareGenreNames'));   
-			                   
-			 $resultData['genres'] = $ArrayOfGenres;
+			# $ArrayOfGenresTemp = \getid3_id3v1::ArrayOfGenres();   // get the array of genres
+			#$ArrayOfGenres[] = ['name' =>(string)$this->l10n->t('- choose -')];
+			#foreach ($ArrayOfGenresTemp as $key => $value) {      // change keys to match displayed value
+			#	$ArrayOfGenres[] = ['name' => $value];
+			#}
+			#
+			#unset($ArrayOfGenresTemp);                            // remove temporary array
+			#
+			#usort($ArrayOfGenres,array('OCA\audioplayer\Controller\ScannerController','compareGenreNames'));   
+			#                   
+			# $resultData['genres'] = $ArrayOfGenres;
 			 
 			$result = [
 				'status' => 'success',
@@ -224,6 +238,7 @@ class ScannerController extends Controller {
 		$pTrack=$this->params('track');
 		$pTrackTotal=$this->params('tracktotal');
 		$pGenre = $this->params('genre');
+		$pExistGenre = $this->params('existgenre');
 		
 		$addCoverToAlbum = $this->params('addcover');
 		
@@ -255,6 +270,11 @@ class ScannerController extends Controller {
 			if($pArtist != ''){
 				$addArtist =  $pArtist;
 			}
+
+			$addGenre = $pExistGenre;
+			if($pGenre != ''){
+				$addGenre =  $pGenre;
+			}
 				
 			$resultData=[
 				'year' => [$pYear],
@@ -262,7 +282,7 @@ class ScannerController extends Controller {
 				'artist' => [$addArtist],
 				'album' => [$addAlbum],
 				'track_number' => [$trackNumber],
-				'genre' => [$pGenre]
+				'genre' => [$addGenre]
 				
 			];
 			$imgString = '';
@@ -301,9 +321,11 @@ class ScannerController extends Controller {
 					$albumId = 0;
 					$artistId = 0;
 					
-						$SQL="SELECT `AT`.`album_id`,`AT`.`artist_id`,`AA`.`name`,`AR`.`name` AS artistname,`AT`.`genre_id` FROM `*PREFIX*audioplayer_tracks` `AT`
+						$SQL="SELECT `AT`.`album_id`,`AT`.`artist_id`,`AA`.`name`,`AR`.`name` AS artistname,`AT`.`genre_id`, `AG`.`name` AS genrename
+									FROM `*PREFIX*audioplayer_tracks` `AT`
 									LEFT JOIN  `*PREFIX*audioplayer_albums` `AA` ON `AT`.`album_id`= `AA`.`id`
 									LEFT JOIN  `*PREFIX*audioplayer_artists` `AR` ON `AT`.`artist_id`= `AR`.`id`
+									LEFT JOIN  `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id`= `AG`.`id`
 						  			WHERE `AT`.`id` = ? AND `AT`.`user_id` = ?";	
 						$stmt = \OCP\DB::prepare($SQL);
 						$result = $stmt->execute(array($pTrackId, $this->userId));
@@ -313,20 +335,20 @@ class ScannerController extends Controller {
 						$albumId = $row['album_id'];
 						$artistName = $row['artistname'];
 						$artistId = $row['artist_id'];
+						$genreName = $row['genrename'];
 						$genreId = $row['genre_id'];
 						$newAlbumId = $albumId;
 						
-						$iGenreId=0;
-						if($pGenre != (string)$this->l10n->t('- choose -')){
-							$iGenreId = $this->writeGenreToDB($pGenre);
-						}
+						if($addGenre != '' && $addGenre != (string)$this->l10n->t('- choose -') && $addGenre != $genreName){
+							$genreId = $this->writeGenreToDB($addGenre);
+						}	
 						
 						if($addArtist != '' && $addArtist != (string)$this->l10n->t('- choose -') && $addArtist != $artistName){
-							$artistId = $this->writeArtistToDB($pArtist);
+							$artistId = $this->writeArtistToDB($addArtist);
 						}	
 
 						if($addAlbum != '' && $addAlbum != (string)$this->l10n->t('- choose -') && $addAlbum != $albumName){
-							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$iGenreId,$iArtistId);
+							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$genreId,$artistId);
 							
 							//check for other songs if not then delete album
 							$stmtCountAlbum = \OCP\DB::prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ?' );
@@ -336,9 +358,9 @@ class ScannerController extends Controller {
 								$stmt2 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 								$stmt2->execute(array($albumId, $this->userId));
 								
-								$SQL1="DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?";
-								$stmt3 = \OCP\DB::prepare($SQL1);
-								$stmt3->execute(array($albumId));
+								#$SQL1="DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?";
+								#$stmt3 = \OCP\DB::prepare($SQL1);
+								#$stmt3->execute(array($albumId));
 							}
 							
 							
@@ -368,9 +390,9 @@ class ScannerController extends Controller {
 					$returnData['albumid'] = $newAlbumId;
 					$returnData['oldalbumid'] = $albumId;
 					
-					$SQL="UPDATE `*PREFIX*audioplayer_tracks` SET `title`= ?, `album_id`= ?, `artist_id`= ?, `number`= ? WHERE `id` = ? AND `user_id` = ?";	
+					$SQL="UPDATE `*PREFIX*audioplayer_tracks` SET `title`= ?, `album_id`= ?, `artist_id`= ?, `number`= ?, `genre_id`= ? WHERE `id` = ? AND `user_id` = ?";	
 					$stmt = \OCP\DB::prepare($SQL);
-					$result = $stmt->execute(array($pTitle, $newAlbumId, $artistId,(int)$pTrack, $pTrackId, $this->userId));
+					$result = $stmt->execute(array($pTitle, $newAlbumId, $artistId,(int)$pTrack, $genreId, $pTrackId, $this->userId));
 						
 					$result = [
 						'status' => 'success',
@@ -444,7 +466,7 @@ class ScannerController extends Controller {
 #		if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
 #		}
-				
+
         $userView =  new View('/' . $this -> userId . '/files');
 		$audios_mp3 = $userView->searchByMime('audio/mpeg');
 		$audios_m4a = $userView->searchByMime('audio/mp4');
@@ -469,8 +491,28 @@ class ScannerController extends Controller {
 		$counter = 0;
 		$counter_new = 0;
 		$error_count = 0;
+		$error_file = 0;
 		$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
+		$cyrillic_support = $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
 
+		$TextEncoding 		= 'UTF-8';
+		$option_tag_id3v1   = false;  // Read and process ID3v1 tags
+		$option_tag_id3v2   = true;  // Read and process ID3v2 tags
+		$option_tag_lyrics3       = false;  // Read and process Lyrics3 tags
+		$option_tag_apetag        = false;  // Read and process APE tags
+		$option_tags_process      = true;  // Copy tags to root key 'tags' and encode to $this->encoding
+		$option_tags_html         = false;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
+
+		$getID3 = new \getID3;
+		$getID3->setOption(array('encoding'=>$TextEncoding, 
+								'option_tag_id3v1'=>$option_tag_id3v1, 
+								'option_tag_id3v2'=>$option_tag_id3v2,
+								'option_tag_lyrics3'=>$option_tag_lyrics3,
+								'option_tag_apetag'=>$option_tag_apetag,
+								'option_tags_process'=>$option_tags_process,
+								'option_tags_html'=>$option_tags_html
+								));
+								
 		foreach($audios as $audio) {
 		  	
 			if ($debug_detail == true) {
@@ -479,13 +521,39 @@ class ScannerController extends Controller {
 			
 			if($this->checkIfTrackDbExists($audio['fileid']) === false){
 				
-				if ($debug_detail == true) {
-					#\OCP\Util::writeLog('audioplayer', 'mp3 detail - track not in DB', \OCP\Util::DEBUG);
-				}
-
-				$TextEncoding = 'UTF-8';
-				$getID3 = new \getID3;
 				$ThisFileInfo = $getID3->analyze($userView->getLocalFile($audio['path']));
+			
+				// Cyrillic id3 workaround
+				// Tag is 1251 if there are 4+ upper half of ASCII table symbols glued together.
+				if($cyrillic_support == 'checked') {
+					#\OCP\Util::writeLog('audioplayer', 'cyrillic', \OCP\Util::DEBUG);				
+					// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
+					foreach (array('id3v1', 'id3v2') as $ttype) {
+						$ruTag = 0;
+						if (isset($ThisFileInfo['tags'][$ttype])) {
+							// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
+							foreach (array('album', 'artist', 'title', 'band', 'genre') as $tkey) {
+								if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
+									if (preg_match('#[\\xA8\\B8\\x80-\\xFF]{4,}#', iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]))) {
+										$ruTag = 1;
+										break;
+									}
+								}
+							}	
+							// Now make a correct conversion
+							if($ruTag == 1) {
+								foreach (array('album', 'artist', 'title', 'band') as $tkey) {
+									if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
+										$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]);
+										$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('Windows-1251', 'UTF-8', $ThisFileInfo['tags'][$ttype][$tkey][0]);
+									}
+								}
+							}
+						}
+					}
+				}				
+
+
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
 
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
@@ -596,7 +664,6 @@ class ScannerController extends Controller {
 			$counter++;
 			$this->abscount++;
 			$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
- 			
 			
 		}
 		
