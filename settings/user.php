@@ -15,11 +15,12 @@ use \OCA\audioplayer\AppInfo\Application;
 $app = new Application();
 $c = $app->getContainer();
 
-#$c->query('API')->addScript('public/settings-user');
+$c->query('API')->addScript('settings-user');
 #$c->query('API')->addStyle('settings-user');
 
 $tmpl = new \OCP\Template($c->query('AppName'), 'settings-user');
 $tmpl->assign('category', $c->query('Config')->getUserValue($c->query('UserId'), $c->query('AppName'), 'category'));
+$tmpl->assign('cyrillic', $c->query('Config')->getUserValue($c->query('UserId'), $c->query('AppName'), 'cyrillic'));
 
 #$tmpl->assign('ampacheKeys', $c->query('AmpacheUserMapper')->getAll($c->query('UserId')));
 #$tmpl->assign('URLGenerator', $c->query('URLGenerator'));
