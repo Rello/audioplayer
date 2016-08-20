@@ -1116,11 +1116,16 @@ Audios.prototype.editSong = function(evt){
 				+'<div class="edit-left"><label class="editDescr">'+t('audioplayer','Title')+'</label> <input type="text" placeholder="'+t('audioplayer','Title')+'" id="sTitle" style="width:45%;" value="' + jsondata.data.title + '" /><br />' 
 				+'<label class="editDescr">'+t('audioplayer','File')+'</label> <input type="text" placeholder="'+t('audioplayer','File')+'"  style="width:45%;" value="' + jsondata.data.localPath + '" readonly /><br />' 
 				+'<label class="editDescr">'+t('audioplayer','Track')+'</label> <input type="text" placeholder="'+t('audioplayer','Track')+'" id="sTrack" maxlength="2" style="width:10%;" value="' + jsondata.data.track + '" /> '+t('audioplayer','of')+' <input type="text" placeholder="'+t('audioplayer','Total')+'" id="sTracktotal" maxlength="2" style="width:10%;" value="' + jsondata.data.tracktotal + '" /><br />' 
-				+'<label class="editDescr">'+t('audioplayer','Existing Interprets')+'</label><select style="width:45%;" id="eArtist"></select>' 
-				+'<label class="editDescr">'+t('audioplayer','New Interpret')+'</label> <input type="text" placeholder="'+t('audioplayer','Interpret')+'" id="sArtist" style="width:45%;" value="" />' 
+
+				+'<label class="editDescr">'+t('audioplayer','Existing Artists')+'</label><select style="width:45%;" id="eArtist"></select>' 
+				+'<label class="editDescr">'+t('audioplayer','New Artist')+'</label> <input type="text" placeholder="'+t('audioplayer','Interpret')+'" id="sArtist" style="width:45%;" value="" />' 
+
 				+'<label class="editDescr">'+t('audioplayer','Existing Albums')+'</label><select style="width:45%;" id="eAlbum"></select>' 
 				+'<label class="editDescr">'+t('audioplayer','New Album')+'</label> <input type="text" placeholder="'+t('audioplayer','Album')+'" id="sAlbum" style="width:45%;" value="" />' 
-				+'<label class="editDescr">'+t('audioplayer','Genre')+'</label><select style="width:45%;" id="sGenre"></select>' 
+
+				+'<label class="editDescr">'+t('audioplayer','Existing Genres')+'</label><select style="width:45%;" id="eGenre"></select>' 
+				+'<label class="editDescr">'+t('audioplayer','New Genre')+'</label> <input type="text" placeholder="'+t('audioplayer','Genre')+'" id="sGenre" style="width:45%;" value="" />' 
+
 				+'<label class="editDescr">'+t('audioplayer','Year')+'</label> <input type="text" placeholder="'+t('audioplayer','Year')+'" id="sYear" maxlength="4" style="width:10%;" value="' + jsondata.data.year + '" /><br />' 
 				+'<label class="editDescr" style="width:190px;">'+t('audioplayer','Add as Albumcover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' 
 				+'</div><div class="edit-right">'+posterAction+'</div>'
@@ -1154,15 +1159,14 @@ Audios.prototype.editSong = function(evt){
 			$('#eAlbum').append(optalbums);
 			
 			var optgenres=[];
-			
-			$.each(jsondata.data.genres,function(i,el){
+			$(jsondata.data.genres).each(function(i,el){
 				if(jsondata.data.genre == el.name){
 					optgenres[i] = $('<option />').attr({'value':el.name,'selected':'selected'}).text(el.name);
 				}else{
 					optgenres[i] = $('<option />').attr('value',el.name).text(el.name);
 				}
 			});
-			$('#sGenre').append(optgenres);
+			$('#eGenre').append(optgenres);
 			
 			$this.loadActionPhotoHandlers();
 			$this.loadPhotoHandlers();
@@ -1186,7 +1190,7 @@ Audios.prototype.editSong = function(evt){
 				
 			$("#dialogSmall").dialog({
 				resizable : false,
-				title : t('audioplayer', 'Edit Song Information (ID3)'),
+				title : t('audioplayer', 'Edit track information (ID3)'),
 				width : 600,
 				modal : true,
 				buttons : [{
@@ -1217,7 +1221,8 @@ Audios.prototype.editSong = function(evt){
 									imgsrc: $('#imgsrc').val(),
 									imgmime: $('#imgmimetype').val(),
 									addcover: $('#sAlbumCover').is(':checked'),
-									genre: $('#sGenre').val()
+									genre: $('#sGenre').val(),
+									existgenre: $('#eGenre').val()
 								},
 								success : function(jsondata) {
 										if(jsondata.status === 'success'){
@@ -1736,7 +1741,6 @@ Audios.prototype.scanSend = function() {
 				$('#audios_import_process_message').text('').hide();
 				this.loadAlbums();
 				this.loadPlaylists();
-				this.loadGenres();
 			}else{
 				$('#audios_import_progressbar').progressbar('option', 'value', 100);
 				//$('#audios_import_progressbar > div').css('background-color', '#FF2626');
@@ -2008,6 +2012,8 @@ $(document).ready(function() {
 						myAudios.AudioPlayer.actions.play(0);
 						myAudios.AudioPlayer.actions.stop();
 					}
+					$("#category_selector").val('');
+					$('#myCategory').html('');
 					$('#alben').addClass('bAktiv');
 					$('#myPlayList li').removeClass('activeIndiPlaylist');
 					myAudios.AlbumContainer.html('');
@@ -2034,6 +2040,7 @@ $(document).ready(function() {
 					});
 					$("#dialogSmall").html('');
 					oDialog.dialog("close");
+					$('#myCategory').html('');
 				}
 			}],
 		});
@@ -2046,6 +2053,8 @@ $(document).ready(function() {
 			myAudios.AudioPlayer.actions.play(0);
 			myAudios.AudioPlayer.actions.stop();
 		}
+		$("#category_selector").val('');
+		$('#myCategory').html('');
 		$('#alben').addClass('bAktiv');
 		$('#myPlayList li').removeClass('activeIndiPlaylist');
 		myAudios.AlbumContainer.html('');

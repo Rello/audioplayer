@@ -123,18 +123,6 @@ $(document).ready(function() {
 
 		OCA.Files.fileActions.register('audio/ogg', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
 		OCA.Files.fileActions.setDefault('audio/ogg', 'View');
-
-		OCA.Files.fileActions.registerAction({
-			name: 'audioplayer play',
-			displayName: t('audioplayer', 'Play'),
-			mime: 'audio/wav',
-			permissions: OC.PERMISSION_READ,
-			icon: function () {return OC.imagePath('core', 'actions/sound');},
-			actionHandler: audioPlayer.onView
-		});
-
-		OCA.Files.fileActions.register('audio/wav', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
-		OCA.Files.fileActions.setDefault('audio/wav', 'View');
 		
 		if($('#header').hasClass('share-file')){
 			
@@ -174,7 +162,6 @@ $(document).ready(function() {
 					 
 				});
 			});
-				
 		}
 			
 			
