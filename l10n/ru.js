@@ -24,10 +24,8 @@ OC.L10N.register(
 	"Year" : "Год",
 	"Album" : "Альбом",
 	"Edit Song from Playlist" : "Редактировать информацию о песне",
-	"Edit Song Information (ID3)" : "Редактирование информации о песне (ID3)",
+	"Edit track information (ID3)" : "Редактирование информации о песне (ID3)",
 	"Missing Permissions for editing ID3 Tags of song!" : "Для редактирования информации (ID3) недостаточно полномочий!",
-	"Existing Interprets" : "Исполнитель из списка",
-	"New Interpret" : " Новый исполнитель",
 	"Existing Albums" : "Альбом из списка",
 	"New Album" : "Новый альбом",
 	"Genre" : "Стиль",
@@ -47,6 +45,10 @@ OC.L10N.register(
 	"Are you sure? All music database entries will be deleted!" : "Выполнить сброс? База данных музыки будет очищена.",
 	"Close" : "Закрыть",
 	"Play" : "Запустить",
-	"Save" : "Сохранить"
-},
+	"Save" : "Сохранить",
+	"Existing Artists" : "Vorhandene Künstler",
+	"New Artist" : " Neuer Künstler",
+	"Existing Genres" : "Vorhandenes Genres",
+	"New Genre" : " Neues Genre"
+	},
 "");

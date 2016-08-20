@@ -1,11 +1,7 @@
 {"translations":{
-
-"Crazy russians" : "yes",
-
 "MP3 Player" : "Музыка",
 "Audio Player" : "Музыка",
-"Albums" : "Альбомы",
-"Create new playlist" : "Новый список воспроизведения",
+"Create new playlist" : "Создать список воспроизв.",
 "GO" : "Поехали!",
 "Scan for new audio files" : "Найти новые аудиофайлы",
 "Nr" : "№",
@@ -34,10 +30,16 @@
 "Shuffle playlist" :"Воспроизводить в случайном порядке",
 "Playlists" : "Списки воспроизведения",
 "Music" : "Музыка",
-"Genres" : "Стили",
-"Year" : "Год",
-"ID3 Groups" : "Категории ID3",
 "- choose -" : "- выберите -",
 "Errors: " : "Проблемы: ",
-"If rescan does not solve this problem the files are broken" : "Попробуйте выполнить сброс базы данных музыки, если не поможет, значит что-то не так с этим аудиофайлом (-файлами)."
+"If rescan does not solve this problem the files are broken" : "Попробуйте выполнить сброс базы данных музыки, если не поможет, значит что-то не так с этим аудиофайлом (-файлами).",
+"Years" : "Года",
+"Selection" : "Категории",
+"All" : "Всё подряд",
+"Unknown" :"Unbekannt",
+"Artist" :"Künstler",
+"Artists" : "Исполнители",
+"Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Если русские названия выглядят нечитаемо, включите эту опцию. Это слегка замедлит индексацию.",
+"Cyrillic Support:" : "Поддержка кириллицы:",
+"==> Details" : "==> Подробности"
 },"pluralForm":""}

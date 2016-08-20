@@ -32,5 +32,14 @@
 "Music" : "音樂",
 "- choose -" : "- 選擇 -",
 "Errors: " : "錯誤: ",
-"If rescan does not solve this problem the files are broken" : "請再重新搜尋，如果錯誤仍發生，表示檔案或ID3標籤有毁損。"
+"If rescan does not solve this problem the files are broken" : "請再重新搜尋，如果錯誤仍發生，表示檔案或ID3標籤有毁損。",
+"Years" : "Jahre",
+"Selection" : "Auswahl",
+"All" : "Alle",
+"Unknown" :"Unbekannt",
+"Artist" :"Künstler",
+"Artists" :"Künstler",
+"Cyrillic Support:" : "Kyrillische Zeichen:",
+"==> Details" : "==> Details",
+"Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Wenn Kyrillische Zeichen nicht korrekt erkannt werden, kann dieses Setting aktiviert werden. Die Indizierung ist dadurch langsamer"
 },"pluralForm":""}

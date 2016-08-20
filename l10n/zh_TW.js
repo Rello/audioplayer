@@ -24,7 +24,7 @@ OC.L10N.register(
 	"Year" : "年份",
 	"Album" : "專輯",
 	"Edit Song from Playlist" : "由播放清單編輯",
-	"Edit Song Information (ID3)" : "編輯ID3",
+	"Edit track information (ID3)" : "編輯ID3",
 	"Missing Permissions for editing ID3 Tags of song!" : "無編輯ID3的權限!",
 	"Existing Interprets" : "現有的演出者",
 	"New Interpret" : " 更新演出者",
@@ -45,6 +45,10 @@ OC.L10N.register(
 	"Resetting finished!" : "重設完成!",
 	"Are you sure? All music database entries will be deleted!" : "資料庫將被重設，請確認!",
 	"Close" : "關閉",
-	"Save" : "儲存"
+	"Save" : "儲存",
+	"Existing Artists" : "Vorhandene Künstler",
+	"New Artist" : " Neuer Künstler",
+	"Existing Genres" : "Vorhandene Genres",
+	"New Genre" : " Neues Genre"
 },
 "");
