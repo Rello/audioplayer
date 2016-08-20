@@ -719,16 +719,11 @@ class ScannerController extends Controller {
 	
 	private function writeAlbumToDB($sAlbum,$sYear,$iGenreId,$iArtistId){
 		
-			
 			if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $this->userId, 'name' => $sAlbum])) {
-					
 				$insertid = $this->db->getInsertId('*PREFIX*audioplayer_albums');
-				
-				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `genre_id`= ? , `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );
-				$stmt->execute(array($sYear, '', $iArtistId, $insertid, $this->userId));
-				
+				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );
+				$stmt->execute(array($sYear, $iArtistId, $insertid, $this->userId));
 				$this->iAlbumCount++;
-				
 				return $insertid;
 			}else{
 				$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ?' );
@@ -828,6 +823,11 @@ class ScannerController extends Controller {
 			
 		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?';
 		$stmt = $this->db->prepareQuery($SQL);
+		
+		if (strlen($aTrack['title']) > 256) {
+			$aTrack['title'] = substr($aTrack['title'], 0, 256);
+		}
+		
 		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype'],$aTrack['genre'],$aTrack['year']));
 		$row = $result->fetchRow();
 		if(isset($row['id'])){
