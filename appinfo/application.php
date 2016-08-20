@@ -105,7 +105,8 @@ class Application extends App {
 			$c->query('Request'),
 			$c->query('UserId'),
 			$c->query('L10N'),
-			$c->query('ServerContainer')->getDb()
+			$c->query('ServerContainer')->getDb(),
+			$c->query('Config')
 			);
 		});
 		$container->registerService('TimerController', function(IContainer $c) {
