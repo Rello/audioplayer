@@ -29,9 +29,9 @@ Share-Player & Action Menu:<br>
 1.1.0 (in progress)
 - new navigator: dynamic lists for Artists, Genres, Years (more to come)
 - redesign of backend table structures
-- proper handling of artists, album artists, ...
+- proper handling of artists, album artists, genres...
 - RU localization
-- navigator selections remain after app-restart (user settings)
+- navigator views remain after app-restart (user settings)
 
 1.0.3
 - fix: Genre not always shown #35
