@@ -123,7 +123,7 @@ i#scanAudiosFirst{
 	color:#999;
 }
 
-#myPlayList li, #albenoverview li, #myGenre li{
+#myPlayList li, #albenoverview li, #myCategory li{
 	cursor: pointer;
 	font-size:14px;
 	line-height:30px;
@@ -179,7 +179,7 @@ i#scanAudiosFirst{
 }
 
 #myPlayList li span.info-cover,
-#myGenre li span.info-cover,
+#myCategory li span.info-cover,
 #alben span.info-cover
 {
 	position:relative;
@@ -197,7 +197,7 @@ i#scanAudiosFirst{
 	margin-right:5px;
 }
 #myPlayList li span.pl-name,
-#myGenre li span.pl-name{
+#myCategory li span.pl-name{
 	float:left;
 	position:relative;
 	width:125px;
@@ -208,12 +208,12 @@ i#scanAudiosFirst{
 	
 }
 #myPlayList li:hover,
-#myGenre li:hover{
+#myCategory li:hover{
 	background-color:#e7e7e7;
 }
 
 #myPlayList li a.icon-rename,
-#myGenre li a.icon-rename{
+#myCategory li a.icon-rename{
 	float:left;
 	position:relative;
 	width:24px;
@@ -225,13 +225,13 @@ i#scanAudiosFirst{
 }
 
 #myPlayList li:hover a.icon-rename,
-#myGenre li:hover a.icon-rename{
+#myCategory li:hover a.icon-rename{
 	opacity:1;
 	background-color:transparent;
 }
 
 #myPlayList li span.counter,
-#myGenre li span.counter{
+#myCategory li span.counter{
 	float:right;
 	right:10px;
 	margin-top:2px;
@@ -280,7 +280,7 @@ i#scanAudiosFirst{
 #myPlayList li.activeIndiPlaylist, 
 #alben:hover, 
 #alben.bAktiv,
-#myGenre li:hover,{
+#myCategory li:hover,{
 	font-weight:bold;
 	
 }
