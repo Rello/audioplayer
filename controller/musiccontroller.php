@@ -203,7 +203,11 @@ class MusicController extends Controller {
 	}
 	
 	private function loadArtistsToAlbum($iAlbumId){
-    	$stmt = $this->db->prepareQuery( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ?' );
+		# load albumartist if available
+		# if no albumartist, we will load all artists from the tracks
+		# if all the same - display it as album artist
+		# if different track-artists, display "various"
+    		$stmt = $this->db->prepareQuery( 'SELECT `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ?' );
 		$result = $stmt->execute(array($iAlbumId));
 		$AArtist = $result->fetchRow();
 		if ((int)$AArtist['artist_id'] !== 0){
