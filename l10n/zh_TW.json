@@ -24,7 +24,7 @@
 "Length" : "時間長度",
 "Opt" : "Opt",
 "Sorting Playlist success! Playlist reloaded!" : "播放清單排序成功! 重新載入播放清單!",
-"Various Artists" :"多位演出者",
+"Various Artists" :"多位藝人",
 "Various" : "多位",
 "Repeat playlist" :"重覆播放",
 "Shuffle playlist" :"隨機播放",
@@ -32,5 +32,14 @@
 "Music" : "音樂",
 "- choose -" : "- 選擇 -",
 "Errors: " : "錯誤: ",
-"If rescan does not solve this problem the files are broken" : "請再重新搜尋，如果錯誤仍發生，表示檔案或ID3標籤有毁損。"
+"If rescan does not solve this problem the files are broken" : "請再重新搜尋，如果錯誤仍發生，表示檔案或ID3標籤有毁損。",
+"Years" : "年份",
+"Selection" : "Auswahl",
+"All" : "全部",
+"Unknown" :"不詳",
+"Artist" :"藝人",
+"Artists" :"多位藝人",
+"Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "啟用西里爾文支援",
+"Cyrillic Support:" : "支援西里爾文:",
+"==> Details" : "==> 詳情"
 },"pluralForm":""}
