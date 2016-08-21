@@ -43,7 +43,7 @@ OC.L10N.register(
 	"Resetting finished!" : "重設完成!",
 	"Are you sure? All music database entries will be deleted!" : "資料庫將被重設，請確認!",
 	"Close" : "關閉",
-	"Play" : "撥放",
+	"Play" : "播放",
 	"Save" : "儲存",
 	"Existing Artists" : "Vorhandene Künstler",
 	"New Artist" : " 新藝人",
