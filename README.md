@@ -31,7 +31,9 @@ Share-Player & Action Menu:<br>
 - redesign of backend table structures
 - proper handling of artists, album artists, genres...
 - RU localization
-- navigator views remain after app-restart (user settings)
+- special scanner setting for cyrillic characters (see personal settings)
+- navigator views remembered after app restart
+- fix: ID3 editor dropdowns
 
 1.0.3
 - fix: Genre not always shown #35
