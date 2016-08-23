@@ -44,7 +44,7 @@ var audioPlayer = {
 
 		}
 		audioPlayer.mime = data.$file.attr('data-mime');
-		data.$file.find('.thumbnail').html('<i class="ioc ioc-pause"  style="color:#fff;margin-left:10px; text-align:center;line-height:32px;"></i><i class="ioc ioc-play"  style="display:none;color:#fff;margin-left:10px; text-align:center;line-height:32px;"></i>');
+		data.$file.find('.thumbnail').html('<i class="ioc ioc-pause"  style="color:#fff;margin-left:10px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"></i><i class="ioc ioc-play"  style="display:none;color:#fff;margin-left:10px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"></i>');
 			
 		if(audioPlayer.player == null){
 			soundManager.setup({
