@@ -97,7 +97,7 @@ class ScannerController extends Controller {
 			if(isset($ThisFileInfo['comments']['artist'][0])){
 				$resultData['artist'] = $ThisFileInfo['comments']['artist'][0];
 			}
-			
+
 			$resultData['year'] = '';
 			if(isset($ThisFileInfo['comments']['year'][0])){
 				$resultData['year'] = $ThisFileInfo['comments']['year'][0];
@@ -154,23 +154,23 @@ class ScannerController extends Controller {
 				 			";
 				
 			$stmt = $this->db->prepareQuery($SQL);
-			$result = $stmt->execute(array($this->userId));
-			
+			$result = $stmt->execute(array($this->userId));			
 			$rowAlbums = $result->fetchAll();
 			array_unshift($rowAlbums,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
-			 $resultData['albums']=$rowAlbums;
+			$resultData['albums']=$rowAlbums;
 			 
-			 $SQL1="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_artists` 
+
+			$SQL1="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_artists` 
 				 			WHERE  `user_id` = ? 
 				 			ORDER BY `name` ASC
 				 			";
 				
 			$stmt1 = $this->db->prepareQuery($SQL1);
-			$result1 = $stmt1->execute(array($this->userId));
-			
+			$result1 = $stmt1->execute(array($this->userId));			
 			$rowArtists = $result1->fetchAll();
 			array_unshift($rowArtists,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
 			$resultData['artists'] = $rowArtists;
+
 
 			$SQL2="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_genre` 
 				 			WHERE  `user_id` = ? 
@@ -179,7 +179,6 @@ class ScannerController extends Controller {
 				
 			$stmt2 = $this->db->prepareQuery($SQL2);
 			$result2 = $stmt2->execute(array($this->userId));
-			
 			$rowGenre = $result2->fetchAll();
 			array_unshift($rowGenre,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
 			$resultData['genres'] = $rowGenre;
@@ -261,19 +260,28 @@ class ScannerController extends Controller {
 		$path= $userView->getPath($songFileId);
 		
 		if(\OC\Files\Filesystem::isUpdatable($path)){
-			$addAlbum = $pExistAlbum;
 			if($pAlbum != ''){
-				$addAlbum =  $pAlbum;
+				$addAlbum = $pAlbum;
+			} elseif ($pExistAlbum != (string)$this->l10n->t('- choose -') && $pExistAlbum != (string)$this->l10n->t('Unknown')) { 
+				$addAlbum = $pExistAlbum;
+			} else {
+				$addAlbum = '';
 			}
 			
-			$addArtist = $pExistArtist;
 			if($pArtist != ''){
-				$addArtist =  $pArtist;
+				$addArtist = $pArtist;
+			} elseif ($pExistArtist != (string)$this->l10n->t('- choose -') && $pExistArtist != (string)$this->l10n->t('Unknown')) { 
+				$addArtist = $pExistArtist;
+			} else {
+				$addArtist = '';
 			}
-
-			$addGenre = $pExistGenre;
+			
 			if($pGenre != ''){
-				$addGenre =  $pGenre;
+				$addGenre = $pGenre;
+			} elseif ($pExistGenre != (string)$this->l10n->t('- choose -') && $pExistGenre != (string)$this->l10n->t('Unknown')) { 
+				$addGenre = $pExistGenre;
+			} else {
+				$addGenre = '';
 			}
 				
 			$resultData=[
@@ -339,16 +347,41 @@ class ScannerController extends Controller {
 						$genreId = $row['genre_id'];
 						$newAlbumId = $albumId;
 						
-						if($addGenre != '' && $addGenre != (string)$this->l10n->t('- choose -') && $addGenre != $genreName){
+
+						if($pGenre != ''){
+							$addGenre = $pGenre;
+						} elseif ($pExistGenre != (string)$this->l10n->t('- choose -')) { 
+							$addGenre = $pExistGenre;
+						} else {
+							$addGenre = '';
+						}
+
+						if($addGenre != '' && $addGenre != $genreName){
 							$genreId = $this->writeGenreToDB($addGenre);
 						}	
-						
-						if($addArtist != '' && $addArtist != (string)$this->l10n->t('- choose -') && $addArtist != $artistName){
-							$artistId = $this->writeArtistToDB($addArtist);
-						}	
+			
+						if($pArtist != ''){
+							$addArtist = $pArtist;
+						} elseif ($pExistArtist != (string)$this->l10n->t('- choose -')) { 
+							$addArtist = $pExistArtist;
+						} else {
+							$addArtist = '';
+						}
 
-						if($addAlbum != '' && $addAlbum != (string)$this->l10n->t('- choose -') && $addAlbum != $albumName){
-							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$genreId,$artistId);
+						if($addArtist != '' && $addArtist != $artistName){
+							$artistId = $this->writeArtistToDB($addArtist);
+						}
+
+						if($pAlbum != ''){
+							$addAlbum = $pAlbum;
+						} elseif ($pExistAlbum != (string)$this->l10n->t('- choose -')) { 
+							$addAlbum = $pExistAlbum;
+						} else {
+							$addAlbum = '';
+						}
+
+						if($addAlbum != '' && $addAlbum != $albumName){
+							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$artistId);
 							
 							//check for other songs if not then delete album
 							$stmtCountAlbum = \OCP\DB::prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ?' );
@@ -357,25 +390,11 @@ class ScannerController extends Controller {
 							if((int)$rowAlbum['ALBUMCOUNT'] === 1){
 								$stmt2 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 								$stmt2->execute(array($albumId, $this->userId));
-								
-								#$SQL1="DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?";
-								#$stmt3 = \OCP\DB::prepare($SQL1);
-								#$stmt3->execute(array($albumId));
 							}
 							
 							
 						}
-						
-						#if($addAlbum == $albumName && $iGenreId > 0){
-						#	$stmt = \OCP\DB::prepare( 'UPDATE `*PREFIX*audioplayer_albums` SET `genre_id` = ? WHERE `id` = ? and `user_id` = ?' );
-						#	$result = $stmt->execute(array($iGenreId, $newAlbumId, $this->userId));
-						#}
-						
-						
-						#if($albumId > 0 && $artistId > 0){
-						#	$this->writeArtistToAlbum($newAlbumId,$artistId);
-						#}
-						
+												
 						$returnData['imgsrc']='';
 						$returnData['prefcolor'] = '';
 						if($pImgMime != '' && $addCoverToAlbum == 'true'){
@@ -391,7 +410,7 @@ class ScannerController extends Controller {
 					$returnData['oldalbumid'] = $albumId;
 					
 					$SQL="UPDATE `*PREFIX*audioplayer_tracks` SET `title`= ?, `album_id`= ?, `artist_id`= ?, `number`= ?, `genre_id`= ? WHERE `id` = ? AND `user_id` = ?";	
-					$stmt = \OCP\DB::prepare($SQL);
+					$stmt = $this->db->prepareQuery($SQL);
 					$result = $stmt->execute(array($pTitle, $newAlbumId, $artistId,(int)$pTrack, $genreId, $pTrackId, $this->userId));
 						
 					$result = [
@@ -589,13 +608,19 @@ class ScannerController extends Controller {
 				}
 				$iArtistId= $this->writeArtistToDB($artist);
 				
+				# write albumartist if available
+				# if no albumartist, no artist is stored
+				# in musiccontroller loadArtistsToAlbum() we will use this
+				# if no album artist is stored, load all artists from the tracks
+				# if all the same - display it as album artist
+				# if different track-artists, display "various"
 				# if Album Artist is maintained
 				if(isset($ThisFileInfo['comments']['band'][0])){
 					$album_artist=$ThisFileInfo['comments']['band'][0];
 					$iAlbumArtistId= $this->writeArtistToDB($album_artist);
-					$iAlbumId = $this->writeAlbumToDB($album,$year,'',$iAlbumArtistId);
+					$iAlbumId = $this->writeAlbumToDB($album,$year,$iAlbumArtistId);
 				} else {
-					$iAlbumId = $this->writeAlbumToDB($album,$year,'','');
+					$iAlbumId = $this->writeAlbumToDB($album,$year,NULL);
 				}
 
 				$name = $audio['name'];
@@ -694,12 +719,12 @@ class ScannerController extends Controller {
 	
 	private function writeCoverToAlbum($iAlbumId,$sImage,$aBgColor){
     		
-    	$stmtCount = \OCP\DB::prepare( 'SELECT `cover` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
+    	$stmtCount = $this->db->prepareQuery( 'SELECT `cover` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 		$resultCount = $stmtCount->execute(array ($iAlbumId, $this->userId));
 		$row = $resultCount->fetchRow();
 		if($row['cover'] === null){
 			$aBgColor=json_encode($aBgColor);
-			$stmt = \OCP\DB::prepare( 'UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?' );
+			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?' );
 			$result = $stmt->execute(array($sImage, $aBgColor, $iAlbumId, $this->userId));
 			return true;
 		}else{
@@ -713,16 +738,22 @@ class ScannerController extends Controller {
 	 *@param string $sAlbum
 	 *@param string $sYear
 	 *@param int $iGenreId
+	 *@param int $iArtistId
 	 * 
 	 * @return int id
 	 */
 	
-	private function writeAlbumToDB($sAlbum,$sYear,$iGenreId,$iArtistId){
+	private function writeAlbumToDB($sAlbum,$sYear,$iArtistId){
 		
 			if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $this->userId, 'name' => $sAlbum])) {
 				$insertid = $this->db->getInsertId('*PREFIX*audioplayer_albums');
-				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );
-				$stmt->execute(array($sYear, $iArtistId, $insertid, $this->userId));
+				if ($iArtistId) {
+					$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );
+					$stmt->execute(array($sYear, $iArtistId, $insertid, $this->userId));
+				} else {
+					$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ? WHERE `id` = ? AND `user_id` = ?' );
+					$stmt->execute(array($sYear, $insertid, $this->userId));
+				} 
 				$this->iAlbumCount++;
 				return $insertid;
 			}else{
