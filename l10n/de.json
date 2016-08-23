@@ -39,7 +39,7 @@
 "Unknown" :"Unbekannt",
 "Artist" :"Künstler",
 "Artists" :"Künstler",
-"Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Wenn Kyrillische Zeichen nicht korrekt erkannt werden, kann dieses Setting aktiviert werden. Die Indizierung ist dadurch langsamer",
+"Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Wenn Kyrillische Zeichen nicht korrekt erkannt werden, kann diese Einstellung aktiviert werden. Die Indizierung ist dadurch langsamer",
 "Cyrillic Support:" : "Kyrillische Zeichen:",
 "==> Details" : "==> Details"
 },"pluralForm":""}
