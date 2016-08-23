@@ -9,7 +9,7 @@
 "Interpret" : "Исполняет",
 "Album" : "Альбом",
 "Scan for audio files" : "Найти аудиофайлы",
-"Start scanning ..." : "Начать поиск",
+"Start scanning ..." : "[ Начать поиск ]",
 "Scanning finished!" : "Поиск окончен!",
 "Audios found: " : " Найдено аудиофайлов: ",
 "Albums found: " : " Найдено альбомов: ",
@@ -36,10 +36,14 @@
 "Years" : "Года",
 "Selection" : "Категории",
 "All" : "Всё подряд",
-"Unknown" :"Unbekannt",
-"Artist" :"Künstler",
+"Unknown" :"Неизвестный",
+"Artist" :"Исполнитель",
 "Artists" : "Исполнители",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Если русские названия выглядят нечитаемо, включите эту опцию. Это слегка замедлит индексацию.",
 "Cyrillic Support:" : "Поддержка кириллицы:",
-"==> Details" : "==> Подробности"
+"==> Details" : "==> Подробности",
+
+
+"Albums" : "Альбомы",
+"Genres" : "Стили"
 },"pluralForm":""}

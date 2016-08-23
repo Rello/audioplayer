@@ -12,7 +12,7 @@ OC.L10N.register(
 	"Sort modus active" : "Включено упорядочивание",
 	"Delete playlist success!" : "Список воспроизведения удалён!",
 	"Rename Playlist" : "Переименовать список воспроизведения",
-	"Start scanning ..." : "[=Начать поиск=]",
+	"Start scanning ..." : "Начать поиск ...",
 	"Scanning finished! New Audios found!" :"Поиск окончен! Новые аудиофайлы обнаружены.",
 	"Yes" : "Да",
 	"No" : "Нет",
@@ -46,9 +46,9 @@ OC.L10N.register(
 	"Close" : "Закрыть",
 	"Play" : "Запустить",
 	"Save" : "Сохранить",
-	"Existing Artists" : "Vorhandene Künstler",
-	"New Artist" : " Neuer Künstler",
-	"Existing Genres" : "Vorhandenes Genres",
-	"New Genre" : " Neues Genre"
+	"Existing Artists" : "Исполнитель из списка",
+	"New Artist" : "Новый исполнитель",
+	"Existing Genres" : "Стиль из списка",
+	"New Genre" : "Новый стиль"
 	},
 "");
