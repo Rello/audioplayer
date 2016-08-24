@@ -1,65 +1,51 @@
-#![](https://github.com/z000ao8q/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
-Albums and Playlists for mp3 & m4a files within a nice, animated cover art navigation.<br>
-One-Click-Play from the file browser or shared link.<br>
-A pure player. No backends or other overhead...
+#![](https://github.com/Rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
+Albums and playlists for MP3 and MP4 files within a nice, animated cover art navigation.<br>
+One Click Play from the file browser and shared link.<br>
+A pure player. No backends or other overhead.
 
-![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_main.png)<br>
-Playlists & Genres:<br>
-![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_lists.png)<br>
+![](https://github.com/Rello/screenshots/blob/master/audioplayer_main.png)<br>
 
-Share-Player & Action Menu:<br>
-![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_share.png)![](https://github.com/z000ao8q/screenshots/blob/master/audioplayer_actions.png)<br>
+Playlists and Selection<br>
+![](https://github.com/Rello/screenshots/blob/master/audioplayer_lists.png)<br>
 
-##Features
-- Animated Album view
-- Various dynamic views (Playlists, Artist, Genre, Year, All)
-- Scanning & Resetting Library & Playlist editing in UI
-- Editing ID3 Tags (incl. picture)
+Share Player and Action Menu<br>
+![](https://github.com/Rello/screenshots/blob/master/audioplayer_share.png) ![](https://github.com/Rello/screenshots/blob/master/audioplayer_actions.png)<br>
+
+## Features
+- Animated album view
+- Various dynamic views (playlists, artist, genre, year, all)
+- Scanning and resetting music library
+- Playlist editing in the UI
+- Editing ID3 tags (incl. picture)
 - Mobile view support
-- One-Click-Play from file browser
+- One Click Play from file browser
 - Play shared audiofiles directly
 
-###Filetypes
-- mp3, m4a, ogg, wav
+## Supported Formats
+- MP3 (`.mp3` – `audio/mpeg`)
+- MP4 (`.m4a`/`.m4b` – `audio/mp4`)
+- Ogg Vorbis (`.ogg` – `audio/ogg`)
+- Waveform Audio (`.wav` – `audio/wav`)
 
-###Languages
-- de, de_DE, ru, zh_TW
+## Languages
+- en, de, de_DE, ru, zh_TW
 
-##Changelog
-1.1.0 (in progress)
-- new navigator: dynamic lists for Artists, Genres, Years (more to come)
-- redesign of backend table structures
-- proper handling of artists, album artists, genres...
-- RU localization
-- special scanner setting for cyrillic characters (see personal settings)
-- navigator views remembered after app restart
-- fix: ID3 editor dropdowns
+## Installation
+- [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please allow experimental apps in `/config/config.php`)
+- [Nextcloud App Store](https://apps.nextcloud.com/) (app store in beta stage)
 
-1.0.3
-- fix: Genre not always shown #35
-- fix: Album not rearranged on navigation show/hide #36
-- fix: display issues on small (phone) screens #36
-- fix: cover art on sharing screen #37
-- fix: various display improvements
+## Bugs and Feature Requests
 
-1.0.2
-- fix: one-click-play #22
-- fix: special characters in filenames #26
-- fix: library reset does not remove playlists #30
-- enhancement: fix soundbar when scrolling #25
-- enhancement: add file option dropdown entry
-- enhancement: use reduced soundmanager-js for one-click-play
+Please report bug or feature request using the [GitHub issue tracking system](https://github.com/Rello/audioplayer/issues) only!
 
-history:
-https://github.com/Rello/audioplayer/releases
+## Changelog
 
+Please read the [full release history](https://github.com/Rello/audioplayer/blob/master/CHANGELOG.md).
 
-##Installation
-via App Store => Multimedia => Experimental Apps
+## Maintainers
+- [Marcel Scherello](https://github.com/Rello) (project leader)
+- [Thomas Marx](https://github.com/xraMsamohT)
 
-##Maintainer
-Marcel Scherello<br>
-
-##Note
-This is the rework of the former "MP3 Player" app which is not maintained anymore. <br>
-Thanks to Sebastian Döll for the awesome initial work
+## Note
+This is the rework of the former [MP3 Player](https://github.com/libasys/audios) app which is not maintained anymore.<br>
+Thanks to [Sebastian Döll](https://github.com/libasys) for the awesome initial work.
