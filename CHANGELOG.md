@@ -1,4 +1,4 @@
-1.1.0 (in progress)
+1.1.0
 - new navigator: dynamic lists for artists, genres, years (more to come)
 - redesign of backend table structures
 - proper handling of artists, album artists, genres
