@@ -5,6 +5,7 @@
 - RU localization
 - special scanner setting for cyrillic characters (see personal settings)
 - navigator views remembered after app restart
+- better visible playing indicators in files app
 - fix: ID3 editor dropdowns
 
 1.0.3
