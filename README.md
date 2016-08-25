@@ -36,7 +36,7 @@ Share Player and Action Menu<br>
 
 ## Bugs and Feature Requests
 
-Please report bug or feature request using the [GitHub issue tracking system](https://github.com/Rello/audioplayer/issues) only!
+Please report bugs or feature request using the [GitHub issue tracking system](https://github.com/Rello/audioplayer/issues) only!
 
 ## Changelog
 
