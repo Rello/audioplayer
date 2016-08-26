@@ -39,7 +39,7 @@ class AudioStream {
 	function __construct($filePath,$user=null) {
 		
 		if(is_null($user) || $user === ''){
-			$user = \OCP\User::getUser();
+			$user = \OC::$server->getUserSession()->getUser()->getUID();
 		}	
 		$this->userView = new View('/' . $user . '/files');	
 		
@@ -87,7 +87,7 @@ class AudioStream {
 				header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 				exit ;
 			}
-			if ($range == '-') {
+			if ($range === '-') {
 				$c_start = $this -> iSize - substr($range, 1);
 			} else {
 				$range = explode('-', $range);
