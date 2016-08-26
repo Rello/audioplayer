@@ -46,6 +46,10 @@ Please read the [full release history](https://github.com/Rello/audioplayer/blob
 - [Marcel Scherello](https://github.com/Rello) (project leader)
 - [Thomas Marx](https://github.com/xraMsamohT)
 
+## License
+
+All contributions to this repository from August, 26 2016 on are considered to be licensed under the AGPLv3 or any later version.
+
 ## Note
 This is the rework of the former [MP3 Player](https://github.com/libasys/audios) app which is not maintained anymore.<br>
 Thanks to [Sebastian Döll](https://github.com/libasys) for the awesome initial work.
