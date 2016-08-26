@@ -130,8 +130,12 @@ class Application extends App {
 			return $server->getURLGenerator();
 		});
 		
+#		$container -> registerService('UserId', function(IContainer $c) {
+#			return \OCP\User::getUser();
+#		});
 		$container -> registerService('UserId', function(IContainer $c) {
-			return \OCP\User::getUser();
+			$user = \OC::$server->getUserSession()->getUser();
+			if ($user) return $user->getUID();
 		});
 		
 		$container -> registerService('L10N', function(IContainer $c) {

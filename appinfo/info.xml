@@ -4,9 +4,9 @@
 	<name>Audio Player</name>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
-	<description>Albums and playlists for mp3 and m4a files within a nice, animated cover art navigation.
+	<description>Albums and Playlists for mp3 and m4a files within a nice, animated cover-art navigation.
 	
-One Click Play from the file browser or shared link.
+One-Click-Play from the file-browser or shared link.
 
 A pure player. No backends or other overhead...</description>
 <version>1.1.0</version>
@@ -17,5 +17,5 @@ A pure player. No backends or other overhead...</description>
 		<php min-version="5.4"/>
 		<owncloud min-version="8.1" max-version="9.2"/>
 </dependencies>
-<bugs>https://github.com/rello/audioplayer/issues</bugs>
+<bugs>https://github.com/z000ao8w/audioplayer/issues</bugs>
 </info>
