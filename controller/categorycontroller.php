@@ -153,7 +153,7 @@ class CategoryController extends Controller {
 	}
 	
 	private function generateTextColor($calendarcolor) {
-		if(substr_count($calendarcolor, '#') == 1) {
+		if(substr_count($calendarcolor, '#') === 1) {
 			$calendarcolor = substr($calendarcolor,1);
 		}
 		$red = hexdec(substr($calendarcolor,0,2));

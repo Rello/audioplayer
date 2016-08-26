@@ -61,9 +61,10 @@ class MusicController extends Controller {
 			$user = $rootLinkItem['uid_owner'];
 		   
 			// Setup filesystem
-			\OCP\JSON::checkUserExists($user);
-			\OC_Util::tearDownFS();
-			\OC_Util::setupFS($user);
+			\OC\Files\Filesystem::init($user, '/' . $user . '/files');
+			#\OCP\JSON::checkUserExists($user);
+			#\OC_Util::tearDownFS();
+			#\OC_Util::setupFS($user);
 			$startPath = \OC\Files\Filesystem::getPath($linkItem['file_source']) ;
 		  	if((string)$linkItem['item_type'] === 'file'){
 				$filenameAudio=$startPath;
@@ -96,9 +97,10 @@ class MusicController extends Controller {
 			$user = $rootLinkItem['uid_owner'];
 		   
 			// Setup filesystem
-			\OCP\JSON::checkUserExists($user);
-			\OC_Util::tearDownFS();
-			\OC_Util::setupFS($user);
+			\OC\Files\Filesystem::init($user, '/' . $user . '/files');
+			#\OCP\JSON::checkUserExists($user);
+			#\OC_Util::tearDownFS();
+			#\OC_Util::setupFS($user);
 			$startPath = \OC\Files\Filesystem::getPath($linkItem['file_source']) ;
 		  	if((string)$linkItem['item_type'] === 'file'){
 				$filenameAudio=$startPath;

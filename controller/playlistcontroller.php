@@ -83,7 +83,7 @@ class PlaylistController extends Controller {
 		 	//filter_var()
 		 $newplaylist=$this->params('playlist');
 		
-		 if($newplaylist !=''){	
+		 if($newplaylist !== ''){	
 			 $aResult = $this->writePlaylistToDB($newplaylist);
 			 if($aResult['msg'] === 'new'){
 				 $result=[
@@ -280,10 +280,6 @@ class PlaylistController extends Controller {
 					. 'WHERE `playlist_id` = ?';
 			$stmt = $this->db->prepareQuery($sql);
 			$result = $stmt->execute(array($iPlaylistId));
-			if (\OCP\DB::isError($result)) {
-				\OCP\Util::writeLog('core',__METHOD__. 'DB error: ' . \OCP\DB::getErrorMessage(),\OCP\Util::ERROR);
-				return false;
-			}
 		} catch(\Exception $e) {
 			\OCP\Util::writeLog('core', __METHOD__.', exception: '.$e->getMessage(),\OCP\Util::ERROR);
 			return false;
@@ -328,7 +324,7 @@ class PlaylistController extends Controller {
 	 * @return boolean
 	 */
 	private function generateTextColor($calendarcolor) {
-		if(substr_count($calendarcolor, '#') == 1) {
+		if(substr_count($calendarcolor, '#') === 1) {
 			$calendarcolor = substr($calendarcolor,1);
 		}
 		$red = hexdec(substr($calendarcolor,0,2));

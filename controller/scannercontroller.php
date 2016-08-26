@@ -260,25 +260,25 @@ class ScannerController extends Controller {
 		$path= $userView->getPath($songFileId);
 		
 		if(\OC\Files\Filesystem::isUpdatable($path)){
-			if($pAlbum != ''){
+			if($pAlbum !== ''){
 				$addAlbum = $pAlbum;
-			} elseif ($pExistAlbum != (string)$this->l10n->t('- choose -') && $pExistAlbum != (string)$this->l10n->t('Unknown')) { 
+			} elseif ($pExistAlbum !== (string)$this->l10n->t('- choose -') && $pExistAlbum !== (string)$this->l10n->t('Unknown')) { 
 				$addAlbum = $pExistAlbum;
 			} else {
 				$addAlbum = '';
 			}
 			
-			if($pArtist != ''){
+			if($pArtist !== ''){
 				$addArtist = $pArtist;
-			} elseif ($pExistArtist != (string)$this->l10n->t('- choose -') && $pExistArtist != (string)$this->l10n->t('Unknown')) { 
+			} elseif ($pExistArtist !== (string)$this->l10n->t('- choose -') && $pExistArtist !== (string)$this->l10n->t('Unknown')) { 
 				$addArtist = $pExistArtist;
 			} else {
 				$addArtist = '';
 			}
 			
-			if($pGenre != ''){
+			if($pGenre !== ''){
 				$addGenre = $pGenre;
-			} elseif ($pExistGenre != (string)$this->l10n->t('- choose -') && $pExistGenre != (string)$this->l10n->t('Unknown')) { 
+			} elseif ($pExistGenre !== (string)$this->l10n->t('- choose -') && $pExistGenre !== (string)$this->l10n->t('Unknown')) { 
 				$addGenre = $pExistGenre;
 			} else {
 				$addGenre = '';
@@ -294,7 +294,7 @@ class ScannerController extends Controller {
 				
 			];
 			$imgString = '';
-			if($pImgSrc != ''){
+			if($pImgSrc !== ''){
 				$image = new \OCP\Image();
 				if($image->loadFromBase64($pImgSrc)) {
 					$imgString = $image ->__toString();	
@@ -335,7 +335,7 @@ class ScannerController extends Controller {
 									LEFT JOIN  `*PREFIX*audioplayer_artists` `AR` ON `AT`.`artist_id`= `AR`.`id`
 									LEFT JOIN  `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id`= `AG`.`id`
 						  			WHERE `AT`.`id` = ? AND `AT`.`user_id` = ?";	
-						$stmt = \OCP\DB::prepare($SQL);
+						$stmt = $this->db->prepareQuery($SQL);
 						$result = $stmt->execute(array($pTrackId, $this->userId));
 						$row = $result->fetchRow()	;
 						
@@ -348,47 +348,47 @@ class ScannerController extends Controller {
 						$newAlbumId = $albumId;
 						
 
-						if($pGenre != ''){
+						if($pGenre !== ''){
 							$addGenre = $pGenre;
-						} elseif ($pExistGenre != (string)$this->l10n->t('- choose -')) { 
+						} elseif ($pExistGenre !== (string)$this->l10n->t('- choose -')) { 
 							$addGenre = $pExistGenre;
 						} else {
 							$addGenre = '';
 						}
 
-						if($addGenre != '' && $addGenre != $genreName){
+						if($addGenre !== '' && $addGenre !== $genreName){
 							$genreId = $this->writeGenreToDB($addGenre);
 						}	
 			
-						if($pArtist != ''){
+						if($pArtist !== ''){
 							$addArtist = $pArtist;
-						} elseif ($pExistArtist != (string)$this->l10n->t('- choose -')) { 
+						} elseif ($pExistArtist !== (string)$this->l10n->t('- choose -')) { 
 							$addArtist = $pExistArtist;
 						} else {
 							$addArtist = '';
 						}
 
-						if($addArtist != '' && $addArtist != $artistName){
+						if($addArtist !== '' && $addArtist !== $artistName){
 							$artistId = $this->writeArtistToDB($addArtist);
 						}
 
-						if($pAlbum != ''){
+						if($pAlbum !== ''){
 							$addAlbum = $pAlbum;
-						} elseif ($pExistAlbum != (string)$this->l10n->t('- choose -')) { 
+						} elseif ($pExistAlbum !== (string)$this->l10n->t('- choose -')) { 
 							$addAlbum = $pExistAlbum;
 						} else {
 							$addAlbum = '';
 						}
 
-						if($addAlbum != '' && $addAlbum != $albumName){
+						if($addAlbum !== '' && $addAlbum !== $albumName){
 							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$artistId);
 							
 							//check for other songs if not then delete album
-							$stmtCountAlbum = \OCP\DB::prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ?' );
+							$stmtCountAlbum = $this->db->prepareQuery( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ?' );
 							$resultAlbumCount = $stmtCountAlbum->execute(array($albumId));
 							$rowAlbum = $resultAlbumCount->fetchRow();
 							if((int)$rowAlbum['ALBUMCOUNT'] === 1){
-								$stmt2 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
+								$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 								$stmt2->execute(array($albumId, $this->userId));
 							}
 							
@@ -397,7 +397,7 @@ class ScannerController extends Controller {
 												
 						$returnData['imgsrc']='';
 						$returnData['prefcolor'] = '';
-						if($pImgMime != '' && $addCoverToAlbum == 'true'){
+						if($pImgMime !== '' && $addCoverToAlbum === 'true'){
 							$getDominateColor = $this->getDominateColorOfImage($imgString);
 							$this->writeCoverToAlbum($newAlbumId,$imgString,$getDominateColor);
 							
@@ -470,7 +470,7 @@ class ScannerController extends Controller {
 				$currentSong = (isset($aCurrent->{'currentsong'})?$aCurrent->{'currentsong'}:'');
 				$percent = (isset($aCurrent->{'percent'})?$aCurrent->{'percent'}:'');
 			
-				if($percent ==''){
+				if($percent === ''){
 					$percent = 0;
 				}
 				$params = [
@@ -534,7 +534,7 @@ class ScannerController extends Controller {
 								
 		foreach($audios as $audio) {
 		  	
-			if ($debug_detail == true) {
+			if ($debug_detail === true) {
 				#\OCP\Util::writeLog('audioplayer', 'file-id: '.$audio['fileid'].' track path : '.$audio['path'], \OCP\Util::DEBUG);
 			}
 			
@@ -544,7 +544,7 @@ class ScannerController extends Controller {
 			
 				// Cyrillic id3 workaround
 				// Tag is 1251 if there are 4+ upper half of ASCII table symbols glued together.
-				if($cyrillic_support == 'checked') {
+				if($cyrillic_support === 'checked') {
 					#\OCP\Util::writeLog('audioplayer', 'cyrillic', \OCP\Util::DEBUG);				
 					// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
 					foreach (array('id3v1', 'id3v2') as $ttype) {
@@ -560,7 +560,7 @@ class ScannerController extends Controller {
 								}
 							}	
 							// Now make a correct conversion
-							if($ruTag == 1) {
+							if($ruTag === 1) {
 								foreach (array('album', 'artist', 'title', 'band') as $tkey) {
 									if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
 										$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]);
@@ -866,7 +866,7 @@ class ScannerController extends Controller {
 		}else{
 			$stmt = $this->db->prepareQuery( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`) VALUES(?,?,?,?,?,?,?,?,?,?,?)' );
 			$result = $stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype'],$aTrack['genre'],$aTrack['year']));
-			$insertid = \OCP\DB::insertid('*PREFIX*audioplayer_tracks');
+			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_tracks');
 			return $insertid;
 		}
 		
@@ -874,7 +874,7 @@ class ScannerController extends Controller {
 	}
 	
 	private function checkIfTrackDbExists($fileid){
-		$stmtCount = \OCP\DB::prepare( 'SELECT  COUNT(`id`)  AS COUNTID FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `file_id` = ? ' );
+		$stmtCount = $this->db->prepareQuery( 'SELECT  COUNT(`id`)  AS COUNTID FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `file_id` = ? ' );
 		$resultCount = $stmtCount->execute(array($this->userId, $fileid));
 		$row = $resultCount->fetchRow();
 		if(isset($row['COUNTID']) && $row['COUNTID'] > 0){
