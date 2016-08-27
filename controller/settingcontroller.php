@@ -39,7 +39,12 @@ class SettingController extends Controller {
 	private $configManager;
 	
 
-	public function __construct($appName, IRequest $request, $userId, $l10n, $db, IConfig $configManager) {
+	public function __construct($appName, 
+								IRequest $request, 
+								$userId, 
+								$l10n, 
+								$db, 
+								IConfig $configManager) {
 		parent::__construct($appName, $request);
 		$this->appname = $appName;
 		$this -> userId = $userId;
@@ -87,5 +92,5 @@ class SettingController extends Controller {
 		$response -> setData($result);
 		return $response;
 	}
-	
+
 }
