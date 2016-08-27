@@ -50,8 +50,6 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'photo#cropPhoto',	'url' => '/cropphoto',	'verb' => 'POST'],
 	['name' => 'photo#saveCropPhoto',	'url' => '/savecropphoto',	'verb' => 'POST'],
 	['name' => 'photo#clearPhotoCache',	'url' => '/clearphotocache',	'verb' => 'POST'],
-	['name' => 'timer#getTimer', 'url' => '/gettimer', 'verb' => 'GET'],
-	['name' => 'timer#setTimer', 'url' => '/settimer', 'verb' => 'GET'],
 	['name' => 'setting#setValue', 'url' => '/setvalue', 'verb' => 'GET'],
 	['name' => 'setting#getValue', 'url' => '/getvalue', 'verb' => 'GET'],
 	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
