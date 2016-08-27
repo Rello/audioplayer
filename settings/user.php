@@ -1,27 +1,34 @@
 <?php
 /**
- * ownCloud - Music app
+ * ownCloud - Audio Player
  *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
+ * @author Marcel Scherello
+ * @copyright 
  *
- * @author Morris Jobke <hey@morrisjobke.de>
- * @copyright Morris Jobke 2013, 2014
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU AFFERO GENERAL PUBLIC LICENSE for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 namespace OCA\audioplayer\AppInfo;
 use \OCA\audioplayer\AppInfo\Application;
-
 
 $app = new Application();
 $c = $app->getContainer();
 
 $c->query('API')->addScript('settings-user');
-#$c->query('API')->addStyle('settings-user');
 
 $tmpl = new \OCP\Template($c->query('AppName'), 'settings-user');
 $tmpl->assign('category', $c->query('Config')->getUserValue($c->query('UserId'), $c->query('AppName'), 'category'));
 $tmpl->assign('cyrillic', $c->query('Config')->getUserValue($c->query('UserId'), $c->query('AppName'), 'cyrillic'));
 
-#$tmpl->assign('ampacheKeys', $c->query('AmpacheUserMapper')->getAll($c->query('UserId')));
-#$tmpl->assign('URLGenerator', $c->query('URLGenerator'));
 return $tmpl->fetchPage();
