@@ -32,7 +32,6 @@ use \OCA\audioplayer\Controller\PlaylistController;
 use \OCA\audioplayer\Controller\ScannerController;
 use \OCA\audioplayer\Controller\MusicController;
 use \OCA\audioplayer\Controller\PhotoController;
-use \OCA\audioplayer\Controller\TimerController;
 use \OCA\audioplayer\Controller\CategoryController;
 use \OCA\audioplayer\Controller\SettingController;
 
@@ -108,17 +107,7 @@ class Application extends App {
 			$c->query('ServerContainer')->getDb(),
 			$c->query('Config')
 			);
-		});
-		$container->registerService('TimerController', function(IContainer $c) {
-			return new TimerController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('UserId'),
-			$c->query('L10N'),
-			$c->query('ServerContainer')->getDb()
-			);
-		});
-		
+		});		
 		
         /**
 		 * Core
@@ -130,9 +119,6 @@ class Application extends App {
 			return $server->getURLGenerator();
 		});
 		
-#		$container -> registerService('UserId', function(IContainer $c) {
-#			return \OCP\User::getUser();
-#		});
 		$container -> registerService('UserId', function(IContainer $c) {
 			$user = \OC::$server->getUserSession()->getUser();
 			if ($user) return $user->getUID();
@@ -145,10 +131,5 @@ class Application extends App {
 		$container->registerService('Config', function($c){
 			return $c->getServer()->getConfig();
 		});
-		
-		
 	}
-  
-    
 }
-
