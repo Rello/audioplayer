@@ -187,7 +187,7 @@ class MusicController extends Controller {
 				
 				$row['titlecolor']='';	
 				$bgColor = json_decode($row['bgcolor']);
-				$row['backgroundColor']='rgba('.$bgColor->{'red'}.','.$bgColor->{'green'}.','.$bgColor->{'blue'}.',0.7)';
+				$row['backgroundColor']='rgb('.$bgColor->{'red'}.','.$bgColor->{'green'}.','.$bgColor->{'blue'}.')';
 				$row['titlecolor'] =$this->generateTextColor($bgColor,true);
 				$row['cover'] = 'data:image/jpg;base64,'.$row['cover'];	
 				
