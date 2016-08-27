@@ -1820,7 +1820,7 @@ Audios.prototype.set_uservalue = function(user_type,user_value) {
 Audios.prototype.check_timer = function() {
     	$.ajax({
 			type : 'GET',
-			url : OC.generateUrl('apps/audioplayer/gettimer'),
+			url : OC.generateUrl('apps/audioplayer_timer/gettimer'),
 			success : function(ajax_data) {
 					ajax_data = parseInt(ajax_data);
 					ajax_data2 = ajax_data + (1*3600*1000);
@@ -2113,7 +2113,7 @@ $(document).ready(function() {
 		myAudios.set_uservalue('category',user_value);
 	});
 
-	//var timer = window.setInterval(check_timer, 10000);
+	//var timer = window.setInterval(myAudios.check_timer, 10000);
 
 	
 });
