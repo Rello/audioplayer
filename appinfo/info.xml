@@ -17,5 +17,5 @@ A pure player. No backends or other overhead...</description>
 		<php min-version="5.4"/>
 		<owncloud min-version="8.1" max-version="9.2"/>
 </dependencies>
-<bugs>https://github.com/rello/audioplayer/issues</bugs>
+<bugs>https://github.com/Rello/audioplayer/issues</bugs>
 </info>
