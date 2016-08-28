@@ -41,7 +41,7 @@
 "Artists" : "Исполнители",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Если русские названия выглядят нечитаемо, включите эту опцию. Это слегка замедлит индексацию.",
 "Cyrillic Support:" : "Поддержка кириллицы:",
-"==> Details" : "==> Подробности",
+"Read more" : "==> Подробности",
 "Albums" : "Альбомы",
 "Genres" : "Стили"
 },"pluralForm":""}
