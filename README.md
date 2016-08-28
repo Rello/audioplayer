@@ -31,7 +31,7 @@ Share Player and Action Menu<br>
 - en, de, de_DE, ru, zh_TW
 
 ## Installation
-- [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please allow experimental apps in `/config/config.php`)
+- [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please allow experimental apps)
 - [Nextcloud App Store](https://apps.nextcloud.com/) (app store in beta stage)
 
 ## Bugs and Feature Requests
