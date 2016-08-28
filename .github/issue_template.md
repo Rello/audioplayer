@@ -3,16 +3,16 @@ This is the issue tracker of Audio Player. Thanks for reporting issues!
 
 To make it possible for us to help you please fill out below information carefully.
 --> 
-### Steps to reproduce
+### Expected behavior
+
+
+### Actual behavior
+
+
+### Steps to reproduce the behavior
 1. 
 2. 
 3. 
-
-### Expected behaviour
-Tell us what should happen
-
-### Actual behaviour
-Tell us what happens instead
 
 ### Server configuration
 **Operating system**:
@@ -43,10 +43,10 @@ Tell us what happens instead
 
 
 ### Client configuration
-**Browser:**
-
-
 **Operating system:**
+
+
+**Browser:**
 
 
 ### Log
