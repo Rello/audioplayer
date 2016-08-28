@@ -20,12 +20,12 @@
  *
  */
  ?>
- <div class="section" id="music-user">
-	<h2><?php p($l->t('Audioplayer')); ?></h2>
+ <div class="section" id="audioplayer">
+	<h2><?php p($l->t('Audio Player')); ?></h2>
 	<div>
 		<label for="cyrillic_user"><?php p($l->t('Cyrillic Support:')); ?></label>
 		<input type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']); ?>/>
 		<p><em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em></p>
-		<p><em><a href="https://github.com/Rello/audioplayer/wiki/Cyrillic-symbol-handling" target="_blank"><?php p($l->t('==> Details')); ?></a></em></p>
+		<p><em><a href="https://github.com/Rello/audioplayer/wiki/Cyrillic-symbol-handling" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
 	</div>
 </div>
