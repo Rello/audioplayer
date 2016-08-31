@@ -1621,7 +1621,7 @@ Audios.prototype.editPhoto = function(id, tmpkey) {
 				$('#cropbox').Jcrop({
 					onChange : this.showCoords,
 					onSelect : this.showCoords,
-					minSize : [230, 140],
+					minSize : [140, 140],
 					maxSize : [500, 500],
 					bgColor : 'black',
 					bgOpacity : .4,
@@ -1839,7 +1839,33 @@ Audios.prototype.check_timer = function() {
 			}
 		});
 	};
-	
+
+Audios.prototype.streamPlayer = function() {
+	var url = 'http://ice39.infomaniak.ch:8000/ouifm3.mp3';
+	var time = 0;
+	var timer = $('#Streaming');
+	var loading = $('#Loading');
+	var start = new Date;
+	var seconds = function(){
+ 	   var diff = ((new Date).getTime() - start.getTime()) / 1000;
+ 	   return diff + ' seconds.';
+	};
+	var timing = setInterval(function() {
+	    timer.html(seconds());
+	}, 100);
+	soundManager.onready(function() {
+	    soundManager.createSound({
+	        id:'Radio', 
+	        url:url, 
+	        autoPlay: true,
+	        onplay: function() {
+	            clearInterval(timing);
+	            loading.html('Finished loading');
+	            timer.html(seconds());
+	        }
+	    });
+	});
+};	
 
 var resizeTimeout = null;
 $(window).resize(_.debounce(function() {
