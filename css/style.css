@@ -990,7 +990,7 @@ li.dropHover{
 	width:100%;
 }
 
-#edit_photo_dialog_img { display: block; min-width: 150; min-height: 200; }
+#edit_photo_dialog_img { display: block; min-width: 150px; min-height: 200px; }
 #file_upload_form { width: 0; height: 0; }
 #file_upload_target, #import_upload_target, #crop_target { display:none; }
 #file_upload_start, #import_upload_start { -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; filter:alpha(opacity=0); opacity:0; z-index:1001; width:0; height:0;}
@@ -1010,8 +1010,8 @@ li.dropHover{
 
 #cropbox { margin: auto; }
 #pin_details_photo_wrapper { width: 95%; }
-#pin_details_photo_wrapper.wait { opacity: 0.6; filter:alpha(opacity=0.6); z-index:1000; background: url('%webroot%/core/img/loading.gif') no-repeat center center; cursor: wait; }
-.pin_details_photo { border-radius: 0.5em; border: thin solid #bbb; margin: 0.3em; background: url('%webroot%/core/img/loading.gif') no-repeat center center; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; opacity: 1; }
+#pin_details_photo_wrapper.wait { opacity: 0.6; filter:alpha(opacity=0.6); z-index:1000; background: url('../../../core/img/loading.gif') no-repeat center center; cursor: wait; }
+.pin_details_photo { border-radius: 0.5em; border: thin solid #bbb; margin: 0.3em; background: url('../../../core/img/loading.gif') no-repeat center center; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; opacity: 1; }
 .pin_details_photo:hover { background: #fff; cursor: default; }
 
 #phototools { position:absolute;top:20px; margin: 5px 0px 0px 5px; width:auto; padding:4px; background-color:#fff; list-style-type:none; border-radius: 0.5em; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; }
