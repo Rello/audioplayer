@@ -138,8 +138,8 @@ class PhotoController extends Controller {
 		$exif = @exif_read_data($localpath);
 		$image = new \OCP\Image();
 		$image -> loadFromFile($localpath);
-		if ($image -> width() > 300 || $image -> height() > 300) {
-			$image -> resize(300);
+		if ($image -> width() > 350 || $image -> height() > 350) {
+			$image -> resize(350);
 		}
 		$image -> fixOrientation();
 		
@@ -192,8 +192,8 @@ class PhotoController extends Controller {
 			$image = new \OCP\Image();
 			if($image->loadFromFile($file['tmp_name'])) {
 				
-				if($image->width() > 300 || $image->height() > 300) {
-					$image->resize(300); // Prettier resizing than with browser and saves bandwidth.
+				if($image->width() > 350 || $image->height() > 350) {
+					$image->resize(350); // Prettier resizing than with browser and saves bandwidth.
 				}
 				if(!$image->fixOrientation()) { // No fatal error so we don't bail out.
 					\OCP\Util::writeLog('audioplayer','Couldn\'t save correct image orientation: '.$tmpkey,\OCP\Util::DEBUG);
