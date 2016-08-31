@@ -1,3 +1,9 @@
+**1.1.1** (in progress)
+- fix: wrong spinning wheel location in css
+- fix: cover crop box more flexible
+- fix: album transparency #44
+- app:code-check compatibility #46
+
 **1.1.0** (2016-08-24)
 - new navigator: dynamic lists for artists, genres, years (more to come)
 - redesign of backend table structures
