@@ -174,13 +174,18 @@ i#scanAudiosFirst{
 	float:left;
 	
 }
-#app-navigation button#newPlaylist,
 #app-navigation .app-navigation-entry-edit button,
 #app-navigation .app-navigation-entry-edit input[type="submit"] {
 	width: 36px;
 	height: 32px;
 	float: left;
 }
+#app-navigation button#addPlaylist{
+	width: 36px;
+	height: 32px;
+	float: right;
+}
+
 
 #myCategory li span.info-cover,
 #alben span.info-cover
