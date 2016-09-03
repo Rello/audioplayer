@@ -40,6 +40,7 @@
   		<option value="Year"><?php p($l->t('Years'));?></option>
   		<option value="All"><?php p($l->t('All'));?></option>
 	</select>
+	<button  class="icon-add mp3_hide" id="addPlaylist"></button>
 	<ul id="myCategory"></ul>	
 	<!--my playlist clone -->	
 	<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
@@ -47,10 +48,7 @@
 	<button class="icon-checkmark"></button>
 	</li>	
 	<!--my playlist clone -->
-	<div id="playlist_new" class="app-navigation-entry-edit mp3_hide">
-		<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
-		<button  class="icon-checkmark" id="newPlaylist"></button>
-	</div>
+		<input type="text" class="mp3_hide" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
 </div>
 </div>	
 <div id="app-content">
