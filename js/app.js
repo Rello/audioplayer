@@ -573,7 +573,7 @@ Audios.prototype.loadCategory = function(category){
 
 	var $this = this;
 	$this.aSongIdsCategory=[];
-	$('#playlist_new').addClass('mp3_hide');
+	$('#addPlaylist').addClass('mp3_hide');
 	$('#myCategory').html('');
 	$('.toolTip').tipsy('hide');
 	$.ajax({
@@ -648,7 +648,7 @@ Audios.prototype.loadCategory = function(category){
 				}
 		});
 		if (category === 'Playlists' ){
-			$('#playlist_new').removeClass('mp3_hide');
+			$('#addPlaylist').removeClass('mp3_hide');
 		}
 };
 
@@ -1737,11 +1737,8 @@ $(document).ready(function() {
 	});
 	
 		  
-	$('#newPlaylist').on('click',function(){
-		if($('#newPlaylistTxt').val() != ''){
-			myAudios.newPlaylist($('#newPlaylistTxt').val());
-			$('#newPlaylistTxt').val('');
-		}
+	$('#addPlaylist').on('click',function(){
+		$('#newPlaylistTxt').removeClass('mp3_hide');
 	});
 	
 	$('#newPlaylistTxt').bind('keydown', function(event){
@@ -1749,6 +1746,7 @@ $(document).ready(function() {
 			myAudios.newPlaylist($('#newPlaylistTxt').val());
 			$('#newPlaylistTxt').val('');
 			$('#newPlaylistTxt').focus();
+			$('#newPlaylistTxt').addClass('mp3_hide');
 		}
 	});
 	
