@@ -24,16 +24,6 @@
 
 <div id="app-navigation" class="mp3_hide">
 <div class="innerNav">
-<!--my playlist clone -->	
-<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
-<input type="text" name="playlist" id="playlist" value=""  />
-<button class="icon-checkmark"></button>
-</li>	
-<!--my playlist clone -->
-<div class="app-navigation-entry-edit">
-<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
-<button  class="icon-checkmark" id="newPlaylist"></button>
-</div>
 	<h3><?php p($l->t('Music'));?></h3>
 	<ul id="albenoverview">
 		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  
@@ -49,13 +39,24 @@
 		<br>&nbsp;<br>
 		<select id="category_selector">
   			<option value=""selected><?php p($l->t('Selection'));?></option>
+  			<option value="Playlists"><?php p($l->t('Playlists'));?></option>
   			<option value="Artist"><?php p($l->t('Artists'));?></option>
   			<option value="Genre"><?php p($l->t('Genres'));?></option>
   			<option value="Year"><?php p($l->t('Years'));?></option>
   			<option value="All"><?php p($l->t('All'));?></option>
 		</select>
 		<ul id="myCategory"></ul>	
+	<!--my playlist clone -->	
+	<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
+	<input type="text" name="playlist" id="playlist" value=""  />
+	<button class="icon-checkmark"></button>
+	</li>	
+	<!--my playlist clone -->
+	<div id="playlist_new" class="app-navigation-entry-edit mp3_hide">
+		<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
+		<button  class="icon-checkmark" id="newPlaylist"></button>
 	</div>
+</div>
 </div>	
 <div id="app-content">
 <div id="loading">
