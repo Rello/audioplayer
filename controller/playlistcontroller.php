@@ -48,37 +48,6 @@ class PlaylistController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function getPlaylists(){
-			
-		$playlists= $this->getPlaylistsforUser();
-	
-		if(is_array($playlists)){
-			$aPlayLists='';
-			foreach($playlists as $playinfo){
-				$bg = $this->genColorCodeFromText(trim($playinfo['name']),40,8);
-				$playinfo['backgroundColor']=$bg;
-				$playinfo['color']=$this->generateTextColor($bg);
-				$aPlayLists[]=['info' => $playinfo, 'songids' => $this->getSongIdsForPlaylist($playinfo['id'])];
-			}
-		
-			$result=[
-				'status' => 'success',
-				'data' => ['playlists' => $aPlayLists]
-			];
-		}else{
-			$result=[
-				'status' => 'success',
-				'data' => 'nodata'
-			];
-		}
-		$response = new JSONResponse();
-		$response -> setData($result);
-		return $response;
-	}
-	/**
-	 * @NoAdminRequired
-	 * 
-	 */
 	public function addPlaylist(){
 		 	//filter_var()
 		 $newplaylist=$this->params('playlist');
@@ -153,45 +122,7 @@ class PlaylistController extends Controller {
 		
 		return true;
 	}
-	
-	private function getPlaylistsforUser(){
-		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_playlists`
-			 			WHERE  `user_id` = ?
-			 			ORDER BY `name` ASC
-			 			";
-			
-		$stmt =$this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($this->userId));
-		$aPlaylists='';
-		while( $row = $result->fetchRow()) {
-			$aPlaylists[]=$row;
-		}
 		
-		if(is_array($aPlaylists)){
-			return $aPlaylists;
-		}else{
-			return false;
-		}
-	}
-	
-	private function getSongIdsForPlaylist($iPlaylistId){
-		$SQL="SELECT  `track_id` FROM `*PREFIX*audioplayer_playlist_tracks`
-			 			WHERE  `playlist_id` = ?
-			 			ORDER BY `sortorder` ASC
-			 			";
-			
-		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($iPlaylistId));
-		$aTracks=[];
-		while( $row = $result->fetchRow()) {
-			$aTracks[]=$row['track_id'];
-		}
-		
-		
-		return $aTracks;
-		
-	}
-	
 	/**
 	 * @NoAdminRequired
 	 * 
