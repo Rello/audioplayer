@@ -155,8 +155,12 @@ i#scanAudiosFirst{
 #app-navigation .plclone{
 	display:none;
 	float:left;
-	
 }
+#app-navigation .mp3_hide{
+	display:none;
+	float:left;
+}
+
 #app-navigation .app-navigation-entry-edit:hover{
 	background:transparent;
 	
@@ -247,6 +251,7 @@ i#scanAudiosFirst{
   	  line-height: 1.2em; 
   	background:#FFFABC;
   	}
+#myCategory li i.ioc-sort,
 #myPlayList li i.ioc-sort{
 	float:right;
 	position:absolute;
@@ -255,14 +260,18 @@ i#scanAudiosFirst{
 	color:#ccc;
 }
 #myPlayList li i.ioc-sort:hover,
-#myPlayList li i.ioc-sort.sortActive{
+#myPlayList li i.ioc-sort.sortActive,
+#myCategory li i.ioc-sort:hover,
+#myCategory li i.ioc-sort.sortActive{
 	color:#008000;
 }
-#myPlayList li i.ioc-sort.sortActive{
+#myPlayList li i.ioc-sort.sortActive,
+#myCategory li i.ioc-sort.sortActive{
 	
 	display:block;
 }
-#myPlayList li i.ioc-delete{
+#myPlayList li i.ioc-delete,
+#myCategory li i.ioc-delete{
 	float:right;
 	position:absolute;
 	right:38px;
@@ -270,7 +279,8 @@ i#scanAudiosFirst{
 	color:#ccc;
 }
 
-#myPlayList li i.ioc-delete:hover{
+#myPlayList li i.ioc-delete:hover,
+#myCategory li i.ioc-delete:hover{
 	color:#A9302A;
 }
 
@@ -280,21 +290,27 @@ i#scanAudiosFirst{
 #myPlayList li.activeIndiPlaylist, 
 #alben:hover, 
 #alben.bAktiv,
-#myCategory li:hover,{
+#myCategory li:hover,
+#myCategory li.activeIndiPlaylist, 
+{
 	font-weight:bold;
 	
 }
-#myPlayList li i.ioc-sort{
+#myPlayList li i.ioc-sort,
+#myCategory li i.ioc-sort{
 	display:none;
 }
 
-#myPlayList li i.ioc-delete{
+#myPlayList li i.ioc-delete,
+#myCategory li i.ioc-delete{
 	display:none;
 }
-#myPlayList li:hover i.ioc-delete{
+#myPlayList li:hover i.ioc-delete,
+#myCategory li:hover i.ioc-delete{
 	display:block;
 }
-#myPlayList li.activeIndiPlaylist:hover i.ioc-sort{
+#myPlayList li.activeIndiPlaylist:hover i.ioc-sort,
+#myCategory li.activeIndiPlaylist:hover i.ioc-sort{
 	display:block;
 }
 
