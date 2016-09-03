@@ -103,8 +103,15 @@ class CategoryController extends Controller {
 		} elseif ($category === 'All') {
 			$SQL="SELECT distinct('0') as `id` ,'".(string)$this->l10n->t('All')."' as `name`  
 						FROM `*PREFIX*audioplayer_tracks`
+			 			WHERE  `user_id` = ?
 			 			";
-		}
+		} elseif ($category === 'Playlists') {
+			$SQL="SELECT  `id`,`name` 
+						FROM `*PREFIX*audioplayer_playlists`
+			 			WHERE  `user_id` = ?
+			 			ORDER BY `name` ASC
+			 			";
+		}	
 			
 		$stmt =$this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId));
@@ -124,24 +131,39 @@ class CategoryController extends Controller {
 
 		if($category === 'Artist') {
 			$SQL="SELECT  `id` 
-						FROM `*PREFIX*audioplayer_tracks`
-			 			WHERE  `artist_id` = ? AND `user_id` = ?
-			 			ORDER BY `title` ASC";
+					FROM `*PREFIX*audioplayer_tracks`
+			 		WHERE  `artist_id` = ? 
+			 		AND `user_id` = ?
+			 		ORDER BY `title` ASC";
 		} elseif ($category === 'Genre') {
 			$SQL="SELECT `id` FROM `*PREFIX*audioplayer_tracks`
-					WHERE `genre_id` = ?  AND `user_id` = ?
+					WHERE `genre_id` = ?  
+					AND `user_id` = ?
 					ORDER BY `title` ASC";
 		} elseif ($category === 'Year') {
 			$SQL="SELECT `id` FROM `*PREFIX*audioplayer_tracks`
-					WHERE `year` = ? AND `user_id` = ?
+					WHERE `year` = ? 
+					AND `user_id` = ?
 					ORDER BY `year` ASC";
 		} elseif ($category === 'All') {
 			$SQL="SELECT `id` FROM `*PREFIX*audioplayer_tracks`
-					WHERE `id` > ? AND `user_id` = ? ORDER BY `title` ASC";
+					WHERE `id` > ? 
+					AND `user_id` = ? 
+					ORDER BY `title` ASC";
+		} elseif ($category === 'Playlists') {
+			$SQL="SELECT  `track_id` AS `id` 
+					FROM `*PREFIX*audioplayer_playlist_tracks`
+			 		WHERE  `playlist_id` = ?
+			 		ORDER BY `sortorder` ASC
+			 		";
 		}
 
 		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($categoryId, $this->userId));
+		if ($category === 'Playlists') {
+			$result = $stmt->execute(array($categoryId));
+		} else {
+				$result = $stmt->execute(array($categoryId, $this->userId));
+		}
 		$aTracks=[];
 		while( $row = $result->fetchRow()) {
 			$aTracks[]=$row['id'];
