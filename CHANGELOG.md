@@ -1,7 +1,8 @@
 **1.1.1** (in progress)
 - fix: wrong spinning wheel location in css
-- fix: cover crop box more flexible
+- fix: cover art crop box more flexible
 - fix: album transparency #44
+- enhancement: rework of playlists (in category dropdown) #54
 - app:code-check compatibility #46
 
 **1.1.0** (2016-08-24)
