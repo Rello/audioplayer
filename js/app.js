@@ -24,7 +24,6 @@ var Audios = function(){
 	 this.AudioPlayer=null;
 	 this.AlbumContainer=$('#audios-audioscontainer');
 	 this.PlaylistContainer=$('#individual-playlist-container');
-	 this.aSongIdsPlaylist=[];
 	 this.aSongIdsCategory=[];
 	 this.albums=[];
 	 this.imgSrc = false;
