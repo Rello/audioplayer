@@ -13,7 +13,7 @@ Share Player and Action Menu<br>
 
 ## Features
 - Animated album view
-- Various dynamic views (playlists, artist, genre, year, all)
+- Various dynamic views (playlists, artists, genres, years, all)
 - Scanning and resetting music library
 - Playlist editing in the UI
 - Editing ID3 tags (incl. picture)
@@ -49,6 +49,12 @@ Please read the [full release history](https://github.com/Rello/audioplayer/blob
 ## License
 
 All contributions to this repository from August, 26 2016 on are considered to be licensed under the AGPLv3 or any later version.
+
+## Stats
+
+GitHub [![Issues](https://img.shields.io/github/issues/Rello/audioplayer.svg)](https://github.com/Rello/audioplayer/issues)
+[![Stars](https://img.shields.io/github/stars/Rello/audioplayer.svg)](https://github.com/Rello/audioplayer/stargazers)
+[![Forks](https://img.shields.io/github/forks/Rello/audioplayer.svg)](https://github.com/Rello/audioplayer/network)
 
 ## Note
 This is the rework of the former [MP3 Player](https://github.com/libasys/audios) app which is not maintained anymore.<br>
