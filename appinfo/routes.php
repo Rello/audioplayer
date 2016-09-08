@@ -29,7 +29,6 @@ $application = new Application();
 
 $application->registerRoutes($this, ['routes' => [
 	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	['name' => 'playlist#getPlaylists', 'url' => '/getplaylists', 'verb' => 'GET'],
 	['name' => 'playlist#addPlaylist', 'url' => '/addplaylist', 'verb' => 'GET'],
 	['name' => 'playlist#addTrackToPlaylist', 'url' => '/addtracktoplaylist', 'verb' => 'GET'],
 	['name' => 'playlist#removeTrackFromPlaylist', 'url' => '/removetrackfromplaylist', 'verb' => 'GET'],
