@@ -1,15 +1,15 @@
-#![](https://github.com/Rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
+#![](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
 Albums and playlists for MP3 and MP4 files within a nice, animated cover art navigation.<br>
 One Click Play from the file browser and shared link.<br>
 A pure player. No backends or other overhead.
 
-![](https://github.com/Rello/screenshots/blob/master/audioplayer_main.png)<br>
+![](https://github.com/rello/screenshots/blob/master/audioplayer_main.png)<br>
 
-Playlists and Selection<br>
-![](https://github.com/Rello/screenshots/blob/master/audioplayer_lists.png)<br>
+Dynamic Navigation<br>
+![](https://github.com/rello/screenshots/blob/master/audioplayer_lists.png)<br>
 
 Share Player and Action Menu<br>
-![](https://github.com/Rello/screenshots/blob/master/audioplayer_share.png) ![](https://github.com/Rello/screenshots/blob/master/audioplayer_actions.png)<br>
+![](https://github.com/rello/screenshots/blob/master/audioplayer_share.png) ![](https://github.com/rello/screenshots/blob/master/audioplayer_actions.png)<br>
 
 ## Features
 - Animated album view
@@ -36,15 +36,15 @@ Share Player and Action Menu<br>
 
 ## Bugs and Feature Requests
 
-Please report bugs or feature request using the [GitHub issue tracking system](https://github.com/Rello/audioplayer/issues) only!
+Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only!
 
 ## Changelog
 
-Please read the [full release history](https://github.com/Rello/audioplayer/blob/master/CHANGELOG.md).
+Please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
 
 ## Maintainers
-- [Marcel Scherello](https://github.com/Rello) (project leader)
-- [Thomas Marx](https://github.com/xraMsamohT)
+- [Marcel Scherello](https://github.com/rello) (project leader)
+- [Thomas Marx](https://github.com/xramsamoht)
 
 ## License
 
@@ -52,9 +52,9 @@ All contributions to this repository from August, 26 2016 on are considered to b
 
 ## Stats
 
-GitHub [![Issues](https://img.shields.io/github/issues/Rello/audioplayer.svg)](https://github.com/Rello/audioplayer/issues)
-[![Stars](https://img.shields.io/github/stars/Rello/audioplayer.svg)](https://github.com/Rello/audioplayer/stargazers)
-[![Forks](https://img.shields.io/github/forks/Rello/audioplayer.svg)](https://github.com/Rello/audioplayer/network)
+GitHub [![Issues](https://img.shields.io/github/issues/Rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)
+[![Stars](https://img.shields.io/github/stars/Rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers)
+[![Forks](https://img.shields.io/github/forks/Rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
 ## Note
 This is the rework of the former [MP3 Player](https://github.com/libasys/audios) app which is not maintained anymore.<br>
