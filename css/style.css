@@ -123,7 +123,7 @@ i#scanAudiosFirst{
 	color:#999;
 }
 
-#myPlayList li, #albenoverview li, #myCategory li{
+#albenoverview li, #myCategory li{
 	cursor: pointer;
 	font-size:14px;
 	line-height:30px;
@@ -155,8 +155,12 @@ i#scanAudiosFirst{
 #app-navigation .plclone{
 	display:none;
 	float:left;
-	
 }
+#app-navigation .mp3_hide{
+	display:none;
+	float:left;
+}
+
 #app-navigation .app-navigation-entry-edit:hover{
 	background:transparent;
 	
@@ -170,15 +174,19 @@ i#scanAudiosFirst{
 	float:left;
 	
 }
-#app-navigation button#newPlaylist,
 #app-navigation .app-navigation-entry-edit button,
 #app-navigation .app-navigation-entry-edit input[type="submit"] {
 	width: 36px;
 	height: 32px;
 	float: left;
 }
+#app-navigation button#addPlaylist{
+	width: 36px;
+	height: 32px;
+	float: right;
+}
 
-#myPlayList li span.info-cover,
+
 #myCategory li span.info-cover,
 #alben span.info-cover
 {
@@ -196,7 +204,6 @@ i#scanAudiosFirst{
 	text-align:center;
 	margin-right:5px;
 }
-#myPlayList li span.pl-name,
 #myCategory li span.pl-name{
 	float:left;
 	position:relative;
@@ -207,12 +214,10 @@ i#scanAudiosFirst{
 	cursor:pointer;
 	
 }
-#myPlayList li:hover,
 #myCategory li:hover{
 	background-color:#e7e7e7;
 }
 
-#myPlayList li a.icon-rename,
 #myCategory li a.icon-rename{
 	float:left;
 	position:relative;
@@ -224,13 +229,11 @@ i#scanAudiosFirst{
 	opacity:0;
 }
 
-#myPlayList li:hover a.icon-rename,
 #myCategory li:hover a.icon-rename{
 	opacity:1;
 	background-color:transparent;
 }
 
-#myPlayList li span.counter,
 #myCategory li span.counter{
 	float:right;
 	right:10px;
@@ -247,22 +250,22 @@ i#scanAudiosFirst{
   	  line-height: 1.2em; 
   	background:#FFFABC;
   	}
-#myPlayList li i.ioc-sort{
+#myCategory li i.ioc-sort{
 	float:right;
 	position:absolute;
 	right:54px;
 	font-size:18px;
 	color:#ccc;
 }
-#myPlayList li i.ioc-sort:hover,
-#myPlayList li i.ioc-sort.sortActive{
+#myCategory li i.ioc-sort:hover,
+#myCategory li i.ioc-sort.sortActive{
 	color:#008000;
 }
-#myPlayList li i.ioc-sort.sortActive{
+#myCategory li i.ioc-sort.sortActive{
 	
 	display:block;
 }
-#myPlayList li i.ioc-delete{
+#myCategory li i.ioc-delete{
 	float:right;
 	position:absolute;
 	right:38px;
@@ -270,31 +273,31 @@ i#scanAudiosFirst{
 	color:#ccc;
 }
 
-#myPlayList li i.ioc-delete:hover{
+#myCategory li i.ioc-delete:hover{
 	color:#A9302A;
 }
 
 
 
-#myPlayList li:hover, 
-#myPlayList li.activeIndiPlaylist, 
 #alben:hover, 
 #alben.bAktiv,
-#myCategory li:hover,{
+#myCategory li:hover,
+#myCategory li.activeIndiPlaylist, 
+{
 	font-weight:bold;
 	
 }
-#myPlayList li i.ioc-sort{
+#myCategory li i.ioc-sort{
 	display:none;
 }
 
-#myPlayList li i.ioc-delete{
+#myCategory li i.ioc-delete{
 	display:none;
 }
-#myPlayList li:hover i.ioc-delete{
+#myCategory li:hover i.ioc-delete{
 	display:block;
 }
-#myPlayList li.activeIndiPlaylist:hover i.ioc-sort{
+#myCategory li.activeIndiPlaylist:hover i.ioc-sort{
 	display:block;
 }
 
