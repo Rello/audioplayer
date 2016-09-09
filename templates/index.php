@@ -24,7 +24,7 @@
 
 <div id="app-navigation" class="mp3_hide">
 <div class="innerNav">
-	<h3><?php p($l->t('Music'));?></h3>
+	<h3></h3>
 	<ul id="albenoverview">
 		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  
 		<i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i>
