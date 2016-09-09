@@ -9,7 +9,7 @@
 - fix: album transparency [#44](https://github.com/rello/audioplayer/issues/44)
 + enhancement: rework of sidebar with integrated playlists in dynamic navigation [#53](https://github.com/rello/audioplayer/pull/53)
 - enhancement: performance improvement when loading categories [#53](https://github.com/rello/audioplayer/pull/53)
-- app:code-check compatibility [#46](https://github.com/rello/audioplayer/issues/46)
+- app:check-code compatibility [#46](https://github.com/rello/audioplayer/issues/46)
 - app will be signed as of this release
 
 ## 1.1.0
