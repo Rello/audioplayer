@@ -5,7 +5,7 @@
 
 .sm2-bar-ui {
  position: relative;
- display: inline-block;
+ display: block;
  width: 100%;
  font-family: helvetica, arial, verdana, sans-serif;
  font-weight: normal;
