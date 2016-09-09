@@ -20,7 +20,7 @@
  *
  */
  ?>
- <div class="section" id="audioplayer">
+<div class="section" id="audioplayer">
 	<h2><?php p($l->t('Audio Player')); ?></h2>
 	<div>
 		<label for="cyrillic_user"><?php p($l->t('Cyrillic Support:')); ?></label>
