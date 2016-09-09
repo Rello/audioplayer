@@ -55,6 +55,7 @@ class PageController extends Controller {
 		$csp->addAllowedImageDomain('\'self\'');
 		$csp->addAllowedImageDomain('data:');
 		$csp->addAllowedImageDomain('*');
+		$csp->addAllowedMediaDomain('*');
 		
 		$csp->addAllowedFrameDomain('*');	
 		
