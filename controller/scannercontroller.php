@@ -618,9 +618,9 @@ class ScannerController extends Controller {
 				if(isset($ThisFileInfo['comments']['band'][0])){
 					$album_artist=$ThisFileInfo['comments']['band'][0];
 					$iAlbumArtistId= $this->writeArtistToDB($album_artist);
-					$iAlbumId = $this->writeAlbumToDB($album,$year,$iAlbumArtistId);
+					$iAlbumId = $this->writeAlbumToDB($album,(int)$year,$iAlbumArtistId);
 				} else {
-					$iAlbumId = $this->writeAlbumToDB($album,$year,NULL);
+					$iAlbumId = $this->writeAlbumToDB($album,(int)$year,NULL);
 				}
 
 				$name = $audio['name'];
@@ -749,10 +749,10 @@ class ScannerController extends Controller {
 				$insertid = $this->db->getInsertId('*PREFIX*audioplayer_albums');
 				if ($iArtistId) {
 					$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );
-					$stmt->execute(array($sYear, $iArtistId, $insertid, $this->userId));
+					$stmt->execute(array((int)$sYear, $iArtistId, $insertid, $this->userId));
 				} else {
 					$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ? WHERE `id` = ? AND `user_id` = ?' );
-					$stmt->execute(array($sYear, $insertid, $this->userId));
+					$stmt->execute(array((int)$sYear, $insertid, $this->userId));
 				} 
 				$this->iAlbumCount++;
 				return $insertid;

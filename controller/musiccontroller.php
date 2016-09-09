@@ -256,7 +256,11 @@ class MusicController extends Controller {
        		}
 			
 			if($file_not_found === false){
-				$row['link'] = \OC::$server->getURLGenerator()->linkToRoute('audioplayer.music.getAudioStream').'?file='.rawurlencode($path);
+				if ($row['mimetype'] === 'audio/m3u') {
+					$row['link'] = $row['title'];
+				}else{	
+					$row['link'] = \OC::$server->getURLGenerator()->linkToRoute('audioplayer.music.getAudioStream').'?file='.rawurlencode($path);
+				}	
 				$aSongs[$row['album_id']][] = $row;
 			}else{
 				$this->deleteFromDB($row['id'],$row['album_id'],$row['artist_id'],$row['file_id']);
