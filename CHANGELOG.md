@@ -1,9 +1,11 @@
-**1.1.1** (in progress)
+**1.2.0** (in progress)
 - fix: wrong spinning wheel location in css
 - fix: cover art crop box more flexible
 - fix: album transparency #44
 - enhancement: rework of playlists (in category dropdown) #54
+- enhancement: performance when loading categories #54
 - app:code-check compatibility #46
+- app will be signed as of this release
 
 **1.1.0** (2016-08-24)
 - new navigator: dynamic lists for artists, genres, years (more to come)
