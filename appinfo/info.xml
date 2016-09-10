@@ -2,10 +2,8 @@
 <info>
 	<id>audioplayer</id>
 	<name>Audio Player</name>
-	<summary>MP3 and MP4 player with categories and playlists</summary>
-	<description>Albums and playlists for MP3 and MP4 files within a nice, animated cover art navigation.
-		One Click Play from the file browser and shared link.
-		A pure player. No backends or other overhead.</description>
+	<summary>Audio Player App for ownCloud and Nextcloud</summary>
+	<description>Albums and playlists within an animated cover art navigation with One Click Play from file browser and shared link.</description>
 	<version>1.2.0</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
