@@ -2,18 +2,20 @@
 <info>
 	<id>audioplayer</id>
 	<name>Audio Player</name>
+	<summary>MP3 and MP4 player with categories and playlists</summary>
 	<description>Albums and playlists for MP3 and MP4 files within a nice, animated cover art navigation.
 		One Click Play from the file browser and shared link.
 		A pure player. No backends or other overhead.</description>
 	<version>1.2.0</version>
-	<licence>AGPL</licence>
+	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
-	<category>multimedia</category>
 	<documentation>
-		<admin>https://github.com/rello/audioplayer/wiki</admin>
 		<user>https://github.com/rello/audioplayer/wiki</user>
+		<admin>https://github.com/rello/audioplayer/wiki</admin>
+		<developer>https://github.com/rello/audioplayer/wiki</developer >
 	</documentation>
+	<category>multimedia</category>
 	<website>https://github.com/rello/audioplayer</website>
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
