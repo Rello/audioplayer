@@ -1,5 +1,5 @@
 #![](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
-Albums and playlists for MP3 and MP4 files within a nice, animated cover art navigation.<br>
+Albums and playlists for audio files within an animated cover art navigation.<br>
 One Click Play from the file browser and shared link.<br>
 A pure player. No backends or other overhead.
 
@@ -19,7 +19,7 @@ Share Player and Action Menu<br>
 - Editing ID3 tags (incl. picture)
 - Mobile view support
 - One Click Play from file browser
-- Play shared audiofiles directly
+- Play shared audio files directly
 
 ## Supported Formats
 - MP3 (`.mp3` – `audio/mpeg`)
@@ -32,7 +32,7 @@ Share Player and Action Menu<br>
 
 ## Installation
 - [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please allow experimental apps)
-- [Nextcloud App Store](https://apps.nextcloud.com/) (app store in beta stage)
+- [Nextcloud App Store](https://apps.nextcloud.com/app/audioplayer) (app store in beta stage)
 
 ## Bugs and Feature Requests
 
