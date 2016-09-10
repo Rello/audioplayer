@@ -18,7 +18,7 @@
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
 	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_main.png</screenshot>
-	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_list.png</screenshot>
+	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_lists.png</screenshot>
 	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_share.png</screenshot>
 	<dependencies>
 		<php min-version="5.4"/>
