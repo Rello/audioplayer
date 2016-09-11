@@ -76,59 +76,29 @@ var audioPlayer = {
 $(document).ready(function() {	
 	if (OCA.Files && OCA.Files.fileActions) {
 		
-		OCA.Files.fileActions.registerAction({
-			name: 'audioplayer play',
-			displayName: t('audioplayer', 'Play'),
-			mime: 'audio/mpeg',
-			permissions: OC.PERMISSION_READ,
-			icon: function () {return OC.imagePath('core', 'actions/sound');},
-			actionHandler: audioPlayer.onView
-		});
-
-		OCA.Files.fileActions.register('audio/mpeg', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
-		OCA.Files.fileActions.setDefault('audio/mpeg', 'View');
-
-		OCA.Files.fileActions.registerAction({
-			name: 'audioplayer play',
-			displayName: t('audioplayer', 'Play'),
-			mime: 'audio/mp4',
-			permissions: OC.PERMISSION_READ,
-			icon: function () {return OC.imagePath('core', 'actions/sound');},
-			actionHandler: audioPlayer.onView
-		});
-
-		OCA.Files.fileActions.register('audio/mp4', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
-		OCA.Files.fileActions.setDefault('audio/mp4', 'View');
-
-		OCA.Files.fileActions.registerAction({
-			name: 'audioplayer play',
-			displayName: t('audioplayer', 'Play'),
-			mime: 'audio/m4b',
-			permissions: OC.PERMISSION_READ,
-			icon: function () {return OC.imagePath('core', 'actions/sound');},
-			actionHandler: audioPlayer.onView
-		});
-
-		OCA.Files.fileActions.register('audio/m4b', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
-		OCA.Files.fileActions.setDefault('audio/m4b', 'View');
+	var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg'];
 		
-		OCA.Files.fileActions.registerAction({
-			name: 'audioplayer play',
-			displayName: t('audioplayer', 'Play'),
-			mime: 'audio/ogg',
-			permissions: OC.PERMISSION_READ,
-			icon: function () {return OC.imagePath('core', 'actions/sound');},
-			actionHandler: audioPlayer.onView
-		});
+		for (var i=0; i<mime_array.length; i++) {
+				
+			OCA.Files.fileActions.registerAction({
+				name: 'audioplayer play',
+				displayName: t('audioplayer', 'Play'),
+				mime: mime_array[i],
+				permissions: OC.PERMISSION_READ,
+				icon: function () {return OC.imagePath('core', 'actions/sound');},
+				actionHandler: audioPlayer.onView
+			});
 
-		OCA.Files.fileActions.register('audio/ogg', 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
-		OCA.Files.fileActions.setDefault('audio/ogg', 'View');
-		
+			OCA.Files.fileActions.register(mime_array[i], 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
+			OCA.Files.fileActions.setDefault(mime_array[i], 'View');
+
+		}//end mime-loop
+
 		if($('#header').hasClass('share-file')){
 			
 			var token = ($('#sharingToken').val() !== undefined) ? $('#sharingToken').val() : '';
 			var mimeType=$('#mimetype').val();
-			if(mimeType === 'audio/mpeg'){
+			if(mime_array.indexOf(mimeType) !== -1){
 			
 			OC.addStyle('audioplayer','360player');
 			OC.addStyle('audioplayer','360player-visualization');	
@@ -164,7 +134,7 @@ $(document).ready(function() {
 			});
 		}
 			
-			
+	
 			 
 		}
 		//$(document).keydown(videoCoolViewer.onKeyDown);
