@@ -5,11 +5,9 @@ A pure player. No backends or other overhead.
 
 ![](https://github.com/rello/screenshots/blob/master/audioplayer_main.png)<br>
 
-Dynamic Navigation<br>
-![](https://github.com/rello/screenshots/blob/master/audioplayer_lists.png)<br>
-
-Share Player and Action Menu<br>
-![](https://github.com/rello/screenshots/blob/master/audioplayer_share.png) ![](https://github.com/rello/screenshots/blob/master/audioplayer_actions.png)<br>
+Navigation, Share Player, and Action Menu<br>
+![](https://github.com/rello/screenshots/blob/master/audioplayer_lists.png)        ![](https://github.com/rello/screenshots/blob/master/audioplayer_share.png)       
+![](https://github.com/rello/screenshots/blob/master/audioplayer_actions.png)
 
 ## Features
 - Animated album view
