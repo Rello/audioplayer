@@ -169,7 +169,7 @@ class MusicController extends Controller {
 	 */
 	public function loadAlbums(){
 			
-			$SQL="SELECT  `AA`.`id`,`AA`.`name`,`AA`.`year`,`AA`.`cover`,`AA`.`bgcolor`,`AG`.`name` AS `genrename` FROM `*PREFIX*audioplayer_albums` `AA`
+		$SQL="SELECT  `AA`.`id`,`AA`.`name`,`AA`.`year`,`AA`.`cover`,`AA`.`bgcolor`,`AG`.`name` AS `genrename` FROM `*PREFIX*audioplayer_albums` `AA`
 						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AA`.`genre_id` = `AG`.`id`
 			 			WHERE  `AA`.`user_id` = ?
 			 			ORDER BY `AA`.`name` ASC
@@ -181,18 +181,22 @@ class MusicController extends Controller {
 		while( $row = $result->fetchRow()) {
 			$row['artist'] = $this->loadArtistsToAlbum($row['id']);	
 			if($row['cover'] === null){
-				$bg=$this->genColorCodeFromText(trim($row['name']),90,7);		
-				$row['backgroundColor'] =$bg;
-				$row['titlecolor'] =$this->generateTextColor($bg);
+				# generated colors were too crazy and not always readable
+				# code is disabled and a standard grey is used
+					# $bg=$this->genColorCodeFromText(trim($row['name']),90,7);		
+					# $row['backgroundColor'] =$bg;
+					# $row['titlecolor'] =$this->generateTextColor($bg);
+				$row['backgroundColor'] = '#D3D3D3';
+				$row['titlecolor'] = '#333333';
 				$row['cover'] = '';
 			}else{
-				
-				$row['titlecolor']='';	
-				$bgColor = json_decode($row['bgcolor']);
-				$row['backgroundColor']='rgb('.$bgColor->{'red'}.','.$bgColor->{'green'}.','.$bgColor->{'blue'}.')';
-				$row['titlecolor'] =$this->generateTextColor($bgColor,true);
+					# $row['titlecolor']='';	
+					# $bgColor = json_decode($row['bgcolor']);
+					# $row['backgroundColor']='rgb('.$bgColor->{'red'}.','.$bgColor->{'green'}.','.$bgColor->{'blue'}.')';
+					# $row['titlecolor'] =$this->generateTextColor($bgColor,true);
+				$row['backgroundColor'] = '#D3D3D3';
+				$row['titlecolor'] = '#333333';
 				$row['cover'] = 'data:image/jpg;base64,'.$row['cover'];	
-				
 			}
 			$aAlbums[$row['id']] = $row;
 		}
@@ -256,8 +260,9 @@ class MusicController extends Controller {
        		}
 			
 			if($file_not_found === false){
-				if ($row['mimetype'] === 'audio/m3u') {
-					$row['link'] = $row['title'];
+				if ($row['id'] === 3272) \OCP\Util::writeLog('audioplayer', 'row-mime: '.$row['mimetype'], \OCP\Util::DEBUG);
+				if ($row['mimetype'] === 'audio/x-mpegurl') {
+					$row['link'] = rawurlencode($row['title']);
 				}else{	
 					$row['link'] = \OC::$server->getURLGenerator()->linkToRoute('audioplayer.music.getAudioStream').'?file='.rawurlencode($path);
 				}	
