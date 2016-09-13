@@ -473,6 +473,7 @@ Audios.prototype.loadAlbums = function(){
 							 var myCover=$('.album.is-active .albumcover');
 							  if(myCover.css('background-image') == 'none'){
 								$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':myCover.css('background-color'),'color':myCover.css('color'),'background-image':'none'});
+//								$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':'#D3D3D3','background-image':'none'});
 								$('.sm2-playlist-cover').click(function(){
 									window.location.href='#show-'+myCover.data('album');
 								});
@@ -628,13 +629,20 @@ Audios.prototype.loadCategory = function(category){
 								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.info.name,'data-editid':el.info.id,'title':t('audioplayer','Rename Playlist')}).click($this.renamePlaylist.bind($this));
 								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.info.id,'title':t('audioplayer','Delete Playlist')}).click($this.deletePlaylist.bind($this));
 			
-								li.append(spanPlaylistInfo);
-								li.append(spanName);
-								li.append(span);
+								//li.append(spanPlaylistInfo);
 								if (category === 'Playlists' ){
+									var spanName=$('<span/>')
+										.attr({'data-plid':el.info.id,'class':'pl-name-play'})
+										.text(el.info.name)
+										.click($this.loadIndividualCategory.bind($this));
+									li.append(spanName);
+									li.append(span);
 									li.append(iEdit);
 									li.append(iSort);
 									li.append(iDelete);
+								} else {
+									li.append(spanName);
+									li.append(span);
 								}
 																
 								aPlaylists[i]=li;
