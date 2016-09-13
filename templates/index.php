@@ -26,7 +26,10 @@
 <div class="innerNav">
 	<h3></h3>
 	<ul id="albenoverview">
-		<li><span id="alben"><span class="info-cover">A</span><?php p($l->t('Albums'));?></span>  
+		<li>
+		<span id="alben" style="vertical-align: top; font-size: 15px;">
+		<img class="svg" src="img/albums.svg" style="width: 18px; padding-top: 3px;">
+		<?php p($l->t('Albums'));?></span>  
 		<i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i>
 		<i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i>
 		</li>
