@@ -125,10 +125,10 @@ i#scanAudiosFirst{
 
 #albenoverview li, #myCategory li{
 	cursor: pointer;
-	font-size:14px;
-	line-height:30px;
+	/*font-size:14px;*/
+	line-height:25px;
 	display:block;
-	height:30px;
+	height:25px;
 	float:left;
 }
 #albenoverview li span{
@@ -207,12 +207,22 @@ i#scanAudiosFirst{
 #myCategory li span.pl-name{
 	float:left;
 	position:relative;
-	width:125px;
+	width:185px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
-	
+	padding-left: 5px;
+}
+#myCategory li span.pl-name-play{
+	float:left;
+	position:relative;
+	width:135px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow:hidden;
+	cursor:pointer;
+	padding-left: 5px;
 }
 #myCategory li:hover{
 	background-color:#e7e7e7;
@@ -799,8 +809,8 @@ padding-left:10px;
 .songcontainer span.time{
 	position:relative;
 	float:left;
-	right:5px;
-	width:60px;
+	/*right:5px;
+	width:60px;*/
 	text-align:right;
 	
 }
