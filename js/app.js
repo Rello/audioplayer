@@ -473,7 +473,6 @@ Audios.prototype.loadAlbums = function(){
 							 var myCover=$('.album.is-active .albumcover');
 							  if(myCover.css('background-image') == 'none'){
 								$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':myCover.css('background-color'),'color':myCover.css('color'),'background-image':'none'});
-//								$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':'#D3D3D3','background-image':'none'});
 								$('.sm2-playlist-cover').click(function(){
 									window.location.href='#show-'+myCover.data('album');
 								});
