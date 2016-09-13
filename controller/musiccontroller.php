@@ -260,7 +260,6 @@ class MusicController extends Controller {
        		}
 			
 			if($file_not_found === false){
-				if ($row['id'] === 3272) \OCP\Util::writeLog('audioplayer', 'row-mime: '.$row['mimetype'], \OCP\Util::DEBUG);
 				if ($row['mimetype'] === 'audio/x-mpegurl') {
 					$row['link'] = rawurlencode($row['title']);
 				}else{	
