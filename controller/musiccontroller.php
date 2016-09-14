@@ -62,9 +62,6 @@ class MusicController extends Controller {
 		   
 			// Setup filesystem
 			\OC\Files\Filesystem::init($user, '/' . $user . '/files');
-			#\OCP\JSON::checkUserExists($user);
-			#\OC_Util::tearDownFS();
-			#\OC_Util::setupFS($user);
 			$startPath = \OC\Files\Filesystem::getPath($linkItem['file_source']) ;
 		  	if((string)$linkItem['item_type'] === 'file'){
 				$filenameAudio=$startPath;
@@ -98,9 +95,6 @@ class MusicController extends Controller {
 		   
 			// Setup filesystem
 			\OC\Files\Filesystem::init($user, '/' . $user . '/files');
-			#\OCP\JSON::checkUserExists($user);
-			#\OC_Util::tearDownFS();
-			#\OC_Util::setupFS($user);
 			$startPath = \OC\Files\Filesystem::getPath($linkItem['file_source']) ;
 		  	if((string)$linkItem['item_type'] === 'file'){
 				$filenameAudio=$startPath;
@@ -110,8 +104,6 @@ class MusicController extends Controller {
 			
 			\OC::$server->getSession()->close();
 			\OCP\Util::writeLog('audioplayer', $filenameAudio.' '.$user, \OCP\Util::DEBUG);
-			#$stream = new \OCA\audioplayer\AudioStream($filenameAudio,$user);
-			#$stream -> start();
 		} 
 	}
 
@@ -260,6 +252,7 @@ class MusicController extends Controller {
        		}
 			
 			if($file_not_found === false){
+				# Beta for Streaming testing; should not have any impact as this filetype is not used
 				if ($row['mimetype'] === 'audio/x-mpegurl') {
 					$row['link'] = rawurlencode($row['title']);
 				}else{	
@@ -282,8 +275,6 @@ class MusicController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public  function searchProperties($searchquery){
-		
-	 
 		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?) OR `year` LIKE ?) AND `user_id` = ?";
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', '%'.addslashes($searchquery).'%', $this->userId));
@@ -384,16 +375,6 @@ class MusicController extends Controller {
 	
 	private function deleteFromDB($Id,$iAlbumId,$iArtistId,$fileId){
 		
-		//DELETE FROM MATRIX album_artists
-		/*
-		$stmtCount = \OCP\DB::prepare( 'SELECT COUNT(`artist_id`) AS `ARTISTSCOUNT`  FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
-		$resultCount = $stmtCount->execute(array($iAlbumId));
-		$row = $resultCount->fetchRow();
-		if((int)$row['ARTISTSCOUNT'] === 1){
-			$stmt1 = \OCP\DB::prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `artist_id` = ? AND `album_id` = ?' );
-			$stmt1->execute(array($iArtistId, $iAlbumId));
-		}*/
-		//DELETE album
 		$stmtCountAlbum = $this->db->prepareQuery( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
 		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
 		$rowAlbum = $resultAlbumCount->fetchRow();
@@ -442,12 +423,6 @@ class MusicController extends Controller {
 			$red = hexdec($calendarcolor->{'red'});
 			$green = hexdec($calendarcolor->{'green'});
 			$blue = hexdec($calendarcolor->{'blue'});
-			/*
-			$cRed=255-$red;
-			$cGreen=255-$green;
-			$cBlue=255-$blue;
-			
-			return 'rgba('.$cRed.','.$cGreen.','.$cGreen.',0.7)';*/
 			$computation = ((($red * 299) + ($green * 587) + ($blue * 114)) / 1000);
 			return ($computation > 130)?'#000000':'#FAFAFA';
 		}
@@ -499,11 +474,6 @@ class MusicController extends Controller {
             //convert each color to hex and append to output
             $output .= str_pad(dechex($colors[$i]), 2, 0, STR_PAD_LEFT);
         }
-
         return '#'.$output;
     }
-	
-	
-
-	
 }
