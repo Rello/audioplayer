@@ -48,10 +48,15 @@
 	<!--my playlist clone -->	
 	<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
 	<input type="text" name="playlist" id="playlist" value=""  />
-	<button class="icon-checkmark"></button>
+		<button class="icon-checkmark"></button>
+		<button class="icon-close"></button>
 	</li>	
 	<!--my playlist clone -->
-		<input type="text" class="mp3_hide" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
+	<div class="app-navigation-entry-edit mp3_hide" id="newPlaylist">
+		<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
+		<button class="icon-checkmark" id="newPlaylistBtn_ok"></button>
+		<button class="icon-close" id="newPlaylistBtn_cancel"></button>
+	</div>
 </div>
 </div>	
 <div id="app-content">
