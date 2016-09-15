@@ -1,7 +1,13 @@
 # Changelog
 
-## 1.2.0
+## 1.2.1
+2016-09-15
 
+- fix: Sharing player only working for mp3 files #54
+- fix: input box for new playlists does not hide #61
+- enhancement: new clean design with less crazy colors #59
+
+## 1.2.0
 2016-09-09
 
 - fix: wrong spinning wheel location in css
@@ -13,7 +19,6 @@
 - app will be signed as of this release
 
 ## 1.1.0
-
 2016-08-24
 
 - new navigator: dynamic lists for artists, genres, years (more to come)
@@ -26,7 +31,6 @@
 - fix: ID3 editor dropdowns
 
 ## 1.0.3
-
 2016-08-08
 
 - fix: genre not always shown [#35](https://github.com/rello/audioplayer/issues/35)
@@ -36,7 +40,6 @@
 - fix: various display improvements
 
 ## 1.0.2
-
 2016-08-04
 
 - fix: One Click Play [#22](https://github.com/rello/audioplayer/issues/22)
@@ -47,7 +50,6 @@
 - enhancement: use reduced soundmanager-js for One Click Play
 
 ## 1.0.1
-
 2016-07-23
 
 - fix: spinning wheel when file was deleted [#19](https://github.com/rello/audioplayer/issues/19)
@@ -57,7 +59,6 @@
 - enhancement: Taiwanese localization (thanks to [sbr9150](https://github.com/sbr9150))
 
 ## 1.0.0
-
 2016-07-18
 
 - rebranding from "Audios" to "Audio Player"
