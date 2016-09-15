@@ -3,11 +3,13 @@ Albums and playlists for audio files within an animated cover art navigation.<br
 One Click Play from the file browser and shared link.<br>
 A pure player. No backends or other overhead.
 
-![](https://github.com/rello/screenshots/blob/master/audioplayer_main.png)<br>
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_main.png" height ="400">
+<br>
 
 Navigation, Share Player, and Action Menu<br>
-![](https://github.com/rello/screenshots/blob/master/audioplayer_lists.png)        ![](https://github.com/rello/screenshots/blob/master/audioplayer_share.png)       
-![](https://github.com/rello/screenshots/blob/master/audioplayer_actions.png)
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_lists.png" height ="250">
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_share.png" height ="250">
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_actions.png" height ="150">
 
 ## Features
 - Animated album view
