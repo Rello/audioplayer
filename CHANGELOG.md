@@ -3,7 +3,7 @@
 ## 1.2.1
 2016-09-15
 
-- fix: sharing player only working for mp3 files [#54](https://github.com/rello/audioplayer/issues/54)
+- fix: share player only working for mp3 files [#54](https://github.com/rello/audioplayer/issues/54)
 - fix: input box for new playlists does not hide [#61](https://github.com/rello/audioplayer/issues/61)
 - enhancement: new clean design with less crazy colors [#59](https://github.com/rello/audioplayer/issues/59)
 
