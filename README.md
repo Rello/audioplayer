@@ -1,19 +1,17 @@
-#![](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
-Albums and playlists for audio files within an animated cover art navigation.<br>
-One Click Play from the file browser and shared link.<br>
+#![Icon](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
+Albums and playlists for audio files within an animated cover art navigation.  
+One Click Play from file browser and shared link.  
 A pure player. No backends or other overhead.
 
-<img src="https://github.com/rello/screenshots/blob/master/audioplayer_main.png" height ="400">
-<br>
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_main.png" alt="Main" height="400" title="Main">
 
-Navigation, Share Player, and Action Menu<br>
-<img src="https://github.com/rello/screenshots/blob/master/audioplayer_lists.png" height ="250">
-<img src="https://github.com/rello/screenshots/blob/master/audioplayer_share.png" height ="250">
-<img src="https://github.com/rello/screenshots/blob/master/audioplayer_actions.png" height ="150">
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_lists.png" alt="Navigation" height="250" title="Navigation">     
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_share.png" alt="Share Player" height="250" title="Share Player">     
+<img src="https://github.com/rello/screenshots/blob/master/audioplayer_actions.png" alt="Action Menu" height="150" title="Action Menu">
 
 ## Features
 - Animated album view
-- Various dynamic views (playlists, artists, genres, years, all)
+- Various selections (playlists, artists, genres, years, all)
 - Scanning and resetting music library
 - Playlist editing in the UI
 - Editing ID3 tags (incl. picture)
@@ -43,8 +41,8 @@ Please report bugs or feature requests using the [GitHub issue tracking system](
 Please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
 
 ## Maintainers
-- [Marcel Scherello](https://github.com/rello) (project leader)
-- [Thomas Marx](https://github.com/xramsamoht)
+- [Marcel Scherello](https://github.com/rello) (author, project leader)
+- [Thomas Marx](https://github.com/xramsamoht) (administrative support)
 
 ## License
 
