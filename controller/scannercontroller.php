@@ -874,10 +874,10 @@ class ScannerController extends Controller {
 	}
 	
 	private function checkIfTrackDbExists($fileid){
-		$stmtCount = $this->db->prepareQuery( 'SELECT  COUNT(`id`)  AS COUNTID FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `file_id` = ? ' );
+		$stmtCount = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `file_id` = ? ' );
 		$resultCount = $stmtCount->execute(array($this->userId, $fileid));
-		$row = $resultCount->fetchRow();
-		if(isset($row['COUNTID']) && $row['COUNTID'] > 0){
+		$rowCount = $resultCount->rowCount();
+		if($rowCount !== 0){
 			return true;
 		}else{
 			return false;
