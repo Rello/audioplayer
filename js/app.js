@@ -1758,6 +1758,7 @@ $(document).ready(function() {
 	$('#alben').addClass('bAktiv');
 	$('#alben').on('click',function(){
 		$('#newPlaylist').addClass('mp3_hide');
+		$('#newPlaylist').addClass('mp3_hide');
 		myAudios.PlaylistContainer.hide();
 		if(	$('.sm2-bar-ui').hasClass('playing')){
 			//myAudios.AudioPlayer.actions.play(0);
@@ -1771,6 +1772,7 @@ $(document).ready(function() {
 		}
   		myAudios.set_uservalue('category','Album');
 	});
+	
 	$(document).on('click', '#resetAudios', function () {
 		$("#dialogSmall").text(t('audioplayer', 'Are you sure? All music database entries will be deleted!'));
 		$("#dialogSmall").dialog({
@@ -1829,7 +1831,7 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
-		
+		$('#newPlaylist').addClass('mp3_hide');
 		if(	$('.sm2-bar-ui').hasClass('playing')){
 			myAudios.AudioPlayer.actions.play(0);
 			myAudios.AudioPlayer.actions.stop();
@@ -1870,6 +1872,7 @@ $(document).ready(function() {
 	$('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
 	
 	$('#app-navigation-toggle_alternative').click(function(){
+			$('#newPlaylist').addClass('mp3_hide');
 		if(	$('#app-navigation').hasClass('mp3_hide')){
 			$('#app-navigation').removeClass('mp3_hide');
 			$('#audios-audioscontainer .rowlist').remove();
@@ -1886,6 +1889,7 @@ $(document).ready(function() {
 	});
 	
 	$('#category_selector').change(function() {
+		$('#newPlaylist').addClass('mp3_hide');
   		var user_value = $('#category_selector').val();
   		$('#myCategory').html('');
   		if (user_value != '' ) {
