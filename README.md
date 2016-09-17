@@ -25,6 +25,12 @@ A pure player. No backends or other overhead.
 - Ogg Vorbis (`.ogg` – `audio/ogg`)
 - Waveform Audio (`.wav` – `audio/wav`)
 
+## Supported Browsers
+
+- Latest Chrome
+- Latest Firefox
+- Latest Safari
+
 ## Languages
 - en, de, de_DE, ru, zh_TW
 
