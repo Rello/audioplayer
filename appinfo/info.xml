@@ -9,8 +9,8 @@
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
 	<documentation>
-		<user>https://github.com/rello/audioplayer/wiki</user>
-		<admin>https://github.com/rello/audioplayer/wiki</admin>
+		<user>https://github.com/rello/audioplayer/wiki#user-documentation</user>
+		<admin>https://github.com/rello/audioplayer/wiki#admin-documentation</admin>
 	</documentation>
 	<category>multimedia</category>
 	<website>https://github.com/rello/audioplayer</website>
