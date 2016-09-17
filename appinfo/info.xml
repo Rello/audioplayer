@@ -4,7 +4,7 @@
 	<name>Audio Player</name>
 	<summary>Audio Player App for ownCloud and Nextcloud</summary>
 	<description>Albums and playlists within an animated cover art navigation with One Click Play from file browser and shared link.</description>
-	<version>1.2.1</version>
+	<version>1.2.2</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
