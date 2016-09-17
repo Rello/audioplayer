@@ -26,7 +26,6 @@ A pure player. No backends or other overhead.
 - Waveform Audio (`.wav` – `audio/wav`)
 
 ## Supported Browsers
-
 - Latest Chrome
 - Latest Firefox
 - Latest Safari
@@ -34,16 +33,18 @@ A pure player. No backends or other overhead.
 ## Languages
 - en, de, de_DE, ru, zh_TW
 
+## Documentation
+- [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
+- [Admin Documentation](https://github.com/rello/audioplayer/wiki#admin-documentation)
+
 ## Installation
 - [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please allow experimental apps)
 - [Nextcloud App Store](https://apps.nextcloud.com/app/audioplayer) (app store in beta stage)
 
 ## Bugs and Feature Requests
-
 Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only!
 
 ## Changelog
-
 Please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
 
 ## Maintainers
@@ -51,11 +52,9 @@ Please read the [full release history](https://github.com/rello/audioplayer/blob
 - [Thomas Marx](https://github.com/xramsamoht) (administrative support)
 
 ## License
-
 All contributions to this repository from August, 26 2016 on are considered to be licensed under the AGPLv3 or any later version.
 
 ## Stats
-
 GitHub [![Issues](https://img.shields.io/github/issues/Rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)
 [![Stars](https://img.shields.io/github/stars/Rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers)
 [![Forks](https://img.shields.io/github/forks/Rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
