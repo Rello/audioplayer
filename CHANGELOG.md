@@ -2,7 +2,7 @@
 
 ## 1.2.2
 2016-09-18
-- fix: icon issues with alternative apps folder [#65](https://github.com/rello/audioplayer/issues/65)
+- fix: icon issues with custom apps directory [#65](https://github.com/rello/audioplayer/issues/65)
 
 ## 1.2.1
 2016-09-15
