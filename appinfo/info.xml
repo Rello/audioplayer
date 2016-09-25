@@ -1,15 +1,12 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>audioplayer</id>
-	<name lang="en">Audio Player</name>
-	<name lang="de">Audio-Player</name>
-	<summary lang="en">Audio Player App for ownCloud and Nextcloud</summary>
-	<summary lang="de">Audio-Player-App für ownCloud und Nextcloud</summary>
-	<description lang="en">Albums and playlists for audio files within an animated cover art navigation.\nOne Click Play from file browser and shared link.\nA pure player. No back ends or other overhead.</description>
-	<description lang="de">Alben und Wiedergabelisten für Audiodateien innerhalb einer animierten Cover-Navigation.\nEin-Klick-Wiedergabe aus Datei-Browser und geteiltem Link.\nKeine Back-Ends oder anderer Overhead.</description>
-	<version>1.2.2.1</version>
+	<name>Audio Player</name>
+	<summary>Audio Player App for ownCloud and Nextcloud</summary>
+	<description>Albums and playlists for audio files within an animated cover art navigation.\nOne Click Play from file browser and shared link.\nA pure player. No back ends or other overhead.</description>
+	<version>1.2.2.2</version>
 	<licence>agpl</licence>
-	<author mail="audioplayer@scherello.de">Marcel Scherello</author>
+	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
 	<documentation>
 		<user>https://github.com/rello/audioplayer/wiki#user-documentation</user>
