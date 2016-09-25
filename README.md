@@ -1,8 +1,6 @@
 #![Icon](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
 
-[![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)
-[![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers)
-[![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
+[![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues) [![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers) [![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
 Albums and playlists for audio files within an animated cover art navigation.  
 One Click Play from file browser and shared link.  
@@ -24,36 +22,31 @@ A pure player. No back ends or other overhead.
 - One Click Play from file browser
 - Play shared audio files directly
 
-## Supported Formats
-- MP3 (`.mp3` – `audio/mpeg`)
-- MP4 (`.m4a`/`.m4b` – `audio/mp4`)
-- Ogg Vorbis (`.ogg` – `audio/ogg`)
-- Waveform Audio (`.wav` – `audio/wav`)
+### Supported Formats
+MP3, MP4, Ogg Vorbis, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/mime-types-and-audio-files#file-formats-and-corresponding-mime-types)
 
-## Supported Browsers
-- Latest Chrome
-- Latest Firefox
-- Latest Safari
+### Supported Browsers
+Latest versions of Chrome, Firefox, and Safari.  
+Internet Explorer and Edge are not supported.
 
-## Languages
-- en, de, de_DE, ru, zh_TW
+### Languages
+English (en), Deutsch (Persönlich) (de), Deutsch (Förmlich) (de_DE), Русский (ru), 正體中文（臺灣） (zh_TW)
 
 ## Documentation
 - [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
 - [Admin Documentation](https://github.com/rello/audioplayer/wiki#admin-documentation)
 
 ## Installation
-- [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please allow experimental apps)
+- [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please enable experimental apps)
 - [Nextcloud App Store](https://apps.nextcloud.com/app/audioplayer) (app store in beta stage)
+- [Known Issues](https://github.com/rello/audioplayer/wiki/installation-instructions#known-issues)
 
 ## Bugs and Feature Requests
 Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only!
 
-## Versioning
-The [development](https://github.com/rello/audioplayer/wiki#development) of Audio Player follows the guidelines of [Semantic Versioning](http://semver.org/) in the `MAJOR.MINOR.PATCH` format.
-
-## Changelog
-Please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
+## Versioning and Changelog
+The [development](https://github.com/rello/audioplayer/wiki#development) of Audio Player follows the guidelines of [Semantic Versioning](http://semver.org/) in the `MAJOR.MINOR.PATCH` format.  
+For a changelog please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
 
 ## Maintainers
 - [Marcel Scherello](https://github.com/rello) (author, project leader)
