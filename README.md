@@ -1,7 +1,7 @@
 #![Icon](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
 Albums and playlists for audio files within an animated cover art navigation.  
 One Click Play from file browser and shared link.  
-A pure player. No backends or other overhead.
+A pure player. No back ends or other overhead.
 
 <img src="https://github.com/rello/screenshots/blob/master/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
