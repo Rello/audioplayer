@@ -1,6 +1,8 @@
 #![Icon](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
 
-[![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+[![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)
+[![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers)
+[![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
 Albums and playlists for audio files within an animated cover art navigation.  
 One Click Play from file browser and shared link.  
@@ -56,11 +58,6 @@ Please read the [full release history](https://github.com/rello/audioplayer/blob
 ## Maintainers
 - [Marcel Scherello](https://github.com/rello) (author, project leader)
 - [Thomas Marx](https://github.com/xramsamoht) (administrative support)
-
-## Stats
-GitHub [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)
-[![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers)
-[![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
 ## Note
 This is the rework of the former [MP3 Player](https://github.com/libasys/audios) app which is not maintained anymore.  
