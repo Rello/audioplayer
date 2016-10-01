@@ -14,7 +14,7 @@ To make it possible for us to help you please fill out below information careful
 2. 
 3. 
 
-### Possible solution
+### Possible solution (optional)
 
 
 ### Server configuration
