@@ -540,7 +540,18 @@ class ScannerController extends Controller {
 			
 			if($this->checkIfTrackDbExists($audio['fileid']) === false){
 				
-				$ThisFileInfo = $getID3->analyze($userView->getLocalFile($audio['path']));
+				$fileInfo = $userView->getFileInfo($audio['path']);
+				$useTempFile = $fileInfo->isEncrypted() || !$fileInfo->getStorage()->isLocal();
+				if ($useTempFile) {
+					$fileName = $userView->toTmpFile($audio['path']);
+				} else {
+					$fileName = $userView->getLocalFile($audio['path']);
+				}
+						
+				$ThisFileInfo = $getID3->analyze($fileName);
+				if ($useTempFile) {
+					unlink($fileName);
+				}
 			
 				// Cyrillic id3 workaround
 				// Tag is 1251 if there are 4+ upper half of ASCII table symbols glued together.
