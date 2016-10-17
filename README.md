@@ -23,7 +23,7 @@ A pure player. No back ends or other overhead.
 - Play shared audio files directly
 
 ### Supported Formats
-MP3, MP4, Ogg Vorbis, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/mime-types-and-audio-files#file-formats-and-corresponding-mime-types)
+MP3, MP4, Ogg Vorbis, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
 
 ### Supported Browsers
 Latest versions of Chrome, Firefox, and Safari.  
