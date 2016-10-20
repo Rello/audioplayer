@@ -534,6 +534,7 @@ class ScannerController extends Controller {
 								
 		foreach($audios as $audio) {
 		  	
+			register_shutdown_function(array($this, 'shutDownFunction'), $audio['path']);		
 			if ($debug_detail === true) {
 				#\OCP\Util::writeLog('audioplayer', 'file-id: '.$audio['fileid'].' track path : '.$audio['path'], \OCP\Util::DEBUG);
 			}
@@ -903,7 +904,15 @@ class ScannerController extends Controller {
 		
 		return true;
 	}
-	
+
+	private function shutDownFunction($test) { 
+	        $error = error_get_last();
+		\OCP\Util::writeLog('audioplayer', 'Fatal Error with file: '.$test, \OCP\Util::DEBUG);
+		\OCP\Util::writeLog('audioplayer', 'Audio Player can not continue scanning until this file is removed', \OCP\Util::DEBUG);
+		\OCP\Util::writeLog('audioplayer', 'Error Message: '.$error['message'], \OCP\Util::DEBUG);
+   	 	exit;
+	}
+
 	private function getDominateColorOfImage($img){
 	$data = base64_decode($img);	
 	$img =imagecreatefromstring($data);	
