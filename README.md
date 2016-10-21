@@ -38,7 +38,7 @@ English (en), Deutsch (Persönlich) (de), Deutsch (Förmlich) (de_DE), Ру
 
 ## Installation
 - [ownCloud App Store](https://apps.owncloud.com/content/show.php?content=174738) (please enable experimental apps)
-- [Nextcloud App Store](https://apps.nextcloud.com/app/audioplayer) (app store in beta stage)
+- [Nextcloud App Store](https://apps.nextcloud.com/apps/audioplayer) (app store in beta stage)
 - [Known Issues](https://github.com/rello/audioplayer/wiki/installation-instructions#known-issues)
 
 ## Bugs and Feature Requests
