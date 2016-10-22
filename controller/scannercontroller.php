@@ -486,7 +486,7 @@ class ScannerController extends Controller {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
 #		}
 
-        $userView =  new View('/' . $this -> userId . '/files');
+		$userView =  new View('/' . $this -> userId . '/files');
 		$audios_mp3 = $userView->searchByMime('audio/mpeg');
 		$audios_m4a = $userView->searchByMime('audio/mp4');
 		$audios_ogg = $userView->searchByMime('audio/ogg');
@@ -534,7 +534,6 @@ class ScannerController extends Controller {
 								
 		foreach($audios as $audio) {
 		  	
-			register_shutdown_function(array($this, 'shutDownFunction'), $audio['path']);		
 			if ($debug_detail === true) {
 				#\OCP\Util::writeLog('audioplayer', 'file-id: '.$audio['fileid'].' track path : '.$audio['path'], \OCP\Util::DEBUG);
 			}
@@ -629,7 +628,7 @@ class ScannerController extends Controller {
 				$name = $audio['name'];
 				if(isset($ThisFileInfo['comments']['title'][0])){
 					$name=$ThisFileInfo['comments']['title'][0];
-					
+
 				}
 				$this->currentSong = $name.' - '.$artist;
 				$trackNumber = '';
@@ -652,6 +651,8 @@ class ScannerController extends Controller {
 					$temp=explode('/',$trackNumber);
 					$cleanTrackNumber=trim($temp[0]);
 				}
+
+				$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
 				
 				if(isset($ThisFileInfo['comments']['picture'])){
 					$data=$ThisFileInfo['comments']['picture'][0]['data'];
@@ -903,14 +904,6 @@ class ScannerController extends Controller {
 		\OC::$server->getCache()->set($this->progresskey,$currentIntArray, 300);
 		
 		return true;
-	}
-
-	private function shutDownFunction($test) { 
-	        $error = error_get_last();
-		\OCP\Util::writeLog('audioplayer', 'Fatal Error with file: '.$test, \OCP\Util::DEBUG);
-		\OCP\Util::writeLog('audioplayer', 'Audio Player can not continue scanning until this file is removed', \OCP\Util::DEBUG);
-		\OCP\Util::writeLog('audioplayer', 'Error Message: '.$error['message'], \OCP\Util::DEBUG);
-   	 	exit;
 	}
 
 	private function getDominateColorOfImage($img){
