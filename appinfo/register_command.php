@@ -27,7 +27,7 @@ $userManager = $c->getServer()->getUserManager();
 
 $application->add(new \OCA\audioplayer\Command\Scan(
 	$userManager, 
-	$c->query('ScannerController')
+	$c->query(\OCA\audioplayer\Controller\ScannerController::class)
 ));
 
 $application->add(new \OCA\audioplayer\Command\Reset(
