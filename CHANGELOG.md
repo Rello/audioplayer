@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3
+2016-10-xx
+- fix: handling of tempory scanner files [#68](https://github.com/rello/audioplayer/issues/68)
+- fix: simpler analysis of incorrect files in scanner [#57](https://github.com/rello/audioplayer/issues/57)
+- enhancement: occ support [#72](https://github.com/rello/audioplayer/issues/72)
+
 ## 1.2.2
 2016-09-18
 - fix: icon issues with custom apps directory [#65](https://github.com/rello/audioplayer/issues/65)
