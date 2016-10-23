@@ -28,7 +28,9 @@ use \OCP\IRequest;
 use \OC\Files\View;
 use \OCP\IConfig;
 use \OCP\IUserSession;
-use \Symfony\Component\Console\Output\OutputInterface;
+use \OCP\IL10N;
+use \OCP\L10N\IFactory;
+use \OCP\IDb;
 
 /**
  * Controller class for main page.
@@ -48,13 +50,22 @@ class ScannerController extends Controller {
 	private $db;
 	private $configManager;
 	private $occ_job;
-	public function __construct($appName, IRequest $request, $userId, $l10n, $db, IConfig $configManager) {
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			$userId, 
+			IL10N $l10n, 
+			IDb $db, 
+			IConfig $configManager, 
+			IFactory $languageFactory
+			) {
 		parent::__construct($appName, $request);
 		$this->appname = $appName;
-		$this -> userId = $userId;
+		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
 		$this->configManager = $configManager;
+		$this->languageFactory = $languageFactory;
 	}
 	/**
 	 * @NoAdminRequired
@@ -432,8 +443,7 @@ class ScannerController extends Controller {
 	public function getImportTpl(){
 		
 		$params = [];	
-		$response = new TemplateResponse('audioplayer', 'part.import',$params, '');  
-        
+		$response = new TemplateResponse('audioplayer', 'part.import',$params, '');          
         return $response;
 	}
 	
@@ -448,7 +458,8 @@ class ScannerController extends Controller {
 			$this->occ_job = true;
 			$this->userId = $userId;
 			\OC\Files\Filesystem::initMountPoints($userId);
-			$output->writeln("Sprachcheck <info>".$this->l10n->t('Unknown')."</info>");
+			$languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
+			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		} else {
 			$this->occ_job = false;
 		}
