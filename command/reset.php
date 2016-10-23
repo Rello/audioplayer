@@ -27,35 +27,29 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use OCA\audioplayer\Controller;
 
-class Scan extends Command {
+class Reset extends Command {
 	private $userManager;
-	private $scanner;
-	public function __construct(\OCP\IUserManager $userManager, $scanner) {
+	private $reset;
+	public function __construct(\OCP\IUserManager $userManager, $reset) {
 		$this->userManager = $userManager;
-		$this->scanner = $scanner;
+		$this->reset = $reset;
 		parent::__construct();
 	}
-
+	
 	protected function configure() {
 		$this
-			->setName('audioplayer:scan')
-			->setDescription('scan for new audio files')
+			->setName('audioplayer:reset')
+			->setDescription('reset audio player library')
 			->addArgument(
 					'user_id',
 					InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-					'scan all audio files of the given user(s)'
+					'reset the whole library of the given user(s)'
 			)
 			->addOption(
 					'all',
 					null,
 					InputOption::VALUE_NONE,
-					'scan all audio files of all known users'
-			)
-			->addOption(
-					'debug',
-					null,
-					InputOption::VALUE_NONE,
-					'run the scan in debug mode (memory usage)'
+					'reset the whole library of all known users'
 			)
 		;
 	}
@@ -70,8 +64,8 @@ class Scan extends Command {
 			if (is_object($user)) {
 				$user = $user->getUID();
 			}
-			$output->writeln("Start scan for <info>$user</info>");
-			$this->scanner->scanForAudios($user, $output, $input->getOption('debug'));
+			$output->writeln("Reset library for <info>$user</info>");
+			$this->reset->resetMediaLibrary($user, $output);
 		}
 	}
 
