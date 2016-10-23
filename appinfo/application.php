@@ -98,16 +98,16 @@ class Application extends App {
 			$c->query('L10N')
 			);
 		});
-		$container->registerService('ScannerController', function(IContainer $c) {
-			return new ScannerController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('UserId'),
-			$c->query('L10N'),
-			$c->query('ServerContainer')->getDb(),
-			$c->query('Config')
-			);
-		});		
+//		$container->registerService('ScannerController', function(IContainer $c) {
+//			return new ScannerController(
+//			$c->query('AppName'),
+//			$c->query('Request'),
+//			$c->query('UserId'),
+//			$c->query('L10N'),
+//			$c->query('ServerContainer')->getDb(),
+//			$c->query('Config')
+//			);
+//		});		
 		
         /**
 		 * Core
