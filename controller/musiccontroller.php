@@ -324,7 +324,14 @@ class MusicController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function resetMediaLibrary(){
+	public function resetMediaLibrary($userId = null, $output = null){
+	
+		if($userId !== null) {
+			$this->occ_job = true;
+			$this->userId = $userId;
+		} else {
+			$this->occ_job = false;
+		}
 			
 		$stmt = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ?' );
 		$stmt->execute(array($this->userId));
@@ -366,11 +373,14 @@ class MusicController extends Controller {
 					'msg' =>'all good'
 				];
 		
-		
-		$response = new JSONResponse();
-		$response -> setData($result);
-		return $response;
-		
+		// applies if scanner is not started via occ
+		if(!$this->occ_job) { 
+			$response = new JSONResponse();
+			$response -> setData($result);
+			return $response;
+		} else {
+			$output->writeln("Reset finished");
+		}
 	}
 	
 	private function deleteFromDB($Id,$iAlbumId,$iArtistId,$fileId){
