@@ -21,6 +21,7 @@ A pure player. No back ends or other overhead.
 - Mobile view support
 - One Click Play from file browser
 - Play shared audio files directly
+- occ support for library scan and reset
 
 ### Supported Formats
 MP3, MP4, Ogg Vorbis, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
