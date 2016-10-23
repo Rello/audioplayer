@@ -30,7 +30,10 @@ use OCA\audioplayer\Controller;
 class Scan extends Command {
 	private $userManager;
 	private $scanner;
-	public function __construct(\OCP\IUserManager $userManager, $scanner) {
+	public function __construct(
+			\OCP\IUserManager $userManager, 
+			$scanner
+		) {
 		$this->userManager = $userManager;
 		$this->scanner = $scanner;
 		parent::__construct();
@@ -74,5 +77,4 @@ class Scan extends Command {
 			$this->scanner->scanForAudios($user, $output, $input->getOption('debug'));
 		}
 	}
-
 }
