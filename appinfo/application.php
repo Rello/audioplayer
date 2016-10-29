@@ -41,79 +41,8 @@ class Application extends App {
 		
 		parent::__construct('audioplayer', $urlParams);
         $container = $this->getContainer();
-	
-	
-		$container->registerService('PageController', function(IContainer $c) {
-			return new PageController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('UserId'),
-			$c->query('L10N')
-			);
-		});
-		
-		$container->registerService('SettingController', function(IContainer $c) {
-			return new SettingController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('UserId'),
-			$c->query('L10N'),
-			$c->query('ServerContainer')->getDb(),
-			$c->query('Config')
-			);
-		});
-
-		$container->registerService('PlaylistController', function(IContainer $c) {
-			return new PlaylistController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('UserId'),
-			$c->query('L10N'),
-			$c->query('ServerContainer')->getDb()
-			);
-		});
-		
-		$container->registerService('CategoryController', function(IContainer $c) {
-			return new CategoryController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('UserId'),
-			$c->query('L10N'),
-			$c->query('ServerContainer')->getDb()
-			);
-		});
-		$container->registerService('MusicController', function(IContainer $c) {
-			return new MusicController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('UserId'),
-			$c->query('L10N'),
-			$c->query('ServerContainer')->getDb()
-			);
-		});
-		$container->registerService('PhotoController', function(IContainer $c) {
-			return new PhotoController(
-			$c->query('AppName'),
-			$c->query('Request'),
-			$c->query('L10N')
-			);
-		});
-//		$container->registerService('ScannerController', function(IContainer $c) {
-//			return new ScannerController(
-//			$c->query('AppName'),
-//			$c->query('Request'),
-//			$c->query('UserId'),
-//			$c->query('L10N'),
-//			$c->query('ServerContainer')->getDb(),
-//			$c->query('Config')
-//			);
-//		});		
-		
-        /**
-		 * Core
-		 */
-		 
-		  $container->registerService('URLGenerator', function(IContainer $c) {
+			 
+		$container->registerService('URLGenerator', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 			return $server->getURLGenerator();
