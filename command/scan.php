@@ -58,7 +58,7 @@ class Scan extends Command {
 					'debug',
 					null,
 					InputOption::VALUE_NONE,
-					'run the scan in debug mode (memory usage)'
+					'current processed audio file will be written for detailed analysis'
 			)
 		;
 	}
