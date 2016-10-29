@@ -27,6 +27,8 @@ use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
+use \OCP\IL10N;
+use \OCP\IDb;
 
 /**
  * Controller class for main page.
@@ -38,9 +40,15 @@ class MusicController extends Controller {
 	private static $sortType='album';
 	private $db;
 
-	public function __construct($appName, IRequest $request, $userId, $l10n, $db) {
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			$userId, 
+			IL10N $l10n, 
+			IDb $db
+		) {
 		parent::__construct($appName, $request);
-		$this -> userId = $userId;
+		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
 	}

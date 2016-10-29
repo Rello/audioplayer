@@ -25,12 +25,13 @@ use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
-use \OC\Files\View;
 use \OCP\IConfig;
 use \OCP\IUserSession;
 use \OCP\IL10N;
 use \OCP\L10N\IFactory;
 use \OCP\IDb;
+use \OCP\Files\IRootFolder;
+use \OC\Files\View; //remove when editAudioFiles is updated and toTmpFile alternative
 
 /**
  * Controller class for main page.
@@ -57,7 +58,8 @@ class ScannerController extends Controller {
 			IL10N $l10n, 
 			IDb $db, 
 			IConfig $configManager, 
-			IFactory $languageFactory
+			IFactory $languageFactory,
+			IRootFolder $rootFolder
 			) {
 		parent::__construct($appName, $request);
 		$this->appname = $appName;
@@ -66,6 +68,7 @@ class ScannerController extends Controller {
 		$this->db = $db;
 		$this->configManager = $configManager;
 		$this->languageFactory = $languageFactory;
+		$this->rootFolder = $rootFolder;
 	}
 	/**
 	 * @NoAdminRequired
@@ -457,7 +460,7 @@ class ScannerController extends Controller {
 		if($userId !== null) {
 			$this->occ_job = true;
 			$this->userId = $userId;
-			\OC\Files\Filesystem::initMountPoints($userId);
+			//\OC\Files\Filesystem::initMountPoints($userId);
 			$languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		} else {
@@ -493,13 +496,14 @@ class ScannerController extends Controller {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
 		}
 
-		$userView =  new View('/' . $this -> userId . '/files');
+//		$tmpView =  new View('/' . $this -> userId . '/files');//to be removed when toTmpFile in iRootFolder is working
+		$userView = $this->rootFolder->getUserFolder($this -> userId);
 		$audios_mp3 = $userView->searchByMime('audio/mpeg');
 		$audios_m4a = $userView->searchByMime('audio/mp4');
 		$audios_ogg = $userView->searchByMime('audio/ogg');
 		$audios_wav = $userView->searchByMime('audio/wav');
 		$audios = array_merge($audios_mp3, $audios_m4a, $audios_ogg, $audios_wav);
-		
+	
 		$this->numOfSongs = count($audios);
 		
 		$this->progresskey = $pProgresskey;
@@ -519,6 +523,8 @@ class ScannerController extends Controller {
 		$counter_new = 0;
 		$error_count = 0;
 		$error_file = 0;
+		$iAlbumCount = 0;
+		$iDublicate = 0;
 		$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
 		$cyrillic_support = $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
 		$TextEncoding 		= 'UTF-8';
@@ -537,19 +543,22 @@ class ScannerController extends Controller {
 								'option_tags_process'=>$option_tags_process,
 								'option_tags_html'=>$option_tags_html
 								));
-								
+    								
 		foreach($audios as $audio) {
 		  	
-			$this->currentSong = $audio['path'];
+			$this->currentSong = $audio->getPath();
 			$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100), $output, $debug);
 			$counter++;
 			$this->abscount++;
 
-			if($this->checkIfTrackDbExists($audio['fileid']) === false){
-				
-				$fileName = $userView->toTmpFile($audio['path']);		
+			if($this->checkIfTrackDbExists($audio->getId()) === false){
+		
+				$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
 				$ThisFileInfo = $getID3->analyze($fileName);
-				unlink($fileName);
+
+				if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
+					unlink($fileName);
+				}
 			
 				// Cyrillic id3 workaround
 				// Tag is 1251 if there are 4+ upper half of ASCII table symbols glued together.
@@ -584,8 +593,8 @@ class ScannerController extends Controller {
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
 				if (!isset($ThisFileInfo['bitrate']) AND !isset($ThisFileInfo['playtime_string'])) {
-					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio['path'], \OCP\Util::DEBUG);
-					$error_file.=$audio['name'].'<br />';
+					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio->getPath(), \OCP\Util::DEBUG);
+					$error_file.=$audio->getName().'<br />';
 					$error_count++;
 					continue;
 				}
@@ -627,7 +636,7 @@ class ScannerController extends Controller {
 					$iAlbumId = $this->writeAlbumToDB($album,(int)$year,NULL);
 				}
 				
-				$name = $audio['name'];
+				$name = $audio->getName();
 				if(isset($ThisFileInfo['comments']['title'][0])){
 					$name=$ThisFileInfo['comments']['title'][0];
 				}
@@ -672,9 +681,9 @@ class ScannerController extends Controller {
 					'artist_id' => (int)$iArtistId,
 					'album_id' =>(int) $iAlbumId,
 					'length' => $playTimeString,
-					'file_id' => (int)$audio['fileid'],
+					'file_id' => (int)$audio->getId(),
 					'bitrate' => (int)$bitrate,
-					'mimetype' => $audio['mimetype'],
+					'mimetype' => $audio->getMimetype(),
 					'genre' => (int)$iGenreId,
 					'year' => (int)$year,
 				];
@@ -905,36 +914,32 @@ class ScannerController extends Controller {
 	}
 	
 	private function getDominateColorOfImage($img){
-	$data = base64_decode($img);	
-	$img =imagecreatefromstring($data);	
+		$data = base64_decode($img);	
+		$img =imagecreatefromstring($data);	
 	
-	$rTotal = 0;
-	$gTotal =0;
-	$bTotal = 0;	
-	$total=0;
-	for ($x=0;$x<imagesx($img);$x++) {
-		for ($y=0;$y<imagesy($img);$y++) {
-			$rgb = imagecolorat($img,$x,$y);
-			$r   = ($rgb >> 16) & 0xFF;
-			$g = ($rgb >> 8) & 0xFF;
-			$b   = $rgb & 0xFF;
+		$rTotal = 0;
+		$gTotal =0;
+		$bTotal = 0;	
+		$total=0;
+		for ($x=0;$x<imagesx($img);$x++) {
+			for ($y=0;$y<imagesy($img);$y++) {
+				$rgb = imagecolorat($img,$x,$y);
+				$r   = ($rgb >> 16) & 0xFF;
+				$g = ($rgb >> 8) & 0xFF;
+				$b   = $rgb & 0xFF;
 	 		
-	 		$rTotal += $r;
-			$gTotal += $g;
-			$bTotal += $b;
-			$total++;
+		 		$rTotal += $r;
+				$gTotal += $g;
+				$bTotal += $b;
+				$total++;
+			}
 		}
-	}
 	 
-	 $returnDominateColor=[
-	 'red' => round($rTotal/$total),
-	 'green' => round($gTotal/$total),
-	 'blue' => round($bTotal/$total)
-	 ];
-	
-	return $returnDominateColor;
-	
-}
-	
-	
+		 $returnDominateColor=[
+		 'red' => round($rTotal/$total),
+		 'green' => round($gTotal/$total),
+		 'blue' => round($bTotal/$total)
+		 ];
+		return $returnDominateColor;
+	}
 }

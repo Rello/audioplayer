@@ -26,6 +26,7 @@ use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
+use \OCP\IL10N;
 
 /**
  * Controller class for main page.
@@ -34,12 +35,15 @@ class PageController extends Controller {
 	
 	private $userId;
 	private $l10n;
-	
-	
 
-	public function __construct($appName, IRequest $request, $userId, $l10n) {
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			$userId, 
+			IL10N $l10n 
+			) {
 		parent::__construct($appName, $request);
-		$this -> userId = $userId;
+		$this->userId = $userId;
 		$this->l10n = $l10n;
 	}
 
