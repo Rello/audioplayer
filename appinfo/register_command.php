@@ -32,6 +32,6 @@ $application->add(new \OCA\audioplayer\Command\Scan(
 
 $application->add(new \OCA\audioplayer\Command\Reset(
 	$userManager, 
-	$c->query('MusicController')
+	$c->query(\OCA\audioplayer\Controller\MusicController::class)
 ));
 
