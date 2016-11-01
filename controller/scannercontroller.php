@@ -523,8 +523,8 @@ class ScannerController extends Controller {
 		$counter_new = 0;
 		$error_count = 0;
 		$error_file = 0;
-		$iAlbumCount = 0;
-		$iDublicate = 0;
+		$this->iAlbumCount = 0;
+		$this->iDublicate = 0;
 		$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
 		$cyrillic_support = $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
 		$TextEncoding 		= 'UTF-8';
