@@ -60,6 +60,11 @@ class Reset extends Command {
 		} else {
 			$users = $input->getArgument('user_id');
 		}
+		$users_total = count($users);
+		if ($users_total === 0) {
+			$output->writeln("<error>Please specify the user id to reset, \"--all\" to reset for all users or \"user id\"</error>");
+			return;
+		}
 		foreach ($users as $user) {
 			if (is_object($user)) {
 				$user = $user->getUID();
