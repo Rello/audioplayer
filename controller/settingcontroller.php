@@ -27,6 +27,8 @@ use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
 use \OCP\IConfig;
+use \OCP\IL10N;
+use \OCP\IDb;
 
 /**
  * Controller class for main page.
@@ -38,16 +40,17 @@ class SettingController extends Controller {
 	private $db;
 	private $configManager;
 	
-
-	public function __construct($appName, 
-								IRequest $request, 
-								$userId, 
-								$l10n, 
-								$db, 
-								IConfig $configManager) {
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			$userId, 
+			IL10N $l10n, 
+			IDb $db,
+			IConfig $configManager
+			) {
 		parent::__construct($appName, $request);
 		$this->appname = $appName;
-		$this -> userId = $userId;
+		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
 		$this->configManager = $configManager;

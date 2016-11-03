@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Pinit
+ * ownCloud - Audio Player
  *
  * @author Sebastian Doell
  * @copyright 2014 sebastian doell sebastian@libasys.de
@@ -26,17 +26,19 @@ use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
+use \OCP\IL10N;
 
 class PhotoController extends Controller {
 	
 	private $l10n;
 	private $helperController;
-	public function __construct($appName, IRequest $request, $l10n) {
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			IL10N $l10n 
+			) {
 		parent::__construct($appName, $request);
-		
-		$this->l10n = $l10n;
-	
-		
+		$this->l10n = $l10n;		
 	}
 	
 	/**

@@ -20,15 +20,18 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 namespace OCA\audioplayer\Controller;
-
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
-use \OC\Files\View;
 use \OCP\IConfig;
+use \OCP\IUserSession;
+use \OCP\IL10N;
+use \OCP\L10N\IFactory;
+use \OCP\IDb;
+use \OCP\Files\IRootFolder;
+use \OC\Files\View; //remove when editAudioFiles is updated and toTmpFile alternative
 
 /**
  * Controller class for main page.
@@ -47,16 +50,26 @@ class ScannerController extends Controller {
 	private $numOfSongs;
 	private $db;
 	private $configManager;
-
-	public function __construct($appName, IRequest $request, $userId, $l10n, $db, IConfig $configManager) {
+	private $occ_job;
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			$userId, 
+			IL10N $l10n, 
+			IDb $db, 
+			IConfig $configManager, 
+			IFactory $languageFactory,
+			IRootFolder $rootFolder
+			) {
 		parent::__construct($appName, $request);
 		$this->appname = $appName;
-		$this -> userId = $userId;
+		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
 		$this->configManager = $configManager;
+		$this->languageFactory = $languageFactory;
+		$this->rootFolder = $rootFolder;
 	}
-
 	/**
 	 * @NoAdminRequired
 	 * 
@@ -97,7 +110,6 @@ class ScannerController extends Controller {
 			if(isset($ThisFileInfo['comments']['artist'][0])){
 				$resultData['artist'] = $ThisFileInfo['comments']['artist'][0];
 			}
-
 			$resultData['year'] = '';
 			if(isset($ThisFileInfo['comments']['year'][0])){
 				$resultData['year'] = $ThisFileInfo['comments']['year'][0];
@@ -159,7 +171,6 @@ class ScannerController extends Controller {
 			array_unshift($rowAlbums,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
 			$resultData['albums']=$rowAlbums;
 			 
-
 			$SQL1="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_artists` 
 				 			WHERE  `user_id` = ? 
 				 			ORDER BY `name` ASC
@@ -170,8 +181,6 @@ class ScannerController extends Controller {
 			$rowArtists = $result1->fetchAll();
 			array_unshift($rowArtists,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
 			$resultData['artists'] = $rowArtists;
-
-
 			$SQL2="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_genre` 
 				 			WHERE  `user_id` = ? 
 				 			ORDER BY `name` ASC
@@ -243,7 +252,6 @@ class ScannerController extends Controller {
 		
 		$pImgSrc=$this->params('imgsrc');
 		$pImgMime=$this->params('imgmime');
-
 		$trackNumber = '';
 		if (!empty($pTrack)) {
 			$trackNumber = $pTrack.(!empty($pTrackTotal) ? '/'.$pTrackTotal : '');
@@ -347,7 +355,6 @@ class ScannerController extends Controller {
 						$genreId = $row['genre_id'];
 						$newAlbumId = $albumId;
 						
-
 						if($pGenre !== ''){
 							$addGenre = $pGenre;
 						} elseif ($pExistGenre !== (string)$this->l10n->t('- choose -')) { 
@@ -355,7 +362,6 @@ class ScannerController extends Controller {
 						} else {
 							$addGenre = '';
 						}
-
 						if($addGenre !== '' && $addGenre !== $genreName){
 							$genreId = $this->writeGenreToDB($addGenre);
 						}	
@@ -367,11 +373,9 @@ class ScannerController extends Controller {
 						} else {
 							$addArtist = '';
 						}
-
 						if($addArtist !== '' && $addArtist !== $artistName){
 							$artistId = $this->writeArtistToDB($addArtist);
 						}
-
 						if($pAlbum !== ''){
 							$addAlbum = $pAlbum;
 						} elseif ($pExistAlbum !== (string)$this->l10n->t('- choose -')) { 
@@ -379,7 +383,6 @@ class ScannerController extends Controller {
 						} else {
 							$addAlbum = '';
 						}
-
 						if($addAlbum !== '' && $addAlbum !== $albumName){
 							$newAlbumId = $this->writeAlbumToDB($addAlbum,$pYear,$artistId);
 							
@@ -436,7 +439,6 @@ class ScannerController extends Controller {
 		return $response;
 		
 	}
-
 	/**
 	 * @NoAdminRequired
 	 * 
@@ -444,8 +446,7 @@ class ScannerController extends Controller {
 	public function getImportTpl(){
 		
 		$params = [];	
-		$response = new TemplateResponse('audioplayer', 'part.import',$params, '');  
-        
+		$response = new TemplateResponse('audioplayer', 'part.import',$params, '');          
         return $response;
 	}
 	
@@ -453,15 +454,24 @@ class ScannerController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function scanForAudios() {
+	public function scanForAudios($userId = null, $output = null, $debug = null) {
 	
+		// check if scanner is started from web or occ
+		if($userId !== null) {
+			$this->occ_job = true;
+			$this->userId = $userId;
+			//\OC\Files\Filesystem::initMountPoints($userId);
+			$languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
+			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
+		} else {
+			$this->occ_job = false;
+		}
+
 		$pProgresskey = $this -> params('progresskey');
 		$pGetprogress = $this -> params('getprogress');
 		\OC::$server->getSession()->close();
 				
 		if (isset($pProgresskey) && isset($pGetprogress)) {
-				
-				
 				$aCurrent = \OC::$server->getCache()->get($pProgresskey);
 				$aCurrent = json_decode($aCurrent);
 				
@@ -482,19 +492,18 @@ class ScannerController extends Controller {
 				return $response;	
 		}
 		
-#		if(!class_exists('getid3_exception')) {
+		if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
-#		}
+		}
 
-		$userView =  new View('/' . $this -> userId . '/files');
+//		$tmpView =  new View('/' . $this -> userId . '/files');//to be removed when toTmpFile in iRootFolder is working
+		$userView = $this->rootFolder->getUserFolder($this -> userId);
 		$audios_mp3 = $userView->searchByMime('audio/mpeg');
 		$audios_m4a = $userView->searchByMime('audio/mp4');
 		$audios_ogg = $userView->searchByMime('audio/ogg');
 		$audios_wav = $userView->searchByMime('audio/wav');
 		$audios = array_merge($audios_mp3, $audios_m4a, $audios_ogg, $audios_wav);
-
-		$tempArray=array();
-		
+	
 		$this->numOfSongs = count($audios);
 		
 		$this->progresskey = $pProgresskey;
@@ -506,14 +515,18 @@ class ScannerController extends Controller {
 		];
 		
 		$currentIntArray = json_encode($currentIntArray);
-		\OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
+
+		// applies if scanner is not started via occ
+		if(!$this->occ_job) \OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
+		
 		$counter = 0;
 		$counter_new = 0;
 		$error_count = 0;
 		$error_file = 0;
+		$this->iAlbumCount = 0;
+		$this->iDublicate = 0;
 		$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
 		$cyrillic_support = $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
-
 		$TextEncoding 		= 'UTF-8';
 		$option_tag_id3v1   = false;  // Read and process ID3v1 tags
 		$option_tag_id3v2   = true;  // Read and process ID3v2 tags
@@ -521,7 +534,6 @@ class ScannerController extends Controller {
 		$option_tag_apetag        = false;  // Read and process APE tags
 		$option_tags_process      = true;  // Copy tags to root key 'tags' and encode to $this->encoding
 		$option_tags_html         = false;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
-
 		$getID3 = new \getID3;
 		$getID3->setOption(array('encoding'=>$TextEncoding, 
 								'option_tag_id3v1'=>$option_tag_id3v1, 
@@ -531,18 +543,22 @@ class ScannerController extends Controller {
 								'option_tags_process'=>$option_tags_process,
 								'option_tags_html'=>$option_tags_html
 								));
-								
+    								
 		foreach($audios as $audio) {
 		  	
-			if ($debug_detail === true) {
-				#\OCP\Util::writeLog('audioplayer', 'file-id: '.$audio['fileid'].' track path : '.$audio['path'], \OCP\Util::DEBUG);
-			}
-			
-			if($this->checkIfTrackDbExists($audio['fileid']) === false){
-				
-				$fileName = $userView->toTmpFile($audio['path']);		
+			$this->currentSong = $audio->getPath();
+			$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100), $output, $debug);
+			$counter++;
+			$this->abscount++;
+
+			if($this->checkIfTrackDbExists($audio->getId()) === false){
+		
+				$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
 				$ThisFileInfo = $getID3->analyze($fileName);
-				unlink($fileName);
+
+				if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
+					unlink($fileName);
+				}
 			
 				// Cyrillic id3 workaround
 				// Tag is 1251 if there are 4+ upper half of ASCII table symbols glued together.
@@ -574,16 +590,11 @@ class ScannerController extends Controller {
 					}
 				}				
 
-
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
-
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
 				if (!isset($ThisFileInfo['bitrate']) AND !isset($ThisFileInfo['playtime_string'])) {
-					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio['path'], \OCP\Util::DEBUG);
-					$counter++;
-					$this->abscount++;
-					$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
-					$error_file.=$audio['name'].'<br />';
+					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio->getPath(), \OCP\Util::DEBUG);
+					$error_file.=$audio->getName().'<br />';
 					$error_count++;
 					continue;
 				}
@@ -624,13 +635,13 @@ class ScannerController extends Controller {
 				} else {
 					$iAlbumId = $this->writeAlbumToDB($album,(int)$year,NULL);
 				}
-
-				$name = $audio['name'];
+				
+				$name = $audio->getName();
 				if(isset($ThisFileInfo['comments']['title'][0])){
 					$name=$ThisFileInfo['comments']['title'][0];
-
 				}
-				$this->currentSong = $name.' - '.$artist;
+				
+				//$this->currentSong = $name.' - '.$artist;
 				$trackNumber = '';
 				if(isset($ThisFileInfo['comments']['track_number'][0])){
 					$trackNumber=$ThisFileInfo['comments']['track_number'][0];
@@ -640,11 +651,6 @@ class ScannerController extends Controller {
 				if(isset($ThisFileInfo['bitrate'])){
 					$bitrate=$ThisFileInfo['bitrate'];
 				}
-				/*
-				$comment = '';
-				if(isset($ThisFileInfo['comments']['comment'][0])){
-					$comment=$ThisFileInfo['comments']['comment'][0];
-				}*/
 				
 				$cleanTrackNumber=$trackNumber;
 				if(stristr($trackNumber,'/')){
@@ -652,8 +658,6 @@ class ScannerController extends Controller {
 					$cleanTrackNumber=trim($temp[0]);
 				}
 
-				$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
-				
 				if(isset($ThisFileInfo['comments']['picture'])){
 					$data=$ThisFileInfo['comments']['picture'][0]['data'];
 					$image = new \OCP\Image();
@@ -665,42 +669,32 @@ class ScannerController extends Controller {
 							$poster='data:'.$ThisFileInfo['comments']['picture'][0]['image_mime'].';base64,'.$imgString;
 						}
 					}
-					
 				}
 				
 				$playTimeString = '';
 				if(isset($ThisFileInfo['playtime_string'])){
 					$playTimeString=$ThisFileInfo['playtime_string'];
 				}
-
 				$aTrack = [
 					'title' => $name,
 					'number' =>(int)$cleanTrackNumber,
 					'artist_id' => (int)$iArtistId,
 					'album_id' =>(int) $iAlbumId,
 					'length' => $playTimeString,
-					'file_id' => (int)$audio['fileid'],
+					'file_id' => (int)$audio->getId(),
 					'bitrate' => (int)$bitrate,
-					'mimetype' => $audio['mimetype'],
+					'mimetype' => $audio->getMimetype(),
 					'genre' => (int)$iGenreId,
 					'year' => (int)$year,
 				];
 				
 				$this->writeTrackToDB($aTrack);
 				$counter_new++;
-				
 			}
-			$counter++;
-			$this->abscount++;
-			$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100));
-			
 		}
-		
-		\OC::$server->getCache()->remove($this->progresskey);
 		
 		$message=(string)$this->l10n->t('Scanning finished!').'<br />';
 		$message.=(string)$this->l10n->t('Audios found: ').$counter.'<br />';
-		#$message.=(string)$this->l10n->t('Duplicates found: ').$this->iDublicate.'<br />';
 		$message.=(string)$this->l10n->t('Written to music library: ').($counter_new - $this->iDublicate).'<br />';
 		$message.=(string)$this->l10n->t('Albums found: ').$this->iAlbumCount.'<br />';
 		if ($error_count>>0) {
@@ -714,12 +708,20 @@ class ScannerController extends Controller {
 				'message' => $message
 			];
 			
-		$response = new JSONResponse();
-		$response -> setData($result);
-		return $response;
+		// different outputs when web or occ
+		if(!$this->occ_job) { 
+			\OC::$server->getCache()->remove($this->progresskey);
+			$response = new JSONResponse();
+			$response -> setData($result);
+			return $response;
+		} else {
+			$output->writeln("Audios found: ".($counter)."");
+			$output->writeln("Added to library: ".($counter_new - $this->iDublicate)."");
+			$output->writeln("Albums found: ".($this->iAlbumCount)."");
+			$output->writeln("Errors: ".($error_count)."");
+		}
 		
 	}
-
 	
 	private function writeCoverToAlbum($iAlbumId,$sImage,$aBgColor){
     		
@@ -892,7 +894,7 @@ class ScannerController extends Controller {
 	 * @param integer $percentage
 	 * @return boolean
 	 */
-	private function updateProgress($percentage) {
+	private function updateProgress($percentage, $output = null, $debug = null) {
 		$this->progress = $percentage;
 		$currentIntArray=[
 			'percent' => $this->progress,
@@ -900,43 +902,44 @@ class ScannerController extends Controller {
 			'current' => $this->abscount,
 			'currentsong' => $this->currentSong
 		];
-		$currentIntArray = json_encode($currentIntArray);
-		\OC::$server->getCache()->set($this->progresskey,$currentIntArray, 300);
+		
+		if(!$this->occ_job) {
+			$currentIntArray = json_encode($currentIntArray);
+			\OC::$server->getCache()->set($this->progresskey,$currentIntArray, 300);
+		} elseif ($debug) {
+			$output->writeln("Current Song: ".$this->currentSong."</info>");
+		}
 		
 		return true;
 	}
-
+	
 	private function getDominateColorOfImage($img){
-	$data = base64_decode($img);	
-	$img =imagecreatefromstring($data);	
+		$data = base64_decode($img);	
+		$img =imagecreatefromstring($data);	
 	
-	$rTotal = 0;
-	$gTotal =0;
-	$bTotal = 0;	
-	$total=0;
-	for ($x=0;$x<imagesx($img);$x++) {
-		for ($y=0;$y<imagesy($img);$y++) {
-			$rgb = imagecolorat($img,$x,$y);
-			$r   = ($rgb >> 16) & 0xFF;
-			$g = ($rgb >> 8) & 0xFF;
-			$b   = $rgb & 0xFF;
+		$rTotal = 0;
+		$gTotal =0;
+		$bTotal = 0;	
+		$total=0;
+		for ($x=0;$x<imagesx($img);$x++) {
+			for ($y=0;$y<imagesy($img);$y++) {
+				$rgb = imagecolorat($img,$x,$y);
+				$r   = ($rgb >> 16) & 0xFF;
+				$g = ($rgb >> 8) & 0xFF;
+				$b   = $rgb & 0xFF;
 	 		
-	 		$rTotal += $r;
-			$gTotal += $g;
-			$bTotal += $b;
-			$total++;
+		 		$rTotal += $r;
+				$gTotal += $g;
+				$bTotal += $b;
+				$total++;
+			}
 		}
-	}
 	 
-	 $returnDominateColor=[
-	 'red' => round($rTotal/$total),
-	 'green' => round($gTotal/$total),
-	 'blue' => round($bTotal/$total)
-	 ];
-	
-	return $returnDominateColor;
-	
-}
-	
-	
+		 $returnDominateColor=[
+		 'red' => round($rTotal/$total),
+		 'green' => round($gTotal/$total),
+		 'blue' => round($bTotal/$total)
+		 ];
+		return $returnDominateColor;
+	}
 }

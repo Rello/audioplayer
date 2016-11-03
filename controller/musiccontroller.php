@@ -27,6 +27,8 @@ use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
+use \OCP\IL10N;
+use \OCP\IDb;
 
 /**
  * Controller class for main page.
@@ -38,9 +40,15 @@ class MusicController extends Controller {
 	private static $sortType='album';
 	private $db;
 
-	public function __construct($appName, IRequest $request, $userId, $l10n, $db) {
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			$userId, 
+			IL10N $l10n, 
+			IDb $db
+		) {
 		parent::__construct($appName, $request);
-		$this -> userId = $userId;
+		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
 	}
@@ -324,7 +332,14 @@ class MusicController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function resetMediaLibrary(){
+	public function resetMediaLibrary($userId = null, $output = null){
+	
+		if($userId !== null) {
+			$this->occ_job = true;
+			$this->userId = $userId;
+		} else {
+			$this->occ_job = false;
+		}
 			
 		$stmt = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ?' );
 		$stmt->execute(array($this->userId));
@@ -366,11 +381,14 @@ class MusicController extends Controller {
 					'msg' =>'all good'
 				];
 		
-		
-		$response = new JSONResponse();
-		$response -> setData($result);
-		return $response;
-		
+		// applies if scanner is not started via occ
+		if(!$this->occ_job) { 
+			$response = new JSONResponse();
+			$response -> setData($result);
+			return $response;
+		} else {
+			$output->writeln("Reset finished");
+		}
 	}
 	
 	private function deleteFromDB($Id,$iAlbumId,$iArtistId,$fileId){

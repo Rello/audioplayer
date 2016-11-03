@@ -26,6 +26,8 @@ use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
+use \OCP\IL10N;
+use \OCP\IDb;
 
 /**
  * Controller class for main page.
@@ -35,9 +37,14 @@ class PlaylistController extends Controller {
 	private $userId;
 	private $l10n;
 	private $db;
-	
 
-	public function __construct($appName, IRequest $request, $userId, $l10n, $db) {
+	public function __construct(
+			$appName, 
+			IRequest $request, 
+			$userId, 
+			IL10N $l10n, 
+			IDb $db
+		) {
 		parent::__construct($appName, $request);
 		$this -> userId = $userId;
 		$this->l10n = $l10n;
