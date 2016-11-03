@@ -62,7 +62,7 @@ class Reset extends Command {
 		}
 		$users_total = count($users);
 		if ($users_total === 0) {
-			$output->writeln("<error>Please specify the user id to reset, \"--all\" to reset for all users or \"user id\"</error>");
+			$output->writeln("<error>Please specify the user id to reset, \"--all\" to reset for all users or \"user_id\"</error>");
 			return;
 		}
 		foreach ($users as $user) {
