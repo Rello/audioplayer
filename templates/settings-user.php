@@ -23,6 +23,13 @@
 <div class="section" id="audioplayer">
 	<h2><?php p($l->t('Audio Player')); ?></h2>
 	<div>
+		<label for="audio-path"><?php p($l->t('Folder of audio files ')); ?>:</label>
+		<input type="text" id="audio-path" value="<?php p($_['path']); ?>" />
+		<p><em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without selection, Audio Player will scan the whole user folder.')); ?></em></p>
+		<p><em><?php p($l->t('To exclude a folder, create a .noAudio file inside that folder.')); ?></em></p>
+		<br>
+	</div>
+	<div>
 		<label for="cyrillic_user"><?php p($l->t('Cyrillic Support:')); ?></label>
 		<input type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']); ?>/>
 		<p><em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em></p>
