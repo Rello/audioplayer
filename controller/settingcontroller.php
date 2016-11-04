@@ -29,6 +29,7 @@ use \OCP\IRequest;
 use \OCP\IConfig;
 use \OCP\IL10N;
 use \OCP\IDb;
+use \OCP\Files\IRootFolder;
 
 /**
  * Controller class for main page.
@@ -46,7 +47,8 @@ class SettingController extends Controller {
 			$userId, 
 			IL10N $l10n, 
 			IDb $db,
-			IConfig $configManager
+			IConfig $configManager,
+			IRootFolder $rootFolder
 			) {
 		parent::__construct($appName, $request);
 		$this->appname = $appName;
@@ -54,6 +56,7 @@ class SettingController extends Controller {
 		$this->l10n = $l10n;
 		$this->db = $db;
 		$this->configManager = $configManager;
+		$this->rootFolder = $rootFolder;
 	}
 
 	/**
@@ -94,6 +97,27 @@ class SettingController extends Controller {
 		$response = new JSONResponse();
 		$response -> setData($result);
 		return $response;
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function userPath() {
+		$path = $this->params('value');
+			try {
+				$element = $this->rootFolder->getUserFolder($this -> userId)->get($path);
+			} catch (\OCP\Files\NotFoundException $e) {
+				return new JSONResponse(array('success' => false));
+			}
+			
+			if ($path[0] !== '/') {
+				$path = '/' . $path;
+			}
+			if ($path[strlen($path)-1] !== '/') {
+				$path .= '/';
+			}
+			$this->configManager->setUserValue($this->userId, $this->appname, 'path', $path);
+		return new JSONResponse(array('success' => true));
 	}
 
 }

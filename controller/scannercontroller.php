@@ -51,6 +51,7 @@ class ScannerController extends Controller {
 	private $db;
 	private $configManager;
 	private $occ_job;
+	protected $ignoreAudio = '.noAudio';
 	public function __construct(
 			$appName, 
 			IRequest $request, 
@@ -460,12 +461,39 @@ class ScannerController extends Controller {
 		if($userId !== null) {
 			$this->occ_job = true;
 			$this->userId = $userId;
-			//\OC\Files\Filesystem::initMountPoints($userId);
 			$languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		} else {
 			$this->occ_job = false;
 		}
+
+		$counter = 0;
+		$counter_new = 0;
+		$error_count = 0;
+		$error_file = 0;
+		$this->iAlbumCount = 0;
+		$this->iDublicate = 0;
+		//$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
+		$cyrillic_support = $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
+		$TextEncoding 		= 'UTF-8';
+		$option_tag_id3v1   = false;  // Read and process ID3v1 tags
+		$option_tag_id3v2   = true;  // Read and process ID3v2 tags
+		$option_tag_lyrics3       = false;  // Read and process Lyrics3 tags
+		$option_tag_apetag        = false;  // Read and process APE tags
+		$option_tags_process      = true;  // Copy tags to root key 'tags' and encode to $this->encoding
+		$option_tags_html         = false;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
+		if(!class_exists('getid3_exception')) {
+			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
+		}
+		$getID3 = new \getID3;
+		$getID3->setOption(array('encoding'=>$TextEncoding, 
+								'option_tag_id3v1'=>$option_tag_id3v1, 
+								'option_tag_id3v2'=>$option_tag_id3v2,
+								'option_tag_lyrics3'=>$option_tag_lyrics3,
+								'option_tag_apetag'=>$option_tag_apetag,
+								'option_tags_process'=>$option_tags_process,
+								'option_tags_html'=>$option_tags_html
+								));
 
 		$pProgresskey = $this -> params('progresskey');
 		$pGetprogress = $this -> params('getprogress');
@@ -491,20 +519,8 @@ class ScannerController extends Controller {
 				$response = new JSONResponse($params);
 				return $response;	
 		}
-		
-		if(!class_exists('getid3_exception')) {
-			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
-		}
-
-//		$tmpView =  new View('/' . $this -> userId . '/files');//to be removed when toTmpFile in iRootFolder is working
-		$userView = $this->rootFolder->getUserFolder($this -> userId);
-		$audios_mp3 = $userView->searchByMime('audio/mpeg');
-		$audios_m4a = $userView->searchByMime('audio/mp4');
-		$audios_ogg = $userView->searchByMime('audio/ogg');
-		$audios_wav = $userView->searchByMime('audio/wav');
-		$audios = array_merge($audios_mp3, $audios_m4a, $audios_ogg, $audios_wav);
 	
-		$this->numOfSongs = count($audios);
+		$audios = $this->getAudioObjects($output, $debug);
 		
 		$this->progresskey = $pProgresskey;
 		$currentIntArray=[
@@ -514,38 +530,20 @@ class ScannerController extends Controller {
 			'currentsong' => ''
 		];
 		
-		$currentIntArray = json_encode($currentIntArray);
-
 		// applies if scanner is not started via occ
 		if(!$this->occ_job) \OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
-		
-		$counter = 0;
-		$counter_new = 0;
-		$error_count = 0;
-		$error_file = 0;
-		$this->iAlbumCount = 0;
-		$this->iDublicate = 0;
-		$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
-		$cyrillic_support = $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
-		$TextEncoding 		= 'UTF-8';
-		$option_tag_id3v1   = false;  // Read and process ID3v1 tags
-		$option_tag_id3v2   = true;  // Read and process ID3v2 tags
-		$option_tag_lyrics3       = false;  // Read and process Lyrics3 tags
-		$option_tag_apetag        = false;  // Read and process APE tags
-		$option_tags_process      = true;  // Copy tags to root key 'tags' and encode to $this->encoding
-		$option_tags_html         = false;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
-		$getID3 = new \getID3;
-		$getID3->setOption(array('encoding'=>$TextEncoding, 
-								'option_tag_id3v1'=>$option_tag_id3v1, 
-								'option_tag_id3v2'=>$option_tag_id3v2,
-								'option_tag_lyrics3'=>$option_tag_lyrics3,
-								'option_tag_apetag'=>$option_tag_apetag,
-								'option_tags_process'=>$option_tags_process,
-								'option_tags_html'=>$option_tags_html
-								));
-    								
+		    								
 		foreach($audios as $audio) {
-		  	
+
+			//exclude files
+//			$parent_folder = $audio->getParent()->getInternalPath();
+//			if($audio->getParent()->nodeExists($this->ignoreAudio)) {
+//				if ($debug) $output->writeln("Folder excluded via .noAudio: ".$parent_folder."</info>");
+//				$this->numOfSongs--;
+//				continue;
+//			}
+			
+			
 			$this->currentSong = $audio->getPath();
 			$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100), $output, $debug);
 			$counter++;
@@ -560,35 +558,7 @@ class ScannerController extends Controller {
 					unlink($fileName);
 				}
 			
-				// Cyrillic id3 workaround
-				// Tag is 1251 if there are 4+ upper half of ASCII table symbols glued together.
-				if($cyrillic_support === 'checked') {
-					#\OCP\Util::writeLog('audioplayer', 'cyrillic', \OCP\Util::DEBUG);				
-					// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
-					foreach (array('id3v1', 'id3v2') as $ttype) {
-						$ruTag = 0;
-						if (isset($ThisFileInfo['tags'][$ttype])) {
-							// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
-							foreach (array('album', 'artist', 'title', 'band', 'genre') as $tkey) {
-								if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
-									if (preg_match('#[\\xA8\\B8\\x80-\\xFF]{4,}#', iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]))) {
-										$ruTag = 1;
-										break;
-									}
-								}
-							}	
-							// Now make a correct conversion
-							if($ruTag === 1) {
-								foreach (array('album', 'artist', 'title', 'band') as $tkey) {
-									if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
-										$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]);
-										$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('Windows-1251', 'UTF-8', $ThisFileInfo['tags'][$ttype][$tkey][0]);
-									}
-								}
-							}
-						}
-					}
-				}				
+				if($cyrillic_support === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
 
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
@@ -889,6 +859,7 @@ class ScannerController extends Controller {
 			return false;
 		}
 	}
+
 	/*
 	 * @brief updates the progress var
 	 * @param integer $percentage
@@ -912,7 +883,84 @@ class ScannerController extends Controller {
 		
 		return true;
 	}
-	
+
+	/**
+	 * Add track to db if not exist
+	 * 
+	 *@param array $ThisFileInfo
+	 * @return array
+	 */
+	private function cyrillic($ThisFileInfo) {
+		#\OCP\Util::writeLog('audioplayer', 'cyrillic', \OCP\Util::DEBUG);				
+		// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
+		foreach (array('id3v1', 'id3v2') as $ttype) {
+			$ruTag = 0;
+			if (isset($ThisFileInfo['tags'][$ttype])) {
+				// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
+				foreach (array('album', 'artist', 'title', 'band', 'genre') as $tkey) {
+					if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
+						if (preg_match('#[\\xA8\\B8\\x80-\\xFF]{4,}#', iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]))) {
+							$ruTag = 1;
+							break;
+						}
+					}
+				}	
+				// Now make a correct conversion
+				if($ruTag === 1) {
+					foreach (array('album', 'artist', 'title', 'band') as $tkey) {
+						if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
+							$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]);
+							$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('Windows-1251', 'UTF-8', $ThisFileInfo['tags'][$ttype][$tkey][0]);
+						}
+					}
+				}
+			}
+		}
+		return $ThisFileInfo;
+
+	}			
+
+	/**
+	 * Add track to db if not exist
+	 * 
+	 *@param array $ThisFileInfo
+	 * @return array
+	 */
+	private function getAudioObjects($output = null, $debug = null) {
+
+		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
+		$userView = $this->rootFolder->getUserFolder($this -> userId);
+
+		if($audioPath !== null && $audioPath !== '/' && $audioPath !== '') {
+			$userView = $userView->get($audioPath);
+		}
+
+		$audios_mp3 = $userView->searchByMime('audio/mpeg');
+		$audios_m4a = $userView->searchByMime('audio/mp4');
+		$audios_ogg = $userView->searchByMime('audio/ogg');
+		$audios_wav = $userView->searchByMime('audio/wav');
+		$audios = array_merge($audios_mp3, $audios_m4a, $audios_ogg, $audios_wav);
+
+		if ($debug) $output->writeln("Scanned Folder: ".$userView->getPath()."</info>");
+		if ($debug) $output->writeln("Total audio files: ".count($audios)."</info>");
+
+		$audios_clean = array();
+		foreach($audios as $audio) {
+			$parent_folder = $audio->getParent()->getInternalPath();
+			if(!$audio->getParent()->nodeExists($this->ignoreAudio)) {
+				array_push($audios_clean,$audio);
+			} elseif ($parent_folder !== $parent_folder_prev) {
+				if ($debug) $output->writeln("Folder excluded via .noAudio: ".$parent_folder."</info>");
+				$parent_folder_prev = $parent_folder;
+			}
+		}
+		$this->numOfSongs = count($audios_clean);
+
+		if ($debug) $output->writeln("Total audios files after exclusions: ".$this->numOfSongs."</info>");
+
+		return $audios_clean;
+	}
+
 	private function getDominateColorOfImage($img){
 		$data = base64_decode($img);	
 		$img =imagecreatefromstring($data);	
