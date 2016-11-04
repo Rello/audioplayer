@@ -30,5 +30,6 @@ $c->query('API')->addScript('settings-user');
 $tmpl = new \OCP\Template($c->query('AppName'), 'settings-user');
 $tmpl->assign('category', $c->query('Config')->getUserValue($c->query('UserId'), $c->query('AppName'), 'category'));
 $tmpl->assign('cyrillic', $c->query('Config')->getUserValue($c->query('UserId'), $c->query('AppName'), 'cyrillic'));
+$tmpl->assign('path', $c->query('Config')->getUserValue($c->query('UserId'), $c->query('AppName'), 'path'));
 
 return $tmpl->fetchPage();
