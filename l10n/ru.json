@@ -43,5 +43,8 @@
 "Cyrillic Support:" : "Поддержка кириллицы:",
 "Read more" : "==> Подробности",
 "Albums" : "Альбомы",
-"Genres" : "Стили"
+"Genres" : "Стили",
+"Folder of audio files " : "Folder of audio files ",
+"This setting specifies which folder is scanned for audio files. Without selection, Audio Player will scan the whole user folder." : "This setting specifies which folder is scanned for audio files. Without selection, Audio Player will scan the whole user folder.",
+"To exclude a folder, create a .noAudio file inside that folder." : "To exclude a folder, create a .noAudio file inside that folder."
 },"pluralForm":""}

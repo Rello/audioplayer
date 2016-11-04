@@ -41,5 +41,8 @@
 "Artists" :"Künstler",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Wenn Kyrillische Zeichen nicht korrekt erkannt werden, kann diese Einstellung aktiviert werden. Die Indizierung ist dadurch langsamer",
 "Cyrillic Support:" : "Kyrillische Zeichen:",
-"Read more" : "Weitere Informationen"
+"Read more" : "Weitere Informationen",
+"Folder of audio files " : "Ordner mit Titeln ",
+"This setting specifies which folder is scanned for audio files. Without selection, Audio Player will scan the whole user folder." : "Diese Einstellung bestimmt den zu scannenden Ordner. Wenn keine Auswahl getroffen wird, wird der ganze User-Ordner durchsucht.",
+"To exclude a folder, create a .noAudio file inside that folder." : "Um einen Ordner auszuschließen, kann eine .noAudio Datei innerhalb des Ordners angelegt werden."
 },"pluralForm":""}
