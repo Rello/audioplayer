@@ -40,4 +40,34 @@ $(document).ready(function() {
 				}
 			});
 	});
+	
+		/*
+	 * Collection path
+	 */
+	var $path = $('#audio-path');
+	$path.on('click', function() {
+		OC.dialogs.filepicker(
+			t('audioplayer', 'Single folder of audio files'),
+			function (path) {
+				if ($path.val() !== path) {
+					$path.val(path);
+					$.post(OC.generateUrl('apps/audioplayer/userpath'), { value: path }, function(data) {
+						if (!data.success) {
+							$('#notification').text('Invalid Path');
+							$('#notification').slideDown();
+							window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
+						} else {
+							$('#notification').text('saved');
+							$('#notification').slideDown();
+							window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
+						}
+					});
+				}
+			},
+			false,
+			'httpd/unix-directory',
+			true
+		);
+	});
+
 });
