@@ -51,7 +51,6 @@ class ScannerController extends Controller {
 	private $db;
 	private $configManager;
 	private $occ_job;
-	protected $ignoreAudio = '.noAudio';
 	public function __construct(
 			$appName, 
 			IRequest $request, 
@@ -458,30 +457,29 @@ class ScannerController extends Controller {
 	public function scanForAudios($userId = null, $output = null, $debug = null) {
 	
 		// check if scanner is started from web or occ
+		$this->occ_job = false;
 		if($userId !== null) {
 			$this->occ_job = true;
 			$this->userId = $userId;
 			$languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
-		} else {
-			$this->occ_job = false;
-		}
-
-		$counter = 0;
-		$counter_new = 0;
-		$error_count = 0;
-		$error_file = 0;
-		$this->iAlbumCount = 0;
-		$this->iDublicate = 0;
-		//$debug_detail = \OC::$server->getConfig()->getSystemValue("audioplayer_debug");
-		$cyrillic_support = $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
-		$TextEncoding 		= 'UTF-8';
-		$option_tag_id3v1   = false;  // Read and process ID3v1 tags
-		$option_tag_id3v2   = true;  // Read and process ID3v2 tags
-		$option_tag_lyrics3       = false;  // Read and process Lyrics3 tags
-		$option_tag_apetag        = false;  // Read and process APE tags
-		$option_tags_process      = true;  // Copy tags to root key 'tags' and encode to $this->encoding
-		$option_tags_html         = false;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
+		} 
+		
+		$counter 				= 0;
+		$counter_new 			= 0;
+		$error_count 			= 0;
+		$error_file 			= 0;
+		$this->iAlbumCount 		= 0;
+		$this->iDublicate 		= 0;
+		$cyrillic_support 		= $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
+		$TextEncoding 			= 'UTF-8';
+		$option_tag_id3v1   	= false;  // Read and process ID3v1 tags
+		$option_tag_id3v2   	= true;  // Read and process ID3v2 tags
+		$option_tag_lyrics3		= false;  // Read and process Lyrics3 tags
+		$option_tag_apetag      = false;  // Read and process APE tags
+		$option_tags_process    = true;  // Copy tags to root key 'tags' and encode to $this->encoding
+		$option_tags_html       = false;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
+		
 		if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
 		}
@@ -511,46 +509,26 @@ class ScannerController extends Controller {
 				if($percent === ''){
 					$percent = 0;
 				}
-				$params = [
-					'status' => 'success',
-					'percent' =>$percent ,
-					'currentmsg' => $currentSong.' '.$percent.'% ('.$currentSongCount.'/'.$numSongs.')'
-				];
+				$params = ['status' => 'success', 'percent' =>$percent , 'currentmsg' => $currentSong.' '.$percent.'% ('.$currentSongCount.'/'.$numSongs.')'];
 				$response = new JSONResponse($params);
 				return $response;	
 		}
 	
+		// get only the relevant audio files
 		$audios = $this->getAudioObjects($output, $debug);
 		
 		$this->progresskey = $pProgresskey;
-		$currentIntArray=[
-			'percent' => 0,
-			'all' => $this->numOfSongs,
-			'current' => 0,
-			'currentsong' => ''
-		];
-		
-		// applies if scanner is not started via occ
+		$currentIntArray=['percent' => 0, 'all' => $this->numOfSongs, 'current' => 0, 'currentsong' => ''];
 		if(!$this->occ_job) \OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
 		    								
+		if ($debug) $output->writeln("Start processing of <info>ID3s</info>");
 		foreach($audios as $audio) {
-
-			//exclude files
-//			$parent_folder = $audio->getParent()->getInternalPath();
-//			if($audio->getParent()->nodeExists($this->ignoreAudio)) {
-//				if ($debug) $output->writeln("Folder excluded via .noAudio: ".$parent_folder."</info>");
-//				$this->numOfSongs--;
-//				continue;
-//			}
 			
-			
-			$this->currentSong = $audio->getPath();
-			$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100), $output, $debug);
-			$counter++;
-			$this->abscount++;
+				$this->currentSong = $audio->getPath();
+				$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100), $output, $debug);
+				$counter++;
+				$this->abscount++;
 
-			if($this->checkIfTrackDbExists($audio->getId()) === false){
-		
 				$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
 				$ThisFileInfo = $getID3->analyze($fileName);
 
@@ -634,8 +612,7 @@ class ScannerController extends Controller {
 					if($image->loadFromdata($data)) {
 						if(($image->width() <= 250 && $image->height() <= 250) || $image->resize(250)) {
 							$imgString=$image->__toString();
-							$getDominateColor = $this->getDominateColorOfImage($imgString);
-							$this->writeCoverToAlbum($iAlbumId,$imgString,$getDominateColor);
+							$this->writeCoverToAlbum($iAlbumId,$imgString,'');
 							$poster='data:'.$ThisFileInfo['comments']['picture'][0]['image_mime'].';base64,'.$imgString;
 						}
 					}
@@ -660,11 +637,11 @@ class ScannerController extends Controller {
 				
 				$this->writeTrackToDB($aTrack);
 				$counter_new++;
-			}
 		}
 		
 		$message=(string)$this->l10n->t('Scanning finished!').'<br />';
 		$message.=(string)$this->l10n->t('Audios found: ').$counter.'<br />';
+		$message.=(string)$this->l10n->t('Duplicates found: ').($this->iDublicate).'<br />';
 		$message.=(string)$this->l10n->t('Written to music library: ').($counter_new - $this->iDublicate).'<br />';
 		$message.=(string)$this->l10n->t('Albums found: ').$this->iAlbumCount.'<br />';
 		if ($error_count>>0) {
@@ -686,11 +663,11 @@ class ScannerController extends Controller {
 			return $response;
 		} else {
 			$output->writeln("Audios found: ".($counter)."");
-			$output->writeln("Added to library: ".($counter_new - $this->iDublicate)."");
+			$output->writeln("Duplicates found: ".($this->iDublicate)."");
+			$output->writeln("Written to music library: ".($counter_new - $this->iDublicate)."");
 			$output->writeln("Albums found: ".($this->iAlbumCount)."");
 			$output->writeln("Errors: ".($error_count)."");
 		}
-		
 	}
 	
 	private function writeCoverToAlbum($iAlbumId,$sImage,$aBgColor){
@@ -736,10 +713,8 @@ class ScannerController extends Controller {
 				$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ?' );
 				$result = $stmt->execute(array($this->userId, $sAlbum));
 				$row = $result->fetchRow();
-				
 				return $row['id'];
 			}
-		
 	}
 	
 	/**
@@ -751,22 +726,16 @@ class ScannerController extends Controller {
 	 */
 	 
 	private function writeGenreToDB($sGenre){
-		//Test If exist
 		
 		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_genre', ['user_id' => $this->userId, 'name' => $sGenre])) {
-					
 			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_genre');
-					
 			return $insertid;
-			
 		}else{
 			$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ? AND `name` = ?' );
 			$result = $stmt->execute(array($this->userId, $sGenre));
 			$row = $result->fetchRow();
-			
 			return $row['id'];
 		}
-		
 	}
 	
 	
@@ -780,44 +749,16 @@ class ScannerController extends Controller {
 	private function writeArtistToDB($sArtist){
 		
 		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_artists', ['user_id' => $this->userId, 'name' => $sArtist])) {
-					
 			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_artists');
-					
 			return $insertid;
-			
 		}else{
 			$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ? AND `name` = ?' );
 			$result = $stmt->execute(array($this->userId, $sArtist));
 			$row = $result->fetchRow();
-			
 			return $row['id'];
 		}
-		
-		
 	}
-	
-	/**
-	 * Add artist to album if not exist
-	 * 
-	 *@param int $iAlbumId
-	 *@param int $iArtistId
-	 *
-	 * @return true
-	 */
-	private function writeArtistToAlbum($iAlbumId,$iArtistId){
 		
-		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_album_artists', ['artist_id' => $iArtistId, 'album_id' => $iAlbumId])) {
-					
-			return true;
-			
-		}else{
-			//we have an artist nothing to do	
-			return true;
-		}
-		
-		
-	}
-	
 	/**
 	 * Add track to db if not exist
 	 * 
@@ -828,13 +769,12 @@ class ScannerController extends Controller {
 	 */
 	private function writeTrackToDB($aTrack){
 			
-		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?';
-		$stmt = $this->db->prepareQuery($SQL);
-		
 		if (strlen($aTrack['title']) > 256) {
 			$aTrack['title'] = substr($aTrack['title'], 0, 256);
 		}
 		
+		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?';
+		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype'],$aTrack['genre'],$aTrack['year']));
 		$row = $result->fetchRow();
 		if(isset($row['id'])){
@@ -845,8 +785,6 @@ class ScannerController extends Controller {
 			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_tracks');
 			return $insertid;
 		}
-		
-		
 	}
 	
 	private function checkIfTrackDbExists($fileid){
@@ -878,9 +816,8 @@ class ScannerController extends Controller {
 			$currentIntArray = json_encode($currentIntArray);
 			\OC::$server->getCache()->set($this->progresskey,$currentIntArray, 300);
 		} elseif ($debug) {
-			$output->writeln("Current Song: ".$this->currentSong."</info>");
+			$output->writeln("   ".$this->currentSong."</info>");
 		}
-		
 		return true;
 	}
 
@@ -917,7 +854,6 @@ class ScannerController extends Controller {
 			}
 		}
 		return $ThisFileInfo;
-
 	}			
 
 	/**
@@ -941,53 +877,43 @@ class ScannerController extends Controller {
 		$audios_wav = $userView->searchByMime('audio/wav');
 		$audios = array_merge($audios_mp3, $audios_m4a, $audios_ogg, $audios_wav);
 
-		if ($debug) $output->writeln("Scanned Folder: ".$userView->getPath()."</info>");
-		if ($debug) $output->writeln("Total audio files: ".count($audios)."</info>");
+		if ($debug) $output->writeln("Scanned Folder: ".$userView->getPath());
+		if ($debug) $output->writeln("Total audio files: ".count($audios));
 
+		$new_array = array();
 		$audios_clean = array();
+		$stmtExclude = $this->db->prepareQuery( 'select fileid from `*PREFIX*filecache` where parent in (SELECT parent FROM `*PREFIX*filecache` WHERE `name` = ".noAudio" or `name` = ".noaudio" ORDER BY `fileid` ASC)' );
+		$resultExclude = $stmtExclude->execute();
+		while( $row = $resultExclude->fetchRow()) {
+			array_push($new_array,$row['fileid']);
+		}
+		$resultExclude = $new_array;
+		//if ($debug) $output->writeln("Excluded ids (.noAdmin): ".implode(",", $resultExclude));
+		
+		$new_array = array();
+		$stmtExisting = $this->db->prepareQuery( 'SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
+		$resultExisting = $stmtExisting->execute(array($this->userId));
+		while( $row = $resultExisting->fetchRow()) {
+			array_push($new_array,$row['file_id']);
+		}
+		$resultExisting = $new_array;
+		$new_array = null;
+		//if ($debug) $output->writeln("Existing ids (already scanned): ".implode(",", $resultExisting)."</info>");
+
+		if ($debug) $output->writeln("Checking all files whether they can be <info>skipped</info>");
 		foreach($audios as $audio) {
-			$parent_folder = $audio->getParent()->getInternalPath();
-			if(!$audio->getParent()->nodeExists($this->ignoreAudio)) {
+			$current_id = $audio->getID();
+			
+			if(in_array($current_id, $resultExclude)) {
+				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => excluded");
+			} elseif (in_array($current_id, $resultExisting)) {
+				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => already indexed");
+			} else {
 				array_push($audios_clean,$audio);
-			} elseif ($parent_folder !== $parent_folder_prev) {
-				if ($debug) $output->writeln("Folder excluded via .noAudio: ".$parent_folder."</info>");
-				$parent_folder_prev = $parent_folder;
-			}
+			} 
 		}
 		$this->numOfSongs = count($audios_clean);
-
-		if ($debug) $output->writeln("Total audios files after exclusions: ".$this->numOfSongs."</info>");
-
+		if ($debug) $output->writeln("Final audio files to be processed: ".$this->numOfSongs);
 		return $audios_clean;
-	}
-
-	private function getDominateColorOfImage($img){
-		$data = base64_decode($img);	
-		$img =imagecreatefromstring($data);	
-	
-		$rTotal = 0;
-		$gTotal =0;
-		$bTotal = 0;	
-		$total=0;
-		for ($x=0;$x<imagesx($img);$x++) {
-			for ($y=0;$y<imagesy($img);$y++) {
-				$rgb = imagecolorat($img,$x,$y);
-				$r   = ($rgb >> 16) & 0xFF;
-				$g = ($rgb >> 8) & 0xFF;
-				$b   = $rgb & 0xFF;
-	 		
-		 		$rTotal += $r;
-				$gTotal += $g;
-				$bTotal += $b;
-				$total++;
-			}
-		}
-	 
-		 $returnDominateColor=[
-		 'red' => round($rTotal/$total),
-		 'green' => round($gTotal/$total),
-		 'blue' => round($bTotal/$total)
-		 ];
-		return $returnDominateColor;
 	}
 }
