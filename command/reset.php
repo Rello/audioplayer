@@ -69,7 +69,7 @@ class Reset extends Command {
 			if (is_object($user)) {
 				$user = $user->getUID();
 			}
-			$output->writeln("Reset library for <info>$user</info>");
+			$output->writeln("<info>Reset library for $user</info>");
 			$this->reset->resetMediaLibrary($user, $output);
 		}
 	}
