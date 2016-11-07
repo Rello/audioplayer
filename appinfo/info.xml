@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<info>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<summary>Audio Player App for ownCloud and Nextcloud</summary>
-	<description>Albums and playlists within an animated cover art navigation with One Click Play from file browser and shared link.</description>
-	<version>1.2.2</version>
+	<description>Albums and playlists for audio files (MP3, MP4, Ogg, Wave) within an animated cover art navigation. One Click Play from file browser and shared link. A pure player. No back ends or other overhead.</description>
+	<version>1.2.2.3</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
@@ -16,6 +16,7 @@
 	<website>https://github.com/rello/audioplayer</website>
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
+	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
 	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_main.png</screenshot>
 	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_lists.png</screenshot>
 	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_share.png</screenshot>
