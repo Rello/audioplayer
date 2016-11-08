@@ -23,10 +23,10 @@
 <div class="section" id="audioplayer">
 	<h2><?php p($l->t('Audio Player')); ?></h2>
 	<div>
-		<label for="audio-path"><?php p($l->t('Folder of audio files ')); ?>:</label>
+		<label for="audio-path"><?php p($l->t('Search for audio files in ')); ?>:</label>
 		<input type="text" id="audio-path" value="<?php p($_['path']); ?>" />
-		<p><em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without selection, Audio Player will scan the whole user folder.')); ?></em></p>
-		<p><em><?php p($l->t('To exclude a folder, create a .noAudio file inside that folder.')); ?></em></p>
+		<p><em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.')); ?></em></p>
+		<p><em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder.')); ?></em></p>
 		<br>
 	</div>
 	<div>
