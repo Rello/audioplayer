@@ -41,5 +41,8 @@
 "Artists" :"多位藝人",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "啟用西里爾文支援",
 "Cyrillic Support:" : "支援西里爾文:",
-"Read more" : "==> 詳情"
+"Read more" : "==> 詳情",
+"Search for audio files in " : "Folder of audio files ",
+"This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.",
+"To exclude a folder, you have to create a .noaudio file inside that folder." : "To exclude a folder, you have to create a .noaudio file inside that folder."
 },"pluralForm":""}
