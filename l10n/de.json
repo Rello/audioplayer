@@ -42,7 +42,7 @@
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Wenn Kyrillische Zeichen nicht korrekt erkannt werden, kann diese Einstellung aktiviert werden. Die Indizierung ist dadurch langsamer",
 "Cyrillic Support:" : "Kyrillische Zeichen:",
 "Read more" : "Weitere Informationen",
-"Folder of audio files " : "Ordner mit Titeln ",
-"This setting specifies which folder is scanned for audio files. Without selection, Audio Player will scan the whole user folder." : "Diese Einstellung bestimmt den zu scannenden Ordner. Wenn keine Auswahl getroffen wird, wird der ganze User-Ordner durchsucht.",
-"To exclude a folder, create a .noAudio file inside that folder." : "Um einen Ordner auszuschließen, kann eine .noAudio Datei innerhalb des Ordners angelegt werden."
+"Search for audio files in " : "Suche nach Audio-Dateien in ",
+"This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Diese Einstellung bestimmt den zu durchsuchenden Ordner. Wenn keine Auswahl getroffen wird, wird der ganze Benutzerordner durchsucht.",
+"To exclude a folder, you have to create a .noaudio file inside that folder." : "Um einen Ordner auszuschließen, muss eine .noaudio-Datei im Ordner angelegt werden. Das ist auch für auszuschließende Unterordner erforderlich."
 },"pluralForm":""}
