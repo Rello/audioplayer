@@ -422,6 +422,11 @@ class ScannerController extends Controller {
 					];
 				}
 			}else {
+				if (is_array($tagwriter->errors)) {
+                    $tagwriter->errors = implode("\n", $tagwriter->errors);
+                }
+                		\OCP\Util::writeLog('audioplayer', $tagwriter->errors, \OCP\Util::DEBUG);				
+
 				$result = [
 						'status' => 'error',
 						'msg' => (string) $tagwriter->errors,
@@ -429,7 +434,7 @@ class ScannerController extends Controller {
 			}
 		}else{
 			$result = [
-						'status' => 'error',
+						'status' => 'error_write',
 						'msg' => 'not writeable',
 					];
 		}
