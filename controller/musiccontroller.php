@@ -188,7 +188,7 @@ class MusicController extends Controller {
 			$aAlbums[$row['id']] = $row;
 		}
 		if(is_array($aAlbums)){
-			$aAlbums=self::sortAlbums($aAlbums,'artist');	
+			$aAlbums = $this->sortArrayByFields($aAlbums); 
 			return $aAlbums;
 		}else{
 			return false;
@@ -389,18 +389,15 @@ class MusicController extends Controller {
 		
 	}
 	
-	 public static function sortAlbums($files, $sortAttribute = 'name', $sortDescending = false) {
-		$sortFunc = 'compareAlbumNames';
-		self::$sortType=$sortAttribute;
-		usort($files, array('\OCA\audioplayer\Controller\MusicController', $sortFunc));
-		if ($sortDescending) {
-			$files = array_reverse($files);
+	private function sortArrayByFields($data)
+	{
+		foreach ($data as $key => $row) {
+    		$first[$key] = $row['artist'];
+    		$second[$key] = $row['name'];
 		}
-		return $files;
+		array_multisort($first, SORT_ASC, SORT_STRING,$second , SORT_ASC, SORT_STRING, $data);
+		return $data;
 	}
-	
-   public static function compareAlbumNames($a, $b) {
-			return \OCP\Util::naturalSortCompare($a[self::$sortType], $b[self::$sortType]);
-	}
+
 		
 }
