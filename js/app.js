@@ -1039,6 +1039,14 @@ Audios.prototype.editSong = function(evt){
 											
 											$("#dialogSmall").html('');
 											oDialog.dialog("close");
+										}else if(jsondata.status === 'error_write'){
+											$('#notification').text(t('audioplayer','Missing Permissions for editing ID3 Tags of song!'));
+			 								$('#notification').slideDown();
+											window.setTimeout(function(){$('#notification').slideUp();}, 3000);
+										}else if(jsondata.status === 'error'){
+											$('#notification').text(t('audioplayer',jsondata.msg));
+			 								$('#notification').slideDown();
+											window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 										}
 								}
 						});
