@@ -26,7 +26,7 @@
 		<label for="audio-path"><?php p($l->t('Search for audio files in ')); ?>:</label>
 		<input type="text" id="audio-path" value="<?php p($_['path']); ?>" />
 		<p><em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.')); ?></em></p>
-		<p><em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder.')); ?></em></p>
+		<p><em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them.')); ?></em></p>
 		<br>
 	</div>
 	<div>
