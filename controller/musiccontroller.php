@@ -176,13 +176,13 @@ class MusicController extends Controller {
 		$aAlbums='';
 		while( $row = $result->fetchRow()) {
 			$row['artist'] = $this->loadArtistsToAlbum($row['id']);	
-			if($row['cover'] === null){
-				$row['backgroundColor'] = '#D3D3D3';
-				$row['titlecolor'] = '#333333';
+			$row['backgroundColor'] = '#D3D3D3';
+			$row['titlecolor'] = '#333333';
+			if ($row['name'] === $this->l10n->t('Unknown') AND $row['artist'] === $this->l10n->t('Various Artists')){
+				$row['cover'] = '';
+			}elseif($row['cover'] === null){
 				$row['cover'] = '';
 			}else{
-				$row['backgroundColor'] = '#D3D3D3';
-				$row['titlecolor'] = '#333333';
 				$row['cover'] = 'data:image/jpg;base64,'.$row['cover'];	
 			}
 			$aAlbums[$row['id']] = $row;
