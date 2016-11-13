@@ -51,5 +51,6 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'photo#clearPhotoCache',	'url' => '/clearphotocache',	'verb' => 'POST'],
 	['name' => 'setting#setValue', 'url' => '/setvalue', 'verb' => 'GET'],
 	['name' => 'setting#getValue', 'url' => '/getvalue', 'verb' => 'GET'],
+	['name' => 'setting#userPath', 'url' => '/userpath', 'verb' => 'POST'],
 	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
 	]]);

@@ -2,9 +2,7 @@
 
 [![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues) [![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers) [![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
-Albums and playlists for audio files within an animated cover art navigation.  
-One Click Play from file browser and shared link.  
-A pure player. No back ends or other overhead.
+Audio Player for MP3, MP4, Ogg, and Wave with a lot of flexibility for all your needs.
 
 <img src="https://github.com/rello/screenshots/blob/master/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
@@ -22,6 +20,8 @@ A pure player. No back ends or other overhead.
 - One Click Play from file browser
 - Play shared audio files directly
 - occ support for library scan and reset
+- Select a dedicated folder for scanning
+- Exclude folders from scanning
 
 ### Supported Formats
 MP3, MP4, Ogg Vorbis, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)

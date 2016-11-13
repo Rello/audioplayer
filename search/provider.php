@@ -35,7 +35,7 @@ class Provider extends \OCP\Search\Provider {
 		$container = $app->getContainer();
 		$this->app = $app;
 		#$this->playlistController = $container->query('PlaylistController');
-		$this->musicController = $container->query('MusicController');
+		$this->musicController = $container->query(\OCA\audioplayer\Controller\MusicController::class);
 		$this->l10N = $container->query('L10N');
 	}
 	

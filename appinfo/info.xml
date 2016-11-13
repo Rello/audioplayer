@@ -3,8 +3,8 @@
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<summary>Audio Player App for ownCloud and Nextcloud</summary>
-	<description>Albums and playlists for audio files (MP3, MP4, Ogg, Wave) within an animated cover art navigation. One Click Play from file browser and shared link. A pure player. No back ends or other overhead.</description>
-	<version>1.2.2.3</version>
+	<description>Audio Player for MP3, MP4, Ogg, and Wave with a lot of flexibility for all your needs.</description>
+	<version>1.3b</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
