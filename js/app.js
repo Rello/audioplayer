@@ -350,11 +350,7 @@ Audios.prototype.buildAlbumRows = function(aAlbums){
 				 	
 				 	if(album.cover === ''){	
 						var addCss='background-color:'+album.backgroundColor+';color:'+album.titlecolor+';';
-						if (album.name === t('audioplayer','Unknown')) {
-							var addDescr='AP';	
-						} else {
-							var addDescr=album.name.substring(0,1);	
-						}
+						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
 						var addCss='background-image:url('+album.cover+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
