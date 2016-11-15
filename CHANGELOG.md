@@ -1,10 +1,11 @@
 # Changelog
 
 ## 1.3
-2016-11-14
+2016-11-15
 - fix: handling of temporary scanner files [#68](https://github.com/rello/audioplayer/issues/68)
 - fix: simpler analysis of incorrect files in scanner [#57](https://github.com/rello/audioplayer/issues/57)
-- fix: album sorted correctly by artist & album [#80](https://github.com/rello/audioplayer/issues/80)
+- fix: album sorted correctly by artist and album [#80](https://github.com/rello/audioplayer/issues/80)
+- fix: neutral cover for unknown album [#16](https://github.com/rello/audioplayer/issues/16)
 - fix: error message from ID3 editor shown in front-end [#77](https://github.com/rello/audioplayer/issues/77)
 - enhancement: occ support for library scan and reset [#72](https://github.com/rello/audioplayer/issues/72)
 - enhancement: select a dedicated folder for scanning in personal settings [#79](https://github.com/rello/audioplayer/issues/79)
