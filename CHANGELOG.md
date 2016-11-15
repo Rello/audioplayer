@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3
+## 1.3.0
 2016-11-15
 - fix: handling of temporary scanner files [#68](https://github.com/rello/audioplayer/issues/68)
 - fix: simpler analysis of incorrect files in scanner [#57](https://github.com/rello/audioplayer/issues/57)
