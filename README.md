@@ -1,4 +1,4 @@
-#![Icon](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player App
+#![Icon](https://github.com/rello/screenshots/blob/master/Audioplayer_Icon_30.png) Audio Player
 
 [![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues) [![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers) [![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
