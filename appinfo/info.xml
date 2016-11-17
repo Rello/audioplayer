@@ -2,7 +2,7 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>audioplayer</id>
 	<name>Audio Player</name>
-	<summary>Audio Player App for ownCloud and Nextcloud</summary>
+	<summary>Audio Player for ownCloud and Nextcloud</summary>
 	<description>Audio Player for MP3, MP4, Ogg, and Wave with a lot of flexibility for all your needs.</description>
 	<version>1.3.0</version>
 	<licence>agpl</licence>
