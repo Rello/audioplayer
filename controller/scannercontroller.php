@@ -887,8 +887,8 @@ class ScannerController extends Controller {
 
 		$new_array = array();
 		$audios_clean = array();
-		$stmtExclude = $this->db->prepareQuery( 'select fileid from `*PREFIX*filecache` where parent in (SELECT parent FROM `*PREFIX*filecache` WHERE `name` = ".noAudio" or `name` = ".noaudio" ORDER BY `fileid` ASC)' );
-		$resultExclude = $stmtExclude->execute();
+		$stmtExclude = $this->db->prepareQuery( 'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)' );
+		$resultExclude = $stmtExclude->execute(array('.noAudio', '.noaudio'));
 		while( $row = $resultExclude->fetchRow()) {
 			array_push($new_array,$row['fileid']);
 		}
