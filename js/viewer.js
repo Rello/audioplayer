@@ -76,7 +76,7 @@ var audioPlayer = {
 $(document).ready(function() {	
 	if (OCA.Files && OCA.Files.fileActions) {
 		
-	var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg'];
+	var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav"];
 		
 		for (var i=0; i<mime_array.length; i++) {
 				
