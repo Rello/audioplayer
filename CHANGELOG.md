@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1
+2016-11-17
+- fix: one-click-play for wav not working
+- fix: wrong sql statement for PostgreSQL [#90](https://github.com/rello/audioplayer/issues/90)
+
 ## 1.3.0
 2016-11-15
 - fix: handling of temporary scanner files [#68](https://github.com/rello/audioplayer/issues/68)
