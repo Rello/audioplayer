@@ -553,7 +553,7 @@ class ScannerController extends Controller {
 				}
 
 				$album = (string) $this->l10n->t('Unknown');
-				if(isset($ThisFileInfo['comments']['album'][0])){
+				if(isset($ThisFileInfo['comments']['album'][0]) and rawurlencode($ThisFileInfo['comments']['album'][0]) !== '%FF%FE'){
 					$album=$ThisFileInfo['comments']['album'][0];
 				}
 
