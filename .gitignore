@@ -16,6 +16,7 @@ RCS/*
 *.backup*
 *.Lock
 .idea
+docs/*
 
 # Mac OS
 .DS_Store
