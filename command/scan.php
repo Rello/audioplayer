@@ -78,10 +78,12 @@ class Scan extends Command {
 			if (is_object($user)) {
 				$user = $user->getUID();
 			}
-			$output->writeln("");
-			$output->writeln("");
-			$output->writeln("<info>Start scan for $user</info>");
-			$this->scanner->scanForAudios($user, $output, $input->getOption('debug'));
+			if ($this->userManager->userExists($user)) {
+				$output->writeln("<info>Start scan for $user</info>");
+				$this->scanner->scanForAudios($user, $output, $input->getOption('debug'));
+			} else {
+				$output->writeln("<error>Unknown user $user</error>");
+			}
 		}
 	}
 }
