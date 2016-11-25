@@ -4,7 +4,7 @@
 	<name>Audio Player</name>
 	<summary>Audio Player for ownCloud and Nextcloud</summary>
 	<description>Audio Player for MP3, MP4, Ogg, and Wave with a lot of flexibility for all your needs.</description>
-	<version>1.3.1</version>
+	<version>1.3.2-beta.1</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
