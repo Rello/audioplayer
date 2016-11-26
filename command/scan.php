@@ -68,22 +68,26 @@ class Scan extends Command {
 			$users = $this->userManager->search('');
 		} else {
 			$users = $input->getArgument('user_id');
+
+			$available_users = array();
+			foreach ($this->userManager->search('') as $user) {
+				array_push($available_users,$user->getUID());
+			}
+			$users = array_intersect($users, $available_users);
 		}
+
 		$users_total = count($users);
 		if ($users_total === 0) {
-			$output->writeln("<error>Please specify the user id to scan, \"--all\" to scan for all users or \"user_id\"</error>");
+			$output->writeln("<error>Please specify a valid user id to scan, \"--all\" to scan for all users</error>");
 			return;
 		}
 		foreach ($users as $user) {
 			if (is_object($user)) {
 				$user = $user->getUID();
 			}
-			if ($this->userManager->userExists($user)) {
-				$output->writeln("<info>Start scan for $user</info>");
-				$this->scanner->scanForAudios($user, $output, $input->getOption('debug'));
-			} else {
-				$output->writeln("<error>Unknown user $user</error>");
-			}
+			
+			$output->writeln("<info>Start scan for $user</info>");
+			$this->scanner->scanForAudios($user, $output, $input->getOption('debug'));
 		}
 	}
 }

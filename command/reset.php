@@ -59,6 +59,12 @@ class Reset extends Command {
 			$users = $this->userManager->search('');
 		} else {
 			$users = $input->getArgument('user_id');
+
+			$available_users = array();
+			foreach ($this->userManager->search('') as $user) {
+				array_push($available_users,$user->getUID());
+			}
+			$users = array_intersect($users, $available_users);
 		}
 		$users_total = count($users);
 		if ($users_total === 0) {
@@ -69,12 +75,8 @@ class Reset extends Command {
 			if (is_object($user)) {
 				$user = $user->getUID();
 			}
-			if ($this->userManager->userExists($user)) {
-				$output->writeln("<info>Reset library for $user</info>");
-				$this->reset->resetMediaLibrary($user, $output);
-			} else {
-				$output->writeln("<error>Unknown user $user</error>");
-			}
+			$output->writeln("<info>Reset library for $user</info>");
+			$this->reset->resetMediaLibrary($user, $output);
 		}
 	}
 
