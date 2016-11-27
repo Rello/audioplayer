@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2
+2016-xx-xx
+- fix: occ catch unknown user [#93](https://github.com/rello/audioplayer/issues/93)
+- fix: catch special characters in album [#87](https://github.com/rello/audioplayer/issues/87)
+- enhancement: Ukrainian translation [#94](https://github.com/rello/audioplayer/issues/94)
+
 ## 1.3.1
 2016-11-17
 - fix: One Click Play for wav not working
