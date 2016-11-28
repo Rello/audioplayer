@@ -74,7 +74,7 @@ class Reset extends Command {
 			} else {
 				$userId = $user->getUID();
 				$output->writeln("<info>Reset library for $userId</info>");
-			$this->reset->resetMediaLibrary($user, $output);
+			$this->reset->resetMediaLibrary($userId, $output);
 			}
 		}
 	}
