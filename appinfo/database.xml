@@ -255,7 +255,6 @@
 				<name>file_id</name>
 				<type>integer</type>
 				<notnull>true</notnull>
-				<length>4</length>
 			</field>
 			<field>
 				<name>bitrate</name>
@@ -280,6 +279,11 @@
 				<notnull>false</notnull>
 				<unsigned>true</unsigned>
 			</field>
+			<field>
+				<name>folder_id</name>
+				<type>integer</type>
+				<notnull>true</notnull>
+			</field>
 
 			<index>
 				<name>aa_tracks_artist_id_idx</name>
@@ -302,6 +306,12 @@
 				</field>
 				<field>
 					<name>user_id</name>
+				</field>
+			</index>
+			<index>
+				<name>aa_tracks_folder_id_idx</name>
+				<field>
+					<name>folder_id</name>
 				</field>
 			</index>
 		</declaration>
