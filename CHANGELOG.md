@@ -1,10 +1,12 @@
 # Changelog
 
-## 1.3.2
+## 1.4.0
 2016-xx-xx
-- fix: occ catch unknown user [#93](https://github.com/rello/audioplayer/issues/93)
 - fix: catch special characters in album [#87](https://github.com/rello/audioplayer/issues/87)
+- fix: occ catch unknown user [#93](https://github.com/rello/audioplayer/issues/93)
 - enhancement: Ukrainian translation [#94](https://github.com/rello/audioplayer/issues/94)
+- enhancement: folders as additional filter category [#98](https://github.com/rello/audioplayer/issues/98)
+- enhancement: search for cover in album folder [#24](https://github.com/rello/audioplayer/issues/24)
 
 ## 1.3.1
 2016-11-17
