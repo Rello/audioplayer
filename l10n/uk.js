@@ -49,6 +49,12 @@ OC.L10N.register(
 	"Existing Artists" : "Виконавець із списку",
 	"New Artist" : "Новий виконавець",
 	"Existing Genres" : "Стиль із списку",
-	"New Genre" : "Новий стиль"
+	"New Genre" : "Новий стиль",
+	"Selected Folder" : "Selected Folder",
+	"Selected Playlists" : "Selected Playlists",
+	"Selected Genre" : "Selected Genre",
+	"Selected Year" : "Selected Year",
+	"Selected All" : "Selected All",
+	"Selected Artist" : "Selected Artist"
 	},
 "");
