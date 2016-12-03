@@ -155,6 +155,7 @@
 
 	<div id="audios-audioscontainer"></div>
 	<div id="individual-playlist-container" class="albumwrapper" data-playlist="">
+		<span id="individual-playlist-info"></span>
 	  	<span id="individual-playlist-header">
  	 		<span class="header-indi">
  	 			<span class="header-num">#</span>
