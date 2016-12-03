@@ -41,6 +41,7 @@
   		<option value="Artist"><?php p($l->t('Artists'));?></option>
   		<option value="Genre"><?php p($l->t('Genres'));?></option>
   		<option value="Year"><?php p($l->t('Years'));?></option>
+  		<option value="Folder"><?php p($l->t('Folders'));?></option>
   		<option value="All"><?php p($l->t('All'));?></option>
 	</select>
 	<button  class="icon-add mp3_hide" id="addPlaylist"></button>
