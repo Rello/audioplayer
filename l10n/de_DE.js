@@ -48,6 +48,12 @@ OC.L10N.register(
 	"Existing Artists" : "Vorhandene Künstler",
 	"New Artist" : " Neuer Künstler",
 	"Existing Genres" : "Vorhandene Genres",
-	"New Genre" : " Neues Genre"
+	"New Genre" : " Neues Genre",
+	"Selected Folder" : "Ausgewählter Ordner",
+	"Selected Playlists" : "Ausgewählte Playlist",
+	"Selected Genre" : "Ausgewähltes Genre",
+	"Selected Year" : "Ausgewähltes Jahr",
+	"Selected All" : "Ausgewählt Alle",
+	"Selected Artist" : "Ausgewählter Künstler"
 },
 "");
