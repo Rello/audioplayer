@@ -78,7 +78,7 @@ class ScannerController extends Controller {
 	public function editAudioFile() {
 		$songFileId=(int)$this->params('songFileId');
 		$resultData=[];
-			\OCP\Util::writeLog('audioplayer','songFileId: '.$songFileId,\OCP\Util::DEBUG);
+		#	\OCP\Util::writeLog('audioplayer','songFileId: '.$songFileId,\OCP\Util::DEBUG);
 		
 		#if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
@@ -622,14 +622,14 @@ class ScannerController extends Controller {
 				} else {
 					if ($parentId !== $parentId_prev) {
 						$folderpicture = false;
-						if ($audio->getParent()->nodeExists('folder.jpg')) {
-							$folderpicture = $audio->getParent()->get('folder.jpg');
-						} elseif ($audio->getParent()->nodeExists('folder.png')) {
-							$folderpicture = $audio->getParent()->get('folder.png');
-						} elseif ($audio->getParent()->nodeExists('cover.jpg')) {
+						if ($audio->getParent()->nodeExists('cover.jpg')) {
 							$folderpicture = $audio->getParent()->get('cover.jpg');
 						} elseif ($audio->getParent()->nodeExists('cover.png')) {
 							$folderpicture = $audio->getParent()->get('cover.png');
+						} elseif ($audio->getParent()->nodeExists('folder.jpg')) {
+							$folderpicture = $audio->getParent()->get('folder.jpg');
+						} elseif ($audio->getParent()->nodeExists('folder.png')) {
+							$folderpicture = $audio->getParent()->get('folder.png');
 						}
 						if ($folderpicture) {
 							$this->getFolderPicture($iAlbumId,$folderpicture->getContent());
@@ -788,7 +788,6 @@ class ScannerController extends Controller {
 	 * Add track to db if not exist
 	 * 
 	 *@param array $aTrack
-	 *
 	 *
 	 * @return id
 	 */
