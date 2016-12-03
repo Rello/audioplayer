@@ -115,6 +115,14 @@ class CategoryController extends Controller {
 			 			WHERE  `user_id` = ?
 			 			ORDER BY `name` ASC
 			 			";
+		} elseif ($category === 'Folder') {
+			$SQL="SELECT  distinct(FC.`fileid`) AS `id`,FC.`name` 
+						FROM `*PREFIX*audioplayer_tracks` AT
+						JOIN `*PREFIX*filecache` FC
+						on FC.`fileid` = AT.`folder_id`
+			 			WHERE  AT.`user_id` = ?
+			 			ORDER BY FC.`name` ASC
+			 			";
 		}	
 			
 		$stmt =$this->db->prepareQuery($SQL);
@@ -177,6 +185,14 @@ class CategoryController extends Controller {
 			 		WHERE  `AP`.`playlist_id` = ?
 			 		ORDER BY `AP`.`sortorder` ASC
 			 		";
+		} elseif ($category === 'Folder') {
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
+					WHERE `AT`.`folder_id` = ? 
+					AND `AT`.`user_id` = ?
+					ORDER BY `AT`.`title` ASC";
 		}
 
 		$stmt = $this->db->prepareQuery($SQL);
