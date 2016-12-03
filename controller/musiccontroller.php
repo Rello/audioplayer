@@ -395,7 +395,7 @@ class MusicController extends Controller {
     		$first[$key] = $row['artist'];
     		$second[$key] = $row['name'];
 		}
-		array_multisort($first, SORT_ASC, SORT_STRING,$second , SORT_ASC, SORT_STRING, $data);
+		array_multisort($first, SORT_ASC, SORT_STRING|SORT_FLAG_CASE,$second , SORT_ASC, SORT_STRING|SORT_FLAG_CASE, $data);
 		return $data;
 	}
 
