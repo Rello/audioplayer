@@ -690,10 +690,13 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$('#myCategory li').removeClass('activeIndiPlaylist');
 	
 		EventTarget.parent('li').addClass('activeIndiPlaylist');
+		category_title = EventTarget.parent('li').find('span').first().text();
 		$('#alben').removeClass('bAktiv');
 	
 		var aPlayList=this.aSongIdsCategory[PlaylistId];
 
+		$('#individual-playlist-info').html(t('audioplayer','Selected '+category)+': '+category_title);
+		
 		$this.AlbumContainer.hide();
 		$this.PlaylistContainer.hide();
 		$this.PlaylistContainer.show();
