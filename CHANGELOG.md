@@ -4,6 +4,7 @@
 2016-xx-xx
 - fix: catch special characters in album [#87](https://github.com/rello/audioplayer/issues/87)
 - fix: occ catch unknown user [#93](https://github.com/rello/audioplayer/issues/93)
+- fix: correct album sort order to case-insensitive
 - enhancement: Ukrainian translation [#94](https://github.com/rello/audioplayer/issues/94)
 - enhancement: folders as additional filter category [#98](https://github.com/rello/audioplayer/issues/98)
 - enhancement: search for cover in album folder [#24](https://github.com/rello/audioplayer/issues/24)
