@@ -44,5 +44,6 @@
 "Read more" : "==> 詳情",
 "Search for audio files in " : "Folder of audio files ",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.",
-"To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "To exclude a folder, you have to create a .noaudio file inside that folder."
+"To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "To exclude a folder, you have to create a .noaudio file inside that folder.",
+"Folders" :"Folders"
 },"pluralForm":""}

@@ -31,6 +31,7 @@ use \OCP\IL10N;
 use \OCP\L10N\IFactory;
 use \OCP\IDb;
 use \OCP\Files\IRootFolder;
+use \OCP\Files\Folder;
 use \OC\Files\View; //remove when editAudioFiles is updated and toTmpFile alternative
 
 /**
@@ -51,7 +52,7 @@ class ScannerController extends Controller {
 	private $db;
 	private $configManager;
 	private $occ_job;
-	public function __construct(
+		public function __construct(
 			$appName, 
 			IRequest $request, 
 			$userId, 
@@ -77,6 +78,7 @@ class ScannerController extends Controller {
 	public function editAudioFile() {
 		$songFileId=(int)$this->params('songFileId');
 		$resultData=[];
+		#	\OCP\Util::writeLog('audioplayer','songFileId: '.$songFileId,\OCP\Util::DEBUG);
 		
 		#if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
@@ -470,6 +472,7 @@ class ScannerController extends Controller {
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		} 
 		
+		$parentId_prev			= false;
 		$counter 				= 0;
 		$counter_new 			= 0;
 		$error_count 			= 0;
@@ -611,17 +614,34 @@ class ScannerController extends Controller {
 					$cleanTrackNumber=trim($temp[0]);
 				}
 
+				$parentId = $audio->getParent()->getId();
+
 				if(isset($ThisFileInfo['comments']['picture'])){
 					$data=$ThisFileInfo['comments']['picture'][0]['data'];
-					$image = new \OCP\Image();
-					if($image->loadFromdata($data)) {
-						if(($image->width() <= 250 && $image->height() <= 250) || $image->resize(250)) {
-							$imgString=$image->__toString();
-							$this->writeCoverToAlbum($iAlbumId,$imgString,'');
-							$poster='data:'.$ThisFileInfo['comments']['picture'][0]['image_mime'].';base64,'.$imgString;
+					$this->getFolderPicture($iAlbumId,$data);
+				} else {
+					if ($parentId !== $parentId_prev) {
+						$folderpicture = false;
+						if ($audio->getParent()->nodeExists('cover.jpg')) {
+							$folderpicture = $audio->getParent()->get('cover.jpg');
+						} elseif ($audio->getParent()->nodeExists('cover.png')) {
+							$folderpicture = $audio->getParent()->get('cover.png');
+						} elseif ($audio->getParent()->nodeExists('folder.jpg')) {
+							$folderpicture = $audio->getParent()->get('folder.jpg');
+						} elseif ($audio->getParent()->nodeExists('folder.png')) {
+							$folderpicture = $audio->getParent()->get('folder.png');
 						}
+						if ($folderpicture) {
+							$this->getFolderPicture($iAlbumId,$folderpicture->getContent());
+							if ($debug) $output->writeln("     Alternative album art: ".$folderpicture->getInternalPath());
+						}
+						$parentId_prev = $parentId;
+					} elseif ($parentId === $parentId_prev AND $folderpicture) {
+						if ($debug) $output->writeln("     Reusing previous folder image");
+						$this->getFolderPicture($iAlbumId,$folderpicture->getContent());
 					}
 				}
+
 				
 				$playTimeString = '';
 				if(isset($ThisFileInfo['playtime_string'])){
@@ -638,6 +658,7 @@ class ScannerController extends Controller {
 					'mimetype' => $audio->getMimetype(),
 					'genre' => (int)$iGenreId,
 					'year' => (int)$year,
+					'folder_id' => $parentId,
 				];
 				
 				$this->writeTrackToDB($aTrack);
@@ -702,7 +723,6 @@ class ScannerController extends Controller {
 	 */
 	
 	private function writeAlbumToDB($sAlbum,$sYear,$iArtistId){
-		
 			if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $this->userId, 'name' => $sAlbum])) {
 				$insertid = $this->db->getInsertId('*PREFIX*audioplayer_albums');
 				if ($iArtistId) {
@@ -769,7 +789,6 @@ class ScannerController extends Controller {
 	 * 
 	 *@param array $aTrack
 	 *
-	 *
 	 * @return id
 	 */
 	private function writeTrackToDB($aTrack){
@@ -778,15 +797,15 @@ class ScannerController extends Controller {
 			$aTrack['title'] = substr($aTrack['title'], 0, 256);
 		}
 		
-		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?';
+		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ? AND `folder_id`= ?';
 		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype'],$aTrack['genre'],$aTrack['year']));
+		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype'],$aTrack['genre'],$aTrack['year'],$aTrack['folder_id']));
 		$row = $result->fetchRow();
 		if(isset($row['id'])){
 			$this->iDublicate++;
 		}else{
-			$stmt = $this->db->prepareQuery( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`) VALUES(?,?,?,?,?,?,?,?,?,?,?)' );
-			$result = $stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype'],$aTrack['genre'],$aTrack['year']));
+			$stmt = $this->db->prepareQuery( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)' );
+			$result = $stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype'],$aTrack['genre'],$aTrack['year'],$aTrack['folder_id']));
 			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_tracks');
 			return $insertid;
 		}
@@ -864,11 +883,13 @@ class ScannerController extends Controller {
 	/**
 	 * Add track to db if not exist
 	 * 
-	 *@param array $ThisFileInfo
+	 *@param array $output
 	 * @return array
 	 */
 	private function getAudioObjects($output = null, $debug = null) {
 
+		$new_array = array();
+		$audios_clean = array();
 		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
 		$userView = $this->rootFolder->getUserFolder($this -> userId);
 
@@ -885,25 +906,25 @@ class ScannerController extends Controller {
 		if ($debug) $output->writeln("Scanned Folder: ".$userView->getPath());
 		if ($debug) $output->writeln("Total audio files: ".count($audios));
 
-		$new_array = array();
-		$audios_clean = array();
-		$stmtExclude = $this->db->prepareQuery( 'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)' );
-		$resultExclude = $stmtExclude->execute(array('.noAudio', '.noaudio'));
-		while( $row = $resultExclude->fetchRow()) {
-			array_push($new_array,$row['fileid']);
-		}
-		$resultExclude = $new_array;
-		//if ($debug) $output->writeln("Excluded ids (.noAdmin): ".implode(",", $resultExclude));
+		// get all fileids which are in an excluded folder
+			$stmtExclude = $this->db->prepareQuery( 'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)' );
+			$resultExclude = $stmtExclude->execute(array('.noAudio', '.noaudio'));
+			while( $row = $resultExclude->fetchRow()) {
+				array_push($new_array,$row['fileid']);
+			}
+			$resultExclude = $new_array;
+			//if ($debug) $output->writeln("Excluded ids (.noAdmin): ".implode(",", $resultExclude));
 		
-		$new_array = array();
-		$stmtExisting = $this->db->prepareQuery( 'SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
-		$resultExisting = $stmtExisting->execute(array($this->userId));
-		while( $row = $resultExisting->fetchRow()) {
-			array_push($new_array,$row['file_id']);
-		}
-		$resultExisting = $new_array;
-		$new_array = null;
-		//if ($debug) $output->writeln("Existing ids (already scanned): ".implode(",", $resultExisting)."</info>");
+		// get all fileids which are already in the Audio Player Database
+			$new_array = array();
+			$stmtExisting = $this->db->prepareQuery( 'SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
+			$resultExisting = $stmtExisting->execute(array($this->userId));
+			while( $row = $resultExisting->fetchRow()) {
+				array_push($new_array,$row['file_id']);
+			}
+			$resultExisting = $new_array;
+			$new_array = null;
+			//if ($debug) $output->writeln("Existing ids (already scanned): ".implode(",", $resultExisting)."</info>");
 
 		if ($debug) $output->writeln("Checking all files whether they can be <info>skipped</info>");
 		foreach($audios as $audio) {
@@ -921,4 +942,26 @@ class ScannerController extends Controller {
 		if ($debug) $output->writeln("Final audio files to be processed: ".$this->numOfSongs);
 		return $audios_clean;
 	}
+	
+	/**
+	 * get picture from folder of audio file
+	 * folder/cover.jpg/png
+	 * 
+	 *@param array $audiofile
+	 * @return id
+	 */
+	private function getFolderPicture($iAlbumId,$data){
+
+		$image = new \OCP\Image();
+ 		if($image->loadFromdata($data)) {
+			if(($image->width() <= 250 && $image->height() <= 250) || $image->resize(250)) {
+				$imgString=$image->__toString();
+				$this->writeCoverToAlbum($iAlbumId,$imgString,'');
+			}
+		}
+		return true;
+	}
+	
+
+	
 }

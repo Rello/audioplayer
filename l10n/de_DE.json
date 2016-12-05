@@ -44,5 +44,6 @@
 "Read more" : "Weitere Informationen",
 "Search for audio files in " : "Suche nach Audio-Dateien in ",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Diese Einstellung bestimmt den zu durchsuchenden Ordner. Wenn keine Auswahl getroffen wird, wird der ganze Benutzerordner durchsucht.",
-"To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "Um einen Ordner auszuschließen, muss eine .noaudio-Datei im Ordner angelegt werden. Das ist auch für auszuschließende Unterordner erforderlich."
+"To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "Um einen Ordner auszuschließen, muss eine .noaudio-Datei im Ordner angelegt werden. Das ist auch für auszuschließende Unterordner erforderlich.",
+"Folders" :"Ordner"
 },"pluralForm":""}

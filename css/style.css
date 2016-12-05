@@ -23,6 +23,9 @@
 	display: none;
 }
 
+#searchresults {
+	margin-top: 0px !important;
+}
 #loading {
 	position:absolute; z-index:1000;margin-top:15%;left:0; display: none; width:100%;
 	text-align:center;

@@ -22,7 +22,7 @@
 "play/ pause" : "відтворення/пауза",
 "Close" : "Закрити",
 "Length" : "Тривалість",
-"Opt" : "Выб.",
+"Opt" : "Виб.",
 "Sorting Playlist success! Playlist reloaded!" : "Список відсортований і перезавантажений!",
 "Various Artists" :"Різні виконавці",
 "Various" : "Різне",
@@ -46,5 +46,6 @@
 "Genres" : "Стилі",
 "Search for audio files in " : "Папка з аудіофайлами ",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Це налаштування виберає папку а з аудіофайлами. Якщо це значення відсутнє - пошук буде проводитись по всіх файлах, що існують.",
-"To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "Щоб виключити папку з індексації - створіть в ній файл .noaudio."
+"To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "Щоб виключити папку з індексації - створіть в ній файл .noaudio.",
+"Folders" :"Теки"
 },"pluralForm":""}
