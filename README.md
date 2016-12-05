@@ -24,7 +24,7 @@ Audio Player for MP3, MP4, Ogg, and Wave with a lot of flexibility for all your 
 - Exclude folders from scanning (`.noaudio`)
 
 ### Supported Formats
-MP3, MP4, Ogg Vorbis, Opus (Ogg container), and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
+MP3, MP4, Ogg Vorbis, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
 
 ### Supported Browsers
 Latest versions of Chrome, Firefox, and Safari.  
