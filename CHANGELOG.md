@@ -9,7 +9,7 @@
 - enhancement: Ukrainian translation [#94](https://github.com/rello/audioplayer/issues/94)
 - enhancement: folders as additional filter category [#98](https://github.com/rello/audioplayer/issues/98)
 - enhancement: search for cover in album folder [#24](https://github.com/rello/audioplayer/issues/24)
-- enhancement: Opus Support [#92](https://github.com/rello/audioplayer/issues/92)
+- enhancement: Opus support [#92](https://github.com/rello/audioplayer/issues/92)
 
 ## 1.3.1
 2016-11-17
