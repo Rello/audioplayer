@@ -53,6 +53,7 @@ OC.L10N.register(
 	"Selected Genre" : "Selected Genre",
 	"Selected Year" : "Selected Year",
 	"Selected All" : "Selected All",
-	"Selected Artist" : "Selected Artist"
+	"Selected Artist" : "Selected Artist",
+	"Length" : "Length"
 },
 "");
