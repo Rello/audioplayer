@@ -55,6 +55,7 @@ OC.L10N.register(
 	"Selected Genre" : "Выбран стиль",
 	"Selected Year" : "Выбран год",
 	"Selected All" : "Выбрано всё",
-	"Selected Artist" : "Выбран исполнитель"
+	"Selected Artist" : "Выбран исполнитель",
+	"Length" : "Длина"
 	},
 "");
