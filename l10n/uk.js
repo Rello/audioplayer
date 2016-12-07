@@ -1,7 +1,6 @@
 OC.L10N.register(
     "audioplayer",
-    {
- 
+    { 
 	"Add new Songs to playlist" : "Знайти і додати нову музику",
 	"Scan for new audio files" : "Знайти нові аудіофайли...",
 	"Sort Playlist" : "Упорядочить список воспроизведения",
@@ -55,6 +54,7 @@ OC.L10N.register(
 	"Selected Genre" : "Обраний стиль",
 	"Selected Year" : "Обраний рік",
 	"Selected All" : "Обрані усі",
-	"Selected Artist" : "Обраний виконавець"
+	"Selected Artist" : "Обраний виконавець",
+	"Length" : "довжина"
 	},
 "");
