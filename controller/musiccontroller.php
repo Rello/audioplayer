@@ -29,6 +29,7 @@ use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
 use \OCP\IL10N;
 use \OCP\IDb;
+use OCP\Share\IManager;
 
 /**
  * Controller class for main page.
@@ -39,18 +40,22 @@ class MusicController extends Controller {
 	private $l10n;
 	private static $sortType='album';
 	private $db;
-
+	/** @var IManager */
+	private $shareManager;
+	
 	public function __construct(
 			$appName, 
 			IRequest $request, 
 			$userId, 
 			IL10N $l10n, 
-			IDb $db
+			IDb $db,
+			IManager $shareManager
 		) {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
+		$this->shareManager = $shareManager;
 	}
 	/**
 	*@PublicPage
@@ -89,29 +94,43 @@ class MusicController extends Controller {
 	 * @NoCSRFRequired
 	 * 
 	 */
-	public function getPublicAudioInfo(){
-		$file  = $this->params('file');	
+	public function getPublicAudioInfo($file){
 		$pToken  = $this->params('token');	
 		if (!empty($pToken)) {
-			$linkItem = \OCP\Share::getShareByToken($pToken);
-			if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
-				exit;
-			}
-			// seems to be a valid share
-			$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
-			$user = $rootLinkItem['uid_owner'];
-		   
-			// Setup filesystem
-			\OC\Files\Filesystem::init($user, '/' . $user . '/files');
-			$startPath = \OC\Files\Filesystem::getPath($linkItem['file_source']) ;
-		  	if((string)$linkItem['item_type'] === 'file'){
-				$filenameAudio=$startPath;
+			$share = $this->shareManager->getShareByToken($pToken);
+			$fileid = $share->getNodeId();
+			$fileowner = $share->getShareOwner();
+
+			\OCP\Util::writeLog('audioplayer', 'fileid: '.$fileid, \OCP\Util::DEBUG);
+			\OCP\Util::writeLog('audioplayer', 'fileowner: '.$fileowner, \OCP\Util::DEBUG);
+
+			$SQL="SELECT `AT`.`title`,`AG`.`name` AS `genre`,`AB`.`name` AS `album`,`AT`.`artist_id`,`AT`.`length`,`AT`.`bitrate`,`AT`.`year`,`AA`.`name` AS `artist` 
+						FROM `*PREFIX*audioplayer_tracks` `AT`
+						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`
+						LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
+			 			WHERE  `AT`.`user_id` = ? AND `AT`.`file_id` = ?
+			 			ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC
+			 			";
+				 
+			$stmt = $this->db->prepareQuery($SQL);
+			$result = $stmt->execute(array($fileowner, $fileid));
+			$row = $result->fetchRow();
+						
+			if($row['title']){
+				$result=[
+					'status' => 'success',
+					'data' => $row];
 			}else{
-				$filenameAudio=$startPath.'/'.rawurldecode($file);
+				$result=[
+				'status' => 'error',
+				'data' => 'nodata'];
 			}
-			
+			$response = new JSONResponse();
+			$response -> setData($result);
+			return $response;
+
 			\OC::$server->getSession()->close();
-			\OCP\Util::writeLog('audioplayer', $filenameAudio.' '.$user, \OCP\Util::DEBUG);
 		} 
 	}
 
