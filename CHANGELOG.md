@@ -10,6 +10,7 @@
 - enhancement: folders as additional filter category [#98](https://github.com/rello/audioplayer/issues/98)
 - enhancement: search for cover in album folder [#24](https://github.com/rello/audioplayer/issues/24)
 - enhancement: Opus support [#92](https://github.com/rello/audioplayer/issues/92)
+- enhancement: ID3 Info in sharing 360 player [#102](https://github.com/rello/audioplayer/issues/102)
 
 ## 1.3.1
 2016-11-17
