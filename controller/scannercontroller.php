@@ -868,7 +868,7 @@ class ScannerController extends Controller {
 				}	
 				// Now make a correct conversion
 				if($ruTag === 1) {
-					foreach (array('album', 'artist', 'title', 'band') as $tkey) {
+					foreach (array('album', 'artist', 'title', 'band', 'genre') as $tkey) {
 						if(isset($ThisFileInfo['tags'][$ttype][$tkey])) {
 							$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]);
 							$ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('Windows-1251', 'UTF-8', $ThisFileInfo['tags'][$ttype][$tkey][0]);
