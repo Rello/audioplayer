@@ -15,8 +15,8 @@ Audio Player for commonly used formats with a lot of flexibility for all your ne
 - Library scan and reset with command-line and browser
 - Specifying media folder (with exclude functionality)
 - Play shared files directly without downloading
+- Playlists and ID3 tag editor (incl. picture)
 - One Click Play from Files app
-- Playlists and ID3 tag editor
 - External cover support
 - Mobile view support
 
