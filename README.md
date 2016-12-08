@@ -16,9 +16,9 @@ Audio Player for commonly used formats with a lot of flexibility for all your ne
 - Specifying media folder (with exclude functionality)
 - Play shared files directly without downloading
 - One Click Play from Files app
-- Mobile view support
 - Playlists and ID3 tag editor
 - External cover support
+- Mobile view support
 
 ### Supported Formats
 MP3, MP4, Ogg Vorbis, Opus and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
