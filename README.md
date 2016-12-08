@@ -2,7 +2,7 @@
 
 [![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues) [![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers) [![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
-Audio Player for MP3, MP4, Ogg, Opus and Wave with a lot of flexibility for all your needs.
+Audio Player for commonly used formats with a lot of flexibility for all your needs.
 
 <img src="https://github.com/rello/screenshots/blob/master/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
@@ -11,17 +11,14 @@ Audio Player for MP3, MP4, Ogg, Opus and Wave with a lot of flexibility for all 
 <img src="https://github.com/rello/screenshots/blob/master/audioplayer_actions.png" alt="Action Menu" width="100" height="156" title="Action Menu">
 
 ## Features
-- Animated album view
-- Various selections (playlists, artists, genres, years, folders, all)
-- Scanning and resetting music library
-- Playlist editing in the UI
-- Editing ID3 tags (incl. picture from ID3 or cover/folder.jpg)
+- Multiple views (albums with covers and more)
+- Library scan and reset with command-line and browser
+- Specifying media folder (with exclude functionality)
+- Play shared files directly without downloading
+- One Click Play from Files app
 - Mobile view support
-- One Click Play from file browser
-- Play shared audio files directly
-- occ support for library scan and reset
-- Select a dedicated folder for scanning
-- Exclude folders from scanning (`.noaudio`)
+- Playlists and ID3 tag editor
+- External cover support
 
 ### Supported Formats
 MP3, MP4, Ogg Vorbis, Opus and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
