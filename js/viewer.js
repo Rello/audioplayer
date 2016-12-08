@@ -143,8 +143,8 @@ $(document).ready(function() {
 						if(jsondata.status == 'success'){
 							var playlistsdata=jsondata.data;
 							$(".directLink").remove();
-							$(".directDownload").remove();
-							$("#id3").css({'height':'100px', 'margin':'0 auto'});
+							//$(".directDownload").remove();
+							$("#id3").css({'height':'110px', 'margin':'0 auto'});
 							$('#content-wrapper').css({'padding-top':'0px'});
 							$('#id3').append('<dt style="text-align: right; float: left;width: 50%;">'+t('audioplayer','Title')+':&nbsp;</dt><dd style="text-align: left;float: left;width: 50%;">'+ jsondata.data.title +'</dd>');
 							$('#id3').append('<dt style="text-align: right; float: left;width: 50%;">'+t('audioplayer','Interpret')+':&nbsp;</dt><dd style="text-align: left;float: left;width: 50%;">'+ jsondata.data.artist +'</dd>');
@@ -152,6 +152,7 @@ $(document).ready(function() {
 							$('#id3').append('<dt style="text-align: right; float: left;width: 50%;">Genre:&nbsp;</dt><dd style="text-align: left;float: left;width: 50%;">'+ jsondata.data.genre +'</dd>');
 							$('#id3').append('<dt style="text-align: right; float: left;width: 50%;">'+t('audioplayer','Year')+':&nbsp;</dt><dd style="text-align: left;float: left;width: 50%;">'+ jsondata.data.year +'</dd>');
 							$('#id3').append('<dt style="text-align: right; float: left;width: 50%;">'+t('audioplayer','Length')+':&nbsp;</dt><dd style="text-align: left;float: left;width: 50%;">'+ jsondata.data.length +'</dd>');
+							$('#id3').append('<dt style="text-align: right; float: left;width: 50%;">'+t('audioplayer','Bitrate')+':&nbsp;</dt><dd style="text-align: left;float: left;width: 50%;">'+ jsondata.data.bitrate +'&nbsp;kbps</dd>');
 							$('#id3').after('<br>');
 						}
 					}
