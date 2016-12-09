@@ -21,7 +21,7 @@ Audio Player for commonly used formats with a lot of flexibility for all your ne
 - Mobile view support
 
 ### Supported Formats
-MP3, MP4, Ogg Vorbis, Opus and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
+MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
 
 ### Supported Browsers
 Latest versions of Chrome, Firefox, and Safari.  
