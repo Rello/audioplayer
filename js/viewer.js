@@ -103,7 +103,7 @@ $(document).ready(function() {
 			OC.addStyle('audioplayer','360player');
 			OC.addStyle('audioplayer','360player-visualization');	
 			
-			$('#imgframe').css({'width':'450px'});
+			//$('#imgframe').css({'width':'450px'});
 			setTimeout(function(){ $('#imgframe').children('img').first().css({'max-width':'250px'}); }, 2000);	
 			
 			if( $('#previewSupported').val() !== 'true'){
