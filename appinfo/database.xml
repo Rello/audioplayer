@@ -282,7 +282,7 @@
 			<field>
 				<name>folder_id</name>
 				<type>integer</type>
-				<notnull>true</notnull>
+				<notnull>false</notnull>
 			</field>
 
 			<index>
