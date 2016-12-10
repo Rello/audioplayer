@@ -757,8 +757,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							}
 							$this.PlaylistContainer.data('playlist',playlistActive.data('id'));
 						
-						   	var parent = $('#myCategory li.activeIndiPlaylist span.pl-name').parent();
-							$('.sm2-playlist-cover').text(parent.find('.info-cover').text()).css({'background-color':parent.find('.info-cover').css('background-color'),'color':parent.find('.info-cover').css('color'),'background-image':''});
+							//$('.sm2-playlist-cover').css();
 							$('.sm2-playlist-target').text('');
 							$('.sm2-playlist-cover').click(function(){
 								window.location.href='#show-playlist-'+$this.PlaylistContainer.data('playlist');
