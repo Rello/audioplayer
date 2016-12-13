@@ -109,7 +109,7 @@ class CategoryController extends Controller {
 						FROM `*PREFIX*audioplayer_tracks`
 			 			WHERE  `user_id` = ?
 			 			";
-		} elseif ($category === 'Playlists') {
+		} elseif ($category === 'Playlist') {
 			$SQL="SELECT  `id`,`name` 
 						FROM `*PREFIX*audioplayer_playlists`
 			 			WHERE  `user_id` = ?
@@ -176,7 +176,7 @@ class CategoryController extends Controller {
 					WHERE `AT`.`id` > ? 
 					AND `AT`.`user_id` = ? 
 					ORDER BY `AT`.`title` ASC";
-		} elseif ($category === 'Playlists') {
+		} elseif ($category === 'Playlist') {
 			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
 					FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
 					LEFT JOIN `*PREFIX*audioplayer_tracks` `AT` ON `AP`.`track_id` = `AT`.`id`
@@ -196,7 +196,7 @@ class CategoryController extends Controller {
 		}
 
 		$stmt = $this->db->prepareQuery($SQL);
-		if ($category === 'Playlists') {
+		if ($category === 'Playlist') {
 			$result = $stmt->execute(array($categoryId));
 		} else {
 				$result = $stmt->execute(array($categoryId, $this->userId));
