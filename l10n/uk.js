@@ -50,10 +50,10 @@ OC.L10N.register(
 	"Existing Genres" : "Стиль із списку",
 	"New Genre" : "Новий стиль",
 	"Selected Folder" : "Обрана тека",
-	"Selected Playlists" : "Обраний список відтворення",
+	"Selected Playlist" : "Обраний список відтворення",
 	"Selected Genre" : "Обраний стиль",
 	"Selected Year" : "Обраний рік",
-	"Selected All" : "Обрані усі",
+	"Selected" : "Обрані",
 	"Selected Artist" : "Обраний виконавець",
 	"Length" : "довжина"
 	},

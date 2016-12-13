@@ -50,10 +50,10 @@ OC.L10N.register(
 	"Existing Genres" : "Vorhandene Genres",
 	"New Genre" : " Neues Genre",
 	"Selected Folder" : "Ausgewählter Ordner",
-	"Selected Playlists" : "Ausgewählte Playlist",
+	"Selected Playlist" : "Ausgewählte Wiedergabeliste",
 	"Selected Genre" : "Ausgewähltes Genre",
 	"Selected Year" : "Ausgewähltes Jahr",
-	"Selected All" : "Ausgewählt Alle",
+	"Selected" : "Ausgewählt",
 	"Selected Artist" : "Ausgewählter Künstler",
 	"Length" : "Länge"
 },

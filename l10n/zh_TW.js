@@ -49,10 +49,10 @@ OC.L10N.register(
 	"Existing Genres" : "現有的曲風",
 	"New Genre" : " 新曲風",
 	"Selected Folder" : "Selected Folder",
-	"Selected Playlists" : "Selected Playlists",
+	"Selected Playlist" : "Selected Playlists",
 	"Selected Genre" : "Selected Genre",
 	"Selected Year" : "Selected Year",
-	"Selected All" : "Selected All",
+	"Selected" : "Selected",
 	"Selected Artist" : "Selected Artist",
 	"Length" : "Length"
 },

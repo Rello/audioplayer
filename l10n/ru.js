@@ -51,10 +51,10 @@ OC.L10N.register(
 	"Existing Genres" : "Стиль из списка",
 	"New Genre" : "Новый стиль",
 	"Selected Folder" : "Выбрана папка",
-	"Selected Playlists" : "Выбран список воспроизведения",
+	"Selected Playlist" : "Выбран список воспроизведения",
 	"Selected Genre" : "Выбран стиль",
 	"Selected Year" : "Выбран год",
-	"Selected All" : "Выбрано всё",
+	"Selected" : "Выбрано",
 	"Selected Artist" : "Выбран исполнитель",
 	"Length" : "Длина"
 	},
