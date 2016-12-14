@@ -21,6 +21,7 @@ OC.L10N.register(
 	"File" : "Файл",
 	"Title" : "Название",
 	"Interpret" : "Исполнитель",
+	"Artist" : "Исполнитель",
 	"Year" : "Год",
 	"Album" : "Альбом",
 	"Edit Song from Playlist" : "Редактировать информацию о песне",

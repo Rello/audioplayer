@@ -20,6 +20,7 @@ OC.L10N.register(
 	"File" : "Файл",
 	"Title" : "Назва",
 	"Interpret" : "Виконавець",
+	"Artist" : "Виконавець",
 	"Year" : "Рік",
 	"Album" : "Альбом",
 	"Edit Song from Playlist" : "Редагувати інформацію про трек",

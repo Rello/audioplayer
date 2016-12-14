@@ -20,6 +20,7 @@ OC.L10N.register(
 	"File" : "檔案名",
 	"Title" : "曲名",
 	"Interpret" : "演出者",
+	"Artist" : "演出者",
 	"Year" : "年份",
 	"Album" : "專輯",
 	"Edit Song from Playlist" : "由播放清單編輯",
