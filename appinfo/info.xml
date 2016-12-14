@@ -17,9 +17,9 @@
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
 	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
-	<screenshot small-thumbnail="https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_main_small.png">https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_main.png</screenshot>
-	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_lists.png</screenshot>
-	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_share.png</screenshot>
+	<screenshot small-thumbnail="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main_small.png">https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_lists.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_share.png</screenshot>
 	<dependencies>
 		<php min-version="5.4"/>
 		<owncloud min-version="8.1" max-version="9.2"/>
