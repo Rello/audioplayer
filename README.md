@@ -1,14 +1,14 @@
-#![Icon](https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_icon.png) Audio Player
+#![Icon](https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_icon.png) Audio Player
 
 [![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues) [![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers) [![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
 Audio Player for commonly used formats with a lot of flexibility for all your needs.
 
-<img src="https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
+<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
-<img src="https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_lists.png" alt="Navigation" width="189" height="250" title="Navigation">     
-<img src="https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_share.png" alt="Share Player" width="179" height="250" title="Share Player">     
-<img src="https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_actions.png" alt="Action Menu" width="100" height="156" title="Action Menu">
+<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_lists.png" alt="Navigation" width="189" height="250" title="Navigation">     
+<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_share.png" alt="Share Player" width="179" height="250" title="Share Player">     
+<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_actions.png" alt="Action Menu" width="100" height="156" title="Action Menu">
 
 ## Features
 - Multiple views (albums with covers and more)
