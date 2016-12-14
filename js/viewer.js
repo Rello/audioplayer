@@ -153,6 +153,7 @@ $(document).ready(function() {
 							$('#id3').append('<div><b>'+t('audioplayer','Year')+':</b>&nbsp;'+ jsondata.data.year +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Length')+':</b>&nbsp;'+ jsondata.data.length +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Bitrate')+':</b>&nbsp;'+ jsondata.data.bitrate +'&nbsp;kbps</div>');
+							$('#id3').append('<div>&nbsp;</div>');
 						}
 					}
 				});
