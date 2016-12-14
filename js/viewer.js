@@ -147,7 +147,7 @@ $(document).ready(function() {
 							$('#content-wrapper').css({'padding-top':'0px'});
 							$('#id3').append('<div>&nbsp;</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Title')+':</b>&nbsp;'+ jsondata.data.title +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Interpret')+':</b>&nbsp;'+ jsondata.data.artist +'</div>');
+							$('#id3').append('<div><b>'+t('audioplayer','Artist')+':</b>&nbsp;'+ jsondata.data.artist +'</div>');
 							$('#id3').append('<div><b>Album:</b>&nbsp;'+ jsondata.data.album +'</div>');
 							$('#id3').append('<div><b>Genre:</b>&nbsp;'+ jsondata.data.genre +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Year')+':</b>&nbsp;'+ jsondata.data.year +'</div>');
