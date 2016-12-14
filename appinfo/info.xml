@@ -17,7 +17,7 @@
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
 	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
-	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_main.png</screenshot>
+	<screenshot small-thumbnail="https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_main_small.png">https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_main.png</screenshot>
 	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_lists.png</screenshot>
 	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_share.png</screenshot>
 	<dependencies>
