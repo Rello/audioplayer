@@ -4,7 +4,7 @@
 	<name>Audio Player</name>
 	<summary>Audio Player for ownCloud and Nextcloud</summary>
 	<description>Audio Player for commonly used formats with a lot of flexibility for all your needs.</description>
-	<version>1.4.0-beta.4</version>
+	<version>1.4.0-beta.5</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
@@ -17,9 +17,9 @@
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
 	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
-	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_main.png</screenshot>
-	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_lists.png</screenshot>
-	<screenshot>https://github.com/rello/screenshots/raw/master/audioplayer_share.png</screenshot>
+	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_main.png</screenshot>
+	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_lists.png</screenshot>
+	<screenshot>https://github.com/rello/audioplayer/blob/master/screenshots/audioplayer_share.png</screenshot>
 	<dependencies>
 		<php min-version="5.4"/>
 		<owncloud min-version="8.1" max-version="9.2"/>
