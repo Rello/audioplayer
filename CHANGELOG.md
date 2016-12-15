@@ -1,7 +1,7 @@
 # Changelog
 
 ## 1.4.0
-2016-xx-xx
+2016-12-15
 - fix: catch special characters in album [#87](https://github.com/rello/audioplayer/issues/87)
 - fix: occ catch unknown user [#93](https://github.com/rello/audioplayer/issues/93)
 - fix: correct album sort order to case-insensitive
