@@ -3,9 +3,7 @@
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<summary>Audio Player for ownCloud and Nextcloud</summary>
-	<summary lang="de">Audio Player für ownCloud und Nextcloud</summary>
 	<description>Audio Player for commonly used formats with a lot of flexibility for all your needs.</description>
-	<description lang="de">Audio Player für häufig verwendete Formate mit viel Flexibilität für alle Bedürfnisse.</description>
 	<version>1.4.0</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
