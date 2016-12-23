@@ -36,6 +36,9 @@ To make it possible for us to help you please fill out below information careful
 **Updated from an older ownCloud/Nextcloud or fresh install:**
 
 
+**Audio Player version:** (see `/settings/apps`)
+
+
 **Where did you install Audio Player from:**
 
 
