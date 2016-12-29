@@ -91,7 +91,7 @@ class CategoryController extends Controller {
 						JOIN `*PREFIX*audioplayer_artists` AA
 						on AA.`id` = AT.`artist_id`
 			 			WHERE  AT.`user_id` = ?
-			 			ORDER BY LOWER(AA.`name`) ASC
+			 			ORDER BY AA.`name` ASC
 			 			";
 		} elseif ($category === 'Genre') {
 			$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_genre`
