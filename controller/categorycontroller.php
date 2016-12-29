@@ -61,7 +61,7 @@ class CategoryController extends Controller {
 		$playlists= $this->getCategoryforUser($category);
 	
 		if(is_array($playlists)){
-			$aPlayLists='';
+			$aPlayLists= array();
 			foreach($playlists as $playinfo){
 				$aPlayLists[]=['info' => $playinfo, 'songids' => $this->getSongIdsForCategory($category,$playinfo['id'])];
 			}
@@ -127,7 +127,7 @@ class CategoryController extends Controller {
 			
 		$stmt =$this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId));
-		$aPlaylists='';
+		$aPlaylists=array();
 		while( $row = $result->fetchRow()) {
 			$bg = $this->genColorCodeFromText(trim($row['name']),40,8);
 			$row['backgroundColor']=$bg;
@@ -135,10 +135,10 @@ class CategoryController extends Controller {
 			$aPlaylists[]=$row;
 		}
 		
-		if(is_array($aPlaylists)){
-			return $aPlaylists;
-		}else{
+		if(empty($aPlaylists)){
 			return false;
+		}else{
+			return  $aPlaylists;
 		}
 	}
 	

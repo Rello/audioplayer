@@ -253,7 +253,7 @@ class MusicController extends Controller {
 			
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId));
-		$aSongs='';
+		$aSongs=array();
 		
 		while( $row = $result->fetchRow()) {
 			$file_not_found = false;
@@ -275,10 +275,10 @@ class MusicController extends Controller {
 				$this->deleteFromDB($row['id'],$row['album_id'],$row['artist_id'],$row['file_id']);
 			}	
 		}
-		if(is_array($aSongs)){
-			return $aSongs;
-		}else{
+		if(empty($aSongs)){
 			return false;
+		}else{
+			return $aSongs;
 		}
 	}
 
