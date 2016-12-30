@@ -614,9 +614,6 @@ Audios.prototype.loadCategory = function(category){
 										}
 									});
 								}
-								var spanPlaylistInfo=$('<span/>')
-								.attr('class','info-cover').css({'background-color':el.info.backgroundColor,'color':el.info.color})
-								.text(el.info.name.substring(0, 1));
 								
 								var spanName=$('<span/>')
 								.attr({'data-plid':el.info.id,'class':'pl-name'})
@@ -628,7 +625,6 @@ Audios.prototype.loadCategory = function(category){
 								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.info.name,'data-editid':el.info.id,'title':t('audioplayer','Rename Playlist')}).click($this.renamePlaylist.bind($this));
 								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.info.id,'title':t('audioplayer','Delete Playlist')}).click($this.deletePlaylist.bind($this));
 			
-								//li.append(spanPlaylistInfo);
 								if (category === 'Playlist' ){
 									var spanName=$('<span/>')
 										.attr({'data-plid':el.info.id,'class':'pl-name-play'})
