@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ### Fixed
 - correct arrays and remove obsolete functions [#110](https://github.com/rello/audioplayer/issues/110) (thanks @mc-comanescu)
+- correct ORDER BY syntax for postresql DB [#112](https://github.com/rello/audioplayer/issues/112) (thanks @Turgon37)
 
 ### Removed
 - support for ownCloud 8
