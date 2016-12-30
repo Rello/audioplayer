@@ -192,7 +192,7 @@ class MusicController extends Controller {
 			
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId));
-		$aAlbums='';
+		$aAlbums=array();
 		while( $row = $result->fetchRow()) {
 			$row['artist'] = $this->loadArtistsToAlbum($row['id']);	
 			$row['backgroundColor'] = '#D3D3D3';
@@ -206,11 +206,11 @@ class MusicController extends Controller {
 			}
 			$aAlbums[$row['id']] = $row;
 		}
-		if(is_array($aAlbums)){
+		if(empty($aAlbums)){
+  			return false;
+ 		}else{
 			$aAlbums = $this->sortArrayByFields($aAlbums); 
 			return $aAlbums;
-		}else{
-			return false;
 		}
 	}
 	
@@ -276,9 +276,9 @@ class MusicController extends Controller {
 			}	
 		}
 		if(empty($aSongs)){
-			return false;
-		}else{
-			return $aSongs;
+  			return false;
+ 		}else{
+ 			return $aSongs;
 		}
 	}
 
