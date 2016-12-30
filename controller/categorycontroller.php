@@ -2,8 +2,7 @@
 /**
  * ownCloud - Audio Player
  *
- * @author Sebastian Doell
- * @copyright 2015 sebastian doell sebastian@libasys.de
+ * @author Marcel Scherello
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -129,16 +128,13 @@ class CategoryController extends Controller {
 		$result = $stmt->execute(array($this->userId));
 		$aPlaylists=array();
 		while( $row = $result->fetchRow()) {
-			$bg = $this->genColorCodeFromText(trim($row['name']),40,8);
-			$row['backgroundColor']=$bg;
-			$row['color']=$this->generateTextColor($bg);
 			$aPlaylists[]=$row;
 		}
 		
 		if(empty($aPlaylists)){
-			return false;
-		}else{
-			return  $aPlaylists;
+  			return false;
+ 		} else {
+ 			return  $aPlaylists;
 		}
 	}
 	
@@ -214,70 +210,7 @@ class CategoryController extends Controller {
 			//$aTracks[]=$row['id'];
 			$aTracks[]=$row;
 		}
-		
-		
 		return $aTracks;
-		
 	}
-	
-	private function generateTextColor($calendarcolor) {
-		if(substr_count($calendarcolor, '#') === 1) {
-			$calendarcolor = substr($calendarcolor,1);
-		}
-		$red = hexdec(substr($calendarcolor,0,2));
-		$green = hexdec(substr($calendarcolor,2,2));
-		$blue = hexdec(substr($calendarcolor,4,2));
-		//recommendation by W3C
-		$computation = ((($red * 299) + ($green * 587) + ($blue * 114)) / 1000);
-		return ($computation > 130)?'#000000':'#FAFAFA';
-	}
-	
-	
-	 /**
-     * genColorCodeFromText method
-     *
-     * Outputs a color (#000000) based Text input
-     *
-     * (https://gist.github.com/mrkmg/1607621/raw/241f0a93e9d25c3dd963eba6d606089acfa63521/genColorCodeFromText.php)
-     *
-     * @param String $text of text
-     * @param Integer $min_brightness: between 0 and 100
-     * @param Integer $spec: between 2-10, determines how unique each color will be
-     * @return string $output
-	  * 
-	  */
-	  
-	 private function genColorCodeFromText($text, $min_brightness = 100, $spec = 10){
-        // Check inputs
-        if(!is_int($min_brightness)) throw new \Exception("$min_brightness is not an integer");
-        if(!is_int($spec)) throw new \Exception("$spec is not an integer");
-        if($spec < 2 or $spec > 10) throw new Exception("$spec is out of range");
-        if($min_brightness < 0 or $min_brightness > 255) throw new \Exception("$min_brightness is out of range");
-
-        $hash = md5($text);  //Gen hash of text
-        $colors = array();
-        for($i=0; $i<3; $i++) {
-            //convert hash into 3 decimal values between 0 and 255
-            $colors[$i] = max(array(round(((hexdec(substr($hash, $spec * $i, $spec))) / hexdec(str_pad('', $spec, 'F'))) * 255), $min_brightness));
-        }
-
-        if($min_brightness > 0) {
-            while(array_sum($colors) / 3 < $min_brightness) {
-                for($i=0; $i<3; $i++) {
-                    //increase each color by 10
-                    $colors[$i] += 10;
-                }
-            }
-        }
-
-        $output = '';
-        for($i=0; $i<3; $i++) {
-            //convert each color to hex and append to output
-            $output .= str_pad(dechex($colors[$i]), 2, 0, STR_PAD_LEFT);
-        }
-
-        return '#'.$output;
-    }
-	
 	
 }
