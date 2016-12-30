@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+### Fixed
+- correct arrays and remove obsolete functions [#110](https://github.com/rello/audioplayer/issues/110) (thanks @mc-comanescu)
+
 ### Removed
 - support for ownCloud 8
 - support for PHP <5.6
