@@ -2,13 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-### Fixed
-- correct arrays and remove obsolete functions [#110](https://github.com/rello/audioplayer/issues/110) (thanks @mc-comanescu)
-- correct ORDER BY syntax for postresql DB [#112](https://github.com/rello/audioplayer/issues/112) (thanks @Turgon37)
-
 ### Removed
 - support for ownCloud 8
 - support for PHP <5.6
+
+### Fixed
+- correct arrays and remove obsolete functions (thanks @[mc-comanescu](https://github.com/mc-comanescu)) [#110](https://github.com/rello/audioplayer/issues/110)
+- correct ORDER BY syntax for PostgreSQL database (thanks @[Turgon37](https://github.com/turgon37)) [#112](https://github.com/rello/audioplayer/issues/112)
 
 ## 1.4.0 - 2016-12-15
 ### Added
