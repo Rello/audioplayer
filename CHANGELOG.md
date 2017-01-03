@@ -71,7 +71,7 @@ All notable changes to this project will be documented in this file.
 - cover art crop box more flexible
 
 ### Fixed
-- wrong spinning wheel location in css
+- wrong spinning wheel location in CSS
 - album transparency [#44](https://github.com/rello/audioplayer/issues/44)
 
 ## 1.1.0 - 2016-08-24
