@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 ### Added
-- pl translation from @[andypl78](https://github.com/@andypl78) [#105](https://github.com/rello/audioplayer/issues/105)
+- pl translation from @[andypl78](https://github.com/andypl78) [#105](https://github.com/rello/audioplayer/issues/105)
 
 ### Removed
 - support for ownCloud 8
