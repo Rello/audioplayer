@@ -45,5 +45,6 @@
 "Search for audio files in " : "Wyszukiwanie plików audio w ",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "To ustawienie określa folder, który jest skanowany w poszukiwaniu plików audio. Bez wyboru cały folder z danymi jest skanowany.",
 "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "Aby wykłuczyć folder trzeba utworzyć plik .noaudio wewnątrz tego folderu. Jest to konieczne także w podfolderach by je także wykluczyć.",
-"Folders" :"Foldery"
+"Folders" :"Foldery",
+"Genres" : "Gatunki"
 },"pluralForm":""}
