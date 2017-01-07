@@ -30,6 +30,7 @@ use \OCP\IRequest;
 use \OCP\IL10N;
 use \OCP\IDb;
 use OCP\Share\IManager;
+use \OCP\IConfig;
 
 /**
  * Controller class for main page.
@@ -49,13 +50,15 @@ class MusicController extends Controller {
 			$userId, 
 			IL10N $l10n, 
 			IDb $db,
-			IManager $shareManager
+			IManager $shareManager,
+			IConfig $config
 		) {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
 		$this->shareManager = $shareManager;
+		$this->config = $config;
 	}
 	/**
 	*@PublicPage
@@ -418,5 +421,11 @@ class MusicController extends Controller {
 		return $data;
 	}
 
-		
+	/*
+	 * Get the type of database backend used by cloud instance
+	 * @return string the database type
+	 */
+	private function getDbType() {
+		return $this->config->getSystemValue('dbtype');
+	}
 }
