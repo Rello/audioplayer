@@ -289,7 +289,7 @@ class MusicController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public  function searchProperties($searchquery){
-		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?) OR `year` LIKE ?) AND `user_id` = ?";
+		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?) OR `year`" . ($this->getDbType() == 'pgsql' ? "::varchar" : "") . " LIKE ?) AND `user_id` = ?";
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', '%'.addslashes($searchquery).'%', $this->userId));
 		$aAlbum ='';
