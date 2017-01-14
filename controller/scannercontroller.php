@@ -572,7 +572,7 @@ class ScannerController extends Controller {
 				}
 								
 				$artist = (string) $this->l10n->t('Unknown');
-				if(isset($ThisFileInfo['comments']['artist'][0])){
+				if(isset($ThisFileInfo['comments']['artist'][0]) and rawurlencode($ThisFileInfo['comments']['artist'][0]) !== '%FF%FE'){
 					$artist=$ThisFileInfo['comments']['artist'][0];
 				}
 				$iArtistId= $this->writeArtistToDB($artist);
@@ -584,7 +584,7 @@ class ScannerController extends Controller {
 				# if all the same - display it as album artist
 				# if different track-artists, display "various"
 				# if Album Artist is maintained
-				if(isset($ThisFileInfo['comments']['band'][0])){
+				if(isset($ThisFileInfo['comments']['band'][0]) and rawurlencode($ThisFileInfo['comments']['band'][0]) !== '%FF%FE'){
 					$album_artist=$ThisFileInfo['comments']['band'][0];
 					$iAlbumArtistId= $this->writeArtistToDB($album_artist);
 					$iAlbumId = $this->writeAlbumToDB($album,(int)$year,$iAlbumArtistId);
@@ -593,7 +593,7 @@ class ScannerController extends Controller {
 				}
 				
 				$name = $audio->getName();
-				if(isset($ThisFileInfo['comments']['title'][0])){
+				if(isset($ThisFileInfo['comments']['title'][0]) and rawurlencode($ThisFileInfo['comments']['title'][0]) !== '%FF%FE'){
 					$name=$ThisFileInfo['comments']['title'][0];
 				}
 				
