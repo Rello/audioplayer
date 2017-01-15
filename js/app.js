@@ -514,6 +514,10 @@ Audios.prototype.loadAlbums = function(){
 				 		$.each(songs[album.id],function(ii,songs){
 				 			aSongs[ii] = $this.loadSongsRow(songs, album.name);
 				 		});
+						var li = $('<li/>');
+						var spanNr = $('<span/>').addClass('number').text('\u00A0');
+						li.append(spanNr);
+						aSongs.push(li);
 			 		}else{
 			 			console.warn('Could not find songs for album:', album.name, album);
 			 		}
