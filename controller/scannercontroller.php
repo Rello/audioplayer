@@ -403,10 +403,7 @@ class ScannerController extends Controller {
 						$returnData['imgsrc']='';
 						$returnData['prefcolor'] = '';
 						if($pImgMime !== '' && $addCoverToAlbum === 'true'){
-							$getDominateColor = $this->getDominateColorOfImage($imgString);
-							$this->writeCoverToAlbum($newAlbumId,$imgString,$getDominateColor);
-							
-							$returnData['prefcolor'] = 'rgba('.$getDominateColor['red'].','.$getDominateColor['green'].','.$getDominateColor['blue'].',0.7)';
+							$this->writeCoverToAlbum($newAlbumId,$imgString,'');
 							$returnData['imgsrc'] = 'data:image/jpg;base64,'.$imgString;
 						}
 					
@@ -701,14 +698,9 @@ class ScannerController extends Controller {
     	$stmtCount = $this->db->prepareQuery( 'SELECT `cover` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 		$resultCount = $stmtCount->execute(array ($iAlbumId, $this->userId));
 		$row = $resultCount->fetchRow();
-		if($row['cover'] === null){
-			$aBgColor=json_encode($aBgColor);
-			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?' );
-			$result = $stmt->execute(array($sImage, $aBgColor, $iAlbumId, $this->userId));
-			return true;
-		}else{
-			return false;
-		}
+		$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?' );
+		$result = $stmt->execute(array($sImage, '', $iAlbumId, $this->userId));
+		return true;
     }
 	
 	/**
