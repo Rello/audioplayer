@@ -510,14 +510,16 @@ Audios.prototype.loadAlbums = function(){
 			 		divSongsContainer.append(listAlbumSelect);
 			 		
 			 		var aSongs=[];
+					var li = $('<li/>');
+					var spanNr = $('<span/>').addClass('number').text('\u00A0');
+					li.append(spanNr);
 			 		if(songs[album.id]){
+			 			var songcounter = 0;
 				 		$.each(songs[album.id],function(ii,songs){
 				 			aSongs[ii] = $this.loadSongsRow(songs, album.name);
+				 			songcounter++;
 				 		});
-						var li = $('<li/>');
-						var spanNr = $('<span/>').addClass('number').text('\u00A0');
-						li.append(spanNr);
-						aSongs.push(li);
+						if (songcounter % 2 !==0) aSongs.push(li); //add a blank row in case of uneven records=>avoid a Chrome bug to strangely split the records across columns
 			 		}else{
 			 			console.warn('Could not find songs for album:', album.name, album);
 			 		}
