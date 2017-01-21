@@ -2,7 +2,7 @@ OC.L10N.register(
     "audioplayer",
     {
  
-	"Add new Songs to playlist" : "Найти и добавить новую музыку",
+	"Add new tracks to library" : "Найти и добавить новую музыку",
 	"Scan for new audio files" : "Найти новые аудиофайлы...",
 	"Sort Playlist" : "Упорядочить список воспроизведения",
 	"Delete Playlist" : "Удалить список воспроизведения",
