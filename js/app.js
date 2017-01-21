@@ -824,7 +824,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		}
 	
  	}else{
- 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audioplayer','No Songs found in current Playlist! Add new Songs per Drag & Drop from album view')+'</span>');
+ 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audioplayer','Add new tracks to playlist by drag and drop from album view')+'</span>');
  	}
 	}else{
 		$this.AlbumContainer.hide();
