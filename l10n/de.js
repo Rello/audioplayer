@@ -7,7 +7,7 @@ OC.L10N.register(
 	"Sort Playlist" : "Wiedergabeliste sortieren",
 	"Delete Playlist" : "Wiedergabeliste löschen",
 	"Delete Song from Playlist" :"Titel von der Playlist löschen",
-	"No Songs found in current Playlist! Add new Songs per Drag & Drop from album view" : "Keine Titel für ausgewählte Wiedergabeliste gefunden! Fügen Sie per Drag & Drop von der Albenansicht neue Titel hinzu",
+	"Add new tracks to playlist by drag and drop from album view" : "Keine Titel für ausgewählte Wiedergabeliste gefunden! Fügen Sie per Drag & Drop von der Albenansicht neue Titel hinzu",
 	"No Playlist selected!" : "Keine Wiedergabeliste ausgewählt!",
 	"Sort modus active" : "Bearbeitung aktiviert",
 	"Delete playlist success!" : "Wiedergabeliste wurde erfolgreich gelöscht!",
