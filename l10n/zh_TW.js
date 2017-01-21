@@ -1,7 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
-	"Add new Songs to playlist" : "搜尋音樂",
+	"Add new tracks to library" : "搜尋音樂",
 	"Scan for new audio files" : "搜尋新的音樂",
 	"Sort Playlist" : "播放清單排序",
 	"Delete Playlist" : "刪除播放清單",
