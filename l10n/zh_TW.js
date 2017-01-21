@@ -6,7 +6,7 @@ OC.L10N.register(
 	"Sort Playlist" : "播放清單排序",
 	"Delete Playlist" : "刪除播放清單",
 	"Delete Song from Playlist" :"刪除音樂",
-	"No Songs found in current Playlist! Add new Songs per Drag & Drop from album view" : "播放清單內無歌曲，請由專輯視窗中拖曳音樂至播放清單",
+	"Add new tracks to playlist by drag and drop from album view" : "播放清單內無歌曲，請由專輯視窗中拖曳音樂至播放清單",
 	"No Playlist selected!" : "請選擇播放清單",
 	"Sort modus active" : "排序",
 	"Delete playlist success!" : "成功刪除播放清單",
