@@ -536,20 +536,16 @@ Audios.prototype.loadAlbums = function(){
 							return false;
 						  });
 			 		});
-			 		divSongContainer[i].append(aClose);
-			 		
-			 		
-				 });
-				 
-				  $this.AlbumContainer.append(divSongContainer);
-				  
-				  $this.PlaylistSongs();
-				
+			 		divSongContainer[i].append(aClose);			 					 		
+				 });				 
+				$this.AlbumContainer.append(divSongContainer);				  
+				$this.PlaylistSongs();				
 			}else{
-				  $this.AlbumContainer.show();
-				  $this.AlbumContainer.html('<span class="no-songs-found"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new Songs to playlist')+'</span>');
-				  $('#app-navigation').removeClass('mp3_hide');
-
+				$this.AlbumContainer.show();
+				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' Audio Player</span>');
+				$this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new Songs to playlist')+'</span>');
+				$this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/Rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
+				$('#app-navigation').removeClass('mp3_hide');
 			}			
 		}
 	});
@@ -1584,6 +1580,9 @@ Audios.prototype.get_uservalue = function(user_type, callback) {
 					callback($this.category_selectors);
 				}else if(jsondata.status === 'success' && user_type === 'navigation' && jsondata.value === 'true') {
 					$('#app-navigation-toggle_alternative').trigger( "click" );
+				}else if(jsondata.status === 'false' && user_type === 'navigation') {
+					$this.category_selectors[0] = 'Album';
+					callback($this.category_selectors);
 				}
 			}
 		});
