@@ -604,32 +604,30 @@ class ScannerController extends Controller {
 
 				$parentId = $audio->getParent()->getId();
 
-				if(isset($ThisFileInfo['comments']['picture'])){
-					$data=$ThisFileInfo['comments']['picture'][0]['data'];
-					$this->getFolderPicture($iAlbumId,$data);
+				if ($parentId === $parentId_prev AND $folderpicture) {
+					if ($debug) $output->writeln("     Reusing previous folder image");
+					$this->getFolderPicture($iAlbumId,$folderpicture->getContent());
 				} else {
-					if ($parentId !== $parentId_prev) {
-						$folderpicture = false;
-						if ($audio->getParent()->nodeExists('cover.jpg')) {
-							$folderpicture = $audio->getParent()->get('cover.jpg');
-						} elseif ($audio->getParent()->nodeExists('cover.png')) {
-							$folderpicture = $audio->getParent()->get('cover.png');
-						} elseif ($audio->getParent()->nodeExists('folder.jpg')) {
-							$folderpicture = $audio->getParent()->get('folder.jpg');
-						} elseif ($audio->getParent()->nodeExists('folder.png')) {
-							$folderpicture = $audio->getParent()->get('folder.png');
-						}
-						if ($folderpicture) {
-							$this->getFolderPicture($iAlbumId,$folderpicture->getContent());
-							if ($debug) $output->writeln("     Alternative album art: ".$folderpicture->getInternalPath());
-						}
-						$parentId_prev = $parentId;
-					} elseif ($parentId === $parentId_prev AND $folderpicture) {
-						if ($debug) $output->writeln("     Reusing previous folder image");
-						$this->getFolderPicture($iAlbumId,$folderpicture->getContent());
+					$folderpicture = false;
+					if ($audio->getParent()->nodeExists('cover.jpg')) {
+						$folderpicture = $audio->getParent()->get('cover.jpg');
+					} elseif ($audio->getParent()->nodeExists('cover.png')) {
+						$folderpicture = $audio->getParent()->get('cover.png');
+					} elseif ($audio->getParent()->nodeExists('folder.jpg')) {
+						$folderpicture = $audio->getParent()->get('folder.jpg');
+					} elseif ($audio->getParent()->nodeExists('folder.png')) {
+						$folderpicture = $audio->getParent()->get('folder.png');
 					}
+					
+					if ($folderpicture) {
+						$this->getFolderPicture($iAlbumId,$folderpicture->getContent());
+						if ($debug) $output->writeln("     Alternative album art: ".$folderpicture->getInternalPath());
+					} elseif (isset($ThisFileInfo['comments']['picture'])){
+						$data=$ThisFileInfo['comments']['picture'][0]['data'];
+						$this->getFolderPicture($iAlbumId,$data);
+					}					
+					$parentId_prev = $parentId;
 				}
-
 				
 				$playTimeString = '';
 				if(isset($ThisFileInfo['playtime_string'])){
