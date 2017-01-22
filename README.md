@@ -2,7 +2,7 @@
 
 [![License: AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues) [![Stars](https://img.shields.io/github/stars/rello/audioplayer.svg)](https://github.com/rello/audioplayer/stargazers) [![Forks](https://img.shields.io/github/forks/rello/audioplayer.svg)](https://github.com/rello/audioplayer/network)
 
-Audio Player for commonly used formats with a lot of flexibility for all your needs.
+A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support and share player.
 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
