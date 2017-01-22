@@ -1,24 +1,14 @@
 <?php
 /**
- * ownCloud - Audio Player App
+ * Audio Player
  *
- * @author Sebastian Doell
- * @copyright 2015 Sebastian Doell sebastian.doell@owncms.de
-  * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
- * License as published by the Free Software Foundation; either 
- * version 3 of the License, or any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU AFFERO GENERAL PUBLIC LICENSE for more details.
- *  
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * INSPIRED BY http://codesamplez.com/programming/php-html5-video-streaming-tutorial
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the LICENSE.md file.
+ *
+ * @author Marcel Scherello <audioplayer@scherello.de>
+ * @author Sebastian Doell <sebastian@libasys.de>
+ * @copyright 2016-2017 Marcel Scherello
+ * @copyright 2015 Sebastian Doell
  */
  
 namespace OCA\audioplayer;
