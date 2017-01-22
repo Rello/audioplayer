@@ -103,13 +103,13 @@ $(document).ready(function() {
 			OC.addStyle('audioplayer','360player');
 			OC.addStyle('audioplayer','360player-visualization');	
 			
-			//$('#imgframe').css({'width':'450px'});
-			setTimeout(function(){ $('#imgframe').children('img').first().css({'max-width':'250px'}); }, 2000);	
+			setTimeout(function(){ $('.publicpreview').css({'margin-top':'0px'}); }, 2000);	
+			$('#imgframe').css({'max-width':'250px'});
+			$('#imgframe').css({'margin-bottom':'0px'});
 			
 			if( $('#previewSupported').val() !== 'true'){
 				$('#imgframe').hide();
 			}
-			//$('#imgframe').append($('<br style="clear:both;" />'));
 			var fileName=$('#filename').val();
 			fileName = encodeURIComponent(fileName);
 			var audioUrl= OC.generateUrl('apps/audioplayer/getpublicaudiostream{file}?token={token}',{'file':fileName,'token':token},{escape:false});
