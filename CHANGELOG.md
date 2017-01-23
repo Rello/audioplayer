@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## 1.4.1 - 2017-01-2x
 ### Added
 - pl translation from @[andypl78](https://github.com/andypl78) [#105](https://github.com/rello/audioplayer/issues/105)
+- support for PHP 7.1
 
 ### Changed
 - getID3 to 1.9.13-201612181356 [#119](https://github.com/rello/audioplayer/issues/119)
