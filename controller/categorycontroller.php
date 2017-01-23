@@ -132,37 +132,37 @@ class CategoryController extends Controller {
 	private function getSongIdsForCategory($category,$categoryId){
 
 		if($category === 'Artist') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
 			 		WHERE  `AT`.`artist_id` = ? 
 			 		AND `AT`.`user_id` = ?
-			 		ORDER BY `AT`.`title` ASC";
+			 		ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Genre') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
 					WHERE `AT`.`genre_id` = ?  
 					AND `AT`.`user_id` = ?
-					ORDER BY `AT`.`title` ASC";
+					ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Year') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
 					WHERE `AT`.`year` = ? 
 					AND `AT`.`user_id` = ?
-					ORDER BY `AT`.`title` ASC";
+					ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'All') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
 					WHERE `AT`.`id` > ? 
 					AND `AT`.`user_id` = ? 
-					ORDER BY `AT`.`title` ASC";
+					ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Playlist') {
 			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
 					FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
@@ -173,13 +173,13 @@ class CategoryController extends Controller {
 			 		ORDER BY `AP`.`sortorder` ASC
 			 		";
 		} elseif ($category === 'Folder') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
 					WHERE `AT`.`folder_id` = ? 
 					AND `AT`.`user_id` = ?
-					ORDER BY `AT`.`title` ASC";
+					ORDER BY LOWER(`AT`.`title`) ASC";
 		}
 
 		$stmt = $this->db->prepareQuery($SQL);
