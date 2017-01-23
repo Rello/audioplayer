@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - getID3 to 1.9.13-201612181356 [#119](https://github.com/rello/audioplayer/issues/119)
 - search order of cover art [#126](https://github.com/rello/audioplayer/issues/126)
 - padding/&#8203;margin in share player
+- natural sorting for category lists
 
 ### Removed
 - support for ownCloud 8
