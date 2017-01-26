@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - search order of cover art [#126](https://github.com/rello/audioplayer/issues/126)
 - padding/&#8203;margin in share player
 - natural sorting for category lists
+- de + de_DE translations
 
 ### Removed
 - support for ownCloud 8
