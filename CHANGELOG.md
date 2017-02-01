@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
-
+ 
+## Unreleased
+### Added
+- albums to selection [#132](https://github.com/rello/audioplayer/issues/132)
+ 
 ## 1.4.1 - 2017-01-26
 ### Added
 - pl translation from @[andypl78](https://github.com/andypl78) [#105](https://github.com/rello/audioplayer/issues/105)
