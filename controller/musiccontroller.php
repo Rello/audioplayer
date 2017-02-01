@@ -408,5 +408,36 @@ class MusicController extends Controller {
 		return $data;
 	}
 
+	/**
+	*@NoAdminRequired
+	 * @NoCSRFRequired
+	 * 
+	 * 
+	 */
+	public function getCover(){
+		$album=$this->params('album');
+			
+		$SQL="SELECT  `cover`
+				FROM `*PREFIX*audioplayer_albums` 
+			 	WHERE  `user_id` = ? AND `id` = ? 
+			 	";
+			
+		$stmt = $this->db->prepareQuery($SQL);
+		$result = $stmt->execute(array($this->userId, $album));
+		$aAlbums=array();
+		while( $row = $result->fetchRow()) {
+			$cover = $row['cover'];	
+		}
+		header('Content-Type: image/jpg');
+		header('Cache-control: max-age='.(60*60*24*365));
+		header('Expires: '.gmdate(DATE_RFC1123,time()+60*60*24*365));
+		header("Pragma: cache");
+
+		$imageData = base64_decode($cover);
+		$source = imagecreatefromstring($imageData);
+		//$rotate = imagerotate($source, '90', 0); // if want to rotate the image
+		imagejpeg($source);
+		imagedestroy($source);
+	}
 		
 }
