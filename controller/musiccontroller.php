@@ -194,6 +194,7 @@ class MusicController extends Controller {
 			}else{
 				$row['cover'] = 'data:image/jpg;base64,'.$row['cover'];	
 			}
+$row['cover'] = 'x';
 			$aAlbums[$row['id']] = $row;
 		}
 		if(empty($aAlbums)){
