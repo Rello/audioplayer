@@ -36,6 +36,7 @@
 		<select id="category_selector">
 	  		<option value=""selected><?php p($l->t('Selection'));?></option>
  	 		<option value="Playlist"><?php p($l->t('Playlists'));?></option>
+ 	 		<option value="Album"><?php p($l->t('Albums'));?></option>
  	 		<option value="Artist"><?php p($l->t('Artists'));?></option>
  	 		<option value="Genre"><?php p($l->t('Genres'));?></option>
  	 		<option value="Year"><?php p($l->t('Years'));?></option>
