@@ -113,6 +113,12 @@ class CategoryController extends Controller {
 			 			WHERE  AT.`user_id` = ?
 			 			ORDER BY LOWER(FC.`name`) ASC
 			 			";
+		} elseif ($category === 'Album') {
+			$SQL="SELECT  `id`,`name`, LOWER(`name`) AS `lower` 
+						FROM `*PREFIX*audioplayer_albums`
+			 			WHERE  `user_id` = ?
+			 			ORDER BY LOWER(`name`) ASC
+			 			";
 		}	
 			
 		$stmt =$this->db->prepareQuery($SQL);
@@ -179,6 +185,14 @@ class CategoryController extends Controller {
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
 					WHERE `AT`.`folder_id` = ? 
 					AND `AT`.`user_id` = ?
+					ORDER BY LOWER(`AT`.`title`) ASC";
+		} elseif ($category === 'Album') {
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`,LOWER(`AT`.`title`) AS `lower`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
+					WHERE `AB`.`id` = ? 
+					AND `AB`.`user_id` = ?
 					ORDER BY LOWER(`AT`.`title`) ASC";
 		}
 
