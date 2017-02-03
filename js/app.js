@@ -335,11 +335,10 @@ Audios.prototype.buildAlbumRows = function(aAlbums){
 					marginLeft = 15;
 				}
 				
-				
 				 $.each(aAlbums,function(i,album){
 				 	
 				 	if(album.cover === ''){	
-						var addCss='background-color:'+album.backgroundColor+';color:'+album.titlecolor+';';
+						var addCss='background-color: #D3D3D3;color: #333333;';
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
@@ -349,12 +348,10 @@ Audios.prototype.buildAlbumRows = function(aAlbums){
 				 	 divAlbum[i] = $('<div/>').addClass('album').css('margin-left',marginLeft+'px')
 				 	 .attr({
 				 	 	'data-album':'album-'+album.id,
-				 	 	'data-bgcolor':album.backgroundColor,
-				 	 	'data-color':album.titlecolor
+				 	 	'data-bgcolor':'#D3D3D3',
+				 	 	'data-color':'#333333'
 				 	 }).click($this.AlbumClickHandler);
-				 	
-				 	 
-				 	 
+				 					 	 
 				 	var divAlbumCover = $('<div/>').addClass('albumcover').attr({
 				 		'data-album':'album-'+album.id,
 				 		'style':addCss
@@ -413,7 +410,7 @@ Audios.prototype.loadAlbums = function(){
 			 		divSongContainer[i] .append(divSongContainerInner);
 			 		
 			 		if(album.cover === ''){	
-						var addCss='background-color:'+album.backgroundColor+';color:'+album.titlecolor+';';
+						var addCss='background-color: #D3D3D3;color: #333333;';
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
@@ -478,17 +475,7 @@ Audios.prototype.loadAlbums = function(){
 			 		
 			 		divSongContainerInner.append(h2SongHeader);
 			 		
-			 		var aYear='';
-			 		if(album.year != 0){
-			 			aYear= ' (' +album.year+')';
-			 		}
-			 		var aGenre='';
-			 		if(album.genrename !== null){
-			 			aGenre= ' /' +album.genrename;
-			 		}
-			 		var h3SongSubHeader=$('<h3/>').text(album.artist+aYear+aGenre);
 			 		divSongContainerInner.append('<br/>');
-			 		//divSongContainerInner.append(h3SongSubHeader);
 			 		var divSongsContainer = $('<div/>').addClass('songlist albumwrapper');
 			 		if($this.AlbumContainer.width() < 850){
 				 		divSongsContainer.addClass('one-column');
@@ -1004,7 +991,6 @@ Audios.prototype.editSong = function(evt){
 													$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
 													 $this.loadAlbums();
 											}
-											
 											if(jsondata.data.imgsrc != ''){
 												$('.albumcover[data-album="album-'+jsondata.data.albumid+'"]')
 												.css({
@@ -1592,6 +1578,43 @@ Audios.prototype.set_uservalue = function(user_type,user_value) {
   		}
 };
 
+Audios.prototype.get_cover = function(user_type, callback) {
+    	$.ajax({
+			type : 'GET',
+			url : OC.generateUrl('apps/audioplayer/getcover'),
+			data : {'album':'280'},
+			success : function(jsondata) {
+				//alert(jsondata);
+			}
+		});
+};
+
+Audios.prototype.sort_playlist = function(evt) {
+		var column = $(evt.target).attr('class');
+
+    var elems = $('#individual-playlist').children('li').get();
+    elems.sort(function(a,b){
+        return ($(b).data(column)) < ($(a).data(column)) ? 1 : -1; 
+    });
+    $('#individual-playlist').append(elems);
+
+    var elems = $('#activePlaylist').children('li').get();
+    elems.sort(function(a,b){
+        return ($(b).data(column)) < ($(a).data(column)) ? 1 : -1; 
+    });
+    $('#activePlaylist').append(elems);
+		
+//		$("#individual-playlist li").sort(sort_li1).appendTo('#individual-playlist');
+//		function sort_li1(a1, b1){
+//    		return ($(b1).data(column)) < ($(a1).data(column)) ? 1 : -1;    
+//		}
+//		$("#activePlaylist li").sort(sort_li2).appendTo('#activePlaylist');
+//		function sort_li2(a2, b2){
+//		    return ($(b2).data(column)) < ($(a2).data(column)) ? 1 : -1;    
+//		}
+//$('.header-title').click($this.sort_playlist.bind($this));
+};
+
 Audios.prototype.check_timer = function() {
     	$.ajax({
 			type : 'GET',
@@ -1902,6 +1925,10 @@ $(document).ready(function() {
   		}
 	});
 
+	$('.header-title').click($this.sort_playlist.bind($this));
+	$('.header-interpret').click($this.sort_playlist.bind($this));
+	$('.header-album').click($this.sort_playlist.bind($this));
+	
 	var timer = window.setTimeout(function() {$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());}, 1000);
 	
 });
