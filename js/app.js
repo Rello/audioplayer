@@ -342,7 +342,7 @@ Audios.prototype.buildAlbumRows = function(aAlbums){
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
-						var addCss='background-image:url(/owncloud/apps/audioplayer/getcover/'+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+						var addCss='background-image:url('+OC.generateUrl('apps/audioplayer/getcover/')+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 					}
 					
 				 	 divAlbum[i] = $('<div/>').addClass('album').css('margin-left',marginLeft+'px')
@@ -414,7 +414,7 @@ Audios.prototype.loadAlbums = function(){
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
-						var addCss='background-image:url(/owncloud/apps/audioplayer/getcover/'+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+						var addCss='background-image:url('+OC.generateUrl('apps/audioplayer/getcover/')+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 					}
 			 		
 			 		var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({
