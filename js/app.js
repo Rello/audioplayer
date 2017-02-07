@@ -397,7 +397,7 @@ Audios.prototype.loadAlbums = function(){
 			 
 			 $this.buildAlbumRows($this.albums);
 			
-			  var divSongContainer = [];
+			 var divSongContainer = [];
 			  	 
 			 $.each($this.albums,function(i,album){
 			 		//Songs into hidden div
