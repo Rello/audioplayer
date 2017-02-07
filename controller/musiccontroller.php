@@ -166,6 +166,10 @@ class MusicController extends Controller {
 		$response = new JSONResponse();
 		$response -> setData($result);
 		return $response;
+//		//ob_start('ob_gzhandler');
+//		header('Content-type: application/json');
+//		echo json_encode($result);
+//		//ob_end_flush();
 	}
 	
 	/**
@@ -174,7 +178,7 @@ class MusicController extends Controller {
 	 */
 	public function loadAlbums(){
 			
-		$SQL="SELECT  `AA`.`id`,`AA`.`name`,`AA`.`year`,`AA`.`cover` 
+		$SQL="SELECT  `AA`.`id`,`AA`.`name`,`AA`.`cover` 
 						FROM `*PREFIX*audioplayer_albums` `AA`
 			 			WHERE  `AA`.`user_id` = ?
 			 			ORDER BY `AA`.`name` ASC
@@ -234,7 +238,8 @@ class MusicController extends Controller {
     }
 	
 	public function loadSongs(){
-		$SQL="SELECT  `AT`.`id`,`AT`.`title`,`AT`.`number`,`AT`.`album_id`,`AT`.`artist_id`,`AT`.`length`,`AT`.`file_id`,`AT`.`bitrate`,`AT`.`mimetype`,`AA`.`name` AS `artistname` FROM `*PREFIX*audioplayer_tracks` `AT`
+//		$SQL="SELECT  `AT`.`id`,`AT`.`title`,`AT`.`number`,`AT`.`album_id`,`AT`.`artist_id`,`AT`.`length`,`AT`.`file_id`,`AT`.`bitrate`,`AT`.`mimetype`,`AA`.`name` AS `artistname` FROM `*PREFIX*audioplayer_tracks` `AT`
+		$SQL="SELECT  `AT`.`id`,`AT`.`title`,`AT`.`number`,`AT`.`album_id`,`AT`.`length`,`AT`.`file_id`,`AT`.`mimetype`,`AA`.`name` AS `artistname` FROM `*PREFIX*audioplayer_tracks` `AT`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 			 			WHERE  `AT`.`user_id` = ?
 			 			ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC
