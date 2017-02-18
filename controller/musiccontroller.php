@@ -20,6 +20,9 @@ use \OCP\IRequest;
 use \OCP\IL10N;
 use \OCP\IDb;
 use OCP\Share\IManager;
+use \OCP\AppFramework\Http\Response;
+use \OCP\AppFramework\Http;
+use \OCA\audioplayer\Http\ImageResponse;
 
 /**
  * Controller class for main page.
@@ -166,10 +169,11 @@ class MusicController extends Controller {
 		$response = new JSONResponse();
 		$response -> setData($result);
 		return $response;
-//		//ob_start('ob_gzhandler');
+//		ob_start('ob_gzhandler');
 //		header('Content-type: application/json');
 //		echo json_encode($result);
-//		//ob_end_flush();
+//		ob_end_flush();
+//		die();
 	}
 	
 	/**
@@ -248,6 +252,7 @@ class MusicController extends Controller {
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId));
 		$aSongs=array();
+		$linkToRoute = \OC::$server->getURLGenerator()->linkToRoute('audioplayer.music.getAudioStream');
 		
 		while( $row = $result->fetchRow()) {
 			$file_not_found = false;
@@ -262,11 +267,11 @@ class MusicController extends Controller {
 				if ($row['mimetype'] === 'audio/x-mpegurl') {
 					$row['link'] = rawurlencode($row['title']);
 				}else{	
-					$row['link'] = \OC::$server->getURLGenerator()->linkToRoute('audioplayer.music.getAudioStream').'?file='.rawurlencode($path);
+					$row['link'] = $linkToRoute.'?file='.rawurlencode($path);
 				}	
 				$aSongs[$row['album_id']][] = $row;
 			}else{
-				$this->deleteFromDB($row['id'],$row['album_id'],$row['artist_id'],$row['file_id']);
+				$this->deleteFromDB($row['id'],$row['album_id']);
 			}	
 		}
 		if(empty($aSongs)){
@@ -387,7 +392,7 @@ class MusicController extends Controller {
 		}
 	}
 	
-	private function deleteFromDB($Id,$iAlbumId,$iArtistId,$fileId){
+	private function deleteFromDB($Id,$iAlbumId){
 		
 		$stmtCountAlbum = $this->db->prepareQuery( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
 		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
@@ -438,16 +443,16 @@ class MusicController extends Controller {
 			}
 		}
 		
-		header('Content-Type: image/jpg');
-		header('Cache-control: max-age='.(60*60*24*365));
-		header('Expires: '.gmdate(DATE_RFC1123,time()+60*60*24*365));
-		header("Pragma: cache");
-
-		$imageData = base64_decode($cover);
-		$source = imagecreatefromstring($imageData);
-		imagejpeg($source);
-		imagedestroy($source);
-	}
-
+		$etag = md5($cover);
 		
+		//if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+        //	if (str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == $etag) {
+        //    	header('HTTP/1.1 304 Not Modified');
+        //    	//$response->setStatus(Http::STATUS_NOT_MODIFIED);
+        //    	exit();
+       	//	}
+    	//}
+		$imageData = base64_decode($cover);
+		return new ImageResponse(array('mimetype' => 'image/jpg','content' => $imageData));
+	}
 }
