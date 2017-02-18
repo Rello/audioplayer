@@ -309,7 +309,8 @@ Audios.prototype.AlbumClickHandler = function(event){
 
 Audios.prototype.buildAlbumRows = function(aAlbums){
 				var divAlbum = [];
-				
+				var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+
 				 var counter=0;
 				 var maxNeben = 5;
 				 var marginLeft=20;
@@ -342,7 +343,7 @@ Audios.prototype.buildAlbumRows = function(aAlbums){
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
-						var addCss='background-image:url('+OC.generateUrl('apps/audioplayer/getcover/')+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+						var addCss='background-image:url('+getcoverUrl+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 					}
 					
 				 	 divAlbum[i] = $('<div/>').addClass('album').css('margin-left',marginLeft+'px')
@@ -398,6 +399,7 @@ Audios.prototype.loadAlbums = function(){
 			 $this.buildAlbumRows($this.albums);
 			
 			 var divSongContainer = [];
+			 var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
 			  	 
 			 $.each($this.albums,function(i,album){
 			 		//Songs into hidden div
@@ -414,7 +416,7 @@ Audios.prototype.loadAlbums = function(){
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
-						var addCss='background-image:url('+OC.generateUrl('apps/audioplayer/getcover/')+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+						var addCss='background-image:url('+getcoverUrl+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 					}
 			 		
 			 		var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({
@@ -1925,11 +1927,10 @@ $(document).ready(function() {
   		}
 	});
 
-	$('.header-title').click($this.sort_playlist.bind($this));
-	$('.header-interpret').click($this.sort_playlist.bind($this));
-	$('.header-album').click($this.sort_playlist.bind($this));
+	//$('.header-title').click($this.sort_playlist.bind($this));
+	//$('.header-interpret').click($this.sort_playlist.bind($this));
+	//$('.header-album').click($this.sort_playlist.bind($this));
 	
 	var timer = window.setTimeout(function() {$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());}, 1000);
 	
 });
-
