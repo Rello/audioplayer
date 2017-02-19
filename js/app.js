@@ -532,6 +532,7 @@ Audios.prototype.loadAlbums = function(){
 
 Audios.prototype.loadSongsRow = function(elem,albumName){
 	
+				var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream');
 				var li = $('<li/>').attr({
 					'data-id' : elem.id,
 					'data-fileid' : elem.file_id,
@@ -546,7 +547,7 @@ Audios.prototype.loadSongsRow = function(elem,albumName){
 				
 				var spanNr = $('<span/>').addClass('number').text(elem.number);
 				li.append(spanNr);
-				var link = $('<a/>').addClass('link-full').attr('href',elem.link);
+				var link = $('<a/>').addClass('link-full').attr('href', getAudiostreamUrl + elem.link);
 				var spanTitle = $('<span/>').attr({'data-title':elem.title,'title':elem.title}).addClass('title').text(elem.title);
 				link.append(spanTitle);
 				li.append(link);
