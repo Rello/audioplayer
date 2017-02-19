@@ -443,15 +443,14 @@ class MusicController extends Controller {
 			}
 		}
 		
-		$etag = md5($cover);
-		
+		//$etag = md5($cover);	
 		//if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
-        //	if (str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == $etag) {
-        //    	header('HTTP/1.1 304 Not Modified');
-        //    	//$response->setStatus(Http::STATUS_NOT_MODIFIED);
-        //    	exit();
-       	//	}
-    	//}
+        	//if (str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == $etag) {
+            	//header('HTTP/1.1 304 Not Modified');
+            	//$response->setStatus(Http::STATUS_NOT_MODIFIED);
+            	//exit();
+       		//}
+    		//}
 		$imageData = base64_decode($cover);
 		return new ImageResponse(array('mimetype' => 'image/jpg','content' => $imageData));
 	}
