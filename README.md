@@ -24,7 +24,7 @@ A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support
 MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
 
 ### Supported Browsers
-Latest versions of Chrome, Firefox, and Safari.  
+Latest versions of Chrome, Firefox, and Safari. Mobile browsers may be restricted in functionality and handling.  
 Internet Explorer and Edge are not supported.
 
 ### Languages
