@@ -97,7 +97,7 @@ class AudioStream {
 				fseek($this -> stream, $this -> iStart);
 			}
 			header('HTTP/1.1 206 Partial Content');
-			header("Content-Length: " . $length);
+//			header("Content-Length: " . $length);
 			header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 			//\OCP\Util::writeLog('audioplayer','SEQ:'.$this->iStart."-".$this->iEnd."/".$this->iSize.'length:'.$length,\OCP\Util::DEBUG);
 		} else {
