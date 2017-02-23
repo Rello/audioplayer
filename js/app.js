@@ -309,7 +309,8 @@ Audios.prototype.AlbumClickHandler = function(event){
 
 Audios.prototype.buildAlbumRows = function(aAlbums){
 				var divAlbum = [];
-				
+				var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+
 				 var counter=0;
 				 var maxNeben = 5;
 				 var marginLeft=20;
@@ -335,26 +336,23 @@ Audios.prototype.buildAlbumRows = function(aAlbums){
 					marginLeft = 15;
 				}
 				
-				
 				 $.each(aAlbums,function(i,album){
 				 	
 				 	if(album.cover === ''){	
-						var addCss='background-color:'+album.backgroundColor+';color:'+album.titlecolor+';';
+						var addCss='background-color: #D3D3D3;color: #333333;';
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
-						var addCss='background-image:url('+album.cover+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+						var addCss='background-image:url('+getcoverUrl+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 					}
 					
 				 	 divAlbum[i] = $('<div/>').addClass('album').css('margin-left',marginLeft+'px')
 				 	 .attr({
 				 	 	'data-album':'album-'+album.id,
-				 	 	'data-bgcolor':album.backgroundColor,
-				 	 	'data-color':album.titlecolor
+				 	 	'data-bgcolor':'#D3D3D3',
+				 	 	'data-color':'#333333'
 				 	 }).click($this.AlbumClickHandler);
-				 	
-				 	 
-				 	 
+				 					 	 
 				 	var divAlbumCover = $('<div/>').addClass('albumcover').attr({
 				 		'data-album':'album-'+album.id,
 				 		'style':addCss
@@ -400,7 +398,8 @@ Audios.prototype.loadAlbums = function(){
 			 
 			 $this.buildAlbumRows($this.albums);
 			
-			  var divSongContainer = [];
+			 var divSongContainer = [];
+			 var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
 			  	 
 			 $.each($this.albums,function(i,album){
 			 		//Songs into hidden div
@@ -413,11 +412,11 @@ Audios.prototype.loadAlbums = function(){
 			 		divSongContainer[i] .append(divSongContainerInner);
 			 		
 			 		if(album.cover === ''){	
-						var addCss='background-color:'+album.backgroundColor+';color:'+album.titlecolor+';';
+						var addCss='background-color: #D3D3D3;color: #333333;';
 						var addDescr=album.name.substring(0,1);	
 					}else{
 						var addDescr='';
-						var addCss='background-image:url('+album.cover+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+						var addCss='background-image:url('+getcoverUrl+album.id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 					}
 			 		
 			 		var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({
@@ -478,17 +477,7 @@ Audios.prototype.loadAlbums = function(){
 			 		
 			 		divSongContainerInner.append(h2SongHeader);
 			 		
-			 		var aYear='';
-			 		if(album.year != 0){
-			 			aYear= ' (' +album.year+')';
-			 		}
-			 		var aGenre='';
-			 		if(album.genrename !== null){
-			 			aGenre= ' /' +album.genrename;
-			 		}
-			 		var h3SongSubHeader=$('<h3/>').text(album.artist+aYear+aGenre);
 			 		divSongContainerInner.append('<br/>');
-			 		//divSongContainerInner.append(h3SongSubHeader);
 			 		var divSongsContainer = $('<div/>').addClass('songlist albumwrapper');
 			 		if($this.AlbumContainer.width() < 850){
 				 		divSongsContainer.addClass('one-column');
@@ -543,6 +532,7 @@ Audios.prototype.loadAlbums = function(){
 
 Audios.prototype.loadSongsRow = function(elem,albumName){
 	
+				var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream');
 				var li = $('<li/>').attr({
 					'data-id' : elem.id,
 					'data-fileid' : elem.file_id,
@@ -557,7 +547,7 @@ Audios.prototype.loadSongsRow = function(elem,albumName){
 				
 				var spanNr = $('<span/>').addClass('number').text(elem.number);
 				li.append(spanNr);
-				var link = $('<a/>').addClass('link-full').attr('href',elem.link);
+				var link = $('<a/>').addClass('link-full').attr('href', getAudiostreamUrl + elem.link);
 				var spanTitle = $('<span/>').attr({'data-title':elem.title,'title':elem.title}).addClass('title').text(elem.title);
 				link.append(spanTitle);
 				li.append(link);
@@ -587,13 +577,10 @@ Audios.prototype.loadCategory = function(category){
 					if(jsondata.status == 'success'){
 						var playlistsdata=jsondata.data;
 						if(playlistsdata !== 'nodata'){
-							var aPlaylists=[];
+							var aPlaylists = [];
 							
-							$(playlistsdata.playlists).each(function(i,el){
-
-								$this.aSongIdsCategory[el.info.id]=el.songids;
-
-								var li = $('<li/>').attr({'data-id':el.info.id,'data-name':el.info.name});
+							$(playlistsdata).each(function(i,el){
+								var li = $('<li/>').attr({'data-id':el.id,'data-name':el.name});
 								if (category === 'Playlist' ){
 									li.droppable({
 										activeClass : "activeHover",
@@ -608,19 +595,19 @@ Audios.prototype.loadCategory = function(category){
 								}
 								
 								var spanName=$('<span/>')
-								.attr({'data-plid':el.info.id,'class':'pl-name'})
-								.text(el.info.name)
+								.attr({'data-plid':el.id,'class':'pl-name'})
+								.text(el.name)
 								.click($this.loadIndividualCategory.bind($this));
 								
-								var span=$('<span/>').attr('class','counter').text(el.songids.length);
-								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.info.id,'title':t('audioplayer','Sort Playlist')}).click($this.sortPlaylist.bind($this));
-								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.info.name,'data-editid':el.info.id,'title':t('audioplayer','Rename Playlist')}).click($this.renamePlaylist.bind($this));
-								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.info.id,'title':t('audioplayer','Delete Playlist')}).click($this.deletePlaylist.bind($this));
+								var span=$('<span/>').attr('class','counter').text(el.counter);
+								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.id,'title':t('audioplayer','Sort Playlist')}).click($this.sortPlaylist.bind($this));
+								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename Playlist')}).click($this.renamePlaylist.bind($this));
+								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.id,'title':t('audioplayer','Delete Playlist')}).click($this.deletePlaylist.bind($this));
 			
 								if (category === 'Playlist' ){
 									var spanName=$('<span/>')
-										.attr({'data-plid':el.info.id,'class':'pl-name-play'})
-										.text(el.info.name)
+										.attr({'data-plid':el.id,'class':'pl-name-play'})
+										.text(el.name)
 										.click($this.loadIndividualCategory.bind($this));
 									li.append(spanName);
 									li.append(span);
@@ -658,6 +645,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	var EventTarget=null;
 	var bRreload = false;
 	var category = $('#category_selector').val();
+	var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream');
 
 	if(typeof evt === 'undefined'){
 		EventTarget=$('#myCategory li.activeIndiPlaylist span.pl-name');		
@@ -681,7 +669,6 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		category_title = EventTarget.parent('li').find('span').first().text();
 		$('#alben').removeClass('bAktiv');
 	
-		var aPlayList=this.aSongIdsCategory[PlaylistId];
 
 		if (category !== "All") {
 			$('#individual-playlist-info').html(t('audioplayer','Selected '+category)+': '+category_title);
@@ -694,128 +681,134 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$this.PlaylistContainer.show();
 		$('#individual-playlist').html('');
 	
-		if(aPlayList.length > 0){
-			var aPlaylistOutput=[];
-			var aPlaylistOutput1=[];
-				
-			$(aPlayList).each(function(i,el){
-			
+		$.ajax({
+			type : 'GET',
+			url : OC.generateUrl('apps/audioplayer/getcategoryitems'),
+			data : {category: category, id: PlaylistId},
+			success : function(jsondata) {
+				if(jsondata.status == 'success'){
+					var playlistsdata=jsondata.data;
+					if(playlistsdata !== 'nodata'){
+						var aPlaylistOutput=[];
+						var aPlaylistOutput1=[];
+	
+						$(playlistsdata).each(function(i,el){			
 
-				var li1 =$('<li/>').attr({'data-trackid':el.id,'data-album':el.album,'data-artist':el.artist});
-				var a1 = $('<a/>').attr({'href':el.link}).html('<span class="title">'+el.title+'</span>');
-				li1.append(a1);
+							var li1 =$('<li/>').attr({'data-trackid':el.id,'data-album':el.album,'data-artist':el.artist});
+							var a1 = $('<a/>').attr({'href': getAudiostreamUrl + el.link}).html('<span class="title">'+el.title+'</span>');
+							li1.append(a1);				
+							aPlaylistOutput1[i]=li1;
 				
-				aPlaylistOutput1[i]=li1;
-				
-				var li = $('<li/>').attr({
-					'data-id' : el.id,
-					'data-fileid' : el.file_id,
-					'data-album' : el.album,
-					'data-artist' : el.artist,
-					'class' : 'dragable'
-				});
-				var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
-				var spanNr = $('<span/>').addClass('number').text(i+1);
-				var link = $('<a/>').addClass('link-full').attr('href',el.link);
-				var spanTitle = $('<span/>').attr({'data-title':el.title,'title':el.title}).addClass('title').text(el.title);
-				var spanTime = $('<span/>').addClass('time').text(el.length);
-				var interpret=$('<span>').attr({'class':'interpret'}).text(el.artist);
-				var album=$('<span>').attr({'class':'album-indi'}).text(el.album);
-				var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':el.id,'data-fileid':el.file_id,'title':t('audioplayer','Edit Song from Playlist')}).click($this.editSong.bind($this));
-
-				li.append(spanAction);
-				li.append(spanNr);
-				li.append(spanTitle);
-				li.append(link);
-				li.append(interpret);
-				li.append(album);
-				li.append(spanTime);
-				li.append(spanEdit);
-				li.find('span').css('color','#555');
-							
-				li.find('span.title').on('click',function(){
-					var disabled = $("#individual-playlist").sortable( "option", "disabled" );
-					if(disabled === true){
-					
-						var albumPlaylistActive=$('#audios-audioscontainer .albumwrapper.isPlaylist');
-						var playlistActive=$('#myCategory li.activeIndiPlaylist');
-						var indiPlaylistId =$this.PlaylistContainer.data('playlist');
-					
-						if(indiPlaylistId === '' || (indiPlaylistId !== playlistActive.data('id'))  || albumPlaylistActive.length > 0){
-							if(albumPlaylistActive.length > 0){
-								albumPlaylistActive.find('.albumSelect li').removeClass('isActive');
-								albumPlaylistActive.find('.albumSelect li i').hide();
-								$('#audios-audioscontainer .albumwrapper').removeClass('isPlaylist');
-							}
-							$this.PlaylistContainer.data('playlist',playlistActive.data('id'));
-						
-							//$('.sm2-playlist-cover').css();
-							$('.sm2-playlist-target').text('');
-							$('.sm2-playlist-cover').click(function(){
-								window.location.href='#show-playlist-'+$this.PlaylistContainer.data('playlist');
+							var li = $('<li/>').attr({
+								'data-id' : el.id,
+								'data-fileid' : el.file_id,
+								'data-album' : el.album,
+								'data-artist' : el.artist,
+								'class' : 'dragable'
 							});
-							$this.PlaylistContainer.addClass('isPlaylist');
-							if($this.AudioPlayer == null){
-								$this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
-							}
-							$('#activePlaylist').html(aPlaylistOutput1);
-						}
-						var activeLi=$(this).closest('li');
-					
-						if($this.PlaylistContainer.find('.isPlaylist li.isActive').length === 1 && !activeLi.hasClass('isActive')){
-							$('#individual-playlist li').removeClass('isActive');
-							$('#individual-playlist li i.ioc').hide();
-						}
-						if(!activeLi.hasClass('isActive')){
-							$('#individual-playlist li').removeClass('isActive');
-							$('#individual-playlist li i.ioc').hide();
-							activeLi.addClass('isActive');
-							$this.AudioPlayer.actions.play(activeLi.index());
-						}else{
-							//$this.AudioPlayer.actions.stop();
-							if($('.sm2-bar-ui').hasClass('playing')){
-								$this.AudioPlayer.actions.stop();
-							}else{
-								$this.AudioPlayer.actions.play();
-							}
-						}
-					}
-					return false;
-				});				
-				
-				if (category === 'Playlist' ){
-					var span=$('<span/>').attr({'class':'ioc ioc-delete', 'data-id':el.id,'title':t('audioplayer','Delete Song from Playlist')}).click($this.removeSongFromPlaylist.bind($this));
-					li.append(span);
-				}
-				aPlaylistOutput[i]=li;
-			});
+							var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
+							var spanNr = $('<span/>').addClass('number').text(i+1);
+							var link = $('<a/>').addClass('link-full').attr('href',getAudiostreamUrl + el.link);
+							var spanTitle = $('<span/>').attr({'data-title':el.title,'title':el.title}).addClass('title').text(el.title);
+							var spanTime = $('<span/>').addClass('time').text(el.length);
+							var interpret=$('<span>').attr({'class':'interpret'}).text(el.artist);
+							var album=$('<span>').attr({'class':'album-indi'}).text(el.album);
+							var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':el.id,'data-fileid':el.file_id,'title':t('audioplayer','Edit Song from Playlist')}).click($this.editSong.bind($this));
 
-		$("#individual-playlist").sortable({
-			items: "li",
-			axis: "y",
-			disabled: true,
-			placeholder: "ui-state-highlight",
-			stop: function( event, ui ) {
-			}
+							li.append(spanAction);
+							li.append(spanNr);
+							li.append(spanTitle);
+							li.append(link);
+							li.append(interpret);
+							li.append(album);
+							li.append(spanTime);
+							li.append(spanEdit);
+							li.find('span').css('color','#555');
+							
+							li.find('span.title').on('click',function(){
+								var disabled = $("#individual-playlist").sortable( "option", "disabled" );
+								if(disabled === true){
+					
+									var albumPlaylistActive=$('#audios-audioscontainer .albumwrapper.isPlaylist');
+									var playlistActive=$('#myCategory li.activeIndiPlaylist');
+									var indiPlaylistId =$this.PlaylistContainer.data('playlist');
+					
+									if(indiPlaylistId === '' || (indiPlaylistId !== playlistActive.data('id'))  || albumPlaylistActive.length > 0){
+										if(albumPlaylistActive.length > 0){
+											albumPlaylistActive.find('.albumSelect li').removeClass('isActive');
+											albumPlaylistActive.find('.albumSelect li i').hide();
+											$('#audios-audioscontainer .albumwrapper').removeClass('isPlaylist');
+										}
+										$this.PlaylistContainer.data('playlist',playlistActive.data('id'));
+						
+										//$('.sm2-playlist-cover').css();
+										$('.sm2-playlist-target').text('');
+										$('.sm2-playlist-cover').click(function(){
+											window.location.href='#show-playlist-'+$this.PlaylistContainer.data('playlist');
+										});
+										$this.PlaylistContainer.addClass('isPlaylist');
+										if($this.AudioPlayer == null){
+											$this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
+										}
+										$('#activePlaylist').html(aPlaylistOutput1);
+									}
+									var activeLi=$(this).closest('li');
+					
+									if($this.PlaylistContainer.find('.isPlaylist li.isActive').length === 1 && !activeLi.hasClass('isActive')){
+										$('#individual-playlist li').removeClass('isActive');
+										$('#individual-playlist li i.ioc').hide();
+									}
+									if(!activeLi.hasClass('isActive')){
+										$('#individual-playlist li').removeClass('isActive');
+										$('#individual-playlist li i.ioc').hide();
+										activeLi.addClass('isActive');
+										$this.AudioPlayer.actions.play(activeLi.index());
+									}else{
+										//$this.AudioPlayer.actions.stop();
+										if($('.sm2-bar-ui').hasClass('playing')){
+											$this.AudioPlayer.actions.stop();
+										}else{
+											$this.AudioPlayer.actions.play();
+										}
+									}
+								}
+								return false;
+							});				
+				
+							if (category === 'Playlist' ){
+								var span=$('<span/>').attr({'class':'ioc ioc-delete', 'data-id':el.id,'title':t('audioplayer','Delete Song from Playlist')}).click($this.removeSongFromPlaylist.bind($this));
+								li.append(span);
+							}
+							aPlaylistOutput[i]=li;
+						});
+
+						$("#individual-playlist").sortable({
+							items: "li",
+							axis: "y",
+							disabled: true,
+							placeholder: "ui-state-highlight",
+							stop: function( event, ui ) {}
+						});
+	
+						$('#individual-playlist').append(aPlaylistOutput);
+						$('#individual-playlist li i.ioc').hide();
+						if($this.PlaylistContainer.hasClass('isPlaylist')){
+							var activeSongSel=$('#individual-playlist li[data-id="'+$('#activePlaylist li.selected').data('trackid')+'"] i.ioc');
+							$('#individual-playlist li[data-id="'+$('#activePlaylist li.selected').data('trackid')+'"]').addClass('isActive');
+							activeSongSel.removeClass('ioc-volume-off');
+							activeSongSel.addClass('ioc-volume-up');
+							activeSongSel.show();
+						}else{
+							$('#individual-playlist li').removeClass('isActive');
+						}
+	
+					}else{
+				 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audioplayer','Add new tracks to playlist by drag and drop from album view')+'</span>');
+				 	}
+			 	}
+		 	}
 		});
-	
-	
-	
-		$('#individual-playlist').append(aPlaylistOutput);
-		$('#individual-playlist li i.ioc').hide();
-		if($this.PlaylistContainer.hasClass('isPlaylist')){
-			var activeSongSel=$('#individual-playlist li[data-id="'+$('#activePlaylist li.selected').data('trackid')+'"] i.ioc');
-			$('#individual-playlist li[data-id="'+$('#activePlaylist li.selected').data('trackid')+'"]').addClass('isActive');
-			activeSongSel.removeClass('ioc-volume-off');
-			activeSongSel.addClass('ioc-volume-up');
-			activeSongSel.show();
-		}else{
-			$('#individual-playlist li').removeClass('isActive');
-		}
-	
- 	}else{
- 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audioplayer','Add new tracks to playlist by drag and drop from album view')+'</span>');
- 	}
+
 	}else{
 		$this.AlbumContainer.hide();
 		if($this.PlaylistContainer.hasClass('isPlaylist')){
@@ -1004,7 +997,6 @@ Audios.prototype.editSong = function(evt){
 													$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
 													 $this.loadAlbums();
 											}
-											
 											if(jsondata.data.imgsrc != ''){
 												$('.albumcover[data-album="album-'+jsondata.data.albumid+'"]')
 												.css({
@@ -1592,6 +1584,43 @@ Audios.prototype.set_uservalue = function(user_type,user_value) {
   		}
 };
 
+Audios.prototype.get_cover = function(user_type, callback) {
+    	$.ajax({
+			type : 'GET',
+			url : OC.generateUrl('apps/audioplayer/getcover'),
+			data : {'album':'280'},
+			success : function(jsondata) {
+				//alert(jsondata);
+			}
+		});
+};
+
+Audios.prototype.sort_playlist = function(evt) {
+		var column = $(evt.target).attr('class');
+
+    var elems = $('#individual-playlist').children('li').get();
+    elems.sort(function(a,b){
+        return ($(b).data(column)) < ($(a).data(column)) ? 1 : -1; 
+    });
+    $('#individual-playlist').append(elems);
+
+    var elems = $('#activePlaylist').children('li').get();
+    elems.sort(function(a,b){
+        return ($(b).data(column)) < ($(a).data(column)) ? 1 : -1; 
+    });
+    $('#activePlaylist').append(elems);
+		
+//		$("#individual-playlist li").sort(sort_li1).appendTo('#individual-playlist');
+//		function sort_li1(a1, b1){
+//    		return ($(b1).data(column)) < ($(a1).data(column)) ? 1 : -1;    
+//		}
+//		$("#activePlaylist li").sort(sort_li2).appendTo('#activePlaylist');
+//		function sort_li2(a2, b2){
+//		    return ($(b2).data(column)) < ($(a2).data(column)) ? 1 : -1;    
+//		}
+//$('.header-title').click($this.sort_playlist.bind($this));
+};
+
 Audios.prototype.check_timer = function() {
     	$.ajax({
 			type : 'GET',
@@ -1902,7 +1931,10 @@ $(document).ready(function() {
   		}
 	});
 
+	//$('.header-title').click($this.sort_playlist.bind($this));
+	//$('.header-interpret').click($this.sort_playlist.bind($this));
+	//$('.header-album').click($this.sort_playlist.bind($this));
+	
 	var timer = window.setTimeout(function() {$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());}, 1000);
 	
 });
-

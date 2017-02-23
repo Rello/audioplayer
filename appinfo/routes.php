@@ -30,6 +30,7 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'scanner#editAudioFile', 'url' => '/editaudiofile', 'verb' => 'GET'],
 	['name' => 'scanner#saveAudioFileData', 'url' => '/saveaudiofiledata', 'verb' => 'POST'],
 	['name' => 'music#getMusic', 'url' => '/getmusic', 'verb' => 'GET'],
+	['name' => 'music#getCover', 'url' => '/getcover/{album}', 'verb' => 'GET'],
 	['name' => 'music#getAudioStream', 'url' => '/getaudiostream', 'verb' => 'GET'],
 	['name' => 'music#resetMediaLibrary', 'url' => '/resetmedialibrary', 'verb' => 'GET'],
 	['name' => 'music#getPublicAudioStream', 'url' => '/getpublicaudiostream{file}', 'verb' => 'GET'],
@@ -43,4 +44,5 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'setting#getValue', 'url' => '/getvalue', 'verb' => 'GET'],
 	['name' => 'setting#userPath', 'url' => '/userpath', 'verb' => 'POST'],
 	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
+	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
 	]]);
