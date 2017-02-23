@@ -63,7 +63,7 @@ class AudioStream {
 		$this -> iStart = 0;
 		$this -> iEnd = $this -> iSize - 1;
 		
-		header("Accept-Ranges: 0-" . $this -> iEnd);
+		header("Accept-Ranges: bytes");
 		
 		if (isset($_SERVER['HTTP_RANGE'])) {
 			$c_start = $this -> iStart;
