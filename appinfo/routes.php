@@ -44,4 +44,5 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'setting#getValue', 'url' => '/getvalue', 'verb' => 'GET'],
 	['name' => 'setting#userPath', 'url' => '/userpath', 'verb' => 'POST'],
 	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
+	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
 	]]);
