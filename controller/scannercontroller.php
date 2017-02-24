@@ -727,7 +727,6 @@ class ScannerController extends Controller {
 	 
 	private function writeGenreToDB($sGenre){
 		$sGenre = $this->truncate($sGenre, '256');		
-		\OCP\Util::writeLog('audioplayer', 'Genre: '.$sGenre, \OCP\Util::DEBUG);
 		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_genre', ['user_id' => $this->userId, 'name' => $sGenre])) {
 			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_genre');
 			return $insertid;
