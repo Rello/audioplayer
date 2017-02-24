@@ -6,7 +6,10 @@ All notable changes to this project will be documented in this file.
 - albums to selection [#132](https://github.com/rello/audioplayer/issues/132)
 
 ### Changed
-- front-end performance improvements [#149](https://github.com/rello/audioplayer/issues/149)
+- front-end performance improvements [#130](https://github.com/rello/audioplayer/issues/130) [#149](https://github.com/rello/audioplayer/issues/149)
+
+### Fixed
+- scanner adjustments [#137](https://github.com/rello/audioplayer/issues/137) [#140](https://github.com/rello/audioplayer/issues/140) [#145](https://github.com/rello/audioplayer/issues/145)
 
 ## 1.4.1 - 2017-01-26
 ### Added
