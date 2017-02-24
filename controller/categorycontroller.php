@@ -44,6 +44,36 @@ class CategoryController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
+	public function getCategory_backup(){
+		$category=$this->params('category');
+			
+		$playlists= $this->getCategoryforUser($category);
+	
+		if(is_array($playlists)){
+			$aPlayLists= array();
+			foreach($playlists as $playinfo){
+				$aPlayLists[]=['info' => $playinfo];
+			}
+		
+			$result=[
+				'status' => 'success',
+				'data' => ['playlists' => $aPlayLists]
+			];
+		}else{
+			$result=[
+				'status' => 'success',
+				'data' => 'nodata'
+			];
+		}
+		$response = new JSONResponse();
+		$response -> setData($result);
+		return $response;
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * 
+	 */
 	public function getCategory(){
 		$category=$this->params('category');
 			
@@ -106,6 +136,12 @@ class CategoryController extends Controller {
 			 			WHERE  AT.`user_id` = ?
 			 			ORDER BY LOWER(FC.`name`) ASC
 			 			";
+		} elseif ($category === 'Album') {
+			$SQL="SELECT  `id`,`name`, LOWER(`name`) AS `lower` 
+						FROM `*PREFIX*audioplayer_albums`
+			 			WHERE  `user_id` = ?
+			 			ORDER BY LOWER(`name`) ASC
+			 			";
 		}	
 			
 		$stmt =$this->db->prepareQuery($SQL);
@@ -162,6 +198,12 @@ class CategoryController extends Controller {
 					WHERE `AT`.`folder_id` = ? 
 					AND `AT`.`user_id` = ?
 					";
+		} elseif ($category === 'Album') {
+			$SQL="SELECT  COUNT(`id`) AS `count` 
+					FROM `*PREFIX*audioplayer_albums`
+					WHERE `id` = ? 
+					AND `user_id` = ?
+			 		";
 		}
 
 		$stmt = $this->db->prepareQuery($SQL);
@@ -257,7 +299,15 @@ class CategoryController extends Controller {
 					WHERE `AT`.`folder_id` = ? 
 					AND `AT`.`user_id` = ?
 					ORDER BY LOWER(`AT`.`title`) ASC";
-		}
+		} elseif ($category === 'Album') {
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`,LOWER(`AT`.`title`) AS `lower`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
+ 					WHERE `AB`.`id` = ? 
+					AND `AB`.`user_id` = ?
+					ORDER BY LOWER(`AT`.`title`) ASC";		
+ 		}
 
 		$stmt = $this->db->prepareQuery($SQL);
 		if ($category === 'Playlist') {
