@@ -7,9 +7,12 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - front-end performance improvements [#130](https://github.com/rello/audioplayer/issues/130) [#149](https://github.com/rello/audioplayer/issues/149)
+- selection rearranged and renamed
+- cover art for "Unknown / Various Artists"
 
 ### Fixed
 - scanner adjustments [#137](https://github.com/rello/audioplayer/issues/137) [#140](https://github.com/rello/audioplayer/issues/140) [#145](https://github.com/rello/audioplayer/issues/145)
+- not playing from shared subfolders [#139](https://github.com/rello/audioplayer/issues/139)
 
 ## 1.4.1 - 2017-01-26
 ### Added
