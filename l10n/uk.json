@@ -40,6 +40,8 @@
 "Unknown" :"Невідомий",
 "Artist" :"Виконавець",
 "Artists" : "Виконавці",
+"Composer" : "Composer",
+"Composers" : "Composers",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Увімкніть цю опцію, якщо кирилиця виглядає нечитабельно, це трохи сповільнить індексацію",
 "Cyrillic Support:" : "Підтримка кирилиці:",
 "Read more" : "==> Деталі",
