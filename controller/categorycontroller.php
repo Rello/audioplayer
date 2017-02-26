@@ -274,7 +274,7 @@ class CategoryController extends Controller {
 					WHERE `AT`.`year` = ? 
 					AND `AT`.`user_id` = ?
 					ORDER BY LOWER(`AT`.`title`) ASC";
-		} elseif ($category === 'All') {
+		} elseif ($category === 'Title') {
 			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
