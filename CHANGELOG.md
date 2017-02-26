@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - cover art for "Unknown / Various Artists"
 
 ### Fixed
+- album cover in soundbar [#133](https://github.com/rello/audioplayer/issues/133)
 - scanner adjustments [#137](https://github.com/rello/audioplayer/issues/137) [#140](https://github.com/rello/audioplayer/issues/140) [#145](https://github.com/rello/audioplayer/issues/145)
 - not playing from shared subfolders [#139](https://github.com/rello/audioplayer/issues/139)
 
@@ -130,14 +131,14 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.2 - 2016-08-04
 ### Added
-- add file option dropdown entry
+- file option dropdown entry
 
 ### Changed
-- fix soundbar when scrolling [#25](https://github.com/rello/audioplayer/issues/25)
 - use reduced soundmanager-js for One Click Play
 
 ### Fixed
 - One Click Play [#22](https://github.com/rello/audioplayer/issues/22)
+- soundbar when scrolling [#25](https://github.com/rello/audioplayer/issues/25)
 - special characters in filenames [#26](https://github.com/rello/audioplayer/issues/26)
 - library reset does not remove playlists [#30](https://github.com/rello/audioplayer/issues/30)
 
