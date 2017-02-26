@@ -251,7 +251,7 @@ class CategoryController extends Controller {
 		$aTracks=array();
 
 		if($category === 'Artist') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, SUBSTRING( `AB`.`cover`, 1 , 1 ) AS `cover`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
@@ -259,7 +259,7 @@ class CategoryController extends Controller {
 			 		AND `AT`.`user_id` = ?
 			 		ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Genre') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, SUBSTRING( `AB`.`cover`, 1 , 1 ) AS `cover`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
@@ -267,7 +267,7 @@ class CategoryController extends Controller {
 					AND `AT`.`user_id` = ?
 					ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Year') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, SUBSTRING( `AB`.`cover`, 1 , 1 ) AS `cover`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
@@ -275,7 +275,7 @@ class CategoryController extends Controller {
 					AND `AT`.`user_id` = ?
 					ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Title') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, SUBSTRING( `AB`.`cover`, 1 , 1 ) AS `cover`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
@@ -283,7 +283,7 @@ class CategoryController extends Controller {
 					AND `AT`.`user_id` = ? 
 					ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Playlist') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`, `AB`.`id` AS `cover_id`, SUBSTRING( `AB`.`cover`, 1 , 1 ) AS `cover`, `AP`.`sortorder`
 					FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
 					LEFT JOIN `*PREFIX*audioplayer_tracks` `AT` ON `AP`.`track_id` = `AT`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
@@ -292,7 +292,7 @@ class CategoryController extends Controller {
 			 		ORDER BY `AP`.`sortorder` ASC
 			 		";
 		} elseif ($category === 'Folder') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, LOWER(`AT`.`title`) AS `lower`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, SUBSTRING( `AB`.`cover`, 1 , 1 ) AS `cover`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
@@ -300,7 +300,7 @@ class CategoryController extends Controller {
 					AND `AT`.`user_id` = ?
 					ORDER BY LOWER(`AT`.`title`) ASC";
 		} elseif ($category === 'Album') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`,LOWER(`AT`.`title`) AS `lower`
+			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, SUBSTRING( `AB`.`cover`, 1 , 1 ) AS `cover`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
@@ -322,10 +322,12 @@ class CategoryController extends Controller {
 			} catch (\Exception $e) {
 				$file_not_found = true;
        		}
- 			array_splice($row, 7, 1);
-			$row['link'] = '?file='.rawurlencode($path);
-
-			$aTracks[]=$row;
+		if ($row['cover'] === null) {
+			$row['cover_id'] = '';
+		} 
+ 		array_splice($row, 8, 2);
+		$row['link'] = '?file='.rawurlencode($path);
+		$aTracks[]=$row;
 		}
 		
 		if(empty($aTracks)){
