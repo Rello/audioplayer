@@ -28,7 +28,7 @@ var audioPlayer = {
 			dirLoad=dirLoad+'/';
 		}
 		if(token !== ''){
-			audioPlayer.location = OC.generateUrl('apps/audioplayer/getpublicaudiostream{file}?token={token}',{'file':dirLoad+file,'token':token},{escape:false});
+			audioPlayer.location = OC.generateUrl('apps/audioplayer/getpublicaudiostream?file={file}&token={token}',{'file':dirLoad+file,'token':token},{escape:false});
 		}else{
 			audioPlayer.location = OC.generateUrl('apps/audioplayer/getaudiostream?file={file}',{'file':dirLoad+file},{escape:false});
 
