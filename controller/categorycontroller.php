@@ -117,8 +117,8 @@ class CategoryController extends Controller {
 			 			WHERE  `user_id` = ?
 			 			ORDER BY `id` ASC
 			 			";
-		} elseif ($category === 'All') {
-			$SQL="SELECT distinct('0') as `id` ,'".(string)$this->l10n->t('All')."' as `name`  
+		} elseif ($category === 'Title') {
+			$SQL="SELECT distinct('0') as `id` ,'".(string)$this->l10n->t('Titles')."' as `name`  
 						FROM `*PREFIX*audioplayer_tracks`
 			 			WHERE  `user_id` = ?
 			 			";
