@@ -53,8 +53,9 @@ class MusicController extends Controller {
 	 * @NoCSRFRequired
 	 * 
 	 */
-	public function getPublicAudioStream($file){
+	public function getPublicAudioStream(){
 		$pToken  = $this->params('token');	
+		$file = $this->params('file');
 		if (!empty($pToken)) {
 			$linkItem = \OCP\Share::getShareByToken($pToken);
 			if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
