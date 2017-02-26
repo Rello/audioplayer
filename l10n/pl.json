@@ -40,6 +40,8 @@
 "Unknown" :"Nieznany",
 "Artist" :"Artysta",
 "Artists" :"Artyści",
+"Composer" : "Composer",
+"Composers" : "Composers",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Włącz to ustawienie jeśli znaki cyrylicy nie są poprawnie rozpoznawane. Może to spowodować wolniejsze indeksowanie!",
 "Cyrillic Support:" : "Obsługa cyrylicy:",
 "Read more" : "Czytaj więcej",
