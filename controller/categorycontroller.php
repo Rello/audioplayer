@@ -181,7 +181,7 @@ class CategoryController extends Controller {
 					WHERE `AT`.`year` = ? 
 					AND `AT`.`user_id` = ?
 					";
-		} elseif ($category === 'All') {
+		} elseif ($category === 'Title') {
 			$SQL="SELECT  COUNT(`AT`.`id`) AS `count`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
 					WHERE `AT`.`id` > ? 
