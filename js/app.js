@@ -670,7 +670,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$('#alben').removeClass('bAktiv');
 	
 
-		if (category !== "All") {
+		if (category !== 'Title') {
 			$('#individual-playlist-info').html(t('audioplayer','Selected '+category)+': '+category_title);
 		} else {
 			$('#individual-playlist-info').html(t('audioplayer','Selected')+': '+category_title);
