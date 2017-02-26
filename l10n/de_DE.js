@@ -24,6 +24,7 @@ OC.L10N.register(
 	"Artist" : "Interpret",
 	"Year" : "Jahr",
 	"Album" : "Album",
+	"Composer" : "Komponist",
 	"Edit Song from Playlist" : "Titel der Wiedergabeliste bearbeiten",
 	"Edit track information (ID3)" : "Titelinformationen (ID3) bearbeiten",
 	"Missing Permissions for editing ID3 Tags of song!" : "Fehlende Berechtigungen zum Bearbeiten der ID3-Tags des Titels!",
@@ -51,11 +52,13 @@ OC.L10N.register(
 	"Existing Genres" : "Vorhandene Genres",
 	"New Genre" : "Neues Genre",
 	"Selected" : "Ausgewählt",
+	"Selected Album" : "Ausgewähltes Album",
 	"Selected Artist" : "Ausgewählter Interpret",
+	"Selected Composer" : "Ausgewählter Komponist",
 	"Selected Folder" : "Ausgewählter Ordner",
 	"Selected Genre" : "Ausgewähltes Genre",
 	"Selected Playlist" : "Ausgewählte Wiedergabeliste",
 	"Selected Year" : "Ausgewähltes Jahr",
-	"Length" : "Laufzeit"
+	"Length" : "Länge"
 },
 "");
