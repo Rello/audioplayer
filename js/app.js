@@ -741,7 +741,16 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 										}
 										$this.PlaylistContainer.data('playlist',playlistActive.data('id'));
 						
-										//$('.sm2-playlist-cover').css();
+			 							var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+			 							if(el.cover_id === ''){	
+											var addCss='background-color: #D3D3D3;color: #333333;';
+											var addDescr=el.album.substring(0,1);	
+										}else{
+											var addDescr='';
+											var addCss='background-image:url('+getcoverUrl+el.cover_id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+										}
+			 		
+			 							$('.sm2-playlist-cover').attr({'style':addCss}).text(addDescr);
 										$('.sm2-playlist-target').text('');
 										$('.sm2-playlist-cover').click(function(){
 											window.location.href='#show-playlist-'+$this.PlaylistContainer.data('playlist');
