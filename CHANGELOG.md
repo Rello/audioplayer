@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ### Added
 - albums to selection [#132](https://github.com/rello/audioplayer/issues/132)
+- separate scrolling for navigation and content [#144](https://github.com/rello/audioplayer/issues/144)
 
 ### Changed
 - front-end performance improvements [#130](https://github.com/rello/audioplayer/issues/130) [#149](https://github.com/rello/audioplayer/issues/149)
@@ -14,7 +15,6 @@ All notable changes to this project will be documented in this file.
 - album cover in soundbar [#133](https://github.com/rello/audioplayer/issues/133)
 - scanner adjustments [#137](https://github.com/rello/audioplayer/issues/137) [#140](https://github.com/rello/audioplayer/issues/140) [#145](https://github.com/rello/audioplayer/issues/145)
 - not playing from shared subfolders [#139](https://github.com/rello/audioplayer/issues/139)
-- separate scrolling for navigation and content [#144](https://github.com/rello/audioplayer/issues/144)
 
 ## 1.4.1 - 2017-01-26
 ### Added
