@@ -525,19 +525,19 @@ class ScannerController extends Controller {
 				$counter++;
 				$this->abscount++;
 
-				$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
-				$ThisFileInfo = $getID3->analyze($fileName);
-
-				if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
-					unlink($fileName);
-				}
+				$ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->fopen('r'), $audio->getSize());
 			
 				if($cyrillic_support === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
 
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
+
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
-				if (!isset($ThisFileInfo['bitrate']) AND !isset($ThisFileInfo['playtime_string'])) {
-					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio->getPath(), \OCP\Util::DEBUG);
+				if(array_key_exists('error', $ThisFileInfo)) {
+					foreach ($ThisFileInfo['error'] as $error) {
+						if ($debug) $output->writeln("       getID3 error: ". $error."</info>");
+						\OCP\Util::writeLog('audioplayer', 'getID3 error: '. $error, \OCP\Util::DEBUG);
+					}
+					\OCP\Util::writeLog('audioplayer', 'error file: '. $audio->getPath(), \OCP\Util::DEBUG);
 					$error_file.=$audio->getName().'<br />';
 					$error_count++;
 					continue;
