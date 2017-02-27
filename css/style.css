@@ -598,6 +598,8 @@ padding-left:10px;
 	color:#888888;
 	font-size:12px;
 	font-style: italic;
+	text-overflow: ellipsis;
+	overflow:hidden;
 }
 
 .albumdescr span.albumname{
