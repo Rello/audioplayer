@@ -137,15 +137,18 @@ i#scanAudiosFirst{
 	color:#000;
 }
 
-
-	#app-navigation-toggle_alternative{
-		position:fixed;
-		background-color:#fff;
-		opacity:1;
-		height:40px;
-		width:45px;
-	}
+#app-navigation-toggle_alternative{
+	position:fixed;
+	background-color:#fff;
+	opacity:1;
+	height:40px;
+	width:45px;
+}
 	
+#app-navigation {
+	overflow-y: auto;
+}
+
 #app-navigation .plclone{
 	display:none;
 	float:left;
