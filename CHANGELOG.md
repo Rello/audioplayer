@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 - front-end performance improvements [#130](https://github.com/rello/audioplayer/issues/130) [#149](https://github.com/rello/audioplayer/issues/149)
 - scanner performance improvements [#151](https://github.com/rello/audioplayer/issues/151)
 - selection rearranged and renamed
-- cover art for "Unknown / Various Artists"
+- cover art for "Unknown/&#8203;Various Artists"
 - padding in share player
 
 ### Fixed
