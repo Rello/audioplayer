@@ -532,12 +532,9 @@ class ScannerController extends Controller {
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
 
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
-				if(array_key_exists('error', $ThisFileInfo)) {
-					foreach ($ThisFileInfo['error'] as $error) {
-						if ($debug) $output->writeln("       getID3 error: ". $error."</info>");
-						\OCP\Util::writeLog('audioplayer', 'getID3 error: '. $error, \OCP\Util::DEBUG);
-					}
-					\OCP\Util::writeLog('audioplayer', 'error file: '. $audio->getPath(), \OCP\Util::DEBUG);
+				if (!isset($ThisFileInfo['bitrate']) AND !isset($ThisFileInfo['playtime_string'])) {
+					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '. $audio->getPath(), \OCP\Util::DEBUG);
+					if ($debug) $output->writeln("       Error with getID3. Does not seem to be a valid audio file");
 					$error_file.=$audio->getName().'<br />';
 					$error_count++;
 					continue;
