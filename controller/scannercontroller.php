@@ -525,7 +525,7 @@ class ScannerController extends Controller {
 				$counter++;
 				$this->abscount++;
 
-				$ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->fopen('r'), $audio->getSize());
+				$ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->fopen('rb'), $audio->getSize());
 			
 				if($cyrillic_support === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
 
