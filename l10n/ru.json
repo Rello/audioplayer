@@ -1,6 +1,5 @@
 {"translations":{
-"MP3 Player" : "Музыка",
-"Audio Player" : "Музыка",
+"Audio Player" : "Аудиоплеер",
 "Create new playlist" : "Создать список воспроизв.",
 "GO" : "Поехали!",
 "Scan for new audio files" : "Найти новые аудиофайлы",
@@ -44,7 +43,7 @@
 "Composers" : "Composers",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Если русские названия выглядят нечитаемо, включите эту опцию. Это слегка замедлит индексацию.",
 "Cyrillic Support:" : "Поддержка кириллицы:",
-"Read more" : "==> Подробности",
+"Read more" : "Подробности",
 "Albums" : "Альбомы",
 "Genres" : "Стили",
 "Search for audio files in " : "Искать аудиофайлы в",
