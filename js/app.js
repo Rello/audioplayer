@@ -521,7 +521,7 @@ Audios.prototype.loadAlbums = function(){
 				$this.PlaylistSongs();				
 			}else{
 				$this.AlbumContainer.show();
-				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' Audio Player</span>');
+				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
 				$this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new tracks to library')+'</span>');
 				$this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/Rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
 				$('#app-navigation').removeClass('mp3_hide');
