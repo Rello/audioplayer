@@ -1,7 +1,8 @@
 OC.L10N.register(
     "audioplayer",
     {
- 
+	"Welcome to" : "Welcome to",
+	"Audio Player" : "Odtwarzacz Audio",
 	"Add new tracks to library" : "Dodaj nową piosenkę do playlisty",
 	"Scan for new audio files" : "Skanowanie w poszukiwaniu nowych plików audio",
 	"Sort Playlist" : "Sortuj Playlistę",
