@@ -5,6 +5,7 @@ OC.L10N.register(
 	"Audio Player" : "Аудіо-плеєр",
 	"Add new tracks to library" : "Знайти і додати нову музику",
 	"Scan for new audio files" : "Знайти нові аудіофайли...",
+	"Help" : "Help",
 	"Sort Playlist" : "Упорядочить список воспроизведения",
 	"Delete Playlist" : "Удалить список воспроизведения",
 	"Delete Song from Playlist" :"Видалити пісню з списку відтворення",
