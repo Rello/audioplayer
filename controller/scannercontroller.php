@@ -525,10 +525,8 @@ class ScannerController extends Controller {
 				$counter++;
 				$this->abscount++;
 
-				$ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->fopen('rb'), $audio->getSize());
-			
+				$ThisFileInfo = $this->analyze($audio, $getID3, $output, $debug);				
 				if($cyrillic_support === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
-
 				\getid3_lib::CopyTagsToComments($ThisFileInfo);
 
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
@@ -964,4 +962,32 @@ class ScannerController extends Controller {
 		return $value;
 	}
 
+	/**
+	 * Analyze ID3 Tags
+	 * if fseek is not possible, libsmbclient-php is not installed or an external storage is used which does not support this.
+	 * then fallback to slow extraction via tmpfile
+	 * 
+	 * @param $audio object
+	 * @return $ThisFileInfo
+	 */
+	private function analyze($audio, $getID3, $output = null, $debug = null) {
+
+		$handle = $audio->fopen('rb');
+		if (@fseek($handle, -24, SEEK_END) === 0) {
+				$ThisFileInfo = $getID3->analyze($audio->getPath(), $handle, $audio->getSize());
+		} else {
+			if (!$this->no_fseek) {
+				if ($debug) $output->writeln("Attention: only slow indexing due to server config. see github wiki for details");
+				\OCP\Util::writeLog('audioplayer', 'Attention: only slow indexing due to server config. see github wiki for details', \OCP\Util::DEBUG);
+				$this->no_fseek = true;
+			}
+			$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
+			$ThisFileInfo = $getID3->analyze($fileName);
+
+			if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
+				unlink($fileName);
+			}	
+		} 
+		return $ThisFileInfo;
+	}				
 }
