@@ -43,6 +43,7 @@ class ScannerController extends Controller {
 	private $db;
 	private $configManager;
 	private $occ_job;
+	private $no_fseek = false;
 		public function __construct(
 			$appName, 
 			IRequest $request, 
