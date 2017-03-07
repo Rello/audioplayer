@@ -1621,6 +1621,9 @@ Audios.prototype.sort_playlist = function(evt) {
     });
     $('#activePlaylist').append(elems);
 
+	if($this.AudioPlayer === null){
+		$this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
+	}
     $this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
 };
 
