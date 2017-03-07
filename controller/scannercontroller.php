@@ -978,8 +978,8 @@ class ScannerController extends Controller {
 				$ThisFileInfo = $getID3->analyze($audio->getPath(), $handle, $audio->getSize());
 		} else {
 			if (!$this->no_fseek) {
-				if ($debug) $output->writeln("Attention: only slow indexing due to server config. see github wiki for details");
-				\OCP\Util::writeLog('audioplayer', 'Attention: only slow indexing due to server config. see github wiki for details', \OCP\Util::DEBUG);
+				if ($debug) $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.");
+				\OCP\Util::writeLog('audioplayer', 'Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', \OCP\Util::DEBUG);
 				$this->no_fseek = true;
 			}
 			$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
