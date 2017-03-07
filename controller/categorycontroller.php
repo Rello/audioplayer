@@ -200,8 +200,8 @@ class CategoryController extends Controller {
 					";
 		} elseif ($category === 'Album') {
 			$SQL="SELECT  COUNT(`id`) AS `count` 
-					FROM `*PREFIX*audioplayer_albums`
-					WHERE `id` = ? 
+					FROM `*PREFIX*audioplayer_tracks`
+					WHERE `album_id` = ? 
 					AND `user_id` = ?
 			 		";
 		}
