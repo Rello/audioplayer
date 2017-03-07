@@ -521,7 +521,7 @@ Audios.prototype.loadAlbums = function(){
 				$this.PlaylistSongs();				
 			}else{
 				$this.AlbumContainer.show();
-				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
+				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' Audio Player</span>');
 				$this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new tracks to library')+'</span>');
 				$this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/Rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
 				$('#app-navigation').removeClass('mp3_hide');
@@ -680,6 +680,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$this.PlaylistContainer.hide();
 		$this.PlaylistContainer.show();
 		$('#individual-playlist').html('');
+		$('#activePlaylist').html('');
 	
 		$.ajax({
 			type : 'GET',
@@ -697,7 +698,6 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							var li1 =$('<li/>').attr({'data-trackid':el.id,'data-album':el.album,'data-artist':el.artist});
 							var a1 = $('<a/>').attr({'href': getAudiostreamUrl + el.link}).html('<span class="title">'+el.title+'</span>');
 							li1.append(a1);				
-							aPlaylistOutput1[i]=li1;
 				
 							var li = $('<li/>').attr({
 								'data-id' : el.id,
@@ -759,7 +759,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 										if($this.AudioPlayer == null){
 											$this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
 										}
-										$('#activePlaylist').html(aPlaylistOutput1);
+//										$('#activePlaylist').html(aPlaylistOutput1);
 									}
 									var activeLi=$(this).closest('li');
 					
@@ -789,8 +789,9 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 								li.append(span);
 							}
 							aPlaylistOutput[i]=li;
+							aPlaylistOutput1[i]=li1;
 						});
-
+						
 						$("#individual-playlist").sortable({
 							items: "li",
 							axis: "y",
@@ -798,7 +799,8 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							placeholder: "ui-state-highlight",
 							stop: function( event, ui ) {}
 						});
-	
+			
+						$('#activePlaylist').append(aPlaylistOutput1);
 						$('#individual-playlist').append(aPlaylistOutput);
 						$('#individual-playlist li i.ioc').hide();
 						if($this.PlaylistContainer.hasClass('isPlaylist')){
@@ -1618,16 +1620,8 @@ Audios.prototype.sort_playlist = function(evt) {
         return ($(b).data(column)) < ($(a).data(column)) ? 1 : -1; 
     });
     $('#activePlaylist').append(elems);
-		
-//		$("#individual-playlist li").sort(sort_li1).appendTo('#individual-playlist');
-//		function sort_li1(a1, b1){
-//    		return ($(b1).data(column)) < ($(a1).data(column)) ? 1 : -1;    
-//		}
-//		$("#activePlaylist li").sort(sort_li2).appendTo('#activePlaylist');
-//		function sort_li2(a2, b2){
-//		    return ($(b2).data(column)) < ($(a2).data(column)) ? 1 : -1;    
-//		}
-//$('.header-title').click($this.sort_playlist.bind($this));
+
+	$this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
 };
 
 Audios.prototype.check_timer = function() {
@@ -1940,9 +1934,9 @@ $(document).ready(function() {
   		}
 	});
 
-	//$('.header-title').click($this.sort_playlist.bind($this));
-	//$('.header-interpret').click($this.sort_playlist.bind($this));
-	//$('.header-album').click($this.sort_playlist.bind($this));
+	$('.header-title').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
+	$('.header-interpret').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
+	$('.header-album').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
 	
 	var timer = window.setTimeout(function() {$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());}, 1000);
 	
