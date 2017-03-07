@@ -3,13 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 ### Added
+- sorting of lists [#122](https://github.com/rello/audioplayer/issues/122)
 - albums to selection [#132](https://github.com/rello/audioplayer/issues/132)
 - separate scrolling for navigation and content [#144](https://github.com/rello/audioplayer/issues/144)
 
 ### Changed
 - front-end performance improvements [#130](https://github.com/rello/audioplayer/issues/130) [#149](https://github.com/rello/audioplayer/issues/149)
 - scanner performance improvements [#151](https://github.com/rello/audioplayer/issues/151)
-- selection rearranged and renamed
+- selection order and naming
 - cover art for "Unknown/&#8203;Various Artists"
 - padding in share player
 
