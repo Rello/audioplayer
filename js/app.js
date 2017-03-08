@@ -695,13 +695,14 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	
 						$(playlistsdata).each(function(i,el){			
 
-							var li1 =$('<li/>').attr({'data-trackid':el.id,'data-album':el.album,'data-artist':el.artist});
+							var li1 =$('<li/>').attr({'data-trackid':el.id,'data-album':el.album,'data-artist':el.artist,'data-title':el.title});
 							var a1 = $('<a/>').attr({'href': getAudiostreamUrl + el.link}).html('<span class="title">'+el.title+'</span>');
 							li1.append(a1);				
 				
 							var li = $('<li/>').attr({
 								'data-id' : el.id,
 								'data-fileid' : el.file_id,
+								'data-title' : el.title,
 								'data-album' : el.album,
 								'data-artist' : el.artist,
 								'class' : 'dragable'
@@ -718,7 +719,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							li.append(spanAction);
 							li.append(spanNr);
 							li.append(spanTitle);
-							li.append(link);
+							//li.append(link);
 							li.append(interpret);
 							li.append(album);
 							li.append(spanTime);
@@ -1607,24 +1608,33 @@ Audios.prototype.get_cover = function(user_type, callback) {
 };
 
 Audios.prototype.sort_playlist = function(evt) {
-		var column = $(evt.target).attr('class');
+	var column = $(evt.target).attr('class').split('-')[1];
+   	var order = $('#individual-playlist').data('order');
+   	var elems = $('#individual-playlist').children('li').get();
 
-    var elems = $('#individual-playlist').children('li').get();
-    elems.sort(function(a,b){
-        return ($(b).data(column)) < ($(a).data(column)) ? 1 : -1; 
-    });
-    $('#individual-playlist').append(elems);
+  	elems.sort(function(a,b){
+		var data1 = $(a).data(column);
+		var data2 = $(b).data(column);
+		if (order === 'descending') { return (data1 < data2) ? -1 : 1; }
+		else {return (data1 < data2) ? 1 : -1;}
+	});
+	$('#individual-playlist').append(elems);
 
-    var elems = $('#activePlaylist').children('li').get();
-    elems.sort(function(a,b){
-        return ($(b).data(column)) < ($(a).data(column)) ? 1 : -1; 
-    });
-    $('#activePlaylist').append(elems);
+	var elems = $('#activePlaylist').children('li').get();
+	elems.sort(function(a,b){
+		var data1 = $(a).data(column);
+		var data2 = $(b).data(column);
+		if (order === 'descending') { return (data1 < data2) ? -1 : 1; }
+		else {return (data1 < data2) ? 1 : -1;}
+	});
+	$('#activePlaylist').append(elems);
 
-	if($this.AudioPlayer === null){
-		$this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
+	if (order === 'descending') { $('#individual-playlist').data('order', 'ascending'); }
+	else { $('#individual-playlist').data('order', 'descending'); }
+
+	if($this.AudioPlayer){
+    		$this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
 	}
-    $this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
 };
 
 Audios.prototype.check_timer = function() {
