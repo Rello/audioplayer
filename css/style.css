@@ -350,8 +350,7 @@ padding-left:10px;
 	display:block;
 }
 
-#individual-playlist-header .header-indi{
-	
+#individual-playlist-header .header-indi{	
 	border-bottom:1px solid #E7E7E7;
 	width:100%;
 	display:block;
@@ -378,15 +377,13 @@ padding-left:10px;
 	position:relative;
 	float:left;
 	display:block;
-	min-width:20%;
-	
+	min-width:20%;	
 }
 #individual-playlist-header span.header-album{
 	position:relative;
 	float:left;
 	display:block;
-	min-width:20%;
-	
+	min-width:20%;	
 }
 
 #individual-playlist-header  span.header-time{
@@ -409,9 +406,8 @@ padding-left:10px;
 	position:relative;
 	float:left;
 	display:block;
-	line-height:20px;
-	
-	width:20px;
+	line-height:20px;	
+	width:22px;
 }
 #individual-playlist li .actionsSong i.ioc{
 	font-size:16px;
