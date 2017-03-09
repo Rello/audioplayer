@@ -681,6 +681,9 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$this.PlaylistContainer.show();
 		$('#individual-playlist').html('');
 		$('#activePlaylist').html('');
+		$('.header-title').data('order', '');
+		$('.header-artist').data('order', '');
+		$('.header-album').data('order', '');
 	
 		$.ajax({
 			type : 'GET',
@@ -1609,31 +1612,34 @@ Audios.prototype.get_cover = function(user_type, callback) {
 
 Audios.prototype.sort_playlist = function(evt) {
 	var column = $(evt.target).attr('class').split('-')[1];
-   	var order = $('#individual-playlist').data('order');
-   	var elems = $('#individual-playlist').children('li').get();
+	var order = $(evt.target).data('order');
+	var factor = 1;
+	
+	if (order === 'descending') {
+		var factor = -1;
+		$(evt.target).data('order', 'ascending'); 
+	} else { 
+		$(evt.target).data('order', 'descending'); 
+	}
 
-  	elems.sort(function(a,b){
-		var data1 = $(a).data(column);
-		var data2 = $(b).data(column);
-		if (order === 'descending') { return (data1 < data2) ? -1 : 1; }
-		else {return (data1 < data2) ? 1 : -1;}
+	var elems = $('#individual-playlist').children('li').get();
+	elems.sort(function(a,b){
+		var a = $(a).data(column);
+		var b = $(b).data(column);
+		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 	});
 	$('#individual-playlist').append(elems);
 
 	var elems = $('#activePlaylist').children('li').get();
 	elems.sort(function(a,b){
-		var data1 = $(a).data(column);
-		var data2 = $(b).data(column);
-		if (order === 'descending') { return (data1 < data2) ? -1 : 1; }
-		else {return (data1 < data2) ? 1 : -1;}
+		var a = $(a).data(column);
+		var b = $(b).data(column);
+		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 	});
 	$('#activePlaylist').append(elems);
 
-	if (order === 'descending') { $('#individual-playlist').data('order', 'ascending'); }
-	else { $('#individual-playlist').data('order', 'descending'); }
-
 	if($this.AudioPlayer){
-    		$this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
+    	$this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
 	}
 };
 
@@ -1948,7 +1954,7 @@ $(document).ready(function() {
 	});
 
 	$('.header-title').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
-	$('.header-interpret').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
+	$('.header-artist').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
 	$('.header-album').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
 	
 	var timer = window.setTimeout(function() {$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());}, 1000);
