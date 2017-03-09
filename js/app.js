@@ -1624,16 +1624,16 @@ Audios.prototype.sort_playlist = function(evt) {
 
 	var elems = $('#individual-playlist').children('li').get();
 	elems.sort(function(a,b){
-		var a = $(a).data(column);
-		var b = $(b).data(column);
+		var a = $(a).data(column).toLowerCase();
+		var b = $(b).data(column).toLowerCase();
 		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 	});
 	$('#individual-playlist').append(elems);
 
 	var elems = $('#activePlaylist').children('li').get();
 	elems.sort(function(a,b){
-		var a = $(a).data(column);
-		var b = $(b).data(column);
+		var a = $(a).data(column).toLowerCase();
+		var b = $(b).data(column).toLowerCase();
 		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 	});
 	$('#activePlaylist').append(elems);
