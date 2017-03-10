@@ -1081,7 +1081,7 @@ li.dropHover{
 		/*display:none;*/
 	}
 	
-	#individual-playlist-header span span.header-interpret,
+	#individual-playlist-header span span.header-artist,
 	#individual-playlist-header span span.header-album,
 	#individual-playlist-header span span.header-opt,
 	#individual-playlist li span.interpret,
@@ -1232,7 +1232,7 @@ li.dropHover{
 		background-color:rgba(255,255,255,0.2);
 	}
 	
-	#individual-playlist-header span span.header-interpret,
+	#individual-playlist-header span span.header-artist,
 	#individual-playlist-header span span.header-album,
 	#individual-playlist-header span span.header-opt,
 	#individual-playlist li span.interpret,
