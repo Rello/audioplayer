@@ -186,19 +186,6 @@ class ScannerController extends Controller {
 			array_unshift($rowGenre,['id' =>0,'name' =>(string)$this->l10n->t('- choose -')]);
 			$resultData['genres'] = $rowGenre;
 			 
-			 //Genre
-			# $ArrayOfGenresTemp = \getid3_id3v1::ArrayOfGenres();   // get the array of genres
-			#$ArrayOfGenres[] = ['name' =>(string)$this->l10n->t('- choose -')];
-			#foreach ($ArrayOfGenresTemp as $key => $value) {      // change keys to match displayed value
-			#	$ArrayOfGenres[] = ['name' => $value];
-			#}
-			#
-			#unset($ArrayOfGenresTemp);                            // remove temporary array
-			#
-			#usort($ArrayOfGenres,array('OCA\audioplayer\Controller\ScannerController','compareGenreNames'));   
-			#                   
-			# $resultData['genres'] = $ArrayOfGenres;
-			 
 			$result = [
 				'status' => 'success',
 				'data' => $resultData,
@@ -215,10 +202,6 @@ class ScannerController extends Controller {
 			return $response;
 		}
 		
-	}
-	
-	public static function compareGenreNames($a, $b) {
-			return \OCP\Util::naturalSortCompare($a['name'], $b['name']);
 	}
 	
 	/**
