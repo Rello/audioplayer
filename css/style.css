@@ -370,20 +370,20 @@ padding-left:10px;
 	position:relative;
 	float:left;
 	display:block;
-	min-width:40%;
+	min-width:30%;
 }
 
 #individual-playlist-header  span.header-artist{
 	position:relative;
 	float:left;
 	display:block;
-	min-width:20%;	
+	min-width:25%;	
 }
 #individual-playlist-header span.header-album{
 	position:relative;
 	float:left;
 	display:block;
-	min-width:20%;	
+	min-width:25%;	
 }
 
 #individual-playlist-header  span.header-time{
