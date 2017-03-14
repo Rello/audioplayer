@@ -1212,7 +1212,9 @@ li.dropHover{
 		width:70%;
 	}
 	
-	#individual-playlist li span.time{
+	#individual-playlist li span.time,
+	#individual-playlist-header span.header-time
+	{
 		right:10px;
 	}
 	
