@@ -363,7 +363,9 @@ padding-left:10px;
 	position:relative;
 	float:left;
 	display:block;
-	width:45px;
+	width: 42px;
+	text-align: right;
+	padding-right: 5px;
 }
 
 #individual-playlist-header  span.header-title{
@@ -1029,7 +1031,6 @@ li.dropHover{
 		/*display:none;*/
 	}
 	
-	#individual-playlist-header span span.header-num,
 	#individual-playlist-header span span.header-artist,
 	#individual-playlist-header span span.header-album,
 	#individual-playlist-header span span.header-opt,
@@ -1041,9 +1042,10 @@ li.dropHover{
 		display:none;
 	}
 
-	#individual-playlist-header span span.header-title,
+	#individual-playlist-header span span.header-num
 	{
-		padding-left: 20px;
+		width: 17px;
+		visibility:hidden
 	}
 
 	#individual-playlist li span.title{
@@ -1188,7 +1190,6 @@ li.dropHover{
 		background-color:rgba(255,255,255,0.2);
 	}
 	
-	#individual-playlist-header span span.header-num,
 	#individual-playlist-header span span.header-artist,
 	#individual-playlist-header span span.header-album,
 	#individual-playlist-header span span.header-opt,
@@ -1201,9 +1202,10 @@ li.dropHover{
 		display:none;
 	}
 
-	#individual-playlist-header span span.header-title,
+	#individual-playlist-header span span.header-num
 	{
-		padding-left: 20px;
+		width: 17px;
+		visibility:hidden
 	}
 
 	#individual-playlist li span.title{
