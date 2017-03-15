@@ -434,9 +434,19 @@ class ScannerController extends Controller {
 	 * 
 	 */
 	public function scanForAudios($userId = null, $output = null, $debug = null) {
+
+		$pProgresskey 			= $this -> params('progresskey');
+		$scanstop 				= $this -> params('scanstop');
+		$this->occ_job 			= false;
+		
+		if (isset($scanstop))	{
+			\OC::$server->getCache()->remove($pProgresskey);
+			$params = ['status' => 'stopped'];
+			$response = new JSONResponse($params);
+			return $response;				
+		}
 	
 		// check if scanner is started from web or occ
-		$this->occ_job = false;
 		if($userId !== null) {
 			$this->occ_job = true;
 			$this->userId = $userId;
@@ -444,6 +454,7 @@ class ScannerController extends Controller {
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		} 
 		
+		$this->progresskey 		= $pProgresskey;
 		$parentId_prev			= false;
 		$counter 				= 0;
 		$counter_new 			= 0;
@@ -473,37 +484,23 @@ class ScannerController extends Controller {
 								'option_tags_html'=>$option_tags_html
 								));
 
-		$pProgresskey = $this -> params('progresskey');
-		$pGetprogress = $this -> params('getprogress');
+		// ??? to be checked why ???
 		\OC::$server->getSession()->close();
-				
-		if (isset($pProgresskey) && isset($pGetprogress)) {
-				$aCurrent = \OC::$server->getCache()->get($pProgresskey);
-				$aCurrent = json_decode($aCurrent);
-				
-				$numSongs = (isset($aCurrent->{'all'})?$aCurrent->{'all'}:0);
-				$currentSongCount = (isset($aCurrent->{'current'})?$aCurrent->{'current'}:0);
-				$currentSong = (isset($aCurrent->{'currentsong'})?$aCurrent->{'currentsong'}:'');
-				$percent = (isset($aCurrent->{'percent'})?$aCurrent->{'percent'}:'');
-			
-				if($percent === ''){
-					$percent = 0;
-				}
-				$params = ['status' => 'success', 'percent' =>$percent , 'currentmsg' => $currentSong.' '.$percent.'% ('.$currentSongCount.'/'.$numSongs.')'];
-				$response = new JSONResponse($params);
-				return $response;	
-		}
-	
+
+		if(!$this->occ_job) $this->updateProgress(0, $output, $debug);
+					
 		// get only the relevant audio files
 		$audios = $this->getAudioObjects($output, $debug);
-		
-		$this->progresskey = $pProgresskey;
-		$currentIntArray=['percent' => 0, 'all' => $this->numOfSongs, 'current' => 0, 'currentsong' => ''];
-		if(!$this->occ_job) \OC::$server->getCache()->set($this->progresskey, $currentIntArray, 100);
-		    								
+			    								
 		if ($debug) $output->writeln("Start processing of <info>ID3s</info>");
 		foreach($audios as $audio) {
 			
+				//check if scan is still supposed to run, or if dialog was closed in web already
+				if (!$this->occ_job) {
+					$scan_running = \OC::$server->getCache()->get($pProgresskey);
+					if (!$scan_running) break;
+				}
+
 				$this->currentSong = $audio->getPath();
 				$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100), $output, $debug);
 				$counter++;
@@ -774,6 +771,32 @@ class ScannerController extends Controller {
 		}else{
 			return false;
 		}
+	}
+
+	/**
+	 * Report scanning Progress back to web frontend - e.g. progress bar
+	 * @NoAdminRequired
+	 * 
+	 */
+	public function getProgress() {
+		$pProgresskey = $this -> params('progresskey');
+		\OC::$server->getSession()->close();
+					
+		$aCurrent = \OC::$server->getCache()->get($pProgresskey);
+		if ($aCurrent) {
+				$aCurrent = json_decode($aCurrent);
+				
+				$numSongs = (isset($aCurrent->{'all'})?$aCurrent->{'all'}:0);
+				$currentSongCount = (isset($aCurrent->{'current'})?$aCurrent->{'current'}:0);
+				$currentSong = (isset($aCurrent->{'currentsong'})?$aCurrent->{'currentsong'}:'');
+				$percent = (isset($aCurrent->{'percent'})?$aCurrent->{'percent'}:0);
+			
+				$params = ['status' => 'success', 'percent' =>$percent , 'msg' => $currentSong , 'prog' => $percent.'% ('.$currentSongCount.' / '.$numSongs.')'];
+		} else {
+			$params = ['status' => 'false'];
+		}
+		$response = new JSONResponse($params);
+		return $response;	
 	}
 
 	/*
