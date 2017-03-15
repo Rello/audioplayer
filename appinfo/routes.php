@@ -26,6 +26,7 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'playlist#removePlaylist', 'url' => '/removeplaylist', 'verb' => 'GET'],
 	['name' => 'playlist#updatePlaylist', 'url' => '/updateplaylist', 'verb' => 'GET'],
 	['name' => 'scanner#getImportTpl', 'url' => '/getimporttpl', 'verb' => 'GET'],
+	['name' => 'scanner#getProgress', 'url' => '/getprogress', 'verb' => 'POST'],
 	['name' => 'scanner#scanForAudios', 'url' => '/scanforaudiofiles', 'verb' => 'POST'],
 	['name' => 'scanner#editAudioFile', 'url' => '/editaudiofile', 'verb' => 'GET'],
 	['name' => 'scanner#saveAudioFileData', 'url' => '/saveaudiofiledata', 'verb' => 'POST'],
