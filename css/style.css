@@ -991,12 +991,13 @@ li.dropHover{
 #audios_import_done{
 	display:none;
 }
-#audios_import_process_message, 
-#audios_import_status, 
-#audios_import_form_message{
+
+#audios_import_process_message,
+#audios_import_process_progress,
+#audios_import_done_message{
 	text-align:center;
 }
-#audios_import_form_message{font-weight: bold;}
+
 .contacts_import_warning{border-color: #fc3333;}
 #audios_import_dialog{
 	padding:0;
