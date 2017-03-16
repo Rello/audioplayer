@@ -247,9 +247,7 @@ class CategoryController extends Controller {
 
 	
 	private function getItemsforCatagory($category,$categoryId){
-
 		$aTracks=array();
-
 		if($category === 'Artist') {
 			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -316,18 +314,24 @@ class CategoryController extends Controller {
 				$result = $stmt->execute(array($categoryId, $this->userId));
 		}
 				
-		while( $row = $result->fetchRow()) {		
+		while( $row = $result->fetchRow()) {
+			$file_not_found = false;	
 			try {
 				$path = \OC\Files\Filesystem::getPath($row['file_id']);
 			} catch (\Exception $e) {
 				$file_not_found = true;
-       		}
-		if ($row['cover'] === null) {
-			$row['cover_id'] = '';
-		} 
- 		array_splice($row, 8, 2);
-		$row['link'] = '?file='.rawurlencode($path);
-		$aTracks[]=$row;
+       			}
+       		
+       			if($file_not_found === false){
+				if ($row['cover'] === null) {
+					$row['cover_id'] = '';
+				} 
+ 				array_splice($row, 8, 2);
+				$row['link'] = '?file='.rawurlencode($path);
+				$aTracks[]=$row;
+			}else{
+				$this->deleteFromDB($row['id'],$row['cover_id']);
+			}	
 		}
 		
 		if(empty($aTracks)){
@@ -336,5 +340,17 @@ class CategoryController extends Controller {
  			return $aTracks;
 		}
 	}
-	
+
+	private function deleteFromDB($Id,$iAlbumId){		
+		$stmtCountAlbum = $this->db->prepareQuery( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
+		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
+		$rowAlbum = $resultAlbumCount->fetchRow();
+		if((int)$rowAlbum['ALBUMCOUNT'] === 1){
+			$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
+			$stmt2->execute(array($iAlbumId, $this->userId));
+		}
+		
+		$stmt = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
+		$stmt->execute(array($this->userId, $Id));		
+	}
 }
