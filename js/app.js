@@ -1525,12 +1525,14 @@ Audios.prototype.scanSend = function() {
 				$('#audios_import_done').css('display', 'block');
 				$('#audios_import_done_message').html(data.message);
 				
-				if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Album') {
-					$("#category_selector").val($this.category_selectors[0]);
-					$this.loadCategory($this.category_selectors[0]);
-				} else {
-					$this.loadAlbums();
-				}
+				$this.get_uservalue('category', function(someElement) {
+					if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Album') {
+						$("#category_selector").val($this.category_selectors[0]);
+						$this.loadCategory($this.category_selectors[0]);
+					} else {
+						$this.loadAlbums();
+					}
+				});
 			}else{
 				$this.progresskey = '';
 				$('#audios_import_progressbar').progressbar('option', 'value', 100);
