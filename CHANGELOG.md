@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - not playing from shared subfolders [#139](https://github.com/rello/audioplayer/issues/139)
 - mobile browser support [#141](https://github.com/rello/audioplayer/issues/141)
 - scan progress dialog reworked [#153](https://github.com/rello/audioplayer/issues/153)
+- cleaning up deleted audio files [#154](https://github.com/rello/audioplayer/issues/154)
 
 ## 1.4.1 - 2017-01-26
 ### Added
