@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - padding in share player
 
 ### Fixed
+- handling of multiple artists of an album [#13](https://github.com/rello/audioplayer/issues/13)
 - album cover in soundbar [#133](https://github.com/rello/audioplayer/issues/133)
 - scanner adjustments [#137](https://github.com/rello/audioplayer/issues/137) [#140](https://github.com/rello/audioplayer/issues/140) [#145](https://github.com/rello/audioplayer/issues/145)
 - not playing from shared subfolders [#139](https://github.com/rello/audioplayer/issues/139)
