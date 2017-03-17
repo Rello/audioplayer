@@ -681,14 +681,20 @@ class ScannerController extends Controller {
 				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );
 				$stmt->execute(array((int)$sYear, $iArtistId, $insertid, $this->userId));
 			} else {
-				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ? WHERE `id` = ? AND `user_id` = ?' );					$stmt->execute(array((int)$sYear, $insertid, $this->userId));
+				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `year`= ? WHERE `id` = ? AND `user_id` = ?' );					
+				$stmt->execute(array((int)$sYear, $insertid, $this->userId));
 			} 
 			$this->iAlbumCount++;
 			return $insertid;
 		}else{
-			$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ?' );
+			$stmt = $this->db->prepareQuery( 'SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ?' );
 			$result = $stmt->execute(array($this->userId, $sAlbum));
 			$row = $result->fetchRow();
+			if ((int)$row['artist_id'] !== (int)$iArtistId) {
+				$various_id = $this->writeArtistToDB($this->l10n->t('Various Artists'));
+				$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_albums` SET `artist_id`= ? WHERE `id` = ? AND `user_id` = ?' );					
+				$stmt->execute(array($various_id, $row['id'], $this->userId));
+			} 
 			return $row['id'];
 		}
 	}
