@@ -28,7 +28,7 @@ Latest versions of Chrome, Firefox, and Safari. Mobile browsers may be restricte
 Internet Explorer and Edge are not supported.
 
 ### Languages
-English (en), Deutsch (Persönlich) (de), Deutsch (Förmlich) (de_DE), Polski (pl), Русский (ru), Українська (uk), 正體中文（臺灣） (zh_TW)
+English (en), German (de), German (Germany) (de_DE), Polish (pl), Russian (ru), Ukrainian (uk), Chinese (Taiwan) (zh_TW)
 
 ## Documentation
 - [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
