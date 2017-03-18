@@ -43,7 +43,7 @@ English (en), German (de), German (Germany) (de_DE), Polish (pl), Russian (ru), 
 Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only!
 
 ## Versioning and Changelog
-The [development](https://github.com/rello/audioplayer/wiki/development) of Audio Player follows the guidelines of [Semantic Versioning](http://semver.org/) in the `MAJOR.MINOR.PATCH` format.  
+The [development](https://github.com/rello/audioplayer/wiki/development) of Audio Player follows the guidelines of [Semantic Versioning](http://semver.org/) in the `MAJOR.MINOR.PATCH` format.  
 For a changelog please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
 
 ## Maintainers
