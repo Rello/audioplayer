@@ -24,7 +24,6 @@ class Result extends \OCP\Search\Result {
 	 */
 	public $type = 'audioplayer';
 
-
 	/**
 	 * Create a new file search result
 	 * @param array $data file data given by provider
@@ -36,8 +35,5 @@ class Result extends \OCP\Search\Result {
 			$this->link = $data['link'];
 			$this->icon = $data['icon'];
 		}
-		
 	}
-
-	
 }
