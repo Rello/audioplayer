@@ -1,6 +1,6 @@
 # ![Icon](https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_icon.png) Audio Player
 
-[![License](https://img.shields.io/badge/license-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Version](https://img.shields.io/github/release/rello/audioplayer.svg)](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md) [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)   [![Donate](https://img.shields.io/badge/donate-Bitcoin-blue.svg)](https://github.com/rello/audioplayer/wiki/donate) [![Donate](https://img.shields.io/badge/donate-PayPal-green.svg)](https://github.com/rello/audioplayer/wiki/donate)
+[![License](https://img.shields.io/badge/license-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   [![Version](https://img.shields.io/github/release/rello/audioplayer.svg)](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md) [![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)   [![Donate](https://img.shields.io/badge/donate-Bitcoin-blue.svg)](https://github.com/rello/audioplayer/wiki/donate) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)
 
 A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support and share player.
 
