@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - mobile browser support [#141](https://github.com/rello/audioplayer/issues/141)
 - scan progress dialog reworked [#153](https://github.com/rello/audioplayer/issues/153)
 - cleaning up deleted audio files [#154](https://github.com/rello/audioplayer/issues/154)
+- search integration [#155](https://github.com/rello/audioplayer/issues/155)
 
 ## 1.4.1 - 2017-01-26
 ### Added
