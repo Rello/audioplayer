@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - selection order and naming
 - cover art for "Unknown/&#8203;Various Artists"
 - padding in share player
+- search integration improvements [#155](https://github.com/rello/audioplayer/issues/155)
 
 ### Fixed
 - handling of multiple album artists of an album [#13](https://github.com/rello/audioplayer/issues/13)
