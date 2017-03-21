@@ -25,16 +25,34 @@ var Audios = function(){
 
 Audios.prototype.init = function() {
 	$this = this;
+	
+	var searchresult = decodeURI(location.hash).substr(1);
+	if(searchresult !== '') {
+		var locHashTemp = searchresult.split('-');
+	}
+		
 	myAudios.get_uservalue('category', function(someElement) {
-		if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Album') {
+		// Category View
+		if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Albums') {		
+			window.location.href='#';
+			if(searchresult !== '') $this.category_selectors = locHashTemp;
 			$("#category_selector").val($this.category_selectors[0]);
-			myAudios.loadCategory($this.category_selectors[0]);
+			myAudios.loadCategory();
+		// Album View
 		} else {
-			$this.loadAlbums();
+			// Searchresult != Album will still trigger the category view
+			if(searchresult !== '' && locHashTemp[0] !== 'Album') {
+				window.location.href='#';
+				$this.category_selectors = locHashTemp;
+				$("#category_selector").val($this.category_selectors[0]);
+				myAudios.loadCategory();
+			// Searchresult = Album will select the album
+			} else {
+				$this.loadAlbums();
+			}
 		}
 	});
 	myAudios.get_uservalue('navigation');
-
 
 	this.initKeyListener();
 	this.initPhotoDialog();
@@ -121,8 +139,6 @@ Audios.prototype.PlaylistSongs = function(){
 			delay : 500,
 			start : function(event, ui) {
 				ui.helper.addClass('draggingSong');
-			
-				
 			},
 			stop:function(){
 				//OC.Snapper.close();
@@ -163,14 +179,8 @@ Audios.prototype.PlaylistSongs = function(){
 				 var myCover=$('.album.is-active .albumcover');
 				 if(myCover.css('background-image') == 'none'){
 					$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':myCover.css('background-color'),'color':myCover.css('color'),'background-image':'none'});
-					$('.sm2-playlist-cover').click(function(){
-						window.location.href='#show-'+myCover.data('album');
-					});
 				}else{
 					$('.sm2-playlist-cover').text('').css({'background-image':myCover.css('background-image')});
-					$('.sm2-playlist-cover').click(function(){
-						window.location.href='#show-'+myCover.data('album');
-					});
 				}
 			}
 			
@@ -188,33 +198,27 @@ Audios.prototype.PlaylistSongs = function(){
 					$this.AudioPlayer.actions.play();
 				}
 			}
-		
-			
 			return false;
-					 
-		});
-		
+		});		
 	});
-
 };
+
 Audios.prototype.AlbumClickHandler = function(event){
 		var AlbumId = '';
 		
 		if(event.albumId !== undefined){
-			AlbumId=event.albumId;
+			AlbumId='album-' + event.albumId;
 		}else{
 			event.preventDefault();
 			AlbumId=$(this).attr('data-album');
 		}
-		
-		
+				
 		var iArrowLeft =  72;
 		var iTop = 80;
 		var iScroll = 120;
 		var iAnimateTime = 200;
 		var iSlideDown = 200;
 		var iSlideUp = 200;
-		
 		
 		if($('.rowlist:first-child .album').length === 2){
 		  	iTop = 50;
@@ -229,7 +233,6 @@ Audios.prototype.AlbumClickHandler = function(event){
 	 		var activeAlbumContainer='.songcontainer[data-album="'+AlbumId+'"]';
 			$(activeAlbumContainer+' .open-arrow').css('left',$(activeAlbum).position().left+iArrowLeft);
 	 	 	$(activeAlbum).addClass('is-active');
-	 	 	window.location.href = '#'+AlbumId;
 	 	 	$(activeAlbum).find('.artist').hide();
 	 	 	
 	 	 	$(activeAlbumContainer).css({
@@ -267,8 +270,6 @@ Audios.prototype.AlbumClickHandler = function(event){
 	 	 	$(activeAlbumContainer+' .open-arrow').css('left',$(activeAlbum).position().left+iArrowLeft);
 	 	 	$(activeAlbum).addClass('is-active');
 	 	 	
-	 	 	window.location.href = '#'+AlbumId;
-	 	 	
 	 	 	$(activeAlbum).find('.artist').hide();
 	 	 	
 	 	 	$(activeAlbumContainer).css({
@@ -298,7 +299,6 @@ Audios.prototype.AlbumClickHandler = function(event){
 			$(activeAlbumContainer).slideUp(iSlideUp, function() {
 			   $('.album').removeClass('is-active');
 			   $('.album').find('.artist').show();
-			    window.location.href = '#';
 			    //$('.rowlist').removeClass('margin-bottom');
 			    $(activeAlbum).parent('.rowlist').css('margin-bottom',0);
 		  });
@@ -462,14 +462,8 @@ Audios.prototype.loadAlbums = function(){
 							 var myCover=$('.album.is-active .albumcover');
 							  if(myCover.css('background-image') == 'none'){
 								$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':myCover.css('background-color'),'color':myCover.css('color'),'background-image':'none'});
-								$('.sm2-playlist-cover').click(function(){
-									window.location.href='#show-'+myCover.data('album');
-								});
 							}else{
 								$('.sm2-playlist-cover').text('').css({'background-image':myCover.css('background-image')});
-								$('.sm2-playlist-cover').click(function(){
-									window.location.href='#show-'+myCover.data('album');
-								});
 							}
 						 }
 			 		});
@@ -518,7 +512,17 @@ Audios.prototype.loadAlbums = function(){
 			 		divSongContainer[i].append(aClose);			 					 		
 				 });				 
 				$this.AlbumContainer.append(divSongContainer);				  
-				$this.PlaylistSongs();				
+				$this.PlaylistSongs();
+				
+				var searchresult = decodeURI(location.hash).substr(1);
+				if(searchresult !== '') {
+					var locHashTemp = searchresult.split('-');
+					evt={};
+					evt.albumId = locHashTemp[1];
+					window.location.href='#';
+					myAudios.AlbumClickHandler(evt);
+				}
+				
 			}else{
 				$this.AlbumContainer.show();
 				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
@@ -563,7 +567,7 @@ Audios.prototype.loadSongsRow = function(elem,albumName){
 Audios.prototype.loadCategory = function(category){	
 
 	var $this = this;
-	var category_selectors = $this.category_selectors;
+	var category = $this.category_selectors[0];
 	$this.aSongIdsCategory=[];
 	var playlistsdata=[];
 	$('#addPlaylist').addClass('mp3_hide');
@@ -627,8 +631,8 @@ Audios.prototype.loadCategory = function(category){
 							$('.toolTip').tipsy({
 								html : true
 							});
-							if ($('#category_selector').val() === category_selectors[0] && category_selectors[1] && category_selectors[1]!='undefined') {
-								$('#myCategory li[data-id="'+category_selectors[1]+'"]').addClass('activeIndiPlaylist');
+							if ($('#category_selector').val() === $this.category_selectors[0] && $this.category_selectors[1] && $this.category_selectors[1]!='undefined') {
+								$('#myCategory li[data-id="'+$this.category_selectors[1]+'"]').addClass('activeIndiPlaylist');
 								$this.loadIndividualCategory();
 							}
 						}
@@ -756,9 +760,6 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 			 		
 			 							$('.sm2-playlist-cover').attr({'style':addCss}).text(addDescr);
 										$('.sm2-playlist-target').text('');
-										$('.sm2-playlist-cover').click(function(){
-											window.location.href='#show-playlist-'+$this.PlaylistContainer.data('playlist');
-										});
 										$this.PlaylistContainer.addClass('isPlaylist');
 										if($this.AudioPlayer == null){
 											$this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
@@ -1123,7 +1124,7 @@ Audios.prototype.newPlaylist = function(plName){
 					window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 				}
 		}
-});
+	});
 };
 
 Audios.prototype.renamePlaylist = function(evt){
@@ -1524,7 +1525,7 @@ Audios.prototype.scanSend = function() {
 				$('#audios_import_process').css('display', 'none');
 				$('#audios_import_done').css('display', 'block');
 				$('#audios_import_done_message').html(data.message);
-				
+
 				$this.get_uservalue('category', function(someElement) {
 					if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Album') {
 						$("#category_selector").val($this.category_selectors[0]);
@@ -1571,7 +1572,7 @@ Audios.prototype.scanUpdate = function() {
 				$('#audios_import_done').css('display', 'block');
 			}
 		}else{
-			alert("getprogress error");
+			//alert("getprogress error");
 		}
 	}.bind(this));
 	return 0;
@@ -1598,7 +1599,7 @@ Audios.prototype.get_uservalue = function(user_type, callback) {
 
 Audios.prototype.set_uservalue = function(user_type,user_value) {
   		if(user_type) {
-  			$this.category_selectors = user_value.split('-');
+			if(user_type === 'category') $this.category_selectors = user_value.split('-');
     		$.ajax({
 				type : 'GET',
 				url : OC.generateUrl('apps/audioplayer/setvalue'),
@@ -1737,6 +1738,27 @@ $(window).resize(_.debounce(function() {
 
 var myPlayer=null;	
 
+window.onhashchange = function() {
+	var locHash = decodeURI(location.hash).substr(1);
+	if(locHash !== ''){
+		var locHashTemp = locHash.split('-');
+		
+		$('#searchresults').addClass('hidden');
+		window.location.href='#';
+		if (locHashTemp[0] === 'Album' && $this.category_selectors[0] === 'Albums') {
+			evt={};
+			evt.albumId = locHashTemp[1];
+			myAudios.AlbumContainer.show();
+			myAudios.PlaylistContainer.hide();
+			myAudios.AlbumClickHandler(evt);
+		}else{
+			$this.category_selectors = locHashTemp;
+			$("#category_selector").val(locHashTemp[0]);
+			myAudios.loadCategory();
+		}
+	}
+};	
+
 $(document).ready(function() {
 
 		myAudios = new Audios();
@@ -1837,7 +1859,7 @@ $(document).ready(function() {
 			$(this).addClass('bAktiv');
 			myAudios.AlbumContainer.show();
 		}
-  		myAudios.set_uservalue('category','Album');
+  		myAudios.set_uservalue('category','Albums');
 	});
 	
 	$(document).on('click', '#resetAudios', function () {
@@ -1957,10 +1979,11 @@ $(document).ready(function() {
 	
 	$('#category_selector').change(function() {
 		$('#newPlaylist').addClass('mp3_hide');
-  		var user_value = $('#category_selector').val();
+  		$this.category_selectors[0] = $('#category_selector').val();
+  		$this.category_selectors[1] = '';
   		$('#myCategory').html('');
-  		if (user_value != '' ) {
-  			myAudios.loadCategory(user_value);
+  		if ($this.category_selectors[0] != '' ) {
+  			myAudios.loadCategory();
   		}
 	});
 
