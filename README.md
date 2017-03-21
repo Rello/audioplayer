@@ -19,6 +19,7 @@ A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support
 - One Click Play from Files app
 - External cover support
 - Mobile view support
+- Search integration
 
 ### Supported Formats
 MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
