@@ -280,55 +280,55 @@ class MusicController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public  function searchProperties($searchquery){
-		$SQL="SELECT  `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
+	public function searchProperties($searchquery){
+		$searchresult = array();
+		$SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
-		$aAlbum ='';
-		if(!is_null($result)) {
-			while( $row = $result->fetchRow()) {
-			
-				$aAlbum[] = [
-					'id' => $row['id'],
-					'name' => 'Album: '.$row['name'],
+		if (!is_null($result)) {
+			while( $row = $result->fetchRow()) {			
+				$searchresult[] = [
+					'id' => 'Album-'.$row['id'],
+					'name' => $this->l10n->t('Album').': '.$row['name'],
 				];
 			}
 		}
-		
-		$SQL="SELECT  `AT`.`title`,`AA`.`name`,`AA`.`id`,`AR`.`name` AS artistname FROM `*PREFIX*audioplayer_tracks` `AT` 
-					LEFT JOIN `*PREFIX*audioplayer_albums` `AA` ON `AT`.`album_id` = `AA`.`id`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AR` ON `AT`.`artist_id` = `AR`.`id`
-					WHERE   (LOWER(`AT`.`title`) LIKE LOWER(?)  OR LOWER(`AR`.`name`) LIKE LOWER(?) ) AND `AT`.`user_id` = ?";
-				 
+
+		$SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_artists` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
 		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', '%'.addslashes($searchquery).'%', $this->userId));
-		$aTrack ='';
+		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
 		if(!is_null($result)) {
 			while( $row = $result->fetchRow()) {
-				$aTrack[] = [
-					'id' => $row['id'],
-					'name' => 'Track: '.$row['title'].' - '.$row['artistname'].'  ('.$row['name'].')',
+				$searchresult[] = [
+					'id' => 'Artist-'.$row['id'],
+					'name' => $this->l10n->t('Artist').': '.$row['name'],
 				];
 			}
 		}
 		
-		if(is_array($aAlbum) && is_array($aTrack)){
-			$result=array_merge($aAlbum,$aTrack);
-			return $result;
-		}elseif(is_array($aAlbum) && !is_array($aTrack)){
-			return $aAlbum;
-		}elseif(is_array($aTrack) && !is_array($aAlbum)){
-				//\OCP\Util::writeLog('audioplayer','COUNTARRAYALBUM:'.count($aAlbum),\OCP\Util::DEBUG);		
-			return $aTrack;
-		}elseif(!is_array($aTrack) && !is_array($aAlbum)){
+		$SQL = "SELECT `album_id`, `title` FROM `*PREFIX*audioplayer_tracks` WHERE (LOWER(`title`) LIKE LOWER(?)) AND `user_id` = ?";
+		$stmt = $this->db->prepareQuery($SQL);
+		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
+		if(!is_null($result)) {
+			while( $row = $result->fetchRow()) {
+				$searchresult[] = [
+					'id' => 'Album-'.$row['album_id'],
+					'name' => $this->l10n->t('Title').': '.$row['title'],
+				];
+			}
+		}
+		
+		if(is_array($searchresult)) {
+			return $searchresult;
+		} else {
 			return array();
 		}
 	}
-	
+
 	/**
-	 * @NoAdminRequired
-	 * 
-	 */
+	* @NoAdminRequired
+	* 
+	*/
 	public function resetMediaLibrary($userId = null, $output = null){
 	
 		if($userId !== null) {
@@ -414,11 +414,9 @@ class MusicController extends Controller {
 	}
 
 	/**
-	*@NoAdminRequired
-	 * @NoCSRFRequired
-	 * 
-	 * 
-	 */
+	* @NoAdminRequired
+	* @NoCSRFRequired
+	*/
 	public function getCover(){
 		$album=$this->params('album');
 		$cover = '';
