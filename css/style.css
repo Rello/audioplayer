@@ -223,6 +223,7 @@ i#scanAudiosFirst{
 }
 #myCategory li:hover{
 	background-color:#e7e7e7;
+	font-weight:bold;
 }
 
 #myCategory li a.icon-rename{
@@ -280,19 +281,16 @@ i#scanAudiosFirst{
 	color:#ccc;
 }
 
-#myCategory li i.ioc-delete:hover{
+#myCategory li i.ioc-delete:hover
+{
 	color:#A9302A;
 }
 
-
-
 #alben:hover, 
 #alben.bAktiv,
-#myCategory li:hover,
-#myCategory li.activeIndiPlaylist, 
+#myCategory li.activeIndiPlaylist 
 {
-	font-weight:bold;
-	
+	font-weight:bold;	
 }
 #myCategory li i.ioc-sort{
 	display:none;
