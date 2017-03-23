@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - sorting of lists [#122](https://github.com/rello/audioplayer/issues/122)
 - albums to selection [#132](https://github.com/rello/audioplayer/issues/132)
+- highlighting and focusing to selection
 - separate scrolling for navigation and content [#144](https://github.com/rello/audioplayer/issues/144)
 
 ### Changed
