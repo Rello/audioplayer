@@ -653,7 +653,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream');
 
 	if(typeof evt === 'undefined'){
-		EventTarget=$('#myCategory li.activeIndiPlaylist span.pl-name');		
+		EventTarget=$('#myCategory li.activeIndiPlaylist span');		
 		bRreload = true;
 		var PlaylistId = EventTarget.attr('data-plid');
 	}else{
