@@ -970,7 +970,7 @@ class ScannerController extends Controller {
 		if(is_numeric($value) && ((int)$value) > 0) {
 			$value = (int)$value;
 		} else {
-			$value = null;
+			$value = 0;
 		}
 		return $value;
 	}
