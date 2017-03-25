@@ -109,6 +109,8 @@ class MusicController extends Controller {
 			$result = $stmt->execute(array($fileowner, $fileid));
 			$row = $result->fetchRow();
 						
+			if($row['year'] === '0') $row['year'] = $this->l10n->t('Unknown');
+
 			if($row['title']){
 				$result=[
 					'status' => 'success',
