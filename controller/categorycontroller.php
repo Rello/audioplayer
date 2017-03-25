@@ -149,6 +149,7 @@ class CategoryController extends Controller {
 		$aPlaylists=array();
 		while( $row = $result->fetchRow()) {
  			array_splice($row, 2, 1);
+ 			if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
 			$row['counter'] = $this->getCountForCategory($category,$row['id']);
 			$aPlaylists[]=$row;
 		}
