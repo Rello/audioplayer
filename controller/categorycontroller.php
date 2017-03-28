@@ -97,6 +97,7 @@ class CategoryController extends Controller {
 	
 	private function getCategoryforUser($category){
 	
+		$aPlaylists=array();
 		if($category === 'Artist') {
 			$SQL="SELECT  distinct(AT.`artist_id`) AS `id`, AA.`name`, LOWER(AA.`name`) AS `lower` 
 						FROM `*PREFIX*audioplayer_tracks` AT
@@ -128,6 +129,12 @@ class CategoryController extends Controller {
 			 			WHERE  `user_id` = ?
 			 			ORDER BY LOWER(`name`) ASC
 			 			";
+			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X1", "name" =>$this->l10n->t('Favorites'));
+			$aPlaylists[] = array("id"=>"X2", "name" =>$this->l10n->t('Recently Added'));
+			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X3", "name" =>$this->l10n->t('Recently Played'));
+			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
+			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X5", "name" =>$this->l10n->t('Top Rated'));
+			$aPlaylists[] = array("id"=>"", "name" =>"");
 		} elseif ($category === 'Folder') {
 			$SQL="SELECT  distinct(FC.`fileid`) AS `id`,FC.`name`, LOWER(FC.`name`) AS `lower` 
 						FROM `*PREFIX*audioplayer_tracks` AT
@@ -248,72 +255,62 @@ class CategoryController extends Controller {
 
 	
 	private function getItemsforCatagory($category,$categoryId){
-		$aTracks=array();
+
+		$aTracks=array();		
+		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
+		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
+						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+						LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
+		$SQL_order	= " ORDER BY LOWER(`AT`.`title`) ASC";
+
 		if($category === 'Artist') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
-			 		WHERE  `AT`.`artist_id` = ? 
-			 		AND `AT`.`user_id` = ?
-			 		ORDER BY LOWER(`AT`.`title`) ASC";
+			$SQL = 	$SQL_select . $SQL_from .
+				"WHERE  `AT`.`artist_id` = ? AND `AT`.`user_id` = ?" .
+			 	$SQL_order;
 		} elseif ($category === 'Genre') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
-					WHERE `AT`.`genre_id` = ?  
-					AND `AT`.`user_id` = ?
-					ORDER BY LOWER(`AT`.`title`) ASC";
+			$SQL = 	$SQL_select . $SQL_from .
+				"WHERE `AT`.`genre_id` = ? AND `AT`.`user_id` = ?" .
+			 	$SQL_order;
 		} elseif ($category === 'Year') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
-					WHERE `AT`.`year` = ? 
-					AND `AT`.`user_id` = ?
-					ORDER BY LOWER(`AT`.`title`) ASC";
+			$SQL = 	$SQL_select . $SQL_from .
+				"WHERE `AT`.`year` = ? AND `AT`.`user_id` = ?" .
+			 	$SQL_order;
 		} elseif ($category === 'Title') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
-					WHERE `AT`.`id` > ? 
-					AND `AT`.`user_id` = ? 
-					ORDER BY LOWER(`AT`.`title`) ASC";
+			$SQL = 	$SQL_select . $SQL_from .
+				"WHERE `AT`.`id` > ? AND `AT`.`user_id` = ?" .
+			 	$SQL_order;
 		} elseif ($category === 'Playlist') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`,`AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, `AP`.`sortorder`
-					FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
+			if ($categoryId === "X1") { // Favorites
+			} elseif ($categoryId === "X2") { // Recently Added
+				$SQL = 	$SQL_select . $SQL_from .
+			 		"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? 
+			 		ORDER BY `AT`.`file_id` DESC
+			 		Limit 25";
+			} elseif ($categoryId === "X3") { // Recently Played
+			} elseif ($categoryId === "X4") { // Most Played
+			} elseif ($categoryId === "X5") { // Top Rated
+			} else {
+				$SQL = $SQL_select ." , `AP`.`sortorder`" .
+					"FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
 					LEFT JOIN `*PREFIX*audioplayer_tracks` `AT` ON `AP`.`track_id` = `AT`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
 			 		WHERE  `AP`.`playlist_id` = ?
-			 		ORDER BY `AP`.`sortorder` ASC
-			 		";
+					AND `AT`.`user_id` = ? 
+			 		ORDER BY `AP`.`sortorder` ASC";
+			}
 		} elseif ($category === 'Folder') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
-					WHERE `AT`.`folder_id` = ? 
-					AND `AT`.`user_id` = ?
-					ORDER BY LOWER(`AT`.`title`) ASC";
+			$SQL = 	$SQL_select . $SQL_from .
+				"WHERE `AT`.`folder_id` = ? AND `AT`.`user_id` = ?" .
+			 	$SQL_order;
 		} elseif ($category === 'Album') {
-			$SQL="SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
- 					WHERE `AB`.`id` = ? 
-					AND `AB`.`user_id` = ?
-					ORDER BY LOWER(`AT`.`title`) ASC";
+			$SQL = 	$SQL_select . $SQL_from .
+ 				"WHERE `AB`.`id` = ? AND `AB`.`user_id` = ?" .
+			 	$SQL_order;
 		}
 
 		$stmt = $this->db->prepareQuery($SQL);
-		if ($category === 'Playlist') {
-			$result = $stmt->execute(array($categoryId));
-		} else {
-				$result = $stmt->execute(array($categoryId, $this->userId));
-		}
+		$result = $stmt->execute(array($categoryId, $this->userId));
 				
 		while( $row = $result->fetchRow()) {
 			$file_not_found = false;	
