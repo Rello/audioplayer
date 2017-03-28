@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - albums to selection [#132](https://github.com/rello/audioplayer/issues/132)
 - highlighting and focusing to selection
 - separate scrolling for navigation and content [#144](https://github.com/rello/audioplayer/issues/144)
+- first stage [#160](https://github.com/rello/audioplayer/issues/160) of Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
 
 ### Changed
 - front-end performance improvements [#130](https://github.com/rello/audioplayer/issues/130) [#149](https://github.com/rello/audioplayer/issues/149)
