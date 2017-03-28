@@ -44,36 +44,6 @@ class CategoryController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function getCategory_backup(){
-		$category=$this->params('category');
-			
-		$playlists= $this->getCategoryforUser($category);
-	
-		if(is_array($playlists)){
-			$aPlayLists= array();
-			foreach($playlists as $playinfo){
-				$aPlayLists[]=['info' => $playinfo];
-			}
-		
-			$result=[
-				'status' => 'success',
-				'data' => ['playlists' => $aPlayLists]
-			];
-		}else{
-			$result=[
-				'status' => 'success',
-				'data' => 'nodata'
-			];
-		}
-		$response = new JSONResponse();
-		$response -> setData($result);
-		return $response;
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * 
-	 */
 	public function getCategory(){
 		$category=$this->params('category');
 			
@@ -119,7 +89,7 @@ class CategoryController extends Controller {
 			 			ORDER BY `id` ASC
 			 			";
 		} elseif ($category === 'Title') {
-			$SQL="SELECT distinct('0') as `id` ,'".(string)$this->l10n->t('Titles')."' as `name`  
+			$SQL="SELECT distinct('0') as `id` ,'" . $this->l10n->t('Titles') . "' as `name`  
 						FROM `*PREFIX*audioplayer_tracks`
 			 			WHERE  `user_id` = ?
 			 			";
@@ -130,11 +100,11 @@ class CategoryController extends Controller {
 			 			ORDER BY LOWER(`name`) ASC
 			 			";
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X1", "name" =>$this->l10n->t('Favorites'));
-			$aPlaylists[] = array("id"=>"X2", "name" =>$this->l10n->t('Recently Added'));
+			$aPlaylists[] = array("id" => "X2", "name" => $this->l10n->t('Recently Added'));
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X3", "name" =>$this->l10n->t('Recently Played'));
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X5", "name" =>$this->l10n->t('Top Rated'));
-			$aPlaylists[] = array("id"=>"", "name" =>"");
+			$aPlaylists[] = array("id" => "", "name" => "");
 		} elseif ($category === 'Folder') {
 			$SQL="SELECT  distinct(FC.`fileid`) AS `id`,FC.`name`, LOWER(FC.`name`) AS `lower` 
 						FROM `*PREFIX*audioplayer_tracks` AT
@@ -153,7 +123,6 @@ class CategoryController extends Controller {
 			
 		$stmt =$this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($this->userId));
-		$aPlaylists=array();
 		while( $row = $result->fetchRow()) {
  			array_splice($row, 2, 1);
  			if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
@@ -226,7 +195,6 @@ class CategoryController extends Controller {
 		return $count;
 	}
 	
-
 	/**
 	 * @NoAdminRequired
 	 * 
@@ -259,8 +227,8 @@ class CategoryController extends Controller {
 		$aTracks=array();		
 		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
 		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
-						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-						LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
+					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
 		$SQL_order	= " ORDER BY LOWER(`AT`.`title`) ASC";
 
 		if($category === 'Artist') {
