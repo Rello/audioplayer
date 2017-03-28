@@ -568,6 +568,7 @@ Audios.prototype.loadCategory = function(category){
 
 	var $this = this;
 	var category = $this.category_selectors[0];
+	var category_id = $this.category_selectors[1];
 	$this.aSongIdsCategory=[];
 	var playlistsdata=[];
 	$('.sm2-bar-ui').show();
@@ -609,7 +610,7 @@ Audios.prototype.loadCategory = function(category){
 								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename Playlist')}).click($this.renamePlaylist.bind($this));
 								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.id,'title':t('audioplayer','Delete Playlist')}).click($this.deletePlaylist.bind($this));
 			
-								if (category === 'Playlist' ){
+								if (category === 'Playlist' && el.id.toString()[0] !== 'X' && el.id !== ''){
 									var spanName=$('<span/>')
 										.attr({'data-plid':el.id,'class':'pl-name-play'})
 										.text(el.name)
