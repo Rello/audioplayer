@@ -6,7 +6,7 @@ A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support
 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
-<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_lists.png" alt="Navigation" width="189" height="250" title="Navigation">     
+<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_lists.png" alt="Navigation" width="187" height="250" title="Navigation">     
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_share.png" alt="Share Player" width="171" height="250" title="Share Player">     
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_actions.png" alt="Action Menu" width="100" height="156" title="Action Menu">
 
