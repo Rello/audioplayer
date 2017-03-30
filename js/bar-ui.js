@@ -1015,6 +1015,11 @@
 
             setTitle(item);
 
+		// **********************************************************
+		// Notify Audio Player about next track e.g. for cover updates
+		// **********************************************************
+		$this.soundmanager_callback('onfinish');
+
             // play next
             this.play({
               url: playlistController.getURL()
@@ -1457,6 +1462,10 @@
 	        // don't play the same item again
 	        if (item && playlistController.data.selectedIndex !== lastIndex) {
 	          playLink(item.getElementsByTagName('a')[0]);
+			// **********************************************************
+			// Notify Audio Player about next track e.g. for cover updates
+			// **********************************************************
+			$this.soundmanager_callback('next');
 	        }
 		}
       },
@@ -1472,6 +1481,10 @@
 	        // don't play the same item again
 	        if (item && playlistController.data.selectedIndex !== lastIndex) {
 	          playLink(item.getElementsByTagName('a')[0]);
+			// **********************************************************
+			// Notify Audio Player about next track e.g. for cover updates
+			// **********************************************************
+			$this.soundmanager_callback('prev');
 	        }
 		}
       },
