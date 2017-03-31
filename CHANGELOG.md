@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 1.5.0 - 2017-03-31
 ### Added
 - sorting of lists [#122](https://github.com/rello/audioplayer/issues/122)
 - albums to selection [#132](https://github.com/rello/audioplayer/issues/132)
