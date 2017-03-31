@@ -540,22 +540,23 @@ class ScannerController extends Controller {
 					$artist=$ThisFileInfo['comments']['artist'][0];
 				}
 				$iArtistId= $this->writeArtistToDB($artist);
-				
+
 				# write albumartist if available
-				# if no albumartist, no artist is stored
-				# in musiccontroller loadArtistsToAlbum() we will use this
-				# if no album artist is stored, load all artists from the tracks
-				# if all the same - display it as album artist
-				# if different track-artists, display "various"
-				# if Album Artist is maintained
-				if(isset($ThisFileInfo['comments']['band'][0]) and rawurlencode($ThisFileInfo['comments']['band'][0]) !== '%FF%FE'){
-					$album_artist=$ThisFileInfo['comments']['band'][0];
-					$iAlbumArtistId= $this->writeArtistToDB($album_artist);
-					$iAlbumId = $this->writeAlbumToDB($album,(int)$year,$iAlbumArtistId);
-				} else {
-					$iAlbumId = $this->writeAlbumToDB($album,(int)$year,NULL);
+				# if no albumartist, NO artist is stored on album level
+				# in musiccontroller loadArtistsToAlbum() takes over deriving the artists from the album tracks
+				# MP3, FLAC & MP4 have different tags for albumartist
+				$iAlbumArtistId	= NULL;
+				$album_artist	= NULL;				
+				$keys		= ['band', 'album_artist', 'albumartist', 'album artist'];
+				for ($i = 0; $i < count($keys); $i++){
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
+						$album_artist=$ThisFileInfo['comments'][$keys[$i]][0];
+						break;
+					}
 				}
-				
+				if (isset($album_artist)) { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
+				$iAlbumId = $this->writeAlbumToDB($album,(int)$year,$iAlbumArtistId);
+
 				$name = $audio->getName();
 				if(isset($ThisFileInfo['comments']['title'][0]) and rawurlencode($ThisFileInfo['comments']['title'][0]) !== '%FF%FE'){
 					$name=$ThisFileInfo['comments']['title'][0];
