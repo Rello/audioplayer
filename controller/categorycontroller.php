@@ -293,6 +293,7 @@ class CategoryController extends Controller {
 					$row['cover_id'] = '';
 				} 
  				array_splice($row, 8, 2);
+				$path = rtrim($path,"/");
 				$row['link'] = '?file='.rawurlencode($path);
 				$aTracks[]=$row;
 			}else{
