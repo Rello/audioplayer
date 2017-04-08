@@ -3,8 +3,8 @@
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<summary>Audio Player for ownCloud and Nextcloud</summary>
-	<description>A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support and share player.</description>
-	<version>1.5.1</version>
+	<description>A versatile music player for FLAC, MP3, MP4, and more with playlist support and share player.</description>
+	<version>1.6.0-alpha.1</version>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
@@ -22,8 +22,8 @@
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_share.png</screenshot>
 	<dependencies>
 		<php min-version="5.6" max-version="7.1"/>
-		<owncloud min-version="9.0" max-version="9.2"/>
-		<nextcloud min-version="9" max-version="11" />
+		<owncloud min-version="9.0" max-version="10.0"/>
+		<nextcloud min-version="9" max-version="12" />
 	</dependencies>
 	<ocsid>174738</ocsid>
 </info>
