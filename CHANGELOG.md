@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 1.5.1 - 2017-04-08
 ### Fixed
 - missing tags for wav files [#166](https://github.com/rello/audioplayer/issues/166)
 - playing of shared files [#171](https://github.com/rello/audioplayer/issues/171)
