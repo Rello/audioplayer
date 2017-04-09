@@ -2,7 +2,7 @@
 
 ![Downloads](https://img.shields.io/github/downloads/rello/audioplayer/total.svg)&#160;&#160;&#160;[![Version](https://img.shields.io/github/release/rello/audioplayer.svg)](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md)&#160;[![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)&#160;&#160;&#160;[![License](https://img.shields.io/badge/license-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)&#160;&#160;&#160;[![Bitcoin](https://img.shields.io/badge/donate-Bitcoin-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)&#160;[![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)
 
-A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support and share player.
+A versatile music player for FLAC, MP3, MP4, and more with playlist support and share player.
 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
@@ -22,7 +22,7 @@ A versatile music player for MP3, MP4, Ogg, Wave, and more with playlist support
 - Search integration
 
 ### Supported Formats
-MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
+FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio. Playing the formats supported by Audio Player depends on the browser. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
 
 ### Supported Browsers
 Latest versions of Chrome, Firefox, and Safari. Mobile browsers may be restricted in functionality and handling.  
