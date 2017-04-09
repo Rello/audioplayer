@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Added
+- FLAC support [#45](https://github.com/rello/audioplayer/issues/45)
+
 ## 1.5.1 - 2017-04-08
 ### Fixed
 - missing tags for wav files [#166](https://github.com/rello/audioplayer/issues/166)
