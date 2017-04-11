@@ -66,23 +66,32 @@ var audioPlayer = {
 $(document).ready(function() {	
 	if (OCA.Files && OCA.Files.fileActions) {
 		
-	var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav'];
-		
-		for (var i=0; i<mime_array.length; i++) {
-				
-			OCA.Files.fileActions.registerAction({
-				name: 'audioplayer play',
-				displayName: t('audioplayer', 'Play'),
-				mime: mime_array[i],
-				permissions: OC.PERMISSION_READ,
-				icon: function () {return OC.imagePath('core', 'actions/sound');},
-				actionHandler: audioPlayer.onView
+	var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
+		if(audioPlayer.player == null){
+			soundManager.setup({
+				url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
+			  	onready: function() {
+				    audioPlayer.player = soundManager.createSound({
+					});
+			    
+					var can_play = soundManager.html5;			  
+					for (var i=0; i<mime_array.length; i++) {	
+					if (can_play[mime_array[i]] === true) {
+						OCA.Files.fileActions.registerAction({
+							name: 'audioplayer play',
+							displayName: t('audioplayer', 'Play'),
+							mime: mime_array[i],
+							permissions: OC.PERMISSION_READ,
+							icon: function () {return OC.imagePath('core', 'actions/sound');},
+							actionHandler: audioPlayer.onView
+						});
+						OCA.Files.fileActions.register(mime_array[i], 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
+						OCA.Files.fileActions.setDefault(mime_array[i], 'View');
+					}
+					}//end mime-loop
+				},
 			});
-
-			OCA.Files.fileActions.register(mime_array[i], 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
-			OCA.Files.fileActions.setDefault(mime_array[i], 'View');
-
-		}//end mime-loop
+		}
 
 		if($('#header').hasClass('share-file')){
 			
