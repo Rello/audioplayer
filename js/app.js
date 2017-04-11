@@ -688,6 +688,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$('.header-title').data('order', '');
 		$('.header-artist').data('order', '');
 		$('.header-album').data('order', '');
+		var can_play = soundManager.html5;
 
 		$.ajax({
 			type : 'GET',
@@ -714,19 +715,29 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 								'data-artist' : el.artist,
 								'class' : 'dragable'
 							});
+
+							var spanTitle = $('<span/>').attr({'data-title':el.title,'title':el.title}).addClass('title');
+							var interpret = $('<span>').attr({'class':'interpret'});
+							var album = $('<span>').attr({'class':'album-indi'}).text(el.album);
 							var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
 							var spanNr = $('<span/>').addClass('number').text(i+1);
-							var link = $('<a/>').addClass('link-full').attr('href',getAudiostreamUrl + el.link);
-							var spanTitle = $('<span/>').attr({'data-title':el.title,'title':el.title}).addClass('title').text(el.title);
 							var spanTime = $('<span/>').addClass('time').text(el.length);
-							var interpret=$('<span>').attr({'class':'interpret'}).text(el.artist);
-							var album=$('<span>').attr({'class':'album-indi'}).text(el.album);
-							var spanEdit=$('<a/>').addClass('edit-song icon-rename').attr({'data-id':el.id,'data-fileid':el.file_id,'title':t('audioplayer','Edit Song from Playlist')}).click($this.editSong.bind($this));
+							
+							if (can_play[el.mimetype] === true) {
+								var spanTitle = spanTitle.text(el.title);
+								var interpret = interpret.text(el.artist);
+								var album = album.text(el.album);
+								var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'data-id':el.id,'data-fileid':el.file_id,'title':t('audioplayer','Edit Song from Playlist')}).click($this.editSong.bind($this));
+							} else {
+								var spanTitle = spanTitle.html('<i>'+el.title+'</i>');
+								var interpret = interpret.html('<i>'+el.artist+'</i>');
+								var album = album.html('<i>'+el.album+'</i>');
+								var spanEdit = $('<a/>').addClass('edit-song ioc-close').attr({'data-id':el.id,'data-fileid':el.file_id,'title':t('audioplayer','MIME type not supported by browser!')}).css({'opacity': 1,'text-align': 'center'}).click($this.editSong.bind($this));
+							}
 
 							li.append(spanAction);
 							li.append(spanNr);
 							li.append(spanTitle);
-							//li.append(link);
 							li.append(interpret);
 							li.append(album);
 							li.append(spanTime);
