@@ -28,7 +28,7 @@ OC.L10N.register(
 	"Album" : "Album",
 	"Composer" : "Composer",
 	"Edit Song from Playlist" : "Edycja utworu z playlisty",
-	"MIME type not supported by browser!" : "MIME type not supported by browser!"
+	"MIME type not supported by browser!" : "MIME type not supported by browser!",
 	"Edit track information (ID3)" : "Edytuj informacje utwóru (ID3)",
 	"Missing Permissions for editing ID3 Tags of song!" : "Brak uprawnień do edycji tagów ID3 piosenki!",
 	"Existing Albums" : "Istniejące albumy",
