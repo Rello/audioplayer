@@ -46,7 +46,7 @@ OC.L10N.register(
 	"Reset Media Library" : "Musikbibliothek zurücksetzen",
 	"Start deleting and resetting media library ..." : "Musikbibliothek wird gelöscht und zurückgesetzt ...",
 	"Resetting finished!" : "Zurücksetzen beendet!",
-	"Are you sure? All music database entries will be deleted!" : "Bist du sicher? Alle Einträge in der Datenbank werden gelöscht!",
+	"Are you sure? All music database entries will be deleted!" : "Sind Sie sicher? Alle Einträge in der Datenbank werden gelöscht!",
 	"Close" : "Schließen",
 	"Play" : "Abspielen",
 	"Save" : "Speichern",
