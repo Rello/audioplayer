@@ -28,7 +28,7 @@ OC.L10N.register(
 	"Album" : "專輯",
 	"Composer" : "Composer",
 	"Edit Song from Playlist" : "由播放清單編輯",
-	"MIME type not supported by browser!" : "MIME type not supported by browser!"
+	"MIME type not supported by browser!" : "MIME type not supported by browser!",
 	"Edit Song Information (ID3)" : "編輯ID3",
 	"Missing Permissions for editing ID3 Tags of song!" : "無編輯ID3的權限!",
 	"Existing Albums" : "現有的專輯",
