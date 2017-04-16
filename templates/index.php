@@ -6,7 +6,6 @@
 	style('audioplayer', 'style');
 	script('files', 'jquery.fileupload');
 	script('audioplayer', 'jquery.Jcrop');
-	script('core','tags');
 	script('audioplayer', 'soundmanager2-nodebug-jsmin'); 
 	script('audioplayer', 'bar-ui');
 	script('audioplayer', 'app');
