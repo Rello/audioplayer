@@ -225,7 +225,7 @@ class CategoryController extends Controller {
 	private function getItemsforCatagory($category,$categoryId){
 
 		$aTracks=array();		
-		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
+		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AT`.`mimetype`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
 		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
@@ -292,7 +292,7 @@ class CategoryController extends Controller {
 				if ($row['cover'] === null) {
 					$row['cover_id'] = '';
 				} 
- 				array_splice($row, 8, 2);
+ 				array_splice($row, 9, 2);
 				$path = rtrim($path,"/");
 				$row['link'] = '?file='.rawurlencode($path);
 				$aTracks[]=$row;
