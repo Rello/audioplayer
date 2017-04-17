@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 - Experimental support for ownCloud 10.0 and Nextcloud 12
 
 ### Changed
-- zh-TW translation updated by @[sbr9150](https://github.com/sbr9150) [#178](https://github.com/rello/audioplayer/issues/178)
+- zh_TW translation updated by @[sbr9150](https://github.com/sbr9150) [#178](https://github.com/rello/audioplayer/issues/178)
 
 ## 1.5.1 - 2017-04-08
 ### Fixed
@@ -170,7 +170,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.1 - 2016-07-23
 ### Added
-- zh-TW translation from @[sbr9150](https://github.com/sbr9150)
+- zh_TW translation from @[sbr9150](https://github.com/sbr9150)
 
 ### Fixed
 - spinning wheel when file was deleted [#19](https://github.com/rello/audioplayer/issues/19)
