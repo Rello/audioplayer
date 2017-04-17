@@ -54,9 +54,9 @@
 "Albums" : "Альбомы",
 "Folders" : "Папки",
 "Genres" : "Стили",
-"Search for audio files in " : "Искать аудиофайлы в",
+"Search for audio files in" : "Искать аудиофайлы в",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Укажите, в какой папке следует искать аудиофайлы. Если ничего не выбрано, будут сканироваться все.",
 "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "Чтобы исключить определённую папку, положите файл с названием .noaudio в неё, а также во все её подпапки, если их тоже нужно исключить.",
-"Formats supported by your current browser:" : "Formats supported by your current browser:",
-"Formats NOT supported by your current browser:" : "Formats NOT supported by your current browser:"
+"Formats supported by your current browser" : "Formats supported by your current browser",
+"Formats NOT supported by your current browser" : "Formats NOT supported by your current browser"
 },"pluralForm":""}
