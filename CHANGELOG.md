@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ### Added
 - FLAC support [#45](https://github.com/rello/audioplayer/issues/45)
+- Experimental support for ownCloud 10.0 and Nextcloud 12
 
 ### Changed
 - zh-TW translation updated by @[sbr9150](https://github.com/sbr9150) [#178](https://github.com/rello/audioplayer/issues/178)
