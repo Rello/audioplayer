@@ -12,24 +12,24 @@
 <div class="section" id="audioplayer">
 	<h2><?php p($l->t('Audio Player')); ?></h2>
 	<div>
-		<label for="audio-path"><?php p($l->t('Search for audio files in ')); ?>:</label>
+		<label for="audio-path"><?php p($l->t('Search for audio files in')); ?>:</label>
 		<input type="text" id="audio-path" value="<?php p($_['path']); ?>" />
 		<p><em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.')); ?></em></p>
 		<p><em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them.')); ?></em></p>
 		<br>
 	</div>
 	<div>
-		<label for="cyrillic_user"><?php p($l->t('Cyrillic Support:')); ?></label>
+		<label for="cyrillic_user"><?php p($l->t('Cyrillic Support')); ?>:</label>
 		<input type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']); ?>/>
 		<p><em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em></p>
 		<p><em><a href="https://github.com/rello/audioplayer/wiki/cyrillic-symbol-handling" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
 		<br>
 	</div>
 	<div>
-		<label for="browser_support"><?php p($l->t('Formats supported by your current browser:')); ?></label>
+		<label for="browser_support"><?php p($l->t('Formats supported by your current browser')); ?>:</label>
 		&nbsp;<em id="browser_yes"></em>
 		<br>
-		<label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser:')); ?></label>
+		<label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser')); ?>:</label>
 		&nbsp;<em id="browser_no"></em>
 		<p><em><a href="https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types#browser-support" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
 	</div>
