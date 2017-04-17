@@ -22,7 +22,7 @@
 		<label for="cyrillic_user"><?php p($l->t('Cyrillic Support:')); ?></label>
 		<input type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']); ?>/>
 		<p><em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em></p>
-		<p><em><a href="https://github.com/Rello/audioplayer/wiki/Cyrillic-symbol-handling" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
+		<p><em><a href="https://github.com/rello/audioplayer/wiki/cyrillic-symbol-handling" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
 		<br>
 	</div>
 	<div>
@@ -31,6 +31,6 @@
 		<br>
 		<label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser:')); ?></label>
 		&nbsp;<em id="browser_no"></em>
-		<p><em><a href="https://github.com/Rello/audioplayer/wiki/Audio-Files-and-MIME-Types#browser-support" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
+		<p><em><a href="https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types#browser-support" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
 	</div>
 </div>
