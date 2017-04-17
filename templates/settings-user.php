@@ -23,6 +23,7 @@
 		<input type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']); ?>/>
 		<p><em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em></p>
 		<p><em><a href="https://github.com/Rello/audioplayer/wiki/Cyrillic-symbol-handling" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
+		<br>
 	</div>
 	<div>
 		<label for="browser_support"><?php p($l->t('Formats supported by your current browser:')); ?></label>
