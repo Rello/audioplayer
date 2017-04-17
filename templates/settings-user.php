@@ -24,4 +24,11 @@
 		<p><em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em></p>
 		<p><em><a href="https://github.com/Rello/audioplayer/wiki/Cyrillic-symbol-handling" target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
 	</div>
+	<div>
+		<label for="browser_support"><?php p($l->t('Formats supported by your current browser:')); ?></label>
+		&nbsp;<em id="browser_yes"></em>
+		<br>
+		<label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser:')); ?></label>
+		&nbsp;<em id="browser_no"></em>
+	</div>
 </div>
