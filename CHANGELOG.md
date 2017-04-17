@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - FLAC support [#45](https://github.com/rello/audioplayer/issues/45)
 
+### Changed
+- zh-TW translation updated by @[sbr9150](https://github.com/sbr9150) [#178](https://github.com/rello/audioplayer/issues/178)
+
 ## 1.5.1 - 2017-04-08
 ### Fixed
 - missing tags for wav files [#166](https://github.com/rello/audioplayer/issues/166)
