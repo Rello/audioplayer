@@ -59,4 +59,27 @@ $(document).ready(function() {
 		);
 	});
 
+	var audioPlayer = {}
+	soundManager.setup({
+		url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
+		onready: function() {
+			audioPlayer.player = soundManager.createSound({});
+			var can_play = soundManager.html5;
+			var supported_types = '';
+			var nsupported_types = '';
+			for (var mtype in can_play){
+		   		var mtype_check = can_play[mtype];
+				if (mtype.substring(5, 6) !== '/' && mtype !== 'usingFlash' && mtype !== 'canPlayType') {
+
+					if (mtype_check === true) {
+						var supported_types = supported_types + mtype + ', ';
+					} else {
+						var nsupported_types = nsupported_types + mtype + ', ';
+					}
+				}
+			}
+			$('#browser_yes').html(supported_types);
+			$('#browser_no').html(nsupported_types);
+		},
+	});
 });
