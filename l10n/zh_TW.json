@@ -1,4 +1,4 @@
-{"translations":{
+﻿{"translations":{
 "Audio Player" : "Audio Player",
 "Create new playlist" : "建立播放清單",
 "GO" : "開始",
@@ -56,6 +56,6 @@
 "Search for audio files in" : "請選擇欲搜尋音樂的資料夾",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "將會在你選擇的資料夾內搜尋音樂檔案，如未選擇，則會搜尋所有的資料夾。",
 "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "如果想要跳過某一資料夾不搜尋，請在該資料夾內創建一個名為 .noaudio 的檔案。如果也不想搜尋該資料夾內的子資料夾，子資料夾內也需要有 .noaudio 檔案。",
-"Formats supported by your current browser" : "Formats supported by your current browser",
-"Formats NOT supported by your current browser" : "Formats NOT supported by your current browser"
+"Formats supported by your current browser" : "使用的瀏覽器支援此音樂檔案格式",
+"Formats NOT supported by your current browser" : "使用的瀏覽器不支援此音樂檔案格式"
 },"pluralForm":""}
