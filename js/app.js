@@ -526,7 +526,7 @@ Audios.prototype.loadAlbums = function(){
 				$this.AlbumContainer.show();
 				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
 				$this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new tracks to library')+'</span>');
-				$this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
+				$this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/Rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
 				$('#app-navigation').removeClass('mp3_hide');
 			}			
 		}
@@ -649,7 +649,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	var EventTarget=null;
 	var bRreload = false;
 	var category = $('#category_selector').val();
-	var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream');
+	var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream')+'?file=';
 
 	if(typeof evt === 'undefined'){
 		EventTarget=$('#myCategory li.activeIndiPlaylist span');		
@@ -689,7 +689,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$('.header-artist').data('order', '');
 		$('.header-album').data('order', '');
 		var can_play = soundManager.html5;
-
+	
 		$.ajax({
 			type : 'GET',
 			url : OC.generateUrl('apps/audioplayer/getcategoryitems'),
@@ -700,41 +700,46 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 					if(playlistsdata !== 'nodata'){
 						var aPlaylistOutput=[];
 						var aPlaylistOutput1=[];
-	
+						var democounter = 0;
 						$(playlistsdata).each(function(i,el){			
 
-							var li1 =$('<li/>').attr({'data-trackid':el.id,'data-album':el.album,'data-artist':el.artist,'data-title':el.title,'data-cover':el.cover_id});
-							var a1 = $('<a/>').attr({'href': getAudiostreamUrl + el.link}).html('<span class="title">'+el.title+'</span>');
+							var li1 =$('<li/>').attr({'data-trackid':el.id,'data-album':el.alb,'data-artist':el.art,'data-title':el.tit,'data-cover':el.cid});
+							var a1 = $('<a/>').attr({'href': getAudiostreamUrl + el.lin}).html('<span class="title">'+el.tit+'</span>');
 							li1.append(a1);				
 				
 							var li = $('<li/>').attr({
 								'data-id' : el.id,
-								'data-fileid' : el.file_id,
-								'data-title' : el.title,
-								'data-album' : el.album,
-								'data-artist' : el.artist,
+								'data-fileid' : el.fid,
+								'data-title' : el.tit,
+								'data-album' : el.alb,
+								'data-artist' : el.art,
 								'class' : 'dragable'
 							});
 
-							var spanTitle = $('<span/>').attr({'data-title':el.title,'title':el.title}).addClass('title');
+							var spanTitle = $('<span/>').attr({'data-title':el.tit,'title':el.tit}).addClass('title');
 							var interpret = $('<span>').attr({'class':'interpret'});
-							var album = $('<span>').attr({'class':'album-indi'}).text(el.album);
-							var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
-							var spanNr = $('<span/>').addClass('number').text(i+1);
-							var spanTime = $('<span/>').addClass('time').text(el.length);
-							
-							if (can_play[el.mimetype] === true) {
-								var spanTitle = spanTitle.text(el.title);
-								var interpret = interpret.text(el.artist);
-								var album = album.text(el.album);
-								var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'data-id':el.id,'data-fileid':el.file_id,'title':t('audioplayer','Edit Song from Playlist')}).click($this.editSong.bind($this));
+							var album = $('<span>').attr({'class':'album-indi'}).text(el.alb);
+							if (el.fav === 't') {
+								var spanAction = $('<span/>').addClass('actionsSong').html('<i class="fav icon-starred" style="opacity:1;"></i><i class="ioc ioc-volume-off"></i>&nbsp;').click($this.favoriteUpdate.bind($this));
 							} else {
-								var spanTitle = spanTitle.html('<i>'+el.title+'</i>');
-								var interpret = interpret.html('<i>'+el.artist+'</i>');
-								var album = album.html('<i>'+el.album+'</i>');
-								var spanEdit = $('<a/>').addClass('edit-song ioc-close').attr({'data-id':el.id,'data-fileid':el.file_id,'title':t('audioplayer','MIME type not supported by browser!')}).css({'opacity': 1,'text-align': 'center'}).click($this.editSong.bind($this));
+								var spanAction = $('<span/>').addClass('actionsSong').html('<i class="fav icon-star"></i><i class="ioc ioc-volume-off"></i>&nbsp;').click($this.favoriteUpdate.bind($this));
 							}
-
+							var spanNr = $('<span/>').addClass('number').text(i+1);
+							var spanTime = $('<span/>').addClass('time').text(el.len);
+							
+							if (can_play[el.mim] === true) {
+								var spanTitle = spanTitle.text(el.tit);
+								var interpret = interpret.text(el.art);
+								var album = album.text(el.alb);
+								var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'data-id':el.id,'data-fileid':el.fid,'mimetype':el.mim,'title':t('audioplayer','Edit Song from Playlist')}).click($this.fileActionsMenu.bind($this));
+							} else {
+								var spanTitle = spanTitle.html('<i>'+el.tit+'</i>');
+								var interpret = interpret.html('<i>'+el.art+'</i>');
+								var album = album.html('<i>'+el.alb+'</i>');
+								var spanEdit = $('<a/>').addClass('edit-song ioc-close').attr({'data-id':el.id,'data-fileid':el.fid,'mimetype':el.mim,'title':t('audioplayer','MIME type not supported by browser!')}).css({'opacity': 1,'text-align': 'center'}).click($this.fileActionsMenu.bind($this));
+							}
+							
+							democounter = democounter +1;						
 							li.append(spanAction);
 							li.append(spanNr);
 							li.append(spanTitle);
@@ -760,12 +765,12 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 									$this.PlaylistContainer.data('playlist',playlistActive.data('id'));
 
 			 						var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-			 						if(el.cover_id === ''){	
+			 						if(el.cid === ''){	
 										var addCss='background-color: #D3D3D3;color: #333333;';
 										var addDescr=el.album.substring(0,1);	
 									}else{
 										var addDescr='';
-										var addCss='background-image:url('+getcoverUrl+el.cover_id+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+										var addCss='background-image:url('+getcoverUrl+el.cid+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 									}
 
 			 						$('.sm2-playlist-cover').attr({'style':addCss}).text(addDescr);
@@ -850,12 +855,65 @@ Audios.prototype.DragElement = function(evt) {
 	return $(this).clone().text($(this).find('.title').attr('data-title'));
 };
 
+Audios.prototype.favoriteUpdate = function(evt) {
+	var $target = $(evt.target).closest('li');
+	var fileId = $target.attr('data-fileid');
+
+	if ($(evt.target).hasClass('fav icon-starred')){
+		var isFavorite = true;
+		$(evt.target).removeClass('fav icon-starred');
+		$(evt.target).addClass('fav icon-star').removeAttr("style");
+	} else {
+		var isFavorite = false;
+		$(evt.target).removeClass('fav icon-star');
+		$(evt.target).addClass('fav icon-starred').css('opacity',1);
+	}
+	
+    $.ajax({
+		type : 'GET',
+		url : OC.generateUrl('apps/audioplayer/setfavorite'),
+		data : {'fileId': fileId,
+				'isFavorite': isFavorite},
+		success : function(ajax_data) {
+		}
+	});
+};
+
+Audios.prototype.fileActionsMenu = function(evt){
+
+	var songId = $(evt.target).attr('data-id');
+	var fileId = $(evt.target).attr('data-fileid');
+	var mimetype = $(evt.target).attr('mimetype');
+	if ($(".fileActionsMenu").attr('data-id') === songId) {
+		$(".fileActionsMenu").remove()
+	} else {
+		$(".fileActionsMenu").remove()
+		
+		var html = '<div class="fileActionsMenu popovermenu bubble open menu" style="margin-top: 30px; margin-right: 30px;" data-id="'+songId+'"><ul>'
+				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>Edit ID3</span></a></li>'
+				+'<li><a href="#" class="menuitem action action-download permanent"><span class="icon icon-details"></span><span>Mime: '+mimetype+'</span></a></li>'
+				+'<li><a href="#" class="menuitem action action-delete permanent"><span class="icon icon-delete"></span><span>Delete</span></a></li>'
+				+'</ul></div>'
+		$(evt.target).closest('li').append(html);
+		
+		$("a[data-action='edit']").click($this.fileActionsEvent.bind($this));
+	}
+};
+
+Audios.prototype.fileActionsEvent = function(evt){
+	$(".fileActionsMenu").remove()
+	var $target = $(evt.target).closest('a');
+	var actionName = $target.attr('data-action');
+	
+	if (actionName === "edit") myAudios.editSong($target);
+};
+
 Audios.prototype.editSong = function(evt){
 	if(typeof evt.target === 'string'){
 		var songId = evt.target;
 	}else{
-		var songId = $(evt.target).attr('data-id');
-		var fileId = $(evt.target).attr('data-fileid');
+		var songId = $(evt).attr('data-id');
+		var fileId = $(evt).attr('data-fileid');
 	}
 	//var plId = $('#myPlayList li.activeIndiPlaylist').attr('data-id');
 	$this = this;
@@ -905,7 +963,7 @@ Audios.prototype.editSong = function(evt){
 				+'<label class="editDescr">'+t('audioplayer','New Genre')+'</label> <input type="text" placeholder="'+t('audioplayer','Genre')+'" id="sGenre" style="width:45%;" value="" />' 
 
 				+'<label class="editDescr">'+t('audioplayer','Year')+'</label> <input type="text" placeholder="'+t('audioplayer','Year')+'" id="sYear" maxlength="4" style="width:10%;" value="' + jsondata.data.year + '" /><br />' 
-				+'<label class="editDescr" style="width:190px;">'+t('audioplayer','Add as Album Cover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' 
+				+'<label class="editDescr" style="width:190px;">'+t('audioplayer','Add as Albumcover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' 
 				+'</div><div class="edit-right">'+posterAction+'</div>'
 			);
 			$("#dialogSmall").html(html);
