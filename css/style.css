@@ -378,7 +378,7 @@ height:auto;
 	position:relative;
 	float:left;
 	display:block;
-	min-width:30%;
+	min-width:35%;
 }
 
 #individual-playlist-header  span.header-artist{
@@ -400,14 +400,14 @@ height:auto;
 	display:block;
 	width:10%;
 	text-align:right;
-	right:65px;
+	right:35px;
 }
 #individual-playlist-header  span.header-opt{
 	position:absolute;
 	float:right;
 	display:block;
-	width:20px;
-	right:10px;
+	width:30px;
+	right:0px;
 }
 
 #individual-playlist li .actionsSong{
@@ -486,8 +486,7 @@ height:auto;
 	display:block;
 	width:10%;
 	text-align:right;
-	
-	right:65px;
+	right:35px;
 }
 
 #individual-playlist li span.ioc-delete{
@@ -510,7 +509,7 @@ height:auto;
 #individual-playlist li a.edit-song{
 	float:right;
 	position:absolute;
-	right:25px;
+	right:0px;
 	width:30px;
 	height:20px;
 	opacity:0;
