@@ -859,7 +859,7 @@
       }
 
       // remove any failed character sequence, also
-      dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li><b>' + $(item).find('span.title').text().replace(extras.loadFailedCharacter, '') +'</b> - '+ $(item).parent().attr('data-album').replace(extras.loadFailedCharacter, '') +' ('+ $(item).parent().attr('data-artist').replace(extras.loadFailedCharacter, '') + ')</li></ul>';
+      dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li><b>' + $(item).parent().attr('data-title').replace(extras.loadFailedCharacter, '') +'</b> ('+ $(item).parent().attr('data-artist').replace(extras.loadFailedCharacter, '') + ')</li></ul>';
      
      
       
