@@ -183,7 +183,7 @@ class MusicController extends Controller {
 	 */
 	public function loadAlbums(){
 			
-		$SQL="SELECT  `AA`.`id`,`AA`.`name`,`AA`.`cover`,`AA`.`artist_id`
+		$SQL="SELECT  `AA`.`id`,`AA`.`name` AS `nam`,`AA`.`cover` AS `cov`,`AA`.`artist_id` AS `aid`
 						FROM `*PREFIX*audioplayer_albums` `AA`
 			 			WHERE  `AA`.`user_id` = ?
 			 			ORDER BY `AA`.`name` ASC
@@ -193,14 +193,14 @@ class MusicController extends Controller {
 		$result = $stmt->execute(array($this->userId));
 		$aAlbums=array();
 		while( $row = $result->fetchRow()) {
-			$row['artist'] = $this->loadArtistsToAlbum($row['id'],$row['artist_id']);	
+			$row['art'] = $this->loadArtistsToAlbum($row['id'],$row['aid']);	
 
-			if ($row['name'] === $this->l10n->t('Unknown') AND $row['artist'] === $this->l10n->t('Various Artists')) {
-				$row['cover'] = 'true';	
-			}elseif ($row['cover'] === null){
-				$row['cover'] = '';
+			if ($row['nam'] === $this->l10n->t('Unknown') AND $row['art'] === $this->l10n->t('Various Artists')) {
+				$row['cov'] = 'true';	
+			}elseif ($row['cov'] === null){
+				$row['cov'] = '';
 			}else{
-				$row['cover'] = 'true';	
+				$row['cov'] = 'true';	
 			}
  			array_splice($row, 3, 1);
 			$aAlbums[$row['id']] = $row;
@@ -241,8 +241,7 @@ class MusicController extends Controller {
     }
 	
 	public function loadSongs(){
-//		$SQL="SELECT  `AT`.`id`,`AT`.`title`,`AT`.`number`,`AT`.`album_id`,`AT`.`artist_id`,`AT`.`length`,`AT`.`file_id`,`AT`.`bitrate`,`AT`.`mimetype`,`AA`.`name` AS `artistname` FROM `*PREFIX*audioplayer_tracks` `AT`
-		$SQL="SELECT  `AT`.`id`,`AT`.`title`,`AT`.`number`,`AT`.`album_id`,`AT`.`length`,`AT`.`file_id`,`AT`.`mimetype`,`AA`.`name` AS `artistname` FROM `*PREFIX*audioplayer_tracks` `AT`
+		$SQL="SELECT  `AT`.`id`,`AT`.`title` AS `tit`,`AT`.`number` AS `num`,`AT`.`album_id` AS `aid`,`AT`.`length` AS `len`,`AT`.`file_id` AS `fid`,`AT`.`mimetype` AS `mim`,`AA`.`name` AS `art` FROM `*PREFIX*audioplayer_tracks` `AT`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 			 			WHERE  `AT`.`user_id` = ?
 			 			ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC
@@ -255,21 +254,21 @@ class MusicController extends Controller {
 		while( $row = $result->fetchRow()) {
 			$file_not_found = false;
 			try {
-				$path = \OC\Files\Filesystem::getPath($row['file_id']);
+				$path = \OC\Files\Filesystem::getPath($row['fid']);
 			} catch (\Exception $e) {
 				$file_not_found = true;
        		}
 			
 			if($file_not_found === false){
 				# Beta for Streaming testing; should not have any impact as this filetype is not used
-				if ($row['mimetype'] === 'audio/x-mpegurl') {
-					$row['link'] = rawurlencode($row['title']);
+				if ($row['mim'] === 'audio/x-mpegurl') {
+					$row['lin'] = rawurlencode($row['title']);
 				}else{	
-					$row['link'] = '?file='.rawurlencode($path);
+					$row['lin'] = '?file='.rawurlencode($path);
 				}	
-				$aSongs[$row['album_id']][] = $row;
+				$aSongs[$row['aid']][] = $row;
 			}else{
-				$this->deleteFromDB($row['id'],$row['album_id']);
+				$this->deleteFromDB($row['id'],$row['aid']);
 			}	
 		}
 		if(empty($aSongs)){
