@@ -901,7 +901,7 @@ Audios.prototype.fileActionsMenu = function(evt){
 		
 		var html = '<div class="fileActionsMenu popovermenu bubble open menu" style="margin-top: 30px; margin-right: 30px;" data-id="'+songId+'"><ul>'
 				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>Edit ID3</span></a></li>'
-				+'<li><a href="#" class="menuitem action action-download permanent"><span class="icon icon-details"></span><span>Mime: '+mimetype+'</span></a></li>'
+				+'<li><a href="#" class="menuitem action action-download permanent"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>'
 
 		if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
 			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>Delete</span></a></li>';
