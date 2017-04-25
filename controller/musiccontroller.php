@@ -407,8 +407,8 @@ class MusicController extends Controller {
 	private function sortArrayByFields($data)
 	{
 		foreach ($data as $key => $row) {
-    		$first[$key] = $row['artist'];
-    		$second[$key] = $row['name'];
+    		$first[$key] = $row['art'];
+    		$second[$key] = $row['nam'];
 		}
 		array_multisort($first, SORT_ASC, SORT_STRING|SORT_FLAG_CASE,$second , SORT_ASC, SORT_STRING|SORT_FLAG_CASE, $data);
 		return $data;
