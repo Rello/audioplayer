@@ -711,7 +711,13 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 						var democounter = 0;
 						$(playlistsdata).each(function(i,el){			
 
-							var li1 =$('<li/>').attr({'data-trackid':el.id,'data-artist':el.art,'data-title':el.tit,'data-cover':el.cid});
+							var li1 =$('<li/>').attr({
+								'data-trackid':el.id,
+								'data-artist':el.art,
+								'data-title':el.tit,
+								'data-cover':el.cid,
+								'data-album':el.alb
+							});
 							var a1 = $('<a/>').attr({'href': getAudiostreamUrl + el.lin});
 							li1.append(a1);				
 				
@@ -719,6 +725,9 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 								'data-id' : el.id,
 								'data-fileid' : el.fid,
 								'mimetype':el.mim,
+								'data-title':el.tit,
+								'data-artist':el.art,
+								'data-album':el.alb,
 								'class' : 'dragable'
 							});
 
