@@ -552,13 +552,12 @@ Audios.prototype.loadSongsRow = function(elem){
 	var spanTitle = $('<span/>').attr({'data-title':elem.tit,'title':elem.tit}).addClass('title');
 	var spanTime = $('<span/>').addClass('time').text(elem.len);
 	var link = $('<a/>').addClass('link-full').attr('href', getAudiostreamUrl + elem.lin);
+	var spanEdit = $('<a/>').addClass('edit-song icon-rename').attr({'data-id':elem.id,'data-fileid':elem.fid,'title':t('audioplayer','Edit ID3 tag')}).click(this.editSong.bind($this));
 
 	if (can_play[elem.mim] === true) {
 		var spanTitle = spanTitle.text(elem.tit);
-		var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'title':t('audioplayer','Edit Song from Playlist')}).click($this.fileActionsMenu.bind($this));
 	} else {
 		var spanTitle = spanTitle.html('<i>'+elem.tit+'</i>');
-		var spanEdit = $('<a/>').addClass('edit-song ioc-close').attr({'title':t('audioplayer','MIME type not supported by browser!')}).css({'opacity': 1,'text-align': 'center'}).click($this.fileActionsMenu.bind($this));
 	}
 
 	li.append(spanAction);
@@ -748,12 +747,12 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 								var spanTitle = spanTitle.text(el.tit);
 								var interpret = interpret.text(el.art);
 								var album = album.text(el.alb);
-								var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'title':t('audioplayer','Edit Song from Playlist')}).click($this.fileActionsMenu.bind($this));
+								var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'title':t('audioplayer','Track options')}).click($this.fileActionsMenu.bind($this));
 							} else {
 								var spanTitle = spanTitle.html('<i>'+el.tit+'</i>');
 								var interpret = interpret.html('<i>'+el.art+'</i>');
 								var album = album.html('<i>'+el.alb+'</i>');
-								var spanEdit = $('<a/>').addClass('edit-song ioc-close').attr({'title':t('audioplayer','MIME type not supported by browser!')}).css({'opacity': 1,'text-align': 'center'}).click($this.fileActionsMenu.bind($this));
+								var spanEdit = $('<a/>').addClass('edit-song ioc-close').attr({'title':t('audioplayer','MIME type not supported by browser')}).css({'opacity': 1,'text-align': 'center'}).click($this.fileActionsMenu.bind($this));
 							}
 							
 							li.append(spanAction);
@@ -908,12 +907,12 @@ Audios.prototype.fileActionsMenu = function(evt){
 		var PlaylistId = EventTarget.attr('data-plid');
 		
 		
-		var html = '<div class="fileActionsMenu popovermenu bubble open menu" style="margin-top: 30px; margin-right: 30px;" data-id="'+songId+'"><ul>'
-				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>Edit ID3</span></a></li>'
-				+'<li><a href="#" class="menuitem action action-download permanent"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>'
+		var html = '<div class="fileActionsMenu popovermenu bubble open menu" data-id="'+songId+'"><ul>'
+				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit ID3 tag')+'</span></a></li>'
+				+'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>Mime: '+mimetype+'</span></a></li>'
 
 		if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
-			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>Delete</span></a></li>';
+			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>'+t('audioplayer','Delete Song from Playlist')+'</span></a></li>';
 		}
 		html = html +'</ul></div>'
 
@@ -938,8 +937,9 @@ Audios.prototype.fileActionsEvent = function(evt){
 };
 
 Audios.prototype.editSong = function(evt){
-	if(typeof evt.target === 'string'){
-		var songId = evt.target;
+	if($(evt.target).attr('data-fileid')){
+		var songId = $(evt.target).attr('data-id');;
+		var fileId = $(evt.target).attr('data-fileid');;
 	}else{
 		var songId = $(evt).attr('data-id');
 		var fileId = $(evt).attr('data-fileid');
