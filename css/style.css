@@ -318,6 +318,12 @@ height:auto;
 
 }
 
+.fileActionsMenu{
+	margin-top: 30px;
+	margin-right: 5px;
+	padding-bottom: 15px
+}
+
 #individual-playlist-container{
 	margin:0;
 	width:98%;
@@ -341,7 +347,7 @@ height:auto;
 #individual-playlist li .ioc-delete{
 	display: none;
 }
-#individual-playlist li:hover {
+#individual-playlist li.dragable:hover {
 	background: #f8f8f8;
 }
 
