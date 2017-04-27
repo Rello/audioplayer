@@ -356,4 +356,28 @@ class CategoryController extends Controller {
  		}
  		return $return;
 	}
+	/**
+	 * @NoAdminRequired
+	 */
+	public function setStatistics() {
+		$track_id = $this->params('track_id');
+		$date = new \DateTime();
+		$playtime = $date->getTimestamp();
+		
+		$SQL='SELECT id, playcount FROM *PREFIX*audioplayer_statistics WHERE `user_id`= ? AND `track_id`= ?';
+		$stmt = $this->db->prepareQuery($SQL);
+		$result = $stmt->execute(array($this->userId, $track_id));
+		$row = $result->fetchRow();
+		if (isset($row['id'])) {
+			$playcount = $row['id'] + 1;
+			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_statistics` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
+			$stmt->execute(array($playcount, $playtime, $row['id']));
+			return 'update';
+		} else {
+			$stmt = $this->db->prepareQuery( 'INSERT INTO `*PREFIX*audioplayer_statistics` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
+			$result = $stmt->execute(array($this->userId, $track_id, $playtime, 1));
+			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_statistics');
+			return $insertid;
+		}
+	}
 }
