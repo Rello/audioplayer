@@ -611,9 +611,9 @@ Audios.prototype.loadCategory = function(category){
 								.click($this.loadIndividualCategory.bind($this));
 								
 								var span=$('<span/>').attr('class','counter').text(el.counter);
-								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.id,'title':t('audioplayer','Sort Playlist')}).click($this.sortPlaylist.bind($this));
-								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename Playlist')}).click($this.renamePlaylist.bind($this));
-								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.id,'title':t('audioplayer','Delete Playlist')}).click($this.deletePlaylist.bind($this));
+								var iSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.id,'title':t('audioplayer','Sort playlist')}).click($this.sortPlaylist.bind($this));
+								var iEdit=$('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename playlist')}).click($this.renamePlaylist.bind($this));
+								var iDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.id,'title':t('audioplayer','Delete playlist')}).click($this.deletePlaylist.bind($this));
 			
 								if (category === 'Playlist' && el.id.toString()[0] !== 'X' && el.id !== ''){
 									var spanName=$('<span/>')
@@ -909,10 +909,10 @@ Audios.prototype.fileActionsMenu = function(evt){
 		
 		var html = '<div class="fileActionsMenu popovermenu bubble open menu" data-id="'+songId+'"><ul>'
 				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit ID3 tag')+'</span></a></li>'
-				+'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>Mime: '+mimetype+'</span></a></li>'
+				+'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>'
 
 		if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
-			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>'+t('audioplayer','Delete Song from Playlist')+'</span></a></li>';
+			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>'+t('audioplayer','Remove from playlist')+'</span></a></li>';
 		}
 		html = html +'</ul></div>'
 
@@ -951,7 +951,7 @@ Audios.prototype.editSong = function(evt){
 	},function(jsondata){
 		if(jsondata.status === 'success'){
 			
-			var posterImg='<div id="noimage">'+t('audioplayer', 'Drag Image Here!')+'</div>';
+			var posterImg='<div id="noimage">'+t('audioplayer', 'Drag picture here!')+'</div>';
 		
 			if(jsondata.data.isPhoto === '1'){
 					
@@ -962,7 +962,7 @@ Audios.prototype.editSong = function(evt){
 			}
 			
 			var posterAction='<span class="labelPhoto" id="pinPhoto">'+posterImg
-  							+'<div class="tip" id="pin_details_photo_wrapper" title="'+t('audioplayer','Drop Photo')+'" data-element="PHOTO">'
+  							+'<div class="tip" id="pin_details_photo_wrapper" title="'+t('audioplayer','Drop picture')+'" data-element="PHOTO">'
 							+'<ul id="phototools" class="transparent hidden">'
 							+'<li><a class="delete" title="'+t('audioplayer','Delete')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/delete.svg')+'"></a></li>'
 							+'<li><a class="edit" title="'+t('audioplayer','Edit')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/rename.svg')+'"></a></li>'
@@ -1137,7 +1137,7 @@ Audios.prototype.editSong = function(evt){
 											$("#dialogSmall").html('');
 											oDialog.dialog("close");
 										}else if(jsondata.status === 'error_write'){
-											$('#notification').text(t('audioplayer','Missing Permissions for editing ID3 Tags of song!'));
+											$('#notification').text(t('audioplayer','Missing permission for editing ID3 tags of track!'));
 			 								$('#notification').slideDown();
 											window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 										}else if(jsondata.status === 'error'){
@@ -1154,7 +1154,7 @@ Audios.prototype.editSong = function(evt){
 			return false;
 		}
 		if(jsondata.status === 'error'){
-			$('#notification').text(t('audioplayer','Missing Permissions for editing ID3 Tags of song!'));
+			$('#notification').text(t('audioplayer','Missing permission for editing ID3 tags of track!'));
 			 $('#notification').slideDown();
 			window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 		}
@@ -1209,7 +1209,7 @@ Audios.prototype.newPlaylist = function(plName){
   					myAudios.loadCategory('Playlist');
 				}
 				if(jsondata.status === 'error'){
-					 $('#notification').text(t('audioplayer','No Playlist selected!'));
+					 $('#notification').text(t('audioplayer','No playlist selected!'));
 					 $('#notification').slideDown();
 					window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 				}
@@ -1340,7 +1340,7 @@ Audios.prototype.deletePlaylist = function(evt){
 	$("#dialogSmall").text(t('audioplayer', 'Are you sure?'));
 	$("#dialogSmall").dialog({
 		resizable : false,
-		title : t('audioplayer', 'Delete Playlist'),
+		title : t('audioplayer', 'Delete playlist'),
 		width : 210,
 		modal : true,
 		buttons : [{
@@ -1360,7 +1360,7 @@ Audios.prototype.deletePlaylist = function(evt){
 						success : function(jsondata) {
 								if(jsondata.status === 'success'){
   									myAudios.loadCategory('Playlist');
-									 $('#notification').text(t('audioplayer','Delete playlist success!'));
+									 $('#notification').text(t('audioplayer','Playlist successfully deleted!'));
 									 $('#notification').slideDown();
 									window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 								}
@@ -1436,7 +1436,7 @@ Audios.prototype.loadActionPhotoHandlers= function() {
 			$(this).tipsy('hide');
 			//$('#pinContainer').addClass('forceOpen');
 			var mimeparts = ['image/jpeg', 'httpd/unix-directory'];
-			OC.dialogs.filepicker(t('audioplayer', 'Select photo'), this.cloudPhotoSelected.bind(this), false, mimeparts, true);
+			OC.dialogs.filepicker(t('audioplayer', 'Select picture'), this.cloudPhotoSelected.bind(this), false, mimeparts, true);
 		}.bind(this));
 			
 };
@@ -1522,7 +1522,7 @@ Audios.prototype.savePhoto = function() {
 		form.submit();
 		
 		target.load(function() {
-            $('#noimage').text(t('audioplayer', 'Picture generating, wait ...')).addClass('icon-loading');
+            $('#noimage').text(t('audioplayer', 'Picture generating, please wait ...')).addClass('icon-loading');
 			var response = jQuery.parseJSON(target.contents().text());
 			if (response != undefined) {
 				$('#isphoto').val('1');
@@ -1547,7 +1547,7 @@ Audios.prototype.deletePhoto = function() {
 		$('#isphoto').val('0');
 		this.imgSrc = false;
 		$('#pin_details_photo').remove();
-		$('<div/>').attr('id', 'noimage').text(t('audioplayer', 'Drag Image Here!')).prependTo($(' #pinPhoto'));
+		$('<div/>').attr('id', 'noimage').text(t('audioplayer', 'Drag picture here!')).prependTo($(' #pinPhoto'));
 		$('#imgsrc').val('');
 		this.loadPhotoHandlers();
 	
@@ -1969,10 +1969,10 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('click', '#resetAudios', function () {
-		$("#dialogSmall").text(t('audioplayer', 'Are you sure? All music database entries will be deleted!'));
+		$("#dialogSmall").text(t('audioplayer', 'Are you sure? All database entries will be deleted!'));
 		$("#dialogSmall").dialog({
 			resizable : false,
-			title : t('audioplayer', 'Reset Media Library'),
+			title : t('audioplayer', 'Reset media library'),
 			width : 250,
 			modal : true,
 			buttons : [{
