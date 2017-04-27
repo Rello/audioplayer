@@ -20,6 +20,7 @@ A versatile music player for FLAC, MP3, MP4, and more with playlist support and 
 - External cover support
 - Mobile view support
 - Search integration
+- Favorites integration
 
 ### Supported Formats
 FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio. Playing the formats supported by Audio Player depends on the browser. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
