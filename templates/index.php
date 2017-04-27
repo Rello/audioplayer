@@ -172,6 +172,6 @@
 </div>
  
 <div id="dialogSmall" style="width:0;height:0;top:0;left:0;display:none;"></div>
-<div id="edit_photo_dialog" title="Edit photo">
+<div id="edit_photo_dialog" title="Edit picture">
 	<div id="edit_photo_dialog_img"></div>
 </div>
