@@ -107,8 +107,8 @@ class CategoryController extends Controller {
 			 			";
 			$aPlaylists[] = array("id"=>"X1", "name"=>$this->l10n->t('Favorites'));
 			$aPlaylists[] = array("id"=>"X2", "name"=> $this->l10n->t('Recently Added'));
-			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X3", "name" =>$this->l10n->t('Recently Played'));
-			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
+			$aPlaylists[] = array("id"=>"X3", "name" =>$this->l10n->t('Recently Played'));
+			$aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X5", "name" =>$this->l10n->t('Top Rated'));
 			$aPlaylists[] = array("id" => "", "name" => "");
 		} elseif ($category === 'Folder') {
