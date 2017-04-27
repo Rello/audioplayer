@@ -17,6 +17,7 @@ use \OCP\AppFramework\Http\TemplateResponse;
 use \OCP\IRequest;
 use \OCP\IL10N;
 use \OCP\IDb;
+use \OCP\ITagManager;
 
 /**
  * Controller class for main page.
@@ -26,19 +27,24 @@ class CategoryController extends Controller {
 	private $userId;
 	private $l10n;
 	private $db;
+	private $tagger;
+	private $tagManager;
 
 	public function __construct(
 			$appName, 
 			IRequest $request, 
 			$userId, 
 			IL10N $l10n, 
-			IDb $db 
+			IDb $db,
+			ITagManager $tagManager
 			) {
 		parent::__construct($appName, $request);
-		$this -> userId = $userId;
+		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
-	}
+		$this->tagManager = $tagManager;
+		$this->tagger = null;
+		}
 
 	/**
 	 * @NoAdminRequired
@@ -99,8 +105,8 @@ class CategoryController extends Controller {
 			 			WHERE  `user_id` = ?
 			 			ORDER BY LOWER(`name`) ASC
 			 			";
-			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X1", "name" =>$this->l10n->t('Favorites'));
-			$aPlaylists[] = array("id" => "X2", "name" => $this->l10n->t('Recently Added'));
+			$aPlaylists[] = array("id"=>"X1", "name"=>$this->l10n->t('Favorites'));
+			$aPlaylists[] = array("id"=>"X2", "name"=> $this->l10n->t('Recently Added'));
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X3", "name" =>$this->l10n->t('Recently Played'));
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
 			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X5", "name" =>$this->l10n->t('Top Rated'));
@@ -225,7 +231,7 @@ class CategoryController extends Controller {
 	private function getItemsforCatagory($category,$categoryId){
 
 		$aTracks=array();		
-		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title` ,`AT`.`number` ,`AT`.`length` ,`AA`.`name` AS `artist`, `AB`.`name` AS `album`, `AT`.`file_id`, `AT`.`mimetype`, `AB`.`id` AS `cover_id`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
+		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `tit`,`AT`.`number`  AS `num`,`AT`.`length` AS `len`,`AA`.`name` AS `art`, `AB`.`name` AS `alb`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
 		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
@@ -249,6 +255,9 @@ class CategoryController extends Controller {
 			 	$SQL_order;
 		} elseif ($category === 'Playlist') {
 			if ($categoryId === "X1") { // Favorites
+				$SQL = 	$SQL_select . $SQL_from .
+					"WHERE `AT`.`id` > ? AND `AT`.`user_id` = ?" .
+			 		$SQL_order;
 			} elseif ($categoryId === "X2") { // Recently Added
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? 
@@ -279,25 +288,36 @@ class CategoryController extends Controller {
 
 		$stmt = $this->db->prepareQuery($SQL);
 		$result = $stmt->execute(array($categoryId, $this->userId));
+
+		$this->tagger = $this->tagManager->load('files');
+		$favorites = $this->tagger->getFavorites();
 				
 		while( $row = $result->fetchRow()) {
 			$file_not_found = false;	
 			try {
-				$path = \OC\Files\Filesystem::getPath($row['file_id']);
+				$path = \OC\Files\Filesystem::getPath($row['fid']);
 			} catch (\Exception $e) {
 				$file_not_found = true;
-       			}
+       		}
        		
-       			if($file_not_found === false){
+       		if($file_not_found === false){
 				if ($row['cover'] === null) {
-					$row['cover_id'] = '';
+					$row['cid'] = '';
 				} 
  				array_splice($row, 9, 2);
 				$path = rtrim($path,"/");
-				$row['link'] = '?file='.rawurlencode($path);
-				$aTracks[]=$row;
-			}else{
-				$this->deleteFromDB($row['id'],$row['cover_id']);
+				$row['lin'] = rawurlencode($path);
+				if (in_array($row['fid'], $favorites)) {
+					$row['fav'] = "t";
+				} else {
+					$row['fav'] = "f";
+				}
+				if ($categoryId === "X1" AND in_array($row['fid'], $favorites) === false ) {
+				} else {
+					$aTracks[]=$row;
+				}
+			} else {
+				$this->deleteFromDB($row['id'],$row['cid']);
 			}	
 		}
 		
@@ -319,5 +339,21 @@ class CategoryController extends Controller {
 		
 		$stmt = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
 		$stmt->execute(array($this->userId, $Id));		
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function setFavorite() {
+		$fileId = $this->params('fileId');
+		$isFavorite = $this->params('isFavorite');
+		$this->tagger = $this->tagManager->load('files');
+		
+		if ($isFavorite === "true") {
+			$return = $this->tagger->removeFromFavorites($fileId);
+ 		} else {
+			$return = $this->tagger->addToFavorites($fileId);
+ 		}
+ 		return $return;
 	}
 }

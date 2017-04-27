@@ -1,4 +1,4 @@
-﻿/*jslint plusplus: true, white: true, nomen: true */
+/*jslint plusplus: true, white: true, nomen: true */
 /* global soundManager, document, console, window */
 
 (function(window) {
@@ -651,9 +651,11 @@
 		 //LIBASYS
 		$('.albumwrapper.isPlaylist li').removeClass('isActive');
 		$('.albumwrapper.isPlaylist li i.ioc').hide();
+		$('.albumwrapper.isPlaylist li i.fav').show();
 		$('.albumwrapper.isPlaylist li i.ioc').eq(index).removeClass('ioc-volume-off');
 		$('.albumwrapper.isPlaylist li i.ioc').eq(index).addClass('ioc-volume-up');
 		$('.albumwrapper.isPlaylist li i.ioc').eq(index).show();
+		$('.albumwrapper.isPlaylist li i.fav').eq(index).hide();
 		$('.albumwrapper.isPlaylist li').eq(index).addClass('isActive');
 
 	}
@@ -857,7 +859,7 @@
       }
 
       // remove any failed character sequence, also
-      dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li><b>' + $(item).find('span.title').text().replace(extras.loadFailedCharacter, '') +'</b> - '+ $(item).parent().attr('data-album').replace(extras.loadFailedCharacter, '') +' ('+ $(item).parent().attr('data-artist').replace(extras.loadFailedCharacter, '') + ')</li></ul>';
+      dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li><b>' + $(item).parent().attr('data-title').replace(extras.loadFailedCharacter, '') +'</b> ('+ $(item).parent().attr('data-artist').replace(extras.loadFailedCharacter, '') + ')</li></ul>';
      
      
       
@@ -910,6 +912,7 @@
         onplay: function() {
           utils.css.swap(dom.o, 'paused', 'playing');
           $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
+          $('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
           $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
 		  $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
         },
@@ -917,6 +920,7 @@
         onpause: function() {
           utils.css.swap(dom.o, 'playing', 'paused');
           $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
+          $('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
           $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-off');
 		  $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up');
         },
@@ -924,6 +928,7 @@
         onresume: function() {
           utils.css.swap(dom.o, 'paused', 'playing');
            $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
+          $('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
           $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
 		  $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
         },
