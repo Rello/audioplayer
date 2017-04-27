@@ -190,11 +190,13 @@ Audios.prototype.PlaylistSongs = function(){
 			if(!$(this).closest('li').hasClass('isActive')){
 				$(this).closest('li').addClass('isActive');
 				$this.AudioPlayer.actions.play($(this).closest('li').index());
+				$this.set_statistics();
 			}else{
 				if($('.sm2-bar-ui').hasClass('playing')){
 					$this.AudioPlayer.actions.stop();
 				}else{
 					$this.AudioPlayer.actions.play();
+					$this.set_statistics();
 				}
 			}
 			return false;
@@ -458,6 +460,7 @@ Audios.prototype.loadAlbums = function(){
 							 	$(this).parent().parent().find('.albumSelect li:first-child').addClass('isActive');
 							 	$this.AudioPlayer.actions.play(0);
 							 }
+							$this.set_statistics();
 							 var myCover=$('.album.is-active .albumcover');
 							  if(myCover.css('background-image') == 'none'){
 								$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':myCover.css('background-color'),'color':myCover.css('color'),'background-image':'none'});
@@ -539,7 +542,7 @@ Audios.prototype.loadSongsRow = function(elem){
 	var can_play = soundManager.html5;
 
 	var li = $('<li/>').attr({
-		'data-id' : elem.id,
+		'data-trackid' : elem.id,
 		'data-fileid' : elem.fid,
 		'data-title' : elem.tit,
 		'data-artist' : elem.art,
@@ -808,11 +811,13 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 										$('#individual-playlist li i.fav').show();
 										activeLi.addClass('isActive');
 										$this.AudioPlayer.actions.play(activeLi.index());
+										$this.set_statistics();
 									}else{
 										if($('.sm2-bar-ui').hasClass('playing')){
 											$this.AudioPlayer.actions.stop();
 										}else{
 											$this.AudioPlayer.actions.play();
+											$this.set_statistics();
 										}
 									}
 								}
@@ -1711,6 +1716,17 @@ Audios.prototype.get_cover = function(user_type, callback) {
 		});
 };
 
+Audios.prototype.set_statistics = function() {
+	var track_id = $('#activePlaylist li.selected').data('trackid');
+    	$.ajax({
+			type : 'GET',
+			url : OC.generateUrl('apps/audioplayer/setstatistics'),
+			data : {'track_id': track_id},
+			success : function(ajax_data) {
+			}
+		});
+};
+
 Audios.prototype.sort_playlist = function(evt) {
 	var column = $(evt.target).attr('class').split('-')[1];
 	var order = $(evt.target).data('order');
@@ -1759,6 +1775,7 @@ Audios.prototype.soundmanager_callback = function(SMaction) {
 		}
 			 		
 		$('.sm2-playlist-cover').attr({'style':addCss}).text(addDescr);
+		$this.set_statistics();
 	}
 };
 
