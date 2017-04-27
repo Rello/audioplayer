@@ -908,8 +908,8 @@ Audios.prototype.fileActionsMenu = function(evt){
 		
 		
 		var html = '<div class="fileActionsMenu popovermenu bubble open menu" data-id="'+songId+'"><ul>'
-				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit metadata')+'</span></a></li>'
 				+'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>'
+				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit metadata')+'</span></a></li>'
 
 		if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
 			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>'+t('audioplayer','Remove from playlist')+'</span></a></li>';
