@@ -4,10 +4,15 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ### Added
 - FLAC support [#45](https://github.com/rello/audioplayer/issues/45)
+- favorites integration [#176](https://github.com/rello/audioplayer/issues/176) in Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
 - Experimental support for ownCloud 10.0 and Nextcloud 12
 
 ### Changed
-- zh_TW translation updated by @[sbr9150](https://github.com/sbr9150) [#178](https://github.com/rello/audioplayer/issues/178)
+- zh_TW translation updated by @[sbr9150](https://github.com/sbr9150) [#173](https://github.com/rello/audioplayer/issues/173)
+- translation sources reworked
+
+### Fixed
+- missing strings added to language files
 
 ## 1.5.1 - 2017-04-08
 ### Fixed
@@ -55,7 +60,7 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 - support for ownCloud 8
-- support for PHP <5.6
+- support for PHP &#60;5.6
 - album year from search criteria [#116](https://github.com/rello/audioplayer/issues/116)
 
 ### Fixed
