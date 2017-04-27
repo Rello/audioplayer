@@ -552,7 +552,7 @@ Audios.prototype.loadSongsRow = function(elem){
 	var spanTitle = $('<span/>').attr({'data-title':elem.tit,'title':elem.tit}).addClass('title');
 	var spanTime = $('<span/>').addClass('time').text(elem.len);
 	var link = $('<a/>').addClass('link-full').attr('href', getAudiostreamUrl + elem.lin);
-	var spanEdit = $('<a/>').addClass('edit-song icon-rename').attr({'data-id':elem.id,'data-fileid':elem.fid,'title':t('audioplayer','Edit ID3 tag')}).click(this.editSong.bind($this));
+	var spanEdit = $('<a/>').addClass('edit-song icon-rename').attr({'data-id':elem.id,'data-fileid':elem.fid,'title':t('audioplayer','Edit metadata')}).click(this.editSong.bind($this));
 
 	if (can_play[elem.mim] === true) {
 		var spanTitle = spanTitle.text(elem.tit);
@@ -908,7 +908,7 @@ Audios.prototype.fileActionsMenu = function(evt){
 		
 		
 		var html = '<div class="fileActionsMenu popovermenu bubble open menu" data-id="'+songId+'"><ul>'
-				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit ID3 tag')+'</span></a></li>'
+				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit metadata')+'</span></a></li>'
 				+'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>'
 
 		if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
@@ -1055,7 +1055,7 @@ Audios.prototype.editSong = function(evt){
 				
 			$("#dialogSmall").dialog({
 				resizable : false,
-				title : t('audioplayer', 'Edit track information (ID3)'),
+				title : t('audioplayer', 'Edit metadata'),
 				width : 600,
 				modal : true,
 				buttons : [{
@@ -1137,7 +1137,7 @@ Audios.prototype.editSong = function(evt){
 											$("#dialogSmall").html('');
 											oDialog.dialog("close");
 										}else if(jsondata.status === 'error_write'){
-											$('#notification').text(t('audioplayer','Missing permission for editing ID3 tags of track!'));
+											$('#notification').text(t('audioplayer','Missing permission to edit metadata of track!'));
 			 								$('#notification').slideDown();
 											window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 										}else if(jsondata.status === 'error'){
@@ -1154,7 +1154,7 @@ Audios.prototype.editSong = function(evt){
 			return false;
 		}
 		if(jsondata.status === 'error'){
-			$('#notification').text(t('audioplayer','Missing permission for editing ID3 tags of track!'));
+			$('#notification').text(t('audioplayer','Missing permission to edit metadata of track!'));
 			 $('#notification').slideDown();
 			window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 		}
