@@ -747,7 +747,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 								var spanTitle = spanTitle.text(el.tit);
 								var interpret = interpret.text(el.art);
 								var album = album.text(el.alb);
-								var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'title':t('audioplayer','Track options')}).click($this.fileActionsMenu.bind($this));
+								var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'title':t('audioplayer','Options')}).click($this.fileActionsMenu.bind($this));
 							} else {
 								var spanTitle = spanTitle.html('<i>'+el.tit+'</i>');
 								var interpret = interpret.html('<i>'+el.art+'</i>');
@@ -912,7 +912,7 @@ Audios.prototype.fileActionsMenu = function(evt){
 				+'<li><a href="#" class="menuitem" data-action="edit" data-id="'+songId+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit metadata')+'</span></a></li>'
 
 		if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
-			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>'+t('audioplayer','Remove from playlist')+'</span></a></li>';
+			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+songId+'"><span class="icon icon-delete"></span><span>'+t('audioplayer','Remove')+'</span></a></li>';
 		}
 		html = html +'</ul></div>'
 
