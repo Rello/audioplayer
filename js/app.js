@@ -603,7 +603,7 @@ Audios.prototype.loadCategory = function(category){
 										over : function(event, ui) {
 										},
 										drop : function(event, ui) {
-											$this.addSongToPlaylist($(this).attr('data-id'), ui.draggable.attr('data-id'));
+											$this.addSongToPlaylist($(this).attr('data-id'), ui.draggable.attr('data-trackid'));
 										}
 									});
 								}
