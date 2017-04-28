@@ -377,7 +377,7 @@ class CategoryController extends Controller {
 		$result = $stmt->execute(array($this->userId, $track_id));
 		$row = $result->fetchRow();
 		if (isset($row['id'])) {
-			$playcount = $row['id'] + 1;
+			$playcount = $row['playcount'] + 1;
 			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_statistics` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
 			$stmt->execute(array($playcount, $playtime, $row['id']));
 			return 'update';
