@@ -109,7 +109,6 @@ class CategoryController extends Controller {
 			$aPlaylists[] = array("id"=>"X2", "name"=> $this->l10n->t('Recently Added'));
 			$aPlaylists[] = array("id"=>"X3", "name" =>$this->l10n->t('Recently Played'));
 			$aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
-			// **after v1.5.0**   $aPlaylists[] = array("id"=>"X5", "name" =>$this->l10n->t('Top Rated'));
 			$aPlaylists[] = array("id" => "", "name" => "");
 		} elseif ($category === 'Folder') {
 			$SQL="SELECT  distinct(FC.`fileid`) AS `id`,FC.`name`, LOWER(FC.`name`) AS `lower` 
@@ -264,8 +263,17 @@ class CategoryController extends Controller {
 			 		ORDER BY `AT`.`file_id` DESC
 			 		Limit 25";
 			} elseif ($categoryId === "X3") { // Recently Played
+				$SQL = 	$SQL_select . $SQL_from .
+			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
+			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
+			 		ORDER BY `AS`.`playtime` DESC
+			 		Limit 25";
 			} elseif ($categoryId === "X4") { // Most Played
-			} elseif ($categoryId === "X5") { // Top Rated
+				$SQL = 	$SQL_select . $SQL_from .
+			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
+			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
+			 		ORDER BY `AS`.`playcount` DESC
+			 		Limit 25";
 			} else {
 				$SQL = $SQL_select ." , `AP`.`sortorder`" .
 					"FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
