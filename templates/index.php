@@ -21,28 +21,27 @@
 
 <div id="app-navigation" class="mp3_hide">
 	<div class="innerNav">
-		<h3></h3>
 		<ul id="albenoverview">
 			<li>
 				<span id="alben" style="vertical-align: top; font-size: 15px;">
-				<img class="svg" src="<?php echo \OC::$server->getURLGenerator()->imagePath('audioplayer','albums.svg'); ?>" style="width: 18px; padding-top: 3px;">
 				<?php p($l->t('Albums'));?></span>  
 				<i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i>
 				<i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i>
 			</li>
 		</ul>
-		<br>&nbsp;<br>
-		<select id="category_selector">
-	  		<option value=""selected><?php p($l->t('Selection'));?></option>
- 	 		<option value="Playlist"><?php p($l->t('Playlists'));?></option>
- 	 		<option value="Artist"><?php p($l->t('Artists'));?></option>
- 	 		<option value="Album"><?php p($l->t('Albums'));?></option>
- 	 		<option value="Title"><?php p($l->t('Titles'));?></option>
- 	 		<option value="Genre"><?php p($l->t('Genres'));?></option>
- 	 		<option value="Year"><?php p($l->t('Years'));?></option>
- 	 		<option value="Folder"><?php p($l->t('Folders'));?></option>
-		</select>
-		<button  class="icon-add mp3_hide" id="addPlaylist"></button>
+		<div id="category_area">
+			<select id="category_selector">
+				<option value=""selected><?php p($l->t('Selection'));?></option>
+				<option value="Playlist"><?php p($l->t('Playlists'));?></option>
+				<option value="Artist"><?php p($l->t('Artists'));?></option>
+				<option value="Album"><?php p($l->t('Albums'));?></option>
+				<option value="Title"><?php p($l->t('Titles'));?></option>
+				<option value="Genre"><?php p($l->t('Genres'));?></option>
+				<option value="Year"><?php p($l->t('Years'));?></option>
+				<option value="Folder"><?php p($l->t('Folders'));?></option>
+			</select>
+			<button  class="icon-add mp3_hide" id="addPlaylist"></button>
+		</div>
 		<ul id="myCategory"></ul>	
 		<!--my playlist clone -->	
 		<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
@@ -52,9 +51,11 @@
 		</li>	
 		<!--my playlist clone -->
 		<div class="app-navigation-entry-edit mp3_hide" id="newPlaylist">
-			<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
-			<button class="icon-checkmark" id="newPlaylistBtn_ok"></button>
-			<button class="icon-close" id="newPlaylistBtn_cancel"></button>
+			<div id="newPlaylist_controls">
+				<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
+				<button class="icon-checkmark" id="newPlaylistBtn_ok" style="margin: 0px;"></button>
+				<button class="icon-close" id="newPlaylistBtn_cancel"></button>
+			</div>
 		</div>
 	</div>
 </div>	

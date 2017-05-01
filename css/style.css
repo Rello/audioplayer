@@ -110,14 +110,12 @@ i#scanAudiosFirst{
 	cursor:pointer;
 }
 .innerNav{
-	padding-top:5px;
-	padding-left:5px;
 }
 .innerNav h3{
 	color:#999;
 }
 
-#albenoverview li, #myCategory li{
+#myCategory li{
 	cursor: pointer;
 	/*font-size:14px;*/
 	line-height:25px;
@@ -125,16 +123,37 @@ i#scanAudiosFirst{
 	height:25px;
 	float:left;
 }
+
+#albenoverview li {
+	min-height: 44px;
+	line-height: 44px;
+    padding-left: 44px;
+    background-size: 18px 18px;
+    background-position: 14px center;
+    background-repeat: no-repeat;
+	background-image: url('../img/albums.svg');
+}
 #albenoverview li span{
 	cursor: pointer;
 }
 #albenoverview li i{
 	color:#ccc;
-	font-size:18px;
+	font-size:16px;
+	float:right;
+	padding-right:10px;
+	cursor:pointer;
 }
 
 #albenoverview li i:hover{
 	color:#000;
+}
+#category_area {
+	display: flex;
+	margin: 0px 4px 4px 4px;
+}
+#category_selector {
+	width: 100%;
+	margin: 0px;
 }
 
 #app-navigation-toggle_alternative{
@@ -157,30 +176,34 @@ i#scanAudiosFirst{
 	display:none;
 	float:left;
 }
-
+#app-navigation .app-navigation-entry-edit {
+	padding: 0px;
+}
 #app-navigation .app-navigation-entry-edit:hover{
 	background:transparent;
 	
 }
+#app-navigation #newPlaylist_controls {
+	display: flex;
+	margin: 4px;
+}
 #app-navigation  input#newPlaylistTxt[type="text"],
 #app-navigation .app-navigation-entry-edit input[type="text"] {
-	padding:0;
-	padding-left:5px;
-	width: 150px;
-	height:30px;
-	float:left;
-	
+	padding: 0px 5px;
+	width: 100%;
+	height: 30px;
+	margin: 0px;
 }
 #app-navigation .app-navigation-entry-edit button,
 #app-navigation .app-navigation-entry-edit input[type="submit"] {
 	width: 36px;
 	height: 32px;
-	float: left;
+	margin: 0px 0px 0px 4px;
 }
 #app-navigation button#addPlaylist{
 	width: 36px;
 	height: 32px;
-	float: right;
+	margin: 0px 0px 0px 4px;
 }
 
 
@@ -544,18 +567,6 @@ height:auto;
 	line-height:28px;
 	display:block;
 	text-align:center;
-}
-#scanAudios{
-	float:right;
-	padding-right:10px;
-	cursor:pointer;
-}
-
-#resetAudios{
-	float:right;
-	padding-right:10px;
-	cursor:pointer;
-	
 }
 
 .rowlist{
