@@ -121,16 +121,16 @@ i#scanAudiosFirst{
 	/*font-size:14px;*/
 	line-height:25px;
 	display:block;
-	height:25px;
-	float:left;
+	float: left;
+	padding: 3px 6px 3px 12px;
 }
 
 #albenoverview li {
 	min-height: 44px;
 	line-height: 44px;
-    padding-left: 44px;
+    padding-left: 40px;
     background-size: 18px 18px;
-    background-position: 14px center;
+    background-position: 11px center;
     background-repeat: no-repeat;
 	background-image: url('../img/albums.svg');
 }
@@ -141,7 +141,7 @@ i#scanAudiosFirst{
 	color:#ccc;
 	font-size:16px;
 	float:right;
-	padding-right:10px;
+	padding:0px 6px;
 	cursor:pointer;
 }
 
@@ -150,7 +150,7 @@ i#scanAudiosFirst{
 }
 #category_area {
 	display: flex;
-	margin: 0px 4px 4px 4px;
+	margin: 0px 6px 4px 6px;
 }
 #category_selector {
 	width: 100%;
@@ -186,7 +186,7 @@ i#scanAudiosFirst{
 }
 #app-navigation #newPlaylist_controls {
 	display: flex;
-	margin: 4px;
+	margin: 6px;
 }
 #app-navigation  input#newPlaylistTxt[type="text"],
 #app-navigation .app-navigation-entry-edit input[type="text"] {
@@ -207,19 +207,15 @@ i#scanAudiosFirst{
 	margin: 0px 0px 0px 4px;
 }
 
-
 #myCategory li span.info-cover,
 #alben span.info-cover
 {
 	position:relative;
 	width:20px;
-	margin-top:5px;
-	height:20px;
 	display:block;
 	float:left;
 	background-color:#000;
 	color:#fff;
-	line-height:20px;
 	font-size:12px;
 	font-weight:bold;
 	text-align:center;
@@ -233,7 +229,6 @@ i#scanAudiosFirst{
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
-	padding-left: 5px;
 }
 #myCategory li span.pl-name-play{
 	float:left;
@@ -269,11 +264,8 @@ i#scanAudiosFirst{
 #myCategory li span.counter{
 	float:right;
 	right:10px;
-	margin-top:2px;
 	position:absolute;
 	width:24px;
-	height:24px;
-	line-height:24px;
 	text-align:center;
 }
 
