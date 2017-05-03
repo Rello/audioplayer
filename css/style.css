@@ -6,6 +6,7 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
+ * @author Artem Anufrij <artem.anufrij@live.de>
  * @copyright 2016-2017 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
@@ -110,31 +111,55 @@ i#scanAudiosFirst{
 	cursor:pointer;
 }
 .innerNav{
-	padding-top:5px;
-	padding-left:5px;
 }
 .innerNav h3{
 	color:#999;
 }
 
-#albenoverview li, #myCategory li{
+#myCategory li{
 	cursor: pointer;
 	/*font-size:14px;*/
 	line-height:25px;
 	display:block;
-	height:25px;
-	float:left;
+	float: left;
+	padding: 0px 6px 0px 12px;
+}
+
+#myCategory .ui-droppable {
+	padding: 0px 6px 0px 12px;
+}
+
+#albenoverview li {
+	min-height: 44px;
+	line-height: 44px;
+    padding-left: 40px;
+    background-size: 18px 18px;
+    background-position: 11px center;
+    background-repeat: no-repeat;
+	background-image: url('../img/albums.svg');
+	margin: 6px 0px;
 }
 #albenoverview li span{
 	cursor: pointer;
 }
 #albenoverview li i{
 	color:#ccc;
-	font-size:18px;
+	font-size:16px;
+	float:right;
+	padding:0px 6px;
+	cursor:pointer;
 }
 
 #albenoverview li i:hover{
 	color:#000;
+}
+#category_area {
+	display: flex;
+	margin: 0px 6px 6px 6px;
+}
+#category_selector {
+	width: 100%;
+	margin: 0px;
 }
 
 #app-navigation-toggle_alternative{
@@ -157,45 +182,55 @@ i#scanAudiosFirst{
 	display:none;
 	float:left;
 }
-
+#app-navigation .app-navigation-entry-edit {
+	padding: 0px;
+}
 #app-navigation .app-navigation-entry-edit:hover{
 	background:transparent;
 	
 }
+
+#app-navigation #playlist_controls {
+	display: flex;
+	margin: 0px 6px;
+}
+
+#app-navigation #playlist_controls #playlist {
+	width: 100%;
+}
+
+#app-navigation #newPlaylist_controls {
+	display: flex;
+	margin: 0px 6px;
+}
 #app-navigation  input#newPlaylistTxt[type="text"],
 #app-navigation .app-navigation-entry-edit input[type="text"] {
-	padding:0;
-	padding-left:5px;
-	width: 150px;
-	height:30px;
-	float:left;
-	
+	padding: 0px 5px;
+	width: 100%;
+	height: 30px;
+	margin: 0px;
 }
 #app-navigation .app-navigation-entry-edit button,
 #app-navigation .app-navigation-entry-edit input[type="submit"] {
 	width: 36px;
 	height: 32px;
-	float: left;
+	margin: 0px 0px 0px 4px;
 }
 #app-navigation button#addPlaylist{
 	width: 36px;
 	height: 32px;
-	float: right;
+	margin: 0px 0px 0px 4px;
 }
-
 
 #myCategory li span.info-cover,
 #alben span.info-cover
 {
 	position:relative;
 	width:20px;
-	margin-top:5px;
-	height:20px;
 	display:block;
 	float:left;
 	background-color:#000;
 	color:#fff;
-	line-height:20px;
 	font-size:12px;
 	font-weight:bold;
 	text-align:center;
@@ -209,7 +244,7 @@ i#scanAudiosFirst{
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
-	padding-left: 5px;
+	min-height: 25px;
 }
 #myCategory li span.pl-name-play{
 	float:left;
@@ -219,7 +254,6 @@ i#scanAudiosFirst{
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
-	padding-left: 5px;
 }
 #myCategory li:hover{
 	background-color:#e7e7e7;
@@ -230,8 +264,8 @@ i#scanAudiosFirst{
 	float:left;
 	position:relative;
 	width:24px;
-	min-height:30px;
-	height:30px;
+	min-height:25px;
+	height:25px;
 	padding:0px;
 	line-height:30px;
 	opacity:0;
@@ -245,11 +279,8 @@ i#scanAudiosFirst{
 #myCategory li span.counter{
 	float:right;
 	right:10px;
-	margin-top:2px;
 	position:absolute;
 	width:24px;
-	height:24px;
-	line-height:24px;
 	text-align:center;
 }
 
@@ -544,18 +575,6 @@ height:auto;
 	line-height:28px;
 	display:block;
 	text-align:center;
-}
-#scanAudios{
-	float:right;
-	padding-right:10px;
-	cursor:pointer;
-}
-
-#resetAudios{
-	float:right;
-	padding-right:10px;
-	cursor:pointer;
-	
 }
 
 .rowlist{
