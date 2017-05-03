@@ -80,7 +80,7 @@ class CategoryController extends Controller {
 						JOIN `*PREFIX*audioplayer_artists` AA
 						on AA.`id` = AT.`artist_id`
 			 			WHERE  AT.`user_id` = ?
-			 			ORDER BY LOWER(AA.`name`) ASC
+			 			ORDER BY AA.`name` ASC
 			 			";
 		} elseif ($category === 'Genre') {
 			$SQL="SELECT  `id`, `name`, LOWER(`name`) AS `lower` 
@@ -116,7 +116,7 @@ class CategoryController extends Controller {
 						JOIN `*PREFIX*filecache` FC
 						on FC.`fileid` = AT.`folder_id`
 			 			WHERE  AT.`user_id` = ?
-			 			ORDER BY LOWER(FC.`name`) ASC
+			 			ORDER BY FC.`name` ASC
 			 			";
 		} elseif ($category === 'Album') {
 			$SQL="SELECT  `id`,`name`, LOWER(`name`) AS `lower` 
