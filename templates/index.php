@@ -45,9 +45,11 @@
 		<ul id="myCategory"></ul>	
 		<!--my playlist clone -->	
 		<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
-			<input type="text" name="playlist" id="playlist" value=""  />
-				<button class="icon-checkmark"></button>
+			<div id="playlist_controls">	
+				<input type="text" name="playlist" id="playlist" value=""  />
+				<button class="icon-checkmark" style="margin: 0px;"></button>
 				<button class="icon-close"></button>
+			</div>
 		</li>	
 		<!--my playlist clone -->
 		<div class="app-navigation-entry-edit mp3_hide" id="newPlaylist">

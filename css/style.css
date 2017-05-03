@@ -122,7 +122,11 @@ i#scanAudiosFirst{
 	line-height:25px;
 	display:block;
 	float: left;
-	padding: 3px 6px 3px 12px;
+	padding: 0px 6px 0px 12px;
+}
+
+#myCategory .ui-droppable {
+	padding: 0px 6px 0px 12px;
 }
 
 #albenoverview li {
@@ -133,6 +137,7 @@ i#scanAudiosFirst{
     background-position: 11px center;
     background-repeat: no-repeat;
 	background-image: url('../img/albums.svg');
+	margin: 6px 0px;
 }
 #albenoverview li span{
 	cursor: pointer;
@@ -184,6 +189,16 @@ i#scanAudiosFirst{
 	background:transparent;
 	
 }
+
+#app-navigation #playlist_controls {
+	display: flex;
+	margin: 0px 6px;
+}
+
+#app-navigation #playlist_controls #playlist {
+	width: 100%;
+}
+
 #app-navigation #newPlaylist_controls {
 	display: flex;
 	margin: 0px 6px;
@@ -229,6 +244,7 @@ i#scanAudiosFirst{
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
+	min-height: 25px;
 }
 #myCategory li span.pl-name-play{
 	float:left;
@@ -238,7 +254,6 @@ i#scanAudiosFirst{
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
-	padding-left: 5px;
 }
 #myCategory li:hover{
 	background-color:#e7e7e7;
@@ -249,8 +264,8 @@ i#scanAudiosFirst{
 	float:left;
 	position:relative;
 	width:24px;
-	min-height:30px;
-	height:30px;
+	min-height:25px;
+	height:25px;
 	padding:0px;
 	line-height:30px;
 	opacity:0;
