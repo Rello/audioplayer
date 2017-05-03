@@ -9,8 +9,9 @@ All notable changes to this project will be documented in this file.
 - Experimental support for ownCloud 10.0 and Nextcloud 12
 
 ### Changed
-- zh_TW translation updated by @[sbr9150](https://github.com/sbr9150) [#173](https://github.com/rello/audioplayer/issues/173)
+- zh_TW translation updated [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
 - translation sources reworked
+- CSS changes for navigation menu [#179](https://github.com/rello/audioplayer/issues/179) @[artemanufrij](https://github.com/artemanufrij)
 
 ### Fixed
 - missing strings added to language files
@@ -49,7 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.4.1 - 2017-01-26
 ### Added
-- pl translation from @[andypl78](https://github.com/andypl78) [#105](https://github.com/rello/audioplayer/issues/105)
+- pl translation [#105](https://github.com/rello/audioplayer/issues/105) @[andypl78](https://github.com/andypl78)
 - support for PHP 7.1
 
 ### Changed
@@ -66,15 +67,15 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - Chrome CSS issue with only one track in album [#104](https://github.com/rello/audioplayer/issues/104)
-- correct arrays and remove obsolete functions (thanks @[mc-comanescu](https://github.com/mc-comanescu) and @[rseabra](https://github.com/rseabra)) [#110](https://github.com/rello/audioplayer/issues/110) [#123](https://github.com/rello/audioplayer/issues/123)
-- correct ORDER BY syntax for PostgreSQL database (thanks @[Turgon37](https://github.com/turgon37)) [#112](https://github.com/rello/audioplayer/issues/112)
+- correct arrays and remove obsolete functions [#110](https://github.com/rello/audioplayer/issues/110) [#123](https://github.com/rello/audioplayer/issues/123) (thanks @[mc-comanescu](https://github.com/mc-comanescu) and @[rseabra](https://github.com/rseabra))
+- correct ORDER BY syntax for PostgreSQL database [#112](https://github.com/rello/audioplayer/issues/112) (thanks @[Turgon37](https://github.com/turgon37))
 - album cover not written to database [#113](https://github.com/rello/audioplayer/issues/113)
 - catch Unicode characters in artist name [#118](https://github.com/rello/audioplayer/issues/118)
 - welcome screen not shown at first start [#121](https://github.com/rello/audioplayer/issues/121) 
 
 ## 1.4.0 - 2016-12-15
 ### Added
-- uk translation from @[BODYA7979](https://github.com/BODYA7979) [#94](https://github.com/rello/audioplayer/issues/94)
+- uk translation [#94](https://github.com/rello/audioplayer/issues/94) @[BODYA7979](https://github.com/BODYA7979)
 - folders as additional filter category [#98](https://github.com/rello/audioplayer/issues/98)
 - search for cover in album folder [#24](https://github.com/rello/audioplayer/issues/24)
 - Opus support [#92](https://github.com/rello/audioplayer/issues/92)
@@ -176,7 +177,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.1 - 2016-07-23
 ### Added
-- zh_TW translation from @[sbr9150](https://github.com/sbr9150)
+- zh_TW translation @[sbr9150](https://github.com/sbr9150)
 
 ### Fixed
 - spinning wheel when file was deleted [#19](https://github.com/rello/audioplayer/issues/19)
@@ -186,7 +187,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.0 - 2016-07-18
 ### Added
-- fullscreen mode as default (hide app-navigation)
+- fullscreen mode as default (hide app navigation)
 - playlist section conditional display
 - genre view (besides albums and custom playlists)
 
