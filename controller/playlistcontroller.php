@@ -13,12 +13,12 @@
 
 namespace OCA\audioplayer\Controller;
 
-use \OCP\AppFramework\Controller;
-use \OCP\AppFramework\Http\JSONResponse;
-use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\IRequest;
-use \OCP\IL10N;
-use \OCP\IDb;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IRequest;
+use OCP\IL10N;
+use OCP\IDbConnection;
 
 /**
  * Controller class for main page.
@@ -34,7 +34,7 @@ class PlaylistController extends Controller {
 			IRequest $request, 
 			$userId, 
 			IL10N $l10n, 
-			IDb $db
+			IDbConnection $db
 		) {
 		parent::__construct($appName, $request);
 		$this -> userId = $userId;
@@ -97,14 +97,14 @@ class PlaylistController extends Controller {
 		
 		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_playlists', ['user_id' => $this->userId, 'name' => $sName])) {
 					
-			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_playlists');
+			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_playlists');
 			
 			$result = ['msg'=>'new','id' => $insertid];
 			
 			return $result;
 			
 		}else{
-			$stmt = $this->db->prepareQuery( 'SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ? AND `name` = ?' );
+			$stmt = $this->db->prepare( 'SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ? AND `name` = ?' );
 			$result = $stmt->execute(array($this->userId, $sName));
 			$row = $result->fetchRow();
 			
@@ -115,7 +115,7 @@ class PlaylistController extends Controller {
 	}
 	
 	private function updatePlaylistToDB($id,$sName){
-		$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_playlists` SET `name` = ? WHERE `user_id`= ? AND `id`= ?' );
+		$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_playlists` SET `name` = ? WHERE `user_id`= ? AND `id`= ?' );
 		$result = $stmt->execute(array($sName, $this->userId, $id));
 		
 		return true;
@@ -154,7 +154,7 @@ class PlaylistController extends Controller {
 			
 		$counter = 1;	
 		foreach($iTrackIds as $trackId){
-			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_playlist_tracks` SET `sortorder` = ? WHERE `playlist_id` = ? AND `track_id` = ?' );
+			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_playlist_tracks` SET `sortorder` = ? WHERE `playlist_id` = ? AND `track_id` = ?' );
 		    $result = $stmt->execute(array($counter, $iPlaylistId,$trackId));
 			$counter++;
 		}
@@ -179,7 +179,7 @@ class PlaylistController extends Controller {
 		try {
 			$sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
 					. 'WHERE `playlist_id` = ? AND `track_id` = ?';
-			$stmt = $this->db->prepareQuery($sql);
+			$stmt = $this->db->prepare($sql);
 			$stmt->execute(array($iPlaylistId, $iTrackId));
 		} catch(\Exception $e) {
 			\OCP\Util::writeLog('core', __METHOD__.', exception: '.$e->getMessage(),
@@ -194,20 +194,17 @@ class PlaylistController extends Controller {
 	 * 
 	 */
 	public function removePlaylist(){
-		 	
 		 
 		 $iPlaylistId = $this->params('playlistid');
-		 
-		 
 		 try {
 			$sql = 'DELETE FROM `*PREFIX*audioplayer_playlists` '
 					. 'WHERE `id` = ? AND `user_id` = ?';
-			$stmt = $this->db->prepareQuery($sql);
+			$stmt = $this->db->prepare($sql);
 			$result = $stmt->execute(array($iPlaylistId, $this->userId));	
 				
 			$sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
 					. 'WHERE `playlist_id` = ?';
-			$stmt = $this->db->prepareQuery($sql);
+			$stmt = $this->db->prepare($sql);
 			$result = $stmt->execute(array($iPlaylistId));
 		} catch(\Exception $e) {
 			\OCP\Util::writeLog('core', __METHOD__.', exception: '.$e->getMessage(),\OCP\Util::ERROR);
@@ -222,8 +219,6 @@ class PlaylistController extends Controller {
 		 $response = new JSONResponse();
 		 $response -> setData($result);
 		 return $response;
-		 
-		  
 	}
 	
 	/**
