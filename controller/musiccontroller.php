@@ -13,12 +13,12 @@
 
 namespace OCA\audioplayer\Controller;
 
-use \OCP\AppFramework\Controller;
-use \OCP\AppFramework\Http\JSONResponse;
-use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\IRequest;
-use \OCP\IL10N;
-use \OCP\IDb;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IRequest;
+use OCP\IL10N;
+use OCP\IDbConnection;
 use OCP\Share\IManager;
 use \OCA\audioplayer\Http\ImageResponse;
 
@@ -39,7 +39,7 @@ class MusicController extends Controller {
 			IRequest $request, 
 			$userId, 
 			IL10N $l10n, 
-			IDb $db,
+			IDbConnection $db,
 			IManager $shareManager
 		) {
 		parent::__construct($appName, $request);
@@ -93,8 +93,8 @@ class MusicController extends Controller {
 			$fileid = $share->getNodeId();
 			$fileowner = $share->getShareOwner();
 
-			\OCP\Util::writeLog('audioplayer', 'fileid: '.$fileid, \OCP\Util::DEBUG);
-			\OCP\Util::writeLog('audioplayer', 'fileowner: '.$fileowner, \OCP\Util::DEBUG);
+			//\OCP\Util::writeLog('audioplayer', 'fileid: '.$fileid, \OCP\Util::DEBUG);
+			//\OCP\Util::writeLog('audioplayer', 'fileowner: '.$fileowner, \OCP\Util::DEBUG);
 
 			$SQL="SELECT `AT`.`title`,`AG`.`name` AS `genre`,`AB`.`name` AS `album`,`AT`.`artist_id`,`AT`.`length`,`AT`.`bitrate`,`AT`.`year`,`AA`.`name` AS `artist`, ROUND((`AT`.`bitrate` / 1000 ),0) AS `bitrate` 
 						FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -105,7 +105,7 @@ class MusicController extends Controller {
 			 			ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC
 			 			";
 				 
-			$stmt = $this->db->prepareQuery($SQL);
+			$stmt = $this->db->prepare($SQL);
 			$result = $stmt->execute(array($fileowner, $fileid));
 			$row = $result->fetchRow();
 						
@@ -152,7 +152,7 @@ class MusicController extends Controller {
 	public function getMusic(){
 			
 		$aSongs = $this->loadSongs();
-    	$aAlbums = $this->loadAlbums();
+    		$aAlbums = $this->loadAlbums();
 		\OC::$server->getSession()->close();
 		
 		if(is_array($aAlbums)){
@@ -189,7 +189,7 @@ class MusicController extends Controller {
 			 			ORDER BY `AA`.`name` ASC
 			 			";
 						
-		$stmt = $this->db->prepareQuery($SQL);
+		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array($this->userId));
 		$aAlbums=array();
 		while( $row = $result->fetchRow()) {
@@ -219,18 +219,18 @@ class MusicController extends Controller {
 		# if all the same - display it as album artist
 		# if different track-artists, display "various"
 		if ((int)$ARtistID !== 0){
-			$stmt = $this->db->prepareQuery( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
+			$stmt = $this->db->prepare( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
 			$result = $stmt->execute(array($ARtistID));
 			$row = $result->fetchRow();
 			return $row['name'];
 		} else {
-    		$stmt = $this->db->prepareQuery( 'SELECT distinct(`artist_id`) FROM `*PREFIX*audioplayer_tracks` WHERE  `album_id` = ?' );
+    		$stmt = $this->db->prepare( 'SELECT distinct(`artist_id`) FROM `*PREFIX*audioplayer_tracks` WHERE  `album_id` = ?' );
 			$result = $stmt->execute(array($iAlbumId));
 			$TArtist = $result->fetchRow();
 			$rowCount = $result->rowCount();
 
 			if($rowCount === 1){
-				$stmt = $this->db->prepareQuery( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
+				$stmt = $this->db->prepare( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
 				$result = $stmt->execute(array($TArtist['artist_id']));
 				$row = $result->fetchRow();
 				return $row['name'];
@@ -247,7 +247,7 @@ class MusicController extends Controller {
 			 			ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC
 			 			";
 			
-		$stmt = $this->db->prepareQuery($SQL);
+		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array($this->userId));
 		$aSongs=array();
 		
@@ -284,7 +284,7 @@ class MusicController extends Controller {
 	public function searchProperties($searchquery){
 		$searchresult = array();
 		$SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
-		$stmt = $this->db->prepareQuery($SQL);
+		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
 		if (!is_null($result)) {
 			while( $row = $result->fetchRow()) {			
@@ -296,7 +296,7 @@ class MusicController extends Controller {
 		}
 
 		$SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_artists` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
-		$stmt = $this->db->prepareQuery($SQL);
+		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
 		if(!is_null($result)) {
 			while( $row = $result->fetchRow()) {
@@ -308,7 +308,7 @@ class MusicController extends Controller {
 		}
 		
 		$SQL = "SELECT `album_id`, `title` FROM `*PREFIX*audioplayer_tracks` WHERE (LOWER(`title`) LIKE LOWER(?)) AND `user_id` = ?";
-		$stmt = $this->db->prepareQuery($SQL);
+		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
 		if(!is_null($result)) {
 			while( $row = $result->fetchRow()) {
@@ -339,42 +339,42 @@ class MusicController extends Controller {
 			$this->occ_job = false;
 		}
 			
-		$stmt = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ?' );
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ?' );
 		$stmt->execute(array($this->userId));
 		
-		$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ?' );
+		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ?' );
 		$stmt2->execute(array($this->userId));	
 		
-		$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ?' );
+		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ?' );
 		$stmt2->execute(array($this->userId));
 		
 		$SQL1="SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?";
-		$stmt5 = $this->db->prepareQuery($SQL1);
+		$stmt5 = $this->db->prepare($SQL1);
 		$result5 = $stmt5->execute(array($this->userId));
 		if(!is_null($result5)) {
 			while($row = $result5->fetchRow()) {
-				$stmt6 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
+				$stmt6 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
 				$stmt6->execute(array($row['id']));
 			}
 		}
 		
-		$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?' );
+		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?' );
 		$stmt2->execute(array($this->userId));
 		
 		$SQL="SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?";
-		$stmt3 = $this->db->prepareQuery($SQL);
+		$stmt3 = $this->db->prepare($SQL);
 		$result = $stmt3->execute(array($this->userId));
 		if(!is_null($result)) {
 			while( $row = $result->fetchRow()) {
-				$stmt4 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ?' );
+				$stmt4 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ?' );
 				$stmt4->execute(array($row['id']));
 			}
 		}
 
-		$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?' );
+		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?' );
 		$stmt2->execute(array($this->userId));
 
-		$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_statistics` WHERE `user_id` = ?' );
+		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_statistics` WHERE `user_id` = ?' );
 		$stmt2->execute(array($this->userId));
 
 		$result=[
@@ -394,15 +394,15 @@ class MusicController extends Controller {
 	
 	private function deleteFromDB($Id,$iAlbumId){
 		
-		$stmtCountAlbum = $this->db->prepareQuery( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
+		$stmtCountAlbum = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
 		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
 		$rowAlbum = $resultAlbumCount->fetchRow();
 		if((int)$rowAlbum['ALBUMCOUNT'] === 1){
-			$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
+			$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 			$stmt2->execute(array($iAlbumId, $this->userId));
 		}
 		
-		$stmt = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
 		$stmt->execute(array($this->userId, $Id));
 		
 	}
@@ -430,7 +430,7 @@ class MusicController extends Controller {
 			 	WHERE  `user_id` = ? AND `id` = ? 
 			 	";
 			
-		$stmt = $this->db->prepareQuery($SQL);
+		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array($this->userId, $album));
 		$aAlbums=array();
 		while( $row = $result->fetchRow()) {
