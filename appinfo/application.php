@@ -13,17 +13,17 @@
  
 namespace OCA\audioplayer\AppInfo;
 
-use \OCP\AppFramework\App;
+use OCP\AppFramework\App;
 use OCP\IContainer;
 use OCP\AppFramework\IAppContainer;
 
-use \OCA\audioplayer\Controller\PageController;
-use \OCA\audioplayer\Controller\PlaylistController;
-use \OCA\audioplayer\Controller\ScannerController;
-use \OCA\audioplayer\Controller\MusicController;
-use \OCA\audioplayer\Controller\PhotoController;
-use \OCA\audioplayer\Controller\CategoryController;
-use \OCA\audioplayer\Controller\SettingController;
+use OCA\audioplayer\Controller\PageController;
+use OCA\audioplayer\Controller\PlaylistController;
+use OCA\audioplayer\Controller\ScannerController;
+use OCA\audioplayer\Controller\MusicController;
+use OCA\audioplayer\Controller\PhotoController;
+use OCA\audioplayer\Controller\CategoryController;
+use OCA\audioplayer\Controller\SettingController;
 
 class Application extends App {
 	
