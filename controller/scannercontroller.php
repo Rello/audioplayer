@@ -615,9 +615,21 @@ class ScannerController extends Controller {
 					$playTimeString=$ThisFileInfo['playtime_string'];
 				}
 
+				# write discnumber if available
+				# if no discumber, discnumber is set to 1
+				# MP3, FLAC & MP4 have different tags for discnumber
 				$disc = 1;
-				if(isset($ThisFileInfo['comments']['disc_number'][0])){
-					$disc=$ThisFileInfo['comments']['disc_number'][0];
+				$keys = [
+					'disc_number',
+					'part_of_a_set',
+					'partofaset',
+					'discnumber'
+				];
+				for ($i = 0; $i < count($keys); $i++){
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
+						$disc=$ThisFileInfo['comments'][$keys[$i]][0];
+						break;
+					}
 				}
 
 				$aTrack = [
