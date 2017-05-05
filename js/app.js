@@ -235,7 +235,7 @@ Audios.prototype.AlbumClickHandler = function(event){
 			$(activeAlbumContainer+' .open-arrow').css('left',$(activeAlbum).position().left+iArrowLeft);
 	 	 	$(activeAlbum).addClass('is-active');
 	 	 	$(activeAlbum).find('.artist').hide();
-	 	 	
+			
 	 	 	$(activeAlbumContainer).css({
 	 	 		'top':scrollTop+$(activeAlbum).offset().top+iTop,
 	 	 		'background-color':$(activeAlbum).data('bgcolor'),
@@ -272,7 +272,7 @@ Audios.prototype.AlbumClickHandler = function(event){
 	 	 	$(activeAlbum).addClass('is-active');
 	 	 	
 	 	 	$(activeAlbum).find('.artist').hide();
-	 	 	
+			
 	 	 	$(activeAlbumContainer).css({
 	 	 		'top':scrollTop+$(activeAlbum).offset().top+iTop,
 	 	 		'background-color':$(activeAlbum).data('bgcolor'),
@@ -293,7 +293,7 @@ Audios.prototype.AlbumClickHandler = function(event){
 			   
 		   }else{
 		   		$(activeAlbum).parent('.rowlist').css('margin-bottom',$(activeAlbumContainer).height()+20);
-		   		 $(activeAlbumContainer).show();
+				$(activeAlbumContainer).show();
 		   }
 			
 		}else{
@@ -2076,12 +2076,17 @@ $(document).ready(function() {
 			$('#audios-audioscontainer .rowlist').remove();
 			myAudios.buildAlbumRows(myAudios.albums);
 			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
+			$('.sm2-bar-ui').removeClass('full-width');
+			$('.sm2-bar-ui').css('max-width', 'none');
+			$('#audios-audioscontainer').css('top', 70-$('.sm2-bar-ui').height());
 			myAudios.set_uservalue('navigation','true');
 		} else {
 			$('#app-navigation').addClass('mp3_hide');
 			$('#audios-audioscontainer .rowlist').remove();
 			myAudios.buildAlbumRows(myAudios.albums);
 			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
+			$('.sm2-bar-ui').addClass('full-width');
+			$('#audios-audioscontainer').css('top', 70);
 			myAudios.set_uservalue('navigation','false');
 		}
 	});
