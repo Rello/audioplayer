@@ -622,8 +622,7 @@ class ScannerController extends Controller {
 				$keys = [
 					'part_of_a_set',
 					'partofset',
-					'disc_number',
-					'discnumber'
+					'disc_number'
 				];
 				for ($i = 0; $i < count($keys); $i++){
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
