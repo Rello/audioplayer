@@ -352,7 +352,7 @@ class MusicController extends Controller {
 		$stmt5 = $this->db->prepare($SQL1);
 		$result5 = $stmt5->execute(array($this->userId));
 		if(!is_null($result5)) {
-			while($row = $result5->fetchRow()) {
+			while($row = $result5->fetch()) {
 				$stmt6 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
 				$stmt6->execute(array($row['id']));
 			}
@@ -365,7 +365,7 @@ class MusicController extends Controller {
 		$stmt3 = $this->db->prepare($SQL);
 		$result = $stmt3->execute(array($this->userId));
 		if(!is_null($result)) {
-			while( $row = $result->fetchRow()) {
+			while( $row = $result->fetch()) {
 				$stmt4 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ?' );
 				$stmt4->execute(array($row['id']));
 			}
@@ -396,7 +396,7 @@ class MusicController extends Controller {
 		
 		$stmtCountAlbum = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
 		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
-		$rowAlbum = $resultAlbumCount->fetchRow();
+		$rowAlbum = $resultAlbumCount->fetch();
 		if((int)$rowAlbum['ALBUMCOUNT'] === 1){
 			$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 			$stmt2->execute(array($iAlbumId, $this->userId));
