@@ -128,7 +128,7 @@ class CategoryController extends Controller {
 			
 		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array($this->userId));
-		while( $row = $result->fetchRow()) {
+		while( $row = $result->fetch()) {
  			array_splice($row, 2, 1);
  			if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
 			$row['counter'] = $this->getCountForCategory($category,$row['id']);
@@ -194,7 +194,7 @@ class CategoryController extends Controller {
 		} else {
 			$result = $stmt->execute(array($categoryId, $this->userId));
 		}
-		while( $row = $result->fetchRow()) {
+		while( $row = $result->fetch()) {
 			$count = $row['count'];
 		}
 		return $count;
@@ -300,7 +300,7 @@ class CategoryController extends Controller {
 		$this->tagger = $this->tagManager->load('files');
 		$favorites = $this->tagger->getFavorites();
 				
-		while( $row = $result->fetchRow()) {
+		while( $row = $result->fetch()) {
 			$file_not_found = false;	
 			try {
 				$path = \OC\Files\Filesystem::getPath($row['fid']);
