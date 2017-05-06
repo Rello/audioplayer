@@ -657,7 +657,7 @@ class ScannerController extends Controller {
     	$stmtCount = $this->db->prepare( 'SELECT `cover` FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 		$resultCount = $stmtCount->execute(array ($iAlbumId, $this->userId));
 		$row = $resultCount->fetchRow();
-		$stmt = $this->db->prepare 'UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?' );
+		$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?' );
 		$result = $stmt->execute(array($sImage, '', $iAlbumId, $this->userId));
 		return true;
     }
