@@ -339,7 +339,7 @@ class CategoryController extends Controller {
 	private function deleteFromDB($Id,$iAlbumId){		
 		$stmtCountAlbum = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
 		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
-		$rowAlbum = $resultAlbumCount->fetchRow();
+		$rowAlbum = $resultAlbumCount->fetch();
 		if((int)$rowAlbum['ALBUMCOUNT'] === 1){
 			$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
 			$stmt2->execute(array($iAlbumId, $this->userId));
@@ -375,7 +375,7 @@ class CategoryController extends Controller {
 		$SQL='SELECT id, playcount FROM *PREFIX*audioplayer_statistics WHERE `user_id`= ? AND `track_id`= ?';
 		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array($this->userId, $track_id));
-		$row = $result->fetchRow();
+		$row = $result->fetch();
 		if (isset($row['id'])) {
 			$playcount = $row['playcount'] + 1;
 			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_statistics` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
