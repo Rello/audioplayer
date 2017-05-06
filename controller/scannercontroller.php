@@ -620,9 +620,9 @@ class ScannerController extends Controller {
 				# MP3, FLAC & MP4 have different tags for discnumber
 				$disc = 1;
 				$keys = [
-					'disc_number',
 					'part_of_a_set',
-					'partofaset',
+					'partofset',
+					'disc_number',
 					'discnumber'
 				];
 				for ($i = 0; $i < count($keys); $i++){
