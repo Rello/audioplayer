@@ -106,8 +106,8 @@ class MusicController extends Controller {
 			 			";
 				 
 			$stmt = $this->db->prepare($SQL);
-			$result = $stmt->execute(array($fileowner, $fileid));
-			$row = $result->fetchRow();
+			$stmt->execute(array($fileowner, $fileid));
+			$row = $stmt->fetch();
 						
 			if($row['year'] === '0') $row['year'] = $this->l10n->t('Unknown');
 
@@ -129,10 +129,8 @@ class MusicController extends Controller {
 	}
 
 	/**
-	*@NoAdminRequired
+	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * 
-	 * 
 	 */
 	public function getAudioStream(){
 		
@@ -147,7 +145,6 @@ class MusicController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 * 
 	 */
 	public function getMusic(){
 			
@@ -179,10 +176,10 @@ class MusicController extends Controller {
 	
 	/**
 	 * @NoAdminRequired
-	 * 
 	 */
 	public function loadAlbums(){
 			
+		$aAlbums=array();
 		$SQL="SELECT  `AA`.`id`,`AA`.`name` AS `nam`,`AA`.`cover` AS `cov`,`AA`.`artist_id` AS `aid`
 						FROM `*PREFIX*audioplayer_albums` `AA`
 			 			WHERE  `AA`.`user_id` = ?
@@ -190,9 +187,10 @@ class MusicController extends Controller {
 			 			";
 						
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array($this->userId));
-		$aAlbums=array();
-		while( $row = $result->fetchRow()) {
+		$stmt->execute(array($this->userId));
+		$results = $stmt->fetchAll();
+
+		foreach($results as $row) {
 			$row['art'] = $this->loadArtistsToAlbum($row['id'],$row['aid']);	
 
 			if ($row['nam'] === $this->l10n->t('Unknown') AND $row['art'] === $this->l10n->t('Various Artists')) {
@@ -220,19 +218,19 @@ class MusicController extends Controller {
 		# if different track-artists, display "various"
 		if ((int)$ARtistID !== 0){
 			$stmt = $this->db->prepare( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
-			$result = $stmt->execute(array($ARtistID));
-			$row = $result->fetchRow();
+			$stmt->execute(array($ARtistID));
+			$row = $stmt->fetch();
 			return $row['name'];
 		} else {
     		$stmt = $this->db->prepare( 'SELECT distinct(`artist_id`) FROM `*PREFIX*audioplayer_tracks` WHERE  `album_id` = ?' );
-			$result = $stmt->execute(array($iAlbumId));
-			$TArtist = $result->fetchRow();
-			$rowCount = $result->rowCount();
+			$stmt->execute(array($iAlbumId));
+			$TArtist =  $stmt->fetch();
+			$rowCount = $stmt->rowCount();
 
 			if($rowCount === 1){
 				$stmt = $this->db->prepare( 'SELECT `name`  FROM `*PREFIX*audioplayer_artists` WHERE  `id` = ?' );
-				$result = $stmt->execute(array($TArtist['artist_id']));
-				$row = $result->fetchRow();
+				$stmt->execute(array($TArtist['artist_id']));
+				$row =  $stmt->fetch();
 				return $row['name'];
 			}else{
 				return (string) $this->l10n->t('Various Artists');
@@ -241,6 +239,7 @@ class MusicController extends Controller {
     }
 	
 	public function loadSongs(){
+		$aSongs=array();
 		$SQL="SELECT  `AT`.`id`,`AT`.`title` AS `tit`,`AT`.`number` AS `num`,`AT`.`album_id` AS `aid`,`AT`.`length` AS `len`,`AT`.`file_id` AS `fid`,`AT`.`mimetype` AS `mim`,`AA`.`name` AS `art` FROM `*PREFIX*audioplayer_tracks` `AT`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 			 			WHERE  `AT`.`user_id` = ?
@@ -248,10 +247,10 @@ class MusicController extends Controller {
 			 			";
 			
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array($this->userId));
-		$aSongs=array();
-		
-		while( $row = $result->fetchRow()) {
+		$stmt->execute(array($this->userId));
+		$results = $stmt->fetchAll();
+
+		foreach($results as $row) {
 			$file_not_found = false;
 			try {
 				$path = \OC\Files\Filesystem::getPath($row['fid']);
@@ -285,9 +284,10 @@ class MusicController extends Controller {
 		$searchresult = array();
 		$SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
-		if (!is_null($result)) {
-			while( $row = $result->fetchRow()) {			
+		$stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
+		$results = $stmt->fetchAll();
+		if(!is_null($results)) {
+			foreach($results as $row) {
 				$searchresult[] = [
 					'id' => 'Album-'.$row['id'],
 					'name' => $this->l10n->t('Album').': '.$row['name'],
@@ -298,8 +298,9 @@ class MusicController extends Controller {
 		$SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_artists` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
 		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
-		if(!is_null($result)) {
-			while( $row = $result->fetchRow()) {
+		$results = $stmt->fetchAll();
+		if(!is_null($results)) {
+			foreach($results as $row) {
 				$searchresult[] = [
 					'id' => 'Artist-'.$row['id'],
 					'name' => $this->l10n->t('Artist').': '.$row['name'],
@@ -310,8 +311,9 @@ class MusicController extends Controller {
 		$SQL = "SELECT `album_id`, `title` FROM `*PREFIX*audioplayer_tracks` WHERE (LOWER(`title`) LIKE LOWER(?)) AND `user_id` = ?";
 		$stmt = $this->db->prepare($SQL);
 		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
-		if(!is_null($result)) {
-			while( $row = $result->fetchRow()) {
+		$results = $stmt->fetchAll();
+		if(!is_null($results)) {
+			foreach($results as $row) {
 				$searchresult[] = [
 					'id' => 'Album-'.$row['album_id'],
 					'name' => $this->l10n->t('Title').': '.$row['title'],
@@ -342,40 +344,40 @@ class MusicController extends Controller {
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ?' );
 		$stmt->execute(array($this->userId));
 		
-		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ?' );
-		$stmt2->execute(array($this->userId));	
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ?' );
+		$stmt->execute(array($this->userId));	
 		
-		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ?' );
-		$stmt2->execute(array($this->userId));
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ?' );
+		$stmt->execute(array($this->userId));
 		
-		$SQL1="SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?";
-		$stmt5 = $this->db->prepare($SQL1);
-		$result5 = $stmt5->execute(array($this->userId))->fetch();
-		if(!is_null($result5)) {
-			foreach($result5 as $result) {
+		$stmt = $this->db->prepare( 'SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?' );
+		$stmt->execute(array($this->userId));
+		$results = $stmt->fetchAll();
+		if(!is_null($results)) {
+			foreach($results as $row) {
 				$stmt6 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
 				$stmt6->execute(array($row['id']));
 			}
 		}
 		
-		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?' );
-		$stmt2->execute(array($this->userId));
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?' );
+		$stmt->execute(array($this->userId));
 		
-		$SQL="SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?";
-		$stmt3 = $this->db->prepare($SQL);
-		$result = $stmt3->execute(array($this->userId));
-		if(!is_null($result)) {
-			while( $row = $result->fetch()) {
+		$stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?');
+		$stmt->execute(array($this->userId));
+		$results = $stmt->fetchAll();
+		if(!is_null($results)) {
+			foreach($results as $row) {
 				$stmt4 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ?' );
 				$stmt4->execute(array($row['id']));
 			}
 		}
 
-		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?' );
-		$stmt2->execute(array($this->userId));
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?' );
+		$stmt->execute(array($this->userId));
 
-		$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_statistics` WHERE `user_id` = ?' );
-		$stmt2->execute(array($this->userId));
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_statistics` WHERE `user_id` = ?' );
+		$stmt->execute(array($this->userId));
 
 		$result=[
 					'status' => 'success',
@@ -424,6 +426,7 @@ class MusicController extends Controller {
 	public function getCover(){
 		$album=$this->params('album');
 		$cover = '';
+		$aAlbums=array();
 		
 		$SQL="SELECT  `cover`, `name`, `artist_id`
 				FROM `*PREFIX*audioplayer_albums` 
@@ -431,9 +434,9 @@ class MusicController extends Controller {
 			 	";
 			
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array($this->userId, $album));
-		$aAlbums=array();
-		while( $row = $result->fetchRow()) {
+		$stmt->execute(array($this->userId, $album));
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
 			$artist = $this->loadArtistsToAlbum($album,$row['artist_id']);
 			$cover = $row['cover'];	
 			if ($row['name'] === $this->l10n->t('Unknown') AND $artist === $this->l10n->t('Various Artists')){
