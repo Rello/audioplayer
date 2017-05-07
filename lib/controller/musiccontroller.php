@@ -297,7 +297,7 @@ class MusicController extends Controller {
 
 		$SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_artists` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
+		$stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
 		$results = $stmt->fetchAll();
 		if(!is_null($results)) {
 			foreach($results as $row) {
@@ -310,7 +310,7 @@ class MusicController extends Controller {
 		
 		$SQL = "SELECT `album_id`, `title` FROM `*PREFIX*audioplayer_tracks` WHERE (LOWER(`title`) LIKE LOWER(?)) AND `user_id` = ?";
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
+		$stmt->execute(array('%'.addslashes($searchquery).'%', $this->userId));
 		$results = $stmt->fetchAll();
 		if(!is_null($results)) {
 			foreach($results as $row) {
@@ -355,8 +355,8 @@ class MusicController extends Controller {
 		$results = $stmt->fetchAll();
 		if(!is_null($results)) {
 			foreach($results as $row) {
-				$stmt6 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
-				$stmt6->execute(array($row['id']));
+				$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
+				$stmt->execute(array($row['id']));
 			}
 		}
 		
@@ -368,8 +368,8 @@ class MusicController extends Controller {
 		$results = $stmt->fetchAll();
 		if(!is_null($results)) {
 			foreach($results as $row) {
-				$stmt4 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ?' );
-				$stmt4->execute(array($row['id']));
+				$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ?' );
+				$stmt->execute(array($row['id']));
 			}
 		}
 
@@ -396,12 +396,12 @@ class MusicController extends Controller {
 	
 	private function deleteFromDB($Id,$iAlbumId){
 		
-		$stmtCountAlbum = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
-		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
-		$rowAlbum = $resultAlbumCount->fetch();
+		$stmt = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
+		$stmt->execute(array($iAlbumId));
+		$rowAlbum = $stmt->fetch();
 		if((int)$rowAlbum['ALBUMCOUNT'] === 1){
-			$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
-			$stmt2->execute(array($iAlbumId, $this->userId));
+			$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
+			$stmt->execute(array($iAlbumId, $this->userId));
 		}
 		
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
