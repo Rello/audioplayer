@@ -350,9 +350,9 @@ class MusicController extends Controller {
 		
 		$SQL1="SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?";
 		$stmt5 = $this->db->prepare($SQL1);
-		$result5 = $stmt5->execute(array($this->userId));
+		$result5 = $stmt5->execute(array($this->userId))->fetchAll();
 		if(!is_null($result5)) {
-			while($row = $result5->fetchRow()) {
+			foreach($result5 as $result) {
 				$stmt6 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
 				$stmt6->execute(array($row['id']));
 			}
