@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - missing strings added to language files
+- issues with sidebar and soundbar [#111](https://github.com/rello/audioplayer/issues/111) [#128](https://github.com/rello/audioplayer/issues/128) @[Faldon](https://github.com/Faldon)
 
 ## 1.5.1 - 2017-04-08
 ### Fixed
