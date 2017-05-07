@@ -127,8 +127,9 @@ class CategoryController extends Controller {
 		}	
 			
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array($this->userId));
-		while( $row = $result->fetch()) {
+		$stmt->execute(array($this->userId));
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
  			array_splice($row, 2, 1);
  			if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
 			$row['counter'] = $this->getCountForCategory($category,$row['id']);
@@ -190,11 +191,12 @@ class CategoryController extends Controller {
 
 		$stmt = $this->db->prepare($SQL);
 		if ($category === 'Playlist') {
-			$result = $stmt->execute(array($categoryId));
+			$stmt->execute(array($categoryId));
 		} else {
-			$result = $stmt->execute(array($categoryId, $this->userId));
+			$stmt->execute(array($categoryId, $this->userId));
 		}
-		while( $row = $result->fetch()) {
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
 			$count = $row['count'];
 		}
 		return $count;
@@ -255,7 +257,7 @@ class CategoryController extends Controller {
 		} elseif ($category === 'Playlist') {
 			if ($categoryId === "X1") { // Favorites
 				$SQL = 	$SQL_select . $SQL_from .
-					"WHERE `AT`.`id` > ? AND `AT`.`user_id` = ?" .
+					"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ?" .
 			 		$SQL_order;
 			} elseif ($categoryId === "X2") { // Recently Added
 				$SQL = 	$SQL_select . $SQL_from .
@@ -294,13 +296,13 @@ class CategoryController extends Controller {
 			 	$SQL_order;
 		}
 
-		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array($categoryId, $this->userId));
-
 		$this->tagger = $this->tagManager->load('files');
 		$favorites = $this->tagger->getFavorites();
 				
-		while( $row = $result->fetch()) {
+		$stmt = $this->db->prepare($SQL);
+		$stmt->execute(array($categoryId, $this->userId));
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
 			$file_not_found = false;	
 			try {
 				$path = \OC\Files\Filesystem::getPath($row['fid']);
@@ -320,7 +322,7 @@ class CategoryController extends Controller {
 				} else {
 					$row['fav'] = "f";
 				}
-				if ($categoryId === "X1" AND in_array($row['fid'], $favorites) === false ) {
+				if ($categoryId === "X1" AND !in_array($row['fid'], $favorites)) {
 				} else {
 					$aTracks[]=$row;
 				}
@@ -338,11 +340,11 @@ class CategoryController extends Controller {
 
 	private function deleteFromDB($Id,$iAlbumId){		
 		$stmtCountAlbum = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
-		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
-		$rowAlbum = $resultAlbumCount->fetch();
+		$stmtCountAlbum->execute(array($iAlbumId));
+		$rowAlbum = $stmtCountAlbum->fetch();
 		if((int)$rowAlbum['ALBUMCOUNT'] === 1){
-			$stmt2 = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
-			$stmt2->execute(array($iAlbumId, $this->userId));
+			$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
+			$stmt->execute(array($iAlbumId, $this->userId));
 		}
 		
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
@@ -374,8 +376,8 @@ class CategoryController extends Controller {
 		
 		$SQL='SELECT id, playcount FROM *PREFIX*audioplayer_statistics WHERE `user_id`= ? AND `track_id`= ?';
 		$stmt = $this->db->prepare($SQL);
-		$result = $stmt->execute(array($this->userId, $track_id));
-		$row = $result->fetch();
+		$stmt->execute(array($this->userId, $track_id));
+		$row = $stmt->fetch();
 		if (isset($row['id'])) {
 			$playcount = $row['playcount'] + 1;
 			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_statistics` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
@@ -383,7 +385,7 @@ class CategoryController extends Controller {
 			return 'update';
 		} else {
 			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_statistics` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
-			$result = $stmt->execute(array($this->userId, $track_id, $playtime, 1));
+			$stmt->execute(array($this->userId, $track_id, $playtime, 1));
 			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_statistics');
 			return $insertid;
 		}
