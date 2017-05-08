@@ -76,7 +76,7 @@ class MusicController extends Controller {
 			
 			\OC::$server->getSession()->close();
 			
-			$stream = new \OCA\audioplayer\AudioStream($filenameAudio,$user);
+			$stream = new \OCA\audioplayer\Http\AudioStream($filenameAudio,$user);
 			$stream -> start();
 		} 
 	}
@@ -138,7 +138,7 @@ class MusicController extends Controller {
 		$filename = rawurldecode($pFile);
 		$user = $this->userId;
 		\OC::$server->getSession()->close();
-		$stream = new \OCA\audioplayer\AudioStream($filename,$user);
+		$stream = new \OCA\audioplayer\Http\AudioStream($filename,$user);
 		$stream -> start();
 	}
 
