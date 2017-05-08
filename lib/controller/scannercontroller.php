@@ -73,7 +73,7 @@ class ScannerController extends Controller {
 		#	\OCP\Util::writeLog('audioplayer','songFileId: '.$songFileId,\OCP\Util::DEBUG);
 		
 		if(!class_exists('getid3_exception')) {
-			require_once __DIR__ . '/../3rdparty/getid3/getid3.php';
+			require_once __DIR__ . '/../../3rdparty/getid3/getid3.php';
 		}
 		
 		$userView =  new View('/' . $this -> userId. '/files');
@@ -890,7 +890,8 @@ class ScannerController extends Controller {
 		// get all fileids which are in an excluded folder
 			$stmtExclude = $this->db->prepare( 'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)' );
 			$stmtExclude->execute(array('.noAudio', '.noaudio'));
-			while( $row = $stmtExclude->fetchAll()) {
+			$results = $stmtExclude->fetchAll();
+			foreach($results as $row) {
 				array_push($new_array,$row['fileid']);
 			}
 			$resultExclude = $new_array;
@@ -900,7 +901,8 @@ class ScannerController extends Controller {
 			$new_array = array();
 			$stmtExisting = $this->db->prepare( 'SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
 			$stmtExisting->execute(array($this->userId));
-			while( $row = $stmtExisting->fetchAll()) {
+			$results = $stmtExclude->fetchAll();
+			foreach($results as $row) {
 				array_push($new_array,$row['file_id']);
 			}
 			$resultExisting = $new_array;
