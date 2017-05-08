@@ -888,9 +888,9 @@ class ScannerController extends Controller {
 		if ($debug) $output->writeln("Total audio files: ".count($audios));
 
 		// get all fileids which are in an excluded folder
-			$stmtExclude = $this->db->prepare( 'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)' );
-			$stmtExclude->execute(array('.noAudio', '.noaudio'));
-			$results = $stmtExclude->fetchAll();
+			$stmt = $this->db->prepare( 'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)' );
+			$stmt->execute(array('.noAudio', '.noaudio'));
+			$results = $stmt->fetchAll();
 			foreach($results as $row) {
 				array_push($new_array,$row['fileid']);
 			}
@@ -899,9 +899,9 @@ class ScannerController extends Controller {
 		
 		// get all fileids which are already in the Audio Player Database
 			$new_array = array();
-			$stmtExisting = $this->db->prepare( 'SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
-			$stmtExisting->execute(array($this->userId));
-			$results = $stmtExclude->fetchAll();
+			$stmt = $this->db->prepare( 'SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
+			$stmt->execute(array($this->userId));
+			$results = $stmt->fetchAll();
 			foreach($results as $row) {
 				array_push($new_array,$row['file_id']);
 			}
