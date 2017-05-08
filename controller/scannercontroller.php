@@ -112,6 +112,10 @@ class ScannerController extends Controller {
 			if(isset($ThisFileInfo['comments']['track_number'][0])){
 				$resultData['track'] = $ThisFileInfo['comments']['track_number'][0];
 			}
+			$resultData['disc'] = '';
+			if(isset($ThisFileInfo['comments']['disc_number'][0])){
+				$resultData['disc'] = $ThisFileInfo['comments']['disc_number'][0];
+			}
 			
 			$resultData['tracktotal'] = '';
 			$resultData['track'] = '';
@@ -217,6 +221,7 @@ class ScannerController extends Controller {
 		$pTitle=$this->params('title');
 		$pArtist=$this->params('artist');
 		$pExistArtist = $this->params('existartist');
+		$pDisc = $this->params('disc');
 		
 		$pAlbum=$this->params('album');
 		$pExistAlbum=$this->params('existalbum');
@@ -275,7 +280,8 @@ class ScannerController extends Controller {
 				'artist' => [$addArtist],
 				'album' => [$addAlbum],
 				'track_number' => [$trackNumber],
-				'genre' => [$addGenre]
+				'genre' => [$addGenre],
+				'disc' => [$pDisc]
 				
 			];
 			$imgString = '';
@@ -386,9 +392,14 @@ class ScannerController extends Controller {
 					$returnData['albumid'] = $newAlbumId;
 					$returnData['oldalbumid'] = $albumId;
 					
-					$SQL="UPDATE `*PREFIX*audioplayer_tracks` SET `title`= ?, `album_id`= ?, `artist_id`= ?, `number`= ?, `genre_id`= ? WHERE `id` = ? AND `user_id` = ?";	
+					$SQL="UPDATE `*PREFIX*audioplayer_tracks` SET `title`= ?,
+					 `album_id`= ?, `artist_id`= ?, `number`= ?, `genre_id`= 
+					 ?, `disc`= ? WHERE `id` = ? AND `user_id` = ?";
 					$stmt = $this->db->prepareQuery($SQL);
-					$result = $stmt->execute(array($pTitle, $newAlbumId, $artistId,(int)$pTrack, $genreId, $pTrackId, $this->userId));
+					$result = $stmt->execute(array($pTitle, $newAlbumId,
+												   $artistId,(int)$pTrack,
+												   $genreId, $pDisc, $pTrackId,
+					$this->userId));
 						
 					$result = [
 						'status' => 'success',
@@ -603,6 +614,23 @@ class ScannerController extends Controller {
 				if(isset($ThisFileInfo['playtime_string'])){
 					$playTimeString=$ThisFileInfo['playtime_string'];
 				}
+
+				# write discnumber if available
+				# if no discumber, discnumber is set to 1
+				# MP3, FLAC & MP4 have different tags for discnumber
+				$disc = 1;
+				$keys = [
+					'part_of_a_set',
+					'partofset',
+					'disc_number'
+				];
+				for ($i = 0; $i < count($keys); $i++){
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
+						$disc=$ThisFileInfo['comments'][$keys[$i]][0];
+						break;
+					}
+				}
+
 				$aTrack = [
 					'title' => $this->truncate($name, '256'),
 					'number' => $this->normalizeInteger($trackNumber),
@@ -614,6 +642,7 @@ class ScannerController extends Controller {
 					'mimetype' => $audio->getMimetype(),
 					'genre' => (int)$iGenreId,
 					'year' => $this->normalizeInteger($year),
+					'disc' => $this->normalizeInteger($disc),
 					'folder_id' => $parentId,
 				];
 				
@@ -755,15 +784,39 @@ class ScannerController extends Controller {
 			$aTrack['title'] = substr($aTrack['title'], 0, 256);
 		}
 		
-		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ? AND `folder_id`= ?';
+		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? 
+		AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? 
+		AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? 
+		AND `year`= ? AND `disc`= ? AND `folder_id`= ?';
 		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype'],$aTrack['genre'],$aTrack['year'],$aTrack['folder_id']));
+		$result = $stmt->execute(array($this->userId, $aTrack['title'],
+									   $aTrack['number'],
+									   $aTrack['artist_id'],
+									   $aTrack['album_id'],$aTrack['length'],
+									   $aTrack['bitrate'],
+									   $aTrack['mimetype'],$aTrack['genre'],
+									   $aTrack['year'],$aTrack['disc'],
+		$aTrack['folder_id']));
 		$row = $result->fetchRow();
 		if(isset($row['id'])){
 			$this->iDublicate++;
 		}else{
-			$stmt = $this->db->prepareQuery( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)' );
-			$result = $stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype'],$aTrack['genre'],$aTrack['year'],$aTrack['folder_id']));
+			$stmt = $this->db->prepareQuery( 'INSERT INTO 
+			`*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,
+			`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,
+			`genre_id`,`year`,`disc`,`folder_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?,
+			?,?)' );
+			$result = $stmt->execute(array($this->userId, $aTrack['title'],
+										   $aTrack['number'],
+										   $aTrack['artist_id'],
+										   $aTrack['album_id'],
+										   $aTrack['length'],
+										   $aTrack['file_id'],
+										   $aTrack['bitrate'],
+										   $aTrack['mimetype'],
+										   $aTrack['genre'],$aTrack['year'],
+										   $aTrack['disc'],
+										   $aTrack['folder_id']));
 			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_tracks');
 			return $insertid;
 		}

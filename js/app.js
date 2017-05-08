@@ -991,7 +991,9 @@ Audios.prototype.editSong = function(evt){
 				+'<label class="editDescr">'+t('audioplayer','New Artist')+'</label> <input type="text" placeholder="'+t('audioplayer','Artist')+'" id="sArtist" style="width:45%;" value="" />' 
 
 				+'<label class="editDescr">'+t('audioplayer','Existing Albums')+'</label><select style="width:45%;" id="eAlbum"></select>' 
-				+'<label class="editDescr">'+t('audioplayer','New Album')+'</label> <input type="text" placeholder="'+t('audioplayer','Album')+'" id="sAlbum" style="width:45%;" value="" />' 
+				+'<label class="editDescr">'+t('audioplayer','New Album')+'</label> <input type="text" placeholder="'+t('audioplayer','Album')+'" id="sAlbum" style="width:45%;" value="" />'
+
+				+'<label class="editDescr">'+t('audioplayer','Disc')+'</label> <input type="text" placeholder="'+t('audioplayer','Disc')+'" id="sDisc" style="width:45%;" value="' + jsondata.data.disc + '" /><br />'
 
 				+'<label class="editDescr">'+t('audioplayer','Existing Genres')+'</label><select style="width:45%;" id="eGenre"></select>' 
 				+'<label class="editDescr">'+t('audioplayer','New Genre')+'</label> <input type="text" placeholder="'+t('audioplayer','Genre')+'" id="sGenre" style="width:45%;" value="" />' 
@@ -1086,6 +1088,7 @@ Audios.prototype.editSong = function(evt){
 									existartist: $('#eArtist').val(),
 									album: $('#sAlbum').val(),
 									existalbum: $('#eAlbum').val(),
+									disc: $('#sDisc').val(),
 									track: $('#sTrack').val(),
 									tracktotal: $('#sTracktotal').val(),
 									imgsrc: $('#imgsrc').val(),
