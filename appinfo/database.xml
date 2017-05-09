@@ -284,6 +284,24 @@
 				<type>integer</type>
 				<notnull>false</notnull>
 			</field>
+			<field>
+				<name>disc</name>
+				<type>integer</type>
+				<notnull>false</notnull>
+				<unsigned>true</unsigned>
+			</field>
+			<field>
+				<name>composer</name>
+				<type>text</type>
+				<notnull>false</notnull>
+				<length>256</length>
+			</field>
+			<field>
+				<name>subtitle</name>
+				<type>text</type>
+				<notnull>false</notnull>
+				<length>256</length>
+			</field>
 
 			<index>
 				<name>aa_tracks_artist_id_idx</name>
