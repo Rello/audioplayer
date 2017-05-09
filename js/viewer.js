@@ -146,8 +146,11 @@ $(document).ready(function() {
 							$('#content-wrapper').css({'padding-top':'0px'});
 							$('#id3').append('<div>&nbsp;</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Title')+':</b>&nbsp;'+ jsondata.data.title +'</div>');
+							$('#id3').append('<div><b>'+t('audioplayer','Subtitle')+':</b>&nbsp;'+ jsondata.data.subtitle +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Artist')+':</b>&nbsp;'+ jsondata.data.artist +'</div>');
+							$('#id3').append('<div><b>'+t('audioplayer','Composer')+':</b>&nbsp;'+ jsondata.data.composer +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Album')+':</b>&nbsp;'+ jsondata.data.album +'</div>');
+							$('#id3').append('<div><b>'+t('audioplayer','Disk')+'/'+t('audioplayer','Track')+':</b>&nbsp;'+ jsondata.data.disc +'/'+ jsondata.data.number +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Genre')+':</b>&nbsp;'+ jsondata.data.genre +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Year')+':</b>&nbsp;'+ jsondata.data.year +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Length')+':</b>&nbsp;'+ jsondata.data.length +'</div>');
