@@ -4,7 +4,7 @@
 	<name>Audio Player</name>
 	<summary>Audio Player for ownCloud and Nextcloud</summary>
 	<description>A versatile music player for FLAC, MP3, MP4, and more with playlist support and share player.</description>
-	<version>1.6.0-alpha.3</version>
+	<version>1.6.0-alpha.4</version>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
