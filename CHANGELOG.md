@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 - FLAC support [#45](https://github.com/rello/audioplayer/issues/45)
 - favorites integration [#176](https://github.com/rello/audioplayer/issues/176) in Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
 - second stage [#177](https://github.com/rello/audioplayer/issues/177) of Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
-- support for ownCloud 10.0 and Nextcloud 12
+- support for ownCloud 10.0 and Nextcloud 12 [#183](https://github.com/rello/audioplayer/issues/183)
 
 ### Changed
 - zh_TW translation updated [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
