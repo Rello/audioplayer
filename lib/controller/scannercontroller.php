@@ -605,13 +605,13 @@ class ScannerController extends Controller {
 				}
 			
 				$subtitle = '';
-				if(isset($ThisFileInfo['comments']['subtitle'])){
-					$playTimeString=$ThisFileInfo['comments']['subtitle'];
+				if(isset($ThisFileInfo['comments']['subtitle'][0]) and rawurlencode($ThisFileInfo['comments']['subtitle'][0]) !== '%FF%FE'){
+					$subtitle=$ThisFileInfo['comments']['subtitle'][0];
 				}
 
 				$composer = '';
-				if(isset($ThisFileInfo['comments']['composer'])){
-					$playTimeString=$ThisFileInfo['comments']['composer'];
+				if(isset($ThisFileInfo['comments']['composer'][0]) and rawurlencode($ThisFileInfo['comments']['composer'][0]) !== '%FF%FE'){
+					$composer=$ThisFileInfo['comments']['composer'][0];
 				}
 
 				# write discnumber if available
