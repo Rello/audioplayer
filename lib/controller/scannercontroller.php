@@ -603,6 +603,29 @@ class ScannerController extends Controller {
 				if(isset($ThisFileInfo['playtime_string'])){
 					$playTimeString=$ThisFileInfo['playtime_string'];
 				}
+			
+				$subtitle = '';
+				if(isset($ThisFileInfo['subtitle'])){
+					$playTimeString=$ThisFileInfo['subtitle'];
+				}
+
+				$composer = '';
+				if(isset($ThisFileInfo['composer'])){
+					$playTimeString=$ThisFileInfo['composer'];
+				}
+
+				# write discnumber if available
+				# if no discumber, discnumber is set to 1
+				# MP3, FLAC & MP4 have different tags for discnumber
+				$disc = 1;
+				$keys = ['part_of_a_set','partofset','disc_number'];
+				for ($i = 0; $i < count($keys); $i++){
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
+						$disc=$ThisFileInfo['comments'][$keys[$i]][0];
+						break;
+					}
+				}
+
 				$aTrack = [
 					'title' => $this->truncate($name, '256'),
 					'number' => $this->normalizeInteger($trackNumber),
@@ -614,6 +637,9 @@ class ScannerController extends Controller {
 					'mimetype' => $audio->getMimetype(),
 					'genre' => (int)$iGenreId,
 					'year' => $this->normalizeInteger($year),
+					'disc' => $this->normalizeInteger($disc),
+					'subtitle' => $this->truncate($subtitle, '256'),
+					'composer' => $this->truncate($composer, '256'),
 					'folder_id' => $parentId,
 				];
 				
@@ -752,15 +778,46 @@ class ScannerController extends Controller {
 			$aTrack['title'] = substr($aTrack['title'], 0, 256);
 		}
 		
-		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? AND `mimetype`= ? AND `genre_id`= ? AND `year`= ? AND `folder_id`= ?';
+		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
+				AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? 
+				AND `mimetype`= ? AND `genre_id`= ? AND `year`= ? AND `folder_id`= ?
+				AND `disc`= ? AND `composer`= ? AND `subtitle`= ?';
 		$stmt = $this->db->prepare($SQL);
-		$stmt->execute(array($this->userId, $aTrack['title'],$aTrack['number'],$aTrack['artist_id'],$aTrack['album_id'],$aTrack['length'],$aTrack['bitrate'],$aTrack['mimetype'],$aTrack['genre'],$aTrack['year'],$aTrack['folder_id']));
+		$stmt->execute(array($this->userId, 
+				     $aTrack['title'],
+				     $aTrack['number'],
+				     $aTrack['artist_id'],
+				     $aTrack['album_id'],
+				     $aTrack['length'],
+				     $aTrack['bitrate'],
+				     $aTrack['mimetype'],
+				     $aTrack['genre'],
+				     $aTrack['year'],
+				     $aTrack['folder_id'],
+				     $aTrack['disc'],
+				     $aTrack['composer'],
+				     $aTrack['subtitle'],
+				));
 		$row = $stmt->fetch();
 		if(isset($row['id'])){
 			$this->iDublicate++;
 		}else{
-			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)' );
-			$stmt->execute(array($this->userId, $aTrack['title'], $aTrack['number'], $aTrack['artist_id'], $aTrack['album_id'], $aTrack['length'], $aTrack['file_id'], $aTrack['bitrate'], $aTrack['mimetype'],$aTrack['genre'],$aTrack['year'],$aTrack['folder_id']));
+			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`,`disc`,`composer`,`subtitle`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)' );
+		$stmt->execute(array($this->userId, 
+				     $aTrack['title'],
+				     $aTrack['number'],
+				     $aTrack['artist_id'],
+				     $aTrack['album_id'],
+				     $aTrack['length'],
+				     $aTrack['bitrate'],
+				     $aTrack['mimetype'],
+				     $aTrack['genre'],
+				     $aTrack['year'],
+				     $aTrack['folder_id'],
+				     $aTrack['disc'],
+				     $aTrack['composer'],
+				     $aTrack['subtitle'],
+				));
 			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_tracks');
 			return $insertid;
 		}
