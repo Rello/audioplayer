@@ -11,14 +11,12 @@
 
 namespace OCA\audioplayer\Controller;
 
-use \OCP\AppFramework\Controller;
-use \OCP\AppFramework\Http\JSONResponse;
-use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\IRequest;
-use \OCP\IConfig;
-use \OCP\IL10N;
-use \OCP\IDb;
-use \OCP\Files\IRootFolder;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IRequest;
+use OCP\IConfig;
+use OCP\Files\IRootFolder;
 
 /**
  * Controller class for main page.
@@ -34,16 +32,12 @@ class SettingController extends Controller {
 			$appName, 
 			IRequest $request, 
 			$userId, 
-			IL10N $l10n, 
-			IDb $db,
 			IConfig $configManager,
 			IRootFolder $rootFolder
 			) {
 		parent::__construct($appName, $request);
 		$this->appname = $appName;
 		$this->userId = $userId;
-		$this->l10n = $l10n;
-		$this->db = $db;
 		$this->configManager = $configManager;
 		$this->rootFolder = $rootFolder;
 	}

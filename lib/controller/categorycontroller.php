@@ -11,13 +11,13 @@
 
 namespace OCA\audioplayer\Controller;
 
-use \OCP\AppFramework\Controller;
-use \OCP\AppFramework\Http\JSONResponse;
-use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\IRequest;
-use \OCP\IL10N;
-use \OCP\IDb;
-use \OCP\ITagManager;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IRequest;
+use OCP\IL10N;
+use OCP\IDbConnection;
+use OCP\ITagManager;
 
 /**
  * Controller class for main page.
@@ -35,7 +35,7 @@ class CategoryController extends Controller {
 			IRequest $request, 
 			$userId, 
 			IL10N $l10n, 
-			IDb $db,
+			IDBConnection $db,
 			ITagManager $tagManager
 			) {
 		parent::__construct($appName, $request);
@@ -126,13 +126,14 @@ class CategoryController extends Controller {
 			 			";
 		}	
 			
-		$stmt =$this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($this->userId));
-		while( $row = $result->fetchRow()) {
+		$stmt = $this->db->prepare($SQL);
+		$stmt->execute(array($this->userId));
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
  			array_splice($row, 2, 1);
  			if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
 			$row['counter'] = $this->getCountForCategory($category,$row['id']);
-			$aPlaylists[]=$row;
+			$aPlaylists[] = $row;
 		}
 		
 		if(empty($aPlaylists)){
@@ -188,13 +189,14 @@ class CategoryController extends Controller {
 			 		";
 		}
 
-		$stmt = $this->db->prepareQuery($SQL);
+		$stmt = $this->db->prepare($SQL);
 		if ($category === 'Playlist') {
-			$result = $stmt->execute(array($categoryId));
+			$stmt->execute(array($categoryId));
 		} else {
-			$result = $stmt->execute(array($categoryId, $this->userId));
+			$stmt->execute(array($categoryId, $this->userId));
 		}
-		while( $row = $result->fetchRow()) {
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
 			$count = $row['count'];
 		}
 		return $count;
@@ -255,7 +257,7 @@ class CategoryController extends Controller {
 		} elseif ($category === 'Playlist') {
 			if ($categoryId === "X1") { // Favorites
 				$SQL = 	$SQL_select . $SQL_from .
-					"WHERE `AT`.`id` > ? AND `AT`.`user_id` = ?" .
+					"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ?" .
 			 		$SQL_order;
 			} elseif ($categoryId === "X2") { // Recently Added
 				$SQL = 	$SQL_select . $SQL_from .
@@ -294,13 +296,13 @@ class CategoryController extends Controller {
 			 	$SQL_order;
 		}
 
-		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($categoryId, $this->userId));
-
 		$this->tagger = $this->tagManager->load('files');
 		$favorites = $this->tagger->getFavorites();
 				
-		while( $row = $result->fetchRow()) {
+		$stmt = $this->db->prepare($SQL);
+		$stmt->execute(array($categoryId, $this->userId));
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
 			$file_not_found = false;	
 			try {
 				$path = \OC\Files\Filesystem::getPath($row['fid']);
@@ -320,7 +322,7 @@ class CategoryController extends Controller {
 				} else {
 					$row['fav'] = "f";
 				}
-				if ($categoryId === "X1" AND in_array($row['fid'], $favorites) === false ) {
+				if ($categoryId === "X1" AND !in_array($row['fid'], $favorites)) {
 				} else {
 					$aTracks[]=$row;
 				}
@@ -337,15 +339,15 @@ class CategoryController extends Controller {
 	}
 
 	private function deleteFromDB($Id,$iAlbumId){		
-		$stmtCountAlbum = $this->db->prepareQuery( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
-		$resultAlbumCount = $stmtCountAlbum->execute(array($iAlbumId));
-		$rowAlbum = $resultAlbumCount->fetchRow();
+		$stmtCountAlbum = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
+		$stmtCountAlbum->execute(array($iAlbumId));
+		$rowAlbum = $stmtCountAlbum->fetch();
 		if((int)$rowAlbum['ALBUMCOUNT'] === 1){
-			$stmt2 = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
-			$stmt2->execute(array($iAlbumId, $this->userId));
+			$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?' );
+			$stmt->execute(array($iAlbumId, $this->userId));
 		}
 		
-		$stmt = $this->db->prepareQuery( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
 		$stmt->execute(array($this->userId, $Id));		
 	}
 
@@ -373,18 +375,18 @@ class CategoryController extends Controller {
 		$playtime = $date->getTimestamp();
 		
 		$SQL='SELECT id, playcount FROM *PREFIX*audioplayer_statistics WHERE `user_id`= ? AND `track_id`= ?';
-		$stmt = $this->db->prepareQuery($SQL);
-		$result = $stmt->execute(array($this->userId, $track_id));
-		$row = $result->fetchRow();
+		$stmt = $this->db->prepare($SQL);
+		$stmt->execute(array($this->userId, $track_id));
+		$row = $stmt->fetch();
 		if (isset($row['id'])) {
 			$playcount = $row['playcount'] + 1;
-			$stmt = $this->db->prepareQuery( 'UPDATE `*PREFIX*audioplayer_statistics` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
+			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_statistics` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
 			$stmt->execute(array($playcount, $playtime, $row['id']));
 			return 'update';
 		} else {
-			$stmt = $this->db->prepareQuery( 'INSERT INTO `*PREFIX*audioplayer_statistics` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
-			$result = $stmt->execute(array($this->userId, $track_id, $playtime, 1));
-			$insertid = $this->db->getInsertId('*PREFIX*audioplayer_statistics');
+			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_statistics` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
+			$stmt->execute(array($this->userId, $track_id, $playtime, 1));
+			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_statistics');
 			return $insertid;
 		}
 	}

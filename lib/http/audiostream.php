@@ -11,7 +11,7 @@
  * @copyright 2015 Sebastian Doell
  */
  
-namespace OCA\audioplayer;
+namespace OCA\audioplayer\Http;
 use \OC\Files\View;
  
 class AudioStream {
