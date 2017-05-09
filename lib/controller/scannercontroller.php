@@ -605,13 +605,13 @@ class ScannerController extends Controller {
 				}
 			
 				$subtitle = '';
-				if(isset($ThisFileInfo['subtitle'])){
-					$playTimeString=$ThisFileInfo['subtitle'];
+				if(isset($ThisFileInfo['comments']['subtitle'])){
+					$playTimeString=$ThisFileInfo['comments']['subtitle'];
 				}
 
 				$composer = '';
-				if(isset($ThisFileInfo['composer'])){
-					$playTimeString=$ThisFileInfo['composer'];
+				if(isset($ThisFileInfo['comments']['composer'])){
+					$playTimeString=$ThisFileInfo['comments']['composer'];
 				}
 
 				# write discnumber if available
@@ -774,10 +774,6 @@ class ScannerController extends Controller {
 	 */
 	private function writeTrackToDB($aTrack){
 			
-		if (strlen($aTrack['title']) > 256) {
-			$aTrack['title'] = substr($aTrack['title'], 0, 256);
-		}
-		
 		$SQL='SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
 				AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? 
 				AND `mimetype`= ? AND `genre_id`= ? AND `year`= ? AND `folder_id`= ?
@@ -809,6 +805,7 @@ class ScannerController extends Controller {
 				     $aTrack['artist_id'],
 				     $aTrack['album_id'],
 				     $aTrack['length'],
+				     $aTrack['file_id'],
 				     $aTrack['bitrate'],
 				     $aTrack['mimetype'],
 				     $aTrack['genre'],
