@@ -340,8 +340,7 @@ class MusicController extends Controller {
 	* @NoAdminRequired
 	* 
 	*/
-	public function resetMediaLibrary($userId = null, $output = null){
-\OCP\Util::writeLog('audioplayer','reset user: '.$userId,\OCP\Util::DEBUG);
+	public function resetMediaLibrary($userId = null, $output = null, $hook = null){
 	
 		if($userId !== null) {
 			$this->occ_job = true;
@@ -398,8 +397,10 @@ class MusicController extends Controller {
 			$response = new JSONResponse();
 			$response -> setData($result);
 			return $response;
-		} else {
+		} elseif($hook === null) {
 			$output->writeln("Reset finished");
+		} else {
+			\OCP\Util::writeLog('audioplayer','Library of "'.$userId.'" reset due to user deletion',\OCP\Util::DEBUG);
 		}
 	}
 	

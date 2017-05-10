@@ -15,8 +15,8 @@ use OCA\audioplayer\Controller;
 class UserHooks {
 	public static function deleteUser($params) {
 		$userId = $params['uid'];
-		$app = new Application();
+		$app = new \OCA\audioplayer\AppInfo\Application();
         	$container = $app->getContainer();
-	        $container->query(MusicController::class)->resetMediaLibrary($userId);
+	        $container->query(\OCA\audioplayer\Controller\MusicController::class)->resetMediaLibrary($userId,null,true);
 	}    
 }
