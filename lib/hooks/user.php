@@ -13,8 +13,10 @@ namespace OCA\audioplayer\Hooks;
 use OCA\audioplayer\Controller;
 
 class User {
-    public static function deleteUser($params) {
-      $userId = $params['uid'];
-      $this->reset->resetMediaLibrary($userId);
+	public static function deleteUser($params) {
+		$userId = $params['uid'];
+		$app = new Application();
+        	$container = $app->getContainer();
+	        $container->query(MusicController::class)->resetMediaLibrary($userId);
 	}    
 }
