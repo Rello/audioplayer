@@ -113,7 +113,17 @@ class ScannerController extends Controller {
 				$resultData['track'] = $ThisFileInfo['comments']['track_number'][0];
 			}
 			
-			$resultData['tracktotal'] = '';
+			$resultData['subtitle'] = '';
+			if(isset($ThisFileInfo['comments']['subtitle'][0])){
+				$resultData['subtitle']=$ThisFileInfo['comments']['subtitle'][0];
+			}
+
+			$resultData['composer'] = '';
+			if(isset($ThisFileInfo['comments']['composer'][0])){
+				$resultData['composer']=$ThisFileInfo['comments']['composer'][0];
+			}
+ 
+ 			$resultData['tracktotal'] = '';
 			$resultData['track'] = '';
 			
 			if (!empty($ThisFileInfo['comments']['track_number']) && is_array($ThisFileInfo['comments']['track_number'])) {
