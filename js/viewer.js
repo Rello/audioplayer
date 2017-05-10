@@ -150,12 +150,11 @@ $(document).ready(function() {
 							$('#id3').append('<div><b>'+t('audioplayer','Artist')+':</b>&nbsp;'+ jsondata.data.artist +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Composer')+':</b>&nbsp;'+ jsondata.data.composer +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Album')+':</b>&nbsp;'+ jsondata.data.album +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Disk')+'/'+t('audioplayer','Track')+':</b>&nbsp;'+ jsondata.data.disc +'/'+ jsondata.data.number +'</div>');
+							$('#id3').append('<div><b>'+t('audioplayer','Disk')+'-'+t('audioplayer','Track')+':</b>&nbsp;'+ jsondata.data.disc +'-'+ jsondata.data.number +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Genre')+':</b>&nbsp;'+ jsondata.data.genre +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Year')+':</b>&nbsp;'+ jsondata.data.year +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Length')+':</b>&nbsp;'+ jsondata.data.length +'</div>');
 							$('#id3').append('<div><b>'+t('audioplayer','Bitrate')+':</b>&nbsp;'+ jsondata.data.bitrate +'&nbsp;kbps</div>');
-							//$('#id3').append('<div><b>'+t('audioplayer','Composer')+':</b>&nbsp;'+ jsondata.data.composer +'</div>');
 							$('#imgframe').css({'padding-top':'20px'});
 							$('#imgframe').css({'padding-bottom':'0px'});
 							$('.directDownload').css({'padding-top':'20px'});
