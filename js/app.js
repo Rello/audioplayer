@@ -997,6 +997,8 @@ Audios.prototype.editSong = function(evt){
 				+'<label class="editDescr">'+t('audioplayer','New Genre')+'</label> <input type="text" placeholder="'+t('audioplayer','Genre')+'" id="sGenre" style="width:45%;" value="" />' 
 
 				+'<label class="editDescr">'+t('audioplayer','Year')+'</label> <input type="text" placeholder="'+t('audioplayer','Year')+'" id="sYear" maxlength="4" style="width:10%;" value="' + jsondata.data.year + '" /><br />' 
+				+'<label class="editDescr">'+t('audioplayer','Composer')+'</label> <input type="text" disabled style="width:45%;" value="'+jsondata.data.composer+'" />' 
+				+'<label class="editDescr">'+t('audioplayer','Subtitle')+'</label> <input type="text" disabled style="width:45%;" value="'+jsondata.data.subtitle+'" />' 
 				+'<label class="editDescr" style="width:190px;">'+t('audioplayer','Add as Album Cover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' 
 				+'</div><div class="edit-right">'+posterAction+'</div>'
 			);
