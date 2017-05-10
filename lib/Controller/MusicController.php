@@ -96,7 +96,10 @@ class MusicController extends Controller {
 			//\OCP\Util::writeLog('audioplayer', 'fileid: '.$fileid, \OCP\Util::DEBUG);
 			//\OCP\Util::writeLog('audioplayer', 'fileowner: '.$fileowner, \OCP\Util::DEBUG);
 
-			$SQL="SELECT `AT`.`title`,`AG`.`name` AS `genre`,`AB`.`name` AS `album`,`AT`.`artist_id`,`AT`.`length`,`AT`.`bitrate`,`AT`.`year`,`AA`.`name` AS `artist`, ROUND((`AT`.`bitrate` / 1000 ),0) AS `bitrate` 
+			$SQL="SELECT `AT`.`title`,`AG`.`name` AS `genre`,`AB`.`name` AS `album`,`AT`.`artist_id`,
+					`AT`.`length`,`AT`.`bitrate`,`AT`.`year`,`AA`.`name` AS `artist`,
+					ROUND((`AT`.`bitrate` / 1000 ),0) AS `bitrate`, `AT`.`disc`,
+					`AT`.`number`, `AT`.`composer`, `AT`.`subtitle`
 						FROM `*PREFIX*audioplayer_tracks` `AT`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`
@@ -240,10 +243,13 @@ class MusicController extends Controller {
 	
 	public function loadSongs(){
 		$aSongs=array();
-		$SQL="SELECT  `AT`.`id`,`AT`.`title` AS `tit`,`AT`.`number` AS `num`,`AT`.`album_id` AS `aid`,`AT`.`length` AS `len`,`AT`.`file_id` AS `fid`,`AT`.`mimetype` AS `mim`,`AA`.`name` AS `art` FROM `*PREFIX*audioplayer_tracks` `AT`
+		$SQL="SELECT  `AT`.`id`,`AT`.`title` AS `tit`,`AT`.`number` AS `num`,
+				`AT`.`album_id` AS `aid`,`AT`.`length` AS `len`,`AT`.`file_id` AS `fid`,
+				`AT`.`mimetype` AS `mim`,`AA`.`name` AS `art`, `AT`.`disc` AS `dis` 
+						FROM `*PREFIX*audioplayer_tracks` `AT`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 			 			WHERE  `AT`.`user_id` = ?
-			 			ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC
+			 			ORDER BY `AT`.`album_id` ASC, `AT`.`disc` ASC, `AT`.`number` ASC
 			 			";
 			
 		$stmt = $this->db->prepare($SQL);
@@ -264,7 +270,9 @@ class MusicController extends Controller {
 					$row['lin'] = rawurlencode($row['title']);
 				}else{	
 					$row['lin'] = '?file='.rawurlencode($path);
-				}	
+				}
+				$row['num'] = $row['dis'].'-'.$row['num'];
+				array_splice($row, 8, 1);
 				$aSongs[$row['aid']][] = $row;
 			}else{
 				$this->deleteFromDB($row['id'],$row['aid']);
