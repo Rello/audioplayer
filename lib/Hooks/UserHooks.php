@@ -12,7 +12,7 @@
 namespace OCA\audioplayer\Hooks;
 use OCA\audioplayer\Controller;
 
-class User {
+class UserHooks {
 	public static function deleteUser($params) {
 		$userId = $params['uid'];
 		$app = new Application();

@@ -341,6 +341,7 @@ class MusicController extends Controller {
 	* 
 	*/
 	public function resetMediaLibrary($userId = null, $output = null){
+\OCP\Util::writeLog('audioplayer','reset user: '.$userId,\OCP\Util::DEBUG);
 	
 		if($userId !== null) {
 			$this->occ_job = true;
