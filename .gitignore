@@ -21,3 +21,5 @@ docs/*
 # Mac OS
 .DS_Store
 __MACOSX/*
+._*
+.smbdelete*
