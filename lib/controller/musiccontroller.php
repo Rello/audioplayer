@@ -270,7 +270,9 @@ class MusicController extends Controller {
 					$row['lin'] = rawurlencode($row['title']);
 				}else{	
 					$row['lin'] = '?file='.rawurlencode($path);
-				}	
+				}
+				$row['num'] = $row['dis'].'-'.$row['num'];
+				array_splice($row, 8, 1);
 				$aSongs[$row['aid']][] = $row;
 			}else{
 				$this->deleteFromDB($row['id'],$row['aid']);
