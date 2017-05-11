@@ -724,7 +724,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							li1.append(a1);				
 				
 							var li = $('<li/>').attr({
-								'data-id' : el.id,
+								'data-trackid' : el.id,
 								'data-fileid' : el.fid,
 								'mimetype':el.mim,
 								'data-title':el.cl1,
@@ -836,6 +836,20 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 			
 						$('#activePlaylist').append(aPlaylistOutput1);
 						$('#individual-playlist').append(aPlaylistOutput);
+						
+						$('#individual-playlist li').each(function(i,el){
+							$(el).draggable({
+								appendTo : "body",
+								helper : $this.DragElement,
+								cursor : "move",
+								delay : 500,
+								start : function(event, ui) {
+									ui.helper.addClass('draggingSong');
+								},
+								stop:function(){
+								}
+							});
+						});
 						$('#individual-playlist li i.ioc').hide();
 						if($this.PlaylistContainer.hasClass('isPlaylist')){
 							var activeSongSel=$('#individual-playlist li[data-id="'+$('#activePlaylist li.selected').data('trackid')+'"] i.ioc');
