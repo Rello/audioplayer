@@ -1988,7 +1988,7 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('click', '#resetAudios', function () {
-		$("#dialogSmall").text(t('audioplayer', 'Are you sure? All database entries will be deleted!'));
+		$("#dialogSmall").text(t('audioplayer','Are you sure?')+' '+t('audioplayer','All database entries will be deleted!'));
 		$("#dialogSmall").dialog({
 			resizable : false,
 			title : t('audioplayer', 'Reset media library'),
