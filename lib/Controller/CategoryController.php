@@ -1,7 +1,7 @@
 <?php
 /**
  * Audio Player
- * 
+ *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the LICENSE.md file.
  *
@@ -211,11 +211,13 @@ class CategoryController extends Controller {
 		$categoryId=$this->params('id');
 			
 		$itmes = $this->getItemsforCatagory($category,$categoryId);
+		$headers = $this->getHeadersforCatagory($category);
 	
 		if(is_array($itmes)){
 			$result=[
 				'status' => 'success',
-				'data' => $itmes
+				'data' => $itmes,
+				'header' => $headers,				
 			];
 		}else{
 			$result=[
@@ -232,13 +234,14 @@ class CategoryController extends Controller {
 	private function getItemsforCatagory($category,$categoryId){
 
 		$aTracks=array();		
-		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `tit`,`AT`.`number`  AS `num`,`AT`.`length` AS `len`,`AA`.`name` AS `art`, `AB`.`name` AS `alb`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
+		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
 		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
 		$SQL_order	= " ORDER BY LOWER(`AT`.`title`) ASC";
 
 		if($category === 'Artist') {
+			$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AB`.`name` AS `cl2`,`AT`.`length` AS `len`,`AT`.`year` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
 			$SQL = 	$SQL_select . $SQL_from .
 				"WHERE  `AT`.`artist_id` = ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
@@ -291,6 +294,7 @@ class CategoryController extends Controller {
 				"WHERE `AT`.`folder_id` = ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
 		} elseif ($category === 'Album') {
+			$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`number`  AS `num`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AT`.`disc` AS `dsc`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
 			$SQL = 	$SQL_select . $SQL_from .
  				"WHERE `AB`.`id` = ? AND `AB`.`user_id` = ?" .
 			 	$SQL_order;
@@ -322,6 +326,11 @@ class CategoryController extends Controller {
 				} else {
 					$row['fav'] = "f";
 				}
+				
+				if ($category === 'Album') {
+					$row['cl3'] = $row['dsc'].'-'.$row['num'];
+				} 
+				
 				if ($categoryId === "X1" AND !in_array($row['fid'], $favorites)) {
 				} else {
 					$aTracks[]=$row;
@@ -336,6 +345,19 @@ class CategoryController extends Controller {
  		}else{
  			return $aTracks;
 		}
+	}
+
+	public function getHeadersforCatagory($category){
+		$headers=array();		
+		if($category === 'Artist') {
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year')];
+		} elseif ($category === 'Album') {
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc-Track')];
+		} else {
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album')];
+		}
+ 		return $headers;
+
 	}
 
 	private function deleteFromDB($Id,$iAlbumId){		
