@@ -539,10 +539,14 @@ class ScannerController extends Controller {
 					$genre=$ThisFileInfo['comments']['genre'][0];
 				}				
 				$iGenreId= $this->writeGenreToDB($genre);
-				
+
 				$year = 0;
-				if(isset($ThisFileInfo['comments']['year'][0])){
-					$year=$ThisFileInfo['comments']['year'][0];
+				$keys = ['year','creation_date','date'];
+				for ($i = 0; $i < count($keys); $i++){
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
+						$year=$ThisFileInfo['comments'][$keys[$i]][0];
+						break;
+					}
 				}
 								
 				$artist = (string) $this->l10n->t('Unknown');
