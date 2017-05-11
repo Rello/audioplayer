@@ -646,7 +646,7 @@ class ScannerController extends Controller {
 					'bitrate' => (int)$bitrate,
 					'mimetype' => $audio->getMimetype(),
 					'genre' => (int)$iGenreId,
-					'year' => $this->normalizeInteger($year),
+					'year' => $this->truncate($this->normalizeInteger($year),4,''),
 					'disc' => $this->normalizeInteger($disc),
 					'subtitle' => $this->truncate($subtitle, '256'),
 					'composer' => $this->truncate($composer, '256'),
