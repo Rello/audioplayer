@@ -50,7 +50,7 @@ OC.L10N.register(
 	"Reset media library" : "Сброс базы данных музыки",
 	"Start deleting and resetting media library ..." : "Выполняю очистку базы данных музыки ...",
 	"Resetting finished!" : "Сброс выполнен!",
-	"Are you sure? All database entries will be deleted!" : "Выполнить сброс? База данных будет очищена.",
+	"All database entries will be deleted!" : "База данных будет очищена!",
 	"Close" : "Закрыть",
 	"Play" : "Запустить",
 	"Save" : "Сохранить",
