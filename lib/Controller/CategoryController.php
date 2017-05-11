@@ -352,7 +352,7 @@ class CategoryController extends Controller {
 		if($category === 'Artist') {
 			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year')];
 		} elseif ($category === 'Album') {
-			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc-Track')];
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc').'-'.$this->l10n->t('Track')];
 		} else {
 			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album')];
 		}
