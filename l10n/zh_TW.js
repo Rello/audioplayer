@@ -50,7 +50,7 @@ OC.L10N.register(
 	"Reset media library" : "重設音樂資料庫",
 	"Start deleting and resetting media library ..." : "音樂資料庫重設中...",
 	"Resetting finished!" : "重設完成!",
-	"Are you sure? All database entries will be deleted!" : "Are you sure? All database entries will be deleted!",
+	"All database entries will be deleted!" : "All database entries will be deleted!",
 	"Close" : "關閉",
 	"Play" : "播放",
 	"Save" : "儲存",
