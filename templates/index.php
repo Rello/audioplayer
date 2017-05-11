@@ -161,7 +161,7 @@
 		<span id="individual-playlist-info"></span>
 	  	<span id="individual-playlist-header">
  	 		<span class="header-indi">
- 	 			<span class="header-num">#</span>
+ 	 			<span class="header-num"></span>
   				<span class="header-title"><?php p($l->t('Title'));?></span>
   				<span class="header-artist"><?php p($l->t('Artist'));?></span>
   				<span class="header-album"><?php p($l->t('Album'));?></span>
