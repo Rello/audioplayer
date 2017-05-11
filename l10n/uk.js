@@ -50,7 +50,7 @@ OC.L10N.register(
 	"Reset media library" : "Скидання бази даних музики",
 	"Start deleting and resetting media library ..." : "Виконую очистку бази даних музики ...",
 	"Resetting finished!" : "Скидання завершено!",
-	"Are you sure? All database entries will be deleted!" : "Виконати скидання? База даних буде очищена.",
+	"All database entries will be deleted!" : "База даних буде очищена!",
 	"Close" : "Закрити",
 	"Play" : "Грати",
 	"Save" : "Зберегти",
