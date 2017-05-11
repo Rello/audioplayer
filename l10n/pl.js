@@ -50,7 +50,7 @@ OC.L10N.register(
 	"Reset media library" : "Resetowanie biblioteki multimediów",
 	"Start deleting and resetting media library ..." : "Zacznij usuwanie i resetowanie biblioteki multimediów ...",
 	"Resetting finished!" : "Resetowanie zakończone!",
-	"Are you sure? All database entries will be deleted!" : "Czy jesteś pewien? Wszystkie wpisy w bazie danych zostaną usunięte!",
+	"All database entries will be deleted!" : "Wszystkie wpisy w bazie danych zostaną usunięte!",
 	"Close" : "Zamknij",
 	"Play" : "Graj",
 	"Save" : "Zapisz",
