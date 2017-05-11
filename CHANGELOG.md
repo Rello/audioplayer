@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 - favorites integration [#176](https://github.com/rello/audioplayer/issues/176) in Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
 - second stage [#177](https://github.com/rello/audioplayer/issues/177) of Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
 - support for ownCloud 10.0 and Nextcloud 12 [#183](https://github.com/rello/audioplayer/issues/183)
+- PSR-4 autoloader compatibility [#184](https://github.com/rello/audioplayer/issues/184)
+- disc, composer, and subtitle to metadata [#184](https://github.com/rello/audioplayer/issues/184) (thanks @[Faldon](https://github.com/Faldon))
+- UserHooks
 
 ### Changed
 - zh_TW translation updated [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
@@ -15,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - missing strings added to language files
+- sorting of albums with multiple discs [#88](https://github.com/rello/audioplayer/issues/88) [#174](https://github.com/rello/audioplayer/issues/174) (thanks @[Faldon](https://github.com/Faldon))
 - issues with sidebar and soundbar [#111](https://github.com/rello/audioplayer/issues/111) [#128](https://github.com/rello/audioplayer/issues/128) @[Faldon](https://github.com/Faldon)
 
 ## 1.5.1 - 2017-04-08
