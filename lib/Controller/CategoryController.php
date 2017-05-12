@@ -297,7 +297,7 @@ class CategoryController extends Controller {
 			$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`number`  AS `num`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AT`.`disc` AS `dsc`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
 			$SQL = 	$SQL_select . $SQL_from .
  				"WHERE `AB`.`id` = ? AND `AB`.`user_id` = ?" .
-			 	$SQL_order;
+			 	" ORDER BY `AT`.`disc` ASC, `AT`.`number` ASC";
 		}
 
 		$this->tagger = $this->tagManager->load('files');
