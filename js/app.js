@@ -913,7 +913,7 @@ Audios.prototype.favoriteUpdate = function(evt) {
 
 Audios.prototype.fileActionsMenu = function(evt){
 
-	var songId = $(evt.target).closest('li').attr('data-id');
+	var songId = $(evt.target).closest('li').attr('data-trackid');
 	var fileId = $(evt.target).closest('li').attr('data-fileid');
 	var mimetype = $(evt.target).closest('li').attr('mimetype');
 	if ($(".fileActionsMenu").attr('data-id') === songId) {
