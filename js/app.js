@@ -1756,18 +1756,32 @@ Audios.prototype.sort_playlist = function(evt) {
 	}
 
 	var elems = $('#individual-playlist').children('li').get();
+	var reg_check = $(elems).first().data(column).toString().match(/^\d{1,2}\-\d{1,2}$/);
 	elems.sort(function(a,b){
-		var a = $(a).data(column).toString().toLowerCase();
-		var b = $(b).data(column).toString().toLowerCase();
+		var a = $(a).data(column).toString();
+		var b = $(b).data(column).toString();
+		if (reg_check) {
+			var a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
+			var b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
+		} else { 
+			var a = a.toLowerCase();
+			var b = b.toLowerCase();
+		}
 		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 	});
 	$('#individual-playlist').append(elems);
 
 	var elems = $('#activePlaylist').children('li').get();
 	elems.sort(function(a,b){
-		var a = $(a).data(column).toString().toLowerCase();
-		var b = $(b).data(column).toString().toLowerCase();
-		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
+		var a = $(a).data(column).toString();
+		var b = $(b).data(column).toString();
+		if (reg_check) {
+			var a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
+			var b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
+		} else { 
+			var a = a.toLowerCase();
+			var b = b.toLowerCase();
+		}
 	});
 	$('#activePlaylist').append(elems);
 
