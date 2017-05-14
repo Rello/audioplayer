@@ -1034,6 +1034,7 @@ class ScannerController extends Controller {
 	private function normalizeInteger($value) {
 		// convert format '1/10' to '1' and '-1' to null
 		$tmp = explode('/', $value);
+		$tmp = explode('-', $tmp[0]);
 		$value = $tmp[0];
 		if(is_numeric($value) && ((int)$value) > 0) {
 			$value = (int)$value;
