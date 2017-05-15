@@ -825,31 +825,33 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							aPlaylistOutput[i]=li;
 							aPlaylistOutput1[i]=li1;
 						});
-
-						$("#individual-playlist").sortable({
-							items: "li",
-							axis: "y",
-							disabled: true,
-							placeholder: "ui-state-highlight",
-							stop: function( event, ui ) {}
-						});
 			
 						$('#activePlaylist').append(aPlaylistOutput1);
 						$('#individual-playlist').append(aPlaylistOutput);
 						
-						$('#individual-playlist li').each(function(i,el){
-							$(el).draggable({
-								appendTo : "body",
-								helper : $this.DragElement,
-								cursor : "move",
-								delay : 500,
-								start : function(event, ui) {
-									ui.helper.addClass('draggingSong');
-								},
-								stop:function(){
-								}
+						if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
+							$("#individual-playlist").sortable({
+								items: "li",
+								axis: "y",
+								disabled: true,
+								placeholder: "ui-state-highlight",
+								stop: function( event, ui ) {}
 							});
-						});
+						} else {
+							$('#individual-playlist li').each(function(i,el){
+								$(el).draggable({
+									appendTo : "body",
+									helper : $this.DragElement,
+									cursor : "move",
+									delay : 500,
+									start : function(event, ui) {
+										ui.helper.addClass('draggingSong');
+									},
+									stop:function(){
+									}
+								});
+							});
+						}
 						$('#individual-playlist li i.ioc').hide();
 						if($this.PlaylistContainer.hasClass('isPlaylist')){
 							var activeSongSel=$('#individual-playlist li[data-id="'+$('#activePlaylist li.selected').data('trackid')+'"] i.ioc');
