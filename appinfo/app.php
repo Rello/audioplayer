@@ -44,6 +44,6 @@ $c->getServer()->getNavigationManager()->add($navigationEntry);
 
 $c->getServer()->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app'=>'audioplayer','apps' => array('files')));	
 
-\OCP\App::registerPersonal($c->query('AppName'), 'lib/settings/user');
+\OCP\App::registerPersonal($c->query('AppName'), 'lib/Settings/User');
 
 \OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\audioplayer\Hooks\UserHooks', 'deleteUser'); //DELETE
