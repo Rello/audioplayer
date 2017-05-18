@@ -125,15 +125,17 @@ class CategoryController extends Controller {
 			 			ORDER BY LOWER(`name`) ASC
 			 			";
 		}	
-			
-		$stmt = $this->db->prepare($SQL);
-		$stmt->execute(array($this->userId));
-		$results = $stmt->fetchAll();
-		foreach($results as $row) {
- 			array_splice($row, 2, 1);
- 			if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
-			$row['counter'] = $this->getCountForCategory($category,$row['id']);
-			$aPlaylists[] = $row;
+		
+		if ($SQL) {	
+			$stmt = $this->db->prepare($SQL);
+			$stmt->execute(array($this->userId));
+			$results = $stmt->fetchAll();
+			foreach($results as $row) {
+ 				array_splice($row, 2, 1);
+ 				if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
+				$row['counter'] = $this->getCountForCategory($category,$row['id']);
+				$aPlaylists[] = $row;
+			}
 		}
 		
 		if(empty($aPlaylists)){
