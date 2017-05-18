@@ -1071,5 +1071,21 @@ class ScannerController extends Controller {
 			}	
 		} 
 		return $ThisFileInfo;
-	}				
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * 
+	 */
+	public function checkNewTracks(){
+		
+		// get only the relevant audio files
+		$audios = $this->getAudioObjects();
+		if ($this->numOfSongs !== 0) {
+			return 'true';
+		} else {
+			return 'false';
+		}
+	}
+				
 }

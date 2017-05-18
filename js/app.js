@@ -1841,7 +1841,20 @@ Audios.prototype.check_timer = function() {
 					}
 			}
 		});
-	};
+};
+
+Audios.prototype.checkNewTracks = function() {
+		$.ajax({
+			type : 'POST',
+			url : OC.generateUrl('apps/audioplayer/checknewtracks'),
+			success : function(data) {
+					if(data === 'true'){
+						$('#notification').text(t('audioplayer','New Audio Files available'));
+						window.setTimeout(function(){$('#notification').slideUp();}, 5000);
+					}
+			}
+		});
+};
 
 /*
 coming soon
@@ -1928,6 +1941,7 @@ $(document).ready(function() {
 
 		myAudios = new Audios();
 		myAudios.init();
+		myAudios.checkNewTracks();
 		
 		//if($(window).width()>768){
 			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
