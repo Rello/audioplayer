@@ -2,7 +2,7 @@
 	style('audioplayer', '3rdparty/fontello/css/animation');	
 	style('audioplayer', '3rdparty/fontello/css/fontello');
 	style('audioplayer', 'jquery.Jcrop');	
-	style('audioplayer','bar-ui');
+	style('audioplayer', 'bar-ui');
 	style('audioplayer', 'style');
 	script('files', 'jquery.fileupload');
 	script('audioplayer', 'jquery.Jcrop');
@@ -40,7 +40,7 @@
 				<option value="Year"><?php p($l->t('Years'));?></option>
 				<option value="Folder"><?php p($l->t('Folders'));?></option>
 			</select>
-			<button  class="icon-add mp3_hide" id="addPlaylist"></button>
+			<button  class="icon-add ap_hidden" id="addPlaylist"></button>
 		</div>
 		<ul id="myCategory"></ul>	
 		<!--my playlist clone -->	
@@ -52,7 +52,7 @@
 			</div>
 		</li>	
 		<!--my playlist clone -->
-		<div class="app-navigation-entry-edit mp3_hide" id="newPlaylist">
+		<div class="app-navigation-entry-edit ap_hidden" id="newPlaylist">
 			<div id="newPlaylist_controls">
 				<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist'));?>" /> 
 				<button class="icon-checkmark" id="newPlaylistBtn_ok" style="margin: 0px;"></button>
