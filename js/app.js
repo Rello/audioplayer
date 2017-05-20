@@ -705,6 +705,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$this.PlaylistContainer.hide();
 		$this.PlaylistContainer.show();
 		$('#individual-playlist').html('');
+		if ($('#individual-playlist').data('ui-sortable')) $('#individual-playlist').sortable("destroy");
 		$('#activePlaylist').html('');
 		$('.header-title').data('order', '');
 		$('.header-artist').data('order', '');
@@ -777,8 +778,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							li.find('span').css('color','#555');
 							
 							li.find('span.title').on('click',function(){
-								var disabled = $("#individual-playlist").sortable( "option", "disabled" );
-								if(disabled === true){
+								if (!$('#individual-playlist').data('ui-sortable')) {
 					
 									var albumPlaylistActive=$('#audios-audioscontainer .albumwrapper.isPlaylist');
 									var playlistActive=$('#myCategory li.activeIndiPlaylist');
@@ -841,13 +841,6 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 						$('#individual-playlist').append(aPlaylistOutput);
 						
 						if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId !== ''){
-							$("#individual-playlist").sortable({
-								items: "li",
-								axis: "y",
-								disabled: true,
-								placeholder: "ui-state-highlight",
-								stop: function( event, ui ) {}
-							});
 						} else {
 							$('#individual-playlist li').each(function(i,el){
 								$(el).draggable({
@@ -1338,7 +1331,7 @@ Audios.prototype.sortPlaylist = function(evt){
 				},function(jsondata){
 					if(jsondata.status === 'success'){						
 						eventTarget.removeClass('sortActive');
-						$("#individual-playlist").sortable("disable");
+						$('#individual-playlist').sortable("destroy");
 						$('#notification').text(jsondata.msg);
 						$('#notification').slideDown();
 						window.setTimeout(function(){$('#notification').slideUp();}, 3000);
@@ -1348,11 +1341,17 @@ Audios.prototype.sortPlaylist = function(evt){
 			
 		}else{
 			
-			 $('#notification').text(t('audioplayer','Sort modus active'));
-			 $('#notification').slideDown();
+			$('#notification').text(t('audioplayer','Sort modus active'));
+			$('#notification').slideDown();
 			window.setTimeout(function(){$('#notification').slideUp();}, 3000);
 					
-			$("#individual-playlist").sortable("enable");
+			$("#individual-playlist").sortable({
+				items: "li",
+				axis: "y",
+				placeholder: "ui-state-highlight",
+				stop: function( event, ui ) {}
+			});
+
 			eventTarget.addClass('sortActive');
 			if(	$('.sm2-bar-ui').hasClass('playing')){
 				this.AudioPlayer.actions.pause();
