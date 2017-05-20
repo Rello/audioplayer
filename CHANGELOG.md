@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - translation sources reworked
 - CSS changes for navigation menu [#179](https://github.com/rello/audioplayer/issues/179) @[artemanufrij](https://github.com/artemanufrij)
 - more ID3 tags added to share player
+- replace deprecated tipsy() with tooltips() [#189](https://github.com/rello/audioplayer/issues/189)
 
 ### Fixed
 - missing strings added to language files
