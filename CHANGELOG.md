@@ -24,7 +24,6 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - missing strings added to language files
 - sorting albums by disc and track [#88](https://github.com/rello/audioplayer/issues/88) [#174](https://github.com/rello/audioplayer/issues/174) (thanks @[Faldon](https://github.com/Faldon))
-- issues with sidebar and soundbar [#111](https://github.com/rello/audioplayer/issues/111) [#128](https://github.com/rello/audioplayer/issues/128) @[Faldon](https://github.com/Faldon)
 - limit year to 4 digits
 - undefinded variable during empty category [#187](https://github.com/rello/audioplayer/issues/187) 
 
