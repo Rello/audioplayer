@@ -19,7 +19,7 @@
 </form>
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>
 
-<div id="app-navigation" class="mp3_hide">
+<div id="app-navigation" class="ap_hidden">
 	<div class="innerNav">
 		<ul id="albenoverview">
 			<li>

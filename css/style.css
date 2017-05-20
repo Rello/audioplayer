@@ -11,8 +11,8 @@
  * @copyright 2015 Sebastian Doell
  */
 
-.mp3_hide {
-	display: none;
+.ap_hidden {
+	display: none !important;
 }
 
 #searchresults {
@@ -359,7 +359,7 @@ height:auto;
 	margin:0;
 	width:98%;
 	position:relative;
-	top:20px;
+	top:60px;
 	float:left;
 	display:none;
 	height:auto;

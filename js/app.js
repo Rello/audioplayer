@@ -528,7 +528,7 @@ Audios.prototype.loadAlbums = function(){
 				$this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
 				$this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new tracks to library')+'</span>');
 				$this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
-				$('#app-navigation').removeClass('mp3_hide');
+				$('#app-navigation').removeClass('ap_hidden');
 			}			
 		}
 	});
@@ -578,7 +578,7 @@ Audios.prototype.loadCategory = function(category){
 	var category_id = $this.category_selectors[1];
 	var playlistsdata=[];
 	$('.sm2-bar-ui').show();
-	$('#addPlaylist').addClass('mp3_hide');
+	$('#addPlaylist').addClass('ap_hidden');
 	$('#myCategory').html('');
 	$('.toolTip').tooltip('hide');
 	$.ajax({
@@ -658,7 +658,7 @@ Audios.prototype.loadCategory = function(category){
 				}
 		});
 		if (category === 'Playlist' ){
-			$('#addPlaylist').removeClass('mp3_hide');
+			$('#addPlaylist').removeClass('ap_hidden');
 		}
 };
 
@@ -1991,13 +1991,13 @@ $(document).ready(function() {
 		  
 	$('#addPlaylist').on('click',function(){
 		$('#newPlaylistTxt').val('');
-		$('#newPlaylist').removeClass('mp3_hide');
+		$('#newPlaylist').removeClass('ap_hidden');
 	});
 	
 
 	$('#newPlaylistBtn_cancel').on('click',function(){
 		$('#newPlaylistTxt').val('');
-		$('#newPlaylist').addClass('mp3_hide');
+		$('#newPlaylist').addClass('ap_hidden');
 	});
 
 	$('#newPlaylistBtn_ok').on('click', function(){
@@ -2005,7 +2005,7 @@ $(document).ready(function() {
 			myAudios.newPlaylist($('#newPlaylistTxt').val());
 			$('#newPlaylistTxt').val('');
 			$('#newPlaylistTxt').focus();
-			$('#newPlaylist').addClass('mp3_hide');
+			$('#newPlaylist').addClass('ap_hidden');
 		}
 	});
 
@@ -2014,14 +2014,14 @@ $(document).ready(function() {
 			myAudios.newPlaylist($('#newPlaylistTxt').val());
 			$('#newPlaylistTxt').val('');
 			$('#newPlaylistTxt').focus();
-			$('#newPlaylist').addClass('mp3_hide');
+			$('#newPlaylist').addClass('ap_hidden');
 		}
 	});
 	
 	
 	$('#alben').addClass('bAktiv');
 	$('#alben').on('click',function(){
-		$('#newPlaylist').addClass('mp3_hide');
+		$('#newPlaylist').addClass('ap_hidden');
 		myAudios.PlaylistContainer.hide();
 		if(	$('.sm2-bar-ui').hasClass('playing')){
 			//myAudios.AudioPlayer.actions.play(0);
@@ -2095,7 +2095,7 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
-		$('#newPlaylist').addClass('mp3_hide');
+		$('#newPlaylist').addClass('ap_hidden');
 		if(	$('.sm2-bar-ui').hasClass('playing')){
 			myAudios.AudioPlayer.actions.play(0);
 			myAudios.AudioPlayer.actions.stop();
@@ -2121,29 +2121,24 @@ $(document).ready(function() {
 	$('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
 	
 	$('#app-navigation-toggle_alternative').click(function(){
-			$('#newPlaylist').addClass('mp3_hide');
-		if(	$('#app-navigation').hasClass('mp3_hide')){
-			$('#app-navigation').removeClass('mp3_hide');
+			$('#newPlaylist').addClass('ap_hidden');
+		if(	$('#app-navigation').hasClass('ap_hidden')){
+			$('#app-navigation').removeClass('ap_hidden');
 			$('#audios-audioscontainer .rowlist').remove();
 			myAudios.buildAlbumRows(myAudios.albums);
 			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
-			$('.sm2-bar-ui').removeClass('full-width');
-			$('.sm2-bar-ui').css('max-width', 'none');
-			$('#audios-audioscontainer').css('top', 70-$('.sm2-bar-ui').height());
 			myAudios.set_uservalue('navigation','true');
 		} else {
-			$('#app-navigation').addClass('mp3_hide');
+			$('#app-navigation').addClass('ap_hidden');
 			$('#audios-audioscontainer .rowlist').remove();
 			myAudios.buildAlbumRows(myAudios.albums);
 			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
-			$('.sm2-bar-ui').addClass('full-width');
-			$('#audios-audioscontainer').css('top', 70);
 			myAudios.set_uservalue('navigation','false');
 		}
 	});
 	
 	$('#category_selector').change(function() {
-		$('#newPlaylist').addClass('mp3_hide');
+		$('#newPlaylist').addClass('ap_hidden');
   		$this.category_selectors[0] = $('#category_selector').val();
   		$this.category_selectors[1] = '';
   		$('#myCategory').html('');
