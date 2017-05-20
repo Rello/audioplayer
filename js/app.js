@@ -55,9 +55,7 @@ Audios.prototype.init = function() {
 
 	this.initKeyListener();
 	this.initPhotoDialog();
-	$('.toolTip').tipsy({
-		html : true
-	});
+	$('.toolTip').tooltip();
 	
 };
 
@@ -582,7 +580,7 @@ Audios.prototype.loadCategory = function(category){
 	$('.sm2-bar-ui').show();
 	$('#addPlaylist').addClass('mp3_hide');
 	$('#myCategory').html('');
-	$('.toolTip').tipsy('hide');
+	$('.toolTip').tooltip('hide');
 	$.ajax({
 				type : 'GET',
 				url : OC.generateUrl('apps/audioplayer/getcategory'),
@@ -649,9 +647,7 @@ Audios.prototype.loadCategory = function(category){
 							
 							
 							$('#myCategory').append(aPlaylists);
-							$('.toolTip').tipsy({
-								html : true
-							});
+							$('.toolTip').tooltip();
 							if ($('#category_selector').val() === $this.category_selectors[0] && $this.category_selectors[1] && $this.category_selectors[1]!='undefined') {
 								$('#myCategory li[data-id="'+$this.category_selectors[1]+'"]').addClass('activeIndiPlaylist');
 								$("#app-navigation").scrollTop($("#app-navigation").scrollTop()+$('#myCategory li.activeIndiPlaylist').first().position().top - 25);
@@ -1063,7 +1059,7 @@ Audios.prototype.editSong = function(evt){
 			$this.loadPhotoHandlers();
 			
 			$('#phototools li a').click(function() {
-					$(this).tipsy('hide');
+					$(this).tooltip('hide');
 				});
 
 				$('#pinPhoto').on('mouseenter', function() {
@@ -1218,7 +1214,7 @@ Audios.prototype.addSongToPlaylist = function(plId,songId) {
 		sorting : (sort + 1)
 	}).then(function(data) {
 		$('#myPlayList').html('');
-		$('.toolTip').tipsy('hide');
+		$('.toolTip').tooltip('hide');
 		$this.category_selectors[0] = 'Playlist';
 		myAudios.loadCategory();		
 	}.bind(this));
@@ -1408,7 +1404,7 @@ Audios.prototype.deletePlaylist = function(evt){
 
 Audios.prototype.loadPhoto = function() {
 	var refreshstr = '&refresh=' + Math.random();
-		$('#phototools li a').tipsy('hide');
+		$('#phototools li a').tooltip('hide');
 		$('#pin_details_photo').remove();
 
 		var ImgSrc = '';
@@ -1426,8 +1422,8 @@ Audios.prototype.loadPhoto = function() {
 
 Audios.prototype.loadPhotoHandlers = function() {
 	var phototools = $('#phototools');
-		phototools.find('li a').tipsy('hide');
-		phototools.find('li a').tipsy();
+		phototools.find('li a').tooltip('hide');
+		phototools.find('li a').tooltip();
 			if ($('#isphoto').val() === '1') {
 			phototools.find('.delete').show();
 			phototools.find('.edit').show();
@@ -1445,26 +1441,26 @@ Audios.prototype.loadActionPhotoHandlers= function() {
 	   var phototools = $('#phototools');
 	   
 	   phototools.find('.delete').click(function(evt) {
-				$(this).tipsy('hide');
+				$(this).tooltip('hide');
 				$('#pinContainer').addClass('forceOpen');
 				this.deletePhoto();
 				$(this).hide();
 			}.bind(this));
 
 			phototools.find('.edit').click(function() {
-				$(this).tipsy('hide');
+				$(this).tooltip('hide');
 				$('#pinContainer').addClass('forceOpen');
 				this.editCurrentPhoto();
 			}.bind(this));
 			
 		phototools.find('.upload').click(function() {
-			$(this).tipsy('hide');
+			$(this).tooltip('hide');
 			$('#pinContainer').addClass('forceOpen');
 			$('#pinphoto_fileupload').trigger('click');
 		});
 
 		phototools.find('.cloud').click(function() {
-			$(this).tipsy('hide');
+			$(this).tooltip('hide');
 			//$('#pinContainer').addClass('forceOpen');
 			var mimeparts = ['image/jpeg', 'httpd/unix-directory'];
 			OC.dialogs.filepicker(t('audioplayer', 'Select picture'), this.cloudPhotoSelected.bind(this), false, mimeparts, true);
@@ -1848,7 +1844,7 @@ Audios.prototype.checkNewTracks = function() {
 			url : OC.generateUrl('apps/audioplayer/checknewtracks'),
 			success : function(data) {
 					if(data === 'true'){
-						$('#notification').text(t('audioplayer','New Audio Files available. Please start a rescan.'));
+						$('#notification').text(t('audioplayer','New Audio Files available'));
 						$('#notification').slideDown();
 						window.setTimeout(function(){$('#notification').slideUp();}, 5000);
 					}
