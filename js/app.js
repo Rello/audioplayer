@@ -1849,7 +1849,8 @@ Audios.prototype.checkNewTracks = function() {
 			url : OC.generateUrl('apps/audioplayer/checknewtracks'),
 			success : function(data) {
 					if(data === 'true'){
-						$('#notification').text(t('audioplayer','New Audio Files available'));
+						$('#notification').text(t('audioplayer','New Audio Files available. Please start a rescan.'));
+						$('#notification').slideDown();
 						window.setTimeout(function(){$('#notification').slideUp();}, 5000);
 					}
 			}
