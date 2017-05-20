@@ -1788,6 +1788,7 @@ Audios.prototype.sort_playlist = function(evt) {
 			var a = a.toLowerCase();
 			var b = b.toLowerCase();
 		}
+		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 	});
 	$('#activePlaylist').append(elems);
 
