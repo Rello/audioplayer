@@ -31,6 +31,7 @@ OC.L10N.register(
 	"Edit metadata" : "Edit metadata",
 	"Remove" : "Remove",
 	"Options" : "Options",
+	"MIME type" : "MIME type",
 	"MIME type not supported by browser" : "MIME type not supported by browser",
 	"Missing permission to edit metadata of track!" : "Missing permission to edit metadata of track!",
 	"Existing Albums" : "Альбом із списку",
