@@ -31,6 +31,7 @@ OC.L10N.register(
 	"Edit metadata" : "Edit metadata",
 	"Remove" : "Remove",
 	"Options" : "Options",
+	"MIME type" : "MIME type",
 	"MIME type not supported by browser" : "瀏覽器不支援此樂曲格式",
 	"Missing permission to edit metadata of track!" : "Missing permission to edit metadata of track!",
 	"Existing Albums" : "現有的專輯",
