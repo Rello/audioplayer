@@ -1,8 +1,8 @@
 # Audio Player
 
-![Downloads](https://img.shields.io/github/downloads/rello/audioplayer/total.svg)&#160;&#160;&#160;[![Version](https://img.shields.io/github/release/rello/audioplayer.svg)](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md)&#160;[![Issues](https://img.shields.io/github/issues/rello/audioplayer.svg)](https://github.com/rello/audioplayer/issues)&#160;&#160;&#160;[![License](https://img.shields.io/badge/license-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)&#160;&#160;&#160;[![Bitcoin](https://img.shields.io/badge/donate-Bitcoin-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)&#160;[![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)
+[![Version](https://img.shields.io/github/release/rello/audioplayer.svg)](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md)&#160;&#160;&#160;[![Bitcoin](https://img.shields.io/badge/donate-Bitcoin-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)&#160;[![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)
 
-A versatile music player for FLAC, MP3, MP4, and more with playlist support and share player.
+A music player for FLAC, MP3, MP4, and more with playlist support and share player.
 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
@@ -47,7 +47,3 @@ Please report bugs or feature requests using the [GitHub issue tracking system](
 ## Maintainers
 - [Marcel Scherello](https://github.com/rello) (author, project leader)
 - [Thomas Marx](https://github.com/xramsamoht) (administrative support)
-
-## Note
-This is the rework of the former [MP3 Player](https://github.com/libasys/audios) app which is not maintained anymore.  
-Thanks to [Sebastian Döll](https://github.com/libasys) for the awesome initial work.
