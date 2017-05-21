@@ -7,11 +7,11 @@ All notable changes to this project will be documented in this file.
 - favorites integration [#176](https://github.com/rello/audioplayer/issues/176) in Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
 - second stage [#177](https://github.com/rello/audioplayer/issues/177) of Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
 - Dynamic Playlists [#186](https://github.com/rello/audioplayer/issues/186)
-- notify user when new/unscanned tracks are available [#188](https://github.com/rello/audioplayer/issues/188)
 - dragging also from selected lists into playlists [#168](https://github.com/rello/audioplayer/issues/168)
 - support for ownCloud 10.0 and Nextcloud 12 [#183](https://github.com/rello/audioplayer/issues/183)
 - PSR-4 autoloader compatibility [#184](https://github.com/rello/audioplayer/issues/184)
 - disc, composer, and subtitle to metadata [#184](https://github.com/rello/audioplayer/issues/184) (thanks @[Faldon](https://github.com/Faldon))
+- notify user when new/unscanned tracks are available [#188](https://github.com/rello/audioplayer/issues/188)
 - UserHooks: library cleanup when user is removed
 - more metadata to Share Player
 
