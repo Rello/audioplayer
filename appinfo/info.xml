@@ -2,7 +2,7 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>audioplayer</id>
 	<name>Audio Player</name>
-	<summary>Audio Player for ownCloud and Nextcloud</summary>
+	<summary>Audio Player for Nextcloud and ownCloud</summary>
 	<description>A versatile music player for FLAC, MP3, MP4, and more with playlist support and share player.</description>
 	<version>2.0.0-beta.1</version>
 	<licence>AGPL</licence>
@@ -13,7 +13,7 @@
 		<admin>https://github.com/rello/audioplayer/wiki#admin-documentation</admin>
 	</documentation>
 	<category>multimedia</category>
-	<website>https://github.com/rello/audioplayer</website>
+	<website>https://rello.github.io/audioplayer</website>
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
 	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
@@ -22,8 +22,8 @@
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_share.png</screenshot>
 	<dependencies>
 		<php min-version="5.6" max-version="7.1"/>
-		<owncloud min-version="9.0" max-version="10.0"/>
 		<nextcloud min-version="9" max-version="12" />
+		<owncloud min-version="9.0" max-version="10.0"/>
 	</dependencies>
 	<ocsid>174738</ocsid>
 </info>
