@@ -4,6 +4,6 @@ theme: jekyll-theme-cayman
 timezone: Europe/Berlin
 name: "Audio Player"
 title: "Audio Player"
-description: "Audio Player for ownCloud and Nextcloud"
+description: "Audio Player for Nextcloud and ownCloud"
 url: "https://rello.github.io/audioplayer"
 author: "Marcel Scherello"
