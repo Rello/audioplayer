@@ -13,20 +13,22 @@ All notable changes to this project will be documented in this file.
 - PSR-4 autoloader compatibility [#184](https://github.com/rello/audioplayer/issues/184)
 - disc, composer, and subtitle to metadata [#184](https://github.com/rello/audioplayer/issues/184) (thanks @[Faldon](https://github.com/Faldon))
 - UserHooks: library cleanup when user is removed
+- more metadata to Share Player
 
 ### Changed
 - zh_TW translation updated [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
 - translation sources reworked
 - CSS changes for navigation menu [#179](https://github.com/rello/audioplayer/issues/179) @[artemanufrij](https://github.com/artemanufrij)
-- more ID3 tags added to share player
-- replace deprecated tipsy() with tooltips() [#189](https://github.com/rello/audioplayer/issues/189)
+
+### Deprecated
+- `OCP\IDB` replaced by `OCP\IDbConnection` [#183](https://github.com/rello/audioplayer/issues/183)
+- `tipsy()` replaced by `tooltips()` [#189](https://github.com/rello/audioplayer/issues/189)
 
 ### Fixed
 - missing strings added to language files
 - sorting albums by disc and track [#88](https://github.com/rello/audioplayer/issues/88) [#174](https://github.com/rello/audioplayer/issues/174) (thanks @[Faldon](https://github.com/Faldon))
 - limit year to 4 digits
 - undefinded variable during empty category [#187](https://github.com/rello/audioplayer/issues/187) 
-
 
 ## 1.5.1 - 2017-04-08
 ### Fixed
@@ -110,9 +112,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - command-line support for library scan and reset [#72](https://github.com/rello/audioplayer/issues/72)
 - select a dedicated folder for scanning in personal settings [#79](https://github.com/rello/audioplayer/issues/79)
-- exclude folders from scanning via .noaudio file [#79](https://github.com/rello/audioplayer/issues/79)
+- exclude folders from scanning via `.noaudio` file [#79](https://github.com/rello/audioplayer/issues/79)
 - significantly reduce database reads during scanning [#79](https://github.com/rello/audioplayer/issues/79)
-- cleanup of classes; move from \OC\Files\View to \OCP\Files\IRootFolder [#72](https://github.com/rello/audioplayer/issues/72)
+- cleanup of classes; move from `OC\Files\View` to `OCP\Files\IRootFolder` [#72](https://github.com/rello/audioplayer/issues/72)
 
 ### Changed
 - neutral cover for unknown album [#16](https://github.com/rello/audioplayer/issues/16)
