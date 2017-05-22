@@ -5,10 +5,10 @@
 	style('audioplayer', 'bar-ui');
 	style('audioplayer', 'style');
 	script('files', 'jquery.fileupload');
-	script('audioplayer', 'jquery.Jcrop-min');
+	script('audioplayer', 'jquery.Jcrop');
 	script('audioplayer', 'soundmanager2-nodebug-jsmin'); 
-	script('audioplayer', 'bar-ui-min');
-	script('audioplayer', 'app-min');
+	script('audioplayer', 'bar-ui');
+	script('audioplayer', 'app');
 ?>
 <form style="display:none;" class="float" id="file_upload_form" action="<?php print_unescaped(\OC::$server->getURLGenerator()->linkToRoute('audioplayer.photo.uploadPhoto')); ?>" method="post" enctype="multipart/form-data" target="file_upload_target">
 	<input type="hidden" name="id" value="">
