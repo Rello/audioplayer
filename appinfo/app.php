@@ -23,7 +23,9 @@ $request = \OC::$server->getRequest();
 			\OCP\Util::addStyle( 'audioplayer', 'style');
 			
 			\OCP\Util::addScript( 'audioplayer', 'soundmanager2-nodebug-jsmin' );
-			\OCP\Util::addScript( 'audioplayer', 'viewer' );
+			\OCP\Util::addScript( 'audioplayer', 'viewer-min' );
+			\OCP\Util::addScript( 'audioplayer', 'berniecode-animator-min' );
+			\OCP\Util::addScript( 'audioplayer', '360player-min' );
 		}
 	}
 
