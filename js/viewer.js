@@ -46,7 +46,6 @@ var audioPlayer = {
 			    });
 			    
 			    	audioPlayer.player.play();
-			  
 			  },
 			  ontimeout: function() {
 			    // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
@@ -58,9 +57,6 @@ var audioPlayer = {
 			//$('#filestable').find('.thumbnail i.ioc-play').show();
 			audioPlayer.player=null;
 		}
-		
-		
-		
 	},
 };
 $(document).ready(function() {	
@@ -123,13 +119,8 @@ $(document).ready(function() {
 			audioInnerDiv.append(audioLink);
 			audioOuterDiv.append(audioInnerDiv);
 			audioContainer.append(audioOuterDiv);
-			OC.addScript('audioplayer','berniecode-animator',function(){
-				OC.addScript('audioplayer','360player',function(){
-					soundManager.setup({
-					  url:'./apps/audioplayer/js/',
-					 });
-					 
-				});
+			soundManager.setup({
+				url:'./apps/audioplayer/js/',
 			});
 			
 			$('#imgframe').before($('<div/>').attr('id','id3'));
@@ -141,21 +132,19 @@ $(document).ready(function() {
 					success : function(jsondata) {
 						if(jsondata.status == 'success'){
 							var playlistsdata=jsondata.data;
-							//$(".directLink").remove();
-							//$(".directDownload").remove();
 							$('#content-wrapper').css({'padding-top':'0px'});
 							$('#id3').append('<div>&nbsp;</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Title')+':</b>&nbsp;'+ jsondata.data.title +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Subtitle')+':</b>&nbsp;'+ jsondata.data.subtitle +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Artist')+':</b>&nbsp;'+ jsondata.data.artist +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Composer')+':</b>&nbsp;'+ jsondata.data.composer +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Album')+':</b>&nbsp;'+ jsondata.data.album +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Genre')+':</b>&nbsp;'+ jsondata.data.genre +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Year')+':</b>&nbsp;'+ jsondata.data.year +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Disc')+'-'+t('audioplayer','Track')+':</b>&nbsp;'+ jsondata.data.disc +'-'+ jsondata.data.number +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Length')+':</b>&nbsp;'+ jsondata.data.length +'</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','Bitrate')+':</b>&nbsp;'+ jsondata.data.bitrate +'&nbsp;kbps</div>');
-							$('#id3').append('<div><b>'+t('audioplayer','MIME type')+':</b>&nbsp;'+ jsondata.data.mimetype +'</div>');
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Title')+': ')).append($('<span/>').text(jsondata.data.title)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Subtitle')+': ')).append($('<span/>').text(jsondata.data.subtitle)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Artist')+': ')).append($('<span/>').text(jsondata.data.artist)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Composer')+': ')).append($('<span/>').text(jsondata.data.composer)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Album')+': ')).append($('<span/>').text(jsondata.data.album)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Genre')+': ')).append($('<span/>').text(jsondata.data.genre)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Year')+': ')).append($('<span/>').text(jsondata.data.year)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Disc')+'-'+t('audioplayer','Track')+': ')).append($('<span/>').text(jsondata.data.disc +'-'+ jsondata.data.number)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Length')+': ')).append($('<span/>').text(jsondata.data.length)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Bitrate')+': ')).append($('<span/>').text(jsondata.data.bitrate)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','MIME type')+': ')).append($('<span/>').text(jsondata.data.mimetype)));
 							$('#imgframe').css({'padding-top':'20px'});
 							$('#imgframe').css({'padding-bottom':'0px'});
 							$('.publicpreview').css({'max-width':'0px !important'});
@@ -165,10 +154,6 @@ $(document).ready(function() {
 					}
 				});
 		}
-			
-	
-			 
 		}
-		//$(document).keydown(videoCoolViewer.onKeyDown);
 	}
 });
