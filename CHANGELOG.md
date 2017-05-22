@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - zh_TW translation updated [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
 - translation sources reworked
 - CSS changes for navigation menu [#179](https://github.com/rello/audioplayer/issues/179) @[artemanufrij](https://github.com/artemanufrij)
+- compress js files [#191](https://github.com/rello/audioplayer/issues/191)
 
 ### Deprecated
 - `OCP\IDB` replaced by `OCP\IDbConnection` [#183](https://github.com/rello/audioplayer/issues/183)
