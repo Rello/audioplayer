@@ -29,7 +29,10 @@ All notable changes to this project will be documented in this file.
 - missing strings added to language files
 - sorting albums by disc and track [#88](https://github.com/rello/audioplayer/issues/88) [#174](https://github.com/rello/audioplayer/issues/174) (thanks @[Faldon](https://github.com/Faldon))
 - limit year to 4 digits
-- undefinded variable during empty category [#187](https://github.com/rello/audioplayer/issues/187) 
+- undefined variable during empty category [#187](https://github.com/rello/audioplayer/issues/187) 
+
+### Security
+- avoid XSS in metadata
 
 ## 1.5.1 - 2017-04-08
 ### Fixed
