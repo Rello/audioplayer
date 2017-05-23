@@ -36,7 +36,7 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'music#getAudioStream', 'url' => '/getaudiostream', 'verb' => 'GET'],
 	['name' => 'music#resetMediaLibrary', 'url' => '/resetmedialibrary', 'verb' => 'GET'],
 	['name' => 'music#getPublicAudioStream', 'url' => '/getpublicaudiostream', 'verb' => 'GET'],
-	['name' => 'music#getPublicAudioInfo', 'url' => '/getpublicaudioinfo{file}', 'verb' => 'GET'],
+	['name' => 'music#getPublicAudioInfo', 'url' => '/getpublicaudioinfo', 'verb' => 'GET'],
 	['name' => 'photo#uploadPhoto',	'url' => '/uploadphoto',	'verb' => 'POST'],
 	['name' => 'photo#getImageFromCloud',	'url' => '/getimagefromcloud',	'verb' => 'GET'],
 	['name' => 'photo#cropPhoto',	'url' => '/cropphoto',	'verb' => 'POST'],
