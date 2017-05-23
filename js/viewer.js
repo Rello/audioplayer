@@ -124,7 +124,7 @@ $(document).ready(function() {
 			});
 			
 			$('#imgframe').before($('<div/>').attr('id','id3'));
-				url = OC.generateUrl('apps/audioplayer/getpublicaudioinfo{file}?token={token}',{'file':fileName,'token':token},{escape:false});
+				url = OC.generateUrl('apps/audioplayer/getpublicaudioinfo?token={token}',{'token':token},{escape:false});
 				
 				$.ajax({
 					type : 'GET',
