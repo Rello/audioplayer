@@ -49,10 +49,9 @@ class MusicController extends Controller {
 		$this->shareManager = $shareManager;
 	}
 	/**
-	*@PublicPage
-	 * @NoCSRFRequired
-	 * 
-	 */
+	* @PublicPage
+	* @NoCSRFRequired
+	*/
 	public function getPublicAudioStream(){
 		$pToken  = $this->params('token');	
 		$file = $this->params('file');
@@ -82,11 +81,10 @@ class MusicController extends Controller {
 	}
 
 	/**
-	*@PublicPage
-	 * @NoCSRFRequired
-	 * 
-	 */
-	public function getPublicAudioInfo($file){
+	* @PublicPage
+	* @NoCSRFRequired
+	*/
+	public function getPublicAudioInfo(){
 		$pToken  = $this->params('token');	
 		if (!empty($pToken)) {
 			$share = $this->shareManager->getShareByToken($pToken);
@@ -132,9 +130,9 @@ class MusicController extends Controller {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
+	* @NoAdminRequired
+	* @NoCSRFRequired
+	*/
 	public function getAudioStream(){
 		
 		$pFile = $this->params('file');
@@ -147,10 +145,9 @@ class MusicController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
-	 */
+	* @NoAdminRequired
+	*/
 	public function getMusic(){
-			
 		$aSongs = $this->loadSongs();
     		$aAlbums = $this->loadAlbums();
 		\OC::$server->getSession()->close();
@@ -178,10 +175,9 @@ class MusicController extends Controller {
 	}
 	
 	/**
-	 * @NoAdminRequired
-	 */
+	* @NoAdminRequired
+	*/
 	public function loadAlbums(){
-			
 		$aAlbums=array();
 		$SQL="SELECT  `AA`.`id`,`AA`.`name` AS `nam`,`AA`.`cover` AS `cov`,`AA`.`artist_id` AS `aid`
 						FROM `*PREFIX*audioplayer_albums` `AA`
