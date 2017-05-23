@@ -6,10 +6,6 @@ A music player for FLAC, MP3, MP4, and more with playlist support and share play
 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png" alt="Main" width="599" height="400" title="Main">
 
-<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_lists.png" alt="Navigation" width="187" height="250" title="Navigation">&#160;&#160;&#160;&#160;&#160;
-<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_share.png" alt="Share Player" width="171" height="250" title="Share Player">&#160;&#160;&#160;&#160;&#160;
-<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_actions.png" alt="Action Menu" width="80" height="250" title="Action Menu">
-
 ## Features
 - Multiple views (albums with covers and more)
 - Library scan and reset with command-line and browser
