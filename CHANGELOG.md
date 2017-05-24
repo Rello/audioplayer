@@ -1,5 +1,5 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+All notable changes to the Audio Player project will be documented in this file.
 
 ## 2.0.0 - 2017-05-24
 ### Added
