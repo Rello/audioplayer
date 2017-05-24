@@ -25,6 +25,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - `OCP\IDB` replaced by `OCP\IDbConnection` [#183](https://github.com/rello/audioplayer/issues/183)
 - `tipsy()` replaced by `tooltips()` [#189](https://github.com/rello/audioplayer/issues/189)
 
+### Removed
+- support for Nextcloud 9
+
 ### Fixed
 - missing strings added to language files
 - sorting albums by disc and track [#88](https://github.com/rello/audioplayer/issues/88) [#174](https://github.com/rello/audioplayer/issues/174) (thanks @[Faldon](https://github.com/Faldon))
