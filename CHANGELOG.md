@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 2.0.0 - 2017-05-24
 ### Added
 - FLAC support [#45](https://github.com/rello/audioplayer/issues/45)
 - favorites integration [#176](https://github.com/rello/audioplayer/issues/176) in Smart Playlists [#164](https://github.com/rello/audioplayer/issues/164)
