@@ -143,7 +143,7 @@ $(document).ready(function() {
 							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Year')+': ')).append($('<span/>').text(jsondata.data.year)));
 							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Disc')+'-'+t('audioplayer','Track')+': ')).append($('<span/>').text(jsondata.data.disc +'-'+ jsondata.data.number)));
 							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Length')+': ')).append($('<span/>').text(jsondata.data.length)));
-							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Bitrate')+': ')).append($('<span/>').text(jsondata.data.bitrate)));
+							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','Bitrate')+': ')).append($('<span/>').text(jsondata.data.bitrate+' kbps')));
 							$('#id3').append($('<div/>').append($('<b/>').text(t('audioplayer','MIME type')+': ')).append($('<span/>').text(jsondata.data.mimetype)));
 							$('#imgframe').css({'padding-top':'20px'});
 							$('#imgframe').css({'padding-bottom':'0px'});
