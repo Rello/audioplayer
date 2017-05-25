@@ -1,6 +1,26 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- zh_CN translation [#193](https://github.com/rello/audioplayer/pull/193) @[TheOne1006](https://github.com/TheOne1006)
+
+### Changed
+- zh_TW translation [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
+- uk translation [#195](https://github.com/rello/audioplayer/pull/195) @[BODYA7979](https://github.com/BODYA7979)
+
+### Deprecated
+- 
+
+### Removed
+- 
+
+### Fixed
+- 
+
+### Security
+- 
+
 ## 2.0.0 - 2017-05-24
 ### Added
 - FLAC support [#45](https://github.com/rello/audioplayer/issues/45)
@@ -16,10 +36,10 @@ All notable changes to the Audio Player project will be documented in this file.
 - more metadata to Share Player
 
 ### Changed
-- zh_TW translation updated [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
+- zh_TW translation [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
 - translation sources reworked
 - CSS changes for navigation menu [#179](https://github.com/rello/audioplayer/issues/179) @[artemanufrij](https://github.com/artemanufrij)
-- compress js files [#191](https://github.com/rello/audioplayer/issues/191)
+- compress `.js` files [#191](https://github.com/rello/audioplayer/issues/191)
 
 ### Deprecated
 - `OCP\IDB` replaced by `OCP\IDbConnection` [#183](https://github.com/rello/audioplayer/issues/183)
