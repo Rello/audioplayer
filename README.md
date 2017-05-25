@@ -22,11 +22,11 @@ A music player for FLAC, MP3, MP4, and more with playlist support and share play
 FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio. Playing the formats supported by Audio Player depends on the browser. [Read more …](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
 
 ### Supported Browsers
-Latest versions of Chrome, Firefox, and Safari. Mobile browsers may be restricted in functionality and handling.  
+Latest versions of Chrome, Firefox, and Safari. Mobile browsers may be restricted in functionality and handling.
 Internet Explorer and Edge are not supported.
 
 ### Languages
-English (US) (en), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Ukrainian (uk), Chinese (Taiwan) (zh_TW)
+English (US) (en), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Ukrainian (uk), Chinese (Taiwan) (zh_TW), Chinese (Simplified) (zh_CN)
 
 ## Documentation
 - [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
