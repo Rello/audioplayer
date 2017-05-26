@@ -11,7 +11,7 @@ A music player for FLAC, MP3, MP4, and more with playlist support and share play
 - Library scan and reset with command-line and browser
 - Specifying media folder (with exclude functionality)
 - Play shared files directly without downloading
-- Playlists and ID3  editor (incl. picture)
+- Playlists and ID3 tag editor (incl. picture)
 - One Click Play from Files app
 - External cover support
 - Mobile view support
