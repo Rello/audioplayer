@@ -632,7 +632,7 @@ class ScannerController extends Controller {
 				# if no discumber, discnumber is set to 1
 				# MP3, FLAC & MP4 have different tags for discnumber
 				$disc = 1;
-				$keys = ['part_of_a_set','partofset','disc_number'];
+				$keys = ['part_of_a_set','discnumber','partofset','disc_number'];
 				for ($i = 0; $i < count($keys); $i++){
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
 						$disc=$ThisFileInfo['comments'][$keys[$i]][0];
