@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## Unreleased
+## 2.0.1 - 2017-05-27
 ### Added
 - zh_CN translation [#193](https://github.com/rello/audioplayer/pull/193) @[TheOne1006](https://github.com/TheOne1006)
 
@@ -9,17 +9,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - zh_TW translation [#173](https://github.com/rello/audioplayer/issues/173) @[sbr9150](https://github.com/sbr9150)
 - uk translation [#195](https://github.com/rello/audioplayer/pull/195) @[BODYA7979](https://github.com/BODYA7979)
 
-### Deprecated
-- 
-
-### Removed
-- 
-
 ### Fixed
 - `DISCNUMBER` tag ignored in VorbisComment [#196](https://github.com/rello/audioplayer/issues/196)
-
-### Security
-- 
 
 ## 2.0.0 - 2017-05-24
 ### Added
