@@ -16,7 +16,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
-- 
+- `DISCNUMBER` tag ignored in VorbisComment [#196](https://github.com/rello/audioplayer/issues/196)
 
 ### Security
 - 
