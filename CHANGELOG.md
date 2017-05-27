@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- 
+
+### Changed
+- pl translation [#197](https://github.com/rello/audioplayer/pull/197) [#197](https://github.com/rello/audioplayer/pull/197) @[andypl78](https://github.com/andypl78)
+
+### Deprecated
+- 
+
+### Removed
+- 
+
+### Fixed
+- 
+
+### Security
+- 
+
 ## 2.0.1 - 2017-05-27
 ### Added
 - zh_CN translation [#193](https://github.com/rello/audioplayer/pull/193) @[TheOne1006](https://github.com/TheOne1006)
