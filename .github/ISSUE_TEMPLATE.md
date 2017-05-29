@@ -33,7 +33,7 @@ To make it possible for us to help you please fill out below information careful
 **PHP version:**
 
 
-**ownCloud/Nextcloud version:** (see `/status.php`)
+**Nextcloud/ownCloud version:** (see `/status.php`)
 
 
 **Updated from an older Nextcloud/ownCloud or fresh install:**
