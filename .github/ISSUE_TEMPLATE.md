@@ -2,7 +2,7 @@
 This is the issue tracker of Audio Player. Thanks for reporting issues!
 
 To make it possible for us to help you please fill out below information carefully.
---> 
+-->
 ### Expected behavior
 
 
@@ -15,6 +15,9 @@ To make it possible for us to help you please fill out below information careful
 3. 
 
 ### Possible solution (optional)
+
+
+### Additional information (optional)
 
 
 ### Server configuration
@@ -33,7 +36,7 @@ To make it possible for us to help you please fill out below information careful
 **ownCloud/Nextcloud version:** (see `/status.php`)
 
 
-**Updated from an older ownCloud/Nextcloud or fresh install:**
+**Updated from an older Nextcloud/ownCloud or fresh install:**
 
 
 **Audio Player version:** (see `/settings/apps`)
@@ -56,11 +59,11 @@ To make it possible for us to help you please fill out below information careful
 
 
 ### Logs
-#### ownCloud/Nextcloud log
+#### Nextcloud/ownCloud log
 <details>
-<summary>ownCloud/Nextcloud log (`/data/[owncloud|nextcloud].log`)</summary>
+<summary>Nextcloud/ownCloud log (`/data/[nextcloud|owncloud].log`)</summary>
 ```
-Insert your ownCloud/Nextcloud log here
+Insert your Nextcloud/ownCloud log here
 ```
 </details>
 
