@@ -15,7 +15,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
-- 
+- `VERSION` tag ignored in VorbisComment [#200](https://github.com/rello/audioplayer/issues/200)
 
 ### Security
 - 
