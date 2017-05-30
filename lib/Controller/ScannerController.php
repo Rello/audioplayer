@@ -615,17 +615,21 @@ class ScannerController extends Controller {
 				
 				$playTimeString = '';
 				if(isset($ThisFileInfo['playtime_string'])){
-					$playTimeString=$ThisFileInfo['playtime_string'];
+					$playTimeString = $ThisFileInfo['playtime_string'];
 				}
 			
 				$subtitle = '';
-				if(isset($ThisFileInfo['comments']['subtitle'][0]) and rawurlencode($ThisFileInfo['comments']['subtitle'][0]) !== '%FF%FE'){
-					$subtitle=$ThisFileInfo['comments']['subtitle'][0];
+				$keys = ['subtitle','version'];
+				for ($i = 0; $i < count($keys); $i++){
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
+						$subtitle = $ThisFileInfo['comments'][$keys[$i]][0];
+						break;
+					}
 				}
 
 				$composer = '';
 				if(isset($ThisFileInfo['comments']['composer'][0]) and rawurlencode($ThisFileInfo['comments']['composer'][0]) !== '%FF%FE'){
-					$composer=$ThisFileInfo['comments']['composer'][0];
+					$composer = $ThisFileInfo['comments']['composer'][0];
 				}
 
 				# write discnumber if available
@@ -635,7 +639,7 @@ class ScannerController extends Controller {
 				$keys = ['part_of_a_set','discnumber','partofset','disc_number'];
 				for ($i = 0; $i < count($keys); $i++){
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
-						$disc=$ThisFileInfo['comments'][$keys[$i]][0];
+						$disc = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
 					}
 				}
