@@ -102,7 +102,8 @@ function ThreeSixtyPlayer() {
 
     useAmplifier: true, // "pulse" like a speaker
 
-    fontSizeMax: null, // set according to CSS
+//    fontSizeMax: null, // set according to CSS
+    fontSizeMax: 24, // set according to CSS
 
     scaleArcWidth: 1,  // thickness factor of playback progress ring
 
@@ -1036,26 +1037,25 @@ function ThreeSixtyPlayer() {
     }
     // grab all links, look for .mp3
 
-    self.oUITemplate = document.createElement('div');
-    self.oUITemplate.className = 'sm2-360ui';
+//    self.oUITemplate = document.createElement('div');
+//    self.oUITemplate.className = 'sm2-360ui';
 
     self.oUITemplateVis = document.createElement('div');
     self.oUITemplateVis.className = 'sm2-360ui';
 
-    uiData = self.uiTest();
+//    uiData = self.uiTest();
+//    self.config.circleDiameter = uiData.circleDiameter;
+//    self.config.circleRadius = uiData.circleRadius;
+// 	  self.config.fontSizeMax = uiData.fontSizeMax;
+//    uiDataVis = self.uiTest('ui360-vis');
+//    self.config.fontSizeMax = uiDataVis.fontSizeMax;
+// canvas needs inline width and height, doesn't quite work otherwise
+//    self.oUITemplate.innerHTML = self.getUIHTML(self.config.circleDiameter).join('');
+//    self.oUITemplateVis.innerHTML = self.getUIHTML(uiDataVis.circleDiameter).join('');
+diameter = 256*hiDPIScale;
+radius = diameter/2;
 
-    self.config.circleDiameter = uiData.circleDiameter;
-    self.config.circleRadius = uiData.circleRadius;
-    // self.config.fontSizeMax = uiData.fontSizeMax;
-
-    uiDataVis = self.uiTest('ui360-vis');
-
-    self.config.fontSizeMax = uiDataVis.fontSizeMax;
-
-    // canvas needs inline width and height, doesn't quite work otherwise
-    self.oUITemplate.innerHTML = self.getUIHTML(self.config.circleDiameter).join('');
-
-    self.oUITemplateVis.innerHTML = self.getUIHTML(uiDataVis.circleDiameter).join('');
+    self.oUITemplateVis.innerHTML = self.getUIHTML(diameter).join('');
 
     for (i=0,j=oLinks.length; i<j; i++) {
       if (sm.canPlayLink(oLinks[i]) && !self.hasClass(oLinks[i],self.excludeClass) && !self.hasClass(oLinks[i],self.css.sDefault)) {
@@ -1066,11 +1066,11 @@ function ThreeSixtyPlayer() {
 
         is_vis = self.hasClass(oLinks[i].parentNode, 'ui360-vis');
 
-        diameter = (is_vis ? uiDataVis : uiData).circleDiameter;
-        radius = (is_vis ? uiDataVis : uiData).circleRadius;
-
+//        diameter = (is_vis ? uiDataVis : uiData).circleDiameter;
+//        radius = (is_vis ? uiDataVis : uiData).circleRadius;
         // add canvas shiz
-        oUI = oLinks[i].parentNode.insertBefore((is_vis?self.oUITemplateVis:self.oUITemplate).cloneNode(true),oLinks[i]);
+//        oUI = oLinks[i].parentNode.insertBefore((is_vis?self.oUITemplateVis:self.oUITemplate).cloneNode(true),oLinks[i]);
+        oUI = oLinks[i].parentNode.insertBefore(self.oUITemplateVis.cloneNode(true),oLinks[i]);
 
         if (isIE && typeof window.G_vmlCanvasManager !== 'undefined') { // IE only
           o = oLinks[i].parentNode;
