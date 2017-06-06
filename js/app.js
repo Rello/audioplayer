@@ -790,7 +790,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 			 						var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
 			 						if(el.cid === ''){	
 										var addCss='background-color: #D3D3D3;color: #333333;';
-										var addDescr=el.cl2.substring(0,1);	
+										var addDescr=el.cl1.substring(0,1);	
 									}else{
 										var addDescr='';
 										var addCss='background-image:url('+getcoverUrl+el.cid+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
@@ -1805,8 +1805,13 @@ Audios.prototype.soundmanager_callback = function(SMaction) {
 		var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
 		if(cover === ''){	
 			var addCss='background-color: #D3D3D3;color: #333333;';
-			var addDescr=album.substring(0,1);	
-		}else{
+			if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Albums') {
+				var album = $('#activePlaylist li.selected').data('title');
+			} else {
+				var album = $('#activePlaylist li.selected').data('album');
+			}
+				var addDescr=album.substring(0,1);	
+		} else {
 			var addDescr='';
 			var addCss='background-image:url('+getcoverUrl+cover+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 		}
