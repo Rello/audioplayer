@@ -6,6 +6,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Changed
+- better default sort order for playlists [#174](https://github.com/rello/audioplayer/issues/174)
 - pl translation [#197](https://github.com/rello/audioplayer/pull/197) [#197](https://github.com/rello/audioplayer/pull/197) @[andypl78](https://github.com/andypl78)
 
 ### Deprecated
@@ -15,6 +16,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
+- continuous playback of tracks without album cover [#199](https://github.com/rello/audioplayer/issues/199)
 - `VERSION` tag ignored in VorbisComment [#200](https://github.com/rello/audioplayer/issues/200)
 
 ### Security
