@@ -866,27 +866,24 @@ height:auto;
 	opacity:1;
 }
 
-
 .isActive{
 	font-weight:bold;
 }
 
-
-
 .outer-audioplayer{
-width:256px;
-position:relative; 
-margin-left:auto;
-margin-right:auto; 
-margin-top:80px;
-margin-bottom:20px;
-color:#000;
+	width:256px;
+	position:relative; 
+	margin-left:auto;
+	margin-right:auto; 
+	margin-top:80px;
+	margin-bottom:20px;
+	color:#000;
+	text-align: center;
 }
 
 .outer-audioplayer .ui360-vis .sm2-timing {
 	 color:#000;
 }
-
 
 .outer-audioplayer .ui360-vis .sm2-360ui{
 	 background-color:rgba(0,0,0,0.6);

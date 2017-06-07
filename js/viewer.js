@@ -38,18 +38,17 @@ var audioPlayer = {
 			
 		if(audioPlayer.player == null){
 			soundManager.setup({
-			  url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
-		  onready: function() {
-			    audioPlayer.player = soundManager.createSound({
-			      id:data.$file.attr('data-id'),
-			      url: audioPlayer.location
-			    });
-			    
+				url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
+		  		onready: function() {
+			    	audioPlayer.player = soundManager.createSound({
+			 			id:data.$file.attr('data-id'),
+						url: audioPlayer.location
+			    	});
 			    	audioPlayer.player.play();
-			  },
-			  ontimeout: function() {
+			  	},
+			  	ontimeout: function() {
 			    // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
-			  }
+			  	}
 			});
 		}else{
 			audioPlayer.player.stop();
@@ -61,8 +60,8 @@ var audioPlayer = {
 };
 $(document).ready(function() {	
 	if (OCA.Files && OCA.Files.fileActions) {
-		
 	var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
+
 		if(audioPlayer.player == null){
 			soundManager.setup({
 				url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
@@ -93,7 +92,7 @@ $(document).ready(function() {
 			
 			var token = ($('#sharingToken').val() !== undefined) ? $('#sharingToken').val() : '';
 			var mimeType=$('#mimetype').val();
-			if(mime_array.indexOf(mimeType) !== -1){
+			if (mime_array.indexOf(mimeType) !== -1){
 			
 			OC.addStyle('audioplayer','360player');
 			OC.addStyle('audioplayer','360player-visualization');	
@@ -113,16 +112,21 @@ $(document).ready(function() {
 			$('#preview').before(audioContainer);
 			var audioOuterDiv=$('<div>').addClass('outer-audioplayer').css('clear','both');
 			var audioInnerDiv=$('<div>').addClass('ui360 ui360-vis');
-			var audioLink=$('<a/>').attr({
-				'href':audioUrl
-			}).text($('#filename').val()).css('visibility','hidden');
+			var audioLink=$('<a/>').attr({'href':audioUrl}).text($('#filename').val()).css('visibility','hidden');
 			audioInnerDiv.append(audioLink);
 			audioOuterDiv.append(audioInnerDiv);
 			audioContainer.append(audioOuterDiv);
+
 			soundManager.setup({
 				url:'./apps/audioplayer/js/',
+		  		onready: function() {
+					var can_play = soundManager.html5;
+					if (can_play[mimeType] !== true) {
+						$('.outer-audioplayer').html('<b><i>' + t('audioplayer','MIME type not supported by browser') + '</i></b>');
+					}
+			  	}
 			});
-			
+						
 			$('#imgframe').before($('<div/>').attr('id','id3'));
 				url = OC.generateUrl('apps/audioplayer/getpublicaudioinfo?token={token}',{'token':token},{escape:false});
 				
