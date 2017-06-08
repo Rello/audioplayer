@@ -36,7 +36,7 @@ $c = $app->getContainer();
 $navigationEntry = function () use ($c) {
 	return [
 		'id' => $c->getAppName(),
-		'order' => 22,
+		'order' => 6,
 		'name' => $c->query('L10N')->t('Audio Player'),
 		'href' => $c->query('URLGenerator')->linkToRoute('audioplayer.page.index'),
 		'icon' => $c->query('URLGenerator')->imagePath('audioplayer', 'app.svg'),
