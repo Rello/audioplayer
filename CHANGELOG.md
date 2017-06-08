@@ -3,7 +3,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## Unreleased
 ### Added
-- 
+- 360° player MIME type hint [#201](https://github.com/rello/audioplayer/issues/201)
 
 ### Changed
 - better default sort order for playlists [#174](https://github.com/rello/audioplayer/issues/174)
@@ -18,6 +18,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - continuous playback of tracks without album cover [#199](https://github.com/rello/audioplayer/issues/199)
 - `VERSION` tag ignored in VorbisComment [#200](https://github.com/rello/audioplayer/issues/200)
+- progress bar of 360° player does not work [#201](https://github.com/rello/audioplayer/issues/201)
 
 ### Security
 - 
