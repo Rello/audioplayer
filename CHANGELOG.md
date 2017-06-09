@@ -6,7 +6,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 360° player MIME type hint [#201](https://github.com/rello/audioplayer/issues/201)
 
 ### Changed
-- better default sort order for playlists [#174](https://github.com/rello/audioplayer/issues/174)
+- default playlist sorting [#174](https://github.com/rello/audioplayer/issues/174)
 - pl translation [#197](https://github.com/rello/audioplayer/pull/197) @[andypl78](https://github.com/andypl78)
 - sorting weight for navigation in apps selection menu
 
