@@ -1,28 +1,19 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## Unreleased
+## 2.0.2 - 2017-06-09
 ### Added
 - 360° player MIME type hint [#201](https://github.com/rello/audioplayer/issues/201)
 
 ### Changed
 - better default sort order for playlists [#174](https://github.com/rello/audioplayer/issues/174)
-- pl translation [#197](https://github.com/rello/audioplayer/pull/197) [#197](https://github.com/rello/audioplayer/pull/197) @[andypl78](https://github.com/andypl78)
-- sorting weight for the navigation in apps selection menu
-
-### Deprecated
-- 
-
-### Removed
-- 
+- pl translation [#197](https://github.com/rello/audioplayer/pull/197) @[andypl78](https://github.com/andypl78)
+- sorting weight for navigation in apps selection menu
 
 ### Fixed
 - continuous playback of tracks without album cover [#199](https://github.com/rello/audioplayer/issues/199)
 - `VERSION` tag ignored in VorbisComment [#200](https://github.com/rello/audioplayer/issues/200)
 - progress bar of 360° player does not work [#201](https://github.com/rello/audioplayer/issues/201)
-
-### Security
-- 
 
 ## 2.0.1 - 2017-05-27
 ### Added
