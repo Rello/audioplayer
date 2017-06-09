@@ -244,24 +244,24 @@ class CategoryController extends Controller {
 
 		if($category === 'Artist') {
 			$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AB`.`name` AS `cl2`,`AT`.`length` AS `len`,`AT`.`year` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
-			$SQL = 	$SQL_select . $SQL_from .
+			$SQL = $SQL_select . $SQL_from .
 				"WHERE  `AT`.`artist_id` = ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
 		} elseif ($category === 'Genre') {
-			$SQL = 	$SQL_select . $SQL_from .
+			$SQL = $SQL_select . $SQL_from .
 				"WHERE `AT`.`genre_id` = ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
 		} elseif ($category === 'Year') {
-			$SQL = 	$SQL_select . $SQL_from .
+			$SQL = $SQL_select . $SQL_from .
 				"WHERE `AT`.`year` = ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
 		} elseif ($category === 'Title') {
-			$SQL = 	$SQL_select . $SQL_from .
+			$SQL = $SQL_select . $SQL_from .
 				"WHERE `AT`.`id` > ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
 		} elseif ($category === 'Playlist') {
 			if ($categoryId === "X1") { // Favorites
-				$SQL = 	$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`" . 
+				$SQL = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`" . 
 					$SQL_from .
 					"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ?" .
 			 		" ORDER BY LOWER(`AT`.`title`) ASC";
