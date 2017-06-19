@@ -863,7 +863,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							$('#individual-playlist li').removeClass('isActive');
 						}
 					}else{
-				 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audioplayer','Add new tracks to playlist by drag and drop from album view')+'</span>');
+				 		$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audioplayer','Add new tracks to playlist by drag and drop')+'</span>');
 				 	}
 					$('.header-title').text(jsondata.header.col1);
 					$('.header-artist').text(jsondata.header.col2);
