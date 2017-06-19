@@ -10,7 +10,7 @@ OC.L10N.register(
 	"Sort playlist" : "Sortuj Playlistę",
 	"Rename playlist" : "Zmiana nazwy Playlisty",
 	"Delete playlist" : "Usuń Playlistę",
-	"Add new tracks to playlist by drag and drop from album view" : "Nie znaleziono utworu w bieżącej Playliście! Dodaj nowy utwór za pomocą Drag & Drop z podglądu albumu",
+	"Add new tracks to playlist by drag and drop" : "Nie znaleziono utworu w bieżącej Playliście! Dodaj nowy utwór za pomocą Drag & Drop",
 	"No playlist selected!" : "Nie wybrano Playlisty!",
 	"Sort modus active" : "Przetwarzanie włączone",
 	"Playlist successfully deleted!" : "Playlista została usunięta!",
