@@ -10,7 +10,7 @@ OC.L10N.register(
 	"Sort playlist" : "Упорядочить список воспроизведения",
 	"Rename playlist" : "Переименовать список воспроизведения",
 	"Delete playlist" : "Удалить список воспроизведения",
-	"Add new tracks to playlist by drag and drop from album view" : "В этом списке воспроизведения пусто! Чтобы добавить песню или альбом, перетащите их сюда",
+	"Add new tracks to playlist by drag and drop" : "Add new tracks to playlist by drag and drop",
 	"No playlist selected!" : "Не выбран список воспроизведения!",
 	"Sort modus active" : "Включено упорядочивание",
 	"Playlist successfully deleted!" : "Список воспроизведения удалён!",
