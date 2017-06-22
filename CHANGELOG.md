@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- 
+
+### Changed
+- number of tracks in Smart Playlists [#208](https://github.com/rello/audioplayer/issues/208)
+
+### Deprecated
+- 
+
+### Removed
+- 
+
+### Fixed
+- 
+
+### Security
+- 
+
 ## 2.0.2 - 2017-06-09
 ### Added
 - 360° player MIME type hint [#201](https://github.com/rello/audioplayer/issues/201)
