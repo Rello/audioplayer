@@ -1062,8 +1062,6 @@ li.dropHover{
 		position:fixed;
 		background-color:#fff;
 		opacity:1;
-		height:40px;
-		width:45px;
 	}
 	#app-navigation-toggle_alternative{
 		display: none;
