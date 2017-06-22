@@ -10,7 +10,7 @@ OC.L10N.register(
 	"Sort playlist" : "Впорядкувати список відтворення",
 	"Rename playlist" : "Перейменувати список відтворення",
 	"Delete playlist" : "Видалити список відтворення",
-	"Add new tracks to playlist by drag and drop from album view" : "В цьому списку відтворення відсутні пісні. Щоб додати пісню або альбом - перетяніть їх сюди.",
+	"Add new tracks to playlist by drag and drop" : "Add new tracks to playlist by drag and drop",
 	"No playlist selected!" : "Не вибрано списку відтворення!",
 	"Sort modus active" : "Впорядкування увімкнено",
 	"Playlist successfully deleted!" : "Список відтворення видалено!",

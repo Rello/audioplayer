@@ -10,7 +10,7 @@ OC.L10N.register(
 	"Sort playlist" : "播放清單排序",
 	"Rename playlist" : "重新命名播放清單",
 	"Delete playlist" : "刪除播放清單",
-	"Add new tracks to playlist by drag and drop from album view" : "播放清單內無歌曲，請由專輯視窗中拖曳音樂至播放清單",
+	"Add new tracks to playlist by drag and drop" : "Add new tracks to playlist by drag and drop",
 	"No playlist selected!" : "請選擇播放清單",
 	"Sort modus active" : "排序",
 	"Playlist successfully deleted!" : "成功刪除播放清單！",

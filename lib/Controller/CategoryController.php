@@ -269,13 +269,13 @@ class CategoryController extends Controller {
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AT`.`file_id` DESC
-			 		Limit 25";
+			 		Limit 100";
 			} elseif ($categoryId === "X3") { // Recently Played
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playtime` DESC
-			 		Limit 25";
+			 		Limit 50";
 			} elseif ($categoryId === "X4") { // Most Played
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
