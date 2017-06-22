@@ -236,14 +236,14 @@ class CategoryController extends Controller {
 	private function getItemsforCatagory($category,$categoryId){
 
 		$aTracks=array();		
-		$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
+		$SQL_select = "SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
 		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
 		$SQL_order	= " ORDER BY LOWER(`AB`.`name`) ASC, `AT`.`disc` ASC, `AT`.`number` ASC";
 
 		if($category === 'Artist') {
-			$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AB`.`name` AS `cl2`,`AT`.`length` AS `len`,`AT`.`year` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
+			$SQL_select = "SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AB`.`name` AS `cl2`, `AT`.`year` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
 			$SQL = $SQL_select . $SQL_from .
 				"WHERE  `AT`.`artist_id` = ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
@@ -261,7 +261,7 @@ class CategoryController extends Controller {
 			 	$SQL_order;
 		} elseif ($category === 'Playlist') {
 			if ($categoryId === "X1") { // Favorites
-				$SQL = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`" . 
+				$SQL = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`,`AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`" . 
 					$SQL_from .
 					"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ?" .
 			 		" ORDER BY LOWER(`AT`.`title`) ASC";
@@ -297,7 +297,7 @@ class CategoryController extends Controller {
 				"WHERE `AT`.`folder_id` = ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
 		} elseif ($category === 'Album') {
-			$SQL_select = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AT`.`number`  AS `num`,`AT`.`length` AS `len`,`AA`.`name` AS `cl2`, `AT`.`disc` AS `dsc`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`";
+			$SQL_select = "SELECT  `AT`.`id`, `AT`.`title` AS `cl1`, `AA`.`name` AS `cl2`, `AT`.`length` AS `len`, `AT`.`disc` AS `dsc`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`,`AT`.`number`  AS `num`";
 			$SQL = 	$SQL_select . $SQL_from .
  				"WHERE `AB`.`id` = ? AND `AB`.`user_id` = ?" .
 			 	" ORDER BY `AT`.`disc` ASC, `AT`.`number` ASC";
@@ -321,7 +321,10 @@ class CategoryController extends Controller {
 				if ($row['cover'] === null) {
 					$row['cid'] = '';
 				} 
- 				array_splice($row, 9, 2);
+				if ($category === 'Album') {
+					$row['cl3'] = $row['dsc'].'-'.$row['num'];
+				} 
+ 				array_splice($row, 8, 3);
 				$path = rtrim($path,"/");
 				$row['lin'] = rawurlencode($path);
 				if (in_array($row['fid'], $favorites)) {
@@ -329,11 +332,7 @@ class CategoryController extends Controller {
 				} else {
 					$row['fav'] = "f";
 				}
-				
-				if ($category === 'Album') {
-					$row['cl3'] = $row['dsc'].'-'.$row['num'];
-				} 
-				
+								
 				if ($categoryId === "X1" AND !in_array($row['fid'], $favorites)) {
 				} else {
 					$aTracks[]=$row;
