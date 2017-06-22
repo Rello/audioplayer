@@ -203,6 +203,66 @@ class CategoryController extends Controller {
 		}
 		return $count;
 	}
+
+	private function getAlbumCountForCategory($category,$categoryId){
+
+		if($category === 'Artist') {
+			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+			 		WHERE  `AT`.`artist_id` = ? 
+			 		AND `AT`.`user_id` = ?
+			 		";
+		} elseif ($category === 'Genre') {
+			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					WHERE `AT`.`genre_id` = ?  
+					AND `AT`.`user_id` = ?
+					";
+		} elseif ($category === 'Year') {
+			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					WHERE `AT`.`year` = ? 
+					AND `AT`.`user_id` = ?
+					";
+		} elseif ($category === 'Title') {
+			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					WHERE `AT`.`id` > ? 
+					AND `AT`.`user_id` = ?
+					";
+		} elseif ($category === 'Playlist') {
+			$SQL="SELECT  COUNT(`AP`.`track_id`) AS `count`
+					FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
+			 		WHERE  `AP`.`playlist_id` = ?
+			 		";
+		} elseif ($category === 'Folder') {
+			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
+					FROM `*PREFIX*audioplayer_tracks` `AT`
+					WHERE `AT`.`folder_id` = ? 
+					AND `AT`.`user_id` = ?
+					";
+		} elseif ($category === 'Album') {
+			$SQL="SELECT  COUNT(DISTINCT `album_id`) AS `count` 
+					FROM `*PREFIX*audioplayer_tracks`
+					WHERE `album_id` = ? 
+					AND `user_id` = ?
+			 		";
+		}
+
+		$stmt = $this->db->prepare($SQL);
+		if ($category === 'Playlist') {
+			$stmt->execute(array($categoryId));
+		} else {
+			$stmt->execute(array($categoryId, $this->userId));
+		}
+		$results = $stmt->fetchAll();
+		foreach($results as $row) {
+			$count = $row['count'];
+		}
+		return $count;
+	}
+
 	
 	/**
 	 * @NoAdminRequired
@@ -214,12 +274,14 @@ class CategoryController extends Controller {
 			
 		$itmes = $this->getItemsforCatagory($category,$categoryId);
 		$headers = $this->getHeadersforCatagory($category);
+		$albums = $this->getAlbumCountForCategory($category,$categoryId);
 	
 		if(is_array($itmes)){
 			$result=[
 				'status' => 'success',
 				'data' => $itmes,
-				'header' => $headers,				
+				'header' => $headers,
+				'albums' => $albums,			
 			];
 		}else{
 			$result=[

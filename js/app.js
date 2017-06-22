@@ -690,13 +690,6 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		category_title = EventTarget.parent('li').find('span').first().text();
 		$('#alben').removeClass('bAktiv');
 	
-
-		if (category !== "Title") {
-			$('#individual-playlist-info').html(t('audioplayer','Selected '+category)+': '+category_title);
-		} else {
-			$('#individual-playlist-info').html(t('audioplayer','Selected')+': '+category_title);
-		} 			
-		
 		$this.AlbumContainer.hide();
 		$this.PlaylistContainer.hide();
 		$this.PlaylistContainer.show();
@@ -707,6 +700,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		$('.header-artist').data('order', '');
 		$('.header-album').data('order', '');
 		var can_play = soundManager.html5;
+		var albumcount = '';
 	
 		$.ajax({
 			type : 'GET',
@@ -868,10 +862,23 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 					$('.header-title').text(jsondata.header.col1);
 					$('.header-artist').text(jsondata.header.col2);
 					$('.header-album').text(jsondata.header.col3);
+					
+					if (jsondata.albums >> 1) {
+						var albumcount = ' (' + jsondata.albums + ' Albums)';
+					}else{
+						var albumcount = '';
+				 	}
+
+		if (category !== "Title") {
+			$('#individual-playlist-info').html(t('audioplayer','Selected '+category)+': '+category_title + albumcount);
+		} else {
+			$('#individual-playlist-info').html(t('audioplayer','Selected')+': '+category_title + albumcount);
+		} 			
+
 			 	}
 		 	}
 		});
-
+		
 	}else{
 		$this.AlbumContainer.hide();
 		if($this.PlaylistContainer.hasClass('isPlaylist')){
