@@ -126,7 +126,7 @@ class CategoryController extends Controller {
 			 			";
 		}	
 		
-		if ($SQL) {	
+		if (isset($SQL)) {	
 			$stmt = $this->db->prepare($SQL);
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
