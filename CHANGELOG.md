@@ -3,7 +3,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## Unreleased
 ### Added
-- 
+- count albums of selected artist [#205](https://github.com/rello/audioplayer/issues/205)
 
 ### Changed
 - number of tracks in Smart Playlists [#208](https://github.com/rello/audioplayer/issues/208)
@@ -15,7 +15,10 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
-- 
+- scanner truncates long multiple title properly [#203](https://github.com/rello/audioplayer/issues/203) @[nhirokinet](https://github.com/nhirokinet)
+- issue with files app [#210](https://github.com/rello/audioplayer/issues/210) (thanks @[artemanufrij](https://github.com/artemanufrij))
+- catch undeclared variable [#212](https://github.com/rello/audioplayer/issues/212)
+- remove cover from metadata [#214](https://github.com/rello/audioplayer/issues/214)
 
 ### Security
 - 
