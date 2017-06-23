@@ -69,7 +69,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - compress `.js` files [#191](https://github.com/rello/audioplayer/issues/191)
 
 ### Deprecated
-- `OCP\IDB` replaced by `OCP\IDbConnection` [#183](https://github.com/rello/audioplayer/issues/183)
+- `OCP\IDb` replaced by `OCP\IDbConnection` [#183](https://github.com/rello/audioplayer/issues/183)
 - `tipsy()` replaced by `tooltips()` [#189](https://github.com/rello/audioplayer/issues/189)
 
 ### Removed
