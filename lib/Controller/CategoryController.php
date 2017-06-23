@@ -213,49 +213,10 @@ class CategoryController extends Controller {
 			 		WHERE  `AT`.`artist_id` = ? 
 			 		AND `AT`.`user_id` = ?
 			 		";
-		} elseif ($category === 'Genre') {
-			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`genre_id` = ?  
-					AND `AT`.`user_id` = ?
-					";
-		} elseif ($category === 'Year') {
-			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`year` = ? 
-					AND `AT`.`user_id` = ?
-					";
-		} elseif ($category === 'Title') {
-			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`id` > ? 
-					AND `AT`.`user_id` = ?
-					";
-		} elseif ($category === 'Playlist') {
-			$SQL="SELECT  COUNT(`AP`.`track_id`) AS `count`
-					FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
-			 		WHERE  `AP`.`playlist_id` = ?
-			 		";
-		} elseif ($category === 'Folder') {
-			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`folder_id` = ? 
-					AND `AT`.`user_id` = ?
-					";
-		} elseif ($category === 'Album') {
-			$SQL="SELECT  COUNT(DISTINCT `album_id`) AS `count` 
-					FROM `*PREFIX*audioplayer_tracks`
-					WHERE `album_id` = ? 
-					AND `user_id` = ?
-			 		";
-		}
+		} 
 
 		$stmt = $this->db->prepare($SQL);
-		if ($category === 'Playlist') {
-			$stmt->execute(array($categoryId));
-		} else {
-			$stmt->execute(array($categoryId, $this->userId));
-		}
+		$stmt->execute(array($categoryId, $this->userId));
 		$results = $stmt->fetchAll();
 		foreach($results as $row) {
 			$count = $row['count'];
@@ -271,10 +232,11 @@ class CategoryController extends Controller {
 	public function getCategoryItems(){
 		$category=$this->params('category');
 		$categoryId=$this->params('id');
+		$albums = 0;
 			
 		$itmes = $this->getItemsforCatagory($category,$categoryId);
 		$headers = $this->getHeadersforCatagory($category);
-		$albums = $this->getAlbumCountForCategory($category,$categoryId);
+		if ($category === 'Artist') $albums = $this->getAlbumCountForCategory($category,$categoryId);
 	
 		if(is_array($itmes)){
 			$result=[

@@ -864,7 +864,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 					$('.header-album').text(jsondata.header.col3);
 					
 					if (jsondata.albums >> 1) {
-						var albumcount = ' (' + jsondata.albums + ' Albums)';
+						var albumcount = ' (' + jsondata.albums + ' '+t('audioplayer','Albums')+')';
 					}else{
 						var albumcount = '';
 				 	}
