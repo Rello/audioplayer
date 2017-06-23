@@ -28,6 +28,7 @@ OC.L10N.register(
 	"Artist" : "Виконавець",
 	"Year" : "Рік",
 	"Album" : "Альбом",
+	"Albums" : "Альбоми",
 	"Composer" : "Композитор",
 	"Edit metadata" : "Редагувати метадані",
 	"Remove" : "Видалити",

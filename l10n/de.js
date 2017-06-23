@@ -29,6 +29,7 @@ OC.L10N.register(
 	"Genre" : "Genre",
 	"Year" : "Jahr",
 	"Album" : "Album",
+	"Albums" : "Alben",
 	"Composer" : "Composer",
 	"Edit metadata" : "Metadaten bearbeiten",
 	"Remove" : "Entfernen",

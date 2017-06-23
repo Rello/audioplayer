@@ -28,6 +28,7 @@ OC.L10N.register(
 	"Artist" : "演出者",
 	"Year" : "年份",
 	"Album" : "专辑",
+	"Albums" : "专辑",
 	"Composer" : "作曲者",
 	"Edit metadata" : "编辑元数据",
 	"Remove" : "删除",
