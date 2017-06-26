@@ -1,7 +1,9 @@
 <!--
 This is the issue tracker of Audio Player. Thanks for reporting issues!
 
-To make it possible for us to help you please fill out below information carefully.
+Please fill in the template as complete as possible. The more information we have, the better we can help.
+
+Please use this template because the automatically pre-filled template of the Issue Template app contains many unnecessary information for us and does not meet our requirements.
 -->
 ### Expected behavior
 
