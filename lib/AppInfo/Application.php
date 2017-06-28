@@ -50,5 +50,11 @@ class Application extends App {
 		$container->registerService('Config', function($c){
 			return $c->getServer()->getConfig();
 		});
+	public function registerFilesHooks() {
+
+		Util::connectHook(
+			'OC_Filesystem', 'delete', '\OCA\audioplayer\Hooks\FileHooks', 'deleteTrack'
+		);
 	}
+
 }
