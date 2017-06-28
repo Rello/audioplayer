@@ -10,7 +10,7 @@
  * @copyright 2016-2017 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
- 
+
 namespace OCA\audioplayer\AppInfo;
 
 use OCP\AppFramework\App;
@@ -27,8 +27,8 @@ use OCA\audioplayer\Controller\SettingController;
 use OCP\Util;
 
 class Application extends App {
-	
-	public function __construct (array $urlParams=array()) {
+
+	public function __construct(array $urlParams = array()) {
 
 		parent::__construct('audioplayer', $urlParams);
 		$container = $this->getContainer();
@@ -46,8 +46,9 @@ class Application extends App {
 			'UserId', function(IContainer $c) {
 			$user = \OC::$server->getUserSession()
 								->getUser();
-			if ($user)
+			if ($user) {
 				return $user->getUID();
+			}
 		}
 		);
 
@@ -67,7 +68,7 @@ class Application extends App {
 
 	}
 
-	
+
 	public function registerFilesHooks() {
 
 		Util::connectHook(
