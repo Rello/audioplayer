@@ -17,20 +17,18 @@ class FileHooks {
 
 	/**
 	 * delete track from library after file deletion
-	 * @param \OCP\Files\Node $node pointing to the file
+	 * @param array $params
 	 */
-	public static function deleteTrack($node) {
-\OCP\Util::writeLog('audioplayer','test',\OCP\Util::DEBUG);		
-		$app = new \OCA\audioplayer\AppInfo\Application();
-        $container = $app->getContainer();
-		\OCP\Util::writeLog('audioplayer','songFileId: '.$node->getId(),\OCP\Util::DEBUG);
+	public static function deleteTrack($params) {
+
+		$view = \OC\Files\Filesystem::getView();
+		$node = $view->getFileInfo($params['path']);
+        
+		\OCP\Util::writeLog('audioplayer','Hook delete id: '.$node->getId(),\OCP\Util::DEBUG);
 		if ($node->getType() == FileInfo::TYPE_FILE) {
-	    	$container->query(\OCA\audioplayer\Controller\CategoryController::class)->deleteFromDB($node->getId(),null);
-		}
-		else {
-			foreach ($node->getDirectoryListing() as $child) {
-				FileHooks::deleteTrack($child);
-			}
+			$app = new \OCA\audioplayer\AppInfo\Application();
+        	$container = $app->getContainer();
+	    	$container->query(\OCA\audioplayer\Controller\CategoryController::class)->deleteFromDB($node->getId());
 		}
 	}    
 }
