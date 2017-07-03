@@ -4,6 +4,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ## Unreleased
 ### Added
 - count albums of selected artist [#205](https://github.com/rello/audioplayer/issues/205)
+- FileHooks: library cleanup when file is removed
 
 ### Changed
 - number of tracks in Smart Playlists [#208](https://github.com/rello/audioplayer/issues/208)
