@@ -19,7 +19,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - scanner truncates long multiple title properly [#203](https://github.com/rello/audioplayer/issues/203) @[nhirokinet](https://github.com/nhirokinet)
 - issue with files app [#210](https://github.com/rello/audioplayer/issues/210) (thanks @[artemanufrij](https://github.com/artemanufrij))
 - catch undeclared variable [#212](https://github.com/rello/audioplayer/issues/212)
-- remove cover from metadata [#214](https://github.com/rello/audioplayer/issues/214)
+- cover removed from metadata [#214](https://github.com/rello/audioplayer/issues/214)
+- `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
 
 ### Security
 - 
@@ -87,7 +88,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## 1.5.1 - 2017-04-08
 ### Fixed
-- missing tags for wav files [#166](https://github.com/rello/audioplayer/issues/166)
+- missing tags for WAV files [#166](https://github.com/rello/audioplayer/issues/166)
 - playing of shared files [#171](https://github.com/rello/audioplayer/issues/171)
 
 ## 1.5.0 - 2017-03-31
@@ -103,7 +104,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - scanner performance improvements [#151](https://github.com/rello/audioplayer/issues/151)
 - selection order and naming
 - cover art for "Unknown/&#8203;Various Artists"
-- padding in share player
+- padding in Share Player
 - search integration improvements [#155](https://github.com/rello/audioplayer/issues/155)
 
 ### Fixed
@@ -125,7 +126,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - getID3 to 1.9.13-201612181356 [#119](https://github.com/rello/audioplayer/issues/119)
 - search order of cover art [#126](https://github.com/rello/audioplayer/issues/126)
-- padding/&#8203;margin in share player
+- padding/&#8203;margin in Share Player
 - natural sorting for category lists
 - de + de_DE translations
 
@@ -136,7 +137,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Fixed
 - Chrome CSS issue with only one track in album [#104](https://github.com/rello/audioplayer/issues/104)
-- correct arrays and remove obsolete functions [#110](https://github.com/rello/audioplayer/issues/110) [#123](https://github.com/rello/audioplayer/issues/123) (thanks @[mc-comanescu](https://github.com/mc-comanescu) and @[rseabra](https://github.com/rseabra))
+- arrays corrected and obsolete functions removed [#110](https://github.com/rello/audioplayer/issues/110) [#123](https://github.com/rello/audioplayer/issues/123) (thanks @[mc-comanescu](https://github.com/mc-comanescu) and @[rseabra](https://github.com/rseabra))
 - correct ORDER BY syntax for PostgreSQL database [#112](https://github.com/rello/audioplayer/issues/112) (thanks @[Turgon37](https://github.com/turgon37))
 - album cover not written to database [#113](https://github.com/rello/audioplayer/issues/113)
 - catch Unicode characters in artist name [#118](https://github.com/rello/audioplayer/issues/118)
@@ -160,7 +161,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## 1.3.1 - 2016-11-17
 ### Fixed
-- One Click Play for wav not working
+- One Click Play of WAV does not work
 - wrong SQL statement for PostgreSQL [#90](https://github.com/rello/audioplayer/issues/90)
 
 ## 1.3.0 - 2016-11-15
@@ -189,7 +190,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - new clean design with less crazy colors [#59](https://github.com/rello/audioplayer/issues/59)
 
 ### Fixed
-- share player only working for mp3 files [#54](https://github.com/rello/audioplayer/issues/54)
+- Share Player works only with MP3 files [#54](https://github.com/rello/audioplayer/issues/54)
 - input box for new playlists does not hide [#61](https://github.com/rello/audioplayer/issues/61)
 
 ## 1.2.0 - 2016-09-09
