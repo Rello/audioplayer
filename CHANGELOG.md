@@ -13,7 +13,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Removed
-- 
+- support for ownCloud App Store (`ocsid`)
 
 ### Fixed
 - scanner truncates long multiple title properly [#203](https://github.com/rello/audioplayer/issues/203) @[nhirokinet](https://github.com/nhirokinet)
