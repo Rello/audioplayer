@@ -20,7 +20,7 @@
 	<dependencies>
 		<php min-version="5.6" max-version="7.1"/>
 		<nextcloud min-version="10" max-version="12" />
-		<owncloud min-version="9.0" max-version="10.0"/>
+		<owncloud min-version="9.1" max-version="10.0"/>
 	</dependencies>
 	<types>
    		<filesystem />
