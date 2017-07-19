@@ -13,7 +13,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - [ownCloud App Store](https://apps.owncloud.com/) (`ocsid`)
 
 ### Removed
-- 
+- support for Nextcloud 10
+- support for ownCloud 9.0 [#222](https://github.com/rello/audioplayer/issues/222)
 
 ### Fixed
 - scanner truncates long multiple title properly [#203](https://github.com/rello/audioplayer/issues/203) @[nhirokinet](https://github.com/nhirokinet)
