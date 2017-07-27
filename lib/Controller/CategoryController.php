@@ -397,6 +397,7 @@ class CategoryController extends Controller {
 		$stmt->execute(array($file_id, $this->userId));
 		$row = $stmt->fetch();
 		$AlbumId = $row['album_id'];
+		$TrackId = $row['id'];
 
 		$stmt = $this->db->prepare( 'SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ' );
 		$stmt->execute(array($AlbumId));
@@ -408,7 +409,23 @@ class CategoryController extends Controller {
 		
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE  `file_id` = ? AND `user_id` = ?' );
 		$stmt->execute(array($file_id, $this->userId));		
-	}
+
+		$stmt = $this->db->prepare( 'SELECT `playlist_id` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `track_id` = ?' );
+		$stmt->execute(array($TrackId));
+		$row = $stmt->fetch();
+		$PlaylistId = $row['playlist_id'];
+
+		$stmt = $this->db->prepare( 'SELECT COUNT(`playlist_id`) AS `PLAYLISTCOUNT` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ? ' );
+		$stmt->execute(array($PlaylistId));
+		$row = $stmt->fetch();
+		if((int)$row['PLAYLISTCOUNT'] === 1){
+			$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlists` WHERE `id` = ? AND `user_id` = ?' );
+			$stmt->execute(array($PlaylistId, $this->userId));
+		}
+
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE  `track_id` = ?' );
+		$stmt->execute(array($TrackId));		
+}
 
 	/**
 	 * @NoAdminRequired
