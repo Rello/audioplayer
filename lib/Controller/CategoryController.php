@@ -393,7 +393,7 @@ class CategoryController extends Controller {
 	public function deleteFromDB($file_id){		
 		\OCP\Util::writeLog('audioplayer','deleteFromDB: '.$file_id,\OCP\Util::DEBUG);
 
-		$stmt = $this->db->prepare( 'SELECT `album_id` FROM `*PREFIX*audioplayer_tracks` WHERE `file_id` = ?  AND `user_id` = ?' );
+		$stmt = $this->db->prepare( 'SELECT `album_id`, `id` FROM `*PREFIX*audioplayer_tracks` WHERE `file_id` = ?  AND `user_id` = ?' );
 		$stmt->execute(array($file_id, $this->userId));
 		$row = $stmt->fetch();
 		$AlbumId = $row['album_id'];
