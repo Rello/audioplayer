@@ -259,6 +259,7 @@ class CategoryController extends Controller {
 	
 	private function getItemsforCatagory($category,$categoryId){
 
+		$favorite = false;
 		$aTracks=array();		
 		$SQL_select = "SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
 		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -289,23 +290,28 @@ class CategoryController extends Controller {
 					$SQL_from .
 					"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ?" .
 			 		" ORDER BY LOWER(`AT`.`title`) ASC";
+			 		$categoryId = 0; //overwrite to integer for PostgreSQL
+			 		$favorite = true;
 			} elseif ($categoryId === "X2") { // Recently Added
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AT`.`file_id` DESC
 			 		Limit 100";
+			 		$categoryId = 0;
 			} elseif ($categoryId === "X3") { // Recently Played
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playtime` DESC
 			 		Limit 50";
+			 		$categoryId = 0;
 			} elseif ($categoryId === "X4") { // Most Played
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playcount` DESC
 			 		Limit 25";
+			 		$categoryId = 0;
 			} else {
 				$SQL = $SQL_select ." , `AP`.`sortorder`" .
 					"FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
@@ -357,7 +363,7 @@ class CategoryController extends Controller {
 					$row['fav'] = "f";
 				}
 								
-				if ($categoryId === "X1" AND !in_array($row['fid'], $favorites)) {
+				if ($favorite AND !in_array($row['fid'], $favorites)) {
 				} else {
 					$aTracks[]=$row;
 				}
