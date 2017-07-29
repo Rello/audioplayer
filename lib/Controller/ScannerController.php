@@ -1008,7 +1008,7 @@ class ScannerController extends Controller {
 
 		$image = new \OCP\Image();
  		if($image->loadFromdata($data)) {
-			if(($image->width() <= 250 && $image->height() <= 250) || $image->resize(250)) {
+			if(($image->width() <= 250 && $image->height() <= 250) || $image->centerCrop(250)) {
 				$imgString=$image->__toString();
 				$this->writeCoverToAlbum($iAlbumId,$imgString,'');
 			}
