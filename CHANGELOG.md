@@ -65,7 +65,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - PSR-4 autoloader compatibility [#184](https://github.com/rello/audioplayer/issues/184)
 - disc, composer, and subtitle to metadata [#184](https://github.com/rello/audioplayer/issues/184) (thanks @[Faldon](https://github.com/Faldon))
 - notify user when new/unscanned tracks are available [#188](https://github.com/rello/audioplayer/issues/188)
-- UserHooks: library cleanup when user is removed
+- UserHooks: library cleanup after deleting users
 - more metadata to Share Player
 
 ### Changed
@@ -118,7 +118,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - not playing from shared subfolders [#139](https://github.com/rello/audioplayer/issues/139)
 - mobile browser support [#141](https://github.com/rello/audioplayer/issues/141)
 - scan progress dialog reworked [#153](https://github.com/rello/audioplayer/issues/153)
-- cleaning up deleted audio files [#154](https://github.com/rello/audioplayer/issues/154)
+- category views cleanup after deleting files [#154](https://github.com/rello/audioplayer/issues/154)
 - search integration [#155](https://github.com/rello/audioplayer/issues/155)
 - playlist selection lost after edit or sort [#162](https://github.com/rello/audioplayer/issues/162)
 
