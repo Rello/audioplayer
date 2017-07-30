@@ -24,6 +24,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - cover removed from metadata [#214](https://github.com/rello/audioplayer/issues/214)
 - clean up playlist after file is deleted [#216](https://github.com/rello/audioplayer/issues/216)
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
+- PostgreSQL issue in favorites
 
 ### Security
 - 
