@@ -8,6 +8,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Changed
 - number of tracks in Smart Playlists [#208](https://github.com/rello/audioplayer/issues/208)
+- crop cover to middle square
 
 ### Deprecated
 - [ownCloud App Store](https://apps.owncloud.com/) (`ocsid`)
@@ -21,6 +22,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - issue with files app [#210](https://github.com/rello/audioplayer/issues/210) (thanks @[artemanufrij](https://github.com/artemanufrij))
 - catch undeclared variable [#212](https://github.com/rello/audioplayer/issues/212)
 - cover removed from metadata [#214](https://github.com/rello/audioplayer/issues/214)
+- clean up playlist after file is deleted [#216](https://github.com/rello/audioplayer/issues/216)
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
 
 ### Security
