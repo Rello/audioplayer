@@ -1938,7 +1938,7 @@ window.onhashchange = function() {
 			myAudios.AlbumContainer.show();
 			myAudios.PlaylistContainer.hide();
 			myAudios.AlbumClickHandler(evt);
-		}else{
+		} else if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle') {
 			$this.category_selectors = locHashTemp;
 			$("#category_selector").val(locHashTemp[0]);
 			myAudios.loadCategory();
