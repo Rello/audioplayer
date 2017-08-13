@@ -25,6 +25,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - playlist cleanup after deleting files [#216](https://github.com/rello/audioplayer/issues/216)
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
 - PostgreSQL issue in favorites
+- catch playbar buttons triggering category selector [#225](https://github.com/rello/audioplayer/issues/225)
 
 ### Security
 - 
