@@ -1938,7 +1938,7 @@ window.onhashchange = function() {
 			myAudios.AlbumContainer.show();
 			myAudios.PlaylistContainer.hide();
 			myAudios.AlbumClickHandler(evt);
-		} else if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle') {
+		} else if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
 			$this.category_selectors = locHashTemp;
 			$("#category_selector").val(locHashTemp[0]);
 			myAudios.loadCategory();
