@@ -9,6 +9,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - number of tracks in Smart Playlists [#208](https://github.com/rello/audioplayer/issues/208)
 - crop cover to middle square
+- cleanup of js functions
 
 ### Deprecated
 - [ownCloud App Store](https://apps.owncloud.com/) (`ocsid`)
@@ -26,9 +27,6 @@ All notable changes to the Audio Player project will be documented in this file.
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
 - PostgreSQL issue in favorites
 - catch playbar buttons triggering category selector [#225](https://github.com/rello/audioplayer/issues/225)
-
-### Security
-- 
 
 ## 2.0.2 - 2017-06-09
 ### Added
