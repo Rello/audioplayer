@@ -652,12 +652,13 @@
 		$('.albumwrapper.isPlaylist li').removeClass('isActive');
 		$('.albumwrapper.isPlaylist li i.ioc').hide();
 		$('.albumwrapper.isPlaylist li i.fav').show();
-		$('.albumwrapper.isPlaylist li i.ioc').eq(index).removeClass('ioc-volume-off');
-		$('.albumwrapper.isPlaylist li i.ioc').eq(index).addClass('ioc-volume-up');
-		$('.albumwrapper.isPlaylist li i.ioc').eq(index).show();
-		$('.albumwrapper.isPlaylist li i.fav').eq(index).hide();
-		$('.albumwrapper.isPlaylist li').eq(index).addClass('isActive');
-
+		if (index !== null) {
+			$('.albumwrapper.isPlaylist li i.ioc').eq(index).removeClass('ioc-volume-off');
+			$('.albumwrapper.isPlaylist li i.ioc').eq(index).addClass('ioc-volume-up');
+			$('.albumwrapper.isPlaylist li i.ioc').eq(index).show();
+			$('.albumwrapper.isPlaylist li i.fav').eq(index).hide();
+			$('.albumwrapper.isPlaylist li').eq(index).addClass('isActive');
+		}
 	}
 	
       function resetLastSelected() {
@@ -1014,8 +1015,7 @@
           item = playlistController.getNext();
 
           // don't play the same item over and over again, if at end of playlist etc.
-          if (item && playlistController.data.selectedIndex !== lastIndex) {
-
+		if (item && (playlistController.data.selectedIndex !== lastIndex || (playlistController.data.playlist.length === 1 && playlistController.data.loopMode))) {
             playlistController.select(item);
 
             setTitle(item);
@@ -1030,12 +1030,12 @@
               url: playlistController.getURL()
             });
 
-          }/* else {
+          } else {
 
-            // explicitly stop?
-            // this.stop();
+            // explicitly stop 
+            this.stop();
 
-          }*/
+          }
 
         }
 

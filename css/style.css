@@ -337,7 +337,7 @@ i#scanAudiosFirst{
 	display:block;
 }
 
-#audios-audioscontainer{
+#albums-container{
 margin:0;
 width:100%;
 position:relative;
@@ -355,7 +355,7 @@ height:auto;
 	padding-bottom: 15px
 }
 
-#individual-playlist-container{
+#playlist-container{
 	margin:0;
 	width:98%;
 	position:relative;
@@ -1165,7 +1165,7 @@ li.dropHover{
 	.play-pause{
 		background-size:50%;
 	}
-	#audios-audioscontainer{
+	#albums-container{
 		padding:0;
 		
 	}

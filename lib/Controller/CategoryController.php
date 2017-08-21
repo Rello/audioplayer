@@ -62,8 +62,7 @@ class CategoryController extends Controller {
 			];
 		}else{
 			$result=[
-				'status' => 'success',
-				'data' => 'nodata'
+				'status' => 'nodata'
 			];
 		}
 		$response = new JSONResponse();
@@ -247,8 +246,7 @@ class CategoryController extends Controller {
 			];
 		}else{
 			$result=[
-				'status' => 'success',
-				'data' => 'nodata'
+				'status' => 'nodata',
 			];
 		}
 		$response = new JSONResponse();

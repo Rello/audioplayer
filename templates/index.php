@@ -156,8 +156,8 @@
 
 	<div id="searchresults" class="hidden" data-appfilter="audioplayer"></div>
 
-	<div id="audios-audioscontainer"></div>
-	<div id="individual-playlist-container" class="albumwrapper" data-playlist="">
+	<div id="albums-container"></div>
+	<div id="playlist-container" class="albumwrapper" data-playlist="">
 		<span id="individual-playlist-info"></span>
 	  	<span id="individual-playlist-header">
  	 		<span class="header-indi">
