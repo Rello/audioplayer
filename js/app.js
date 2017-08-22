@@ -1141,8 +1141,8 @@ Audios.prototype.removeSongFromPlaylist=function(evt){
 	}.bind(this));
 };
 
-Audios.prototype.addSongToPlaylist = function(plId,songId) {
-	
+Audios.prototype.addSongToPlaylist = function(plId,songId) {	
+	var sort = parseInt($('#myPlayList li[data-id="'+plId+'"]').find('.counter').text());
 	return $.getJSON(OC.generateUrl('apps/audioplayer/addtracktoplaylist'), {
 		playlistid : plId,
 		songid: songId,
