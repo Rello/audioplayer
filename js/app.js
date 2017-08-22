@@ -164,6 +164,7 @@ Audios.prototype.AlbumSongs = function(){
 				}
 
 				var ClonePlaylist = myWrapper.find('li').clone();
+				$('#activePlaylist').html('');
 				$('#activePlaylist').append(ClonePlaylist);
 				$('#activePlaylist span.actionsSong').remove();
 				$('#activePlaylist span.number').remove();
