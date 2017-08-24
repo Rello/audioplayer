@@ -52,11 +52,9 @@ class MusicController extends Controller {
 	* @PublicPage
 	* @NoCSRFRequired
 	*/
-	public function getPublicAudioStream(){
-		$pToken  = $this->params('token');	
-		$file = $this->params('file');
-		if (!empty($pToken)) {
-			$linkItem = \OCP\Share::getShareByToken($pToken);
+	public function getPublicAudioStream($token, $file){
+		if (!empty($token)) {
+			$linkItem = \OCP\Share::getShareByToken($token);
 			if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
 				exit;
 			}
@@ -84,10 +82,9 @@ class MusicController extends Controller {
 	* @PublicPage
 	* @NoCSRFRequired
 	*/
-	public function getPublicAudioInfo(){
-		$pToken  = $this->params('token');	
-		if (!empty($pToken)) {
-			$share = $this->shareManager->getShareByToken($pToken);
+	public function getPublicAudioInfo($token){
+		if (!empty($token)) {
+			$share = $this->shareManager->getShareByToken($token);
 			$fileid = $share->getNodeId();
 			$fileowner = $share->getShareOwner();
 
@@ -133,10 +130,8 @@ class MusicController extends Controller {
 	* @NoAdminRequired
 	* @NoCSRFRequired
 	*/
-	public function getAudioStream(){
-		
-		$pFile = $this->params('file');
-		$filename = rawurldecode($pFile);
+	public function getAudioStream($file){
+		$filename = rawurldecode($file);
 		$user = $this->userId;
 		\OC::$server->getSession()->close();
 		$stream = new \OCA\audioplayer\Http\AudioStream($filename,$user);
@@ -149,7 +144,7 @@ class MusicController extends Controller {
 	*/
 	public function getMusic(){
 		$aSongs = $this->loadSongs();
-    		$aAlbums = $this->loadAlbums();
+    	$aAlbums = $this->loadAlbums();
 		\OC::$server->getSession()->close();
 		
 		if(is_array($aAlbums)){
@@ -429,8 +424,7 @@ class MusicController extends Controller {
 	* @NoAdminRequired
 	* @NoCSRFRequired
 	*/
-	public function getCover(){
-		$album=$this->params('album');
+	public function getCover($album){
 		$cover = '';
 		$aAlbums=array();
 		

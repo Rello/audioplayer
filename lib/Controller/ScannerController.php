@@ -67,8 +67,7 @@ class ScannerController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function editAudioFile() {
-		$songFileId=(int)$this->params('songFileId');
+	public function editAudioFile($songFileId) {
 		$resultData=[];
 		#	\OCP\Util::writeLog('audioplayer','songFileId: '.$songFileId,\OCP\Util::DEBUG);
 		
@@ -218,27 +217,21 @@ class ScannerController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function saveAudioFileData() {
-		
-		$songFileId=$this->params('songFileId');
-		$pTrackId = $this->params('trackId');
-		
-		$pYear=$this->params('year');
-		$pTitle=$this->params('title');
-		$pArtist=$this->params('artist');
-		$pExistArtist = $this->params('existartist');
-		
-		$pAlbum=$this->params('album');
-		$pExistAlbum=$this->params('existalbum');
-		$pTrack=$this->params('track');
-		$pTrackTotal=$this->params('tracktotal');
-		$pGenre = $this->params('genre');
-		$pExistGenre = $this->params('existgenre');
-		
-		$addCoverToAlbum = $this->params('addcover');
-		
-		$pImgSrc=$this->params('imgsrc');
-		$pImgMime=$this->params('imgmime');
+	public function saveAudioFileData($songFileId, $trackId, $year, $title, $artist, $existartist, $album, $existalbum, $track, $tracktotal, $genre, $existgenre, $addcover, $imgsrc, $imgmime) {
+		$pTrackId = $trackId;		
+		$pYear=$year;
+		$pTitle=$title;
+		$pArtist=$artist;
+		$pExistArtist = $existartist;
+		$pAlbum=$album;
+		$pExistAlbum=$existalbum;
+		$pTrack=$track;
+		$pTrackTotal=$tracktotal;
+		$pGenre = $genre;
+		$pExistGenre = $existgenre;
+		$addCoverToAlbum = $addcover;
+		$pImgSrc=$imgsrc;
+		$pImgMime=$imgmime;
 		$trackNumber = '';
 		if (!empty($pTrack)) {
 			$trackNumber = $pTrack.(!empty($pTrackTotal) ? '/'.$pTrackTotal : '');

@@ -45,10 +45,8 @@ class SettingController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function setValue() {
+	public function setValue($type,$value) {
 		$success = false;
-		$type = $this->params('type');
-		$value = $this->params('value');
 		//\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
 		$this->configManager->setUserValue($this->userId, $this->appname, $type, $value);
 		$success = true;
@@ -58,9 +56,8 @@ class SettingController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function getValue() {
+	public function getValue($type) {
 		$value = 'false';
-		$type = $this->params('type');
 		$value = $this->configManager->getUserValue($this->userId, $this->appname, $type);
 
 		//\OCP\Util::writeLog('audioplayer', 'settings load: '.$type.$value, \OCP\Util::DEBUG);
@@ -85,8 +82,8 @@ class SettingController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function userPath() {
-		$path = $this->params('value');
+	public function userPath($value) {
+		$path = $value;
 			try {
 				$element = $this->rootFolder->getUserFolder($this -> userId)->get($path);
 			} catch (\OCP\Files\NotFoundException $e) {

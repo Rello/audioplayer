@@ -50,9 +50,7 @@ class CategoryController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function getCategory(){
-		$category=$this->params('category');
-			
+	public function getCategory($category){
 		$playlists= $this->getCategoryforUser($category);
 	
 		if(is_array($playlists)){
@@ -228,9 +226,7 @@ class CategoryController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function getCategoryItems(){
-		$category=$this->params('category');
-		$categoryId=$this->params('id');
+	public function getCategoryItems($category, $categoryId){
 		$albums = 0;
 			
 		$itmes = $this->getItemsforCatagory($category,$categoryId);
@@ -434,9 +430,7 @@ class CategoryController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function setFavorite() {
-		$fileId = $this->params('fileId');
-		$isFavorite = $this->params('isFavorite');
+	public function setFavorite($fileId, $isFavorite) {
 		$this->tagger = $this->tagManager->load('files');
 		
 		if ($isFavorite === "true") {
@@ -449,8 +443,7 @@ class CategoryController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function setStatistics() {
-		$track_id = $this->params('track_id');
+	public function setStatistics($track_id) {
 		$date = new \DateTime();
 		$playtime = $date->getTimestamp();
 		
