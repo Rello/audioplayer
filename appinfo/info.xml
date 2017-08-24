@@ -3,7 +3,7 @@
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<description>A music player for FLAC, MP3, MP4, and more with playlist support and share player.</description>
-	<version>2.1.0-rc.3</version>
+	<version>2.1.0-rc.4</version>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
