@@ -69,7 +69,7 @@ class ScannerController extends Controller {
 	 */
 	public function editAudioFile($songFileId) {
 		$resultData=[];
-		#	\OCP\Util::writeLog('audioplayer','songFileId: '.$songFileId,\OCP\Util::DEBUG);
+			\OCP\Util::writeLog('audioplayer','songFileId: '.$songFileId,\OCP\Util::DEBUG);
 		
 		if(!class_exists('getid3_exception')) {
 			require_once __DIR__ . '/../../3rdparty/getid3/getid3.php';
@@ -436,10 +436,9 @@ class ScannerController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function scanForAudios($userId = null, $output = null, $debug = null) {
+	public function scanForAudios($userId = null, $output = null, $debug = null, $progresskey, $scanstop) {
 
-		$pProgresskey 			= $this -> params('progresskey');
-		$scanstop 				= $this -> params('scanstop');
+		$pProgresskey 			= $progresskey;
 		$this->occ_job 			= false;
 		
 		if (isset($scanstop))	{
