@@ -660,7 +660,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	$.ajax({
 		type : 'GET',
 		url : OC.generateUrl('apps/audioplayer/getcategoryitems'),
-		data : {category: category, id: PlaylistId},
+		data : {category: category, categoryId: PlaylistId},
 		success : function(jsondata) {
 			if(jsondata.status === 'success'){
 				$(jsondata.data).each(function(i,el){			
@@ -1042,11 +1042,11 @@ Audios.prototype.editSong = function(evt){
 									existalbum: $('#eAlbum').val(),
 									track: $('#sTrack').val(),
 									tracktotal: $('#sTracktotal').val(),
-									imgsrc: $('#imgsrc').val(),
-									imgmime: $('#imgmimetype').val(),
-									addcover: $('#sAlbumCover').is(':checked'),
 									genre: $('#sGenre').val(),
-									existgenre: $('#eGenre').val()
+									existgenre: $('#eGenre').val(),
+									addcover: $('#sAlbumCover').is(':checked'),
+									imgsrc: $('#imgsrc').val(),
+									imgmime: $('#imgmimetype').val()
 								},
 								success : function(jsondata) {
 										if(jsondata.status === 'success'){
