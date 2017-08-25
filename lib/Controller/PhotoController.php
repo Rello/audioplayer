@@ -55,11 +55,9 @@ class PhotoController extends Controller {
 	 */
 	 
 	public function clearPhotoCache($tmpkey){
-		$tmpkey = $this -> params('tmpkey');		
 		$data = \OC::$server->getCache()->get($tmpkey);
 		//\OCP\Util::writeLog('pinit','cleared.'.$tmpkey,\OCP\Util::DEBUG);		
 		if($data) {
-			
 			\OC::$server->getCache()->remove($tmpkey);
 		}
 	}
@@ -67,11 +65,11 @@ class PhotoController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function saveCropPhoto($id,$tmpkey){
-		$x = $this -> params('x1', 0);	
-		$y = $this -> params('y1', 0);	
-		$w = $this -> params('w', -1);	
-		$h = $this -> params('h', -1);	
+	public function saveCropPhoto($id,$tmpkey, $x1, $y1, $w, $h){
+		$x = $x1 ?: 0;	
+		$y = $y1 ?: 0;	
+		$w = $w ?: -1;	
+		$h = $h ?: -1;	
 		
 		$image = null;
 		
