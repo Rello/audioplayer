@@ -845,8 +845,8 @@ class ScannerController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function getProgress() {
-		$pProgresskey = $this -> params('progresskey');
+	public function getProgress($progresskey) {
+		$pProgresskey = $progresskey;
 		\OC::$server->getSession()->close();
 					
 		$aCurrent = \OC::$server->getCache()->get($pProgresskey);
