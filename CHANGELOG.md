@@ -5,6 +5,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Added
 - count albums of selected artist [#205](https://github.com/rello/audioplayer/issues/205)
 - FileHooks: library cleanup after deleting files
+- support for Nextcloud 13
 
 ### Changed
 - number of tracks in Smart Playlists [#208](https://github.com/rello/audioplayer/issues/208)
@@ -27,7 +28,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
 - PostgreSQL issue in favorites
 - catch playbar buttons triggering category selector [#225](https://github.com/rello/audioplayer/issues/225)
-- Audio Player is stuck playing the same track forever [#226](https://github.com/rello/audioplayer/issues/226)
+- forcing reset of `selectedIndex` [#226](https://github.com/rello/audioplayer/issues/226)
 
 ## 2.0.2 - 2017-06-09
 ### Added
