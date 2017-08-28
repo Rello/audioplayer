@@ -352,7 +352,8 @@ height:auto;
 .fileActionsMenu{
 	margin-top: 30px;
 	margin-right: 5px;
-	padding-bottom: 15px
+	padding-bottom: 15px;
+	top: unset;
 }
 
 #playlist-container{
