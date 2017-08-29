@@ -16,8 +16,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - [ownCloud App Store](https://apps.owncloud.com/) (`ocsid`)
 
 ### Removed
-- support for Nextcloud 10
 - support for ownCloud 9.0 [#222](https://github.com/rello/audioplayer/issues/222)
+- support for Nextcloud 10
 
 ### Fixed
 - scanner truncates long multiple title properly [#203](https://github.com/rello/audioplayer/issues/203) @[nhirokinet](https://github.com/nhirokinet)
@@ -26,9 +26,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - raw cover data removed from metadata [#214](https://github.com/rello/audioplayer/issues/214)
 - playlist cleanup after deleting files [#216](https://github.com/rello/audioplayer/issues/216)
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
-- PostgreSQL issue in favorites
 - catch playbar buttons triggering category selector [#225](https://github.com/rello/audioplayer/issues/225)
 - forcing reset of `selectedIndex` [#226](https://github.com/rello/audioplayer/issues/226)
+- PostgreSQL issue in favorites
 
 ## 2.0.2 - 2017-06-09
 ### Added
