@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## Unreleased
+## 2.1.0 - 2017-08-29
 ### Added
 - count albums of selected artist [#205](https://github.com/rello/audioplayer/issues/205)
 - FileHooks: library cleanup after deleting files
@@ -23,7 +23,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - scanner truncates long multiple title properly [#203](https://github.com/rello/audioplayer/issues/203) @[nhirokinet](https://github.com/nhirokinet)
 - issue with files app [#210](https://github.com/rello/audioplayer/issues/210) (thanks @[artemanufrij](https://github.com/artemanufrij))
 - catch undeclared variable [#212](https://github.com/rello/audioplayer/issues/212)
-- cover removed from metadata [#214](https://github.com/rello/audioplayer/issues/214)
+- cover-raw-data removed from metadata [#214](https://github.com/rello/audioplayer/issues/214)
 - playlist cleanup after deleting files [#216](https://github.com/rello/audioplayer/issues/216)
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
 - PostgreSQL issue in favorites
