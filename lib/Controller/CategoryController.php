@@ -106,6 +106,7 @@ class CategoryController extends Controller {
 			$aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
 			$aPlaylists[] = array("id" => "", "name" => "");
 
+			// Stream files are shown directly
 			$SQL="SELECT  `file_id` AS `id`, `title` AS `name`, LOWER(`title`) AS `lower` 
 						FROM `*PREFIX*audioplayer_streams`
 			 			WHERE  `user_id` = ?
@@ -115,12 +116,25 @@ class CategoryController extends Controller {
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
 			foreach($results as $row) {
- 				array_splice($row, 2, 1);
- 				$row['id'] = 'S'.$row['id'];
-				$aPlaylists[] = $row;
+				$file_not_found = false;	
+	
+				try {
+					$path = \OC\Files\Filesystem::getPath($row['id']);
+				} catch (\Exception $e) {
+					$file_not_found = true;
+       			}
+
+       			if($file_not_found === false){
+ 					array_splice($row, 2, 1);
+ 					$row['id'] = 'S'.$row['id'];
+					$aPlaylists[] = $row;
+				} else {
+					$this->deleteFromDB($row['id']);
+				}	
 			}
 			$aPlaylists[] = array("id" => "", "name" => "");
 
+			// regular playlists are selected
 			$SQL="SELECT  `id`,`name`, LOWER(`name`) AS `lower` 
 						FROM `*PREFIX*audioplayer_playlists`
 			 			WHERE  `user_id` = ?
@@ -470,6 +484,9 @@ class CategoryController extends Controller {
 		}
 		
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE  `file_id` = ? AND `user_id` = ?' );
+		$stmt->execute(array($file_id, $this->userId));		
+		
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_streams` WHERE  `file_id` = ? AND `user_id` = ?' );
 		$stmt->execute(array($file_id, $this->userId));		
 
 		$stmt = $this->db->prepare( 'SELECT `playlist_id` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `track_id` = ?' );
