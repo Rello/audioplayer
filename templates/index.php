@@ -20,10 +20,9 @@
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>
 
 <div id="app-navigation" class="ap_hidden">
-	<div class="innerNav">
 		<ul id="albenoverview">
-			<li>
-				<span id="alben" style="vertical-align: top; font-size: 15px;">
+			<li id="alben">
+				<span style="vertical-align: top; font-size: 15px;">
 				<?php p($l->t('Albums'));?></span>  
 				<i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"></i>
 				<i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"></i>
@@ -59,7 +58,18 @@
 				<button class="icon-close" id="newPlaylistBtn_cancel"></button>
 			</div>
 		</div>
-	</div>
+
+<div id="app-settings">
+		<div id="app-settings-header">
+			<button class="settings-button" data-apps-slide-toggle="#app-settings-content">
+				Settings			</button>
+		</div>
+		<div id="app-settings-content">
+				<i class="ioc ioc-delete toolTip" title="<?php p($l->t('Reset music library'));?>" id="resetAudios"><?php p($l->t('Reset music library'));?></i>
+				<i class="ioc ioc-refresh toolTip" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios"><?php p($l->t('Scan for new audio files'));?></i>
+		</div>
+</div>
+			
 </div>	
 <div id="app-content">
 	<div id="loading">
