@@ -115,18 +115,8 @@ i#scanAudiosFirst{
 .innerNav h3{
 	color:#999;
 }
-
-#myCategory li{
-	cursor: pointer;
-	/*font-size:14px;*/
-	line-height:25px;
-	display:block;
-	float: left;
-	padding: 0px 6px 0px 12px;
-}
-
-#myCategory .ui-droppable {
-	padding: 0px 6px 0px 12px;
+#albenoverview{
+	height: 60px !important;
 }
 
 #albenoverview li {
@@ -138,6 +128,7 @@ i#scanAudiosFirst{
     background-repeat: no-repeat;
 	background-image: url('../img/albums.svg');
 	margin: 6px 0px;
+	opacity: 0.57;
 }
 #albenoverview li span{
 	cursor: pointer;
@@ -222,6 +213,23 @@ i#scanAudiosFirst{
 	margin: 0px 0px 0px 4px;
 }
 
+#myCategory {
+	height: initial !important;
+}
+
+#myCategory li{
+	line-height:28px;
+	display:block;
+	float: left;
+	padding: 0px 6px 0px 12px;
+	opacity: 0.57;
+}
+
+#myCategory .ui-droppable {
+	padding: 0px 6px 0px 12px;
+}
+
+
 #myCategory li span.info-cover,
 #alben span.info-cover
 {
@@ -244,7 +252,6 @@ i#scanAudiosFirst{
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
-	min-height: 25px;
 }
 #myCategory li span.pl-name-play{
 	float:left;
@@ -255,9 +262,9 @@ i#scanAudiosFirst{
 	overflow:hidden;
 	cursor:pointer;
 }
+#albenoverview li:hover,
 #myCategory li:hover{
-	background-color:#e7e7e7;
-	font-weight:bold;
+	opacity: 1;
 }
 
 #myCategory li a.icon-rename{
@@ -317,12 +324,6 @@ i#scanAudiosFirst{
 	color:#A9302A;
 }
 
-#alben:hover, 
-#alben.bAktiv,
-#myCategory li.activeIndiPlaylist 
-{
-	font-weight:bold;	
-}
 #myCategory li i.ioc-sort{
 	display:none;
 }
