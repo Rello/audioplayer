@@ -128,6 +128,7 @@ i#scanAudiosFirst{
 }
 #albenoverview{
 	height: 60px !important;
+	min-height: 60px;
 }
 
 #albenoverview li {
@@ -158,6 +159,7 @@ i#scanAudiosFirst{
 #category_area {
 	display: flex;
 	margin: 0px 6px 6px 6px;
+	min-height: 40px;
 }
 #category_selector {
 	width: 100%;
