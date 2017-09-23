@@ -379,7 +379,7 @@ Audios.prototype.loadAlbums = function(){
 	 $this = this;
 	 $('.sm2-bar-ui').hide();
 	 this.AlbumContainer.hide();
-	  $('#loading').show();
+	 $('#loading').show();
 	$.ajax({
 		type : 'GET',
 		url : OC.generateUrl('apps/audioplayer/getmusic'),
@@ -618,8 +618,8 @@ Audios.prototype.loadCategory = function(){
 							
 				$('.toolTip').tooltip();
 				if ($('#category_selector').val() === category && $this.category_selectors[1] && $this.category_selectors[1] != 'undefined') {
-					$('#myCategory li[data-id="'+$this.category_selectors[1]+'"]').addClass('activeIndiPlaylist');
-					$("#app-navigation").scrollTop($("#app-navigation").scrollTop()+$('#myCategory li.activeIndiPlaylist').first().position().top - 25);
+					$('#myCategory li[data-id="'+$this.category_selectors[1]+'"]').addClass('active');
+					$("#app-navigation").scrollTop($("#app-navigation").scrollTop()+$('#myCategory li.active').first().position().top - 25);
 					$this.loadIndividualCategory();
 				}
 			}
@@ -635,15 +635,15 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream')+'?file=';
 
 	if(typeof evt !== 'undefined'){
-		$('#myCategory li').removeClass('activeIndiPlaylist');
+		$('#myCategory li').removeClass('active').removeClass('active');
 		EventTarget = $(evt.target);
-		EventTarget.parent('li').addClass('activeIndiPlaylist');
+		EventTarget.parent('li').addClass('active').addClass('active');
 	}
 	
 	var $this = this;
-	var PlaylistId = $('#myCategory li.activeIndiPlaylist').data('id');
-	var category_title = $('#myCategory li.activeIndiPlaylist').find('span').first().text();
-	$('#alben').removeClass('bAktiv');
+	var PlaylistId = $('#myCategory li.active').data('id');
+	var category_title = $('#myCategory li.active').find('span').first().text();
+	$('#alben').removeClass('active');
 	
 	$this.AlbumContainer.hide();
 	$this.PlaylistContainer.hide();
@@ -756,7 +756,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 							$('#individual-playlist li i.fav').show();
 
 							if ($this.PlaylistContainer.data('playlist') !== $this.ActivePlaylist.data('playlist')) {
-								var PlaylistId = $('#myCategory li.activeIndiPlaylist').data('id');
+								var PlaylistId = $('#myCategory li.active').data('id');
 								var category = $('#category_selector').val();
 								myAudios.set_uservalue('category',category + '-' + PlaylistId);
 
@@ -811,6 +811,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 				$('.header-title').text(jsondata.header.col1);
 				$('.header-artist').text(jsondata.header.col2);
 				$('.header-album').text(jsondata.header.col3);
+				$('.header-time').text(jsondata.header.col4);
 					
 				if (jsondata.albums >> 1) {
 					var albumcount = ' (' + jsondata.albums + ' '+t('audioplayer','Albums')+')';
@@ -870,8 +871,8 @@ Audios.prototype.fileActionsMenu = function(evt){
 		$(".fileActionsMenu").remove();
 		
 		var category = $('#category_selector').val();
-		var PlaylistId = $('#myCategory li.activeIndiPlaylist').data('id');
-		var EventTarget = $('#myCategory li.activeIndiPlaylist span');		
+		var PlaylistId = $('#myCategory li.active').data('id');
+		var EventTarget = $('#myCategory li.active span');		
 				
 		var html = '<div class="fileActionsMenu popovermenu bubble open menu" data-trackid="'+trackid+'"><ul>'
 				+'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>';
@@ -1065,7 +1066,7 @@ Audios.prototype.editSong = function(evt){
 														$this.AudioPlayer.actions.play(0);
 														$this.AudioPlayer.actions.stop();
 													}
-													$('#alben').addClass('bAktiv');
+													$('#alben').addClass('active');
 													$this.AlbumContainer.html('');
 													$this.AlbumContainer.show();
 													$this.PlaylistContainer.hide();
@@ -1137,13 +1138,13 @@ Audios.prototype.removeSongFromPlaylist=function(evt){
 		var songId = $(evt).attr('data-id');
 	}
 
-	var plId = $('#myCategory li.activeIndiPlaylist').attr('data-id');
+	var plId = $('#myCategory li.active').attr('data-id');
 	
 	return $.getJSON(OC.generateUrl('apps/audioplayer/removetrackfromplaylist'), {
 		playlistid : plId,
 		songid: songId
 	}).then(function(data) {
-		$('#myCategory li.activeIndiPlaylist').find('.counter').text($('#myCategory li.activeIndiPlaylist').find('.counter').text()-1);
+		$('#myCategory li.active').find('.counter').text($('#myCategory li.active').find('.counter').text()-1);
 		$('#individual-playlist li[data-trackid="'+songId+'"]').remove();
 		$('#activePlaylist li[data-trackid="'+songId+'"]').remove();
 		$this.category_selectors[0] = 'Playlist';
@@ -1260,7 +1261,7 @@ Audios.prototype.renamePlaylist = function(evt){
 
 Audios.prototype.sortPlaylist = function(evt){
 	var eventTarget=$(evt.target);
-	if($('#myCategory li').hasClass('activeIndiPlaylist')){
+	if($('#myCategory li').hasClass('active')){
 		var plId = eventTarget.attr('data-sortid');
 		if(eventTarget.hasClass('sortActive')){
 		   
@@ -1972,8 +1973,9 @@ $(document).ready(function() {
 	});
 	
 	
-	$('#alben').addClass('bAktiv');
+	$('#alben').addClass('active');
 	$('#alben').on('click',function(){
+		$('#myCategory li').removeClass('active');
 		$('#newPlaylist').addClass('ap_hidden');
 		myAudios.PlaylistContainer.hide();
 		if(	$('.sm2-bar-ui').hasClass('playing')){
@@ -1983,7 +1985,7 @@ $(document).ready(function() {
 		if($this.AlbumContainer.children().first().hasClass('rowlist') === false) {
 			$this.loadAlbums();
 		} else {
-			$(this).addClass('bAktiv');
+			$(this).addClass('active');
 			myAudios.AlbumContainer.show();
 		}
   		myAudios.set_uservalue('category','Albums');
@@ -2014,7 +2016,7 @@ $(document).ready(function() {
 					$("#category_selector").val('');
 					$this.set_uservalue('category',$this.category_selectors[0]+'-');
 					$('#myCategory').html('');
-					$('#alben').addClass('bAktiv');
+					$('#alben').addClass('active');
 					myAudios.AlbumContainer.html('');
 					myAudios.AlbumContainer.show();
 					myAudios.PlaylistContainer.hide();
@@ -2054,7 +2056,7 @@ $(document).ready(function() {
 		}
 		$("#category_selector").val('');
 		$('#myCategory').html('');
-		$('#alben').addClass('bAktiv');
+		$('#alben').addClass('active');
 		myAudios.AlbumContainer.html('');
 		myAudios.AlbumContainer.show();
 		myAudios.PlaylistContainer.hide();
