@@ -415,13 +415,13 @@ class CategoryController extends Controller {
 	public function getHeadersforCatagory($category){
 		$headers=array();		
 		if($category === 'Artist') {
-			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year')];
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
 		} elseif ($category === 'Album') {
-			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc').'-'.$this->l10n->t('Track')];
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc').'-'.$this->l10n->t('Track'), 'col4' => $this->l10n->t('Length')];
 		} elseif ($category === 'Stream') {
-			$headers = ['col1' => $this->l10n->t('URL'), 'col2' => $this->l10n->t(''), 'col3' => $this->l10n->t('')];
+			$headers = ['col1' => $this->l10n->t('URL'), 'col2' => $this->l10n->t(''), 'col3' => $this->l10n->t(''), 'col4' => $this->l10n->t('')];
 		} else {
-			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album')];
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album'), 'col4' => $this->l10n->t('Length')];
 		}
  		return $headers;
 	}
@@ -449,13 +449,12 @@ class CategoryController extends Controller {
 				$row['cl1'] = $matches[0][0];
 				$row['cl2'] = '';
 				$row['cl3'] = '';
-				$row['len'] = '999';
+				$row['len'] = '';
 				$row['mim'] = 'audio/mpegurl';
 				$row['cid'] = '0';
 				$row['lin'] = $matches[0][0];
 				$row['fav'] = 'f';            
 				if ($title) $row['cl1'] = $title;
-				if ($time) $row['len'] = $time;
        			$aTracks[]=$row;
        		}
 		}
