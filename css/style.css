@@ -18,6 +18,17 @@
 #searchresults {
 	margin-top: 0px !important;
 }
+
+#audio-settings li > a {
+	line-height: 30px;
+	min-height: 30px;
+}
+#audio-settings li.audio-settings-item {
+	padding-left: 14px;
+	padding-top: 10px;
+	opacity: .57;
+}
+
 #loading {
 	position:absolute; z-index:1000;margin-top:15%;left:0; display: none; width:100%;
 	text-align:center;
