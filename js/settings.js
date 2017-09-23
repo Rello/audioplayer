@@ -59,6 +59,85 @@ $(document).ready(function() {
 		);
 	});
 
+	$(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
+		$('#newPlaylist').addClass('ap_hidden');
+		if(	$('.sm2-bar-ui').hasClass('playing')){
+			myAudios.AudioPlayer.actions.play(0);
+			myAudios.AudioPlayer.actions.stop();
+		}
+		$("#category_selector").val('');
+		$('#myCategory').html('');
+		myAudios.AlbumContainer.html('');
+		myAudios.AlbumContainer.show();
+		myAudios.PlaylistContainer.hide();
+		$('#individual-playlist').html('');
+		$('.albumwrapper').removeClass('isPlaylist');
+		$('#activePlaylist').html('');
+		$('.sm2-playlist-target').html('');
+		$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
+		
+		myAudios.openImportDialog();
+		
+		return false;
+	});
+
+	$(document).on('click', '#resetAudios', function () {
+		$("#dialogSmall").text(t('audioplayer','Are you sure?')+' '+t('audioplayer','All database entries will be deleted!'));
+		$("#dialogSmall").dialog({
+			resizable : false,
+			title : t('audioplayer', 'Reset media library'),
+			width : 250,
+			modal : true,
+			buttons : [{
+				text : t('audioplayer', 'No'),
+			click : function() {
+					$("#dialogSmall").html('');
+					$(this).dialog("close");
+				}
+			}, {
+				text : t('audioplayer', 'Yes'),
+				click : function() {
+					var oDialog = $(this);
+					
+					if(	$('.sm2-bar-ui').hasClass('playing')){
+						myAudios.AudioPlayer.actions.play(0);
+						myAudios.AudioPlayer.actions.stop();
+					}
+					$("#category_selector").val('');
+					$this.set_uservalue('category',$this.category_selectors[0]+'-');
+					$('#myCategory').html('');
+					$('#alben').addClass('active');
+					myAudios.AlbumContainer.html('');
+					myAudios.AlbumContainer.show();
+					myAudios.PlaylistContainer.hide();
+					$('#individual-playlist').html('');
+					$('.albumwrapper').removeClass('isPlaylist');
+					$('#activePlaylist').html('');
+					$('.sm2-playlist-target').html('');
+					$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
+					$('#notification').text(t('audioplayer','Start deleting and resetting media library ...'));
+					$('#notification').slideDown();
+					
+					$.ajax({
+							type : 'GET',
+							url : OC.generateUrl('apps/audioplayer/resetmedialibrary'),
+							success : function(jsondata) {
+									if(jsondata.status === 'success'){
+										myAudios.loadAlbums();
+										$('#notification').text(t('audioplayer','Resetting finished!'));
+										window.setTimeout(function(){$('#notification').slideUp();}, 3000);
+									}
+							}
+					});
+					$("#dialogSmall").html('');
+					oDialog.dialog("close");
+					$('#myCategory').html('');
+				}
+			}],
+		});
+		return false;
+	});
+
 	var audioPlayer = {}
 	soundManager.setup({
 		url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
@@ -82,7 +161,7 @@ $(document).ready(function() {
 			$('#browser_no').html(nsupported_types);
 		},
 	});
-	
+
     $.ajax({
 		type : 'GET',
 		url : OC.generateUrl('apps/audioplayer/getvalue'),
@@ -103,5 +182,5 @@ $(document).ready(function() {
 			}
 		}
 	});
-
+	
 });
