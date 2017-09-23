@@ -430,8 +430,7 @@ Audios.prototype.loadAlbums = function(){
 						if(!myWrapper.hasClass('isPlaylist')){
 							if($this.PlaylistContainer.hasClass('isPlaylist')){
 								$this.PlaylistContainer.removeClass('isPlaylist');
-								$this.PlaylistContainer.html();
-// Playlist is not cleared here; '' missing
+								$this.PlaylistContainer.html('');
 							}
 							if(	$('.sm2-bar-ui').hasClass('playing')){
 								$this.AudioPlayer.actions.stop();
@@ -1990,86 +1989,7 @@ $(document).ready(function() {
 		}
   		myAudios.set_uservalue('category','Albums');
 	});
-	
-	$(document).on('click', '#resetAudios', function () {
-		$("#dialogSmall").text(t('audioplayer','Are you sure?')+' '+t('audioplayer','All database entries will be deleted!'));
-		$("#dialogSmall").dialog({
-			resizable : false,
-			title : t('audioplayer', 'Reset media library'),
-			width : 250,
-			modal : true,
-			buttons : [{
-				text : t('audioplayer', 'No'),
-			click : function() {
-					$("#dialogSmall").html('');
-					$(this).dialog("close");
-				}
-			}, {
-				text : t('audioplayer', 'Yes'),
-				click : function() {
-					var oDialog = $(this);
-					
-					if(	$('.sm2-bar-ui').hasClass('playing')){
-						myAudios.AudioPlayer.actions.play(0);
-						myAudios.AudioPlayer.actions.stop();
-					}
-					$("#category_selector").val('');
-					$this.set_uservalue('category',$this.category_selectors[0]+'-');
-					$('#myCategory').html('');
-					$('#alben').addClass('active');
-					myAudios.AlbumContainer.html('');
-					myAudios.AlbumContainer.show();
-					myAudios.PlaylistContainer.hide();
-					$('#individual-playlist').html('');
-					$('.albumwrapper').removeClass('isPlaylist');
-					$('#activePlaylist').html('');
-					$('.sm2-playlist-target').html('');
-					$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-					$('#notification').text(t('audioplayer','Start deleting and resetting media library ...'));
-					$('#notification').slideDown();
-					
-					$.ajax({
-							type : 'GET',
-							url : OC.generateUrl('apps/audioplayer/resetmedialibrary'),
-							success : function(jsondata) {
-									if(jsondata.status === 'success'){
-										myAudios.loadAlbums();
-										$('#notification').text(t('audioplayer','Resetting finished!'));
-										window.setTimeout(function(){$('#notification').slideUp();}, 3000);
-									}
-							}
-					});
-					$("#dialogSmall").html('');
-					oDialog.dialog("close");
-					$('#myCategory').html('');
-				}
-			}],
-		});
-		return false;
-	});
-	
-	$(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
-		$('#newPlaylist').addClass('ap_hidden');
-		if(	$('.sm2-bar-ui').hasClass('playing')){
-			myAudios.AudioPlayer.actions.play(0);
-			myAudios.AudioPlayer.actions.stop();
-		}
-		$("#category_selector").val('');
-		$('#myCategory').html('');
-		$('#alben').addClass('active');
-		myAudios.AlbumContainer.html('');
-		myAudios.AlbumContainer.show();
-		myAudios.PlaylistContainer.hide();
-		$('#individual-playlist').html('');
-		$('.albumwrapper').removeClass('isPlaylist');
-		$('#activePlaylist').html('');
-		$('.sm2-playlist-target').html('');
-		$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
 		
-		myAudios.openImportDialog();
-		
-		return false;
-	});
 		
 	$('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
 	
