@@ -22,22 +22,22 @@
 <div id="app-settings-content">
 	<ul id="audio-settings" class="with-icon">
 		<li>
-			<a href="#" class="icon-delete" title="<?php p($l->t('Reset music library'));?>" id="resetAudios">
-				<?php p($l->t('Reset music library'));?>
-			</a>
-		</li>
-		<li>
 			<a href="#" class="icon-search" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios">
 				<?php p($l->t('Scan for new audio files'));?>
 			</a>
 		</li>
+		<li>
+			<a href="#" class="icon-delete" title="<?php p($l->t('Reset music library'));?>" id="resetAudios">
+				<?php p($l->t('Reset music library'));?>
+			</a>
+		</li>
 		<li class="audio-settings-item">
-			<input class="checkbox" type="checkbox" id="cyrillic_user"/>
-			<label for="cyrillic_user"><?php p($l->t('Cyrillic Support')); ?>:</label>
+			<input class="checkbox" type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']) ?>/>
+			<label for="cyrillic_user">&nbsp;&nbsp;&nbsp;<?php p($l->t('Cyrillic Support')); ?></label>
 		</li>
 		<li class="audio-settings-item">
 			<label for="audio-path"><?php p($l->t('Search for audio files in')); ?>:</label>
-			<input type="text" id="audio-path" value="" />
+			<input type="text" id="audio-path" value="<?php p($_['path']) ?>" />
 		</li>
 		<li class="audio-settings-item">
 			<label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser')); ?>:</label>
