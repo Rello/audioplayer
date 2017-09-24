@@ -52,7 +52,6 @@ Audios.prototype.init = function () {
 			}
 		}
 	});
-	myAudios.get_uservalue('navigation');
 
 	this.initKeyListener();
 	this.initPhotoDialog();
