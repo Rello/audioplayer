@@ -1201,6 +1201,7 @@ class ScannerController extends Controller {
 		
 		// get only the relevant audio files
 		$audios = $this->getAudioObjects();
+		$streams = $this->getStreamObjects();
 		if ($this->numOfSongs !== 0) {
 			return 'true';
 		} else {
