@@ -22,8 +22,8 @@
 <div id="app-settings-content">
 	<ul id="audio-settings" class="with-icon">
 		<li>
-			<a href="#" class="icon-search" title="<?php p($l->t('Scan for new audio files'));?>" id="scanAudios">
-				<?php p($l->t('Scan for new audio files'));?>
+			<a href="#" class="icon-search" title="<?php p($l->t('Scan for audio files'));?>" id="scanAudios">
+				<?php p($l->t('Scan for audio files'));?>
 			</a>
 		</li>
 		<li>
