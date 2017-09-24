@@ -24,8 +24,6 @@ use OCP\Files\IRootFolder;
 class SettingController extends Controller {
 	
 	private $userId;
-	private $l10n;
-	private $db;
 	private $configManager;
 	
 	public function __construct(
@@ -99,5 +97,4 @@ class SettingController extends Controller {
 			$this->configManager->setUserValue($this->userId, $this->appname, 'path', $path);
 		return new JSONResponse(array('success' => true));
 	}
-
 }
