@@ -162,25 +162,5 @@ $(document).ready(function() {
 		},
 	});
 
-    $.ajax({
-		type : 'GET',
-		url : OC.generateUrl('apps/audioplayer/getvalue'),
-		data : {'type':'path'},
-		success : function(jsondata) {
-			if(jsondata.status === 'success') {
-				$('#audio-path').val(jsondata.value);
-			}
-		}
-	});
-	    $.ajax({
-		type : 'GET',
-		url : OC.generateUrl('apps/audioplayer/getvalue'),
-		data : {'type':'cyrillic'},
-		success : function(jsondata) {
-			if(jsondata.status === 'success' && jsondata.value === 'checked') {
-				$('#cyrillic_user').prop('checked', true);
-			}
-		}
-	});
 	
 });
