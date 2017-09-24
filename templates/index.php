@@ -30,7 +30,7 @@
 </form>
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>
 
-<div id="app-navigation" class="ap_hidden">
+<div id="app-navigation" <?php if ($_['navigation']=== 'false') echo 'class="ap_hidden"';?>>
 
 	<?php print_unescaped($this->inc('part.navigation')); ?>
 	
