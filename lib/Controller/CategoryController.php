@@ -288,6 +288,7 @@ class CategoryController extends Controller {
 	
 	private function getItemsforCatagory($category,$categoryId){
 
+		$SQL = null;
 		$favorite = false;
 		$aTracks = array();		
 		$SQL_select = "SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
