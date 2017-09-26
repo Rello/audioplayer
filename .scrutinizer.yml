@@ -1,0 +1,14 @@
+filter:
+    excluded_paths:
+        - '3rdparty/*'
+        - 'js/soundmanager2*'
+        - 'js/bar*'
+        - 'js/berniecode*'
+
+imports:
+    - javascript
+    - php
+
+tools:
+    external_code_coverage:
+        timeout: 7200 # Timeout in seconds. 120 minutes
