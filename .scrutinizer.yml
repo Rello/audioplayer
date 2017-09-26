@@ -4,6 +4,8 @@ filter:
         - 'js/soundmanager2*'
         - 'js/bar*'
         - 'js/berniecode*'
+        - 'js/jquery*'
+        - 'js/360player*'          
 
 imports:
     - javascript
