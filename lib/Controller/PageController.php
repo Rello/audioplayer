@@ -64,9 +64,9 @@ class PageController extends Controller {
 		$response = new TemplateResponse('audioplayer', 'index');
 		$response->setContentSecurityPolicy($csp);
 		
-			\OCP\Util::writeLog('audioplayer','userid: '.$this->userId,\OCP\Util::DEBUG);
-			\OCP\Util::writeLog('audioplayer','appname: '.$this->appname,\OCP\Util::DEBUG);
-			\OCP\Util::writeLog('audioplayer',$this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic'),\OCP\Util::DEBUG);
+			\OCP\Util::writeLog('audioplayer', 'userid: '.$this->userId, \OCP\Util::DEBUG);
+			\OCP\Util::writeLog('audioplayer', 'appname: '.$this->appname, \OCP\Util::DEBUG);
+			\OCP\Util::writeLog('audioplayer', $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic'), \OCP\Util::DEBUG);
 		$response->setParams(array(
 			'uploadMaxFilesize' => $maxUploadFilesize,
 			'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),

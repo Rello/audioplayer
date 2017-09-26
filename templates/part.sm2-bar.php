@@ -20,19 +20,19 @@
 
 			<div class="sm2-inline-element sm2-button-element">
 				<div class="sm2-button-bd">
-					<a href="#prev" class="sm2-inline-button previous"><?php p($l->t('previous song'));?></a>
+					<a href="#prev" class="sm2-inline-button previous"><?php p($l->t('previous song')); ?></a>
 				</div>
 			</div>
   
 			<div class="sm2-inline-element sm2-button-element">
 				<div class="sm2-button-bd">
-					<a href="#play" class="sm2-inline-button play-pause"><?php p($l->t('play/ pause'));?></a>
+					<a href="#play" class="sm2-inline-button play-pause"><?php p($l->t('play/ pause')); ?></a>
 				</div>
 			</div>
   
 			<div class="sm2-inline-element sm2-button-element">
 				<div class="sm2-button-bd">
-					<a href="#next" class="sm2-inline-button next"><?php p($l->t('next song'));?></a>
+					<a href="#next" class="sm2-inline-button next"><?php p($l->t('next song')); ?></a>
 				</div>
 			</div>
   
@@ -68,19 +68,19 @@
 			<div class="sm2-inline-element sm2-button-element sm2-volume">
 				<div class="sm2-button-bd">
 					<span class="sm2-inline-button sm2-volume-control volume-shade"></span>
-					<a href="#volume" title="<?php p($l->t('Volume'));?>" class="toolTip sm2-inline-button sm2-volume-control">volume</a>
+					<a href="#volume" title="<?php p($l->t('Volume')); ?>" class="toolTip sm2-inline-button sm2-volume-control">volume</a>
 				</div>
 			</div>
  
 			<div class="sm2-inline-element sm2-button-element sm2-repeat">
 				<div class="sm2-button-bd">
-					<a href="#repeat" title="<?php p($l->t('Repeat playlist'));?>" class="toolTip sm2-inline-button repeat">&infin; repeat</a>
+					<a href="#repeat" title="<?php p($l->t('Repeat playlist')); ?>" class="toolTip sm2-inline-button repeat">&infin; repeat</a>
 				</div>
 			</div>
 			
 			<div class="sm2-inline-element sm2-button-element sm2-shuffle">
 				<div class="sm2-button-bd">
-					<a href="#shuffle" title="<?php p($l->t('Shuffle playlist'));?>" class="toolTip sm2-inline-button shuffle">shuffle</a>
+					<a href="#shuffle" title="<?php p($l->t('Shuffle playlist')); ?>" class="toolTip sm2-inline-button shuffle">shuffle</a>
 				</div>
 			</div>
 		</div>
