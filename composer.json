@@ -1,8 +1,4 @@
 {
-	"repositories": [
-		{
-		}
-	],
 	"require": {
 		"php": ">=5.6.0"
 	},
