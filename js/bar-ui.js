@@ -621,7 +621,7 @@
         }
         
 		// update Audio Player Status
-        externPlayList(data.selectedIndex);
+//        externPlayList(data.selectedIndex);
        
         return getItem();
       }
@@ -641,7 +641,7 @@
         }
 
 		// update Audio Player Status
-		externPlayList(data.selectedIndex);
+//		externPlayList(data.selectedIndex);
 
         return getItem();
       }
@@ -913,12 +913,17 @@
 
         onplay: function() {
 			utils.css.swap(dom.o, 'paused', 'playing');
-			if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
-				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
-				$('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
+		if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+			$('.albumwrapper.isPlaylist li').removeClass('isActive');
+			$('.albumwrapper.isPlaylist li i.ioc').hide();
+			$('.albumwrapper.isPlaylist li i.fav').show();
 				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
 				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
-			}
+				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
+				$('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
+				$('.albumwrapper.isPlaylist li').eq(playlistController.data.selectedIndex).addClass('isActive');
+		}
+
         },
 
         onpause: function() {
@@ -926,8 +931,8 @@
 			if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
 				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
 				$('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
-				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
-				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
+				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up');
+				$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-off');
 			}
         },
 

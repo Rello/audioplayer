@@ -335,6 +335,42 @@
 		</declaration>
 	</table>
 	<table>
+		<name>*dbprefix*audioplayer_streams</name>
+		<declaration>
+			<field>
+				<name>id</name>
+				<type>integer</type>
+				<notnull>true</notnull>
+				<autoincrement>true</autoincrement>
+				<unsigned>true</unsigned>
+				<primary>true</primary>
+			</field>
+			<field>
+				<name>user_id</name>
+				<type>text</type>
+				<notnull>true</notnull>
+				<length>64</length>
+			</field>
+			<field>
+				<name>title</name>
+				<type>text</type>
+				<notnull>true</notnull>
+				<length>256</length>
+			</field>
+			<field>
+				<name>file_id</name>
+				<type>integer</type>
+				<notnull>true</notnull>
+			</field>
+			<field>
+				<name>mimetype</name>
+				<type>text</type>
+				<notnull>true</notnull>
+				<length>256</length>
+			</field>
+		</declaration>
+	</table>
+	<table>
 		<name>*dbprefix*audioplayer_statistics</name>
 		<declaration>
 			<field>

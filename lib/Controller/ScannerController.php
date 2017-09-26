@@ -55,7 +55,7 @@ class ScannerController extends Controller {
 			IRootFolder $rootFolder
 			) {
 		parent::__construct($appName, $request);
-		$this->appname = $appName;
+		$this->appName = $appName;
 		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
@@ -314,9 +314,6 @@ class ScannerController extends Controller {
 					];
 				}else{
 						
-					$albumId = 0;
-					$artistId = 0;
-					
 						$SQL="SELECT `AT`.`album_id`,`AT`.`artist_id`,`AA`.`name`,`AR`.`name` AS artistname,`AT`.`genre_id`, `AG`.`name` AS genrename
 									FROM `*PREFIX*audioplayer_tracks` `AT`
 									LEFT JOIN  `*PREFIX*audioplayer_albums` `AA` ON `AT`.`album_id`= `AA`.`id`
@@ -377,11 +374,12 @@ class ScannerController extends Controller {
 							
 							
 						}
-												
+						
+						$returnData = array();
 						$returnData['imgsrc']='';
 						$returnData['prefcolor'] = '';
 						if($pImgMime !== '' && $addCoverToAlbum === 'true'){
-							$this->writeCoverToAlbum($newAlbumId,$imgString,'');
+							$this->writeCoverToAlbum($newAlbumId,$imgString);
 							$returnData['imgsrc'] = 'data:image/jpg;base64,'.$imgString;
 						}
 					
@@ -456,6 +454,7 @@ class ScannerController extends Controller {
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		} 
 		
+		$folderpicture = false;
 		$this->progresskey 		= $pProgresskey;
 		$parentId_prev			= false;
 		$counter 				= 0;
@@ -464,7 +463,7 @@ class ScannerController extends Controller {
 		$error_file 			= 0;
 		$this->iAlbumCount 		= 0;
 		$this->iDublicate 		= 0;
-		$cyrillic_support 		= $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic');
+		$cyrillic_support 		= $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
 		$TextEncoding 			= 'UTF-8';
 		$option_tag_id3v1   	= false;  // Read and process ID3v1 tags
 		$option_tag_id3v2   	= true;  // Read and process ID3v2 tags
@@ -493,6 +492,9 @@ class ScannerController extends Controller {
 					
 		// get only the relevant audio files
 		$audios = $this->getAudioObjects($output, $debug);
+
+		// get only the relevant stream files
+		$streams = $this->getStreamObjects($output, $debug);
 			    								
 		if ($debug) $output->writeln("Start processing of <info>ID3s</info>");
 		foreach($audios as $audio) {
@@ -534,7 +536,7 @@ class ScannerController extends Controller {
 
 				$year = 0;
 				$keys = ['year','creation_date','date'];
-				for ($i = 0; $i < count($keys); $i++){
+				for ($i = 0; $c < count($keys); $i<$c; $i++){
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
 						$year=$ThisFileInfo['comments'][$keys[$i]][0];
 						break;
@@ -554,7 +556,7 @@ class ScannerController extends Controller {
 				$iAlbumArtistId	= NULL;
 				$album_artist	= NULL;				
 				$keys		= ['band', 'album_artist', 'albumartist', 'album artist'];
-				for ($i = 0; $i < count($keys); $i++){
+				for ($i = 0; $c < count($keys); $i<$c; $i++){
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
 						$album_artist=$ThisFileInfo['comments'][$keys[$i]][0];
 						break;
@@ -612,7 +614,7 @@ class ScannerController extends Controller {
 			
 				$subtitle = '';
 				$keys = ['subtitle','version'];
-				for ($i = 0; $i < count($keys); $i++){
+				for ($i = 0; $c < count($keys); $i<$c; $i++){
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
 						$subtitle = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
@@ -629,7 +631,7 @@ class ScannerController extends Controller {
 				# MP3, FLAC & MP4 have different tags for discnumber
 				$disc = 1;
 				$keys = ['part_of_a_set','discnumber','partofset','disc_number'];
-				for ($i = 0; $i < count($keys); $i++){
+				for ($i = 0; $c < count($keys); $i<$c; $i++){
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE'){
 						$disc = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
@@ -656,6 +658,33 @@ class ScannerController extends Controller {
 				$this->writeTrackToDB($aTrack);
 				$counter_new++;
 		}
+
+		if ($debug) $output->writeln("Start processing of <info>Streams</info>");
+		foreach($streams as $stream) {
+				//check if scan is still supposed to run, or if dialog was closed in web already
+				if (!$this->occ_job) {
+					$scan_running = \OC::$server->getCache()->get($pProgresskey);
+					if (!$scan_running) break;
+				}
+
+				$this->currentSong = $stream->getPath();
+				$this->updateProgress(intval(($this->abscount / $this->numOfSongs)*100), $output, $debug);
+				$counter++;
+				$this->abscount++;
+
+				$name = $stream->getName();
+				$aStream = [
+					'title' => $this->truncate($name, '256'),
+					'artist_id' => 0,
+					'album_id' => 0,
+					'file_id' => (int)$stream->getId(),
+					'bitrate' => 0,
+					'mimetype' => $stream->getMimetype(),
+				];
+				$this->writeStreamToDB($aStream);
+				$counter_new++;
+		}
+
 		
 		$message=(string)$this->l10n->t('Scanning finished!').'<br />';
 		$message.=(string)$this->l10n->t('Audios found: ').$counter.'<br />';
@@ -688,7 +717,7 @@ class ScannerController extends Controller {
 		}
 	}
 	
-	private function writeCoverToAlbum($iAlbumId,$sImage,$aBgColor){
+	private function writeCoverToAlbum($iAlbumId,$sImage){
     		
 		$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?' );
 		$stmt->execute(array($sImage, '', $iAlbumId, $this->userId));
@@ -700,7 +729,6 @@ class ScannerController extends Controller {
 	 * 
 	 *@param string $sAlbum
 	 *@param string $sYear
-	 *@param int $iGenreId
 	 *@param int $iArtistId
 	 * 
 	 * @return int id
@@ -828,18 +856,31 @@ class ScannerController extends Controller {
 			return $insertid;
 		}
 	}
-	
-	private function checkIfTrackDbExists($fileid){
-		$stmt = $this->db->prepare( 'SELECT `id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `file_id` = ? ' );
-		$stmt->execute(array($this->userId, $fileid));
-		$rowCount = $stmt->rowCount();
-		if($rowCount !== 0){
-			return true;
+
+	/**
+	 * Add stream to db if not exist
+	 *@param array $aStream
+	 *
+	 * @return id
+	 */
+	private function writeStreamToDB($aStream){			
+		$stmt = $this->db->prepare( 'SELECT `id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? AND `file_id` = ? ' );
+		$stmt->execute(array($this->userId,$aStream['file_id']));
+		$row = $stmt->fetch();
+		if(isset($row['id'])){
+			$this->iDublicate++;
 		}else{
-			return false;
+			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_streams` (`user_id`,`title`,`file_id`,`mimetype`) VALUES(?,?,?,?)' );
+			$stmt->execute(array($this->userId, 
+				     $aStream['title'],
+				     $aStream['file_id'],
+				     $aStream['mimetype'],
+			));
+			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_streams');
+			return $insertid;
 		}
 	}
-
+	
 	/**
 	 * Report scanning Progress back to web frontend - e.g. progress bar
 	 * @NoAdminRequired
@@ -988,12 +1029,74 @@ class ScannerController extends Controller {
 		if ($debug) $output->writeln("Final audio files to be processed: ".$this->numOfSongs);
 		return $audios_clean;
 	}
+
+	/**
+	 * Add track to db if not exist
+	 * 
+	 *@param array $output
+	 * @return array
+	 */
+	private function getStreamObjects($output = null, $debug = null) {
+
+		$new_array = array();
+		$audios_clean = array();
+		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
+		$userView = $this->rootFolder->getUserFolder($this -> userId);
+
+		if($audioPath !== null && $audioPath !== '/' && $audioPath !== '') {
+			$userView = $userView->get($audioPath);
+		}
+
+		$audios_mpegurl = $userView->searchByMime('audio/mpegurl');
+		$audios_scpls = $userView->searchByMime('audio/x-scpls');
+		$audios_xspf = $userView->searchByMime('application/xspf+xml');
+		$audios = array_merge($audios_mpegurl, $audios_scpls, $audios_xspf);
+		if ($debug) $output->writeln("Total stream files: ".count($audios));
+
+		// get all fileids which are in an excluded folder
+			$stmt = $this->db->prepare( 'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)' );
+			$stmt->execute(array('.noAudio', '.noaudio'));
+			$results = $stmt->fetchAll();
+			foreach($results as $row) {
+				array_push($new_array,$row['fileid']);
+			}
+			$resultExclude = $new_array;
+			//if ($debug) $output->writeln("Excluded ids (.noAdmin): ".implode(",", $resultExclude));
+		
+		// get all fileids which are already in the Audio Player Database
+			$new_array = array();
+			$stmt = $this->db->prepare( 'SELECT `file_id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? ' );
+			$stmt->execute(array($this->userId));
+			$results = $stmt->fetchAll();
+			foreach($results as $row) {
+				array_push($new_array,$row['file_id']);
+			}
+			$resultExisting = $new_array;
+			//if ($debug) $output->writeln("Existing ids (already scanned): ".implode(",", $resultExisting)."</info>");
+
+		if ($debug) $output->writeln("Checking all streams whether they can be <info>skipped</info>");
+		foreach($audios as $audio) {
+			$current_id = $audio->getID();
+			
+			if(in_array($current_id, $resultExclude)) {
+				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => excluded");
+			} elseif (in_array($current_id, $resultExisting)) {
+				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => already indexed");
+			} else {
+				array_push($audios_clean,$audio);
+			} 
+		}
+		$this->numOfSongs = $this->numOfSongs + count($audios_clean);
+		if ($debug) $output->writeln("Final streaming files to be processed: ".count($audios_clean));
+		return $audios_clean;
+	}
 	
 	/**
 	 * get picture from folder of audio file
 	 * folder/cover.jpg/png
 	 * 
-	 *@param array $audiofile
+	 * @param $iAlbumId
+	 * @param $data
 	 * @return id
 	 */
 	private function getFolderPicture($iAlbumId,$data){
@@ -1002,7 +1105,7 @@ class ScannerController extends Controller {
  		if($image->loadFromdata($data)) {
 			if(($image->width() <= 250 && $image->height() <= 250) || $image->centerCrop(250)) {
 				$imgString=$image->__toString();
-				$this->writeCoverToAlbum($iAlbumId,$imgString,'');
+				$this->writeCoverToAlbum($iAlbumId,$imgString);
 			}
 		}
 		return true;
@@ -1045,25 +1148,35 @@ class ScannerController extends Controller {
 	 * then fallback to slow extraction via tmpfile
 	 * 
 	 * @param $audio object
+	 * @param $getID3 object
 	 * @return $ThisFileInfo
 	 */
 	private function analyze($audio, $getID3, $output = null, $debug = null) {
 
-		$handle = $audio->fopen('rb');
-		if (@fseek($handle, -24, SEEK_END) === 0) {
-				$ThisFileInfo = $getID3->analyze($audio->getPath(), $handle, $audio->getSize());
+		if ($audio->getMimetype() === 'audio/mpegurl' or $audio->getMimetype() === 'audio/x-scpls' or $audio->getMimetype() === 'application/xspf+xml') {
+			$ThisFileInfo = array();
+			$ThisFileInfo['comments']['genre'][0] = 'Stream';
+			$ThisFileInfo['comments']['artist'][0] = 'Stream';
+			$ThisFileInfo['comments']['album'][0] = 'Stream';
+			$ThisFileInfo['bitrate'] = 0;
+			$ThisFileInfo['playtime_string'] = 0;
 		} else {
-			if (!$this->no_fseek) {
-				if ($debug) $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.");
-				\OCP\Util::writeLog('audioplayer', 'Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', \OCP\Util::DEBUG);
-				$this->no_fseek = true;
-			}
-			$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
-			$ThisFileInfo = $getID3->analyze($fileName);
+			$handle = $audio->fopen('rb');
+			if (@fseek($handle, -24, SEEK_END) === 0) {
+					$ThisFileInfo = $getID3->analyze($audio->getPath(), $handle, $audio->getSize());
+			} else {
+				if (!$this->no_fseek) {
+					if ($debug) $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.");
+					\OCP\Util::writeLog('audioplayer', 'Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', \OCP\Util::DEBUG);
+					$this->no_fseek = true;
+				}
+				$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				
+				$ThisFileInfo = $getID3->analyze($fileName);
 
-			if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
-				unlink($fileName);
-			}	
+				if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
+					unlink($fileName);
+				}	
+			} 
 		} 
 		return $ThisFileInfo;
 	}
@@ -1075,7 +1188,8 @@ class ScannerController extends Controller {
 	public function checkNewTracks(){
 		
 		// get only the relevant audio files
-		$audios = $this->getAudioObjects();
+		$this->getAudioObjects();
+		$this->getStreamObjects();
 		if ($this->numOfSongs !== 0) {
 			return 'true';
 		} else {

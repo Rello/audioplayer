@@ -18,6 +18,17 @@
 #searchresults {
 	margin-top: 0px !important;
 }
+
+#audio-settings li > a {
+	line-height: 30px;
+	min-height: 30px;
+}
+#audio-settings li.audio-settings-item {
+	padding-left: 14px;
+	padding-top: 10px;
+	opacity: .57;
+}
+
 #loading {
 	position:absolute; z-index:1000;margin-top:15%;left:0; display: none; width:100%;
 	text-align:center;
@@ -115,18 +126,9 @@ i#scanAudiosFirst{
 .innerNav h3{
 	color:#999;
 }
-
-#myCategory li{
-	cursor: pointer;
-	/*font-size:14px;*/
-	line-height:25px;
-	display:block;
-	float: left;
-	padding: 0px 6px 0px 12px;
-}
-
-#myCategory .ui-droppable {
-	padding: 0px 6px 0px 12px;
+#albenoverview{
+	height: 60px !important;
+	min-height: 60px;
 }
 
 #albenoverview li {
@@ -138,6 +140,7 @@ i#scanAudiosFirst{
     background-repeat: no-repeat;
 	background-image: url('../img/albums.svg');
 	margin: 6px 0px;
+	opacity: 0.57;
 }
 #albenoverview li span{
 	cursor: pointer;
@@ -156,6 +159,7 @@ i#scanAudiosFirst{
 #category_area {
 	display: flex;
 	margin: 0px 6px 6px 6px;
+	min-height: 40px;
 }
 #category_selector {
 	width: 100%;
@@ -222,6 +226,23 @@ i#scanAudiosFirst{
 	margin: 0px 0px 0px 4px;
 }
 
+#myCategory {
+	height: initial !important;
+}
+
+#myCategory li{
+	line-height:28px;
+	display:block;
+	float: left;
+	padding: 0px 6px 0px 12px;
+	opacity: 0.57;
+}
+
+#myCategory .ui-droppable {
+	padding: 0px 6px 0px 12px;
+}
+
+
 #myCategory li span.info-cover,
 #alben span.info-cover
 {
@@ -244,7 +265,6 @@ i#scanAudiosFirst{
 	text-overflow: ellipsis;
 	overflow:hidden;
 	cursor:pointer;
-	min-height: 25px;
 }
 #myCategory li span.pl-name-play{
 	float:left;
@@ -255,9 +275,9 @@ i#scanAudiosFirst{
 	overflow:hidden;
 	cursor:pointer;
 }
+#albenoverview li:hover,
 #myCategory li:hover{
-	background-color:#e7e7e7;
-	font-weight:bold;
+	opacity: 1;
 }
 
 #myCategory li a.icon-rename{
@@ -317,12 +337,6 @@ i#scanAudiosFirst{
 	color:#A9302A;
 }
 
-#alben:hover, 
-#alben.bAktiv,
-#myCategory li.activeIndiPlaylist 
-{
-	font-weight:bold;	
-}
 #myCategory li i.ioc-sort{
 	display:none;
 }

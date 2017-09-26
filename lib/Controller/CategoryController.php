@@ -18,6 +18,7 @@ use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\ITagManager;
+use OCP\Files\IRootFolder;
 
 /**
  * Controller class for main page.
@@ -36,7 +37,8 @@ class CategoryController extends Controller {
 			$userId, 
 			IL10N $l10n, 
 			IDBConnection $db,
-			ITagManager $tagManager
+			ITagManager $tagManager,
+			IRootFolder $rootFolder
 			) {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
@@ -44,6 +46,7 @@ class CategoryController extends Controller {
 		$this->db = $db;
 		$this->tagManager = $tagManager;
 		$this->tagger = null;
+		$this->rootFolder = $rootFolder;
 		}
 
 	/**
@@ -70,6 +73,7 @@ class CategoryController extends Controller {
 	
 	private function getCategoryforUser($category){
 	
+		$SQL = null;
 		$aPlaylists=array();
 		if($category === 'Artist') {
 			$SQL="SELECT  distinct(AT.`artist_id`) AS `id`, AA.`name`, LOWER(AA.`name`) AS `lower` 
@@ -97,16 +101,47 @@ class CategoryController extends Controller {
 			 			WHERE  `user_id` = ?
 			 			";
 		} elseif ($category === 'Playlist') {
-			$SQL="SELECT  `id`,`name`, LOWER(`name`) AS `lower` 
-						FROM `*PREFIX*audioplayer_playlists`
-			 			WHERE  `user_id` = ?
-			 			ORDER BY LOWER(`name`) ASC
-			 			";
 			$aPlaylists[] = array("id"=>"X1", "name"=>$this->l10n->t('Favorites'));
 			$aPlaylists[] = array("id"=>"X2", "name"=> $this->l10n->t('Recently Added'));
 			$aPlaylists[] = array("id"=>"X3", "name" =>$this->l10n->t('Recently Played'));
 			$aPlaylists[] = array("id"=>"X4", "name" =>$this->l10n->t('Most Played'));
 			$aPlaylists[] = array("id" => "", "name" => "");
+
+			// Stream files are shown directly
+			$SQL="SELECT  `file_id` AS `id`, `title` AS `name`, LOWER(`title`) AS `lower` 
+						FROM `*PREFIX*audioplayer_streams`
+			 			WHERE  `user_id` = ?
+			 			ORDER BY LOWER(`title`) ASC
+			 			";
+			$stmt = $this->db->prepare($SQL);
+			$stmt->execute(array($this->userId));
+			$results = $stmt->fetchAll();
+			foreach($results as $row) {
+				$file_not_found = false;	
+	
+				try {
+					$path = \OC\Files\Filesystem::getPath($row['id']);
+				} catch (\Exception $e) {
+					$file_not_found = true;
+       			}
+
+       			if($file_not_found === false){
+ 					array_splice($row, 2, 1);
+ 					$row['id'] = 'S'.$row['id'];
+					$aPlaylists[] = $row;
+				} else {
+					$this->deleteFromDB($row['id']);
+				}	
+			}
+			$aPlaylists[] = array("id" => "", "name" => "");
+
+			// regular playlists are selected
+			$SQL="SELECT  `id`,`name`, LOWER(`name`) AS `lower` 
+						FROM `*PREFIX*audioplayer_playlists`
+			 			WHERE  `user_id` = ?
+			 			ORDER BY LOWER(`name`) ASC
+			 			";
+
 		} elseif ($category === 'Folder') {
 			$SQL="SELECT  distinct(FC.`fileid`) AS `id`,FC.`name`, LOWER(FC.`name`) AS `lower` 
 						FROM `*PREFIX*audioplayer_tracks` AT
@@ -144,6 +179,7 @@ class CategoryController extends Controller {
 
 	private function getCountForCategory($category,$categoryId){
 
+		$SQL = null;
 		if($category === 'Artist') {
 			$SQL="SELECT  COUNT(`AT`.`id`) AS `count`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -195,6 +231,7 @@ class CategoryController extends Controller {
 			$stmt->execute(array($categoryId, $this->userId));
 		}
 		$results = $stmt->fetchAll();
+		$count = array();
 		foreach($results as $row) {
 			$count = $row['count'];
 		}
@@ -203,6 +240,7 @@ class CategoryController extends Controller {
 
 	private function getAlbumCountForCategory($category,$categoryId){
 
+		$SQL = null;
 		if($category === 'Artist') {
 			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -227,8 +265,8 @@ class CategoryController extends Controller {
 	 * 
 	 */
 	public function getCategoryItems($category, $categoryId){
-		$albums = 0;
-			
+		$albums = 0;			
+		if ($categoryId[0] === "S") $category = "Stream";
 		$itmes = $this->getItemsforCatagory($category,$categoryId);
 		$headers = $this->getHeadersforCatagory($category);
 		if ($category === 'Artist') $albums = $this->getAlbumCountForCategory($category,$categoryId);
@@ -253,8 +291,9 @@ class CategoryController extends Controller {
 	
 	private function getItemsforCatagory($category,$categoryId){
 
+		$SQL = null;
 		$favorite = false;
-		$aTracks=array();		
+		$aTracks = array();		
 		$SQL_select = "SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
 		$SQL_from 	= " FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
@@ -316,6 +355,10 @@ class CategoryController extends Controller {
 					AND `AT`.`user_id` = ? 
 			 		ORDER BY `AP`.`sortorder` ASC";
 			}
+		} elseif ($category === 'Stream') {
+			$aTracks = $this->StreamParser($categoryId);
+			return $aTracks;
+
 		} elseif ($category === 'Folder') {
 			$SQL = 	$SQL_select . $SQL_from .
 				"WHERE `AT`.`folder_id` = ? AND `AT`.`user_id` = ?" .
@@ -374,16 +417,51 @@ class CategoryController extends Controller {
 	}
 
 	public function getHeadersforCatagory($category){
-		$headers=array();		
 		if($category === 'Artist') {
-			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year')];
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
 		} elseif ($category === 'Album') {
-			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc').'-'.$this->l10n->t('Track')];
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc').'-'.$this->l10n->t('Track'), 'col4' => $this->l10n->t('Length')];
+		} elseif ($category === 'Stream') {
+			$headers = ['col1' => $this->l10n->t('URL'), 'col2' => $this->l10n->t(''), 'col3' => $this->l10n->t(''), 'col4' => $this->l10n->t('')];
 		} else {
-			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album')];
+			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album'), 'col4' => $this->l10n->t('Length')];
 		}
  		return $headers;
+	}
 
+	private function StreamParser($categoryId){
+		$aTracks = array();	
+		$x = 0;	
+		$userView = $this->rootFolder->getUserFolder($this -> userId);
+		\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
+		$streamfile = $userView->getById(substr($categoryId, 1));
+		$file_content = $streamfile[0]->getContent();
+
+		foreach(preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line){
+			if (substr($line,0,8) === '#EXTINF:') {
+				$extinf = explode(',', substr($line,8));
+				$time = $extinf[0];
+				$title = $extinf[1];
+			}
+			preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
+			
+			if ($matches[0]) {
+				$x++;
+				$row['id'] = substr($categoryId, 1).$x;
+				$row['fid'] = substr($categoryId, 1).$x;
+				$row['cl1'] = $matches[0][0];
+				$row['cl2'] = '';
+				$row['cl3'] = '';
+				$row['len'] = '';
+				$row['mim'] = 'audio/mpegurl';
+				$row['cid'] = '0';
+				$row['lin'] = $matches[0][0];
+				$row['fav'] = 'f';            
+				if ($title) $row['cl1'] = $title;
+       			$aTracks[]=$row;
+       		}
+		}
+		return $aTracks;
 	}
 
 	/**
@@ -409,6 +487,9 @@ class CategoryController extends Controller {
 		
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE  `file_id` = ? AND `user_id` = ?' );
 		$stmt->execute(array($file_id, $this->userId));		
+		
+		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_streams` WHERE  `file_id` = ? AND `user_id` = ?' );
+		$stmt->execute(array($file_id, $this->userId));		
 
 		$stmt = $this->db->prepare( 'SELECT `playlist_id` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `track_id` = ?' );
 		$stmt->execute(array($TrackId));
@@ -425,7 +506,7 @@ class CategoryController extends Controller {
 
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE  `track_id` = ?' );
 		$stmt->execute(array($TrackId));		
-}
+	}
 
 	/**
 	 * @NoAdminRequired
