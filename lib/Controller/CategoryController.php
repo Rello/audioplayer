@@ -73,6 +73,7 @@ class CategoryController extends Controller {
 	
 	private function getCategoryforUser($category){
 	
+		$SQL = null;
 		$aPlaylists=array();
 		if($category === 'Artist') {
 			$SQL="SELECT  distinct(AT.`artist_id`) AS `id`, AA.`name`, LOWER(AA.`name`) AS `lower` 
@@ -178,6 +179,7 @@ class CategoryController extends Controller {
 
 	private function getCountForCategory($category,$categoryId){
 
+		$SQL = null;
 		if($category === 'Artist') {
 			$SQL="SELECT  COUNT(`AT`.`id`) AS `count`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -229,6 +231,7 @@ class CategoryController extends Controller {
 			$stmt->execute(array($categoryId, $this->userId));
 		}
 		$results = $stmt->fetchAll();
+		$count = array();
 		foreach($results as $row) {
 			$count = $row['count'];
 		}
@@ -237,6 +240,7 @@ class CategoryController extends Controller {
 
 	private function getAlbumCountForCategory($category,$categoryId){
 
+		$SQL = null;
 		if($category === 'Artist') {
 			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
 					FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -261,8 +265,7 @@ class CategoryController extends Controller {
 	 * 
 	 */
 	public function getCategoryItems($category, $categoryId){
-		$albums = 0;
-			
+		$albums = 0;			
 		if ($categoryId[0] === "S") $category = "Stream";
 		$itmes = $this->getItemsforCatagory($category,$categoryId);
 		$headers = $this->getHeadersforCatagory($category);
@@ -414,7 +417,6 @@ class CategoryController extends Controller {
 	}
 
 	public function getHeadersforCatagory($category){
-		$headers=array();		
 		if($category === 'Artist') {
 			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
 		} elseif ($category === 'Album') {
