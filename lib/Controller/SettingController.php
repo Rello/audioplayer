@@ -43,7 +43,7 @@ class SettingController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function setValue($type,$value) {
+	public function setValue($type, $value) {
 		$success = false;
 		//\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
 		$this->configManager->setUserValue($this->userId, $this->appname, $type, $value);
@@ -60,13 +60,13 @@ class SettingController extends Controller {
 
 		//\OCP\Util::writeLog('audioplayer', 'settings load: '.$type.$value, \OCP\Util::DEBUG);
 
-		if($value !== ''){
-			$result=[
+		if ($value !== '') {
+			$result = [
 					'status' => 'success',
 					'value' => $value
 				];
-		}else{
-			$result=[
+		} else {
+			$result = [
 					'status' => 'false',
 					'value' =>'nodata'
 				];
@@ -89,9 +89,9 @@ class SettingController extends Controller {
 			}
 			
 			if ($path[0] !== '/') {
-				$path = '/' . $path;
+				$path = '/'.$path;
 			}
-			if ($path[strlen($path)-1] !== '/') {
+			if ($path[strlen($path) - 1] !== '/') {
 				$path .= '/';
 			}
 			$this->configManager->setUserValue($this->userId, $this->appname, 'path', $path);

@@ -18,14 +18,14 @@ $request = \OC::$server->getRequest();
 	
 	if (isset($request->server['REQUEST_URI'])) {
 		$url = $request->server['REQUEST_URI'];
-		if (preg_match('%/apps/files(/.*)?%', $url)	|| preg_match('%/s/(/.*)?%', $url)) {
+		if (preg_match('%/apps/files(/.*)?%', $url) || preg_match('%/s/(/.*)?%', $url)) {
 			\OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');		
-			\OCP\Util::addStyle( 'audioplayer', 'style');
+			\OCP\Util::addStyle('audioplayer', 'style');
 			
-			\OCP\Util::addScript( 'audioplayer', 'soundmanager2-nodebug-jsmin' );
-			\OCP\Util::addScript( 'audioplayer', 'viewer-min' );
-			\OCP\Util::addScript( 'audioplayer', 'berniecode-animator-min' );
-			\OCP\Util::addScript( 'audioplayer', '360player-min' );
+			\OCP\Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
+			\OCP\Util::addScript('audioplayer', 'viewer-min');
+			\OCP\Util::addScript('audioplayer', 'berniecode-animator-min');
+			\OCP\Util::addScript('audioplayer', '360player-min');
 		}
 	}
 
@@ -36,7 +36,7 @@ $app->registerUserHooks();
 $c = $app->getContainer();
 // add an navigation entry
 
-$navigationEntry = function () use ($c) {
+$navigationEntry = function() use ($c) {
 	return [
 		'id' => $c->getAppName(),
 		'order' => 6,
@@ -47,6 +47,6 @@ $navigationEntry = function () use ($c) {
 };
 $c->getServer()->getNavigationManager()->add($navigationEntry);
 
-$c->getServer()->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app'=>'audioplayer','apps' => array('files')));	
+$c->getServer()->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app'=>'audioplayer', 'apps' => array('files')));	
 
 #\OCP\App::registerPersonal($c->query('AppName'), 'lib/Settings/User');

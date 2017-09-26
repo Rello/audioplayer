@@ -22,13 +22,13 @@
 <div id="app-settings-content">
 	<ul id="audio-settings" class="with-icon">
 		<li>
-			<a href="#" class="icon-search" title="<?php p($l->t('Scan for audio files'));?>" id="scanAudios">
-				<?php p($l->t('Scan for audio files'));?>
+			<a href="#" class="icon-search" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios">
+				<?php p($l->t('Scan for audio files')); ?>
 			</a>
 		</li>
 		<li>
-			<a href="#" class="icon-delete" title="<?php p($l->t('Reset music library'));?>" id="resetAudios">
-				<?php p($l->t('Reset music library'));?>
+			<a href="#" class="icon-delete" title="<?php p($l->t('Reset music library')); ?>" id="resetAudios">
+				<?php p($l->t('Reset music library')); ?>
 			</a>
 		</li>
 		<li class="audio-settings-item">
