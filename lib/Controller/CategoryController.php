@@ -121,6 +121,7 @@ class CategoryController extends Controller {
 	
 				try {
 					$path = \OC\Files\Filesystem::getPath($row['id']);
+					$path = null;
 				} catch (\Exception $e) {
 					$file_not_found = true;
        			}
@@ -253,6 +254,7 @@ class CategoryController extends Controller {
 		$stmt = $this->db->prepare($SQL);
 		$stmt->execute(array($categoryId, $this->userId));
 		$results = $stmt->fetchAll();
+		$count = array();
 		foreach($results as $row) {
 			$count = $row['count'];
 		}
@@ -432,6 +434,7 @@ class CategoryController extends Controller {
 	private function StreamParser($categoryId){
 		$aTracks = array();	
 		$x = 0;	
+		$title = null;
 		$userView = $this->rootFolder->getUserFolder($this -> userId);
 		\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
 		$streamfile = $userView->getById(substr($categoryId, 1));
@@ -440,13 +443,13 @@ class CategoryController extends Controller {
 		foreach(preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line){
 			if (substr($line,0,8) === '#EXTINF:') {
 				$extinf = explode(',', substr($line,8));
-				$time = $extinf[0];
 				$title = $extinf[1];
 			}
 			preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
 			
 			if ($matches[0]) {
 				$x++;
+				$row = array();
 				$row['id'] = substr($categoryId, 1).$x;
 				$row['fid'] = substr($categoryId, 1).$x;
 				$row['cl1'] = $matches[0][0];
