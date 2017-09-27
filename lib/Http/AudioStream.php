@@ -67,6 +67,7 @@ class AudioStream {
 		header("Accept-Ranges: bytes");
 		
 		if (isset($_SERVER['HTTP_RANGE'])) {
+			$c_end = $this -> iEnd;
 			$this->isStream = true;
 		
 			list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
@@ -100,6 +101,7 @@ class AudioStream {
 		} else {
 			header("Content-Length: " . $this -> iSize);
 			$this->isStream = false;
+			
 		}
 	}
 
@@ -137,7 +139,7 @@ class AudioStream {
 	        }
 		}else{
 			 \OC\Files\Filesystem::readfile($this -> path);
-		}
+		}	
 	}
 
 	/**
@@ -148,6 +150,6 @@ class AudioStream {
 		$this -> openStream();
 		$this -> setHeader();
 		$this -> stream();
-		$this -> closeStream();
+		$this -> closeStream();		
 	}
 }
