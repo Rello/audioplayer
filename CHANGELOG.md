@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- stream URLs [#27](https://github.com/rello/audioplayer/issues/27) [#233](https://github.com/rello/audioplayer/issues/233)
+- Scrutinizer ci checks
+
+### Changed
+- sidebar rebuilt [#233](https://github.com/rello/audioplayer/issues/233)
+- user settings moved to sidebar [#233](https://github.com/rello/audioplayer/issues/233)
+- scan and reset moved to settings [#233](https://github.com/rello/audioplayer/issues/233)
+
+### Deprecated
+- 
+
+### Removed
+- 
+
+### Fixed
+- `count()` in `for()` loop [#235](https://github.com/rello/audioplayer/issues/235)
+
+### Security
+- 
+
 ## 2.1.0 - 2017-08-29
 ### Added
 - count albums of selected artist [#205](https://github.com/rello/audioplayer/issues/205)
