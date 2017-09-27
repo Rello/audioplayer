@@ -593,7 +593,7 @@ Audios.prototype.loadCategory = function(){
 					var spanName;
 					
 					if (category === 'Playlist' && el.id.toString()[0] !== 'X' && el.id !== '' && el.id.toString()[0] !== 'S'){
-						var spanName = $('<span/>').attr({'class':'pl-name-play'}).text(el.name).click($this.loadIndividualCategory.bind($this));
+						spanName = $('<span/>').attr({'class':'pl-name-play'}).text(el.name).click($this.loadIndividualCategory.bind($this));
 						var spanSort = $('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.id,'title':t('audioplayer','Sort playlist')}).click($this.sortPlaylist.bind($this));
 						var spanEdit = $('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename playlist')}).click($this.renamePlaylist.bind($this));
 						var spanDelete = $('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.id,'title':t('audioplayer','Delete playlist')}).click($this.deletePlaylist.bind($this));
@@ -612,7 +612,7 @@ Audios.prototype.loadCategory = function(){
 						li.append(spanDelete);
 						li.append(spanCounter);
 					} else if (el.id === ''){
-						vspanName = $('<span/>').text(el.name).css({'float':'left', 'min-height': '10px'});
+						spanName = $('<span/>').text(el.name).css({'float':'left', 'min-height': '10px'});
 						li.append(spanName);
 						li.append(spanCounter);
 					} else {
@@ -662,13 +662,13 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	$('.header-artist').data('order', '');
 	$('.header-album').data('order', '');
 	var can_play = soundManager.html5;
-	var albumcount = '';
 	
 	$.ajax({
 		type : 'GET',
 		url : OC.generateUrl('apps/audioplayer/getcategoryitems'),
 		data : {category: category, categoryId: PlaylistId},
 		success : function(jsondata) {
+			var albumcount = '';
 			if(jsondata.status === 'success'){
 				$(jsondata.data).each(function(i,el){			
 				
@@ -682,11 +682,12 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 						'data-cover':el.cid,
 						'class' : 'dragable'
 					});
+					var fav_action;
 
 					if (el.fav === 't') {
-						var fav_action = '<i class="fav icon-starred" style="opacity:0.3;"></i>';
+						fav_action = '<i class="fav icon-starred" style="opacity:0.3;"></i>';
 					} else {
-						var fav_action = '<i class="fav icon-star"></i>';
+						fav_action = '<i class="fav icon-star"></i>';
 					}
 					
 					var can_play_stream;
@@ -755,7 +756,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 						$('.sm2-playlist-target').text('');
 
 						$this.PlaylistContainer.addClass('isPlaylist');
-						if ($this.AudioPlayer == null){
+						if ($this.AudioPlayer === null){
 							$this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
 						}
 
@@ -778,7 +779,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 					 			var ClonePlaylist = $this.PlaylistContainer.find('#individual-playlist li').clone();
 								$this.ActivePlaylist.html('');
 								$this.ActivePlaylist.append(ClonePlaylist);
-								$this.ActivePlaylist.find('span').remove()
+								$this.ActivePlaylist.find('span').remove();
 								$this.ActivePlaylist.data('playlist',category+'-'+PlaylistId);
 							}
 							
@@ -828,7 +829,6 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 				$('.header-album').text(jsondata.header.col3);
 				$('.header-time').text(jsondata.header.col4);
 				
-				var albumcount;
 				if (jsondata.albums >> 1) {
 					albumcount = ' (' + jsondata.albums + ' '+t('audioplayer','Albums')+')';
 				}else{
@@ -891,8 +891,8 @@ Audios.prototype.fileActionsMenu = function(evt){
 		var PlaylistId = $('#myCategory li.active').data('id');
 		var EventTarget = $('#myCategory li.active span');		
 				
-		var html = '<div class="fileActionsMenu popovermenu bubble open menu" data-trackid="'+trackid+'"><ul>'
-				+'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>';
+		var html = '<div class="fileActionsMenu popovermenu bubble open menu" data-trackid="'+trackid+'"><ul>'+
+			'<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>MIME: '+mimetype+'</span></a></li>';
 		if (PlaylistId.toString()[0] !== 'S'){
 			html = html +'<li><a href="#" class="menuitem" data-action="edit" data-trackid="'+trackid+'" data-fileid="'+fileId+'"><span class="icon icon-rename"></span><span>'+t('audioplayer','Edit metadata')+'</span></a></li>';
 		}
@@ -900,7 +900,7 @@ Audios.prototype.fileActionsMenu = function(evt){
 		if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId.toString()[0] !== 'S' && PlaylistId !== ''){
 			html = html +'<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="'+trackid+'"><span class="icon icon-delete"></span><span>'+t('audioplayer','Remove')+'</span></a></li>';
 		}
-		html = html +'</ul></div>'
+		html = html +'</ul></div>';
 
 		$(evt.target).closest('li').append(html);	
 		OC.showMenu(null, $(".fileActionsMenu"));
@@ -914,7 +914,7 @@ Audios.prototype.fileActionsMenu = function(evt){
 };
 
 Audios.prototype.fileActionsEvent = function(evt){
-	$(".fileActionsMenu").remove()
+	$(".fileActionsMenu").remove();
 	var $target = $(evt.target).closest('a');
 	var actionName = $target.attr('data-action');
 	
@@ -1147,10 +1147,11 @@ Audios.prototype.editSong = function(evt){
 
 Audios.prototype.removeSongFromPlaylist=function(evt){
 	
+	var songId;
 	if(typeof evt.target === 'string'){
-		var songId = evt.target;
+		songId = evt.target;
 	}else{
-		var songId = $(evt).attr('data-id');
+		songId = $(evt).attr('data-id');
 	}
 
 	var plId = $('#myCategory li.active').attr('data-id');
@@ -1797,7 +1798,7 @@ Audios.prototype.check_timer = function() {
 					ajax_data2 = ajax_data + (1*3600*1000);
 					timer_time = new Date(ajax_data);
 					timer_time2 = new Date(ajax_data2);
-					if (new Date() > ajax_data && new Date < ajax_data2 && $('.sm2-bar-ui').hasClass('playing')) {
+					if (new Date() > ajax_data && new Date() < ajax_data2 && $('.sm2-bar-ui').hasClass('playing')) {
 						$('#notification').text('Timer Done!');
 						$('#notification').slideDown();
 						window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
