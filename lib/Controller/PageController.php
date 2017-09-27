@@ -17,7 +17,6 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
-use OCP\IL10N;
 use OCP\IConfig;
 
 /**
@@ -33,13 +32,11 @@ class PageController extends Controller {
 			$appName, 
 			IRequest $request, 
 			$userId, 
-			IL10N $l10n,
 			IConfig $configManager
 			) {
 		parent::__construct($appName, $request);
-		$this->appname = $appName;
+		$this->appName = $appName;
 		$this->userId = $userId;
-		$this->l10n = $l10n;
 		$this->configManager = $configManager;
 	}
 
@@ -48,31 +45,25 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index() {
-		
-		
+				
 		$csp = new \OCP\AppFramework\Http\ContentSecurityPolicy();
 		$csp->addAllowedStyleDomain('data:');
 		$csp->addAllowedImageDomain('\'self\'');
 		$csp->addAllowedImageDomain('data:');
 		$csp->addAllowedImageDomain('*');
-		$csp->addAllowedMediaDomain('*');
-		
+		$csp->addAllowedMediaDomain('*');		
 		$csp->addAllowedFrameDomain('*');	
 		
 		$maxUploadFilesize = \OCP\Util::maxUploadFilesize('/');
 		 
 		$response = new TemplateResponse('audioplayer', 'index');
 		$response->setContentSecurityPolicy($csp);
-		
-			\OCP\Util::writeLog('audioplayer', 'userid: '.$this->userId, \OCP\Util::DEBUG);
-			\OCP\Util::writeLog('audioplayer', 'appname: '.$this->appname, \OCP\Util::DEBUG);
-			\OCP\Util::writeLog('audioplayer', $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic'), \OCP\Util::DEBUG);
 		$response->setParams(array(
 			'uploadMaxFilesize' => $maxUploadFilesize,
 			'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),
-			'cyrillic' => $this->configManager->getUserValue($this->userId, $this->appname, 'cyrillic'),
-			'path' => $this->configManager->getUserValue($this->userId, $this->appname, 'path'),
-			'navigation' => $this->configManager->getUserValue($this->userId, $this->appname, 'navigation'),
+			'cyrillic' => $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic'),
+			'path' => $this->configManager->getUserValue($this->userId, $this->appName, 'path'),
+			'navigation' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
 		));
 		return $response;
 	}	
