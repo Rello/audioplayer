@@ -413,8 +413,9 @@ class MusicController extends Controller {
 		
 	}
 	
-	private function sortArrayByFields($data)
-	{
+	private function sortArrayByFields($data) {
+		$first = array();
+		$second = array();
 		foreach ($data as $key => $row) {
 			$first[$key] = $row['art'];
 			$second[$key] = $row['nam'];
@@ -428,9 +429,7 @@ class MusicController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function getCover($album){
-		$cover = '';
-		$aAlbums=array();
-		
+		$cover = '';		
 		$SQL="SELECT  `cover`, `name`, `artist_id`
 				FROM `*PREFIX*audioplayer_albums` 
 			 	WHERE  `user_id` = ? AND `id` = ? 
