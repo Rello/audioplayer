@@ -812,7 +812,7 @@ class ScannerController extends Controller {
 	 * 
 	 *@param array $aTrack
 	 *
-	 * @return id
+	 * @return null|integer
 	 */
 	private function writeTrackToDB($aTrack) {
 			
@@ -865,7 +865,7 @@ class ScannerController extends Controller {
 	 * Add stream to db if not exist
 	 *@param array $aStream
 	 *
-	 * @return id
+	 * @return null|integer
 	 */
 	private function writeStreamToDB($aStream) {			
 		$stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? AND `file_id` = ? ');
@@ -1105,9 +1105,9 @@ class ScannerController extends Controller {
 	 * get picture from folder of audio file
 	 * folder/cover.jpg/png
 	 * 
-	 * @param $iAlbumId
+	 * @param integer $iAlbumId
 	 * @param $data
-	 * @return id
+	 * @return boolean
 	 */
 	private function getFolderPicture($iAlbumId, $data) {
 
