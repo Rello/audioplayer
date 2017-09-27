@@ -536,7 +536,8 @@ class ScannerController extends Controller {
 
 				$year = 0;
 				$keys = ['year', 'creation_date', 'date'];
-				for ($i = 0; $c < count($keys); $i < $c; $i++) {
+				$c = count($keys);
+				for ($i = 0; $i < $c; $i++) {
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
 						$year = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
@@ -556,7 +557,8 @@ class ScannerController extends Controller {
 				$iAlbumArtistId = NULL;
 				$album_artist = NULL;				
 				$keys = ['band', 'album_artist', 'albumartist', 'album artist'];
-				for ($i = 0; $c < count($keys); $i < $c; $i++) {
+				$c = count($keys);
+				for ($i = 0; $i < $c; $i++) {
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
 						$album_artist = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
@@ -614,7 +616,8 @@ class ScannerController extends Controller {
 			
 				$subtitle = '';
 				$keys = ['subtitle', 'version'];
-				for ($i = 0; $c < count($keys); $i < $c; $i++) {
+				$c = count($keys);
+				for ($i = 0; $i < $c; $i++) {
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
 						$subtitle = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
@@ -631,7 +634,8 @@ class ScannerController extends Controller {
 				# MP3, FLAC & MP4 have different tags for discnumber
 				$disc = 1;
 				$keys = ['part_of_a_set', 'discnumber', 'partofset', 'disc_number'];
-				for ($i = 0; $c < count($keys); $i < $c; $i++) {
+				$c = count($keys);
+				for ($i = 0; $i < $c; $i++) {
 					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
 						$disc = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
