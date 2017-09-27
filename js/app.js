@@ -1714,6 +1714,8 @@ Audios.prototype.sort_playlist = function(evt) {
 	var column = $(evt.target).attr('class').split('-')[1];
 	var order = $(evt.target).data('order');
 	var factor = 1;
+	var a;
+	var b;
 	
 	if (order === 'descending') {
 		factor = -1;
@@ -1725,8 +1727,8 @@ Audios.prototype.sort_playlist = function(evt) {
 	var elems = $('#individual-playlist').children('li').get();
 	var reg_check = $(elems).first().data(column).toString().match(/^\d{1,2}\-\d{1,2}$/);
 	elems.sort(function(a,b){
-		var a = $(a).data(column).toString();
-		var b = $(b).data(column).toString();
+		a = $(a).data(column).toString();
+		b = $(b).data(column).toString();
 		if (reg_check) {
 			a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
 			b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
@@ -1739,10 +1741,10 @@ Audios.prototype.sort_playlist = function(evt) {
 	$('#individual-playlist').append(elems);
 
 	if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
-		var elems = $('#activePlaylist').children('li').get();
+		elems = $('#activePlaylist').children('li').get();
 		elems.sort(function(a,b){
-			var a = $(a).data(column).toString();
-			var b = $(b).data(column).toString();
+			a = $(a).data(column).toString();
+			b = $(b).data(column).toString();
 			if (reg_check) {
 				a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
 				b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
@@ -1765,6 +1767,7 @@ Audios.prototype.soundmanager_callback = function(SMaction) {
 		var cover = $('#activePlaylist li.selected').data('cover');
 		var album = $('#activePlaylist li.selected').data('album');
 		var addCss;
+		var addDescr;
 		var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
 		
 		if(cover === ''){	
@@ -1774,9 +1777,9 @@ Audios.prototype.soundmanager_callback = function(SMaction) {
 			} else {
 				album = $('#activePlaylist li.selected').data('album');
 			}
-			var addDescr=album.substring(0,1);	
+			addDescr = album.substring(0,1);	
 		} else {
-			addDescr='';
+			addDescr = '';
 			addCss='background-image:url('+getcoverUrl+cover+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 		}
 			 		
@@ -1794,12 +1797,12 @@ Audios.prototype.check_timer = function() {
 					ajax_data2 = ajax_data + (1*3600*1000);
 					timer_time = new Date(ajax_data);
 					timer_time2 = new Date(ajax_data2);
-					if (new Date > ajax_data && new Date < ajax_data2 && $('.sm2-bar-ui').hasClass('playing')) {
+					if (new Date() > ajax_data && new Date < ajax_data2 && $('.sm2-bar-ui').hasClass('playing')) {
 						$('#notification').text('Timer Done!');
 						$('#notification').slideDown();
 						window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
 						$this.AudioPlayer.actions.stop();
-					} else if (new Date < ajax_data && $('.sm2-bar-ui').hasClass('playing')){
+					} else if (new Date() < ajax_data && $('.sm2-bar-ui').hasClass('playing')){
 						$('#notification').text('Timer set: ' + timer_time.toLocaleString());
 						$('#notification').slideDown();
 						window.setTimeout(function(){$('#notification').slideUp();}, 3000);						
@@ -1971,7 +1974,7 @@ $(document).ready(function() {
 	});
 
 	$('#newPlaylistBtn_ok').on('click', function(){
-		if ($('#newPlaylistTxt').val() != ''){
+		if ($('#newPlaylistTxt').val() !== ''){
 			myAudios.newPlaylist($('#newPlaylistTxt').val());
 			$('#newPlaylistTxt').val('');
 			$('#newPlaylistTxt').focus();
@@ -1980,7 +1983,7 @@ $(document).ready(function() {
 	});
 
 	$('#newPlaylistTxt').bind('keydown', function(event){
-		if (event.which == 13 && $('#newPlaylistTxt').val() != ''){
+		if (event.which == 13 && $('#newPlaylistTxt').val() !== ''){
 			myAudios.newPlaylist($('#newPlaylistTxt').val());
 			$('#newPlaylistTxt').val('');
 			$('#newPlaylistTxt').focus();
@@ -2032,7 +2035,7 @@ $(document).ready(function() {
   		$this.category_selectors[0] = $('#category_selector').val();
   		$this.category_selectors[1] = '';
   		$('#myCategory').html('');
-  		if ($this.category_selectors[0] != '' ) {
+  		if ($this.category_selectors[0] !== '' ) {
   			myAudios.loadCategory();
   		}
 	});
