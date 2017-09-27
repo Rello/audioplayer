@@ -11,11 +11,12 @@
 $(document).ready(function() {
 
 	$('#cyrillic_user').on('click', function() {
+	var user_value;
 		if ($('#cyrillic_user').prop('checked')) {
-			var user_value = 'checked';
+			user_value = 'checked';
 		}
 		else {
-			var user_value = '';
+			user_value = '';
 		}
     		$.ajax({ 
 				type : 'GET',
@@ -138,7 +139,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	var audioPlayer = {}
+	var audioPlayer = {};
 	soundManager.setup({
 		url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
 		onready: function() {
@@ -151,9 +152,9 @@ $(document).ready(function() {
 				if (mtype.substring(5, 6) !== '/' && mtype !== 'usingFlash' && mtype !== 'canPlayType') {
 
 					if (mtype_check === true) {
-						var supported_types = supported_types + mtype + ', ';
+						supported_types = supported_types + mtype + ', ';
 					} else {
-						var nsupported_types = nsupported_types + mtype + ', ';
+						nsupported_types = nsupported_types + mtype + ', ';
 					}
 				}
 			}
@@ -161,6 +162,4 @@ $(document).ready(function() {
 			$('#browser_no').html(nsupported_types);
 		},
 	});
-
-	
 });
