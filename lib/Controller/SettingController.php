@@ -34,7 +34,7 @@ class SettingController extends Controller {
 			IRootFolder $rootFolder
 			) {
 		parent::__construct($appName, $request);
-		$this->appname = $appName;
+		$this->appName = $appName;
 		$this->userId = $userId;
 		$this->configManager = $configManager;
 		$this->rootFolder = $rootFolder;
@@ -44,19 +44,16 @@ class SettingController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function setValue($type, $value) {
-		$success = false;
 		//\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
-		$this->configManager->setUserValue($this->userId, $this->appname, $type, $value);
-		$success = true;
-		return new JSONResponse(array('success' => $success));
+		$this->configManager->setUserValue($this->userId, $this->appName, $type, $value);
+		return new JSONResponse(array('success' => 'true'));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
 	public function getValue($type) {
-		$value = 'false';
-		$value = $this->configManager->getUserValue($this->userId, $this->appname, $type);
+		$value = $this->configManager->getUserValue($this->userId, $this->appName, $type);
 
 		//\OCP\Util::writeLog('audioplayer', 'settings load: '.$type.$value, \OCP\Util::DEBUG);
 
@@ -83,7 +80,7 @@ class SettingController extends Controller {
 	public function userPath($value) {
 		$path = $value;
 			try {
-				$element = $this->rootFolder->getUserFolder($this -> userId)->get($path);
+				$this->rootFolder->getUserFolder($this -> userId)->get($path);
 			} catch (\OCP\Files\NotFoundException $e) {
 				return new JSONResponse(array('success' => false));
 			}
@@ -94,7 +91,7 @@ class SettingController extends Controller {
 			if ($path[strlen($path) - 1] !== '/') {
 				$path .= '/';
 			}
-			$this->configManager->setUserValue($this->userId, $this->appname, 'path', $path);
+			$this->configManager->setUserValue($this->userId, $this->appName, 'path', $path);
 		return new JSONResponse(array('success' => true));
 	}
 }
