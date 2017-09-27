@@ -17,7 +17,6 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
-use OCP\IL10N;
 
 class PhotoController extends Controller {
 	
@@ -25,11 +24,9 @@ class PhotoController extends Controller {
 	private $helperController;
 	public function __construct(
 			$appName, 
-			IRequest $request, 
-			IL10N $l10n 
+			IRequest $request
 			) {
 		parent::__construct($appName, $request);
-		$this->l10n = $l10n;		
 	}
 	
 	/**
@@ -37,7 +34,7 @@ class PhotoController extends Controller {
 	 */
 	
 	public function cropPhoto($id, $tmpkey){
-				$params=array(
+		$params=array(
 		 'tmpkey' => $tmpkey,
 		 'id' => $id,
 		);	
@@ -71,8 +68,6 @@ class PhotoController extends Controller {
 		$w = $w ?: -1;	
 		$h = $h ?: -1;	
 		
-		$image = null;
-		
 		//\OCP\Util::writeLog('audioplayer','MIMI'.$tmpkey,\OCP\Util::DEBUG);	
 		$data = \OC::$server->getCache()->get($tmpkey);
 		if($data) {
@@ -98,7 +93,7 @@ class PhotoController extends Controller {
 						 \OC::$server->getCache()->remove($tmpkey);
 						 \OC::$server->getCache()->set($tmpkey, $image->data(), 600);
 						 $response = new JSONResponse();
-						  $response -> setData($resultData);
+						 $response -> setData($resultData);
 						  
 						return $response;
 					}
@@ -115,8 +110,6 @@ class PhotoController extends Controller {
 	public function getImageFromCloud($id,$path){		
 		$localpath = \OC\Files\Filesystem::getLocalFile($path);
 		$tmpkey = 'audioplayer-photo-' . $id;
-		$size = getimagesize($localpath, $info);
-		$exif = @exif_read_data($localpath);
 		$image = new \OCP\Image();
 		$image -> loadFromFile($localpath);
 		if ($image -> width() > 350 || $image -> height() > 350) {
@@ -127,8 +120,6 @@ class PhotoController extends Controller {
 		$imgString = $image -> __toString();
 		$imgMimeType = $image -> mimeType();
 		if (\OC::$server->getCache()->set($tmpkey, $image -> data(), 600)) {
-	 	
-		
 			
 	    $resultData = array(
 		     'id' =>$id,
@@ -136,15 +127,11 @@ class PhotoController extends Controller {
 		     'imgdata' => $imgString,
 		     'mimetype' => $imgMimeType,
 	      );
-		  
 		  $response = new JSONResponse();
 		  $response -> setData($resultData);
-		  
 		return $response;
-	
-} 
-		
-	}
+} 		
+}
 /**
 	 * @NoAdminRequired
 	 */
@@ -166,8 +153,6 @@ class PhotoController extends Controller {
 
 		if(file_exists($file['tmp_name'])) {
 			$tmpkey = 'audioplayer-photo-'.md5(basename($file['tmp_name']));
-			$size = getimagesize($file['tmp_name'], $info);
-		    $exif = @exif_read_data($file['tmp_name']);
 			$image = new \OCP\Image();
 			if($image->loadFromFile($file['tmp_name'])) {
 				
@@ -177,13 +162,9 @@ class PhotoController extends Controller {
 				if(!$image->fixOrientation()) { // No fatal error so we don't bail out.
 					\OCP\Util::writeLog('audioplayer','Couldn\'t save correct image orientation: '.$tmpkey,\OCP\Util::DEBUG);
 				}
-				
 					if(\OC::$server->getCache()->set($tmpkey, $image->data(), 600)) {
 					$imgString=$image->__toString();
-					
-					
-
-                      $resultData=array(
+                      			$resultData=array(
 							'mime'=>$file['type'],
 							'size'=>$file['size'],
 							'name'=>$file['name'],
@@ -196,18 +177,8 @@ class PhotoController extends Controller {
 					  $response -> setData($resultData);
 					  
 					return $response;
-					
 				}
-				
-				
 			}
-			
-			
-			
 		}
-		
-		
 	}
-
-	
 }
