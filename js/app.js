@@ -948,45 +948,41 @@ Audios.prototype.editSong = function(evt){
 					$this.loadPhoto();
 			}
 			
-			var posterAction='<span class="labelPhoto" id="pinPhoto">'+posterImg
-  							+'<div class="tip" id="pin_details_photo_wrapper" title="'+t('audioplayer','Drop picture')+'" data-element="PHOTO">'
-							+'<ul id="phototools" class="transparent hidden">'
-							+'<li><a class="delete" title="'+t('audioplayer','Delete')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/delete.svg')+'"></a></li>'
-							+'<li><a class="edit" title="'+t('audioplayer','Edit')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/rename.svg')+'"></a></li>'
-							+'<li><a class="svg upload" title="'+t('audioplayer','Upload')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/upload.svg')+'"></a></li>'
-							+'<li><a class="svg cloud" title="'+t('audioplayer','Select from cloud')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/public.svg')+'"></a></li>'
-							+'</ul></div>'
-							+'<iframe name="file_upload_target" id="file_upload_target" src=""></iframe>'
-						 	+'</span>';
+			var posterAction='<span class="labelPhoto" id="pinPhoto">'+posterImg+
+				'<div class="tip" id="pin_details_photo_wrapper" title="'+t('audioplayer','Drop picture')+'" data-element="PHOTO">'+
+				'<ul id="phototools" class="transparent hidden">'+
+				'<li><a class="delete" title="'+t('audioplayer','Delete')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/delete.svg')+'"></a></li>'+
+				'<li><a class="edit" title="'+t('audioplayer','Edit')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/rename.svg')+'"></a></li>'+
+				'<li><a class="svg upload" title="'+t('audioplayer','Upload')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/upload.svg')+'"></a></li>'+
+				'<li><a class="svg cloud" title="'+t('audioplayer','Select from cloud')+'"><img style="height:26px;" class="svg" src="'+OC.imagePath('core', 'actions/public.svg')+'"></a></li>'+
+				'</ul></div>'+
+				'<iframe name="file_upload_target" id="file_upload_target" src=""></iframe></span>';
 						 
 			html = $('<div/>').html(
-				'<input type="hidden" name="isphoto" id="isphoto" value="'+jsondata.data.isPhoto+'" />'
-				+'<input type="hidden" name="id" id="photoId" value="'+fileId+'" />'
-			   +'<input type="hidden" name="tmpkey" id="tmpkey" value="'+jsondata.data.tmpkey+'" />'
-			   +'<textarea id="imgsrc" name="imgsrc" style="display:none;">'+jsondata.data.poster+'</textarea>'
-			   +'<input type="hidden" name="imgmimetype" id="imgmimetype" value="'+jsondata.data.mimeType+'" />'	
-				+'<div class="edit-left"><label class="editDescr">'+t('audioplayer','Title')+'</label> <input type="text" placeholder="'+t('audioplayer','Title')+'" id="sTitle" style="width:45%;" value="' + jsondata.data.title + '" /><br />' 
-				+'<label class="editDescr">'+t('audioplayer','File')+'</label> <input type="text" placeholder="'+t('audioplayer','File')+'"  style="width:45%;" value="' + jsondata.data.localPath + '" readonly /><br />' 
-				+'<label class="editDescr">'+t('audioplayer','Track')+'</label> <input type="text" placeholder="'+t('audioplayer','Track')+'" id="sTrack" maxlength="2" style="width:10%;" value="' + jsondata.data.track + '" /> '+t('audioplayer','of')+' <input type="text" placeholder="'+t('audioplayer','Total')+'" id="sTracktotal" maxlength="2" style="width:10%;" value="' + jsondata.data.tracktotal + '" /><br />' 
+				'<input type="hidden" name="isphoto" id="isphoto" value="'+jsondata.data.isPhoto+'" />'+
+				'<input type="hidden" name="id" id="photoId" value="'+fileId+'" />'+
+				'<input type="hidden" name="tmpkey" id="tmpkey" value="'+jsondata.data.tmpkey+'" />'+
+				'<textarea id="imgsrc" name="imgsrc" style="display:none;">'+jsondata.data.poster+'</textarea>'+
+				'<input type="hidden" name="imgmimetype" id="imgmimetype" value="'+jsondata.data.mimeType+'" />'	+
+				'<div class="edit-left"><label class="editDescr">'+t('audioplayer','Title')+'</label> <input type="text" placeholder="'+t('audioplayer','Title')+'" id="sTitle" style="width:45%;" value="' + jsondata.data.title + '" /><br />' +
+				'<label class="editDescr">'+t('audioplayer','File')+'</label> <input type="text" placeholder="'+t('audioplayer','File')+'"  style="width:45%;" value="' + jsondata.data.localPath + '" readonly /><br />' +
+				'<label class="editDescr">'+t('audioplayer','Track')+'</label> <input type="text" placeholder="'+t('audioplayer','Track')+'" id="sTrack" maxlength="2" style="width:10%;" value="' + jsondata.data.track + '" /> '+t('audioplayer','of')+' <input type="text" placeholder="'+t('audioplayer','Total')+'" id="sTracktotal" maxlength="2" style="width:10%;" value="' + jsondata.data.tracktotal + '" /><br />'+
 
-				+'<label class="editDescr">'+t('audioplayer','Existing Artists')+'</label><select style="width:45%;" id="eArtist"></select>' 
-				+'<label class="editDescr">'+t('audioplayer','New Artist')+'</label> <input type="text" placeholder="'+t('audioplayer','Artist')+'" id="sArtist" style="width:45%;" value="" />' 
-
-				+'<label class="editDescr">'+t('audioplayer','Existing Albums')+'</label><select style="width:45%;" id="eAlbum"></select>' 
-				+'<label class="editDescr">'+t('audioplayer','New Album')+'</label> <input type="text" placeholder="'+t('audioplayer','Album')+'" id="sAlbum" style="width:45%;" value="" />' 
-
-				+'<label class="editDescr">'+t('audioplayer','Existing Genres')+'</label><select style="width:45%;" id="eGenre"></select>' 
-				+'<label class="editDescr">'+t('audioplayer','New Genre')+'</label> <input type="text" placeholder="'+t('audioplayer','Genre')+'" id="sGenre" style="width:45%;" value="" />' 
-
-				+'<label class="editDescr">'+t('audioplayer','Year')+'</label> <input type="text" placeholder="'+t('audioplayer','Year')+'" id="sYear" maxlength="4" style="width:10%;" value="' + jsondata.data.year + '" /><br />' 
-				+'<label class="editDescr">'+t('audioplayer','Composer')+'</label> <input type="text" disabled style="width:45%;" value="'+jsondata.data.composer+'" />' 
-				+'<label class="editDescr">'+t('audioplayer','Subtitle')+'</label> <input type="text" disabled style="width:45%;" value="'+jsondata.data.subtitle+'" />' 
-				+'<label class="editDescr" style="width:190px;">'+t('audioplayer','Add as Album Cover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' 
-				+'</div><div class="edit-right">'+posterAction+'</div>'
+				'<label class="editDescr">'+t('audioplayer','Existing Artists')+'</label><select style="width:45%;" id="eArtist"></select>' +
+				'<label class="editDescr">'+t('audioplayer','New Artist')+'</label> <input type="text" placeholder="'+t('audioplayer','Artist')+'" id="sArtist" style="width:45%;" value="" />' +
+				'<label class="editDescr">'+t('audioplayer','Existing Albums')+'</label><select style="width:45%;" id="eAlbum"></select>' +
+				'<label class="editDescr">'+t('audioplayer','New Album')+'</label> <input type="text" placeholder="'+t('audioplayer','Album')+'" id="sAlbum" style="width:45%;" value="" />' +
+				'<label class="editDescr">'+t('audioplayer','Existing Genres')+'</label><select style="width:45%;" id="eGenre"></select>' +
+				'<label class="editDescr">'+t('audioplayer','New Genre')+'</label> <input type="text" placeholder="'+t('audioplayer','Genre')+'" id="sGenre" style="width:45%;" value="" />' +
+				'<label class="editDescr">'+t('audioplayer','Year')+'</label> <input type="text" placeholder="'+t('audioplayer','Year')+'" id="sYear" maxlength="4" style="width:10%;" value="' + jsondata.data.year + '" /><br />' +
+				'<label class="editDescr">'+t('audioplayer','Composer')+'</label> <input type="text" disabled style="width:45%;" value="'+jsondata.data.composer+'" />' +
+				'<label class="editDescr">'+t('audioplayer','Subtitle')+'</label> <input type="text" disabled style="width:45%;" value="'+jsondata.data.subtitle+'" />' +
+				'<label class="editDescr" style="width:190px;">'+t('audioplayer','Add as Album Cover')+'</label> <input type="checkbox"  id="sAlbumCover" maxlength="4" style="width:10%;"  />' +
+				'</div><div class="edit-right">'+posterAction+'</div>'
 			);
 			$("#dialogSmall").html(html);
 			
-			if(jsondata.data.poster!=''){
+			if(jsondata.data.poster !== ''){
 					$this.loadPhoto();
 			}
 			
@@ -1096,7 +1092,7 @@ Audios.prototype.editSong = function(evt){
 													$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
 													 $this.loadAlbums();
 											}
-											if(jsondata.data.imgsrc != ''){
+											if(jsondata.data.imgsrc !== ''){
 												$('.albumcover[data-album="album-'+jsondata.data.albumid+'"]')
 												.css({
 													'background-image':'url('+jsondata.data.imgsrc+')',
@@ -1372,7 +1368,7 @@ Audios.prototype.loadPhoto = function() {
 		$('#pin_details_photo').remove();
 
 		var ImgSrc = '';
-		if (this.imgSrc != false) {
+		if (this.imgSrc !== false) {
 			ImgSrc = this.imgSrc;
 		}
 		
@@ -1495,7 +1491,7 @@ Audios.prototype.editPhoto = function(id, tmpkey) {
 			}.bind(this)
 			});
 		
-		if ($('#edit_photo_dialog').dialog('isOpen') == true) {
+		if ($('#edit_photo_dialog').dialog('isOpen') === true) {
 			$('#edit_photo_dialog').dialog('moveToTop');
 		} else {
 			$('#edit_photo_dialog').dialog('open');
@@ -1514,7 +1510,7 @@ Audios.prototype.savePhoto = function() {
 		target.load(function() {
             $('#noimage').text(t('audioplayer', 'Picture generating, please wait ...')).addClass('icon-loading');
 			var response = jQuery.parseJSON(target.contents().text());
-			if (response != undefined) {
+			if (response !== undefined) {
 				$('#isphoto').val('1');
 				
 				this.imgSrc = response.dataimg;
@@ -1592,7 +1588,7 @@ Audios.prototype.processScan = function() {
 	$('#audios_import_process').css('display', 'block');
 	
 	this.scanSend();
-	window.setTimeout('myAudios.scanUpdate()', 1000);
+	window.setTimeout(myAudios.scanUpdate(), 1000);
 };
 
 Audios.prototype.scanSend = function() {
@@ -1645,7 +1641,7 @@ Audios.prototype.scanUpdate = function() {
 			$('#audios_import_process_progress').text(data.prog);
 			$('#audios_import_process_message').text(data.msg);
 			if(data.percent < 100 ){
-				window.setTimeout('myAudios.scanUpdate()', 500);
+				window.setTimeout(myAudios.scanUpdate(), 500);
 			}else{
 				$('#audios_import_process').css('display', 'none');
 				$('#audios_import_done').css('display', 'block');
@@ -1720,7 +1716,7 @@ Audios.prototype.sort_playlist = function(evt) {
 	var factor = 1;
 	
 	if (order === 'descending') {
-		var factor = -1;
+		factor = -1;
 		$(evt.target).data('order', 'ascending'); 
 	} else { 
 		$(evt.target).data('order', 'descending'); 
@@ -1732,11 +1728,11 @@ Audios.prototype.sort_playlist = function(evt) {
 		var a = $(a).data(column).toString();
 		var b = $(b).data(column).toString();
 		if (reg_check) {
-			var a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
-			var b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
+			a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
+			b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
 		} else { 
-			var a = a.toLowerCase();
-			var b = b.toLowerCase();
+			a = a.toLowerCase();
+			b = b.toLowerCase();
 		}
 		return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 	});
@@ -1748,11 +1744,11 @@ Audios.prototype.sort_playlist = function(evt) {
 			var a = $(a).data(column).toString();
 			var b = $(b).data(column).toString();
 			if (reg_check) {
-				var a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
-				var b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
+				a = parseInt(a.split('-')[0])*100 + parseInt(a.split('-')[1]);
+				b = parseInt(b.split('-')[0])*100 + parseInt(b.split('-')[1]);
 			} else { 
-				var a = a.toLowerCase();
-				var b = b.toLowerCase();
+				a = a.toLowerCase();
+				b = b.toLowerCase();
 			}
 			return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 		});
@@ -1768,19 +1764,20 @@ Audios.prototype.soundmanager_callback = function(SMaction) {
 	if ($('#albums-container .albumwrapper.isPlaylist').length === 0 ) {
 		var cover = $('#activePlaylist li.selected').data('cover');
 		var album = $('#activePlaylist li.selected').data('album');
-			 							
+		var addCss;
 		var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+		
 		if(cover === ''){	
-			var addCss='background-color: #D3D3D3;color: #333333;';
+			addCss='background-color: #D3D3D3;color: #333333;';
 			if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Albums') {
-				var album = $('#activePlaylist li.selected').data('title');
+				album = $('#activePlaylist li.selected').data('title');
 			} else {
-				var album = $('#activePlaylist li.selected').data('album');
+				album = $('#activePlaylist li.selected').data('album');
 			}
-				var addDescr=album.substring(0,1);	
+			var addDescr=album.substring(0,1);	
 		} else {
-			var addDescr='';
-			var addCss='background-image:url('+getcoverUrl+cover+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+			addDescr='';
+			addCss='background-image:url('+getcoverUrl+cover+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
 		}
 			 		
 		$('.sm2-playlist-cover').attr({'style':addCss}).text(addDescr);
