@@ -30,7 +30,7 @@ class CategoryController extends Controller {
 	private $db;
 	private $tagger;
 	private $tagManager;
-    private $rootFolder;
+	private $rootFolder;
 
 	public function __construct(
 			$appName, 
@@ -417,7 +417,7 @@ class CategoryController extends Controller {
 		}
 	}
 
-	public function getHeadersforCatagory($category){
+	private function getHeadersforCatagory($category){
 		if($category === 'Artist') {
 			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
 		} elseif ($category === 'Album') {
