@@ -30,6 +30,7 @@ class CategoryController extends Controller {
 	private $db;
 	private $tagger;
 	private $tagManager;
+    private $rootFolder;
 
 	public function __construct(
 			$appName, 
@@ -319,35 +320,34 @@ class CategoryController extends Controller {
 			$SQL = $SQL_select . $SQL_from .
 				"WHERE `AT`.`id` > ? AND `AT`.`user_id` = ?" .
 			 	$SQL_order;
-		} elseif ($category === 'Playlist') {
-			if ($categoryId === "X1") { // Favorites
+		} elseif ($category === 'Playlist' AND $categoryId === "X1") { // Favorites
 				$SQL = "SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`,`AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`" . 
 					$SQL_from .
 					"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ?" .
 			 		" ORDER BY LOWER(`AT`.`title`) ASC";
 			 		$categoryId = 0; //overwrite to integer for PostgreSQL
 			 		$favorite = true;
-			} elseif ($categoryId === "X2") { // Recently Added
+		} elseif ($category === 'Playlist' AND $categoryId === "X2") { // Recently Added
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AT`.`file_id` DESC
 			 		Limit 100";
 			 		$categoryId = 0;
-			} elseif ($categoryId === "X3") { // Recently Played
+		} elseif ($category === 'Playlist' AND $categoryId === "X3") { // Recently Played
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playtime` DESC
 			 		Limit 50";
 			 		$categoryId = 0;
-			} elseif ($categoryId === "X4") { // Most Played
+		} elseif ($category === 'Playlist' AND $categoryId === "X4") { // Most Played
 				$SQL = 	$SQL_select . $SQL_from .
 			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playcount` DESC
 			 		Limit 25";
 			 		$categoryId = 0;
-			} else {
+		} elseif ($category === 'Playlist')  {
 				$SQL = $SQL_select ." , `AP`.`sortorder`" .
 					"FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
 					LEFT JOIN `*PREFIX*audioplayer_tracks` `AT` ON `AP`.`track_id` = `AT`.`id`
@@ -356,7 +356,6 @@ class CategoryController extends Controller {
 			 		WHERE  `AP`.`playlist_id` = ?
 					AND `AT`.`user_id` = ? 
 			 		ORDER BY `AP`.`sortorder` ASC";
-			}
 		} elseif ($category === 'Stream') {
 			$aTracks = $this->StreamParser($categoryId);
 			return $aTracks;
@@ -436,7 +435,7 @@ class CategoryController extends Controller {
 		$x = 0;	
 		$title = null;
 		$userView = $this->rootFolder->getUserFolder($this -> userId);
-		\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
+		//\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
 		$streamfile = $userView->getById(substr($categoryId, 1));
 		$file_content = $streamfile[0]->getContent();
 
