@@ -335,14 +335,14 @@ class CategoryController extends Controller {
 			 		$categoryId = 0;
 		} elseif ($category === 'Playlist' AND $categoryId === "X3") { // Recently Played
 				$SQL = 	$SQL_select . $SQL_from .
-			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
+			 		"LEFT JOIN `*PREFIX*audioplayer_stats` `AS` ON `AT`.`id` = `AS`.`track_id`
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playtime` DESC
 			 		Limit 50";
 			 		$categoryId = 0;
 		} elseif ($category === 'Playlist' AND $categoryId === "X4") { // Most Played
 				$SQL = 	$SQL_select . $SQL_from .
-			 		"LEFT JOIN `*PREFIX*audioplayer_statistics` `AS` ON `AT`.`id` = `AS`.`track_id`
+			 		"LEFT JOIN `*PREFIX*audioplayer_stats` `AS` ON `AT`.`id` = `AS`.`track_id`
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playcount` DESC
 			 		Limit 25";
@@ -530,19 +530,19 @@ class CategoryController extends Controller {
 		$date = new \DateTime();
 		$playtime = $date->getTimestamp();
 		
-		$SQL='SELECT id, playcount FROM *PREFIX*audioplayer_statistics WHERE `user_id`= ? AND `track_id`= ?';
+		$SQL='SELECT id, playcount FROM *PREFIX*audioplayer_stats WHERE `user_id`= ? AND `track_id`= ?';
 		$stmt = $this->db->prepare($SQL);
 		$stmt->execute(array($this->userId, $track_id));
 		$row = $stmt->fetch();
 		if (isset($row['id'])) {
 			$playcount = $row['playcount'] + 1;
-			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_statistics` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
+			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_stats` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
 			$stmt->execute(array($playcount, $playtime, $row['id']));
 			return 'update';
 		} else {
-			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_statistics` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
+			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_stats` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
 			$stmt->execute(array($this->userId, $track_id, $playtime, 1));
-			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_statistics');
+			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_stats');
 			return $insertid;
 		}
 	}
