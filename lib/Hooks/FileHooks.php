@@ -25,7 +25,7 @@ class FileHooks {
 		$node = $view->getFileInfo($params['path']);
         
 		\OCP\Util::writeLog('audioplayer','Hook delete id: '.$node->getId(),\OCP\Util::DEBUG);
-		if ($node->getType() == FileInfo::TYPE_FILE) {
+		if ($node->getType() === FileInfo::TYPE_FILE) {
 			$app = new \OCA\audioplayer\AppInfo\Application();
         	$container = $app->getContainer();
 	    	$container->query(\OCA\audioplayer\Controller\CategoryController::class)->deleteFromDB($node->getId());
