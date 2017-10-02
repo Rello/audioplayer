@@ -10,6 +10,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - sidebar rebuilt [#233](https://github.com/rello/audioplayer/issues/233)
 - user settings moved to sidebar [#233](https://github.com/rello/audioplayer/issues/233)
 - scan and reset moved to settings [#233](https://github.com/rello/audioplayer/issues/233)
+- database index optimizations
+- statistics table renamed to meet guideline (current statistics are reset)
 
 ### Deprecated
 - 
