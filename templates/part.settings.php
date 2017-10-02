@@ -43,6 +43,13 @@
 			<label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser')); ?>:</label>
 			&nbsp;<em id="browser_no"></em>
 		</li>
+		<li class="audio-settings-item">
+		</li>
+		<li>
+			<a href="https://github.com/rello/audioplayer/wiki/cyrillic-symbol-handling"  target="_blank" class="icon-info">
+				<?php p($l->t('Read more')); ?>
+			</a>
+		</li>
 	</ul>
 </div>
 </div>
