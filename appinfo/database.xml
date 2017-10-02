@@ -28,6 +28,12 @@
 				<notnull>false</notnull>
 				<length>256</length>
 			</field>
+			<index>
+				<name>artists_user_id_idx</name>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
 		</declaration>
 	</table>
 
@@ -81,36 +87,24 @@
 				<type>integer</type>
 				<notnull>false</notnull>
 			</field>
-		</declaration>
-	</table>
-
-	<table>
-		<name>*dbprefix*audioplayer_album_artists</name>
-		<declaration>
-			<field>
-				<name>artist_id</name>
-				<type>integer</type>
-				<notnull>false</notnull>
-			</field>
-			<field>
-				<name>album_id</name>
-				<type>integer</type>
-				<notnull>false</notnull>
-			</field>
-
 			<index>
-				<name>a_artist_id_album_id_idx</name>
-				<unique>true</unique>
+				<name>albums_user_id_idx</name>
 				<field>
-					<name>artist_id</name>
+					<name>user_id</name>
+				</field>
+			</index>
+			<index>
+				<name>albums_album_user_idx</name>
+				<field>
+					<name>id</name>
 				</field>
 				<field>
-					<name>album_id</name>
+					<name>user_id</name>
 				</field>
 			</index>
 		</declaration>
 	</table>
-	
+
 	<table>
 		<name>*dbprefix*audioplayer_genre</name>
 		<declaration>
@@ -134,6 +128,12 @@
 				<notnull>false</notnull>
 				<length>256</length>
 			</field>
+			<index>
+				<name>genre_user_id_idx</name>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
 		</declaration>
 	</table>
 	
@@ -160,6 +160,12 @@
 				<notnull>false</notnull>
 				<length>256</length>
 			</field>
+			<index>
+				<name>playlists_user_id_idx</name>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
 		</declaration>
 	</table>
 	
@@ -187,14 +193,14 @@
 			    <length>1</length>
 			</field>
 			<index>
-				<name>aa_playlist_tracks_idx</name>
+				<name>playlist_tracks_idx</name>
 				<field>
 					<name>playlist_id</name>
 				</field>
 			</index>
 
 			<index>
-				<name>aa_playlist_tracks_unique_idx</name>
+				<name>playlist_tracks_unique_idx</name>
 				<unique>true</unique>
 				<field>
 					<name>playlist_id</name>
@@ -304,32 +310,54 @@
 			</field>
 
 			<index>
-				<name>aa_tracks_artist_id_idx</name>
+				<name>tracks_artist_id_idx</name>
 				<field>
 					<name>artist_id</name>
-				</field>
-			</index>
-			<index>
-				<name>aa_tracks_album_id_idx</name>
-				<field>
-					<name>album_id</name>
-				</field>
-			</index>
-
-			<index>
-				<name>aa_tracks_file_user_id_idx</name>
-				<unique>true</unique>
-				<field>
-					<name>file_id</name>
 				</field>
 				<field>
 					<name>user_id</name>
 				</field>
 			</index>
 			<index>
-				<name>aa_tracks_folder_id_idx</name>
+				<name>tracks_genre_id_idx</name>
+				<field>
+					<name>genre_id</name>
+				</field>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
+			<index>
+				<name>tracks_year_idx</name>
+				<field>
+					<name>year</name>
+				</field>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
+			<index>
+				<name>tracks_album_id_idx</name>
+				<field>
+					<name>album_id</name>
+				</field>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
+			<index>
+				<name>tracks_user_id_idx</name>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
+			<index>
+				<name>tracks_folder_id_idx</name>
 				<field>
 					<name>folder_id</name>
+				</field>
+				<field>
+					<name>user_id</name>
 				</field>
 			</index>
 		</declaration>
@@ -368,10 +396,16 @@
 				<notnull>true</notnull>
 				<length>256</length>
 			</field>
+			<index>
+				<name>streams_user_id_idx</name>
+				<field>
+					<name>user_id</name>
+				</field>
+			</index>
 		</declaration>
 	</table>
 	<table>
-		<name>*dbprefix*audioplayer_statistics</name>
+		<name>*dbprefix*audioplayer_stats</name>
 		<declaration>
 			<field>
 				<name>id</name>
@@ -403,7 +437,7 @@
 				<notnull>false</notnull>
 			</field>
 			<index>
-				<name>aa_statistics_file_user_id_idx</name>
+				<name>stats_file_user_id_idx</name>
 				<unique>true</unique>
 				<field>
 					<name>track_id</name>
