@@ -11,7 +11,7 @@
 "Albums found: " : " 找到新的专辑: ",
 "Duplicates found: " : "相同重复的音乐: ",
 "Written to music library: " : "写入音乐资料库: ",
-"Reset music library" : "重设音乐资料库",
+"Reset library" : "Reset library",
 "Volume" : "音量",
 "previous song" : "上一曲",
 "next song" : "下一曲",
@@ -57,11 +57,11 @@
 "Year" : "年",
 "Years" : "年份",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "如果西里尔字符是不正确识别来激活这个设置。这使得索引较慢",
-"Cyrillic Support:" : "西里尔支持:",
+"Cyrillic support" : "西里尔支持",
 "Read more" : "详情",
 "Search for audio files in" : "请选择想要搜索的文件夹",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "将会在你选择的文件夹中搜索音频信息,如果没有选择,将会搜索所有的文件夹。",
 "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them." : "如果想要跳过某一文件夹不搜索,请在文件夹内创建一个名为 .noaudio 的文件。如果不希望在子文件夹中搜索也要在子文件夹中的 .noaudio 的文件。",
-"Formats supported by your current browser" : "使用的浏览器支持此音频格式",
-"Formats NOT supported by your current browser" : "使用的浏览器不支持此音频格式"
+"Formats supported by the browser" : "Formats supported by the browser",
+"Formats not supported by the browser" : "Formats not supported by the browser"
 },"pluralForm":""}
