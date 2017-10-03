@@ -27,8 +27,8 @@
 			</a>
 		</li>
 		<li>
-			<a href="#" class="icon-delete" title="<?php p($l->t('Reset music library')); ?>" id="resetAudios">
-				<?php p($l->t('Reset music library')); ?>
+			<a href="#" class="icon-delete" title="<?php p($l->t('Reset library')); ?>" id="resetAudios">
+				<?php p($l->t('Reset library')); ?>
 			</a>
 		</li>
 		<li class="audio-settings-item">
@@ -40,7 +40,7 @@
 			<input type="text" id="audio-path" value="<?php p($_['path']) ?>" />
 		</li>
 		<li class="audio-settings-item">
-			<label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser')); ?>:</label>
+			<label for="browser_support"><?php p($l->t('Formats not supported by the browser')); ?>:</label>
 			&nbsp;<em id="browser_no"></em>
 		</li>
 		<li class="audio-settings-item">
