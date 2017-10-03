@@ -58,7 +58,7 @@
 "Folders" : "Ordner",
 "Genres" : "Genres",
 "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Wenn Kyrillische Zeichen nicht korrekt erkannt werden, kann diese Einstellung aktiviert werden. Die Indexierung ist dadurch langsamer!",
-"Cyrillic support" : "Unterstützung kyrillischer Zeichen",
+"Cyrillic support" : " Kyrillisch-Unterstützung",
 "Read more" : "Weitere Informationen",
 "Search for audio files in" : "Suche nach Audiodateien in",
 "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Diese Einstellung legt fest, welcher Ordner nach Audiodateien gescannt wird. Wird keine Auswahl getroffen, wird der gesamte Datenordner gescannt.",
