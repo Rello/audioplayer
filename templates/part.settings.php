@@ -33,7 +33,7 @@
 		</li>
 		<li class="audio-settings-item">
 			<input class="checkbox" type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']) ?>/>
-			<label for="cyrillic_user">&nbsp;&nbsp;&nbsp;<?php p($l->t('Cyrillic Support')); ?></label>
+			<label for="cyrillic_user">&nbsp;&nbsp;&nbsp;<?php p($l->t('Cyrillic support')); ?></label>
 		</li>
 		<li class="audio-settings-item">
 			<label for="audio-path"><?php p($l->t('Search for audio files in')); ?>:</label>
@@ -46,7 +46,7 @@
 		<li class="audio-settings-item">
 		</li>
 		<li>
-			<a href="https://github.com/rello/audioplayer/wiki/cyrillic-symbol-handling"  target="_blank" class="icon-info">
+			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank" class="icon-info">
 				<?php p($l->t('Read more')); ?>
 			</a>
 		</li>
