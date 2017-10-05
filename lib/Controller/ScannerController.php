@@ -693,7 +693,7 @@ class ScannerController extends Controller {
 		$message = (string) $this->l10n->t('Scanning finished!').'<br />';
 		$message .= (string) $this->l10n->t('Audios found: ').$counter.'<br />';
 		$message .= (string) $this->l10n->t('Duplicates found: ').($this->iDublicate).'<br />';
-		$message .= (string) $this->l10n->t('Written to music library: ').($counter_new - $this->iDublicate).'<br />';
+		$message .= (string) $this->l10n->t('Written to library: ').($counter_new - $this->iDublicate).'<br />';
 		$message .= (string) $this->l10n->t('Albums found: ').$this->iAlbumCount.'<br />';
 		if ($error_count >> 0) {
 			$message .= '<br /><b>'.(string) $this->l10n->t('Errors: ').$error_count.'<br />';
@@ -715,7 +715,7 @@ class ScannerController extends Controller {
 		} else {
 			$output->writeln("Audios found: ".($counter)."");
 			$output->writeln("Duplicates found: ".($this->iDublicate)."");
-			$output->writeln("Written to music library: ".($counter_new - $this->iDublicate)."");
+			$output->writeln("Written to library: ".($counter_new - $this->iDublicate)."");
 			$output->writeln("Albums found: ".($this->iAlbumCount)."");
 			$output->writeln("Errors: ".($error_count)."");
 		}

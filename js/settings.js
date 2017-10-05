@@ -24,7 +24,7 @@ $(document).ready(function() {
 				data : {'type': 'cyrillic',
 						'value': user_value},
 				success : function(ajax_data) {
-					$('#notification').text('saved');
+					$('#notification').text(t('audioplayer','saved'));
 					$('#notification').slideDown();
 					window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
 				}
@@ -37,17 +37,17 @@ $(document).ready(function() {
 	var $path = $('#audio-path');
 	$path.on('click', function() {
 		OC.dialogs.filepicker(
-			t('audioplayer', 'Single folder of audio files'),
+			t('audioplayer', 'Select a single folder with audio files'),
 			function (path) {
 				if ($path.val() !== path) {
 					$path.val(path);
 					$.post(OC.generateUrl('apps/audioplayer/userpath'), { value: path }, function(data) {
 						if (!data.success) {
-							$('#notification').text('Invalid Path');
+							$('#notification').text(t('audioplayer','Invalid path!'));
 							$('#notification').slideDown();
 							window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
 						} else {
-							$('#notification').text('saved');
+							$('#notification').text(t('audioplayer','saved'));
 							$('#notification').slideDown();
 							window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
 						}
@@ -83,10 +83,10 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '#resetAudios', function () {
-		$("#dialogSmall").text(t('audioplayer','Are you sure?')+' '+t('audioplayer','All database entries will be deleted!'));
+		$("#dialogSmall").text(t('audioplayer','Are you sure?')+' '+t('audioplayer','All library entries will be deleted!'));
 		$("#dialogSmall").dialog({
 			resizable : false,
-			title : t('audioplayer', 'Reset media library'),
+			title : t('audioplayer', 'Reset library'),
 			width : 250,
 			modal : true,
 			buttons : [{
@@ -116,7 +116,7 @@ $(document).ready(function() {
 					$('#activePlaylist').html('');
 					$('.sm2-playlist-target').html('');
 					$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-					$('#notification').text(t('audioplayer','Start deleting and resetting media library ...'));
+					$('#notification').text(t('audioplayer','Start resetting library ...'));
 					$('#notification').slideDown();
 					
 					$.ajax({
