@@ -4,14 +4,15 @@ All notable changes to the Audio Player project will be documented in this file.
 ## Unreleased
 ### Added
 - stream URLs [#27](https://github.com/rello/audioplayer/issues/27) [#233](https://github.com/rello/audioplayer/issues/233)
-- Scrutinizer ci checks
+- Scrutinizer Continuous Inspection checks
 
 ### Changed
 - sidebar rebuilt [#233](https://github.com/rello/audioplayer/issues/233)
 - user settings moved to sidebar [#233](https://github.com/rello/audioplayer/issues/233)
 - scan and reset moved to settings [#233](https://github.com/rello/audioplayer/issues/233)
 - database index optimizations
-- statistics table renamed to meet guideline (current statistics are reset)
+- statistics table renamed to meet guideline (resets current statistics)
+- spellings and translations reworked [#243](https://github.com/rello/audioplayer/issues/243)
 
 ### Deprecated
 - 
