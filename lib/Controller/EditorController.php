@@ -6,21 +6,20 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
+ * @author Sebastian Doell <sebastian@libasys.de>
  * @copyright 2016-2017 Marcel Scherello
+ * @copyright 2015 Sebastian Doell
  */
 
 namespace OCA\audioplayer\Controller;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
-use OCP\IUserSession;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
 use OCP\IDbConnection;
 use OCP\Files\IRootFolder;
-use OCP\Files\Folder;
 use \OC\Files\View; //remove when editAudioFiles is updated and toTmpFile alternative
 
 /**
@@ -31,24 +30,15 @@ class EditorController extends Controller {
 	private $userId;
 	private $l10n;
 	private $path;
-	private $abscount = 0;
-	private $progress;
-	private $progresskey;
-	private $currentSong;
-	private $iDublicate = 0;
-	private $iAlbumCount = 0;
-	private $numOfSongs;
 	private $db;
-	private $configManager;
-	private $occ_job;
-	private $no_fseek = false;
+	private $languageFactory;
+	private $rootFolder;
 		public function __construct(
 			$appName, 
 			IRequest $request, 
 			$userId, 
 			IL10N $l10n, 
 			IDbConnection $db, 
-			IConfig $configManager, 
 			IFactory $languageFactory,
 			IRootFolder $rootFolder
 			) {
@@ -57,7 +47,6 @@ class EditorController extends Controller {
 		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
-		$this->configManager = $configManager;
 		$this->languageFactory = $languageFactory;
 		$this->rootFolder = $rootFolder;
 	}
@@ -507,8 +496,8 @@ class EditorController extends Controller {
 	/**
 	 * truncates fiels do DB-field size
 	 * 
-	 * @param $string
-	 * @param $length
+	 * @param string $string
+	 * @param string $length
 	 * @param $dots
 	 * @return string
 	 */
@@ -518,7 +507,8 @@ class EditorController extends Controller {
 
 	/**
 	 * validate unsigned int values
-	 * 
+	 *
+	 * @param string $value
 	 * @return int value
 	 */
 
