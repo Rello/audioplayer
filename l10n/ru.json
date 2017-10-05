@@ -54,10 +54,11 @@
 "Artists" : "Исполнители",
 "Composer" : "Composer",
 "Composers" : "Composers",
-"Cyrillic support" : "Поддержка кириллицы",
-"Read more" : "Подробности",
 "Folders" : "Папки",
 "Genres" : "Стили",
+"Settings" : "Settings",
+"Cyrillic support" : "Поддержка кириллицы",
+"Read more" : "Подробности",
 "Search for audio files in" : "Искать аудиофайлы в",
 "Formats supported by the browser" : "Formats supported by the browser",
 "Formats not supported by the browser" : "Formats not supported by the browser"
