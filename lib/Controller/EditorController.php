@@ -15,7 +15,6 @@ namespace OCA\audioplayer\Controller;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
 use OCP\IDbConnection;
@@ -31,6 +30,7 @@ class EditorController extends Controller {
 	private $l10n;
 	private $path;
 	private $db;
+	private $iAlbumCount = 0;
 	private $languageFactory;
 	private $rootFolder;
 		public function __construct(
