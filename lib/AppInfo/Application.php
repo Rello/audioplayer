@@ -25,6 +25,7 @@ use OCA\audioplayer\Controller\MusicController;
 use OCA\audioplayer\Controller\PhotoController;
 use OCA\audioplayer\Controller\CategoryController;
 use OCA\audioplayer\Controller\SettingController;
+use OCA\audioplayer\Controller\EditorController;
 
 class Application extends App {
 
