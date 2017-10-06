@@ -43,6 +43,10 @@ class ScannerController extends Controller {
 	private $configManager;
 	private $occ_job;
 	private $no_fseek = false;
+	private $languageFactory;
+	private $rootFolder;
+	private $ID3Tags;
+
 		public function __construct(
 			$appName, 
 			IRequest $request, 
@@ -78,13 +82,12 @@ class ScannerController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function scanForAudios($userId = null, $output = null, $debug = null, $progresskey, $scanstop) {
+	public function scanForAudios($userId = null, $output = null, $debug = null, $progresskey = null, $scanstop = null) {
 
-		$pProgresskey = $progresskey;
 		$this->occ_job = false;
 		
 		if (isset($scanstop)) {
-			\OC::$server->getCache()->remove($pProgresskey);
+			\OC::$server->getCache()->remove($progresskey);
 			$params = ['status' => 'stopped'];
 			$response = new JSONResponse($params);
 			return $response;				
@@ -98,35 +101,28 @@ class ScannerController extends Controller {
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		} 
 		
-		$folderpicture = false;
-		$this->progresskey = $pProgresskey;
-		$parentId_prev = false;
-		$counter = 0;
+		$folderpicture 			= false;
+		$this->progresskey 		= $progresskey;
+		$parentId_prev 			= false;
+		$counter 				= 0;
 		$counter_new 			= 0;
 		$error_count 			= 0;
-		$error_file = 0;
-		$this->iAlbumCount = 0;
+		$error_file 			= 0;
+		$this->iAlbumCount 		= 0;
 		$this->iDublicate 		= 0;
-		$cyrillic_support 		= $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
-		$TextEncoding = 'UTF-8';
-		$option_tag_id3v1   	= false; // Read and process ID3v1 tags
-		$option_tag_id3v2   	= true; // Read and process ID3v2 tags
-		$option_tag_lyrics3		= false; // Read and process Lyrics3 tags
-		$option_tag_apetag      = false; // Read and process APE tags
-		$option_tags_process    = true; // Copy tags to root key 'tags' and encode to $this->encoding
-		$option_tags_html       = false; // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
+		$this->cyrillic 		= $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
 		
 		if (!class_exists('getid3_exception')) {
 			require_once __DIR__.'/../../3rdparty/getid3/getid3.php';
 		}
 		$getID3 = new \getID3;
-		$getID3->setOption(array('encoding'=>$TextEncoding, 
-								'option_tag_id3v1'=>$option_tag_id3v1, 
-								'option_tag_id3v2'=>$option_tag_id3v2,
-								'option_tag_lyrics3'=>$option_tag_lyrics3,
-								'option_tag_apetag'=>$option_tag_apetag,
-								'option_tags_process'=>$option_tags_process,
-								'option_tags_html'=>$option_tags_html
+		$getID3->setOption(array('encoding'=>'UTF-8', 
+								'option_tag_id3v1'=>false, 
+								'option_tag_id3v2'=>true,
+								'option_tag_lyrics3'=>false,
+								'option_tag_apetag'=>false,
+								'option_tags_process'=>true,
+								'option_tags_html'=>false
 								));
 
 		// ??? to be checked why ???
@@ -134,18 +130,18 @@ class ScannerController extends Controller {
 
 		if (!$this->occ_job) $this->updateProgress(0, $output, $debug);
 					
-		// get only the relevant audio files
+		// get only the relevant audio & stream files
 		$audios = $this->getAudioObjects($output, $debug);
-
-		// get only the relevant stream files
 		$streams = $this->getStreamObjects($output, $debug);
 			    								
+		if ($debug AND $this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated");
 		if ($debug) $output->writeln("Start processing of <info>ID3s</info>");
+
 		foreach ($audios as $audio) {
 			
 				//check if scan is still supposed to run, or if dialog was closed in web already
 				if (!$this->occ_job) {
-					$scan_running = \OC::$server->getCache()->get($pProgresskey);
+					$scan_running = \OC::$server->getCache()->get($this->progresskey);
 					if (!$scan_running) break;
 				}
 
@@ -154,12 +150,10 @@ class ScannerController extends Controller {
 				$counter++;
 				$this->abscount++;
 
-				$ThisFileInfo = $this->analyze($audio, $getID3, $output, $debug);				
-				if ($cyrillic_support === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
-				\getid3_lib::CopyTagsToComments($ThisFileInfo);
+				$this->analyze($audio, $getID3, $output, $debug);				
 
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
-				if (!isset($ThisFileInfo['bitrate']) AND !isset($ThisFileInfo['playtime_string'])) {
+				if (!isset($this->ID3Tags['bitrate']) AND !isset($this->ID3Tags['playtime_string'])) {
 					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio->getPath(), \OCP\Util::DEBUG);
 					if ($debug) $output->writeln("       Error with getID3. Does not seem to be a valid audio file");
 					$error_file .= $audio->getName().'<br />';
@@ -167,67 +161,41 @@ class ScannerController extends Controller {
 					continue;
 				}
 
-				$album = (string) $this->l10n->t('Unknown');
-				if (isset($ThisFileInfo['comments']['album'][0]) and rawurlencode($ThisFileInfo['comments']['album'][0]) !== '%FF%FE') {
-					$album = $ThisFileInfo['comments']['album'][0];
-				}
+				$album 		= $this->getID3Value(array('album'));
+				$genre 		= $this->getID3Value(array('genre'));
+				$artist 	= $this->getID3Value(array('artist'));
+				$name 		= $this->getID3Value(array('title'),$audio->getName());
+				$trackNr	= $this->getID3Value(array('track_number'),'');
+				$composer 	= $this->getID3Value(array('composer'),'');
+				$year 		= $this->getID3Value(array('year', 'creation_date', 'date'),0);
+				$subtitle	= $this->getID3Value(array('subtitle', 'version'),'');
+				$disc		= $this->getID3Value(array('part_of_a_set', 'discnumber', 'partofset', 'disc_number'),1);
 
-				$genre = (string) $this->l10n->t('Unknown');
-				if (isset($ThisFileInfo['comments']['genre'][0])) {
-					$genre = $ThisFileInfo['comments']['genre'][0];
-				}				
-				$iGenreId = $this->writeGenreToDB($genre);
-
-				$year = 0;
-				$keys = ['year', 'creation_date', 'date'];
-				$c = count($keys);
-				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
-						$year = $ThisFileInfo['comments'][$keys[$i]][0];
-						break;
-					}
-				}
+				$iGenreId 	= $this->writeGenreToDB($genre);
+				$iArtistId 	= $this->writeArtistToDB($artist);
 								
-				$artist = (string) $this->l10n->t('Unknown');
-				if (isset($ThisFileInfo['comments']['artist'][0]) and rawurlencode($ThisFileInfo['comments']['artist'][0]) !== '%FF%FE') {
-					$artist = $ThisFileInfo['comments']['artist'][0];
-				}
-				$iArtistId = $this->writeArtistToDB($artist);
-
 				# write albumartist if available
 				# if no albumartist, NO artist is stored on album level
 				# in musiccontroller loadArtistsToAlbum() takes over deriving the artists from the album tracks
 				# MP3, FLAC & MP4 have different tags for albumartist
 				$iAlbumArtistId = NULL;
-				$album_artist = NULL;				
-				$keys = ['band', 'album_artist', 'albumartist', 'album artist'];
-				$c = count($keys);
-				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
-						$album_artist = $ThisFileInfo['comments'][$keys[$i]][0];
-						break;
-					}
-				}
-				if (isset($album_artist)) { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
-				$iAlbumId = $this->writeAlbumToDB($album, (int) $year, $iAlbumArtistId);
+				$album_artist 	= NULL;				
+				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),0);
 
-				$name = $audio->getName();
-				if (isset($ThisFileInfo['comments']['title'][0]) and rawurlencode($ThisFileInfo['comments']['title'][0]) !== '%FF%FE') {
-					$name = $ThisFileInfo['comments']['title'][0];
-				}
-				
-				$trackNumber = '';
-				if (isset($ThisFileInfo['comments']['track_number'][0])) {
-					$trackNumber = $ThisFileInfo['comments']['track_number'][0];
-				}
+				if ($album_artist !== $this->l10n->t('Unknown')) { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
+				$iAlbumId = $this->writeAlbumToDB($album, (int) $year, $iAlbumArtistId);
 				
 				$bitrate = 0;
-				if (isset($ThisFileInfo['bitrate'])) {
-					$bitrate = $ThisFileInfo['bitrate'];
+				if (isset($this->ID3Tags['bitrate'])) {
+					$bitrate = $this->ID3Tags['bitrate'];
+				}
+
+				$playTimeString = '';
+				if (isset($this->ID3Tags['playtime_string'])) {
+					$playTimeString = $this->ID3Tags['playtime_string'];
 				}
 				
 				$parentId = $audio->getParent()->getId();
-
 				if ($parentId === $parentId_prev AND $folderpicture) {
 					if ($debug) $output->writeln("     Reusing previous folder image");
 					$this->getFolderPicture($iAlbumId, $folderpicture->getContent());
@@ -246,49 +214,16 @@ class ScannerController extends Controller {
 					if ($folderpicture) {
 						$this->getFolderPicture($iAlbumId, $folderpicture->getContent());
 						if ($debug) $output->writeln("     Alternative album art: ".$folderpicture->getInternalPath());
-					} elseif (isset($ThisFileInfo['comments']['picture'])) {
-						$data = $ThisFileInfo['comments']['picture'][0]['data'];
+					} elseif (isset($this->ID3Tags['comments']['picture'])) {
+						$data = $this->ID3Tags['comments']['picture'][0]['data'];
 						$this->getFolderPicture($iAlbumId, $data);
 					}					
 					$parentId_prev = $parentId;
 				}
 				
-				$playTimeString = '';
-				if (isset($ThisFileInfo['playtime_string'])) {
-					$playTimeString = $ThisFileInfo['playtime_string'];
-				}
-			
-				$subtitle = '';
-				$keys = ['subtitle', 'version'];
-				$c = count($keys);
-				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
-						$subtitle = $ThisFileInfo['comments'][$keys[$i]][0];
-						break;
-					}
-				}
-
-				$composer = '';
-				if (isset($ThisFileInfo['comments']['composer'][0]) and rawurlencode($ThisFileInfo['comments']['composer'][0]) !== '%FF%FE') {
-					$composer = $ThisFileInfo['comments']['composer'][0];
-				}
-
-				# write discnumber if available
-				# if no discumber, discnumber is set to 1
-				# MP3, FLAC & MP4 have different tags for discnumber
-				$disc = 1;
-				$keys = ['part_of_a_set', 'discnumber', 'partofset', 'disc_number'];
-				$c = count($keys);
-				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
-						$disc = $ThisFileInfo['comments'][$keys[$i]][0];
-						break;
-					}
-				}
-
 				$aTrack = [
 					'title' => $this->truncate($name, '256'),
-					'number' => $this->normalizeInteger($trackNumber),
+					'number' => $this->normalizeInteger($trackNr),
 					'artist_id' => (int) $iArtistId,
 					'album_id' =>(int) $iAlbumId,
 					'length' => $playTimeString,
@@ -311,7 +246,7 @@ class ScannerController extends Controller {
 		foreach ($streams as $stream) {
 				//check if scan is still supposed to run, or if dialog was closed in web already
 				if (!$this->occ_job) {
-					$scan_running = \OC::$server->getCache()->get($pProgresskey);
+					$scan_running = \OC::$server->getCache()->get($this->progresskey);
 					if (!$scan_running) break;
 				}
 
@@ -332,7 +267,6 @@ class ScannerController extends Controller {
 				$this->writeStreamToDB($aStream);
 				$counter_new++;
 		}
-
 		
 		$message = (string) $this->l10n->t('Scanning finished!').'<br />';
 		$message .= (string) $this->l10n->t('Audios found: ').$counter.'<br />';
@@ -365,8 +299,29 @@ class ScannerController extends Controller {
 		}
 	}
 	
-	private function writeCoverToAlbum($iAlbumId, $sImage) {
-    		
+	/**
+	 * Get specific ID3 tags from array
+	 * 
+	 *@param array $ID3Value
+	 *@param string $defaultValue
+	 * 
+	 * @return string
+	 */
+	private function getID3Value ($ID3Value, $defaultValue = null) {
+		$c = count($ID3Value);
+		//	\OCP\Util::writeLog('audioplayer', 'album: '.$this->ID3Tags['comments']['album'][0], \OCP\Util::DEBUG);
+		for ($i = 0; $i < $c; $i++) {
+			if (isset($this->ID3Tags['comments'][$ID3Value[$i]][0]) and rawurlencode($this->ID3Tags['comments'][$ID3Value[$i]][0]) !== '%FF%FE') {
+				return $this->ID3Tags['comments'][$ID3Value[$i]][0];
+			} elseif ($i === $c-1 AND $defaultValue !== null) {
+				return $defaultValue;
+			} elseif ($i === $c-1){
+				return $this->l10n->t('Unknown');
+			}
+		}
+	}
+
+	private function writeCoverToAlbum($iAlbumId, $sImage) {    		
 		$stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?');
 		$stmt->execute(array($sImage, '', $iAlbumId, $this->userId));
 		return true;
@@ -380,8 +335,7 @@ class ScannerController extends Controller {
 	 *@param int $iArtistId
 	 * 
 	 * @return int id
-	 */
-	
+	 */	
 	private function writeAlbumToDB($sAlbum, $sYear, $iArtistId) {
 		$sAlbum = $this->truncate($sAlbum, '256');	
 		$sYear = $this->normalizeInteger($sYear);			
@@ -415,8 +369,7 @@ class ScannerController extends Controller {
 	 *@param string $sGenre
 	 *
 	 * @return int id
-	 */
-	 
+	 */	 
 	private function writeGenreToDB($sGenre) {
 		$sGenre = $this->truncate($sGenre, '256');		
 		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_genre', ['user_id' => $this->userId, 'name' => $sGenre])) {
@@ -535,10 +488,9 @@ class ScannerController extends Controller {
 	 * 
 	 */
 	public function getProgress($progresskey) {
-		$pProgresskey = $progresskey;
 		\OC::$server->getSession()->close();
 					
-		$aCurrent = \OC::$server->getCache()->get($pProgresskey);
+		$aCurrent = \OC::$server->getCache()->get($progresskey);
 		if ($aCurrent) {
 				$aCurrent = json_decode($aCurrent);
 				$numSongs = (isset($aCurrent->{'all'}) ? $aCurrent->{'all'}:0);
@@ -584,7 +536,7 @@ class ScannerController extends Controller {
 	 * @return array
 	 */
 	private function cyrillic($ThisFileInfo) {
-		#\OCP\Util::writeLog('audioplayer', 'cyrillic', \OCP\Util::DEBUG);				
+		\OCP\Util::writeLog('audioplayer', 'cyrillic handling activated', \OCP\Util::DEBUG);				
 		// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
 		foreach (array('id3v1', 'id3v2') as $ttype) {
 			$ruTag = 0;
@@ -619,7 +571,6 @@ class ScannerController extends Controller {
 	 * @return array
 	 */
 	private function getAudioObjects($output = null, $debug = null) {
-
 		$new_array = array();
 		$audios_clean = array();
 		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
@@ -689,7 +640,6 @@ class ScannerController extends Controller {
 	 * @return array
 	 */
 	private function getStreamObjects($output = null, $debug = null) {
-
 		$new_array = array();
 		$audios_clean = array();
 		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
@@ -782,7 +732,6 @@ class ScannerController extends Controller {
 	 * 
 	 * @return int value
 	 */
-
 	private function normalizeInteger($value) {
 		// convert format '1/10' to '1' and '-1' to null
 		$tmp = explode('/', $value);
@@ -806,7 +755,6 @@ class ScannerController extends Controller {
 	 * @return array
 	 */
 	private function analyze($audio, $getID3, $output = null, $debug = null) {
-
 		if ($audio->getMimetype() === 'audio/mpegurl' or $audio->getMimetype() === 'audio/x-scpls' or $audio->getMimetype() === 'application/xspf+xml') {
 			$ThisFileInfo = array();
 			$ThisFileInfo['comments']['genre'][0] = 'Stream';
@@ -834,15 +782,18 @@ class ScannerController extends Controller {
 				}	
 			} 
 		} 
-		return $ThisFileInfo;
+		if ($this->cyrillic === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
+		\getid3_lib::CopyTagsToComments($ThisFileInfo);
+
+		$this->ID3Tags = $ThisFileInfo;	
+		return;	
 	}
 
 	/**
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function checkNewTracks() {
-		
+	public function checkNewTracks() {		
 		// get only the relevant audio files
 		$this->getAudioObjects();
 		$this->getStreamObjects();
@@ -851,6 +802,5 @@ class ScannerController extends Controller {
 		} else {
 			return 'false';
 		}
-	}
-				
+	}				
 }
