@@ -46,6 +46,7 @@ class ScannerController extends Controller {
 	private $languageFactory;
 	private $rootFolder;
 	private $ID3Tags;
+	private $cyrillic;
 
 		public function __construct(
 			$appName, 
@@ -72,7 +73,6 @@ class ScannerController extends Controller {
 	 * 
 	 */
 	public function getImportTpl(){
-		
 		$params = [];	
 		$response = new TemplateResponse('audioplayer', 'part.import',$params, '');          
 		return $response;
@@ -83,7 +83,6 @@ class ScannerController extends Controller {
 	 * 
 	 */
 	public function scanForAudios($userId = null, $output = null, $debug = null, $progresskey = null, $scanstop = null) {
-
 		$this->occ_job = false;
 		
 		if (isset($scanstop)) {
@@ -179,7 +178,6 @@ class ScannerController extends Controller {
 				# in musiccontroller loadArtistsToAlbum() takes over deriving the artists from the album tracks
 				# MP3, FLAC & MP4 have different tags for albumartist
 				$iAlbumArtistId = NULL;
-				$album_artist 	= NULL;				
 				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),0);
 
 				if ($album_artist !== $this->l10n->t('Unknown')) { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
@@ -302,7 +300,7 @@ class ScannerController extends Controller {
 	/**
 	 * Get specific ID3 tags from array
 	 * 
-	 *@param array $ID3Value
+	 *@param string[] $ID3Value
 	 *@param string $defaultValue
 	 * 
 	 * @return string
@@ -316,12 +314,16 @@ class ScannerController extends Controller {
 			} elseif ($i === $c-1 AND $defaultValue !== null) {
 				return $defaultValue;
 			} elseif ($i === $c-1){
-				return $this->l10n->t('Unknown');
+				$unknown = $this->l10n->t('Unknown');
+				return $unknown;
 			}
 		}
 	}
 
-	private function writeCoverToAlbum($iAlbumId, $sImage) {    		
+	/**
+	 * @param integer $iAlbumId
+	 */
+ 	private function writeCoverToAlbum($iAlbumId, $sImage) {
 		$stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?');
 		$stmt->execute(array($sImage, '', $iAlbumId, $this->userId));
 		return true;
@@ -335,7 +337,8 @@ class ScannerController extends Controller {
 	 *@param int $iArtistId
 	 * 
 	 * @return int id
-	 */	
+	 */
+	
 	private function writeAlbumToDB($sAlbum, $sYear, $iArtistId) {
 		$sAlbum = $this->truncate($sAlbum, '256');	
 		$sYear = $this->normalizeInteger($sYear);			
@@ -369,7 +372,8 @@ class ScannerController extends Controller {
 	 *@param string $sGenre
 	 *
 	 * @return int id
-	 */	 
+	 */
+	 
 	private function writeGenreToDB($sGenre) {
 		$sGenre = $this->truncate($sGenre, '256');		
 		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_genre', ['user_id' => $this->userId, 'name' => $sGenre])) {
@@ -412,7 +416,6 @@ class ScannerController extends Controller {
 	 * @return null|integer
 	 */
 	private function writeTrackToDB($aTrack) {
-			
 		$SQL = 'SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
 				AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? 
 				AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?
@@ -704,7 +707,6 @@ class ScannerController extends Controller {
 	 * @return boolean
 	 */
 	private function getFolderPicture($iAlbumId, $data) {
-
 		$image = new \OCP\Image();
  		if ($image->loadFromdata($data)) {
 			if (($image->width() <= 250 && $image->height() <= 250) || $image->centerCrop(250)) {
@@ -730,6 +732,7 @@ class ScannerController extends Controller {
 	/**
 	 * validate unsigned int values
 	 * 
+	 * @param string $value
 	 * @return int value
 	 */
 	private function normalizeInteger($value) {
@@ -793,7 +796,7 @@ class ScannerController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function checkNewTracks() {		
+	public function checkNewTracks() {
 		// get only the relevant audio files
 		$this->getAudioObjects();
 		$this->getStreamObjects();
@@ -802,5 +805,5 @@ class ScannerController extends Controller {
 		} else {
 			return 'false';
 		}
-	}				
+	}
 }
