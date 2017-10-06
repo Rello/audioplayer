@@ -168,7 +168,7 @@ class ScannerController extends Controller {
 				}
 
 				$album = (string) $this->l10n->t('Unknown');
-				if (isset($ThisFileInfo['comments']['album'][0]) and rawurlencode($ThisFileInfo['comments']['album'][0]) !== '%FF%FE') {
+				if (isset($ThisFileInfo['comments']['album'][0]) and rawurlencode($ThisFileInfo['comments']['album'][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments']['album'][0]) !== FALSE) {
 					$album = $ThisFileInfo['comments']['album'][0];
 				}
 
@@ -182,14 +182,14 @@ class ScannerController extends Controller {
 				$keys = ['year', 'creation_date', 'date'];
 				$c = count($keys);
 				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments'][$keys[$i]][0]) !== FALSE) {
 						$year = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
 					}
 				}
 								
 				$artist = (string) $this->l10n->t('Unknown');
-				if (isset($ThisFileInfo['comments']['artist'][0]) and rawurlencode($ThisFileInfo['comments']['artist'][0]) !== '%FF%FE') {
+				if (isset($ThisFileInfo['comments']['artist'][0]) and rawurlencode($ThisFileInfo['comments']['artist'][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments']['artist'][0]) !== FALSE) {
 					$artist = $ThisFileInfo['comments']['artist'][0];
 				}
 				$iArtistId = $this->writeArtistToDB($artist);
@@ -203,7 +203,7 @@ class ScannerController extends Controller {
 				$keys = ['band', 'album_artist', 'albumartist', 'album artist'];
 				$c = count($keys);
 				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments'][$keys[$i]][0]) !== FALSE) {
 						$album_artist = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
 					}
@@ -212,7 +212,7 @@ class ScannerController extends Controller {
 				$iAlbumId = $this->writeAlbumToDB($album, (int) $year, $iAlbumArtistId);
 
 				$name = $audio->getName();
-				if (isset($ThisFileInfo['comments']['title'][0]) and rawurlencode($ThisFileInfo['comments']['title'][0]) !== '%FF%FE') {
+				if (isset($ThisFileInfo['comments']['title'][0]) and rawurlencode($ThisFileInfo['comments']['title'][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments']['title'][0]) !== FALSE) {
 					$name = $ThisFileInfo['comments']['title'][0];
 				}
 				
@@ -262,14 +262,14 @@ class ScannerController extends Controller {
 				$keys = ['subtitle', 'version'];
 				$c = count($keys);
 				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments'][$keys[$i]][0]) !== FALSE) {
 						$subtitle = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
 					}
 				}
 
 				$composer = '';
-				if (isset($ThisFileInfo['comments']['composer'][0]) and rawurlencode($ThisFileInfo['comments']['composer'][0]) !== '%FF%FE') {
+				if (isset($ThisFileInfo['comments']['composer'][0]) and rawurlencode($ThisFileInfo['comments']['composer'][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments']['composer'][0]) !== FALSE) {
 					$composer = $ThisFileInfo['comments']['composer'][0];
 				}
 
@@ -280,7 +280,7 @@ class ScannerController extends Controller {
 				$keys = ['part_of_a_set', 'discnumber', 'partofset', 'disc_number'];
 				$c = count($keys);
 				for ($i = 0; $i < $c; $i++) {
-					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE') {
+					if (isset($ThisFileInfo['comments'][$keys[$i]][0]) and rawurlencode($ThisFileInfo['comments'][$keys[$i]][0]) !== '%FF%FE' and mb_detect_encoding($ThisFileInfo['comments'][$keys[$i]][0]) !== FALSE) {
 						$disc = $ThisFileInfo['comments'][$keys[$i]][0];
 						break;
 					}
