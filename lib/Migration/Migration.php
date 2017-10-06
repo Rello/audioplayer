@@ -53,19 +53,16 @@ class Migration implements IRepairStep {
 	 */
 	public function run(IOutput $output) {
 		$version = $this->config->getAppValue('audioplayer', 'installed_version', '0.0.0');
-		if (version_compare($version, '2.2.0', '>=')) {
+		if (version_compare($version, '2.1.0', '>')) {
 
 			if ($this->connection->tableExists('audioplayer_statistics')) {
 				$this->connection->dropTable('audioplayer_statistics');
 				\OCP\Util::writeLog('audioplayer', 'Table -audioplayer_statistics- deleted', \OCP\Util::DEBUG);
 			}
-
 			if ($this->connection->tableExists('audioplayer_album_artists')) {
 				$this->connection->dropTable('audioplayer_album_artists');
 				\OCP\Util::writeLog('audioplayer', 'Table -audioplayer_album_artists- deleted', \OCP\Util::DEBUG);
 			}
-
-			\OCP\Util::writeLog('audioplayer', 'Old table deleted', \OCP\Util::DEBUG);
 			$output->finishProgress();
 		}
 	}
