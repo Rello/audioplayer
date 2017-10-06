@@ -20,7 +20,8 @@ use OCA\audioplayer\AppInfo\Application;
 class Provider extends \OCP\Search\Provider {
 
 	private $musicController;
-	private $l10N;
+	private $l10n;
+	private $app;
 	
     public function __construct() {
 		$app = new Application();
@@ -36,14 +37,11 @@ class Provider extends \OCP\Search\Provider {
 	 * @return \OCP\Search\Result
 	 */
 	function search($query) {
-		$unescape = function($value) {
-			return strtr($value, array('\,' => ',', '\;' => ';'));
-		};
-
 		$searchresults = array();
 		$results = $this->musicController->searchProperties($query);
 		
 		foreach($results as $result) {
+			$returnData = array();
 			$returnData['id'] = $result['id'];
 			$returnData['description'] = $this->l10n->t('Audio Player').' - '.$result['name'];
 			$returnData['link'] = '../audioplayer/#' . $result['id'];
