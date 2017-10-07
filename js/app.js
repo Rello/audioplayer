@@ -664,7 +664,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	$('.header-album').data('order', '');
 	var can_play = soundManager.html5;
 	
-	if ($this.ajax_call_status != null ) {
+	if ($this.ajax_call_status !== null ) {
 		$this.ajax_call_status.abort();
 	}
 	
