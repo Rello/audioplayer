@@ -180,7 +180,7 @@ class ScannerController extends Controller {
 				$iAlbumArtistId = NULL;
 				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),0);
 
-				if ($album_artist !== $this->l10n->t('Unknown')) { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
+				if ($album_artist !== 0) { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
 				$iAlbumId = $this->writeAlbumToDB($album, (int) $year, $iAlbumArtistId);
 				
 				$bitrate = 0;
@@ -314,8 +314,7 @@ class ScannerController extends Controller {
 			} elseif ($i === $c-1 AND $defaultValue !== null) {
 				return $defaultValue;
 			} elseif ($i === $c-1){
-				$unknown = $this->l10n->t('Unknown');
-				return $unknown;
+				return (string) $this->l10n->t('Unknown');
 			}
 		}
 	}
@@ -592,9 +591,8 @@ class ScannerController extends Controller {
 
 		if ($debug) {
 			$output->writeln("Scanned Folder: ".$userView->getPath());
-		}
-		if ($debug) {
 			$output->writeln("Total audio files: ".count($audios));
+			$output->writeln("Checking all files whether they can be <info>skipped</info>");
 		}
 
 		// get all fileids which are in an excluded folder
@@ -605,7 +603,6 @@ class ScannerController extends Controller {
 				array_push($new_array, $row['fileid']);
 			}
 			$resultExclude = $new_array;
-			//if ($debug) $output->writeln("Excluded ids (.noAdmin): ".implode(",", $resultExclude));
 		
 		// get all fileids which are already in the Audio Player Database
 			$new_array = array();
@@ -616,13 +613,9 @@ class ScannerController extends Controller {
 				array_push($new_array, $row['file_id']);
 			}
 			$resultExisting = $new_array;
-			$new_array = null;
-			//if ($debug) $output->writeln("Existing ids (already scanned): ".implode(",", $resultExisting)."</info>");
 
-		if ($debug) $output->writeln("Checking all files whether they can be <info>skipped</info>");
 		foreach ($audios as $audio) {
-			$current_id = $audio->getID();
-			
+			$current_id = $audio->getID();			
 			if (in_array($current_id, $resultExclude)) {
 				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => excluded");
 			} elseif (in_array($current_id, $resultExisting)) {
