@@ -21,6 +21,7 @@ var Audios = function () {
 	this.percentage = 0;
 	this.progresskey = '';
 	this.category_selectors = [];
+	this.ajax_call_status = null;
 };
 
 Audios.prototype.init = function () {
@@ -663,7 +664,11 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 	$('.header-album').data('order', '');
 	var can_play = soundManager.html5;
 	
-	$.ajax({
+	if ($this.ajax_call_status != null ) {
+		$this.ajax_call_status.abort();
+	}
+	
+	$this.ajax_call_status = $.ajax({
 		type : 'GET',
 		url : OC.generateUrl('apps/audioplayer/getcategoryitems'),
 		data : {category: category, categoryId: PlaylistId},
