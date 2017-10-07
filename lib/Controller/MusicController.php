@@ -31,6 +31,7 @@ class MusicController extends Controller {
 	private $l10n;
 	private static $sortType = 'album';
 	private $db;
+	private $occ_job;
 	/** @var IManager */
 	private $shareManager;
 	
@@ -349,16 +350,6 @@ class MusicController extends Controller {
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ?' );
 		$stmt->execute(array($this->userId));
 		
-		$stmt = $this->db->prepare( 'SELECT `id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?' );
-		$stmt->execute(array($this->userId));
-		$results = $stmt->fetchAll();
-		if(!is_null($results)) {
-			foreach($results as $row) {
-				$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_album_artists` WHERE `album_id` = ?' );
-				$stmt->execute(array($row['id']));
-			}
-		}
-		
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ?' );
 		$stmt->execute(array($this->userId));
 		
@@ -382,9 +373,9 @@ class MusicController extends Controller {
 		$stmt->execute(array($this->userId));
 
 		$result=[
-					'status' => 'success',
-					'msg' =>'all good'
-				];
+			'status' => 'success',
+			'msg' =>'all good'
+		];
 		
 		// applies if scanner is not started via occ
 		if(!$this->occ_job) { 
@@ -410,7 +401,6 @@ class MusicController extends Controller {
 		
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?' );
 		$stmt->execute(array($this->userId, $Id));
-		
 	}
 	
 	private function sortArrayByFields($data) {
