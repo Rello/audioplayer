@@ -24,7 +24,7 @@ var audioPlayer = {
 		var token = ($('#sharingToken').val() !== undefined) ? $('#sharingToken').val() : '';
 		//.thumbnail
 		var dirLoad=data.dir.substr(1);
-		if(dirLoad!=''){
+		if(dirLoad !== ''){
 			dirLoad=dirLoad+'/';
 		}
 		if(token !== ''){
@@ -36,7 +36,7 @@ var audioPlayer = {
 		audioPlayer.mime = data.$file.attr('data-mime');
 		data.$file.find('.thumbnail').html('<i class="ioc ioc-volume-up"  style="color:#fff;margin-left:5px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;font-size: 24px;"></i>');
 			
-		if(audioPlayer.player == null){
+		if(audioPlayer.player === null){
 			soundManager.setup({
 				url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
 		  		onready: function() {
@@ -61,8 +61,9 @@ var audioPlayer = {
 $(document).ready(function() {	
 	if (OCA.Files && OCA.Files.fileActions) {
 	var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
+	var icon_url = OC.imagePath('core', 'actions/sound');
 
-		if(audioPlayer.player == null){
+		if(audioPlayer.player === null){
 			soundManager.setup({
 				url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
 			  	onready: function() {
@@ -77,7 +78,7 @@ $(document).ready(function() {
 							displayName: t('audioplayer', 'Play'),
 							mime: mime_array[i],
 							permissions: OC.PERMISSION_READ,
-							icon: function () {return OC.imagePath('core', 'actions/sound');},
+							icon: icon_url,
 							actionHandler: audioPlayer.onView
 						});
 						OCA.Files.fileActions.register(mime_array[i], 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
