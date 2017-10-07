@@ -231,7 +231,7 @@ Audios.prototype.AlbumClickHandler = function(event){
 		
  	 	if($('.album.is-active').length === 0){
 		 	scrollTop = $('#app-content').scrollTop();
-	 		vactiveAlbumContainer = '.songcontainer[data-album="'+AlbumId+'"]';
+	 		activeAlbumContainer = '.songcontainer[data-album="'+AlbumId+'"]';
 			$(activeAlbumContainer+' .open-arrow').css('left',$(activeAlbum).position().left+iArrowLeft);
 	 	 	$(activeAlbum).addClass('is-active');
 	 	 	$(activeAlbum).find('.artist').hide();
