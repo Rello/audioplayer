@@ -134,7 +134,7 @@ class ScannerController extends Controller {
 		$streams = $this->getStreamObjects($output, $debug);
 			    								
 		if ($debug AND $this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated");
-		if ($debug) $output->writeln("Start processing of <info>ID3s</info>");
+		if ($debug) $output->writeln("Start processing of <info>audio files</info>");
 
 		foreach ($audios as $audio) {
 			
@@ -178,9 +178,9 @@ class ScannerController extends Controller {
 				# in musiccontroller loadArtistsToAlbum() takes over deriving the artists from the album tracks
 				# MP3, FLAC & MP4 have different tags for albumartist
 				$iAlbumArtistId = NULL;
-				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),0);
+				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),'0');
 
-				if ($album_artist !== 0) { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
+				if ($album_artist !== '0') { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
 				$iAlbumId = $this->writeAlbumToDB($album, (int) $year, $iAlbumArtistId);
 				
 				$bitrate = 0;
@@ -240,7 +240,7 @@ class ScannerController extends Controller {
 				$counter_new++;
 		}
 
-		if ($debug) $output->writeln("Start processing of <info>Streams</info>");
+		if ($debug) $output->writeln("Start processing of <info>stream files</info>");
 		foreach ($streams as $stream) {
 				//check if scan is still supposed to run, or if dialog was closed in web already
 				if (!$this->occ_job) {
@@ -573,7 +573,6 @@ class ScannerController extends Controller {
 	 * @return array
 	 */
 	private function getAudioObjects($output = null, $debug = null) {
-		$new_array = array();
 		$audios_clean = array();
 		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
 		$userView = $this->rootFolder->getUserFolder($this -> userId);
@@ -591,28 +590,22 @@ class ScannerController extends Controller {
 
 		if ($debug) {
 			$output->writeln("Scanned Folder: ".$userView->getPath());
-			$output->writeln("Total audio files: ".count($audios));
-			$output->writeln("Checking all files whether they can be <info>skipped</info>");
+			$output->writeln("<info>Total audio files:</info> ".count($audios));
+			$output->writeln("Checking audio files to be skipped");
 		}
 
 		// get all fileids which are in an excluded folder
 			$stmt = $this->db->prepare('SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)');
 			$stmt->execute(array('.noAudio', '.noaudio'));
 			$results = $stmt->fetchAll();
-			foreach ($results as $row) {
-				array_push($new_array, $row['fileid']);
-			}
-			$resultExclude = $new_array;
+			$resultExclude = array_column($results, 'fileid');
 		
 		// get all fileids which are already in the Audio Player Database
 			$new_array = array();
 			$stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ');
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
-			foreach ($results as $row) {
-				array_push($new_array, $row['file_id']);
-			}
-			$resultExisting = $new_array;
+			$resultExisting = array_column($results, 'file_id');
 
 		foreach ($audios as $audio) {
 			$current_id = $audio->getID();			
@@ -636,7 +629,6 @@ class ScannerController extends Controller {
 	 * @return array
 	 */
 	private function getStreamObjects($output = null, $debug = null) {
-		$new_array = array();
 		$audios_clean = array();
 		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
 		$userView = $this->rootFolder->getUserFolder($this -> userId);
@@ -650,31 +642,23 @@ class ScannerController extends Controller {
 		$audios_xspf = $userView->searchByMime('application/xspf+xml');
 		$audios = array_merge($audios_mpegurl, $audios_scpls, $audios_xspf);
 		if ($debug) {
-			$output->writeln("Total stream files: ".count($audios));
+			$output->writeln("<info>Total stream files:</info> ".count($audios));
+			$output->writeln("Checking stream files to be skipped");
 		}
 
 		// get all fileids which are in an excluded folder
 			$stmt = $this->db->prepare('SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)');
 			$stmt->execute(array('.noAudio', '.noaudio'));
 			$results = $stmt->fetchAll();
-			foreach ($results as $row) {
-				array_push($new_array, $row['fileid']);
-			}
-			$resultExclude = $new_array;
-			//if ($debug) $output->writeln("Excluded ids (.noAdmin): ".implode(",", $resultExclude));
+			$resultExisting = array_column($results, 'fileid');
 		
 		// get all fileids which are already in the Audio Player Database
 			$new_array = array();
 			$stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? ');
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
-			foreach ($results as $row) {
-				array_push($new_array, $row['file_id']);
-			}
-			$resultExisting = $new_array;
-			//if ($debug) $output->writeln("Existing ids (already scanned): ".implode(",", $resultExisting)."</info>");
+			$resultExisting = array_column($results, 'file_id');
 
-		if ($debug) $output->writeln("Checking all streams whether they can be <info>skipped</info>");
 		foreach ($audios as $audio) {
 			$current_id = $audio->getID();
 			
