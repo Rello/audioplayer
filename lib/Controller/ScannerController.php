@@ -17,7 +17,6 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
-use OCP\IUserSession;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
 use OCP\IDbConnection;
@@ -601,7 +600,6 @@ class ScannerController extends Controller {
 			$resultExclude = array_column($results, 'fileid');
 		
 		// get all fileids which are already in the Audio Player Database
-			$new_array = array();
 			$stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ');
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
@@ -656,7 +654,7 @@ class ScannerController extends Controller {
 			$stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? ');
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
-			$resultExisting = array_column($results, 'file_id');
+			$resultExclude = array_column($results, 'file_id');
 
 		foreach ($audios as $audio) {
 			$current_id = $audio->getID();
