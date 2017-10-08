@@ -653,7 +653,6 @@ class ScannerController extends Controller {
 			$resultExisting = array_column($results, 'fileid');
 		
 		// get all fileids which are already in the Audio Player Database
-			$new_array = array();
 			$stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? ');
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
