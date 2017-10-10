@@ -1822,10 +1822,8 @@ Audios.prototype.checkNewTracks = function() {
 			type : 'POST',
 			url : OC.generateUrl('apps/audioplayer/checknewtracks'),
 			success : function(data) {
-					if(data === 'true'){
-						$('#notification').text(t('audioplayer','New audio files available'));
-						$('#notification').slideDown();
-						window.setTimeout(function(){$('#notification').slideUp();}, 5000);
+					if (data === 'true'){
+                        OC.Notification.showTemporary(t('audioplayer','New audio files available'));
 					}
 			}
 		});
@@ -1917,15 +1915,24 @@ $(document).ready(function() {
 		myAudios = new Audios();
 		myAudios.init();
 		myAudios.checkNewTracks();
-		
-		//if($(window).width()>768){
+
+    	var notify = $('#audioplayer_notification').val();
+		if( notify !== ''){
+			OC.Notification.showHtml(
+                notify,
+				{
+					type: 'error',
+					isHTML: true
+				}
+			);
+		}
+
+    //if($(window).width()>768){
 			$('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
 		//}else{
 		//	$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width()-45);
 		//}
-	
-	
-	
+
 	$('#edit_photo_dialog').dialog({
 		autoOpen : false,
 		modal : true,
