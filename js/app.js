@@ -32,7 +32,7 @@ Audios.prototype.init = function () {
 		var locHashTemp = searchresult.split('-');
 	}
 		
-	myAudios.get_uservalue('category', function(someElement) {
+	myAudios.get_uservalue('category', function() {
 		// Category View
 		if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Albums') {		
 			window.location.href='#';
@@ -166,8 +166,8 @@ Audios.prototype.AlbumSongs = function(){
 				}
 
 				var ClonePlaylist = myWrapper.find('li').clone();
-				$('#activePlaylist').html('');
-				$('#activePlaylist').append(ClonePlaylist);
+                $this.ActivePlaylist.html('');
+                $this.ActivePlaylist.append(ClonePlaylist);
 				$('#activePlaylist span.actionsSong').remove();
 				$('#activePlaylist span.number').remove();
 				$('#activePlaylist span.time').remove();
@@ -175,7 +175,7 @@ Audios.prototype.AlbumSongs = function(){
 				$('#activePlaylist li.noPlaylist').remove();
 				
 				 var myCover=$('.album.is-active .albumcover');
-				 if(myCover.css('background-image') == 'none'){
+				 if(myCover.css('background-image') === 'none'){
 					$('.sm2-playlist-cover').text(myCover.text()).css({'background-color':myCover.css('background-color'),'color':myCover.css('color'),'background-image':'none'});
 				}else{
 					$('.sm2-playlist-cover').text('').css({'background-image':myCover.css('background-image')});
@@ -382,9 +382,8 @@ Audios.prototype.buildAlbumRows = function(aAlbums){
 };
 
 Audios.prototype.loadAlbums = function(){
-	 $this = this;
 	 $('.sm2-bar-ui').hide();
-	 this.AlbumContainer.hide();
+    $this.AlbumContainer.hide();
 	 $('#loading').show();
 	$.ajax({
 		type : 'GET',
@@ -448,8 +447,8 @@ Audios.prototype.loadAlbums = function(){
 							$('.albumSelect li i.ioc').hide();
 				 			myWrapper.addClass('isPlaylist');
 				 			var objCloneActivePlaylist= $(this).parent().parent().find('.albumSelect li').clone();
-				 			$('#activePlaylist').html('');
-							$('#activePlaylist').append(objCloneActivePlaylist);
+                            $this.ActivePlaylist.html('');
+                            $this.ActivePlaylist.append(objCloneActivePlaylist);
 							$('#activePlaylist span').remove();
 							$('#activePlaylist li.noPlaylist').remove();
 							 if($this.AudioPlayer === null){
@@ -578,7 +577,6 @@ Audios.prototype.loadSongsRow = function(elem){
 Audios.prototype.loadCategory = function(){	
 	var $this = this;
 	var category = $this.category_selectors[0];
-	$('.sm2-bar-ui').show();
 	$('#addPlaylist').addClass('ap_hidden');
 	$('#myCategory').html('');
 	$('.toolTip').tooltip('hide');
@@ -630,6 +628,13 @@ Audios.prototype.loadCategory = function(){
 					$("#app-navigation").scrollTop($("#app-navigation").scrollTop()+$('#myCategory li.active').first().position().top - 25);
 					$this.loadIndividualCategory();
 				}
+            }else{
+                $('.sm2-bar-ui').hide();
+                $this.PlaylistContainer.hide();
+                $this.AlbumContainer.show();
+                $this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
+                $this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new tracks to library')+'</span>');
+                $this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
 			}
 		}
 	});
@@ -675,7 +680,8 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 		success : function(jsondata) {
 			var albumcount = '';
 			if(jsondata.status === 'success'){
-				$(jsondata.data).each(function(i,el){			
+                $('.sm2-bar-ui').show();
+				$(jsondata.data).each(function(i,el){
 				
 					var li = $('<li/>').attr({
 						'data-trackid' : el.id,
@@ -841,7 +847,12 @@ Audios.prototype.loadIndividualCategory = function(evt) {
 				}
 
 			}else{
-				$('#individual-playlist').html('<span class="no-songs-found-pl">'+t('audioplayer','Add new tracks to playlist by drag and drop')+'</span>');
+                $('.sm2-bar-ui').hide();
+                $this.PlaylistContainer.hide();
+                $this.AlbumContainer.show();
+                $this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
+                $this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new tracks to library')+'</span>');
+                $this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
 			}
 			
 			if (category !== "Title") {
@@ -1092,7 +1103,7 @@ Audios.prototype.editSong = function(evt){
 													$this.PlaylistContainer.hide();
 													$('#individual-playlist').html('');
 													$('.albumwrapper').removeClass('isPlaylist');
-													$('#activePlaylist').html('');
+                                                	$this.ActivePlaylist.html('');
 													$('.sm2-playlist-target').html('');
 													$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
 													 $this.loadAlbums();
@@ -1747,7 +1758,7 @@ Audios.prototype.sort_playlist = function(evt) {
 	$('#individual-playlist').append(elems);
 
 	if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
-		elems = $('#activePlaylist').children('li').get();
+		elems = $this.ActivePlaylist.children('li').get();
 		elems.sort(function(a,b){
 			a = $(a).data(column).toString();
 			b = $(b).data(column).toString();
@@ -1760,7 +1771,7 @@ Audios.prototype.sort_playlist = function(evt) {
 			}
 			return ((a < b) ? -1*factor : ((a > b) ? 1*factor : 0));
 		});
-		$('#activePlaylist').append(elems);
+        $this.ActivePlaylist.append(elems);
 	}
 
 	if($this.AudioPlayer){
