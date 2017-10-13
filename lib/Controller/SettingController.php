@@ -24,6 +24,7 @@ class SettingController extends Controller {
 	
 	private $userId;
 	private $configManager;
+	private $rootFolder;
 	
 	public function __construct(
 			$appName, 
