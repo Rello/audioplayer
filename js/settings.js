@@ -116,7 +116,7 @@ $(document).ready(function() {
 					$('#activePlaylist').html('');
 					$('.sm2-playlist-target').html('');
 					$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-					$('#notification').text(t('audioplayer','Start resetting library ...'));
+					$('#notification').text(t('audioplayer','Start resetting library…'));
 					$('#notification').slideDown();
 					
 					$.ajax({
