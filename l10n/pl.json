@@ -9,7 +9,7 @@
 "Titles" : "Tytuły",
 "Album" : "Album",
 "Scan for audio files" : "Skanowanie plików audio",
-"Start scanning ..." : "Rozpocznij skanowanie ...",
+"Start scanning…" : "Rozpocznij skanowanie…",
 "Scanning finished!" : "Skanowanie zakończone!",
 "Audios found: " : " Znaleziono nowe tytuły: ",
 "Albums found: " : " Znaleziono nowe albumy: ",
@@ -19,7 +19,7 @@
 "Volume" : "Głośność",
 "previous song" : "poprzedni utwór",
 "next song" : "następny utwór",
-"play/ pause" : "graj/pauza",
+"play/ pause" : "graj/ pauza",
 "Cancel" : "Anuluj",
 "Close" : "Zamknij",
 "Length" : "Długość",
@@ -58,8 +58,9 @@
 "Genres" : "Gatunki",
 "Settings" : "Settings",
 "Cyrillic support" : "Obsługa cyrylicy",
-"Read more" : "Czytaj więcej",
+"More information…" : "More information…",
 "Search for audio files in" : "Wyszukiwanie plików audio w",
 "Formats supported by the browser" : "Formats supported by the browser",
-"Formats not supported by the browser" : "Formats not supported by the browser"
+"Formats not supported by the browser" : "Formats not supported by the browser",
+"Please reset and rescan library to make use of new features." : "Please reset and rescan library to make use of new features."
 },"pluralForm":""}
