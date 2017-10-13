@@ -42,7 +42,7 @@ class Application extends App {
 		);
 
 		$container->registerService(
-			'UserId', function(IContainer $c) {
+			'UserId', function() {
 				$user = \OC::$server->getUserSession()->getUser();
 				if ($user) {
 					return $user->getUID();
