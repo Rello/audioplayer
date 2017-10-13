@@ -9,7 +9,7 @@
 "Titles" : "Titel",
 "Album" : "Album",
 "Scan for audio files" : "Nach Audiodateien scannen",
-"Start scanning ..." : "Scannen starten ...",
+"Start scanning…" : "Scannen starten…",
 "Scanning finished!" : "Scannen beendet!",
 "Audios found: " : " Audiodateien gefunden: ",
 "Albums found: " : " Alben gefunden: ",
@@ -40,7 +40,7 @@
 "- choose -" : "- auswählen -",
 "Errors: " : "Fehler: ",
 "Edit picture" : "Bild bearbeiten",
-"If rescan does not solve this problem the files are broken" : "Wenn erneutes Scannen das Problem nicht behebt,<br>sind die Dateien defekt",
+"If rescan does not solve this problem the files are broken" : "Wenn erneutes scannen das Problem nicht behebt,<br>sind die Dateien defekt",
 "Disc" : "Disc",
 "Discs" : "Discs",
 "Track" : "Stück",
@@ -58,9 +58,9 @@
 "Genres" : "Genres",
 "Settings" : "Einstellungen",
 "Cyrillic support" : " Kyrillisch-Unterstützung",
-"Read more" : "Weitere Informationen",
+"More information…" : "Mehr Informationen…",
 "Search for audio files in" : "Suche nach Audiodateien in",
 "Formats supported by the browser" : "Vom Browser unterstützte Formate",
 "Formats not supported by the browser" : "Vom Browser nicht unterstützte Formate",
-"Please reset and rescan the library to make use of the newest features. More information..." : "Bitte die Bibliothek zurücksetzen und neu scannen, um die neuen Features nutzen zu können. Mehr Informationen..."
+"Please reset and rescan library to make use of new features." : "Bitte Bibliothek zurücksetzen und erneut scannen, um neue Funktionen nutzen zu können."
 },"pluralForm":""}
