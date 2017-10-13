@@ -13,7 +13,6 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
