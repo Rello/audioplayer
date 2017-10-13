@@ -1514,7 +1514,7 @@ Audios.prototype.savePhoto = function() {
 		form.submit();
 		
 		target.load(function() {
-            $('#noimage').text(t('audioplayer', 'Picture generating, please wait ...')).addClass('icon-loading');
+            $('#noimage').text(t('audioplayer', 'Picture generating, please wait…')).addClass('icon-loading');
 			var response = jQuery.parseJSON(target.contents().text());
 			if (response !== undefined) {
 				$('#isphoto').val('1');
