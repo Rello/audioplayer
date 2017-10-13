@@ -47,7 +47,7 @@
 		</li>
 		<li>
 			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank" class="icon-info">
-				<?php p($l->t('Read more')); ?>
+				<?php p($l->t('More information…')); ?>
 			</a>
 		</li>
 	</ul>
