@@ -9,7 +9,7 @@
 "Titles" : "Назви",
 "Album" : "Альбом",
 "Scan for audio files" : "Знайти аудіофайли",
-"Start scanning ..." : "[ Почати пошук ]",
+"Start scanning…" : "Почати пошук…",
 "Scanning finished!" : "Пошук завершено!",
 "Audios found: " : " Знайдено аудіофайлів: ",
 "Albums found: " : " Знайдено альбомів: ",
@@ -19,7 +19,7 @@
 "Volume" : "Гучність",
 "previous song" : "попередня",
 "next song" : "наступна",
-"play/ pause" : "відтворення/пауза",
+"play/ pause" : "відтворення/ пауза",
 "Cancel" : "Скасувати",
 "Close" : "Закрити",
 "Length" : "Тривалість",
@@ -58,8 +58,9 @@
 "Genres" : "Стилі",
 "Settings" : "Settings",
 "Cyrillic support" : "Підтримка кирилиці",
-"Read more" : "Деталі",
+"More information…" : "More information…",
 "Search for audio files in" : "Папка з аудіофайлами",
 "Formats supported by the browser" : "Formats supported by the browser",
-"Formats not supported by the browser" : "Formats not supported by the browser"
+"Formats not supported by the browser" : "Formats not supported by the browser",
+"Please reset and rescan library to make use of new features." : "Please reset and rescan library to make use of new features."
 },"pluralForm":""}
