@@ -75,7 +75,7 @@ class PageController extends Controller {
 		$app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');
 		$scanner_version = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_version', '0.0.0');
 		if (version_compare($app_version, $scanner_version, '>')) {
-			return '<a href="https://github.com/Rello/audioplayer/blob/master/CHANGELOG.md">'.$this->l10n->t('Please reset and rescan the library to make use of the newest features. More information...').'</a>';
+			return '<a href="https://github.com/rello/audioplayer/blob/master/CHANGELOG.md">'.$this->l10n->t('Please reset and rescan library to make use of new features.').' '.$this->l10n->t('More information…').'</a>';
 		} else {
 			return null;
 		}	
