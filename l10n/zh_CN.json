@@ -6,7 +6,7 @@
 "Scan for new audio files" : "搜索新的音频",
 "Nr" : "曲数",
 "Scan for audio files" : "搜索音频",
-"Start scanning ..." : "搜索中...",
+"Start scanning…" : "搜索中…",
 "Scanning finished!" : "搜索完成!",
 "Audios found: " : " 找到新的音频: ",
 "Albums found: " : " 找到新的专辑: ",
@@ -16,7 +16,7 @@
 "Volume" : "音量",
 "previous song" : "上一曲",
 "next song" : "下一曲",
-"play/ pause" : "播放/暂停",
+"play/ pause" : "播放/ 暂停",
 "Cancel" : "取消",
 "Close" : "关闭",
 "Length" : "时间长度",
@@ -58,8 +58,9 @@
 "Genres" : "Genres",
 "Settings" : "Settings",
 "Cyrillic support" : "西里尔支持",
-"Read more" : "详情",
+"More information…" : "More information…",
 "Search for audio files in" : "请选择想要搜索的文件夹",
 "Formats supported by the browser" : "Formats supported by the browser",
-"Formats not supported by the browser" : "Formats not supported by the browser"
+"Formats not supported by the browser" : "Formats not supported by the browser",
+"Please reset and rescan library to make use of new features." : "Please reset and rescan library to make use of new features."
 },"pluralForm":""}
