@@ -121,7 +121,6 @@ class CategoryController extends Controller {
 	
 				try {
 					$path = \OC\Files\Filesystem::getPath($row['id']);
-					$path = null;
 				} catch (\Exception $e) {
 					$file_not_found = true;
        			}
