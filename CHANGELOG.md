@@ -5,6 +5,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Added
 - stream URLs [#27](https://github.com/rello/audioplayer/issues/27) [#233](https://github.com/rello/audioplayer/issues/233)
 - Scrutinizer Continuous Inspection checks
+- Intruduce on demand rescan notifications [#246](https://github.com/rello/audioplayer/issues/246)
 
 ### Changed
 - sidebar rebuilt [#233](https://github.com/rello/audioplayer/issues/233)
@@ -22,6 +23,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Fixed
 - `count()` in `for()` loop [#235](https://github.com/rello/audioplayer/issues/235)
+- one-click-player did not start with first click
 
 ### Security
 - 
