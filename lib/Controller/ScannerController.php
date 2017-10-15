@@ -128,7 +128,7 @@ class ScannerController extends Controller {
 
 		if (!$this->occ_job) $this->updateProgress(0, $output, $debug);
 					
-		// get only the relevant audio & stream files
+        	$this->checkScannerVersion();
 		$audios = $this->getAudioObjects($output, $debug);
 		$streams = $this->getStreamObjects($output, $debug);
 			    								
@@ -780,4 +780,18 @@ class ScannerController extends Controller {
 			return 'false';
 		}
 	}
+
+	/**
+     * if the scanner is started on an empty library, the current app version is stored
+     *
+     */
+    private function checkScannerVersion() {
+        $stmt = $this->db->prepare( 'SELECT COUNT(`id`) AS `TRACKCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
+        $stmt->execute(array($this->userId));
+        $row = $stmt->fetch();
+        if((int)$row['TRACKCOUNT'] === 0){
+            $app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');
+            $this->configManager->setUserValue($this->userId,$this->appName,'scanner_version', $app_version);
+        }
+    }
 }

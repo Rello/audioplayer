@@ -14,10 +14,10 @@
 namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
+use OCP\IL10N;
 
 /**
  * Controller class for main page.
@@ -32,12 +32,14 @@ class PageController extends Controller {
 			$appName, 
 			IRequest $request, 
 			$userId, 
-			IConfig $configManager
+			IConfig $configManager,
+			IL10N $l10n
 			) {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
 		$this->userId = $userId;
 		$this->configManager = $configManager;
+		$this->l10n = $l10n;
 	}
 
 	/**
@@ -64,7 +66,18 @@ class PageController extends Controller {
 			'cyrillic' => $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic'),
 			'path' => $this->configManager->getUserValue($this->userId, $this->appName, 'path'),
 			'navigation' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
+			'notification' => $this->getNotification(),
 		));
 		return $response;
+	}	
+
+	private function getNotification() {
+		$app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');
+		$scanner_version = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_version', '0.0.0');
+		if (version_compare($app_version, $scanner_version, '>')) {
+			return '<a href="https://github.com/rello/audioplayer/blob/master/CHANGELOG.md">'.$this->l10n->t('Please reset and rescan library to make use of new features.').' '.$this->l10n->t('More information…').'</a>';
+		} else {
+			return null;
+		}	
 	}	
 }

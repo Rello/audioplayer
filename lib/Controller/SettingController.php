@@ -13,7 +13,6 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
@@ -25,6 +24,7 @@ class SettingController extends Controller {
 	
 	private $userId;
 	private $configManager;
+	private $rootFolder;
 	
 	public function __construct(
 			$appName, 

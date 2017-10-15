@@ -36,52 +36,43 @@ class Application extends App {
 
 		$container->registerService(
 			'URLGenerator', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return $server->getURLGenerator();
-		}
+				$server = $c->query('ServerContainer');
+				return $server->getURLGenerator();
+			}
 		);
 
 		$container->registerService(
-			'UserId', function(IContainer $c) {
-			$user = \OC::$server->getUserSession()
-								->getUser();
-			if ($user) {
-				return $user->getUID();
+			'UserId', function() {
+				$user = \OC::$server->getUserSession()->getUser();
+				if ($user) {
+					return $user->getUID();
+				}
 			}
-		}
 		);
 
 		$container->registerService(
 			'L10N', function(IContainer $c) {
-			return $c->query('ServerContainer')
+				return $c->query('ServerContainer')
 					 ->getL10N($c->query('AppName'));
-		}
+			}
 		);
 
 		$container->registerService(
-			'Config', function($c) {
-			return $c->getServer()
-					 ->getConfig();
-		}
+			'Config', function(IContainer $c) {
+				return $c->getServer()->getConfig();
+			}
 		);
-
 	}
 
-
 	public function registerFileHooks() {
-
 		Util::connectHook(
 			'OC_Filesystem', 'delete', '\OCA\audioplayer\Hooks\FileHooks', 'deleteTrack'
 		);
 	}
 
 	public function registerUserHooks() {
-
 		Util::connectHook(
 			'OC_User', 'post_deleteUser', '\OCA\audioplayer\Hooks\UserHooks', 'deleteUser'
 		);
 	}
-
 }

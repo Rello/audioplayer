@@ -13,7 +13,6 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
@@ -122,7 +121,6 @@ class CategoryController extends Controller {
 	
 				try {
 					$path = \OC\Files\Filesystem::getPath($row['id']);
-					$path = null;
 				} catch (\Exception $e) {
 					$file_not_found = true;
        			}

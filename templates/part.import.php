@@ -3,7 +3,7 @@
 	<form action=" " onsubmit="return false;" >
 		<input type="hidden" id="audios_import_progresskey" value="<?php p('audioplayer-scan-' .time()) ?>">
 			<br><br>
-		<input id="audios_import_submit" type="button" class="button" value="<?php p($l->t('Start scanning ...')); ?>" id="startimport">
+		<input id="audios_import_submit" type="button" class="button" value="<?php p($l->t('Start scanning…')); ?>" id="startimport">
 	<form>
 </div>
 <div id="audios_import_process">

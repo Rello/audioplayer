@@ -6,7 +6,7 @@
 "Scan for new audio files" : "搜尋新的音樂",
 "Nr" : "曲數",
 "Scan for audio files" : "搜尋音樂",
-"Start scanning ..." : "搜尋中...",
+"Start scanning…" : "搜尋中…",
 "Scanning finished!" : "搜尋完成！",
 "Audios found: " : " 找到新的音樂: ",
 "Albums found: " : " 找到新的專輯: ",
@@ -58,8 +58,9 @@
 "Genres" : "Genres",
 "Settings" : "Settings",
 "Cyrillic support" : "支援西里爾文",
-"Read more" : "詳情",
+"More information…" : "More information…",
 "Search for audio files in" : "請選擇欲搜尋音樂的資料夾",
 "Formats supported by the browser" : "Formats supported by the browser",
-"Formats not supported by the browser" : "Formats not supported by the browser"
+"Formats not supported by the browser" : "Formats not supported by the browser",
+"Please reset and rescan library to make use of new features." : "Please reset and rescan library to make use of new features."
 },"pluralForm":""}

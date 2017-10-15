@@ -9,7 +9,7 @@
 "Titles" : "Titles",
 "Album" : "Альбом",
 "Scan for audio files" : "Найти аудиофайлы",
-"Start scanning ..." : "[ Начать поиск ]",
+"Start scanning…" : "Начать поиск…",
 "Scanning finished!" : "Поиск окончен!",
 "Audios found: " : " Найдено аудиофайлов: ",
 "Albums found: " : " Найдено альбомов: ",
@@ -19,7 +19,7 @@
 "Volume" : "Громкость",
 "previous song" : "предыдущая",
 "next song" : "следующая",
-"play/ pause" : "воспроизведение/пауза",
+"play/ pause" : "воспроизведение/ пауза",
 "Cancel" : "Cancel",
 "Close" : "Закрыть",
 "Length" : "Длительность",
@@ -58,8 +58,9 @@
 "Genres" : "Стили",
 "Settings" : "Settings",
 "Cyrillic support" : "Поддержка кириллицы",
-"Read more" : "Подробности",
+"More information…" : "More information…",
 "Search for audio files in" : "Искать аудиофайлы в",
 "Formats supported by the browser" : "Formats supported by the browser",
-"Formats not supported by the browser" : "Formats not supported by the browser"
+"Formats not supported by the browser" : "Formats not supported by the browser",
+"Please reset and rescan library to make use of new features." : "Please reset and rescan library to make use of new features."
 },"pluralForm":""}
