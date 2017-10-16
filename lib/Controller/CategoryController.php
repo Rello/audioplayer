@@ -488,6 +488,7 @@ class CategoryController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+     *
 	 */
 	public function setFavorite($fileId, $isFavorite) {
 		$this->tagger = $this->tagManager->load('files');
