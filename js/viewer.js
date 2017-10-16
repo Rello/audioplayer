@@ -73,8 +73,8 @@ $(document).ready(function() {
                     });
 
                     var can_play = soundManager.html5;
-                    for (var i=0; i<stream_array.length; i++) {
-                        can_play[stream_array[i]] = true;
+                    for (var s=0; s<stream_array.length; s++) {
+                        can_play[stream_array[s]] = true;
                     }
                     for (var i=0; i<mime_array.length; i++) {
                         if (can_play[mime_array[i]] === true) {
