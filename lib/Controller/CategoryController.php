@@ -76,7 +76,7 @@ class CategoryController extends Controller {
 		$SQL = null;
 		$aPlaylists=array();
 		if($category === 'Artist') {
-			$SQL="SELECT  distinct(AT.`artist_id`) AS `id`, AA.`name`, LOWER(AA.`name`) AS `lower` 
+            $SQL="SELECT  distinct(AT.`artist_id`) AS `id`, AA.`name`, LOWER(AA.`name`) AS `lower` 
 						FROM `*PREFIX*audioplayer_tracks` AT
 						JOIN `*PREFIX*audioplayer_artists` AA
 						on AA.`id` = AT.`artist_id`
@@ -117,21 +117,9 @@ class CategoryController extends Controller {
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
 			foreach($results as $row) {
-				$file_not_found = false;	
-	
-				try {
-					$path = \OC\Files\Filesystem::getPath($row['id']);
-				} catch (\Exception $e) {
-					$file_not_found = true;
-       			}
-
-       			if($file_not_found === false){
- 					array_splice($row, 2, 1);
- 					$row['id'] = 'S'.$row['id'];
-					$aPlaylists[] = $row;
-				} else {
-					$this->deleteFromDB($row['id']);
-				}	
+                array_splice($row, 2, 1);
+                $row['id'] = 'S'.$row['id'];
+                $aPlaylists[] = $row;
 			}
 			$aPlaylists[] = array("id" => "", "name" => "");
 
@@ -376,36 +364,26 @@ class CategoryController extends Controller {
 		$stmt->execute(array($categoryId, $this->userId));
 		$results = $stmt->fetchAll();
 		foreach($results as $row) {
-			$file_not_found = false;	
-			try {
-				$path = \OC\Files\Filesystem::getPath($row['fid']);
-			} catch (\Exception $e) {
-				$file_not_found = true;
-       		}
-       		
-       		if($file_not_found === false){
-				if ($row['cover'] === null) {
-					$row['cid'] = '';
-				} 
-				if ($category === 'Album') {
-					$row['cl3'] = $row['dsc'].'-'.$row['num'];
-				} 
- 				array_splice($row, 8, 3);
-				$path = rtrim($path,"/");
-				$row['lin'] = rawurlencode($path);
-				if (in_array($row['fid'], $favorites)) {
-					$row['fav'] = "t";
-				} else {
-					$row['fav'] = "f";
-				}
-								
-				if ($favorite AND !in_array($row['fid'], $favorites)) {
-				} else {
-					$aTracks[]=$row;
-				}
-			} else {
-				$this->deleteFromDB($row['fid']);
-			}	
+            if ($row['cover'] === null) {
+                $row['cid'] = '';
+            }
+            if ($category === 'Album') {
+                $row['cl3'] = $row['dsc'].'-'.$row['num'];
+            }
+            array_splice($row, 8, 3);
+            $path = \OC\Files\Filesystem::getPath($row['fid']);
+            $path = rtrim($path,"/");
+            $row['lin'] = rawurlencode($path);
+            if (in_array($row['fid'], $favorites)) {
+                $row['fav'] = "t";
+            } else {
+                $row['fav'] = "f";
+            }
+
+            if ($favorite AND !in_array($row['fid'], $favorites)) {
+            } else {
+                $aTracks[]=$row;
+            }
 		}
 		
 		if(empty($aTracks)){
@@ -528,7 +506,7 @@ class CategoryController extends Controller {
 		$date = new \DateTime();
 		$playtime = $date->getTimestamp();
 		
-		$SQL='SELECT id, playcount FROM *PREFIX*audioplayer_stats WHERE `user_id`= ? AND `track_id`= ?';
+		$SQL='SELECT `id`, `playcount` FROM `*PREFIX*audioplayer_stats` WHERE `user_id`= ? AND `track_id`= ?';
 		$stmt = $this->db->prepare($SQL);
 		$stmt->execute(array($this->userId, $track_id));
 		$row = $stmt->fetch();

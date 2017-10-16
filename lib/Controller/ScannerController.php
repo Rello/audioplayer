@@ -414,7 +414,7 @@ class ScannerController extends Controller {
 	 * @return null|integer
 	 */
 	private function writeTrackToDB($aTrack) {
-		$SQL = 'SELECT id FROM *PREFIX*audioplayer_tracks WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
+		$SQL = 'SELECT `id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
 				AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? 
 				AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?
 				AND `disc`= ? AND `composer`= ? AND `subtitle`= ?';
