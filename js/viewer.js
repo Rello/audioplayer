@@ -61,6 +61,8 @@ var audioPlayer = {
 $(document).ready(function() {
     if (OCA.Files && OCA.Files.fileActions) {
         var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
+        var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
+        mime_array = mime_array.concat(stream_array);
         var icon_url = OC.imagePath('core', 'actions/sound');
 
         if(audioPlayer.player === null){
@@ -71,6 +73,9 @@ $(document).ready(function() {
                     });
 
                     var can_play = soundManager.html5;
+                    for (var i=0; i<stream_array.length; i++) {
+                        can_play[stream_array[i]] = true;
+                    }
                     for (var i=0; i<mime_array.length; i++) {
                         if (can_play[mime_array[i]] === true) {
                             OCA.Files.fileActions.registerAction({
