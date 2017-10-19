@@ -21,7 +21,6 @@ $request = \OC::$server->getRequest();
 		if (preg_match('%/apps/files(/.*)?%', $url) || preg_match('%/s/(/.*)?%', $url)) {
 			\OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');		
 			\OCP\Util::addStyle('audioplayer', 'style');
-			
 			\OCP\Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
 			\OCP\Util::addScript('audioplayer', 'viewer-min');
 			\OCP\Util::addScript('audioplayer', 'berniecode-animator-min');

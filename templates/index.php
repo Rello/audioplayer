@@ -16,7 +16,7 @@
 	style('audioplayer', 'style');
 	script('files', 'jquery.fileupload');
 	script('audioplayer', 'jquery.Jcrop-min');
-	script('audioplayer', 'soundmanager2-nodebug-jsmin'); 
+	script('audioplayer', 'soundmanager2-nodebug-jsmin');
 	script('audioplayer', 'bar-ui-min');
 	script('audioplayer', 'app-min');
 	script('audioplayer', 'settings');
