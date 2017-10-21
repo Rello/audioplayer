@@ -262,8 +262,8 @@ class CategoryController extends Controller {
 	 * @NoAdminRequired
 	 *
      * @param string $category
-     * @param integer $categoryId
-     * @return array
+     * @param string $categoryId
+     * @return JSONResponse
 	 */
 	public function getCategoryItems($category, $categoryId){
 		$albums = 0;			
@@ -293,7 +293,7 @@ class CategoryController extends Controller {
      * Get playlist titles for a selected category
      *
      * @param string $category
-     * @param integer $categoryId
+     * @param string $categoryId
      * @return array
      */
 	private function getItemsforCatagory($category,$categoryId){
@@ -454,8 +454,8 @@ class CategoryController extends Controller {
 			if ($matches[0]) {
 				$x++;
 				$row = array();
-				$row['id'] = substr($categoryId, 1).$x;
-				$row['fid'] = substr($categoryId, 1).$x;
+				$row['id'] = $fileId.$x;
+				$row['fid'] = $fileId.$x;
 				$row['cl1'] = $matches[0][0];
 				$row['cl2'] = '';
 				$row['cl3'] = '';
