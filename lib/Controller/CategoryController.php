@@ -70,9 +70,14 @@ class CategoryController extends Controller {
 		$response -> setData($result);
 		return $response;
 	}
-	
+
+    /**
+     * Get the categories items for a user
+     *
+     * @param string $category
+     * @return array
+     */
 	private function getCategoryforUser($category){
-	
 		$SQL = null;
 		$aPlaylists=array();
 		if($category === 'Artist') {
@@ -165,8 +170,14 @@ class CategoryController extends Controller {
 		}
 	}
 
+    /**
+     * Get the number of items for a category item
+     *
+     * @param string $category
+     * @param integer $categoryId
+     * @return integer
+     */
 	private function getCountForCategory($category,$categoryId){
-
 		$SQL = null;
 		if($category === 'Artist') {
 			$SQL="SELECT  COUNT(`AT`.`id`) AS `count`
@@ -218,16 +229,18 @@ class CategoryController extends Controller {
 		} else {
 			$stmt->execute(array($categoryId, $this->userId));
 		}
-		$results = $stmt->fetchAll();
-		$count = array();
-		foreach($results as $row) {
-			$count = $row['count'];
-		}
-		return $count;
+		$results = $stmt->fetch();
+		return $results['count'];
 	}
 
+    /**
+     * Count the number of albums within the artist selection
+     *
+     * @param string $category
+     * @param integer $categoryId
+     * @return integer
+     */
 	private function getAlbumCountForCategory($category,$categoryId){
-
 		$SQL = null;
 		if($category === 'Artist') {
 			$SQL="SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
@@ -240,18 +253,17 @@ class CategoryController extends Controller {
 
 		$stmt = $this->db->prepare($SQL);
 		$stmt->execute(array($categoryId, $this->userId));
-		$results = $stmt->fetchAll();
-		$count = array();
-		foreach($results as $row) {
-			$count = $row['count'];
-		}
-		return $count;
+        $results = $stmt->fetch();
+        return $results['count'];
 	}
 
-	
 	/**
+     * AJAX function to get playlist titles for a selected category
 	 * @NoAdminRequired
-	 * 
+	 *
+     * @param string $category
+     * @param integer $categoryId
+     * @return array
 	 */
 	public function getCategoryItems($category, $categoryId){
 		$albums = 0;			
@@ -277,9 +289,14 @@ class CategoryController extends Controller {
 		return $response;
 	}
 
-	
+    /**
+     * Get playlist titles for a selected category
+     *
+     * @param string $category
+     * @param integer $categoryId
+     * @return array
+     */
 	private function getItemsforCatagory($category,$categoryId){
-
 		$SQL = null;
 		$favorite = false;
 		$aTracks = array();		
@@ -343,7 +360,7 @@ class CategoryController extends Controller {
 					AND `AT`.`user_id` = ? 
 			 		ORDER BY `AP`.`sortorder` ASC";
 		} elseif ($category === 'Stream') {
-			$aTracks = $this->StreamParser($categoryId);
+			$aTracks = $this->StreamParser(substr($categoryId, 1));
 			return $aTracks;
 
 		} elseif ($category === 'Folder') {
@@ -393,6 +410,12 @@ class CategoryController extends Controller {
 		}
 	}
 
+    /**
+     * Get playlist dependend headers
+     *
+     * @param string $category
+     * @return array
+     */
 	private function getHeadersforCatagory($category){
 		if($category === 'Artist') {
 			$headers = ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
@@ -406,13 +429,19 @@ class CategoryController extends Controller {
  		return $headers;
 	}
 
-	private function StreamParser($categoryId){
+    /**
+     * Extract steam urls from playlist files
+     *
+     * @param integer $fileId
+     * @return array
+     */
+	private function StreamParser($fileId){
 		$aTracks = array();	
 		$x = 0;	
 		$title = null;
 		$userView = $this->rootFolder->getUserFolder($this -> userId);
 		//\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
-		$streamfile = $userView->getById(substr($categoryId, 1));
+		$streamfile = $userView->getById($fileId);
 		$file_content = $streamfile[0]->getContent();
 
 		foreach(preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line){

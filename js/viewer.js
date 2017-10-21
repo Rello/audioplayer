@@ -16,13 +16,11 @@ var audioPlayer = {
     location : null,
     player : null,
     dir: null,
-    onView : function(file, data) {
+    playFile : function(file, data) {
         file = encodeURIComponent(file);
         audioPlayer.file = file;
         audioPlayer.dir = data.dir;
-        //sharingToken
         var token = ($('#sharingToken').val() !== undefined) ? $('#sharingToken').val() : '';
-        //.thumbnail
         var dirLoad=data.dir.substr(1);
         if(dirLoad !== ''){
             dirLoad=dirLoad+'/';
@@ -31,7 +29,6 @@ var audioPlayer = {
             audioPlayer.location = OC.generateUrl('apps/audioplayer/getpublicaudiostream?token={token}&file={file}',{'token':token, 'file':dirLoad+file},{escape:false});
         }else{
             audioPlayer.location = OC.generateUrl('apps/audioplayer/getaudiostream?file={file}',{'file':dirLoad+file},{escape:false});
-
         }
         audioPlayer.mime = data.$file.attr('data-mime');
         data.$file.find('.thumbnail').html('<i class="ioc ioc-volume-up"  style="color:#fff;margin-left:5px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;font-size: 24px;"></i>');
@@ -45,9 +42,6 @@ var audioPlayer = {
                         url: audioPlayer.location
                     });
                     audioPlayer.player.play();
-                },
-                ontimeout: function() {
-                    // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
                 }
             });
         }else{
@@ -56,13 +50,13 @@ var audioPlayer = {
             //$('#filestable').find('.thumbnail i.ioc-play').show();
             audioPlayer.player=null;
         }
-    },
+    }
 };
 $(document).ready(function() {
     if (OCA.Files && OCA.Files.fileActions) {
         var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
-        var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
-        mime_array = mime_array.concat(stream_array);
+        //var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
+        //mime_array = mime_array.concat(stream_array);
         var icon_url = OC.imagePath('core', 'actions/sound');
 
         if(audioPlayer.player === null){
@@ -73,9 +67,6 @@ $(document).ready(function() {
                     });
 
                     var can_play = soundManager.html5;
-                    for (var s=0; s<stream_array.length; s++) {
-                        can_play[stream_array[s]] = true;
-                    }
                     for (var i=0; i<mime_array.length; i++) {
                         if (can_play[mime_array[i]] === true) {
                             OCA.Files.fileActions.registerAction({
@@ -84,10 +75,10 @@ $(document).ready(function() {
                                 mime: mime_array[i],
                                 permissions: OC.PERMISSION_READ,
                                 icon: icon_url,
-                                actionHandler: audioPlayer.onView
+                                actionHandler: audioPlayer.playFile
                             });
-                            OCA.Files.fileActions.register(mime_array[i], 'View', OC.PERMISSION_READ, '', audioPlayer.onView);
-                            OCA.Files.fileActions.setDefault(mime_array[i], 'View');
+                            OCA.Files.fileActions.register(mime_array[i], 'audioplayer', OC.PERMISSION_READ, '', audioPlayer.playFile);
+                            OCA.Files.fileActions.setDefault(mime_array[i], 'audioplayer');
                         }
                     }
                     audioPlayer.player=null;
@@ -111,7 +102,7 @@ $(document).ready(function() {
                 if( $('#previewSupported').val() !== 'true'){
                     $('#imgframe').hide();
                 }
-                var fileName=$('#filename').val();
+                var fileName = $('#filename').val();
                 fileName = encodeURIComponent(fileName);
                 var audioUrl= OC.generateUrl('apps/audioplayer/getpublicaudiostream?token={token}&file={file}',{'token':token, 'file':fileName},{escape:false});
                 var audioContainer=$('<div/>').attr('id','sm2-container');
@@ -141,7 +132,7 @@ $(document).ready(function() {
                     type : 'GET',
                     url : url,
                     success : function(jsondata) {
-                        if(jsondata.status == 'success'){
+                        if(jsondata.status === 'success'){
                             var playlistsdata=jsondata.data;
                             $('#content-wrapper').css({'padding-top':'0px'});
                             var $id3 = $('#id3');
