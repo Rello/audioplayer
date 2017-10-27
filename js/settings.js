@@ -23,10 +23,8 @@ $(document).ready(function() {
 				url : OC.generateUrl('apps/audioplayer/setvalue'),
 				data : {'type': 'cyrillic',
 						'value': user_value},
-				success : function(ajax_data) {
-					$('#notification').text(t('audioplayer','saved'));
-					$('#notification').slideDown();
-					window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
+				success : function() {
+                    OC.Notification.showTemporary(t('audioplayer','saved'));
 				}
 			});
 	});
@@ -43,13 +41,9 @@ $(document).ready(function() {
 					$path.val(path);
 					$.post(OC.generateUrl('apps/audioplayer/userpath'), { value: path }, function(data) {
 						if (!data.success) {
-							$('#notification').text(t('audioplayer','Invalid path!'));
-							$('#notification').slideDown();
-							window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
+                            OC.Notification.showTemporary(t('audioplayer','Invalid path!'));
 						} else {
-							$('#notification').text(t('audioplayer','saved'));
-							$('#notification').slideDown();
-							window.setTimeout(function(){$('#notification').slideUp();}, 3000);	
+                            OC.Notification.showTemporary(t('audioplayer','saved'));
 						}
 					});
 				}
@@ -77,7 +71,7 @@ $(document).ready(function() {
 		$('.sm2-playlist-target').html('');
 		$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
 		
-		myAudios.openImportDialog();
+		myAudios.openScannerDialog();
 		
 		return false;
 	});
@@ -116,17 +110,15 @@ $(document).ready(function() {
 					$('#activePlaylist').html('');
 					$('.sm2-playlist-target').html('');
 					$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-					$('#notification').text(t('audioplayer','Start resetting library…'));
-					$('#notification').slideDown();
-					
+                    OC.Notification.showTemporary(t('audioplayer','New audio files available'));
+
 					$.ajax({
 							type : 'GET',
 							url : OC.generateUrl('apps/audioplayer/resetmedialibrary'),
 							success : function(jsondata) {
 									if(jsondata.status === 'success'){
 										myAudios.loadAlbums();
-										$('#notification').text(t('audioplayer','Resetting finished!'));
-										window.setTimeout(function(){$('#notification').slideUp();}, 3000);
+                                        OC.Notification.showTemporary(t('audioplayer','Resetting finished!'));
 									}
 							}
 					});
@@ -134,7 +126,7 @@ $(document).ready(function() {
 					oDialog.dialog("close");
 					$('#myCategory').html('');
 				}
-			}],
+			}]
 		});
 		return false;
 	});
@@ -160,6 +152,120 @@ $(document).ready(function() {
 			}
 			$('#browser_yes').html(supported_types);
 			$('#browser_no').html(nsupported_types);
-		},
+		}
 	});
 });
+
+Audios.prototype.openScannerDialog = function() {
+
+    $('body').append('<div id="audios_import"></div>');
+    $('#audios_import').load(OC.generateUrl('apps/audioplayer/getimporttpl'),function(){
+        this.scanInit();
+    }.bind(this));
+
+};
+Audios.prototype.scanInit = function() {
+
+    var $this = this;
+    $('#audios_import_dialog').dialog({
+        width : 500,
+        resizable: false,
+        close : function() {
+            $this.scanStop($this.progresskey);
+            $this.progresskey = '';
+            $this.percentage = 0;
+            $('#audios_import_dialog').dialog('destroy').remove();
+            $('#audios_import_dialog').remove();
+        }
+    });
+
+    $('#audios_import_done_close').click(function(){
+        $this.progresskey = '';
+        $this.percentage = 0;
+        $('#audios_import_dialog').dialog('destroy');
+        $('#audios_import_dialog').remove();
+    });
+
+    $('#audios_import_progress_cancel').click(function(){
+        $this.scanStop($this.progresskey);
+        $this.progresskey = '';
+        $this.percentage = 0;
+    });
+
+    $('#audios_import_submit').click(function(){
+        $this.processScan();
+    });
+
+    $('#audios_import_progressbar').progressbar({value:0});
+    this.progresskey = $('#audios_import_progresskey').val();
+};
+
+Audios.prototype.processScan = function() {
+    $('#audios_import_form').css('display', 'none');
+    $('#audios_import_process').css('display', 'block');
+
+    this.scanSend();
+    window.setTimeout(myAudios.scanUpdate(), 1000);
+};
+
+Audios.prototype.scanSend = function() {
+
+    $.post(OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
+        {progresskey: this.progresskey},  function(data){
+            if(data.status === 'success'){
+                $this.progresskey = '';
+                $('#audios_import_process').css('display', 'none');
+                $('#audios_import_done').css('display', 'block');
+                $('#audios_import_done_message').html(data.message);
+
+                $this.get_uservalue('category', function() {
+                    if ($this.category_selectors[0] && $this.category_selectors[0]!== 'Albums') {
+                        $("#category_selector").val($this.category_selectors[0]);
+                        $this.loadCategory();
+                    } else {
+                        $this.loadAlbums();
+                    }
+                });
+            }else{
+                $this.progresskey = '';
+                $('#audios_import_progressbar').progressbar('option', 'value', 100);
+                $('#audios_import_done_message').html(data.message);
+            }
+        }.bind(this));
+};
+
+Audios.prototype.scanStop = function(progresskey) {
+    $.ajax({
+        type : 'POST',
+        url : OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
+        data : {'progresskey': progresskey,
+            'scanstop': true},
+        success : function(ajax_data) {
+        }
+    });
+};
+
+Audios.prototype.scanUpdate = function() {
+    if(this.progresskey === ''){
+        return false;
+    }
+
+    $.post(OC.generateUrl('apps/audioplayer/getprogress'),
+        {progresskey: this.progresskey}, function(data){
+            if(data.status === 'success'){
+                this.percentage = parseInt(data.percent);
+                $('#audios_import_progressbar').progressbar('option', 'value', parseInt(data.percent));
+                $('#audios_import_process_progress').text(data.prog);
+                $('#audios_import_process_message').text(data.msg);
+                if(data.percent < 100 ){
+                    window.setTimeout(myAudios.scanUpdate(), 500);
+                }else{
+                    $('#audios_import_process').css('display', 'none');
+                    $('#audios_import_done').css('display', 'block');
+                }
+            }else{
+                //alert("getprogress error");
+            }
+        }.bind(this));
+    return 0;
+};

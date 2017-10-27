@@ -20,6 +20,8 @@
 	script('audioplayer', 'bar-ui-min');
 	script('audioplayer', 'app-min');
 	script('audioplayer', 'settings');
+    script('audioplayer', 'editor-min');
+
 ?>
 <form style="display:none;" class="float" id="file_upload_form" action="<?php print_unescaped(\OC::$server->getURLGenerator()->linkToRoute('audioplayer.photo.uploadPhoto')); ?>" method="post" enctype="multipart/form-data" target="file_upload_target">
 	<input type="hidden" name="id" value="">
