@@ -55,24 +55,7 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
-		$('#newPlaylist').addClass('ap_hidden');
-		if(	$('.sm2-bar-ui').hasClass('playing')){
-			myAudios.AudioPlayer.actions.play(0);
-			myAudios.AudioPlayer.actions.stop();
-		}
-		$("#category_selector").val('');
-		$('#myCategory').html('');
-		myAudios.AlbumContainer.html('');
-		myAudios.AlbumContainer.show();
-		myAudios.PlaylistContainer.hide();
-		$('#individual-playlist').html('');
-		$('.albumwrapper').removeClass('isPlaylist');
-		$('#activePlaylist').html('');
-		$('.sm2-playlist-target').html('');
-		$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-		
 		myAudios.openScannerDialog();
-		
 		return false;
 	});
 
