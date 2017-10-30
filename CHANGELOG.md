@@ -24,6 +24,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - `count()` in `for()` loop [#235](https://github.com/rello/audioplayer/issues/235)
 - One Click Play did not start on first click
+- moved `.dialog` to `.ocdialog` for better server integration [#247](https://github.com/rello/audioplayer/issues/247)
 
 ### Security
 - 
