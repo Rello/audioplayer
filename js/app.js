@@ -1380,53 +1380,7 @@ $(document).ready(function() {
         );
     }
 
-    //if($(window).width()>768){
     $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
-    //}else{
-    //	$('.sm2-bar-ui.fixed').width(myAudios.AlbumContainer.width()-45);
-    //}
-
-    $('#edit_photo_dialog').dialog({
-        autoOpen : false,
-        modal : true,
-        position : {
-            my : "left top+100",
-            at : "left+40% top",
-            of : $('#body-user')
-        },
-        height : 'auto',
-        width : 'auto',
-        buttons:[
-            {
-                text : t('core', 'OK'),
-                click : function() {
-
-                    myAudios.savePhoto(this);
-                    $('#coords input').val('');
-                    $(this).dialog('close');
-                }
-            },
-            {
-                text :  t('core', 'Cancel'),
-                click : function() {
-                    //$('#coords input').val('');
-                    $.ajax({
-                        type : 'POST',
-                        url : OC.generateUrl('apps/audioplayer/clearphotocache'),
-                        data : {
-                            'tmpkey' : $('#tmpkey').val(),
-                        },
-                        success : function(data) {
-
-                        }
-
-                    });
-                    $(this).dialog('close');
-                }
-            }
-        ]
-    });
-
 
     $('#addPlaylist').on('click',function(){
         $('#newPlaylistTxt').val('');

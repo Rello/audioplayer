@@ -59,60 +59,10 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$(document).on('click', '#resetAudios', function () {
-		$("#dialogSmall").text(t('audioplayer','Are you sure?')+' '+t('audioplayer','All library entries will be deleted!'));
-		$("#dialogSmall").dialog({
-			resizable : false,
-			title : t('audioplayer', 'Reset library'),
-			width : 250,
-			modal : true,
-			buttons : [{
-				text : t('audioplayer', 'No'),
-			click : function() {
-					$("#dialogSmall").html('');
-					$(this).dialog("close");
-				}
-			}, {
-				text : t('audioplayer', 'Yes'),
-				click : function() {
-					var oDialog = $(this);
-					
-					if(	$('.sm2-bar-ui').hasClass('playing')){
-						myAudios.AudioPlayer.actions.play(0);
-						myAudios.AudioPlayer.actions.stop();
-					}
-					$("#category_selector").val('');
-					$this.set_uservalue('category',$this.category_selectors[0]+'-');
-					$('#myCategory').html('');
-					$('#alben').addClass('active');
-					myAudios.AlbumContainer.html('');
-					myAudios.AlbumContainer.show();
-					myAudios.PlaylistContainer.hide();
-					$('#individual-playlist').html('');
-					$('.albumwrapper').removeClass('isPlaylist');
-					$('#activePlaylist').html('');
-					$('.sm2-playlist-target').html('');
-					$('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-                    OC.Notification.showTemporary(t('audioplayer','New audio files available'));
-
-					$.ajax({
-							type : 'GET',
-							url : OC.generateUrl('apps/audioplayer/resetmedialibrary'),
-							success : function(jsondata) {
-									if(jsondata.status === 'success'){
-										myAudios.loadAlbums();
-                                        OC.Notification.showTemporary(t('audioplayer','Resetting finished!'));
-									}
-							}
-					});
-					$("#dialogSmall").html('');
-					oDialog.dialog("close");
-					$('#myCategory').html('');
-				}
-			}]
-		});
-		return false;
-	});
+    $(document).on('click', '#resetAudios', function () {
+        myAudios.openResetDialog();
+        return false;
+    });
 
 	var audioPlayer = {};
 	soundManager.setup({
@@ -139,40 +89,82 @@ $(document).ready(function() {
 	});
 });
 
-Audios.prototype.openScannerDialog = function() {
+Audios.prototype.openResetDialog = function() {
+	OC.dialogs.message(
+		t('audioplayer','Are you sure?'),
+		t('audioplayer','All library entries will be deleted!'),
+		null,
+		OCdialogs.YES_NO_BUTTONS,
+		function (e) {
+			if (e === true) {
+				myAudios.resetLibrary();
+			}
+		},
+		true
+	);
+};
 
+Audios.prototype.resetLibrary = function() {
+    if(	$('.sm2-bar-ui').hasClass('playing')){
+        myAudios.AudioPlayer.actions.play(0);
+        myAudios.AudioPlayer.actions.stop();
+    }
+    $("#category_selector").val('');
+    $this.set_uservalue('category',$this.category_selectors[0]+'-');
+    $('#myCategory').html('');
+    $('#alben').addClass('active');
+    myAudios.AlbumContainer.html('');
+    myAudios.AlbumContainer.show();
+    myAudios.PlaylistContainer.hide();
+    $('#individual-playlist').html('');
+    $('.albumwrapper').removeClass('isPlaylist');
+    $('#activePlaylist').html('');
+    $('.sm2-playlist-target').html('');
+    $('.sm2-playlist-cover').css('background-color','#ffffff').html('');
+    OC.Notification.showTemporary(t('audioplayer','New audio files available'));
+
+    $.ajax({
+        type : 'GET',
+        url : OC.generateUrl('apps/audioplayer/resetmedialibrary'),
+        success : function(jsondata) {
+            if(jsondata.status === 'success'){
+                myAudios.loadAlbums();
+                OC.Notification.showTemporary(t('audioplayer','Resetting finished!'));
+            }
+        }
+    });
+    $('#myCategory').html('');
+};
+
+Audios.prototype.openScannerDialog = function() {
     $('body').append('<div id="audios_import"></div>');
     $('#audios_import').load(OC.generateUrl('apps/audioplayer/getimporttpl'),function(){
         this.scanInit();
     }.bind(this));
-
 };
+
 Audios.prototype.scanInit = function() {
 
     var $this = this;
-    $('#audios_import_dialog').dialog({
+    $('#audios_import_dialog').ocdialog({
         width : 500,
+        modal: true,
         resizable: false,
         close : function() {
             $this.scanStop($this.progresskey);
-            $this.progresskey = '';
-            $this.percentage = 0;
-            $('#audios_import_dialog').dialog('destroy').remove();
-            $('#audios_import_dialog').remove();
+            $('#audios_import_dialog').ocdialog('destroy');
+            $('#audios_import').remove();
         }
     });
 
     $('#audios_import_done_close').click(function(){
         $this.progresskey = '';
         $this.percentage = 0;
-        $('#audios_import_dialog').dialog('destroy');
-        $('#audios_import_dialog').remove();
+        $('#audios_import_dialog').ocdialog('close');
     });
 
     $('#audios_import_progress_cancel').click(function(){
         $this.scanStop($this.progresskey);
-        $this.progresskey = '';
-        $this.percentage = 0;
     });
 
     $('#audios_import_submit').click(function(){
@@ -192,7 +184,6 @@ Audios.prototype.processScan = function() {
 };
 
 Audios.prototype.scanSend = function() {
-
     $.post(OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
         {progresskey: this.progresskey},  function(data){
             if(data.status === 'success'){
@@ -218,6 +209,8 @@ Audios.prototype.scanSend = function() {
 };
 
 Audios.prototype.scanStop = function(progresskey) {
+    $this.progresskey = '';
+    $this.percentage = 0;
     $.ajax({
         type : 'POST',
         url : OC.generateUrl('apps/audioplayer/scanforaudiofiles'),

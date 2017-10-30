@@ -8,24 +8,6 @@
  * @copyright 2016-2017 Marcel Scherello
  */
 
-Audios.prototype.initPhotoDialog = function(){
-    /* Initialize the photo edit dialog */
-
-    $('input#pinphoto_fileupload').fileupload({
-        dataType : 'json',
-        url : OC.generateUrl('apps/audioplayer/uploadphoto'),
-        done : function(e, data) {
-
-            this.imgSrc = data.result.imgdata;
-            this.imgMimeType = data.result.mimetype;
-            $('#imgsrc').val(this.imgSrc);
-            $('#imgmimetype').val(this.imgMimeType);
-            $('#tmpkey').val(data.result.tmp);
-            this.editPhoto($('#photoId').val(), data.result.tmp);
-        }.bind(this)
-    });
-};
-
 Audios.prototype.editSong = function(evt){
 
     this.initPhotoDialog();
@@ -250,6 +232,66 @@ Audios.prototype.editSong = function(evt){
         }
     });
 };
+
+Audios.prototype.initPhotoDialog = function(){
+    /* Initialize the photo edit dialog */
+
+    $('#edit_photo_dialog').dialog({
+        autoOpen : false,
+        modal : true,
+        position : {
+            my : "left top+100",
+            at : "left+40% top",
+            of : $('#body-user')
+        },
+        height : 'auto',
+        width : 'auto',
+        buttons:[
+            {
+                text : t('core', 'OK'),
+                click : function() {
+
+                    myAudios.savePhoto(this);
+                    $('#coords input').val('');
+                    $(this).dialog('close');
+                }
+            },
+            {
+                text :  t('core', 'Cancel'),
+                click : function() {
+                    //$('#coords input').val('');
+                    $.ajax({
+                        type : 'POST',
+                        url : OC.generateUrl('apps/audioplayer/clearphotocache'),
+                        data : {
+                            'tmpkey' : $('#tmpkey').val(),
+                        },
+                        success : function(data) {
+
+                        }
+
+                    });
+                    $(this).dialog('close');
+                }
+            }
+        ]
+    });
+
+    $('input#pinphoto_fileupload').fileupload({
+        dataType : 'json',
+        url : OC.generateUrl('apps/audioplayer/uploadphoto'),
+        done : function(e, data) {
+
+            this.imgSrc = data.result.imgdata;
+            this.imgMimeType = data.result.mimetype;
+            $('#imgsrc').val(this.imgSrc);
+            $('#imgmimetype').val(this.imgMimeType);
+            $('#tmpkey').val(data.result.tmp);
+            this.editPhoto($('#photoId').val(), data.result.tmp);
+        }.bind(this)
+    });
+};
+
 
 Audios.prototype.loadPhoto = function() {
     var refreshstr = '&refresh=' + Math.random();
