@@ -91,8 +91,8 @@ $(document).ready(function() {
 
 Audios.prototype.openResetDialog = function() {
 	OC.dialogs.message(
-		t('audioplayer','Are you sure?'),
-		t('audioplayer','All library entries will be deleted!'),
+		t('audioplayer','Are you sure?')+' '+t('audioplayer','All library entries will be deleted!'),
+        t('audioplayer', 'Reset library'),
 		null,
 		OCdialogs.YES_NO_BUTTONS,
 		function (e) {
