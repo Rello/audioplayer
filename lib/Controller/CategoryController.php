@@ -19,6 +19,7 @@ use OCP\IDbConnection;
 use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 
+
 /**
  * Controller class for main page.
  */
@@ -442,33 +443,64 @@ class CategoryController extends Controller {
 		$userView = $this->rootFolder->getUserFolder($this -> userId);
 		//\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
 		$streamfile = $userView->getById($fileId);
-		$file_content = $streamfile[0]->getContent();
 
-		foreach(preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line){
-			if (substr($line,0,8) === '#EXTINF:') {
-				$extinf = explode(',', substr($line,8));
-				$title = $extinf[1];
-			}
-			preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
-			
-			if ($matches[0]) {
-				$x++;
-				$row = array();
-				$row['id'] = $fileId.$x;
-				$row['fid'] = $fileId.$x;
-				$row['cl1'] = $matches[0][0];
-				$row['cl2'] = '';
-				$row['cl3'] = '';
-				$row['len'] = '';
-				$row['mim'] = 'audio/mpegurl';
-				$row['cid'] = '0';
-				$row['lin'] = $matches[0][0];
-				$row['fav'] = 'f';            
-				if ($title) $row['cl1'] = $title;
-       			$aTracks[]=$row;
-       		}
-		}
-		return $aTracks;
+        $file_type = $streamfile[0]->getMimetype();
+        $file_content = $streamfile[0]->getContent();
+
+        if ($file_type === 'audio/x-scpls') {
+            $stream_data = parse_ini_string($file_content, true, INI_SCANNER_RAW);
+            for ($i = 1; $i <= $stream_data['playlist']['NumberOfEntries']; $i++) {
+                $title = $stream_data['playlist']['Title'.$i];
+                $file = $stream_data['playlist']['File'.$i];
+                preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $file, $matches);
+
+                if ($matches[0]) {
+                    $row = array();
+                    $row['id'] = $fileId.$i;
+                    $row['fid'] = $fileId.$i;
+                    $row['cl1'] = $matches[0][0];
+                    $row['cl2'] = '';
+                    $row['cl3'] = '';
+                    $row['len'] = '';
+                    $row['mim'] = $file_type;
+                    $row['cid'] = '0';
+                    $row['lin'] = $matches[0][0];
+                    $row['fav'] = 'f';
+                    if ($title) $row['cl1'] = $title;
+                    $aTracks[]=$row;
+                }
+            }
+        } else {
+            foreach(preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line){
+                if (substr($line,0,8) === '#EXTINF:') {
+                    $extinf = explode(',', substr($line,8));
+                    $title = $extinf[1];
+                }
+                if (substr($line,0,5) === 'Title') {
+                    $extinf = explode('=', $line);
+                    $title = $extinf[1];
+                }
+                preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
+
+                if ($matches[0]) {
+                    $x++;
+                    $row = array();
+                    $row['id'] = $fileId.$x;
+                    $row['fid'] = $fileId.$x;
+                    $row['cl1'] = $matches[0][0];
+                    $row['cl2'] = '';
+                    $row['cl3'] = '';
+                    $row['len'] = '';
+                    $row['mim'] = $file_type;
+                    $row['cid'] = '0';
+                    $row['lin'] = $matches[0][0];
+                    $row['fav'] = 'f';
+                    if ($title) $row['cl1'] = $title;
+                    $aTracks[]=$row;
+                }
+            }
+        }
+        return $aTracks;
 	}
 
 	/**
