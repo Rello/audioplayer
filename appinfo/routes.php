@@ -45,8 +45,8 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'setting#setValue', 'url' => '/setvalue', 'verb' => 'GET'],
 	['name' => 'setting#getValue', 'url' => '/getvalue', 'verb' => 'GET'],
 	['name' => 'setting#userPath', 'url' => '/userpath', 'verb' => 'POST'],
+    ['name' => 'setting#setFavorite', 'url' => '/setfavorite', 'verb' => 'GET'],
+    ['name' => 'setting#setStatistics', 'url' => '/setstatistics', 'verb' => 'GET'],
 	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
 	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
-	['name' => 'category#setFavorite', 'url' => '/setfavorite', 'verb' => 'GET'],
-	['name' => 'category#setStatistics', 'url' => '/setstatistics', 'verb' => 'GET'],
 	]]);

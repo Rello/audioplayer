@@ -476,10 +476,6 @@ class CategoryController extends Controller {
                     $extinf = explode(',', substr($line,8));
                     $title = $extinf[1];
                 }
-                if (substr($line,0,5) === 'Title') {
-                    $extinf = explode('=', $line);
-                    $title = $extinf[1];
-                }
                 preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
 
                 if ($matches[0]) {
@@ -545,43 +541,5 @@ class CategoryController extends Controller {
 
 		$stmt = $this->db->prepare( 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE  `track_id` = ?' );
 		$stmt->execute(array($TrackId));		
-	}
-
-	/**
-	 * @NoAdminRequired
-     *
-	 */
-	public function setFavorite($fileId, $isFavorite) {
-		$this->tagger = $this->tagManager->load('files');
-		
-		if ($isFavorite === "true") {
-			$return = $this->tagger->removeFromFavorites($fileId);
- 		} else {
-			$return = $this->tagger->addToFavorites($fileId);
- 		}
- 		return $return;
-	}
-	/**
-	 * @NoAdminRequired
-	 */
-	public function setStatistics($track_id) {
-		$date = new \DateTime();
-		$playtime = $date->getTimestamp();
-		
-		$SQL='SELECT `id`, `playcount` FROM `*PREFIX*audioplayer_stats` WHERE `user_id`= ? AND `track_id`= ?';
-		$stmt = $this->db->prepare($SQL);
-		$stmt->execute(array($this->userId, $track_id));
-		$row = $stmt->fetch();
-		if (isset($row['id'])) {
-			$playcount = $row['playcount'] + 1;
-			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_stats` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');					
-			$stmt->execute(array($playcount, $playtime, $row['id']));
-			return 'update';
-		} else {
-			$stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_stats` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
-			$stmt->execute(array($this->userId, $track_id, $playtime, 1));
-			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_stats');
-			return $insertid;
-		}
 	}
 }
