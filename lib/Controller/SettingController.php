@@ -28,6 +28,7 @@ class SettingController extends Controller {
 	private $configManager;
 	private $rootFolder;
     private $tagger;
+    private $tagManager;
     private $db;
 
 	public function __construct(
