@@ -22,6 +22,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
+- `YEAR` field in metadata editor enlarged [#221](https://github.com/rello/audioplayer/issues/221)
 - `count()` in `for()` loop [#235](https://github.com/rello/audioplayer/issues/235)
 - One Click Play did not start on first click
 - moved `.dialog` to `.ocdialog` for better server integration [#247](https://github.com/rello/audioplayer/issues/247)
@@ -92,7 +93,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - dragging also from selected lists into playlists [#168](https://github.com/rello/audioplayer/issues/168)
 - support for ownCloud 10.0 and Nextcloud 12 [#183](https://github.com/rello/audioplayer/issues/183)
 - PSR-4 autoloader compatibility [#184](https://github.com/rello/audioplayer/issues/184)
-- disc, composer, and subtitle to metadata [#184](https://github.com/rello/audioplayer/issues/184) (thanks @[Faldon](https://github.com/Faldon))
+- `DISC`, `COMPOSER`, and `SUBTITLE` to metadata [#184](https://github.com/rello/audioplayer/issues/184) (thanks @[Faldon](https://github.com/Faldon))
 - notify user when new/unscanned tracks are available [#188](https://github.com/rello/audioplayer/issues/188)
 - UserHooks: library cleanup after deleting users
 - more metadata to Share Player
@@ -171,7 +172,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - Chrome CSS issue with only one track in album [#104](https://github.com/rello/audioplayer/issues/104)
 - arrays corrected and obsolete functions removed [#110](https://github.com/rello/audioplayer/issues/110) [#123](https://github.com/rello/audioplayer/issues/123) (thanks @[mc-comanescu](https://github.com/mc-comanescu) and @[rseabra](https://github.com/rseabra))
-- correct ORDER BY syntax for PostgreSQL database [#112](https://github.com/rello/audioplayer/issues/112) (thanks @[Turgon37](https://github.com/turgon37))
+- correct `ORDER BY` syntax for PostgreSQL database [#112](https://github.com/rello/audioplayer/issues/112) (thanks @[Turgon37](https://github.com/turgon37))
 - album cover not written to database [#113](https://github.com/rello/audioplayer/issues/113)
 - catch Unicode characters in artist name [#118](https://github.com/rello/audioplayer/issues/118)
 - welcome screen not shown at first start [#121](https://github.com/rello/audioplayer/issues/121) 
