@@ -35,7 +35,7 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 - **Stream-URLs**
 
 Siehe [README](https://github.com/rello/audioplayer/blob/master/README.md)-Datei für alle unterstützten MIME-Typen und Einschränkungen.]]></description>
-	<version>2.2.0-beta.2</version>
+	<version>2.2.0-rc.1</version>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<author>Thomas Marx</author>
