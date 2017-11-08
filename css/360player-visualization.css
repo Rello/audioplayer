@@ -52,9 +52,9 @@
 .ui360-vis,
 .ui360-vis .sm2-360ui.sm2_paused .sm2-360btn,
 .ui360-vis .sm2-360btn-default {
- background:transparent url(../img/360-button-vis-play.png) no-repeat 50% 50%;
-  *background-image:url(../img/360-button-vis-play.png);
- _background:transparent url(../img/360-button-vis-play.gif) no-repeat 50% 50%;
+ background:transparent url(../img/360player/360-button-vis-play.png) no-repeat 50% 50%;
+  *background-image:url(../img/360player/360-button-vis-play.png);
+ _background:transparent url(../img/360player/360-button-vis-play.gif) no-repeat 50% 50%;
  cursor:pointer;
 
 }
@@ -62,28 +62,28 @@
 .ui360-vis:hover .sm2-360btn,
 .ui360-vis .sm2-360btn-default:hover,
 .ui360-vis .sm2-360ui.sm2_paused .sm2-360btn:hover {
- background:transparent url(../img/360-button-vis-play-light.png) no-repeat 50% 50%;
- _background:transparent url(../img/360-button-vis-play.gif) no-repeat 50% 50%;
+ background:transparent url(../img/360player/360-button-vis-play-light.png) no-repeat 50% 50%;
+ _background:transparent url(../img/360player/360-button-vis-play.gif) no-repeat 50% 50%;
  cursor:pointer;
 }
 
 
 .ui360-vis .sm2-360ui.sm2_playing .sm2-360btn:hover,
 .ui360-vis .sm2-360btn-playing:hover {
- background:transparent url(../img/360-button-vis-pause-light.png) no-repeat 50% 50%;
- _background:transparent url(../img/360-button-vis-pause-light.gif) no-repeat 50% 50%;
+ background:transparent url(../img/360player/360-button-vis-pause-light.png) no-repeat 50% 50%;
+ _background:transparent url(../img/360player/360-button-vis-pause-light.gif) no-repeat 50% 50%;
  cursor:pointer;
 }
 
 .ui360-vis {
  /* non-JS / before-loaded state */
  background-position: 21% 50%;
- _background:transparent url(../img/360-button-vis-play.gif) no-repeat 21% 50%; /* IE 6-only: special crap GIF */
+ _background:transparent url(../img/360player/360-button-vis-play.gif) no-repeat 21% 50%; /* IE 6-only: special crap GIF */
 }
 
 .ui360-vis .sm2-360btn-default {
  /* real button, post-loaded state */
- _background:transparent url(../img/360-button-vis-play.gif) no-repeat 50% 50%; /* IE 6-only: special crap GIF */
+ _background:transparent url(../img/360player/360-button-vis-play.gif) no-repeat 50% 50%; /* IE 6-only: special crap GIF */
 }
 
 .ui360-vis .sm2-360ui.sm2_dragging .sm2-360btn {

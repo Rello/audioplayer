@@ -163,7 +163,7 @@ background-color:#fff;
 .sm2-bar-ui.textured.dark-text .sm2-playlist-wrapper ul li.selected a {
  /* dark + textured case: dark highlights */
  background-color: rgba(0,0,0,0.1);
- background-image: url(../img/black-10.png);
+ background-image: url(../img/bar-ui/black-10.png);
  /* modern browsers don't neeed the image */
  background-image: none, none;
 }
@@ -529,24 +529,21 @@ background-color:#fff;
 .play-pause,
 .play-pause:hover,
 .paused .play-pause:hover {
- background-image: url(../img/oc/play-big.png);
- background-image: none, url(../img/oc/play-big.svg);
+ background-image: none, url(../img/bar-ui/play.svg);
 
  background-size: 90%;
  background-position: 40% 53%;
 }
 
 .playing .play-pause {
- background-image: url(../img/oc/pause-big.png);
- background-image: none, url(../img/oc/pause-big.svg);
+ background-image: none, url(../img/bar-ui/pause.svg);
  background-size: 90%;
  background-position: 50% 53%;
  opacity:1;
 }
 
 .sm2-volume-control {
- background-image: url(../img/icomoon/entypo-25px-000000/PNG/volume.png);
- background-image: none, url(../img/icomoon/entypo-25px-000000/SVG/volume.svg);
+ background-image: none, url(../img/bar-ui/volume.svg);
 }
 
 .sm2-volume-control,
@@ -559,27 +556,23 @@ background-color:#fff;
  filter: alpha(opacity=33); /* <= IE 8 */
  opacity: 0.33;
 /* -webkit-filter: invert(1);*/
- background-image: url(../img/icomoon/entypo-25px-000000/PNG/volume.png);
- background-image: none, url(../img/icomoon/entypo-25px-000000/SVG/volume.svg);
+ background-image: none, url(../img/bar-ui/volume.svg);
 }
 
 .sm2-inline-button.menu {
- background-image: url(../img/icomoon/entypo-25px-000000/PNG/list2.png);
- background-image: none, url(../img/icomoon/entypo-25px-000000/SVG/list2.svg);
+ background-image: none, url(../img/bar-ui/list2.svg);
  background-size: 58%;
  background-position: 54% 51%;
 }
 
 .sm2-inline-button.previous {
- background-image: url(../img/oc/play-previous.png);
- background-image: none, url(../img/oc/play-previous.svg);
+ background-image: none, url(../img/bar-ui/previous.svg);
   
 }
 
 .sm2-inline-button.next {
   
- background-image: url(../img/oc/play-next.png);
- background-image: none, url(../img/oc/play-next.svg);
+ background-image: none, url(../img/bar-ui/next.svg);
 }
 
 .sm2-inline-button.previous,
@@ -595,15 +588,13 @@ background-color:#fff;
 }
 
 .sm2-inline-button.shuffle {
- background-image: url(../img/icomoon/entypo-25px-000000/PNG/shuffle.png);
- background-image: none, url(../img/icomoon/entypo-25px-000000/SVG/shuffle.svg);
+ background-image: none, url(../img/bar-ui/shuffle.svg);
  background-size: 45%;
  background-position: 50% 50%;
 }
 
 .sm2-inline-button.repeat {
- background-image: url('../img/oc/repeat.png');
- background-image: none, url('../img/oc/repeat.svg');
+ background-image: none, url('../img/bar-ui/repeat.svg');
  background-position: 50% 43%;
  background-size: 54%;
 }
@@ -618,7 +609,7 @@ background-color:#fff;
  height: 100%;
  top: 0px;
  left: 0px;
- background: none, url(../img/icomoon/free-25px-000000/SVG/spinner.svg);
+ background: none, url(../img/bar-ui/spinner.svg);
  background-size: 72%;
  background-position: 50%;
  background-repeat: no-repeat;
@@ -796,7 +787,7 @@ background-color:#fff;
 
 .sm2-bar-ui.dark-text .sm2-playlist-wrapper ul li:hover a {
  background-color: rgba(255,255,255,0.1);
- background-image: url(../img/black-10.png);
+ background-image: url(../img/bar-ui/black-10.png);
  background-image: none, none;
 }
 
@@ -808,7 +799,7 @@ background-color:#fff;
 
 .sm2-bar-ui.dark-text ul li.selected a {
  background-color: rgba(255,255,255,0.1);
- background-image: url(../img/black-10.png);
+ background-image: url(../img/bar-ui/black-10.png);
  background-image: none, none; 
 }
 
@@ -876,7 +867,7 @@ background-color:#fff;
 
 .sm2-bar-ui.dark-text .label {
  background-color: rgba(0,0,0,0.1);
- background-image: url(../img/black-10.png);
+ background-image: url(../img/bar-ui/black-10.png);
  background-image: none, none;
 }
 

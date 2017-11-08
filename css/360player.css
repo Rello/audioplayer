@@ -190,13 +190,13 @@
 .ui360,
 .ui360 .sm2-360btn-default,
 .ui360 .sm2-360ui.sm2_paused .sm2-360btn {
- background:transparent url(../img/360-button-play.png) no-repeat;
+ background:transparent url(../img/360player/360-button-play.png) no-repeat;
  /* if you change the source image, update these data: URIs as well. */
  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABoUlEQVR42sWVu2oCQRhGU/s8gpVYJeQJNkZSbiH4QNuLlQZS21sJayGYaOEFVFDxNiremj9zig2uzk5YQpKFg8PMd75ZZle9E5Ff4e+Ll8tlQuNoPI2vUcCYOdbIxCmm9F5T0YgNMmS/LebSwWdNa7VayXq9ls1mI9vtVna7nQBj5lgjQxYHN7KY3QkiUbDf7+V4PMrpdArBHGtkyOJc3/n1mVaUUl+F5/PZSrABDi4dpmKH3QkixQEHlw5TsccZmsRCoSD1et1ajkuHqdg/HA5GKZPJCOTzeanVasYMLh2mYsXDIGAoDuG6rlSr1WCdBxrcsTIWazgrQiHS6bSRYJ3XDzeq2O/3+9Ltdm9IpVIhstmslEqlUAY36ii8ZrMpjUbjhmQyKeA4jhSLRWMGN+rhOZ1Oh8ANuVxOyuUy40hwo163RK/XeyPQbrdjgYNr/ILAYDB41Gf1wZnFAQfX+iM0HA5fxuPx+2g0Ej22QoYsDq61mGsymTxMp9NX/Sk2yJDFsRZfXpzXbDZ7WiwW3nw+9zUKGDPHGpkL5V//mn7OJyJZApyzeUS5AAAAAElFTkSuQmCC);
  /* hi-dpi, we presume */
- background-image: none, url(../img/360-button-play-2x.png);
+ background-image: none, url(../img/360player/360-button-play-2x.png);
  background-size: 22px 22px;
- *background-image: url(../img/360-button-play.png);
+ *background-image: url(../img/360player/360-button-play.png);
  background-repeat: no-repeat;
 }
 
@@ -206,13 +206,13 @@
   background image will be removed via JS, in threeSixyPlayer.init()
  */
  background-position: 14px 50%;
- _background:transparent url(../img/360-button-play.gif) no-repeat 14px 50%; /* IE 6-only: special crap GIF */
+ _background:transparent url(../img/360player/360-button-play.gif) no-repeat 14px 50%; /* IE 6-only: special crap GIF */
 }
 
 .ui360 .sm2-360btn-default,
 .ui360 .sm2-360ui.sm2_paused .sm2-360btn {
  background-position:50% 50%;
- _background:transparent url(../img/360-button-play.gif) no-repeat 50% 50%; /* IE 6-only: special crap GIF */
+ _background:transparent url(../img/360player/360-button-play.gif) no-repeat 50% 50%; /* IE 6-only: special crap GIF */
 }
 
 .ui360 .sm2-360btn-default,
@@ -222,20 +222,20 @@
 
 .ui360 .sm2-360btn-default:hover,
 .ui360 .sm2-360ui.sm2_paused .sm2-360btn:hover {
- background:transparent url(../img/360-button-play-light.png) no-repeat 50% 50%;
+ background:transparent url(../img/360player/360-button-play-light.png) no-repeat 50% 50%;
  /* hi-dpi, we presume */
- background-image: none, url(../img/360-button-play-light-2x.png);
+ background-image: none, url(../img/360player/360-button-play-light-2x.png);
  background-size: 22px 22px;
- _background:transparent url(../img/360-button-play.gif) no-repeat 50% 50%;
+ _background:transparent url(../img/360player/360-button-play.gif) no-repeat 50% 50%;
  cursor:pointer;
 }
 
 .ui360 .sm2-360ui.sm2_playing .sm2-360btn:hover,
 .ui360 .sm2-360btn-playing:hover {
- background:transparent url(../img/360-button-pause-light.png) no-repeat 50% 50%;
- background-image: none, url(../img/360-button-pause-light-2x.png);
+ background:transparent url(../img/360player/360-button-pause-light.png) no-repeat 50% 50%;
+ background-image: none, url(../img/360player/360-button-pause-light-2x.png);
  background-size: 22px 22px;
- _background:transparent url(../img/360-button-pause-light.gif) no-repeat 50% 50%;
+ _background:transparent url(../img/360player/360-button-pause-light.gif) no-repeat 50% 50%;
  cursor:pointer;
 }
 
@@ -270,7 +270,7 @@
 
 .ui360 .sm2-360ui.sm2_buffering .sm2-360btn,
 .ui360 .sm2-360ui.sm2_buffering .sm2-360btn:hover {
-  background:transparent url(../img/icon_loading_spinner.gif) no-repeat 50% 50%;
+  background:transparent url(../img/360player/icon_loading_spinner.gif) no-repeat 50% 50%;
   opacity:0.5;
   visibility:visible;
 }
