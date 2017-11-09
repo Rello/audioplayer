@@ -18,21 +18,21 @@
 				<div class="sm2-button-bd" id="toggle_alternative"></div>
 			</div>
 
-			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('previous song')); ?>">
+			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('Previous track')); ?>">
 				<div class="sm2-button-bd">
-					<a href="#prev" class="sm2-inline-button previous"><?php p($l->t('previous song')); ?></a>
+					<a href="#prev" class="sm2-inline-button previous">previous</a>
 				</div>
 			</div>
   
-			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('play/ pause')); ?>">
+			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('Play/Pause')); ?>">
 				<div class="sm2-button-bd">
-					<a href="#play" class="sm2-inline-button play-pause"><?php p($l->t('play/ pause')); ?></a>
+					<a href="#play" class="sm2-inline-button play-pause">play</a>
 				</div>
 			</div>
   
-			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('next song')); ?>">
+			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('Next track')); ?>">
 				<div class="sm2-button-bd">
-					<a href="#next" class="sm2-inline-button next"><?php p($l->t('next song')); ?></a>
+					<a href="#next" class="sm2-inline-button next">next</a>
 				</div>
 			</div>
   
