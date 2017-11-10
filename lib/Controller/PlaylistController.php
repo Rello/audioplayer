@@ -141,8 +141,8 @@ class PlaylistController extends Controller {
 	 * @NoAdminRequired
 	 * 
 	 */
-	public function sortPlaylist($playlistid, $songid){
-		$iTrackIds = explode(';', $songid);
+	public function sortPlaylist($playlistid, $songids){
+		$iTrackIds = explode(';', $songids);
 		$counter = 1;	
 		foreach($iTrackIds as $trackId){
 			$stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_playlist_tracks` SET `sortorder` = ? WHERE `playlist_id` = ? AND `track_id` = ?' );
