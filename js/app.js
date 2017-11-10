@@ -831,6 +831,11 @@ Audios.prototype.loadIndividualCategory = function(evt) {
                     albumcount = '';
                 }
 
+            } else if (category === 'Playlist') {
+                $('.sm2-bar-ui').hide();
+                $this.PlaylistContainer.hide();
+                $this.AlbumContainer.show();
+                $this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
             }else{
                 $('.sm2-bar-ui').hide();
                 $this.PlaylistContainer.hide();
