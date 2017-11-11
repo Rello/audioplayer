@@ -575,7 +575,7 @@ Audios.prototype.loadCategory = function(){
                     if (category === 'Playlist' && el.id.toString()[0] !== 'X' && el.id !== '' && el.id.toString()[0] !== 'S'){
                         spanName = $('<span/>').attr({'class':'pl-name-play'}).text(el.name).click($this.loadIndividualCategory.bind($this));
                         var spanSort = $('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.id,'title':t('audioplayer','Sort playlist')}).click($this.sortPlaylist.bind($this));
-                        var spanEdit = $('<a/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename playlist')}).click($this.renamePlaylist.bind($this));
+                        var spanEdit = $('<i/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename playlist')}).click($this.renamePlaylist.bind($this));
                         var spanDelete = $('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.id,'title':t('audioplayer','Delete playlist')}).click($this.deletePlaylist.bind($this));
                         li.droppable({
                             activeClass : "activeHover",
@@ -831,7 +831,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
                     albumcount = '';
                 }
 
-            } else if (category === 'Playlist') {
+            } else if (PlaylistId.toString()[0] === 'X') {
                 $('.sm2-bar-ui').hide();
                 $this.PlaylistContainer.hide();
                 $this.AlbumContainer.show();
@@ -840,9 +840,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
                 $('.sm2-bar-ui').hide();
                 $this.PlaylistContainer.hide();
                 $this.AlbumContainer.show();
-                $this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Welcome to')+' '+t('audioplayer','Audio Player')+'</span>');
-                $this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="'+t('audioplayer','Scan for new audio files')+'" id="scanAudiosFirst"></i> '+t('audioplayer','Add new tracks to library')+'</span>');
-                $this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">'+t('audioplayer','Help')+'</a>');
+                $this.AlbumContainer.html('<span class="no-songs-found">'+t('audioplayer','Add new tracks to playlist by drag and drop')+'</span>');
             }
 
             if (category !== "Title") {
@@ -1318,29 +1316,26 @@ Audios.prototype.checkNewTracks = function() {
 
 var resizeTimeout = null;
 $(window).resize(_.debounce(function() {
-    if (resizeTimeout)
+    if (resizeTimeout && $this.category_selectors[0] === 'Albums') {
         clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(function() {
-        //if($(window).width()>768){
-        $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
-        //}else{
-        //	$('.sm2-bar-ui').width(myAudios.AlbumContainer.width()-45);
-        //}
+        resizeTimeout = setTimeout(function() {
+            $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
 
-        if(myAudios.AlbumContainer.width() < 850){
-            $('.songcontainer .songlist').addClass('one-column');
-            $('.songcontainer .songlist').removeClass('two-column');
-            $('.songcontainer .songcontainer-cover').addClass('cover-small');
-        }else{
-            $('.songcontainer .songlist').removeClass('one-column');
-            $('.songcontainer .songlist').addClass('two-column');
-            $('.songcontainer .songcontainer-cover').removeClass('cover-small');
-        }
+            if(myAudios.AlbumContainer.width() < 850){
+                $('.songcontainer .songlist').addClass('one-column');
+                $('.songcontainer .songlist').removeClass('two-column');
+                $('.songcontainer .songcontainer-cover').addClass('cover-small');
+            }else{
+                $('.songcontainer .songlist').removeClass('one-column');
+                $('.songcontainer .songlist').addClass('two-column');
+                $('.songcontainer .songcontainer-cover').removeClass('cover-small');
+            }
 
-        $('#albums-container .rowlist').remove();
-        myAudios.buildAlbumRows(myAudios.albums);
+            $('#albums-container .rowlist').remove();
+            myAudios.buildAlbumRows(myAudios.albums);
 
-    }, 500);
+        }, 500);
+    }
 }));
 
 

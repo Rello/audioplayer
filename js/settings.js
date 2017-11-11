@@ -56,12 +56,10 @@ $(document).ready(function() {
 
 	$(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
 		myAudios.openScannerDialog();
-		return false;
 	});
 
     $(document).on('click', '#resetAudios', function () {
         myAudios.openResetDialog();
-        return false;
     });
 
 	var audioPlayer = {};

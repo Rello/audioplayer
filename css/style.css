@@ -294,7 +294,7 @@ i#scanAudiosFirst{
   	background:#FFFABC;
   	}
 
-#myCategory li a.icon-rename{
+#myCategory li i.icon-rename{
 	display:none;
 	float:left;
 	position:relative;
@@ -307,7 +307,7 @@ i#scanAudiosFirst{
 	right: -5px;
 }
 
-#myCategory li.active a.icon-rename:hover{
+#myCategory li.active i.icon-rename:hover{
 	opacity:1;
 	background-color:transparent;
 }
@@ -322,7 +322,7 @@ i#scanAudiosFirst{
 }
 #myCategory li.active i.ioc-sort,
 #myCategory li.active i.ioc-delete,
-#myCategory li.active a.icon-rename
+#myCategory li.active i.icon-rename
 {
 	display:block;
 }
