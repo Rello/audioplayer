@@ -1338,10 +1338,6 @@ $(window).resize(_.debounce(function() {
     }
 }));
 
-
-
-var myPlayer=null;
-
 window.onhashchange = function() {
     var locHash = decodeURI(location.hash).substr(1);
     if(locHash !== ''){

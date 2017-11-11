@@ -205,25 +205,25 @@ i#scanAudiosFirst{
 
 #app-navigation #newPlaylist_controls {
 	display: flex;
-	margin: 0px 6px;
+	margin: 0 6px;
 }
 #app-navigation  input#newPlaylistTxt[type="text"],
 #app-navigation .app-navigation-entry-edit input[type="text"] {
-	padding: 0px 5px;
+	padding: 0 5px;
 	width: 100%;
 	height: 30px;
-	margin: 0px;
+	margin: 0;
 }
 #app-navigation .app-navigation-entry-edit button,
 #app-navigation .app-navigation-entry-edit input[type="submit"] {
 	width: 36px;
 	height: 32px;
-	margin: 0px 0px 0px 4px;
+	margin: 0 0 0 4px;
 }
 #app-navigation button#addPlaylist{
 	width: 36px;
 	height: 32px;
-	margin: 0px 0px 0px 4px;
+	margin: 0 0 0 4px;
 }
 
 #myCategory {
@@ -234,12 +234,12 @@ i#scanAudiosFirst{
 	line-height:28px;
 	display:block;
 	float: left;
-	padding: 0px 6px 0px 12px;
+	padding: 0 6px 0 12px;
 	opacity: 0.57;
 }
 
 #myCategory .ui-droppable {
-	padding: 0px 6px 0px 12px;
+	padding: 0 6px 0 12px;
 }
 
 
@@ -301,7 +301,7 @@ i#scanAudiosFirst{
 	width:24px;
 	min-height:25px;
 	height:25px;
-	padding:0px;
+	padding:0;
 	line-height:30px;
 	opacity: 0.3;
 	right: -5px;
