@@ -14,18 +14,14 @@ All notable changes to the Audio Player project will be documented in this file.
 - database index optimizations
 - statistics table renamed to meet guideline (resets current statistics)
 - spellings and translations reworked [#243](https://github.com/rello/audioplayer/issues/243)
-
-### Deprecated
-- 
-
-### Removed
-- 
+- soundbar icons  [#253](https://github.com/rello/audioplayer/issues/253)
 
 ### Fixed
 - `YEAR` field in metadata editor enlarged [#221](https://github.com/rello/audioplayer/issues/221)
 - `count()` in `for()` loop [#235](https://github.com/rello/audioplayer/issues/235)
 - One Click Play did not start on first click
 - moved `.dialog` to `.ocdialog` for better server integration [#247](https://github.com/rello/audioplayer/issues/247)
+- wrong icons and no tooltips in soundbar [#252](https://github.com/rello/audioplayer/issues/252)
 
 ### Security
 - 
@@ -55,7 +51,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - raw cover data removed from metadata [#214](https://github.com/rello/audioplayer/issues/214)
 - playlist cleanup after deleting files [#216](https://github.com/rello/audioplayer/issues/216)
 - `folder_id` removed from duplicate check [#217](https://github.com/rello/audioplayer/issues/217)
-- catch playbar buttons triggering category selector [#225](https://github.com/rello/audioplayer/issues/225)
+- catch soundbar buttons triggering category selector [#225](https://github.com/rello/audioplayer/issues/225)
 - forcing reset of `selectedIndex` [#226](https://github.com/rello/audioplayer/issues/226)
 - PostgreSQL issue in favorites
 

@@ -1,10 +1,41 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>audioplayer</id>
-	<name>Audio Player</name>
-	<summary>Audio Player for Nextcloud and ownCloud</summary>
-	<description><![CDATA[Ledger]]></description>
-	<version>2.2.0-rc.1</version>
+	<name lang="en">Audio Player</name>
+	<name lang="de">Audio-Player</name>
+	<summary lang="en">Audio Player for Nextcloud and ownCloud</summary>
+	<summary lang="de">Audio-Player für Nextcloud und ownCloud</summary>
+	<description lang="en"><![CDATA[A music player for FLAC, MP3, MP4, and more with playlist support and Share Player.
+
+- Multiple views (albums with covers and more)
+- Library scan and reset by command-line and browser
+- Specifying media folder (with exclude functionality)
+- Play shared files directly without downloading
+- Playlists and ID3 tag editor (incl. picture)
+- One Click Play from Files app
+- External cover support
+- Mobile view support
+- Search integration
+- Favorites integration
+- **Stream URLs**
+
+See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
+	<description lang="de"><![CDATA[Ein Musik-Player für FLAC, MP3, MP4 und mehr mit Playlist-Unterstützung und Freigabe-Player.
+
+- Mehrere Ansichten (Alben mit Cover und mehr)
+- Scannen und Rücksetzen der Bibliothek per Befehlszeile und Browser
+- Festlegen eines Medienordners (mit Ausschlussfunktionalität)
+- Freigegebene Dateien direkt abspielen ohne herunterladen
+- Wiedergabelisten und ID3-Tag-Editor (einschl. Bild)
+- Ein-Klick-Abspielen aus Dateien-App
+- Unterstützung für externe Cover
+- Unterstützung für mobile Ansicht
+- Integration in Suche
+- Favoriten-Integration
+- **Stream-URLs**
+
+Siehe [README](https://github.com/rello/audioplayer/blob/master/README.md)-Datei für alle unterstützten MIME-Typen und Einschränkungen.]]></description>
+	<version>2.2.0-rc.2</version>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<author>Thomas Marx</author>
@@ -16,7 +47,9 @@
 	<category>multimedia</category>
 	<website>https://rello.github.io/audioplayer</website>
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
+	<repository type="git">https://github.com/rello/audioplayer.git</repository>
 	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
+	<screenshot small-thumbnail="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main_small.png">https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png</screenshot>
 	<dependencies>
 		<php min-version="5.6" max-version="7.1"/>
 		<nextcloud min-version="11" max-version="13"/>
