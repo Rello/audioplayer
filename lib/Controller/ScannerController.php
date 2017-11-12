@@ -83,14 +83,19 @@ class ScannerController extends Controller {
 	 */
 	public function scanForAudios($userId = null, $output = null, $debug = null, $progresskey = null, $scanstop = null) {
 		$this->occ_job = false;
-		
-		if (isset($scanstop)) {
+
+
+        if (isset($scanstop)) {
 			\OC::$server->getCache()->remove($progresskey);
 			$params = ['status' => 'stopped'];
 			$response = new JSONResponse($params);
 			return $response;				
 		}
-	
+
+        // ??? to be checked why ???
+        \OC::$server->getSession()->close();
+        if (!$this->occ_job) $this->updateProgress(0, $output, $debug);
+
 		// check if scanner is started from web or occ
 		if ($userId !== null) {
 			$this->occ_job = true;
@@ -123,12 +128,7 @@ class ScannerController extends Controller {
 								'option_tags_html'=>false
 								));
 
-		// ??? to be checked why ???
-		\OC::$server->getSession()->close();
-
-		if (!$this->occ_job) $this->updateProgress(0, $output, $debug);
-					
-        	$this->checkScannerVersion();
+        $this->checkScannerVersion();
 		$audios = $this->getAudioObjects($output, $debug);
 		$streams = $this->getStreamObjects($output, $debug);
 			    								
