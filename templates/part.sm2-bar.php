@@ -18,21 +18,21 @@
 				<div class="sm2-button-bd" id="toggle_alternative"></div>
 			</div>
 
-			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('Previous track')); ?>">
+			<div class="sm2-inline-element sm2-button-element toolTipx" data-placement="right" title="<?php p($l->t('Previous track')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#prev" class="sm2-inline-button previous">previous</a>
 				</div>
 			</div>
   
-			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('Play/Pause')); ?>">
+			<div class="sm2-inline-element sm2-button-element toolTipx" data-placement="right" title="<?php p($l->t('Play/Pause')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#play" class="sm2-inline-button play-pause">play</a>
 				</div>
 			</div>
   
-			<div class="sm2-inline-element sm2-button-element toolTip" data-placement="right" title="<?php p($l->t('Next track')); ?>">
+			<div class="sm2-inline-element sm2-button-element toolTipx" data-placement="right" title="<?php p($l->t('Next track')); ?>">
 				<div class="sm2-button-bd">
-					<a href="#next" class="sm2-inline-button next">next</a>
+					<a href="#next" class="sm2-inline-button next" data-placement="right" title="<?php p($l->t('Next track')); ?>">next</a>
 				</div>
 			</div>
   
@@ -65,20 +65,20 @@
 				</div>
 			 </div>
 
-			<div class="sm2-inline-element sm2-button-element sm2-volume toolTip" data-placement="left" title="<?php p($l->t('Volume')); ?>">
+			<div class="sm2-inline-element sm2-button-element sm2-volume toolTipx" data-placement="left" title="<?php p($l->t('Volume')); ?>">
 				<div class="sm2-button-bd">
 					<span class="sm2-inline-button sm2-volume-control volume-shade"></span>
 					<a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
 				</div>
 			</div>
  
-			<div class="sm2-inline-element sm2-button-element sm2-repeat toolTip" data-placement="left" title="<?php p($l->t('Repeat playlist')); ?>">
+			<div class="sm2-inline-element sm2-button-element sm2-repeat toolTipx" data-placement="left" title="<?php p($l->t('Repeat playlist')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#repeat" class="sm2-inline-button repeat">repeat</a>
 				</div>
 			</div>
 			
-			<div class="sm2-inline-element sm2-button-element sm2-shuffle toolTip" data-placement="left" title="<?php p($l->t('Shuffle playlist')); ?>">
+			<div class="sm2-inline-element sm2-button-element sm2-shuffle toolTipx" data-placement="left" title="<?php p($l->t('Shuffle playlist')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#shuffle" class="sm2-inline-button shuffle">shuffle</a>
 				</div>
