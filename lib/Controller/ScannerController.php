@@ -92,19 +92,15 @@ class ScannerController extends Controller {
 			return $response;				
 		}
 
-        // ??? to be checked why ???
-        \OC::$server->getSession()->close();
-        if (!$this->occ_job) $this->updateProgress(0, $output, $debug);
-
 		// check if scanner is started from web or occ
 		if ($userId !== null) {
 			$this->occ_job = true;
 			$this->userId = $userId;
 			$languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
-		} 
-		
-		$folderpicture 			= false;
+		}
+
+        $folderpicture 			= false;
 		$this->progresskey 		= $progresskey;
 		$parentId_prev 			= false;
 		$counter 				= 0;
@@ -114,8 +110,12 @@ class ScannerController extends Controller {
 		$this->iAlbumCount 		= 0;
 		$this->iDublicate 		= 0;
 		$this->cyrillic 		= $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
-		
-		if (!class_exists('getid3_exception')) {
+
+        // ??? to be checked why ???
+        \OC::$server->getSession()->close();
+        if (!$this->occ_job) $this->updateProgress(0, $output, $debug);
+
+        if (!class_exists('getid3_exception')) {
 			require_once __DIR__.'/../../3rdparty/getid3/getid3.php';
 		}
 		$getID3 = new \getID3;
