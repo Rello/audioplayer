@@ -21,10 +21,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - `count()` in `for()` loop [#235](https://github.com/rello/audioplayer/issues/235)
 - One Click Play did not start on first click
 - moved `.dialog` to `.ocdialog` for better server integration [#247](https://github.com/rello/audioplayer/issues/247)
-- wrong icons and no tooltips in soundbar [#252](https://github.com/rello/audioplayer/issues/252)
-
-### Security
-- 
+- wrong icons in soundbar [#252](https://github.com/rello/audioplayer/issues/252)
 
 ## 2.1.0 - 2017-08-29
 ### Added
