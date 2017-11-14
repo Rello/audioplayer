@@ -1316,24 +1316,24 @@ Audios.prototype.checkNewTracks = function() {
 
 var resizeTimeout = null;
 $(window).resize(_.debounce(function() {
-    if (resizeTimeout && $this.category_selectors[0] === 'Albums') {
+    if ($this.category_selectors[0] === 'Albums') {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
             $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
 
-            if(myAudios.AlbumContainer.width() < 850){
-                $('.songcontainer .songlist').addClass('one-column');
-                $('.songcontainer .songlist').removeClass('two-column');
-                $('.songcontainer .songcontainer-cover').addClass('cover-small');
-            }else{
-                $('.songcontainer .songlist').removeClass('one-column');
-                $('.songcontainer .songlist').addClass('two-column');
-                $('.songcontainer .songcontainer-cover').removeClass('cover-small');
+            if ($this.category_selectors[0] === 'Albums') {
+                if(myAudios.AlbumContainer.width() < 850){
+                    $('.songcontainer .songlist').addClass('one-column');
+                    $('.songcontainer .songlist').removeClass('two-column');
+                    $('.songcontainer .songcontainer-cover').addClass('cover-small');
+                }else{
+                    $('.songcontainer .songlist').removeClass('one-column');
+                    $('.songcontainer .songlist').addClass('two-column');
+                    $('.songcontainer .songcontainer-cover').removeClass('cover-small');
+                }
+                $('#albums-container .rowlist').remove();
+                myAudios.buildAlbumRows(myAudios.albums);
             }
-
-            $('#albums-container .rowlist').remove();
-            myAudios.buildAlbumRows(myAudios.albums);
-
         }, 500);
     }
 }));

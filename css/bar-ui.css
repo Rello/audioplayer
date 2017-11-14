@@ -883,8 +883,8 @@ background-color:#fff;
 }
 
 .sm2-bar-ui .sm2-inline-element {
- /* collapse */
- width: 1%;
+ /* collapse
+ width: 1%;*/
 }
 
 .sm2-bar-ui .sm2-inline-status {
