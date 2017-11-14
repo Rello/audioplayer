@@ -77,7 +77,6 @@ $(document).ready(function() {
                                 icon: icon_url,
                                 actionHandler: audioPlayer.playFile
                             });
-                            OCA.Files.fileActions.register(mime_array[i], 'audioplayer', OC.PERMISSION_READ, '', audioPlayer.playFile);
                             OCA.Files.fileActions.setDefault(mime_array[i], 'audioplayer');
                         }
                     }
