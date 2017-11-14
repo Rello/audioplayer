@@ -70,7 +70,7 @@ $(document).ready(function() {
                     for (var i=0; i<mime_array.length; i++) {
                         if (can_play[mime_array[i]] === true) {
                             OCA.Files.fileActions.registerAction({
-                                name: 'audioplayer play',
+                                name: 'audioplayer-play',
                                 displayName: t('audioplayer', 'Play'),
                                 mime: mime_array[i],
                                 permissions: OC.PERMISSION_READ,
