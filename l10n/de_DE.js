@@ -10,7 +10,7 @@ OC.L10N.register(
 	"Sort playlist" : "Wiedergabeliste sortieren",
 	"Rename playlist" : "Wiedergabeliste umbenennen",
 	"Delete playlist" : "Wiedergabeliste löschen",
-	"Add new tracks to playlist by drag and drop" : "Der Wiedergabeliste neue Titel per Drag and Drop hinzufügen",
+	"Add new tracks to playlist by drag and drop" : "Der Wiedergabeliste neue Titel per Drag und Drop hinzufügen",
 	"No playlist selected!" : "Keine Wiedergabeliste ausgewählt!",
 	"Sort modus active" : "Sortiermodus aktiv",
 	"Playlist successfully deleted!" : "Wiedergabeliste erfolgreich gelöscht!",
