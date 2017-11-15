@@ -1316,26 +1316,26 @@ Audios.prototype.checkNewTracks = function() {
 
 var resizeTimeout = null;
 $(window).resize(_.debounce(function() {
-    if ($this.category_selectors[0] === 'Albums') {
+    if (resizeTimeout) {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {
-            $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
+    }
+    resizeTimeout = setTimeout(function() {
+        $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
 
-            if ($this.category_selectors[0] === 'Albums') {
-                if(myAudios.AlbumContainer.width() < 850){
-                    $('.songcontainer .songlist').addClass('one-column');
-                    $('.songcontainer .songlist').removeClass('two-column');
-                    $('.songcontainer .songcontainer-cover').addClass('cover-small');
-                }else{
-                    $('.songcontainer .songlist').removeClass('one-column');
-                    $('.songcontainer .songlist').addClass('two-column');
-                    $('.songcontainer .songcontainer-cover').removeClass('cover-small');
-                }
+            if(myAudios.AlbumContainer.width() < 850){
+                $('.songcontainer .songlist').addClass('one-column');
+                $('.songcontainer .songlist').removeClass('two-column');
+                $('.songcontainer .songcontainer-cover').addClass('cover-small');
+            }else{
+                $('.songcontainer .songlist').removeClass('one-column');
+                $('.songcontainer .songlist').addClass('two-column');
+                $('.songcontainer .songcontainer-cover').removeClass('cover-small');
+            }
+            if(	$('#alben').hasClass('active')) {
                 $('#albums-container .rowlist').remove();
                 myAudios.buildAlbumRows(myAudios.albums);
             }
-        }, 500);
-    }
+    }, 500);
 }));
 
 window.onhashchange = function() {
@@ -1421,7 +1421,9 @@ $(document).ready(function() {
             $this.loadAlbums();
         } else {
             $(this).addClass('active');
+            $('#albums-container .rowlist').remove();
             myAudios.AlbumContainer.show();
+            myAudios.buildAlbumRows(myAudios.albums);
         }
         myAudios.set_uservalue('category','Albums');
     });
