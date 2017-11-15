@@ -6,6 +6,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - stream URLs [#27](https://github.com/rello/audioplayer/issues/27) [#233](https://github.com/rello/audioplayer/issues/233)
 - Scrutinizer Continuous Inspection checks
 - notification for required rescan [#246](https://github.com/rello/audioplayer/issues/246)
+- tooltips for soundbar icons in desktop browsers [#252](https://github.com/rello/audioplayer/issues/252)
 
 ### Changed
 - sidebar rebuilt [#233](https://github.com/rello/audioplayer/issues/233)
@@ -14,7 +15,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - database index optimizations
 - statistics table renamed to meet guideline (resets current statistics)
 - spellings and translations reworked [#243](https://github.com/rello/audioplayer/issues/243)
-- soundbar icons  [#253](https://github.com/rello/audioplayer/issues/253)
+- soundbar icons [#253](https://github.com/rello/audioplayer/issues/253)
 
 ### Fixed
 - `YEAR` field in metadata editor enlarged [#221](https://github.com/rello/audioplayer/issues/221)
