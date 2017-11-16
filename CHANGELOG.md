@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.2.0 - 2017-11-16
+## 2.2.0 - 2017-11-17
 ### Added
 - stream URLs [#27](https://github.com/rello/audioplayer/issues/27) [#233](https://github.com/rello/audioplayer/issues/233)
 - Scrutinizer Continuous Inspection checks
