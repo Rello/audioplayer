@@ -934,7 +934,6 @@ Audios.prototype.removeSongFromPlaylist=function(evt){
     }else{
         songId = $(evt).attr('data-id');
     }
-
     var plId = $('#myCategory li.active').attr('data-id');
 
     return $.getJSON(OC.generateUrl('apps/audioplayer/removetrackfromplaylist'), {
