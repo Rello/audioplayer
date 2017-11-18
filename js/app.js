@@ -944,8 +944,6 @@ Audios.prototype.removeSongFromPlaylist=function(evt){
         $('#myCategory li.active').find('.counter').text($('#myCategory li.active').find('.counter').text()-1);
         $('#individual-playlist li[data-trackid="'+songId+'"]').remove();
         $('#activePlaylist li[data-trackid="'+songId+'"]').remove();
-        $this.category_selectors[0] = 'Playlist';
-        myAudios.loadCategory();
     }.bind(this));
 };
 
@@ -1073,7 +1071,6 @@ Audios.prototype.sortPlaylist = function(evt){
                     $('#notification').text(jsondata.msg);
                     $('#notification').slideDown();
                     window.setTimeout(function(){$('#notification').slideUp();}, 3000);
-                    myAudios.loadCategory();
                 }
             }.bind(this));
 
