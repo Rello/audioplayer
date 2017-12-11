@@ -18,6 +18,7 @@ use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\ITagManager;
 use OCP\Files\IRootFolder;
+use OCP\ILogger;
 
 
 /**
@@ -31,6 +32,7 @@ class CategoryController extends Controller {
 	private $tagger;
 	private $tagManager;
 	private $rootFolder;
+    private $logger;
 
 	public function __construct(
 			$appName, 
@@ -39,7 +41,8 @@ class CategoryController extends Controller {
 			IL10N $l10n, 
 			IDBConnection $db,
 			ITagManager $tagManager,
-			IRootFolder $rootFolder
+			IRootFolder $rootFolder,
+            ILogger $logger
 			) {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
@@ -48,6 +51,7 @@ class CategoryController extends Controller {
 		$this->tagManager = $tagManager;
 		$this->tagger = null;
 		$this->rootFolder = $rootFolder;
+        $this->logger = $logger;
 		}
 
 	/**
@@ -503,8 +507,8 @@ class CategoryController extends Controller {
 	* @NoAdminRequired
 	* 
 	*/
-	public function deleteFromDB($file_id){		
-		\OCP\Util::writeLog('audioplayer','deleteFromDB: '.$file_id,\OCP\Util::DEBUG);
+	public function deleteFromDB($file_id){
+        $this->logger->debug('deleteFromDB: '.$file_id, array('app' => 'audioplayer'));
 
 		$stmt = $this->db->prepare( 'SELECT `album_id`, `id` FROM `*PREFIX*audioplayer_tracks` WHERE `file_id` = ?  AND `user_id` = ?' );
 		$stmt->execute(array($file_id, $this->userId));

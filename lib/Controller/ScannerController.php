@@ -22,6 +22,7 @@ use OCP\L10N\IFactory;
 use OCP\IDbConnection;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
+use OCP\ILogger;
 
 /**
  * Controller class for main page.
@@ -30,7 +31,6 @@ class ScannerController extends Controller {
 	
 	private $userId;
 	private $l10n;
-	private $path;
 	private $abscount = 0;
 	private $progress;
 	private $progresskey;
@@ -46,6 +46,7 @@ class ScannerController extends Controller {
 	private $rootFolder;
 	private $ID3Tags;
 	private $cyrillic;
+    private $logger;
 
 		public function __construct(
 			$appName, 
@@ -55,8 +56,9 @@ class ScannerController extends Controller {
 			IDbConnection $db, 
 			IConfig $configManager, 
 			IFactory $languageFactory,
-			IRootFolder $rootFolder
-			) {
+			IRootFolder $rootFolder,
+            ILogger $logger
+        ) {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
 		$this->userId = $userId;
@@ -65,6 +67,7 @@ class ScannerController extends Controller {
 		$this->configManager = $configManager;
 		$this->languageFactory = $languageFactory;
 		$this->rootFolder = $rootFolder;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -83,7 +86,6 @@ class ScannerController extends Controller {
 	 */
 	public function scanForAudios($userId = null, $output = null, $debug = null, $progresskey = null, $scanstop = null) {
 		$this->occ_job = false;
-
 
         if (isset($scanstop)) {
 			\OC::$server->getCache()->remove($progresskey);
@@ -136,7 +138,8 @@ class ScannerController extends Controller {
 		if ($debug) $output->writeln("Start processing of <info>audio files</info>");
 
 		foreach ($audios as $audio) {
-			
+
+            $this->logger->debug($audio->getName(), array('app' => 'audioplayer'));
 				//check if scan is still supposed to run, or if dialog was closed in web already
 				if (!$this->occ_job) {
 					$scan_running = \OC::$server->getCache()->get($this->progresskey);
@@ -152,7 +155,7 @@ class ScannerController extends Controller {
 
 				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
 				if (!isset($this->ID3Tags['bitrate']) AND !isset($this->ID3Tags['playtime_string'])) {
-					\OCP\Util::writeLog('audioplayer', 'Error with getID3. Does not seem to be a valid audio file: '.$audio->getPath(), \OCP\Util::DEBUG);
+                    $this->logger->debug('Error with getID3. Does not seem to be a valid audio file: '.$audio->getPath(), array('app' => 'audioplayer'));
 					if ($debug) $output->writeln("       Error with getID3. Does not seem to be a valid audio file");
 					$error_file .= $audio->getName().'<br />';
 					$error_count++;
@@ -537,7 +540,7 @@ class ScannerController extends Controller {
 	 * @return array
 	 */
 	private function cyrillic($ThisFileInfo) {
-		\OCP\Util::writeLog('audioplayer', 'cyrillic handling activated', \OCP\Util::DEBUG);				
+        $this->logger->debug('cyrillic handling activated', array('app' => 'audioplayer'));
 		// Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
 		foreach (array('id3v1', 'id3v2') as $ttype) {
 			$ruTag = 0;
@@ -742,13 +745,13 @@ class ScannerController extends Controller {
 		} else {
 			$handle = $audio->fopen('rb');
 			if (@fseek($handle, -24, SEEK_END) === 0) {
-					$ThisFileInfo = $getID3->analyze($audio->getPath(), $handle, $audio->getSize());
+                $ThisFileInfo = $getID3->analyze($audio->getPath(), $handle, $audio->getSize());
 			} else {
 				if (!$this->no_fseek) {
 					if ($debug) {
 						$output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.");
 					}
-					\OCP\Util::writeLog('audioplayer', 'Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', \OCP\Util::DEBUG);
+                    $this->logger->debug('Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', array('app' => 'audioplayer'));
 					$this->no_fseek = true;
 				}
 				$fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());				

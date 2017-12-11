@@ -17,16 +17,20 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
+use OCP\ILogger;
 
 class PhotoController extends Controller {
 	
 	private $l10n;
 	private $helperController;
+    private $logger;
 	public function __construct(
 			$appName, 
-			IRequest $request
-			) {
+			IRequest $request,
+            ILogger $logger
+    ) {
 		parent::__construct($appName, $request);
+        $this->logger = $logger;
 	}
 	
 	/**
@@ -53,7 +57,6 @@ class PhotoController extends Controller {
 	 
 	public function clearPhotoCache($tmpkey){
 		$data = \OC::$server->getCache()->get($tmpkey);
-		//\OCP\Util::writeLog('pinit','cleared.'.$tmpkey,\OCP\Util::DEBUG);		
 		if($data) {
 			\OC::$server->getCache()->remove($tmpkey);
 		}
@@ -148,7 +151,7 @@ class PhotoController extends Controller {
 				4=>$this->l10n->t("No file was uploaded"),
 				6=>$this->l10n->t("Missing a temporary folder")
 			);
-			\OCP\Util::writeLog('audioplayer','Uploaderror: '.$errors[$error],\OCP\Util::DEBUG);	
+            $this->logger->debug('Uploaderror: '.$errors[$error], array('app' => 'audioplayer'));
 		}
 
 		if(file_exists($file['tmp_name'])) {
@@ -160,7 +163,7 @@ class PhotoController extends Controller {
 					$image->resize(350); // Prettier resizing than with browser and saves bandwidth.
 				}
 				if(!$image->fixOrientation()) { // No fatal error so we don't bail out.
-					\OCP\Util::writeLog('audioplayer','Couldn\'t save correct image orientation: '.$tmpkey,\OCP\Util::DEBUG);
+                    $this->logger->debug('Couldn\'t save correct image orientation: '.$tmpkey, array('app' => 'audioplayer'));
 				}
 					if(\OC::$server->getCache()->set($tmpkey, $image->data(), 600)) {
 					$imgString=$image->__toString();

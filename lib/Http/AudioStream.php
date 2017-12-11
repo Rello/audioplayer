@@ -125,7 +125,6 @@ class AudioStream {
 	        set_time_limit(0);
 	        while(!feof($this->stream) && $curPos <= $this->iEnd) {
 	           if( connection_aborted() || connection_status() !== 0 ) {
-	           	\OCP\Util::writeLog('audioplayer','Connection aborted',\OCP\Util::DEBUG);
 				   $this->closeStream();
 			  	}
 			    $bytesToRead = $this->buffer;

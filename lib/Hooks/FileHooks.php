@@ -12,19 +12,26 @@
 namespace OCA\audioplayer\Hooks;
 use OCA\audioplayer\Controller;
 use \OCP\Files\FileInfo;
+use OCP\ILogger;
 
 class FileHooks {
 
-	/**
+    private $logger;
+
+    public function __construct(ILogger $logger) {
+        $this->logger = $logger;
+    }
+
+    /**
 	 * delete track from library after file deletion
 	 * @param array $params
 	 */
-	public static function deleteTrack($params) {
+	public function deleteTrack($params) {
 
 		$view = \OC\Files\Filesystem::getView();
 		$node = $view->getFileInfo($params['path']);
         
-		\OCP\Util::writeLog('audioplayer','Hook delete id: '.$node->getId(),\OCP\Util::DEBUG);
+        $this->logger->debug('Hook delete id: '.$node->getId(), array('app' => 'audioplayer'));
 		if ($node->getType() === FileInfo::TYPE_FILE) {
 			$app = new \OCA\audioplayer\AppInfo\Application();
         	$container = $app->getContainer();

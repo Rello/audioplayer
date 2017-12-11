@@ -20,6 +20,7 @@ use OCP\L10N\IFactory;
 use OCP\IDbConnection;
 use OCP\Files\IRootFolder;
 use \OC\Files\View; //remove when editAudioFiles is updated and toTmpFile alternative
+use OCP\ILogger;
 
 /**
  * Controller class for main page.
@@ -33,6 +34,7 @@ class EditorController extends Controller {
 	private $iAlbumCount = 0;
 	private $languageFactory;
 	private $rootFolder;
+    private $logger;
 		public function __construct(
 			$appName, 
 			IRequest $request, 
@@ -40,8 +42,9 @@ class EditorController extends Controller {
 			IL10N $l10n, 
 			IDbConnection $db, 
 			IFactory $languageFactory,
-			IRootFolder $rootFolder
-			) {
+			IRootFolder $rootFolder,
+            ILogger $logger
+        ) {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
 		$this->userId = $userId;
@@ -49,6 +52,7 @@ class EditorController extends Controller {
 		$this->db = $db;
 		$this->languageFactory = $languageFactory;
 		$this->rootFolder = $rootFolder;
+		$this->logger = $logger;
 	}
 	/**
 	 * @NoAdminRequired
@@ -56,8 +60,8 @@ class EditorController extends Controller {
 	 */
 	public function editAudioFile($songFileId) {
 		$resultData = [];
-			\OCP\Util::writeLog('audioplayer', 'songFileId: '.$songFileId, \OCP\Util::DEBUG);
-		
+        $this->logger->debug('songFileId: '.$songFileId, array('app' => 'audioplayer'));
+
 		if (!class_exists('getid3_exception')) {
 			require_once __DIR__.'/../../3rdparty/getid3/getid3.php';
 		}
@@ -69,7 +73,6 @@ class EditorController extends Controller {
 		if ($fileInfo['permissions'] & \OCP\PERMISSION_UPDATE) {
 		
 			$localFile = $userView->getLocalFile($path);
-			//\OCP\Util::writeLog('audioplayer','local: '.$path,\OCP\Util::DEBUG);
 			$getID3 = new \getID3;
 			$ThisFileInfo = $getID3->analyze($localFile);
 			\getid3_lib::CopyTagsToComments($ThisFileInfo);
@@ -284,7 +287,6 @@ class EditorController extends Controller {
 			
 			$tagwriter = new \getid3_writetags;
 			$localFile = $userView->getLocalFile($path);
-			//\OCP\Util::writeLog('audioplayer','local: '.$localFile,\OCP\Util::DEBUG);
 			$tagwriter->filename = $localFile;
 			$tagwriter->tagformats = array('id3v2.3');
 			$tagwriter->overwrite_tags    = true;
@@ -385,9 +387,9 @@ class EditorController extends Controller {
 				}
 			} else {
 				if (is_array($tagwriter->errors)) {
-								$tagwriter->errors = implode("\n", $tagwriter->errors);
-			   			}
-						\OCP\Util::writeLog('audioplayer', $tagwriter->errors, \OCP\Util::DEBUG);				
+                    $tagwriter->errors = implode("\n", $tagwriter->errors);
+                }
+                $this->logger->debug($tagwriter->errors, array('app' => 'audioplayer'));
 
 				$result = [
 						'status' => 'error',

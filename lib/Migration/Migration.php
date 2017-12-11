@@ -15,6 +15,7 @@ use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
+use OCP\ILogger;
 
 class Migration implements IRepairStep {
 
@@ -23,14 +24,19 @@ class Migration implements IRepairStep {
 
 	/** @var IConfig */
 	protected $config;
-
+    private $logger;
 	/**
 	 * @param IDBConnection $connection
 	 * @param IConfig $config
 	 */
-	public function __construct(IDBConnection $connection, IConfig $config) {
+	public function __construct(
+	        IDBConnection $connection,
+            IConfig $config,
+            ILogger $logger
+    ) {
 		$this->connection = $connection;
 		$this->config = $config;
+        $this->logger = $logger;
 	}
 
 	/**
@@ -54,14 +60,14 @@ class Migration implements IRepairStep {
 	public function run(IOutput $output) {
 		$version = $this->config->getAppValue('audioplayer', 'installed_version', '0.0.0');
 		if (version_compare($version, '2.1.0', '>')) {
-            \OCP\Util::writeLog('audioplayer', 'Migration of Audio Player started', \OCP\Util::DEBUG);
+            $this->logger->info('Migration of Audio Player started', array('app' => 'audioplayer'));
             if ($this->connection->tableExists('audioplayer_statistics')) {
 				$this->connection->dropTable('audioplayer_statistics');
-				\OCP\Util::writeLog('audioplayer', 'Table -audioplayer_statistics- deleted', \OCP\Util::DEBUG);
+                $this->logger->info('Table -audioplayer_statistics- deleted', array('app' => 'audioplayer'));
 			}
 			if ($this->connection->tableExists('audioplayer_album_artists')) {
 				$this->connection->dropTable('audioplayer_album_artists');
-				\OCP\Util::writeLog('audioplayer', 'Table -audioplayer_album_artists- deleted', \OCP\Util::DEBUG);
+                $this->logger->info('Table -audioplayer_album_artists- deleted', array('app' => 'audioplayer'));
 			}
 			$output->finishProgress();
 		}

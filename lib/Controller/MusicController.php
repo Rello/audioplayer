@@ -20,6 +20,7 @@ use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\Share\IManager;
 use \OCA\audioplayer\Http\ImageResponse;
+use OCP\ILogger;
 
 /**
  * Controller class for main page.
@@ -32,6 +33,7 @@ class MusicController extends Controller {
 	private $db;
 	private $occ_job;
 	private $shareManager;
+    private $logger;
 
 	public function __construct(
 			$appName, 
@@ -39,13 +41,15 @@ class MusicController extends Controller {
 			$userId, 
 			IL10N $l10n, 
 			IDbConnection $db,
-			IManager $shareManager
-		) {
+			IManager $shareManager,
+            ILogger $logger
+    ) {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
 		$this->l10n = $l10n;
 		$this->db = $db;
 		$this->shareManager = $shareManager;
+        $this->logger = $logger;
 	}
 	/**
 	 * @PublicPage
@@ -379,7 +383,7 @@ class MusicController extends Controller {
 		} elseif($hook === null) {
 			$output->writeln("Reset finished");
 		} else {
-			\OCP\Util::writeLog('audioplayer','Library of "'.$userId.'" reset due to user deletion',\OCP\Util::DEBUG);
+            $this->logger->info('Library of "'.$userId.'" reset due to user deletion', array('app' => 'audioplayer'));
 		}
 	}
 	

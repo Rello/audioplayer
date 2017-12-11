@@ -131,7 +131,6 @@ class PlaylistController extends Controller {
 					'sortorder' => (int) $sorting,
 				));
 		} catch(\Exception $e) {
-			\OCP\Util::writeLog('core', __METHOD__.', exception: '.$e->getMessage(),\OCP\Util::ERROR);
 			return false;
 		}
 		return true;
@@ -169,8 +168,6 @@ class PlaylistController extends Controller {
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute(array($playlistid, $songid));
 		} catch(\Exception $e) {
-			\OCP\Util::writeLog('core', __METHOD__.', exception: '.$e->getMessage(),
-				\OCP\Util::ERROR);
 			return false;
 		}
 		return true;
@@ -192,7 +189,6 @@ class PlaylistController extends Controller {
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute(array($playlistid));
 		} catch(\Exception $e) {
-			\OCP\Util::writeLog('core', __METHOD__.', exception: '.$e->getMessage(),\OCP\Util::ERROR);
 			return false;
 		}
 		
