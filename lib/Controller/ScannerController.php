@@ -660,7 +660,7 @@ class ScannerController extends Controller {
      * @param object $audio
      * @param integer $iAlbumId
      * @param integer $parentId
-     * @return boolean
+     * @return boolean|null
      */
     private function getAlbumArt($audio, $iAlbumId, $parentId, $output = null, $debug = null) {
         if ($parentId === $this->parentId_prev) {
