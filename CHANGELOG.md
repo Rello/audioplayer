@@ -15,7 +15,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
-- 
+- Nextcloud 13 compatibility of settings panel [#258](https://github.com/rello/audioplayer/issues/258)
 
 ### Security
 - 
