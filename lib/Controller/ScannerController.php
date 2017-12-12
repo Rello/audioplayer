@@ -104,9 +104,9 @@ class ScannerController extends Controller {
 			$this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
 		}
 
-        $folderpicture 			= false;
+        $this->folderpicture 	= false;
 		$this->progresskey 		= $progresskey;
-		$parentId_prev 			= false;
+        $this->parentId_prev 	= false;
 		$counter 				= 0;
 		$counter_new 			= 0;
 		$error_count 			= 0;
@@ -197,7 +197,7 @@ class ScannerController extends Controller {
 				}
 				
 				$parentId = $audio->getParent()->getId();
-				$this->getAlbumArt($audio, $iAlbumId, $parentId, $debug);
+				$this->getAlbumArt($audio, $iAlbumId, $parentId, $output, $debug);
 
 				$aTrack = [
 					'title' => $this->truncate($name, '256'),
@@ -660,10 +660,9 @@ class ScannerController extends Controller {
      * @param object $audio
      * @param integer $iAlbumId
      * @param integer $parentId
-     * @param $debug
      * @return boolean
      */
-    private function getAlbumArt($audio, $iAlbumId, $parentId, $debug = null) {
+    private function getAlbumArt($audio, $iAlbumId, $parentId, $output = null, $debug = null) {
         if ($parentId === $this->parentId_prev) {
             if ($this->folderpicture) {
                 if ($debug) $output->writeln("     Reusing previous folder image");
