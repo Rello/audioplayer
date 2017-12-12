@@ -9,7 +9,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Deprecated
-- `OCP\Util::writeLog` replaced by `OCP\IDbConnection`
+- `OCP\Util::writeLog` replaced by `OCP\ILogger` [#257](https://github.com/rello/audioplayer/issues/257)
 
 ### Removed
 - 
