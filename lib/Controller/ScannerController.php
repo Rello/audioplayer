@@ -47,6 +47,8 @@ class ScannerController extends Controller {
 	private $ID3Tags;
 	private $cyrillic;
     private $logger;
+    private $parentId_prev;
+    private $folderpicture = false;
 
 		public function __construct(
 			$appName, 
@@ -139,7 +141,6 @@ class ScannerController extends Controller {
 
 		foreach ($audios as $audio) {
 
-            $this->logger->debug($audio->getName(), array('app' => 'audioplayer'));
 				//check if scan is still supposed to run, or if dialog was closed in web already
 				if (!$this->occ_job) {
 					$scan_running = \OC::$server->getCache()->get($this->progresskey);
@@ -196,31 +197,8 @@ class ScannerController extends Controller {
 				}
 				
 				$parentId = $audio->getParent()->getId();
-				if ($parentId === $parentId_prev AND $folderpicture) {
-					if ($debug) $output->writeln("     Reusing previous folder image");
-					$this->getFolderPicture($iAlbumId, $folderpicture->getContent());
-				} else {
-					$folderpicture = false;
-					if ($audio->getParent()->nodeExists('cover.jpg')) {
-						$folderpicture = $audio->getParent()->get('cover.jpg');
-					} elseif ($audio->getParent()->nodeExists('cover.png')) {
-						$folderpicture = $audio->getParent()->get('cover.png');
-					} elseif ($audio->getParent()->nodeExists('folder.jpg')) {
-						$folderpicture = $audio->getParent()->get('folder.jpg');
-					} elseif ($audio->getParent()->nodeExists('folder.png')) {
-						$folderpicture = $audio->getParent()->get('folder.png');
-					}
-					
-					if ($folderpicture) {
-						$this->getFolderPicture($iAlbumId, $folderpicture->getContent());
-						if ($debug) $output->writeln("     Alternative album art: ".$folderpicture->getInternalPath());
-					} elseif (isset($this->ID3Tags['comments']['picture'])) {
-						$data = $this->ID3Tags['comments']['picture'][0]['data'];
-						$this->getFolderPicture($iAlbumId, $data);
-					}					
-					$parentId_prev = $parentId;
-				}
-				
+				$this->getAlbumArt($audio, $iAlbumId, $parentId, $debug);
+
 				$aTrack = [
 					'title' => $this->truncate($name, '256'),
 					'number' => $this->normalizeInteger($trackNr),
@@ -674,16 +652,59 @@ class ScannerController extends Controller {
 		if ($debug) $output->writeln("Final streaming files to be processed: ".count($audios_clean));
 		return $audios_clean;
 	}
-	
+
+    /**
+     * extract cover art from folder or from audio file
+     * folder/cover.jpg/png
+     *
+     * @param object $audio
+     * @param integer $iAlbumId
+     * @param integer $parentId
+     * @param $debug
+     * @return boolean
+     */
+    private function getAlbumArt($audio, $iAlbumId, $parentId, $debug = null) {
+        if ($parentId === $this->parentId_prev) {
+            if ($this->folderpicture) {
+                if ($debug) $output->writeln("     Reusing previous folder image");
+                $this->processImageString($iAlbumId, $this->folderpicture->getContent());
+            } else {
+                $data = $this->ID3Tags['comments']['picture'][0]['data'];
+                $this->processImageString($iAlbumId, $data);
+            }
+        } else {
+            $this->folderpicture = false;
+            if ($audio->getParent()->nodeExists('cover.jpg')) {
+                $this->folderpicture = $audio->getParent()->get('cover.jpg');
+            } elseif ($audio->getParent()->nodeExists('cover.png')) {
+                $this->folderpicture = $audio->getParent()->get('cover.png');
+            } elseif ($audio->getParent()->nodeExists('folder.jpg')) {
+                $this->folderpicture = $audio->getParent()->get('folder.jpg');
+            } elseif ($audio->getParent()->nodeExists('Folder.jpg')) {
+                $this->folderpicture = $audio->getParent()->get('Folder.jpg');
+            } elseif ($audio->getParent()->nodeExists('folder.png')) {
+                $this->folderpicture = $audio->getParent()->get('folder.png');
+            }
+
+            if ($this->folderpicture) {
+                $this->processImageString($iAlbumId, $this->folderpicture->getContent());
+                if ($debug) $output->writeln("     Alternative album art: ".$this->folderpicture->getInternalPath());
+            } elseif (isset($this->ID3Tags['comments']['picture'])) {
+                $data = $this->ID3Tags['comments']['picture'][0]['data'];
+                $this->processImageString($iAlbumId, $data);
+            }
+            $this->parentId_prev = $parentId;
+        }
+    }
+
 	/**
-	 * get picture from folder of audio file
-	 * folder/cover.jpg/png
+	 * create image string from rawdata and store as album cover
 	 * 
 	 * @param integer $iAlbumId
 	 * @param $data
 	 * @return boolean
 	 */
-	private function getFolderPicture($iAlbumId, $data) {
+	private function processImageString($iAlbumId, $data) {
 		$image = new \OCP\Image();
  		if ($image->loadFromdata($data)) {
 			if (($image->width() <= 250 && $image->height() <= 250) || $image->centerCrop(250)) {
