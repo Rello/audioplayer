@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- 
+
+### Changed
+- 
+
+### Deprecated
+- `OCP\Util::writeLog` replaced by `OCP\ILogger` [#257](https://github.com/rello/audioplayer/issues/257)
+
+### Removed
+- 
+
+### Fixed
+- 
+
+### Security
+- 
+
 ## 2.2.1 - 2017-11-19
 ### Fixed
 - only one change in a playlist possible
