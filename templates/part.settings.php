@@ -21,13 +21,13 @@
 
 <div id="app-settings-content">
 	<ul id="audio-settings">
-		<li class="audio-settings-item icon-search" style="padding-left: 10px;">
-			<a href="#" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios">
+		<li class="audio-settings-item icon-search">
+			<a href="#" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios" style="padding: 0 20px;">
 				<?php p($l->t('Scan for audio files')); ?>
 			</a>
 		</li>
-		<li class="audio-settings-item icon-delete" style="padding-left: 10px;">
-			<a href="#" title="<?php p($l->t('Reset library')); ?>" id="resetAudios">
+		<li class="audio-settings-item icon-delete">
+			<a href="#" title="<?php p($l->t('Reset library')); ?>" id="resetAudios" style="padding: 0 20px;">
 				<?php p($l->t('Reset library')); ?>
 			</a>
 		</li>
@@ -45,8 +45,8 @@
 		</li>
 		<li class="audio-settings-item">
 		</li>
-		<li class="audio-settings-item icon-info" style="padding-left: 10px;">
-			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank">
+		<li class="audio-settings-item icon-info">
+			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank" style="padding: 0 20px;">
 				<?php p($l->t('More information…')); ?>
 			</a>
 		</li>
