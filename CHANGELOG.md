@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- 
+
+### Changed
+- 
+
+### Deprecated
+- `OCP\Util::writeLog` replaced by `OCP\IDbConnection`
+
+### Removed
+- 
+
+### Fixed
+- 
+
+### Security
+- 
+
 ## 2.2.1 - 2017-11-19
 ### Fixed
 - only one change in a playlist possible
