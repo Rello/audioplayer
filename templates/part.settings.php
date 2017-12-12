@@ -20,22 +20,22 @@
 </div>
 
 <div id="app-settings-content">
-	<ul id="audio-settings" class="with-icon">
-		<li>
-			<a href="#" class="icon-search" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios">
+	<ul id="audio-settings">
+		<li class="audio-settings-item icon-search" style="padding-left: 10px;">
+			<a href="#" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios">
 				<?php p($l->t('Scan for audio files')); ?>
 			</a>
 		</li>
-		<li>
-			<a href="#" class="icon-delete" title="<?php p($l->t('Reset library')); ?>" id="resetAudios">
+		<li class="audio-settings-item icon-delete" style="padding-left: 10px;">
+			<a href="#" title="<?php p($l->t('Reset library')); ?>" id="resetAudios">
 				<?php p($l->t('Reset library')); ?>
 			</a>
 		</li>
-		<li class="audio-settings-item">
+		<li class="audio-settings-item" style="padding-top: 10px;">
 			<input class="checkbox" type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']) ?>/>
 			<label for="cyrillic_user">&nbsp;&nbsp;&nbsp;<?php p($l->t('Cyrillic support')); ?></label>
 		</li>
-		<li class="audio-settings-item">
+		<li class="audio-settings-item" style="padding-top: 10px;">
 			<label for="audio-path"><?php p($l->t('Search for audio files in')); ?>:</label>
 			<input type="text" id="audio-path" value="<?php p($_['path']) ?>" />
 		</li>
@@ -45,8 +45,8 @@
 		</li>
 		<li class="audio-settings-item">
 		</li>
-		<li>
-			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank" class="icon-info">
+		<li class="audio-settings-item icon-info" style="padding-left: 10px;">
+			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank">
 				<?php p($l->t('More information…')); ?>
 			</a>
 		</li>

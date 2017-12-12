@@ -24,8 +24,8 @@
 	min-height: 30px;
 }
 #audio-settings li.audio-settings-item {
-	padding-left: 14px;
-	padding-top: 10px;
+	background-size: 15px 15px;
+	background-position: 0px center;
 	opacity: .57;
 }
 
