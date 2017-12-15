@@ -26,12 +26,12 @@ class FileHooks {
 	 * delete track from library after file deletion
 	 * @param array $params
 	 */
-	public function deleteTrack($params) {
+	public static function deleteTrack($params) {
 
 		$view = \OC\Files\Filesystem::getView();
 		$node = $view->getFileInfo($params['path']);
-        
-        $this->logger->debug('Hook delete id: '.$node->getId(), array('app' => 'audioplayer'));
+
+        #$this->logger->debug('Hook delete id: '.$node->getId(), array('app' => 'audioplayer'));
 		if ($node->getType() === FileInfo::TYPE_FILE) {
 			$app = new \OCA\audioplayer\AppInfo\Application();
         	$container = $app->getContainer();
