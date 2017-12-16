@@ -57,7 +57,7 @@ class PageController extends Controller {
 		$csp->addAllowedFrameDomain('*');	
 		
 		$maxUploadFilesize = \OCP\Util::maxUploadFilesize('/');
-		 
+
 		$response = new TemplateResponse('audioplayer', 'index');
 		$response->setContentSecurityPolicy($csp);
 		$response->setParams(array(
@@ -66,10 +66,11 @@ class PageController extends Controller {
 			'cyrillic' => $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic'),
 			'path' => $this->configManager->getUserValue($this->userId, $this->appName, 'path'),
 			'navigation' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
+            'volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
 			'notification' => $this->getNotification(),
 		));
 		return $response;
-	}	
+	}
 
 	private function getNotification() {
 		//$app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');

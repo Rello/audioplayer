@@ -29,6 +29,7 @@
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php p($_['uploadMaxFilesize']) ?>" id="max_upload">
 	<input type="hidden" class="max_human_file_size" value="(max <?php p($_['uploadMaxHumanFilesize']); ?>)">
 	<input type="hidden" id="audioplayer_notification" value="<?php p($_['notification']); ?>">
+    <input type="hidden" id="audioplayer_volume" value="<?php p($_['volume']); ?>">
 	<input id="pinphoto_fileupload" type="file" accept="image/*" name="imagefile" />
 </form>
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>

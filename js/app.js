@@ -142,8 +142,9 @@ Audios.prototype.AlbumSongs = function(){
                 $('.albumSelect li i.ioc').hide();
 
                 myWrapper.addClass('isPlaylist');
-                if($this.AudioPlayer === null){
+                if ($this.AudioPlayer === null){
                     $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
+                    $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val())
                 }
 
                 var ClonePlaylist = myWrapper.find('li').clone();
@@ -432,14 +433,12 @@ Audios.prototype.loadAlbums = function(){
                             $this.ActivePlaylist.append(objCloneActivePlaylist);
                             $('#activePlaylist span').remove();
                             $('#activePlaylist li.noPlaylist').remove();
-                            if($this.AudioPlayer === null){
+                            if ($this.AudioPlayer === null){
                                 $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
-                                $(this).parent().parent().find('.albumSelect li:first-child').addClass('isActive');
-                                $this.AudioPlayer.actions.play(0);
-                            }else{
-                                $(this).parent().parent().find('.albumSelect li:first-child').addClass('isActive');
-                                $this.AudioPlayer.actions.play(0);
+                                $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val())
                             }
+                            $(this).parent().parent().find('.albumSelect li:first-child').addClass('isActive');
+                            $this.AudioPlayer.actions.play(0);
                             $this.set_statistics();
                             var myCover=$('.album.is-active .albumcover');
                             if(myCover.css('background-image') == 'none'){
@@ -754,6 +753,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
                             $this.PlaylistContainer.addClass('isPlaylist');
                             if ($this.AudioPlayer === null){
                                 $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
+                                $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val())
                             }
 
                             var activeLi=$(this).closest('li');
@@ -1195,6 +1195,7 @@ Audios.prototype.set_statistics = function() {
             }
         });
     }
+    $this.set_uservalue('volume',Math.round($this.AudioPlayer.actions.getVolume()));
 };
 
 Audios.prototype.sort_playlist = function(evt) {
@@ -1318,19 +1319,19 @@ $(window).resize(_.debounce(function() {
     resizeTimeout = setTimeout(function() {
         $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
 
-            if(myAudios.AlbumContainer.width() < 850){
-                $('.songcontainer .songlist').addClass('one-column');
-                $('.songcontainer .songlist').removeClass('two-column');
-                $('.songcontainer .songcontainer-cover').addClass('cover-small');
-            }else{
-                $('.songcontainer .songlist').removeClass('one-column');
-                $('.songcontainer .songlist').addClass('two-column');
-                $('.songcontainer .songcontainer-cover').removeClass('cover-small');
-            }
-            if(	$('#alben').hasClass('active')) {
-                $('#albums-container .rowlist').remove();
-                myAudios.buildAlbumRows(myAudios.albums);
-            }
+        if(myAudios.AlbumContainer.width() < 850){
+            $('.songcontainer .songlist').addClass('one-column');
+            $('.songcontainer .songlist').removeClass('two-column');
+            $('.songcontainer .songcontainer-cover').addClass('cover-small');
+        }else{
+            $('.songcontainer .songlist').removeClass('one-column');
+            $('.songcontainer .songlist').addClass('two-column');
+            $('.songcontainer .songcontainer-cover').removeClass('cover-small');
+        }
+        if(	$('#alben').hasClass('active')) {
+            $('#albums-container .rowlist').remove();
+            myAudios.buildAlbumRows(myAudios.albums);
+        }
     }, 500);
 }));
 
