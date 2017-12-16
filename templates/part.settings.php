@@ -39,13 +39,11 @@
 			<label for="audio-path"><?php p($l->t('Search for audio files in')); ?>:</label>
 			<input type="text" id="audio-path" value="<?php p($_['path']) ?>" />
 		</li>
-		<li class="audio-settings-item">
+		<li class="audio-settings-item" style="padding-top: 10px;">
 			<label for="browser_support"><?php p($l->t('Formats not supported by the browser')); ?>:</label>
 			&nbsp;<em id="browser_no"></em>
 		</li>
-		<li class="audio-settings-item">
-		</li>
-		<li class="audio-settings-item icon-info">
+		<li class="audio-settings-item icon-info" style="padding-top: 10px;">
 			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank" style="padding: 0 20px;">
 				<?php p($l->t('More information…')); ?>
 			</a>
