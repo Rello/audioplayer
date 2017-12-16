@@ -144,7 +144,7 @@ Audios.prototype.AlbumSongs = function(){
                 myWrapper.addClass('isPlaylist');
                 if ($this.AudioPlayer === null){
                     $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
-                    $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val())
+                    $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
                 }
 
                 var ClonePlaylist = myWrapper.find('li').clone();
@@ -435,7 +435,7 @@ Audios.prototype.loadAlbums = function(){
                             $('#activePlaylist li.noPlaylist').remove();
                             if ($this.AudioPlayer === null){
                                 $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
-                                $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val())
+                                $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
                             }
                             $(this).parent().parent().find('.albumSelect li:first-child').addClass('isActive');
                             $this.AudioPlayer.actions.play(0);
@@ -753,7 +753,7 @@ Audios.prototype.loadIndividualCategory = function(evt) {
                             $this.PlaylistContainer.addClass('isPlaylist');
                             if ($this.AudioPlayer === null){
                                 $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
-                                $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val())
+                                $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
                             }
 
                             var activeLi=$(this).closest('li');
