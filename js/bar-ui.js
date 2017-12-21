@@ -1603,6 +1603,10 @@
                 }
 
                 defaultVolume = volume;
+                // **********************************************************
+                // Notify Audio Player about next track e.g. for cover updates
+                // **********************************************************
+                $this.soundmanager_callback('setVolume');
 
                 return utils.events.preventDefault(e);
 

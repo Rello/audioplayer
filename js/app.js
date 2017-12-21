@@ -1195,7 +1195,6 @@ Audios.prototype.set_statistics = function() {
             }
         });
     }
-    $this.set_uservalue('volume',Math.round($this.AudioPlayer.actions.getVolume()));
 };
 
 Audios.prototype.sort_playlist = function(evt) {
@@ -1251,6 +1250,10 @@ Audios.prototype.sort_playlist = function(evt) {
 };
 
 Audios.prototype.soundmanager_callback = function(SMaction) {
+    if (SMaction === 'setVolume') {
+        $this.set_uservalue('volume',Math.round($this.AudioPlayer.actions.getVolume()));
+        return;
+    }
     if ($('#albums-container .albumwrapper.isPlaylist').length === 0 ) {
         var cover = $('#activePlaylist li.selected').data('cover');
         var album = $('#activePlaylist li.selected').data('album');
