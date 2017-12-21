@@ -1,24 +1,16 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## Unreleased
+## 2.2.2 - 2017-12-xx
 ### Added
 - `Folder.jpg` as cover art filename [#256](https://github.com/rello/audioplayer/issues/256)
-
-### Changed
-- 
+- store playback volume into user settings [#260](https://github.com/rello/audioplayer/issues/260)
 
 ### Deprecated
 - `OCP\Util::writeLog` replaced by `OCP\ILogger` [#257](https://github.com/rello/audioplayer/issues/257)
 
-### Removed
-- 
-
 ### Fixed
 - Nextcloud 13 compatibility of settings panel [#258](https://github.com/rello/audioplayer/issues/258)
-
-### Security
-- 
 
 ## 2.2.1 - 2017-11-19
 ### Fixed
