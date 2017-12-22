@@ -15,10 +15,8 @@
         return results;}
         function get(){var results=getAll.apply(this,arguments);if(results&&results.length){return results[results.length-1];}
             return results&&results.length===0?null:results;}
-        return{get:get,getAll:getAll};}()),position:(function(){function getOffX(o){var curleft=0;if(o.offsetParent){while(o.offsetParent){curleft+=o.offsetLeft;o=o.offsetParent;}}else if(o.x){curleft+=o.x;}
-        return curleft;}
-        function getOffY(o){var curtop=0;if(o.offsetParent){while(o.offsetParent){curtop+=o.offsetTop;o=o.offsetParent;}}else if(o.y){curtop+=o.y;}
-            return curtop;}
+        return{get:get,getAll:getAll};}()),position:(function(){function getOffX(o){return $(o).offset().left;}
+        function getOffY(o){return $(o).offset().top;}
         return{getOffX:getOffX,getOffY:getOffY};}()),style:(function(){function get(node,styleProp){var value;if(node.currentStyle){value=node.currentStyle[styleProp];}else if(window.getComputedStyle){value=document.defaultView.getComputedStyle(node,null).getPropertyValue(styleProp);}
         return value;}
         return{get:get};}()),events:(function(){var add,remove,preventDefault;add=function(o,evtName,evtHandler){var eventObject={detach:function(){return remove(o,evtName,evtHandler);}};if(window.addEventListener){o.addEventListener(evtName,evtHandler,false);}else{o.attachEvent('on'+evtName,evtHandler);}

@@ -207,53 +207,11 @@
         position: (function() {
 
             function getOffX(o) {
-
-                // http://www.xs4all.nl/~ppk/js/findpos.html
-                var curleft = 0;
-
-                if (o.offsetParent) {
-
-                    while (o.offsetParent) {
-
-                        curleft += o.offsetLeft;
-
-                        o = o.offsetParent;
-
-                    }
-
-                } else if (o.x) {
-
-                    curleft += o.x;
-
-                }
-
-                return curleft;
-
+                return $(o).offset().left;
             }
 
             function getOffY(o) {
-
-                // http://www.xs4all.nl/~ppk/js/findpos.html
-                var curtop = 0;
-
-                if (o.offsetParent) {
-
-                    while (o.offsetParent) {
-
-                        curtop += o.offsetTop;
-
-                        o = o.offsetParent;
-
-                    }
-
-                } else if (o.y) {
-
-                    curtop += o.y;
-
-                }
-
-                return curtop;
-
+                return $(o).offset().top;
             }
 
             return {
