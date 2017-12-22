@@ -223,10 +223,9 @@
 
                 } else if (o.x) {
 
-                    curleft += o.x;
+                    return $(o).offset().left;
 
                 }
-
                 return curleft;
 
             }
@@ -248,7 +247,7 @@
 
                 } else if (o.y) {
 
-                    curtop += o.y;
+                    return $(o).offset().top;
 
                 }
 
