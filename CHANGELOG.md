@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.2.2 - 2017-12-xx
+## 2.2.2 - 2017-12-26
 ### Added
 - `Folder.jpg` as cover art filename [#256](https://github.com/rello/audioplayer/issues/256)
 - store playback volume into user settings [#260](https://github.com/rello/audioplayer/issues/260)
