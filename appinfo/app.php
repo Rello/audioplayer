@@ -15,18 +15,28 @@
 namespace OCA\audioplayer\AppInfo;
  
 $request = \OC::$server->getRequest();
-	
-	if (isset($request->server['REQUEST_URI'])) {
-		$url = $request->server['REQUEST_URI'];
-		if (preg_match('%/apps/files(/.*)?%', $url) || preg_match('%/s/(/.*)?%', $url)) {
-			\OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');		
-			\OCP\Util::addStyle('audioplayer', 'style');
-			\OCP\Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
-			\OCP\Util::addScript('audioplayer', 'viewer-min');
-			\OCP\Util::addScript('audioplayer', 'berniecode-animator-min');
-			\OCP\Util::addScript('audioplayer', '360player-min');
-		}
-	}
+
+$eventDispatcher = \OC::$server->getEventDispatcher();
+$eventDispatcher->addListener(
+    'OCA\Files::loadAdditionalScripts',
+    function() {
+        \OCP\Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
+        \OCP\Util::addScript('audioplayer', 'viewer/viewer');
+        \OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
+    }
+);
+$eventDispatcher->addListener(
+    'OCA\Files_Sharing::loadAdditionalScripts',
+    function() {
+        \OCP\Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
+        \OCP\Util::addScript('audioplayer', 'sharing/sharing');
+        \OCP\Util::addScript('audioplayer', 'sharing/berniecode-animator-min');
+        \OCP\Util::addScript('audioplayer', 'sharing/360player-min');
+        \OCP\Util::addStyle('audioplayer', 'sharing/360player');
+        \OCP\Util::addStyle('audioplayer', 'sharing/360player-visualization');
+        \OCP\Util::addStyle('audioplayer', 'sharing/sharing');
+    }
+);
 
 $app = new Application();
 $app->registerFileHooks();
