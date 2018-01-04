@@ -50,37 +50,49 @@ var audioPlayer = {
             //$('#filestable').find('.thumbnail i.ioc-play').show();
             audioPlayer.player=null;
         }
+    },
+
+    registerFileActions : function () {
+        var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
+        //var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
+        //mime_array = mime_array.concat(stream_array);
+        var icon_url = OC.imagePath('core', 'actions/sound');
+
+        if(audioPlayer.player === null){
+            soundManager.setup({
+                url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
+                onready: function() {
+                    audioPlayer.player = soundManager.createSound({
+                    });
+
+                    var can_play = soundManager.html5;
+                    var mime;
+                    for (var i=0; i<mime_array.length; i++) {
+                        if (can_play[mime_array[i]] === true) {
+                            mime = mime_array[i];
+                            OCA.Files.fileActions.register(
+                                mime,
+                                'audioplayer-play',
+                                OC.PERMISSION_READ,
+                                OC.imagePath('core', 'actions/sound'),
+                                audioPlayer.playFile,
+                                t('audioplayer', 'Play')
+                            );
+                            OCA.Files.fileActions.setDefault(mime, 'audioplayer-play');
+                        }
+                    }
+                    audioPlayer.player=null;
+                }
+            });
+        }
     }
 };
+
 $(document).ready(function() {
-    var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
-    //var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
-    //mime_array = mime_array.concat(stream_array);
-    var icon_url = OC.imagePath('core', 'actions/sound');
-
-    if(audioPlayer.player === null){
-        soundManager.setup({
-            url:OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
-            onready: function() {
-                audioPlayer.player = soundManager.createSound({
-                });
-
-                var can_play = soundManager.html5;
-                for (var i=0; i<mime_array.length; i++) {
-                    if (can_play[mime_array[i]] === true) {
-                        OCA.Files.fileActions.registerAction({
-                            name: 'audioplayer',
-                            displayName: t('audioplayer', 'Play'),
-                            mime: mime_array[i],
-                            permissions: OC.PERMISSION_READ,
-                            icon: icon_url,
-                            actionHandler: audioPlayer.playFile
-                        });
-                        OCA.Files.fileActions.setDefault(mime_array[i], 'audioplayer');
-                    }
-                }
-                audioPlayer.player=null;
-            }
-        });
+    if ( typeof OCA !== 'undefined'
+        && typeof OCA.Files !== 'undefined'
+        && typeof OCA.Files.fileActions !== 'undefined'
+    ) {
+        audioPlayer.registerFileActions();
     }
 });
