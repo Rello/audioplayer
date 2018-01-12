@@ -453,7 +453,8 @@ class CategoryController extends Controller {
 
         if ($file_type === 'audio/x-scpls') {
             $stream_data = parse_ini_string($file_content, true, INI_SCANNER_RAW);
-            for ($i = 1; $i <= $stream_data['playlist']['NumberOfEntries']; $i++) {
+            $stream_rows = isset($stream_data['playlist']['NumberOfEntries']) ? $stream_data['playlist']['NumberOfEntries'] : $stream_data['playlist']['numberofentries'];
+            for ($i = 1; $i <= $stream_rows; $i++) {
                 $title = $stream_data['playlist']['Title'.$i];
                 $file = $stream_data['playlist']['File'.$i];
                 preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $file, $matches);
