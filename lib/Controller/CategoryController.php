@@ -60,17 +60,13 @@ class CategoryController extends Controller {
 	 */
 	public function getCategory($category){
 		$playlists= $this->getCategoryforUser($category);
-	
-		if(is_array($playlists)){
-			$result=[
-				'status' => 'success',
-				'data' => $playlists
-			];
-		}else{
-			$result=[
-				'status' => 'nodata'
-			];
-		}
+
+        $result = empty($playlists) ? [
+            'status' => 'nodata'
+        ] : [
+            'status' => 'success',
+            'data' => $playlists
+        ];
 		$response = new JSONResponse();
 		$response -> setData($result);
 		return $response;
@@ -167,12 +163,7 @@ class CategoryController extends Controller {
 				$aPlaylists[] = $row;
 			}
 		}
-		
-		if(empty($aPlaylists)){
-  			return false;
- 		} else {
- 			return $aPlaylists;
-		}
+		return $aPlaylists;
 	}
 
     /**
@@ -276,19 +267,15 @@ class CategoryController extends Controller {
 		$itmes = $this->getItemsforCatagory($category,$categoryId);
 		$headers = $this->getHeadersforCatagory($category);
 		if ($category === 'Artist') $albums = $this->getAlbumCountForCategory($category,$categoryId);
-	
-		if(is_array($itmes)){
-			$result=[
-				'status' => 'success',
-				'data' => $itmes,
-				'header' => $headers,
-				'albums' => $albums,			
-			];
-		}else{
-			$result=[
-				'status' => 'nodata',
-			];
-		}
+
+        $result = !empty($itmes) ? [
+            'status' => 'success',
+            'data' => $itmes,
+            'header' => $headers,
+            'albums' => $albums,
+        ] : [
+            'status' => 'nodata',
+        ];
 		$response = new JSONResponse();
 		$response -> setData($result);
 		return $response;
@@ -365,7 +352,7 @@ class CategoryController extends Controller {
 					AND `AT`.`user_id` = ? 
 			 		ORDER BY `AP`.`sortorder` ASC";
 		} elseif ($category === 'Stream') {
-			$aTracks = $this->StreamParser(substr($categoryId, 1));
+			$aTracks = $this->StreamParser(intval(substr($categoryId, 1)));
 			return $aTracks;
 
 		} elseif ($category === 'Folder') {
@@ -407,12 +394,7 @@ class CategoryController extends Controller {
                 $aTracks[]=$row;
             }
 		}
-		
-		if(empty($aTracks)){
-  			return false;
- 		}else{
- 			return $aTracks;
-		}
+		return $aTracks;
 	}
 
     /**
