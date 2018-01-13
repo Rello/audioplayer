@@ -1,11 +1,19 @@
+build:
+    nodes:
+        analysis:
+            project_setup:
+                override: true
+            tests:
+                override: [php-scrutinizer-run]
+
 filter:
     excluded_paths:
         - '3rdparty/*'
         - 'js/soundmanager2*'
         - 'js/bar*'
-        - 'js/berniecode*'
+        - 'js/sharing/berniecode*'
         - 'js/jquery*'
-        - 'js/360player*'          
+        - 'js/sharing/360player*'          
 
 imports:
     - javascript
