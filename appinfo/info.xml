@@ -6,7 +6,7 @@
 	<description><![CDATA[A music player for FLAC, MP3, MP4, streams, and more with playlist support and Share Player.
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
-	<version>2.2.3-beta.1</version>
+	<version>2.2.3-beta.2</version>
 	<licence>AGPL</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>

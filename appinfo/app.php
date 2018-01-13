@@ -29,12 +29,14 @@ $eventDispatcher->addListener(
     'OCA\Files_Sharing::loadAdditionalScripts',
     function() {
         \OCP\Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
+        \OCP\Util::addScript('audioplayer', 'viewer/viewer');
         \OCP\Util::addScript('audioplayer', 'sharing/sharing');
         \OCP\Util::addScript('audioplayer', 'sharing/berniecode-animator-min');
         \OCP\Util::addScript('audioplayer', 'sharing/360player-min');
         \OCP\Util::addStyle('audioplayer', 'sharing/360player');
         \OCP\Util::addStyle('audioplayer', 'sharing/360player-visualization');
         \OCP\Util::addStyle('audioplayer', 'sharing/sharing');
+        \OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
     }
 );
 

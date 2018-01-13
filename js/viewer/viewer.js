@@ -14,6 +14,7 @@ $(document).ready(function() {
     if ( typeof OCA !== 'undefined'
         && typeof OCA.Files !== 'undefined'
         && typeof OCA.Files.fileActions !== 'undefined'
+        && $('#header').hasClass('share-file') === false
     ) {
 
         var audioPlayer = {
