@@ -1,7 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.2.3 - 2018-01-??
+## 2.2.3 - 2018-01-15
+### Changed
+adjust PLS playlist parser [#265](https://github.com/rello/audioplayer/issues/265)
+
 ### Fixed
 - Audio Player CSS is breaking Overflow Menu in Files app [#264](https://github.com/rello/audioplayer/issues/264)
 
