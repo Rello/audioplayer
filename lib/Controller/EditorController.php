@@ -29,7 +29,6 @@ class EditorController extends Controller {
 	
 	private $userId;
 	private $l10n;
-	private $path;
 	private $db;
 	private $iAlbumCount = 0;
 	private $languageFactory;
@@ -70,7 +69,7 @@ class EditorController extends Controller {
 		$path = $userView->getPath($songFileId);
 		$fileInfo = $userView -> getFileInfo($path);
 		
-		if ($fileInfo['permissions'] & \OCP\PERMISSION_UPDATE) {
+		if ($fileInfo['permissions'] & \OCP\Constants::PERMISSION_UPDATE) {
 		
 			$localFile = $userView->getLocalFile($path);
 			$getID3 = new \getID3;
