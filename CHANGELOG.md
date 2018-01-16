@@ -7,7 +7,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Fixed
 - Audio Player CSS is breaking Overflow Menu in Files app [#264](https://github.com/rello/audioplayer/issues/264)
-- NC14 deprecated constant [#266](https://github.com/rello/audioplayer/issues/266)
+- replace deprecated constant [#266](https://github.com/rello/audioplayer/issues/266)
 
 ## 2.2.2 - 2017-12-26
 ### Added
