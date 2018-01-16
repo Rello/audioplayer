@@ -5,9 +5,11 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - adjust PLS playlist parser [#265](https://github.com/rello/audioplayer/issues/265)
 
+### Deprecated
+- `OCP\PERMISSION_UPDATE` replaced by `OCP\Constants::PERMISSION_UPDATE` [#266](https://github.com/rello/audioplayer/issues/266)
+
 ### Fixed
 - Audio Player CSS is breaking Overflow Menu in Files app [#264](https://github.com/rello/audioplayer/issues/264)
-- replace deprecated constant [#266](https://github.com/rello/audioplayer/issues/266)
 
 ## 2.2.2 - 2017-12-26
 ### Added
