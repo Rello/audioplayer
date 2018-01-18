@@ -5,6 +5,19 @@
 	<summary>Audio Player for Nextcloud and ownCloud</summary>
 	<description><![CDATA[A music player for FLAC, MP3, MP4, streams, and more with playlist support and Share Player.
 
+- Multiple views (albums with covers and more)
+- Library scan and reset by command-line and browser
+- Specifying media folder (with exclude functionality)
+- Play shared files directly without downloading
+- Playlists and ID3 tag editor (incl. picture)
+- One Click Play from Files app
+- External cover support
+- Mobile view support
+- Search integration
+- Favorites integration
+- Playlist files
+- Stream URLs
+
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
 	<version>2.2.3</version>
 	<licence>AGPL</licence>
