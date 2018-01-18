@@ -17,6 +17,7 @@ A music player for FLAC, MP3, MP4, streams, and more with playlist support and s
 - Mobile view support
 - Search integration
 - Favorites integration
+- Playlist files
 - Stream URLs
 
 ### Supported Formats
