@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.2.4 - 2018-01-20
+### Fixed
+- separate archives for Nextcloud and ownCloud code signing [#268](https://github.com/rello/audioplayer/issues/268)
+
 ## 2.2.3 - 2018-01-16
 ### Changed
 - adjust PLS playlist parser [#265](https://github.com/rello/audioplayer/issues/265)
