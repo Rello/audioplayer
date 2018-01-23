@@ -29,12 +29,12 @@
 			<button  class="icon-add ap_hidden" id="addPlaylist"></button>
 		</div>
 		<ul id="myCategory">
-		</ul>	
-		<!--my playlist clone -->	
+		</ul>
+        <!--my playlist clone -->
 		<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
 			<div id="playlist_controls">	
 				<input type="text" name="playlist" id="playlist" value=""  />
-				<button class="icon-checkmark" style="margin: 0px;"></button>
+				<button class="icon-checkmark"></button>
 				<button class="icon-close"></button>
 			</div>
 		</li>	
@@ -42,7 +42,7 @@
 		<div class="app-navigation-entry-edit ap_hidden" id="newPlaylist">
 			<div id="newPlaylist_controls">
 				<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist')); ?>" /> 
-				<button class="icon-checkmark" id="newPlaylistBtn_ok" style="margin: 0px;"></button>
+				<button class="icon-checkmark" id="newPlaylistBtn_ok"></button>
 				<button class="icon-close" id="newPlaylistBtn_cancel"></button>
 			</div>
 		</div>

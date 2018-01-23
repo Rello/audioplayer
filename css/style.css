@@ -16,7 +16,7 @@
 }
 
 #searchresults {
-	margin-top: 0px !important;
+	margin-top: 0 !important;
 }
 
 #audio-settings li > a {
@@ -25,7 +25,7 @@
 }
 #audio-settings li.audio-settings-item {
 	background-size: 15px 15px;
-	background-position: 0px center;
+	background-position: 0 center;
 	opacity: .57;
 }
 
@@ -37,7 +37,6 @@
 }
 .ui-dialog{
 	background:#fff;
-	padding:0;
 	margin:0;
 	box-shadow:0 0 1em rgba(0, 0, 0, .5);
 	border:none;
@@ -113,7 +112,7 @@
 	box-sizing: border-box;
 	z-index: 130;
 	/* account for margin-bottom in files list */
-	margin-top: 0px;
+	margin-top: 0;
 	
 }
 
@@ -139,7 +138,7 @@ i#scanAudiosFirst{
     background-position: 11px center;
     background-repeat: no-repeat;
 	background-image: url('../img/albums.svg');
-	margin: 6px 0px;
+	margin: 6px 0;
 	opacity: 0.57;
 }
 #albenoverview li span{
@@ -149,7 +148,7 @@ i#scanAudiosFirst{
 	color:#ccc;
 	font-size:16px;
 	float:right;
-	padding:0px 6px;
+	padding:0 6px;
 	cursor:pointer;
 }
 
@@ -158,12 +157,12 @@ i#scanAudiosFirst{
 }
 #category_area {
 	display: flex;
-	margin: 0px 6px 6px 6px;
+	margin: 0 6px 6px 6px;
 	min-height: 40px;
 }
 #category_selector {
 	width: 100%;
-	margin: 0px;
+	margin: 0;
 }
 
 #app-navigation-toggle_alternative{
@@ -187,7 +186,7 @@ i#scanAudiosFirst{
 	float:left;
 }
 #app-navigation .app-navigation-entry-edit {
-	padding: 0px;
+	padding: 0;
 }
 #app-navigation .app-navigation-entry-edit:hover{
 	background:transparent;
@@ -196,7 +195,7 @@ i#scanAudiosFirst{
 
 #app-navigation #playlist_controls {
 	display: flex;
-	margin: 0px 6px;
+	margin: 0 6px;
 }
 
 #app-navigation #playlist_controls #playlist {
@@ -207,18 +206,11 @@ i#scanAudiosFirst{
 	display: flex;
 	margin: 0 6px;
 }
-#app-navigation  input#newPlaylistTxt[type="text"],
-#app-navigation .app-navigation-entry-edit input[type="text"] {
-	padding: 0 5px;
-	width: 100%;
-	height: 30px;
-	margin: 0;
-}
-#app-navigation .app-navigation-entry-edit button,
-#app-navigation .app-navigation-entry-edit input[type="submit"] {
-	width: 36px;
-	height: 32px;
-	margin: 0 0 0 4px;
+
+#app-navigation .app-navigation-entry-edit {
+	z-index: 1;
+	opacity: 1;
+	position: relative;
 }
 #app-navigation button#addPlaylist{
 	width: 36px;
@@ -453,7 +445,7 @@ i#scanAudiosFirst{
 	float:right;
 	display:block;
 	width:30px;
-	right:0px;
+	right:0;
 }
 
 #individual-playlist li .actionsSong{
@@ -555,14 +547,14 @@ i#scanAudiosFirst{
 #individual-playlist li a.edit-song{
 	float:right;
 	position:absolute;
-	right:0px;
+	right:0;
 	width:30px;
 	height:20px;
 	opacity:0;
 }
 
 #app-content{
-	padding-left:0px;
+	padding-left:0;
 	
 }
 .no-songs-found{
@@ -680,7 +672,7 @@ i#scanAudiosFirst{
 	display:none;
 	background-color: #E6E6E6;
 	color:#555;
-	box-shadow:0px 0px 4px #ccc;
+	box-shadow:0 0 4px #ccc;
 	
 }
 
@@ -863,7 +855,7 @@ i#scanAudiosFirst{
 .songcontainer .albumSelect li a.edit-song{
 	float:left;
 	position:relative;
-	right:0px;
+	right:0;
 	width:30px;
 	height:20px;
 	text-align:right;
@@ -1009,7 +1001,7 @@ li.dropHover{
 .pin_details_photo { border-radius: 0.5em; border: thin solid #bbb; margin: 0.3em; background: url('../../../core/img/loading.gif') no-repeat center center; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; opacity: 1; }
 .pin_details_photo:hover { background: #fff; cursor: default; }
 
-#phototools { position:absolute;top:20px; margin: 5px 0px 0px 5px; width:auto; padding:4px; background-color:#fff; list-style-type:none; border-radius: 0.5em; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; }
+#phototools { position:absolute;top:20px; margin: 5px 0 0 5px; width:auto; padding:4px; background-color:#fff; list-style-type:none; border-radius: 0.5em; -moz-box-shadow: 0 1px 3px #777; -webkit-box-shadow: 0 1px 3px #777; box-shadow: 0 1px 3px #777; }
 #phototools li { display: inline; }
 #phototools li a { float:left; cursor:pointer; width:30px; height:30px; opacity: 0.6; }
 #phototools li a:hover { opacity: 0.8; }
@@ -1060,7 +1052,7 @@ li.dropHover{
 	}
 	.sm2-bar-ui.fixed {
 		margin-left:45px;
-		 left: 0px;
+		 left: 0;
 		
 	}
 	.sm2-inline-element.sm2-button-element.sm2-shuffle{
@@ -1127,7 +1119,7 @@ li.dropHover{
 	
 	.sm2-bar-ui.fixed {
 		margin-left:45px;
-		 left: 0px;
+		 left: 0;
 		 width:80%;
 	}
 	.sm2-inline-element.sm2-button-element.sm2-menu{
@@ -1218,7 +1210,7 @@ li.dropHover{
 		height:24px;
 	}
 	.songcontainer span.actionsSong i.ioc{
-		margin-left:0px;
+		margin-left:0;
 		margin-top:2px;
 		line-height:20px;
 	}
