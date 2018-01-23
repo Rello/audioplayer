@@ -185,12 +185,8 @@ i#scanAudiosFirst{
 	display:none;
 	float:left;
 }
-#app-navigation .app-navigation-entry-edit {
-	padding: 0;
-}
 #app-navigation .app-navigation-entry-edit:hover{
 	background:transparent;
-	
 }
 
 #app-navigation #playlist_controls {
