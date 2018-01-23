@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- 
+
+### Changed
+- 
+
+### Deprecated
+- 
+
+### Removed
+- 
+
+### Fixed
+- no standard playlist creation possible [#270](https://github.com/rello/audioplayer/issues/270)
+
+### Security
+- 
+
 ## 2.2.4 - 2018-01-20
 ### Fixed
 - separate archives for Nextcloud and ownCloud code signing [#268](https://github.com/rello/audioplayer/issues/268)
