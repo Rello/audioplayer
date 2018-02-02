@@ -15,10 +15,14 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
-- no standard playlist creation possible [#270](https://github.com/rello/audioplayer/issues/270)
+- 
 
 ### Security
 - 
+
+## 2.2.5 - 2018-02-02
+### Fixed
+- no standard playlist creation possible [#270](https://github.com/rello/audioplayer/issues/270)
 
 ## 2.2.4 - 2018-01-20
 ### Fixed
