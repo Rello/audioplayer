@@ -49,4 +49,5 @@ $application->registerRoutes($this, ['routes' => [
     ['name' => 'setting#setStatistics', 'url' => '/setstatistics', 'verb' => 'GET'],
 	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
 	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
+    ['name' => 'sidebar#getAudioInfo', 'url' => '/getaudioinfo', 'verb' => 'GET'],
 	]]);

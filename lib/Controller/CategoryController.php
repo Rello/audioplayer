@@ -145,19 +145,26 @@ class CategoryController extends Controller {
 			 			ORDER BY LOWER(FC.`name`) ASC
 			 			";
 		} elseif ($category === 'Album') {
-			$SQL="SELECT  `id`,`name`, LOWER(`name`) AS `lower` 
-						FROM `*PREFIX*audioplayer_albums`
-			 			WHERE  `user_id` = ?
-			 			ORDER BY LOWER(`name`) ASC
+			$SQL="SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`name` AS `art`, `AB`.`cover` AS `cid` 
+						FROM `*PREFIX*audioplayer_albums` `AB`
+						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` 
+						ON `AB`.`artist_id` = `AA`.`id`
+			 			WHERE  `AB`.`user_id` = ?
+			 			ORDER BY LOWER(`AB`.`name`) ASC
 			 			";
-		}	
-		
-		if (isset($SQL)) {	
+		}
+
+        if (isset($SQL)) {
 			$stmt = $this->db->prepare($SQL);
 			$stmt->execute(array($this->userId));
 			$results = $stmt->fetchAll();
 			foreach($results as $row) {
- 				array_splice($row, 2, 1);
+                if ($category === 'Album' && $row['cid'] !== null) {
+                    $row['cid'] = $row['id'];
+                } elseif ($category === 'Album') {
+                    $row['cid'] = '';
+                }
+                array_splice($row, 2, 1);
  				if($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
 				$row['counter'] = $this->getCountForCategory($category,$row['id']);
 				$aPlaylists[] = $row;
