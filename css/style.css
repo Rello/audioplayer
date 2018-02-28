@@ -345,20 +345,13 @@ i#scanAudiosFirst{
 	height:auto;
 }
 
-.fileActionsMenu{
-	margin-top: 30px;
-	margin-right: 5px;
-	padding-bottom: 15px;
-	top: unset;
-}
-
 #playlist-container{
 	margin:0;
 	width:98%;
 	position:relative;
 	top:60px;
 	float:left;
-	display:none;
+	display:inline;
 	height:auto;
 	padding-left:10px;
 }
@@ -574,7 +567,7 @@ i#scanAudiosFirst{
 	text-align:center;
 }
 
-.rowlist{
+.coverrow{
 	width:100%;
 	position:relative;
 	float:left;
@@ -700,7 +693,7 @@ i#scanAudiosFirst{
 	margin-left: -7px;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-	border-bottom: 12px solid  #D3D3D3;
+	border-bottom: 12px solid  #E6E6E6;
 	-webkit-transition: all 0.2s ease-in;
 	-moz-transition: all 0.2s ease-in;
 	transition: all 0.2s ease-in;
@@ -768,12 +761,11 @@ i#scanAudiosFirst{
 
 
 
-.songcontainer .songlist.albumwrapper{
+.songcontainer .songlist{
 	position:relative;
 	float:left;
 	padding-left:20px;
 	display:block;
-	
 }
 
 .two-column{
@@ -790,23 +782,11 @@ i#scanAudiosFirst{
 	width:55%;
 }
 
-.songcontainer .albumSelect{
-	
-}
 .songcontainer .albumSelect li{
 	line-height:20px;
 	width:100%;
 	float:left;
-	
 }
-
-.songcontainer .albumSelect li a.link-full{
-	float:left;
-	position:relative;
-	width:63%;
-	
-}
-
 
 .songcontainer span.actionsSong{
 	float:left;
@@ -815,7 +795,6 @@ i#scanAudiosFirst{
 	width:20px;
 	height:18px;
 	padding-left:5px;
-	
 }
 .songcontainer i.ioc{
 	margin-top:0px;
@@ -832,12 +811,11 @@ i#scanAudiosFirst{
 }
 .songcontainer span.title{
 	position:relative;
-	width:100%;
+	width:63%;
 	float:left;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow:hidden;
-	
 }
 
 .songcontainer span.time{
@@ -1027,6 +1005,32 @@ li.dropHover{
 #audios_import_dialog{
 	padding:0;
 	margin:0;
+}
+
+#audioplayerTabView table {
+	margin-left: 2em;
+}
+
+#audioplayerTabView tr:hover {
+	background-color: transparent;
+}
+
+#audioplayerTabView td {
+	border: none;
+	padding: 0;
+}
+
+#audioplayerTabView .key {
+	color: #999;
+	padding-right: 1em;
+	vertical-align: top;
+}
+
+#audioplayerTabView .value {
+	width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 1px;
 }
 
 @media only screen and (max-width: 768px){
