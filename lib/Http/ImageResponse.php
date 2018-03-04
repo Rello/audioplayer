@@ -18,35 +18,36 @@ use OCP\AppFramework\Http;
 /**
  * A renderer for cover arts
  */
-class ImageResponse extends Response {
+class ImageResponse extends Response
+{
 
-	private $preview;
+    private $preview;
 
-	/**
-	 * @param array $image image meta data
-	 * @param int $statusCode the Http status code, defaults to 200
-	 */
+    /**
+     * @param array $image image meta data
+     * @param int $statusCode the Http status code, defaults to 200
+     */
+    public function __construct(array $image, $statusCode = Http::STATUS_OK)
+    {
+        $this->preview = $image['content'];
+        $this->setStatus($statusCode);
+        $this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');
+        $this->addHeader('Cache-Control', 'max-age=1800, must-revalidate');
+        $etag = md5($image['content']);
+        $this->setETag($etag);
+    }
 
-	public function __construct(array $image, $statusCode = Http::STATUS_OK) {
-		$this->preview = $image['content'];
-		$this->setStatus($statusCode);
-		$this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');
-		$etag = md5($image['content']);
-		$this->setETag($etag);		
-		//$this->addHeader('Cache-Control ', 'public');
-	}
-
-	/**
-	 * Returns the rendered image
-	 *
-	 * @return string the file
-	 */
-	public function render() {
-		if ($this->preview instanceof \OC_Image) {
-			// Uses imagepng() to output the image
-			return $this->preview->data();
-		} else {
-			return $this->preview;
-		}
-	}
+    /**
+     * Returns the rendered image
+     *
+     * @return string the file
+     */
+    public function render()
+    {
+        if ($this->preview instanceof \OC_Image) {
+            return $this->preview->data();
+        } else {
+            return $this->preview;
+        }
+    }
 }

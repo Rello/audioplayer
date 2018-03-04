@@ -1,6 +1,22 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.2.6 - Unreleased
+### Added
+- Sidebar integration
+
+### Changed
+- rework of js backend
+- albums cover display performance
+
+### Fixed
+- caching for cover arts enabled
+- Highlight current song in album view [#282](https://github.com/rello/audioplayer/issues/282)
+
+## 2.2.5 - 2018-02-02
+### Fixed
+- no standard playlist creation possible [#270](https://github.com/rello/audioplayer/issues/270)
+
 ## 2.2.4 - 2018-01-20
 ### Fixed
 - separate archives for Nextcloud and ownCloud code signing [#268](https://github.com/rello/audioplayer/issues/268)
