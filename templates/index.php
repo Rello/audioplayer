@@ -14,11 +14,13 @@
 	style('audioplayer', 'jquery.Jcrop');	
 	style('audioplayer', 'bar-ui');
 	style('audioplayer', 'style');
+style('files', 'detailsView');
 	script('files', 'jquery.fileupload');
 	script('audioplayer', 'jquery.Jcrop-min');
 	script('audioplayer', 'soundmanager2-nodebug-jsmin');
-	script('audioplayer', 'bar-ui-min');
-	script('audioplayer', 'app-min');
+	script('audioplayer', 'bar-ui');
+	script('audioplayer', 'app');
+    script('audioplayer', 'sidebar');
 	script('audioplayer', 'settings');
     script('audioplayer', 'editor-min');
 
@@ -54,7 +56,11 @@
 	<?php print_unescaped($this->inc('part.container')); ?>
 
 </div>
- 
+
+<div id="app-sidebar" class="details-view scroll-container disappear">
+    <?php print_unescaped($this->inc('part.sidebar')); ?>
+</div>
+
 <div id="dialogSmall" style="width:0;height:0;top:0;left:0;display:none;"></div>
 <div id="edit_photo_dialog" style="display: none;" title="<?php p($l->t('Edit picture')); ?>">
 	<div id="edit_photo_dialog_img"></div>

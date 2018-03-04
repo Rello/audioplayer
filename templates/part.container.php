@@ -9,9 +9,7 @@
  * @copyright 2016-2017 Marcel Scherello
  */
  ?>
- 	<div id="albums-container">
-	</div>
-	<div id="playlist-container" class="albumwrapper" data-playlist="">
+	<div id="playlist-container" data-playlist="">
 		<span id="individual-playlist-info"></span>
 	  	<span id="individual-playlist-header">
  	 		<span class="header-indi">

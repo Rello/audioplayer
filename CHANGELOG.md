@@ -1,24 +1,17 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## Unreleased
+## 2.2.6 - Unreleased
 ### Added
-- 
+- Sidebar integration
 
 ### Changed
-- 
-
-### Deprecated
-- 
-
-### Removed
-- 
+- rework of js backend
+- albums cover display performance
 
 ### Fixed
-- 
-
-### Security
-- 
+- caching for cover arts enabled
+- Highlight current song in album view [#282](https://github.com/rello/audioplayer/issues/282)
 
 ## 2.2.5 - 2018-02-02
 ### Fixed

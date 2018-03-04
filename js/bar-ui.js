@@ -537,9 +537,6 @@
                         data.selectedIndex = randIndex[1];
                     }
 
-                    // update Audio Player Status
-                    externPlayList(data.selectedIndex);
-
                     return getItem();
                 }
 
@@ -578,9 +575,6 @@
 
                 }
 
-                // update Audio Player Status
-//        externPlayList(data.selectedIndex);
-
                 return getItem();
             }
 
@@ -598,26 +592,7 @@
                     }
                 }
 
-                // update Audio Player Status
-//		externPlayList(data.selectedIndex);
-
                 return getItem();
-            }
-
-            // function for Audio Player
-            function externPlayList(index){
-                if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
-                    $('.albumwrapper.isPlaylist li').removeClass('isActive');
-                    $('.albumwrapper.isPlaylist li i.ioc').hide();
-                    $('.albumwrapper.isPlaylist li i.fav').show();
-                    if (index !== null) {
-                        $('.albumwrapper.isPlaylist li i.ioc').eq(index).removeClass('ioc-volume-off');
-                        $('.albumwrapper.isPlaylist li i.ioc').eq(index).addClass('ioc-volume-up');
-                        $('.albumwrapper.isPlaylist li i.ioc').eq(index).show();
-                        $('.albumwrapper.isPlaylist li i.fav').eq(index).hide();
-                        $('.albumwrapper.isPlaylist li').eq(index).addClass('isActive');
-                    }
-                }
             }
 
             function resetLastSelected() {
