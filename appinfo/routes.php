@@ -31,7 +31,6 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'scanner#checkNewTracks', 'url' => '/checknewtracks', 'verb' => 'POST'],
 	['name' => 'editor#editAudioFile', 'url' => '/editaudiofile', 'verb' => 'GET'],
 	['name' => 'editor#saveAudioFileData', 'url' => '/saveaudiofiledata', 'verb' => 'POST'],
-	['name' => 'music#getMusic', 'url' => '/getmusic', 'verb' => 'GET'],
 	['name' => 'music#getCover', 'url' => '/getcover/{album}', 'verb' => 'GET'],
 	['name' => 'music#getAudioStream', 'url' => '/getaudiostream', 'verb' => 'GET'],
 	['name' => 'music#resetMediaLibrary', 'url' => '/resetmedialibrary', 'verb' => 'GET'],

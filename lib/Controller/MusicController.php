@@ -115,68 +115,6 @@ class MusicController extends Controller
         $stream->start();
     }
 
-    /**
-     * @NoAdminRequired
-     */
-    public function getMusic()
-    {
-        $aSongs = $this->loadSongs();
-        $aAlbums = $this->loadAlbums();
-        \OC::$server->getSession()->close();
-
-        if (is_array($aAlbums)) {
-            $result = [
-                'status' => 'success',
-                'data' => ['albums' => $aAlbums, 'songs' => $aSongs]
-            ];
-        } else {
-            $result = [
-                'status' => 'success',
-                'data' => 'nodata'
-            ];
-        }
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
-    }
-
-    /**
-     * @NoAdminRequired
-     */
-    public function loadAlbums()
-    {
-        $aAlbums = array();
-        $SQL = "SELECT  `AA`.`id`,`AA`.`name` AS `nam`,`AA`.`cover` AS `cov`,`AA`.`artist_id` AS `aid`
-						FROM `*PREFIX*audioplayer_albums` `AA`
-			 			WHERE  `AA`.`user_id` = ?
-			 			ORDER BY `AA`.`name` ASC
-			 			";
-
-        $stmt = $this->db->prepare($SQL);
-        $stmt->execute(array($this->userId));
-        $results = $stmt->fetchAll();
-
-        foreach ($results as $row) {
-            $row['art'] = $this->loadArtistsToAlbum($row['id'], $row['aid']);
-
-            if ($row['nam'] === $this->l10n->t('Unknown') AND $row['art'] === $this->l10n->t('Various Artists')) {
-                $row['cov'] = 'true';
-            } elseif ($row['cov'] === null) {
-                $row['cov'] = '';
-            } else {
-                $row['cov'] = 'true';
-            }
-            array_splice($row, 3, 1);
-            $aAlbums[$row['id']] = $row;
-        }
-        if (empty($aAlbums)) {
-            return false;
-        } else {
-            $aAlbums = $this->sortArrayByFields($aAlbums);
-            return $aAlbums;
-        }
-    }
-
     private function loadArtistsToAlbum($iAlbumId, $ARtistID)
     {
         # load albumartist if available
@@ -202,54 +140,6 @@ class MusicController extends Controller
             } else {
                 return (string)$this->l10n->t('Various Artists');
             }
-        }
-    }
-
-    /**
-     * @NoAdminRequired
-     */
-    public function loadSongs()
-    {
-        $aSongs = array();
-        $SQL = "SELECT  `AT`.`id`,`AT`.`title` AS `tit`,`AT`.`number` AS `num`,
-				`AT`.`album_id` AS `aid`,`AT`.`length` AS `len`,`AT`.`file_id` AS `fid`,
-				`AT`.`mimetype` AS `mim`,`AA`.`name` AS `art`, `AT`.`disc` AS `dis` 
-						FROM `*PREFIX*audioplayer_tracks` `AT`
-						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-			 			WHERE  `AT`.`user_id` = ?
-			 			ORDER BY `AT`.`album_id` ASC, `AT`.`disc` ASC, `AT`.`number` ASC
-			 			";
-
-        $stmt = $this->db->prepare($SQL);
-        $stmt->execute(array($this->userId));
-        $results = $stmt->fetchAll();
-
-        foreach ($results as $row) {
-            $file_not_found = false;
-            try {
-                $path = \OC\Files\Filesystem::getPath($row['fid']);
-            } catch (\Exception $e) {
-                $file_not_found = true;
-            }
-
-            if ($file_not_found === false) {
-                # Beta for Streaming testing; should not have any impact as this filetype is not used
-                if ($row['mim'] === 'audio/x-mpegurl') {
-                    $row['lin'] = rawurlencode($row['title']);
-                } else {
-                    $row['lin'] = '?file=' . rawurlencode($path);
-                }
-                $row['num'] = $row['dis'] . '-' . $row['num'];
-                array_splice($row, 8, 1);
-                $aSongs[$row['aid']][] = $row;
-            } else {
-                $this->deleteFromDB($row['id'], $row['aid']);
-            }
-        }
-        if (empty($aSongs)) {
-            return false;
-        } else {
-            return $aSongs;
         }
     }
 
@@ -365,33 +255,6 @@ class MusicController extends Controller
         } else {
             $this->logger->info('Library of "' . $userId . '" reset due to user deletion', array('app' => 'audioplayer'));
         }
-    }
-
-    private function deleteFromDB($Id, $iAlbumId)
-    {
-
-        $stmt = $this->db->prepare('SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ');
-        $stmt->execute(array($iAlbumId));
-        $rowAlbum = $stmt->fetch();
-        if ((int)$rowAlbum['ALBUMCOUNT'] === 1) {
-            $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?');
-            $stmt->execute(array($iAlbumId, $this->userId));
-        }
-
-        $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? AND `id` = ?');
-        $stmt->execute(array($this->userId, $Id));
-    }
-
-    private function sortArrayByFields($data)
-    {
-        $first = array();
-        $second = array();
-        foreach ($data as $key => $row) {
-            $first[$key] = $row['art'];
-            $second[$key] = $row['nam'];
-        }
-        array_multisort($first, SORT_ASC, SORT_STRING | SORT_FLAG_CASE, $second, SORT_ASC, SORT_STRING | SORT_FLAG_CASE, $data);
-        return $data;
     }
 
     /**
