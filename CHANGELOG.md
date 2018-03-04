@@ -8,11 +8,12 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - rework of js backend
 - albums cover display performance
+- replace 360/Soundmanger2 with audio-tag in sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
 
 ### Fixed
 - caching for cover arts enabled
-- Highlight current song in album view [#282](https://github.com/rello/audioplayer/issues/282)
-- Double player in sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
+- highlight current song in album view [#282](https://github.com/rello/audioplayer/issues/282)
+- double player in sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
 
 ## 2.2.5 - 2018-02-02
 ### Fixed
