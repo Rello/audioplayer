@@ -20,11 +20,11 @@ $(document).ready(function () {
         if (mime_array.indexOf(mimeType) !== -1) {
 
             var imgFrame = $('#imgframe');
-            imgFrame.css({'max-width': '250px'});
+            imgFrame.css({'max-width': '450px'});
 
             if (imgFrame.find('audio').length === 0) {
                 var downloadURL = $('#downloadURL').val();
-                var audioTag = '<audio tabindex="0" controls="" preload="none" style="width: 100%; max-width: 300px; max-height: 100px"> <source src="' + downloadURL + '" type="' + mimeType + '"/> </audio>';
+                var audioTag = '<audio tabindex="0" controls="" preload="none" style="width: 100%;"> <source src="' + downloadURL + '" type="' + mimeType + '"/> </audio>';
                 imgFrame.append(audioTag);
             }
 
@@ -50,9 +50,7 @@ $(document).ready(function () {
                         $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Bitrate') + ': ')).append($('<span/>').text(jsondata.data.bitrate + ' kbps')));
                         $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'MIME type') + ': ')).append($('<span/>').text(jsondata.data.mimetype)));
                         imgFrame.css({'padding-bottom': '0px'});
-                        $('.publicpreview').css({'max-width': '0px !important'});
                         $('.directDownload').css({'padding-top': '20px'});
-                        $('.directLink').css({'padding-top': '0px'});
                     }
                 }
             });
