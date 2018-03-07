@@ -68,6 +68,7 @@ OC.L10N.register(
 	"Selected" : "Wybrany",
 	"Selected Album" : "Wybrany album",
 	"Selected Artist" : "Wybrany artysta",
+        "Selected Album Artist": "Selected Album Artist",
 	"Selected Composer" : "Selected Composer",
 	"Selected Folder" : "Wybrany folder",
 	"Selected Genre" : "Wybrany gatunek",

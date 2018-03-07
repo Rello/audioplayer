@@ -68,6 +68,7 @@ OC.L10N.register(
 	"Selected" : "選擇",
 	"Selected Album" : "選擇的專輯",
 	"Selected Artist" : "選擇的藝人",
+        "Selected Album Artist": "Selected Album Artist",
 	"Selected Composer" : "選擇的作曲者",
 	"Selected Folder" : "選擇的資料夾",
 	"Selected Genre" : "選擇的曲風",

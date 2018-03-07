@@ -68,6 +68,7 @@ OC.L10N.register(
 	"Selected" : "Выбрано",
 	"Selected Album" : "Выбран альбом",
 	"Selected Artist" : "Выбран исполнитель",
+        "Selected Album Artist": "Selected Album Artist",
 	"Selected Composer" : "Selected Composer",
 	"Selected Folder" : "Выбрана папка",
 	"Selected Genre" : "Выбран стиль",

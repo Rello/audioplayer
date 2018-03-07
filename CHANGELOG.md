@@ -3,7 +3,8 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## 2.2.6 - Unreleased
 ### Added
-- Sidebar integration
+- sidebar integration
+- new category "Album Artists" [#286](https://github.com/rello/audioplayer/issues/286)
 
 ### Changed
 - rework of js backend

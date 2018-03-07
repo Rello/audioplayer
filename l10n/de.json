@@ -52,6 +52,7 @@
 "Unknown" : "Unbekannt",
 "Artist" : "Interpret",
 "Artists" : "Interpreten",
+  "Album Artists": "Albuminterpreten",
 "Composer" : "Komponist",
 "Composers" : "Komponisten",
 "Folders" : "Ordner",
