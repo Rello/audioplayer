@@ -102,7 +102,7 @@ class CategoryController extends Controller {
 			 			ORDER BY `id` ASC
 			 			";
 		} elseif ($category === 'Title') {
-			$SQL="SELECT distinct('0') as `id` ,'" . $this->l10n->t('Titles') . "' as `name`  
+            $SQL = "SELECT distinct('0') as `id` ,'" . $this->l10n->t('All Titles') . "' as `name`  
 						FROM `*PREFIX*audioplayer_tracks`
 			 			WHERE  `user_id` = ?
 			 			";
