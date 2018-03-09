@@ -20,6 +20,7 @@
 				<option value=""selected><?php p($l->t('Selection')); ?></option>
 				<option value="Playlist"><?php p($l->t('Playlists')); ?></option>
 				<option value="Artist"><?php p($l->t('Artists')); ?></option>
+				<option value="Album Artist"><?php p($l->t('Album Artists')); ?></option>
 				<option value="Album"><?php p($l->t('Albums')); ?></option>
 				<option value="Title"><?php p($l->t('Titles')); ?></option>
 				<option value="Genre"><?php p($l->t('Genres')); ?></option>
