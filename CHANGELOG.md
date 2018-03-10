@@ -1,20 +1,21 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.2.6 - Unreleased
+## 2.3.0 - Unreleased
 ### Added
 - sidebar integration
-- new category "Album Artists" [#286](https://github.com/rello/audioplayer/issues/286)
+- support for PHP 7.2
+- album artists to category selection [#286](https://github.com/rello/audioplayer/issues/286)
 
 ### Changed
-- rework of js backend
+- rework of `.js` backend
 - albums cover display performance
-- replace 360/Soundmanger2 with audio-tag in sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
+- 360° player/SoundManager 2 replaced by `AUDIO` tag on sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
 
 ### Fixed
 - caching for cover arts enabled
-- highlight current song in album view [#282](https://github.com/rello/audioplayer/issues/282)
-- double player in sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
+- double player on sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
+- highlight current track in album view [#282](https://github.com/rello/audioplayer/issues/282)
 
 ## 2.2.5 - 2018-02-02
 ### Fixed
