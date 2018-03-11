@@ -372,7 +372,6 @@ class CategoryController extends Controller
                 "WHERE `AB`.`id` = ? AND `AB`.`user_id` = ?" .
                 " ORDER BY `AT`.`disc` ASC, `AT`.`number` ASC";
         } elseif ($category === 'Album Artist') {
-            $SQL_select = "SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AB`.`name` AS `cl2`, `AT`.`year` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`";
             $SQL = $SQL_select . $SQL_from .
                 "WHERE  `AB`.`artist_id` = ? AND `AT`.`user_id` = ?" .
                 $SQL_order;
@@ -488,7 +487,7 @@ class CategoryController extends Controller
      */
     private function getHeadersforCatagory($category)
     {
-        if ($category === 'Artist' or $category === 'Album Artist') {
+        if ($category === 'Artist') {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
         } elseif ($category === 'Album') {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc') . '-' . $this->l10n->t('Track'), 'col4' => $this->l10n->t('Length')];
