@@ -110,8 +110,6 @@ Audios.prototype.resetLibrary = function() {
     $this.set_uservalue('category',$this.category_selectors[0]+'-');
     $('#myCategory').html('');
     $('#alben').addClass('active');
-    myAudios.AlbumContainer.html('');
-    myAudios.AlbumContainer.show();
     myAudios.PlaylistContainer.hide();
     $('#individual-playlist').html('');
     $('.albumwrapper').removeClass('isPlaylist');

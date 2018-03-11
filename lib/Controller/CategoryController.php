@@ -20,7 +20,6 @@ use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
 
-
 /**
  * Controller class for main page.
  */
@@ -34,6 +33,7 @@ class CategoryController extends Controller
     private $tagManager;
     private $rootFolder;
     private $logger;
+    private $DBController;
 
     public function __construct(
         $appName,
@@ -43,7 +43,8 @@ class CategoryController extends Controller
         IDBConnection $db,
         ITagManager $tagManager,
         IRootFolder $rootFolder,
-        ILogger $logger
+        ILogger $logger,
+        DbController $DBController
     )
     {
         parent::__construct($appName, $request);
@@ -54,6 +55,7 @@ class CategoryController extends Controller
         $this->tagger = null;
         $this->rootFolder = $rootFolder;
         $this->logger = $logger;
+        $this->DBController = $DBController;
     }
 
     /**
@@ -149,7 +151,7 @@ class CategoryController extends Controller
 			 			ORDER BY LOWER(FC.`name`) ASC
 			 			";
         } elseif ($category === 'Album') {
-            $SQL = "SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`name` AS `art`, `AB`.`cover` AS `cid` 
+            $SQL = "SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`id` AS `art`, `AB`.`cover` AS `cid` 
 						FROM `*PREFIX*audioplayer_albums` `AB`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` 
 						ON `AB`.`artist_id` = `AA`.`id`
@@ -172,12 +174,16 @@ class CategoryController extends Controller
             $stmt->execute(array($this->userId));
             $results = $stmt->fetchAll();
             foreach ($results as $row) {
-                if ($category === 'Album' && $row['cid'] !== null) {
-                    $row['cid'] = $row['id'];
-                } elseif ($category === 'Album') {
-                    $row['cid'] = '';
+                if ($category === 'Album') {
+                    $row['art'] = $this->DBController->loadArtistsToAlbum($row['id'], $row['art']);
+                    if ($row['cid'] !== null) {
+                        $row['cid'] = $row['id'];
+                    } else {
+                        $row['cid'] = '';
+                    }
                 }
-                array_splice($row, 2, 1);
+                if ($category === 'Album')
+                    array_splice($row, 2, 1);
                 if ($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
                 $row['counter'] = $this->getCountForCategory($category, $row['id']);
                 $aPlaylists[] = $row;
@@ -523,48 +529,4 @@ class CategoryController extends Controller
         return $results['count'];
     }
 
-    /**
-     * @NoAdminRequired
-     *
-     */
-    public function deleteFromDB($file_id)
-    {
-        $this->logger->debug('deleteFromDB: ' . $file_id, array('app' => 'audioplayer'));
-
-        $stmt = $this->db->prepare('SELECT `album_id`, `id` FROM `*PREFIX*audioplayer_tracks` WHERE `file_id` = ?  AND `user_id` = ?');
-        $stmt->execute(array($file_id, $this->userId));
-        $row = $stmt->fetch();
-        $AlbumId = $row['album_id'];
-        $TrackId = $row['id'];
-
-        $stmt = $this->db->prepare('SELECT COUNT(`album_id`) AS `ALBUMCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `album_id` = ? ');
-        $stmt->execute(array($AlbumId));
-        $row = $stmt->fetch();
-        if ((int)$row['ALBUMCOUNT'] === 1) {
-            $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_albums` WHERE `id` = ? AND `user_id` = ?');
-            $stmt->execute(array($AlbumId, $this->userId));
-        }
-
-        $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_tracks` WHERE  `file_id` = ? AND `user_id` = ?');
-        $stmt->execute(array($file_id, $this->userId));
-
-        $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_streams` WHERE  `file_id` = ? AND `user_id` = ?');
-        $stmt->execute(array($file_id, $this->userId));
-
-        $stmt = $this->db->prepare('SELECT `playlist_id` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `track_id` = ?');
-        $stmt->execute(array($TrackId));
-        $row = $stmt->fetch();
-        $PlaylistId = $row['playlist_id'];
-
-        $stmt = $this->db->prepare('SELECT COUNT(`playlist_id`) AS `PLAYLISTCOUNT` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ? ');
-        $stmt->execute(array($PlaylistId));
-        $row = $stmt->fetch();
-        if ((int)$row['PLAYLISTCOUNT'] === 1) {
-            $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_playlists` WHERE `id` = ? AND `user_id` = ?');
-            $stmt->execute(array($PlaylistId, $this->userId));
-        }
-
-        $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE  `track_id` = ?');
-        $stmt->execute(array($TrackId));
-    }
 }

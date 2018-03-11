@@ -178,7 +178,7 @@ class ScannerController extends Controller {
 								
 				# write albumartist if available
 				# if no albumartist, NO artist is stored on album level
-				# in musiccontroller loadArtistsToAlbum() takes over deriving the artists from the album tracks
+            # in DBController loadArtistsToAlbum() takes over deriving the artists from the album tracks
 				# MP3, FLAC & MP4 have different tags for albumartist
 				$iAlbumArtistId = NULL;
 				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),'0');

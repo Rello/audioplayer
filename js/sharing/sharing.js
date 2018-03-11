@@ -37,7 +37,6 @@ $(document).ready(function () {
                 success: function (jsondata) {
                     if (jsondata.status === 'success') {
                         var $id3 = $('#id3');
-                        $id3.append('<div>&nbsp;</div>');
                         if (jsondata.data.title !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Title') + ': ')).append($('<span/>').text(jsondata.data.title)));
                         if (jsondata.data.subtitle !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Subtitle') + ': ')).append($('<span/>').text(jsondata.data.subtitle)));
                         if (jsondata.data.artist !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Artist') + ': ')).append($('<span/>').text(jsondata.data.artist)));
@@ -50,8 +49,6 @@ $(document).ready(function () {
                         if (jsondata.data.length !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Length') + ': ')).append($('<span/>').text(jsondata.data.length)));
                         if (jsondata.data.bitrate !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Bitrate') + ': ')).append($('<span/>').text(jsondata.data.bitrate + ' kbps')));
                         if (jsondata.data.mimetype !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'MIME type') + ': ')).append($('<span/>').text(jsondata.data.mimetype)));
-                        imgFrame.css({'padding-bottom': '0px'});
-                        $('.directDownload').css({'padding-top': '20px'});
                     }
                 }
             });

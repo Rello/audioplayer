@@ -19,7 +19,7 @@ use OCA\audioplayer\AppInfo\Application;
  */
 class Provider extends \OCP\Search\Provider {
 
-	private $musicController;
+    private $DBController;
 	private $l10n;
 	private $app;
 	
@@ -27,7 +27,7 @@ class Provider extends \OCP\Search\Provider {
 		$app = new Application();
 		$container = $app->getContainer();
 		$this->app = $app;
-		$this->musicController = $container->query(\OCA\audioplayer\Controller\MusicController::class);
+        $this->DBController = $container->query(\OCA\audioplayer\Controller\DbController::class);
 		$this->l10n = $container->query('L10N');
 	}
 	
@@ -38,7 +38,7 @@ class Provider extends \OCP\Search\Provider {
 	 */
 	function search($query) {
 		$searchresults = array();
-		$results = $this->musicController->searchProperties($query);
+        $results = $this->DBController->searchProperties($query);
 		
 		foreach($results as $result) {
 			$returnData = array();

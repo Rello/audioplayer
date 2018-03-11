@@ -35,7 +35,7 @@ class FileHooks {
 		if ($node->getType() === FileInfo::TYPE_FILE) {
 			$app = new \OCA\audioplayer\AppInfo\Application();
         	$container = $app->getContainer();
-	    	$container->query(\OCA\audioplayer\Controller\CategoryController::class)->deleteFromDB($node->getId());
+            $container->query(\OCA\audioplayer\Controller\DbController::class)->deleteFromDB($node->getId());
 		}
 	}    
 }
