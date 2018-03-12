@@ -245,10 +245,8 @@ class CategoryController extends Controller
 					AND `user_id` = ?
 			 		";
         } elseif ($category === 'Album Artist') {
-            $SQL = "SELECT  COUNT(`AT`.`id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					RIGHT JOIN `*PREFIX*audioplayer_albums` `AB` 
-					ON `AB`.`id` = `AT`.`album_id`
+            $SQL = "SELECT  COUNT(`AB`.`id`) AS `count`
+					FROM `*PREFIX*audioplayer_albums` `AB` 
 			 		WHERE  `AB`.`artist_id` = ? 
 			 		AND `AB`.`user_id` = ?
 			 		";
