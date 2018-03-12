@@ -24,7 +24,7 @@ $(document).ready(function () {
 
             if (imgFrame.find('audio').length === 0) {
                 var downloadURL = $('#downloadURL').val();
-                var audioTag = '<audio tabindex="0" controls="" preload="none" style="width: 100%;"> <source src="' + downloadURL + '" type="' + mimeType + '"/> </audio>';
+                var audioTag = '<audio tabindex="0" controls preload="none" style="width: 100%;"> <source src="' + downloadURL + '" type="' + mimeType + '"/> </audio>';
                 imgFrame.append(audioTag);
             }
 
@@ -49,6 +49,7 @@ $(document).ready(function () {
                         if (jsondata.data.length !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Length') + ': ')).append($('<span/>').text(jsondata.data.length)));
                         if (jsondata.data.bitrate !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Bitrate') + ': ')).append($('<span/>').text(jsondata.data.bitrate + ' kbps')));
                         if (jsondata.data.mimetype !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'MIME type') + ': ')).append($('<span/>').text(jsondata.data.mimetype)));
+                        $('.directDownload').css({'padding-top':'20px'});
                     }
                 }
             });
