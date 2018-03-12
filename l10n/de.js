@@ -26,6 +26,7 @@ OC.L10N.register(
 	"Title" : "Titel",
 	"Subtitle" : "Untertitel",
 	"Artist" : "Interpret",
+	"Album Artist" : "Albuminterpret",
 	"Genre" : "Genre",
 	"Year" : "Jahr",
 	"Album" : "Album",
