@@ -295,7 +295,7 @@ class DbController extends Controller
             $stmt->execute(array($userId, $sAlbum));
             $row = $stmt->fetch();
             if ((int)$row['artist_id'] !== (int)$iArtistId) {
-                $various_id = $this->writeArtistToDB($this->l10n->t('Various Artists'));
+                $various_id = $this->writeArtistToDB($userId, $this->l10n->t('Various Artists'));
                 $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
                 $stmt->execute(array($various_id, $row['id'], $userId));
             }
