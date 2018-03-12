@@ -26,6 +26,7 @@ OC.L10N.register(
 	"Title" : "曲名",
 	"Subtitle" : "副標題",
 	"Artist" : "演出者",
+	"Album Artist" : "Album Artist",
 	"Year" : "年份",
 	"Album" : "專輯",
 	"Albums" : "專輯",
