@@ -26,6 +26,7 @@ OC.L10N.register(
 	"Title" : "Назва",
 	"Subtitle" : "Підзаголовок",
 	"Artist" : "Виконавець",
+	"Album Artist" : "Album Artist",
 	"Year" : "Рік",
 	"Album" : "Альбом",
 	"Albums" : "Альбоми",

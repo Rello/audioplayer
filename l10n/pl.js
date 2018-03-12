@@ -26,6 +26,7 @@ OC.L10N.register(
 	"Title" : "Tytuł",
 	"Subtitle" : "Napisy",
 	"Artist" : "Artysta",
+	"Album Artist" : "Album Artist",
 	"Year" : "Rok",
 	"Album" : "Album",
 	"Albums" : "Albumy",
