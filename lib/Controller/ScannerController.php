@@ -23,6 +23,7 @@ use OCP\IDbConnection;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
 use OCP\ILogger;
+use OCP\IDateTimeZone;
 
 /**
  * Controller class for main page.
@@ -49,18 +50,23 @@ class ScannerController extends Controller {
     private $logger;
     private $parentId_prev;
     private $folderpicture = false;
+    private $DBController;
+    private $IDateTimeZone;
 
 		public function __construct(
-			$appName, 
-			IRequest $request, 
-			$userId, 
-			IL10N $l10n, 
-			IDbConnection $db, 
-			IConfig $configManager, 
-			IFactory $languageFactory,
-			IRootFolder $rootFolder,
-            ILogger $logger
-        ) {
+            $appName,
+            IRequest $request,
+            $userId,
+            IL10N $l10n,
+            IDbConnection $db,
+            IConfig $configManager,
+            IFactory $languageFactory,
+            IRootFolder $rootFolder,
+            ILogger $logger,
+            DbController $DBController,
+            IDateTimeZone $IDateTimeZone
+        )
+        {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
 		$this->userId = $userId;
@@ -70,6 +76,8 @@ class ScannerController extends Controller {
 		$this->languageFactory = $languageFactory;
 		$this->rootFolder = $rootFolder;
 		$this->logger = $logger;
+            $this->DBController = $DBController;
+            $this->IDateTimeZone = $IDateTimeZone;
 	}
 
 	/**
@@ -132,7 +140,7 @@ class ScannerController extends Controller {
 								'option_tags_html'=>false
 								));
 
-        $this->checkScannerVersion();
+        $this->setScannerVersion();
 		$audios = $this->getAudioObjects($output, $debug);
 		$streams = $this->getStreamObjects($output, $debug);
 			    								
@@ -151,6 +159,10 @@ class ScannerController extends Controller {
 				$this->updateProgress(intval(($this->abscount / $this->numOfSongs) * 100), $output, $debug);
 				$counter++;
 				$this->abscount++;
+
+            if ($this->checkFileChanged($audio)) {
+                $this->DBController->deleteFromDB($audio->getId(), $userId);
+            }
 
 				$this->analyze($audio, $getID3, $output, $debug);				
 
@@ -173,8 +185,8 @@ class ScannerController extends Controller {
 				$subtitle	= $this->getID3Value(array('subtitle', 'version'),'');
 				$disc		= $this->getID3Value(array('part_of_a_set', 'discnumber', 'partofset', 'disc_number'),1);
 
-				$iGenreId 	= $this->writeGenreToDB($genre);
-				$iArtistId 	= $this->writeArtistToDB($artist);
+            $iGenreId = $this->DBController->writeGenreToDB($this->userId, $genre);
+            $iArtistId = $this->DBController->writeArtistToDB($this->userId, $artist);
 								
 				# write albumartist if available
 				# if no albumartist, NO artist is stored on album level
@@ -183,9 +195,13 @@ class ScannerController extends Controller {
 				$iAlbumArtistId = NULL;
 				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),'0');
 
-				if ($album_artist !== '0') { $iAlbumArtistId = $this->writeArtistToDB($album_artist); }
-				$iAlbumId = $this->writeAlbumToDB($album, (int) $year, $iAlbumArtistId);
-				
+            if ($album_artist !== '0') {
+                $iAlbumArtistId = $this->DBController->writeArtistToDB($this->userId, $album_artist);
+            }
+            $return = $this->DBController->writeAlbumToDB($this->userId, $album, (int)$year, $iAlbumArtistId);
+            $iAlbumId = $return['id'];
+            $this->iAlbumCount = $this->iAlbumCount + $return['albumcount'];
+
 				$bitrate = 0;
 				if (isset($this->ID3Tags['bitrate'])) {
 					$bitrate = $this->ID3Tags['bitrate'];
@@ -215,8 +231,9 @@ class ScannerController extends Controller {
 					'composer' => $this->truncate($composer, '256'),
 					'folder_id' => $parentId,
 				];
-				
-				$this->writeTrackToDB($aTrack);
+
+            $return = $this->DBController->writeTrackToDB($this->userId, $aTrack);
+            $this->iDublicate = $this->iDublicate + $return['dublicate'];
 				$counter_new++;
 		}
 
@@ -242,10 +259,13 @@ class ScannerController extends Controller {
 					'bitrate' => 0,
 					'mimetype' => $stream->getMimetype(),
 				];
-				$this->writeStreamToDB($aStream);
+            $return = $this->DBController->writeStreamToDB($this->userId, $aStream);
+            $this->iDublicate = $this->iDublicate + $return['dublicate'];
 				$counter_new++;
 		}
-		
+
+        $this->setScannerTimestamp();
+
 		$message = (string) $this->l10n->t('Scanning finished!').'<br />';
 		$message .= (string) $this->l10n->t('Audios found: ').$counter.'<br />';
 		$message .= (string) $this->l10n->t('Duplicates found: ').($this->iDublicate).'<br />';
@@ -274,6 +294,7 @@ class ScannerController extends Controller {
 			$output->writeln("Written to library: ".($counter_new - $this->iDublicate)."");
 			$output->writeln("Albums found: ".($this->iAlbumCount)."");
 			$output->writeln("Errors: ".($error_count)."");
+            return true;
 		}
 	}
 	
@@ -299,171 +320,6 @@ class ScannerController extends Controller {
 		}
 	}
 
-	/**
-	 * @param integer $iAlbumId
-	 */
- 	private function writeCoverToAlbum($iAlbumId, $sImage) {
-		$stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?');
-		$stmt->execute(array($sImage, '', $iAlbumId, $this->userId));
-		return true;
-	}
-	
-	/**
-	 * Add album to db if not exist
-	 * 
-	 *@param string $sAlbum
-	 *@param string $sYear
-	 *@param int $iArtistId
-	 * 
-	 * @return int id
-	 */
-	
-	private function writeAlbumToDB($sAlbum, $sYear, $iArtistId) {
-		$sAlbum = $this->truncate($sAlbum, '256');	
-		$sYear = $this->normalizeInteger($sYear);			
-		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $this->userId, 'name' => $sAlbum])) {
-			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_albums');
-			if ($iArtistId) {
-				$stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
-				$stmt->execute(array((int) $sYear, $iArtistId, $insertid, $this->userId));
-			} else {
-				$stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ? WHERE `id` = ? AND `user_id` = ?');					
-				$stmt->execute(array((int) $sYear, $insertid, $this->userId));
-			} 
-			$this->iAlbumCount++;
-			return $insertid;
-		} else {
-			$stmt = $this->db->prepare('SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ?');
-			$stmt->execute(array($this->userId, $sAlbum));
-			$row = $stmt->fetch();
-			if ((int) $row['artist_id'] !== (int) $iArtistId) {
-				$various_id = $this->writeArtistToDB($this->l10n->t('Various Artists'));
-				$stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');					
-				$stmt->execute(array($various_id, $row['id'], $this->userId));
-			} 
-			return $row['id'];
-		}
-	}
-	
-	/**
-	 * Add genre to db if not exist
-	 * 
-	 *@param string $sGenre
-	 *
-	 * @return int id
-	 */
-	 
-	private function writeGenreToDB($sGenre) {
-		$sGenre = $this->truncate($sGenre, '256');		
-		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_genre', ['user_id' => $this->userId, 'name' => $sGenre])) {
-			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_genre');
-			return $insertid;
-		} else {
-			$stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ? AND `name` = ?');
-			$stmt->execute(array($this->userId, $sGenre));
-			$row = $stmt->fetch();
-			return $row['id'];
-		}
-	}
-	
-	
-	/**
-	 * Add artist to db if not exist
-	 * 
-	 *@param string $sArtist
-	 *
-	 * @return int id
-	 */
-	private function writeArtistToDB($sArtist) {
-		$sArtist = $this->truncate($sArtist, '256');
-		if ($this->db->insertIfNotExist('*PREFIX*audioplayer_artists', ['user_id' => $this->userId, 'name' => $sArtist])) {
-			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_artists');
-			return $insertid;
-		} else {
-			$stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ? AND `name` = ?');
-			$stmt->execute(array($this->userId, $sArtist));
-			$row = $stmt->fetch();
-			return $row['id'];
-		}
-	}
-		
-	/**
-	 * Add track to db if not exist
-	 * 
-	 *@param array $aTrack
-	 *
-	 * @return null|integer
-	 */
-	private function writeTrackToDB($aTrack) {
-		$SQL = 'SELECT `id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
-				AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? 
-				AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?
-				AND `disc`= ? AND `composer`= ? AND `subtitle`= ?';
-		$stmt = $this->db->prepare($SQL);
-		$stmt->execute(array($this->userId, 
-					 $aTrack['title'],
-					 $aTrack['number'],
-					 $aTrack['artist_id'],
-					 $aTrack['album_id'],
-					 $aTrack['length'],
-					 $aTrack['bitrate'],
-					 $aTrack['mimetype'],
-					 $aTrack['genre'],
-					 $aTrack['year'],
-					 $aTrack['disc'],
-					 $aTrack['composer'],
-					 $aTrack['subtitle'],
-				));
-		$row = $stmt->fetch();
-		if (isset($row['id'])) {
-			$this->iDublicate++;
-		} else {
-			$stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`,`disc`,`composer`,`subtitle`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-		$stmt->execute(array($this->userId, 
-					 $aTrack['title'],
-					 $aTrack['number'],
-					 $aTrack['artist_id'],
-					 $aTrack['album_id'],
-					 $aTrack['length'],
-					 $aTrack['file_id'],
-					 $aTrack['bitrate'],
-					 $aTrack['mimetype'],
-					 $aTrack['genre'],
-					 $aTrack['year'],
-					 $aTrack['folder_id'],
-					 $aTrack['disc'],
-					 $aTrack['composer'],
-					 $aTrack['subtitle'],
-				));
-			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_tracks');
-			return $insertid;
-		}
-	}
-
-	/**
-	 * Add stream to db if not exist
-	 *@param array $aStream
-	 *
-	 * @return null|integer
-	 */
-	private function writeStreamToDB($aStream) {			
-		$stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? AND `file_id` = ? ');
-		$stmt->execute(array($this->userId, $aStream['file_id']));
-		$row = $stmt->fetch();
-		if (isset($row['id'])) {
-			$this->iDublicate++;
-		} else {
-			$stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_streams` (`user_id`,`title`,`file_id`,`mimetype`) VALUES(?,?,?,?)');
-			$stmt->execute(array($this->userId, 
-					 $aStream['title'],
-					 $aStream['file_id'],
-					 $aStream['mimetype'],
-			));
-			$insertid = $this->db->lastInsertId('*PREFIX*audioplayer_streams');
-			return $insertid;
-		}
-	}
-	
 	/**
 	 * Report scanning Progress back to web frontend - e.g. progress bar
 	 * @NoAdminRequired
@@ -591,7 +447,12 @@ class ScannerController extends Controller {
 			if (in_array($current_id, $resultExclude)) {
 				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => excluded");
 			} elseif (in_array($current_id, $resultExisting)) {
-				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => already indexed");
+                if ($this->checkFileChanged($audio)) {
+                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed title changed => reindex");
+                    array_push($audios_clean, $audio);
+                } else {
+                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed");
+                }
 			} else {
 				array_push($audios_clean, $audio);
 			} 
@@ -643,7 +504,12 @@ class ScannerController extends Controller {
 			if (in_array($current_id, $resultExclude)) {
 				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => excluded");
 			} elseif (in_array($current_id, $resultExisting)) {
-				if ($debug) $output->writeln("   ".$current_id." - ".$audio->getPath()."  => already indexed");
+                if ($this->checkFileChanged($audio)) {
+                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed file changed => reindex");
+                    array_push($audios_clean, $audio);
+                } else {
+                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed");
+                }
 			} else {
 				array_push($audios_clean, $audio);
 			} 
@@ -708,7 +574,7 @@ class ScannerController extends Controller {
  		if ($image->loadFromdata($data)) {
 			if (($image->width() <= 250 && $image->height() <= 250) || $image->centerCrop(250)) {
 				$imgString = $image->__toString();
-				$this->writeCoverToAlbum($iAlbumId, $imgString);
+                $this->DBController->writeCoverToAlbum($this->userId, $iAlbumId, $imgString);
 			}
 		}
 		return true;
@@ -808,7 +674,8 @@ class ScannerController extends Controller {
      * if the scanner is started on an empty library, the current app version is stored
      *
      */
-    private function checkScannerVersion() {
+    private function setScannerVersion()
+    {
         $stmt = $this->db->prepare( 'SELECT COUNT(`id`) AS `TRACKCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ' );
         $stmt->execute(array($this->userId));
         $row = $stmt->fetch();
@@ -817,4 +684,41 @@ class ScannerController extends Controller {
             $this->configManager->setUserValue($this->userId,$this->appName,'scanner_version', $app_version);
         }
     }
+
+    /**
+     * check the timestamp of the last scan to derive changed files
+     *
+     */
+    private function getScannerTimestamp()
+    {
+        return $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_timestamp', 120);
+    }
+
+    /**
+     * set the timestamp of the last scan to derive changed files
+     *
+     */
+    private function setScannerTimestamp()
+    {
+        $this->configManager->setUserValue($this->userId, $this->appName, 'scanner_timestamp', time());
+    }
+
+    /**
+     * check changed timestamps
+     *
+     * @param object $audio
+     * @return bool
+     */
+    private function checkFileChanged($audio)
+    {
+        $modTime = $audio->getMTime();
+        $scannerTime = $this->getScannerTimestamp();
+        if ($modTime >= $scannerTime - 300) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

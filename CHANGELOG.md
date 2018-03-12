@@ -6,6 +6,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - sidebar integration
 - support for PHP 7.2
 - album artists to category selection [#286](https://github.com/rello/audioplayer/issues/286) and sharing screen
+- detect changed audio metadata of indexed files [#284](https://github.com/rello/audioplayer/issues/284)
 
 ### Changed
 - rework of `.js` backend

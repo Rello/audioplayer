@@ -204,9 +204,15 @@ class DbController extends Controller
      * Delete single title from audio player tables
      * @NoAdminRequired
      * @param int $file_id
+     * @param int $userId
+     * @return bool
      */
-    public function deleteFromDB($file_id)
+    public function deleteFromDB($file_id, $userId = null)
     {
+        // check if scanner is started from web or occ
+        if ($userId !== null) {
+            $this->userId = $userId;
+        }
         $this->logger->debug('deleteFromDB: ' . $file_id, array('app' => 'audioplayer'));
 
         $stmt = $this->db->prepare('SELECT `album_id`, `id` FROM `*PREFIX*audioplayer_tracks` WHERE `file_id` = ?  AND `user_id` = ?');
@@ -244,5 +250,228 @@ class DbController extends Controller
 
         $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE  `track_id` = ?');
         $stmt->execute(array($TrackId));
+        return true;
     }
+
+    /**
+     * write cover image data to album
+     * @param int $userId
+     * @param integer $iAlbumId
+     * @param string $sImage
+     * @return true
+     */
+    public function writeCoverToAlbum($userId, $iAlbumId, $sImage)
+    {
+        $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?');
+        $stmt->execute(array($sImage, '', $iAlbumId, $userId));
+        return true;
+    }
+
+    /**
+     * Add album to db if not exist
+     * @param int $userId
+     * @param string $sAlbum
+     * @param string $sYear
+     * @param int $iArtistId
+     * @return array
+     */
+    public function writeAlbumToDB($userId, $sAlbum, $sYear, $iArtistId)
+    {
+        $sAlbum = $this->truncate($sAlbum, '256');
+        $sYear = $this->normalizeInteger($sYear);
+        $AlbumCount = 0;
+        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $userId, 'name' => $sAlbum])) {
+            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_albums');
+            if ($iArtistId) {
+                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
+                $stmt->execute(array((int)$sYear, $iArtistId, $insertid, $userId));
+            } else {
+                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ? WHERE `id` = ? AND `user_id` = ?');
+                $stmt->execute(array((int)$sYear, $insertid, $userId));
+            }
+            $AlbumCount = 1;
+        } else {
+            $stmt = $this->db->prepare('SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ?');
+            $stmt->execute(array($userId, $sAlbum));
+            $row = $stmt->fetch();
+            if ((int)$row['artist_id'] !== (int)$iArtistId) {
+                $various_id = $this->writeArtistToDB($this->l10n->t('Various Artists'));
+                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
+                $stmt->execute(array($various_id, $row['id'], $userId));
+            }
+            $insertid = $row['id'];
+        }
+        $return = [
+            'id' => $insertid,
+            'state' => true,
+            'albumcount' => $AlbumCount,
+        ];
+        return $return;
+    }
+
+    /**
+     * Add artist to db if not exist
+     * @param int $userId
+     * @param string $sArtist
+     * @return int
+     */
+    public function writeArtistToDB($userId, $sArtist)
+    {
+        $sArtist = $this->truncate($sArtist, '256');
+        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_artists', ['user_id' => $userId, 'name' => $sArtist])) {
+            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_artists');
+            return $insertid;
+        } else {
+            $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ? AND `name` = ?');
+            $stmt->execute(array($userId, $sArtist));
+            $row = $stmt->fetch();
+            return $row['id'];
+        }
+    }
+
+    /**
+     * Add genre to db if not exist
+     * @param int $userId
+     * @param string $sGenre
+     * @return int
+     */
+    public function writeGenreToDB($userId, $sGenre)
+    {
+        $sGenre = $this->truncate($sGenre, '256');
+        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_genre', ['user_id' => $userId, 'name' => $sGenre])) {
+            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_genre');
+            return $insertid;
+        } else {
+            $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ? AND `name` = ?');
+            $stmt->execute(array($userId, $sGenre));
+            $row = $stmt->fetch();
+            return $row['id'];
+        }
+    }
+
+    /**
+     * Add track to db if not exist
+     * @param int $userId
+     * @param array $aTrack
+     * @return array
+     */
+    public function writeTrackToDB($userId, $aTrack)
+    {
+        $dublicate = 0;
+        $insertid = 0;
+        $SQL = 'SELECT `id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
+				AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? 
+				AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?
+				AND `disc`= ? AND `composer`= ? AND `subtitle`= ?';
+        $stmt = $this->db->prepare($SQL);
+        $stmt->execute(array($userId,
+            $aTrack['title'],
+            $aTrack['number'],
+            $aTrack['artist_id'],
+            $aTrack['album_id'],
+            $aTrack['length'],
+            $aTrack['bitrate'],
+            $aTrack['mimetype'],
+            $aTrack['genre'],
+            $aTrack['year'],
+            $aTrack['disc'],
+            $aTrack['composer'],
+            $aTrack['subtitle'],
+        ));
+        $row = $stmt->fetch();
+        if (isset($row['id'])) {
+            $dublicate = 1;
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`,`disc`,`composer`,`subtitle`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+            $stmt->execute(array($userId,
+                $aTrack['title'],
+                $aTrack['number'],
+                $aTrack['artist_id'],
+                $aTrack['album_id'],
+                $aTrack['length'],
+                $aTrack['file_id'],
+                $aTrack['bitrate'],
+                $aTrack['mimetype'],
+                $aTrack['genre'],
+                $aTrack['year'],
+                $aTrack['folder_id'],
+                $aTrack['disc'],
+                $aTrack['composer'],
+                $aTrack['subtitle'],
+            ));
+            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_tracks');
+        }
+        $return = [
+            'id' => $insertid,
+            'state' => true,
+            'dublicate' => $dublicate,
+        ];
+        return $return;
+    }
+
+    /**
+     * Add stream to db if not exist
+     * @param int $userId
+     * @param array $aStream
+     * @return array
+     */
+    public function writeStreamToDB($userId, $aStream)
+    {
+        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? AND `file_id` = ? ');
+        $stmt->execute(array($userId, $aStream['file_id']));
+        $row = $stmt->fetch();
+        $dublicate = 0;
+        $insertid = 0;
+        if (isset($row['id'])) {
+            $dublicate = 1;
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_streams` (`user_id`,`title`,`file_id`,`mimetype`) VALUES(?,?,?,?)');
+            $stmt->execute(array($userId,
+                $aStream['title'],
+                $aStream['file_id'],
+                $aStream['mimetype'],
+            ));
+            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_streams');
+        }
+        $return = [
+            'id' => $insertid,
+            'state' => true,
+            'dublicate' => $dublicate,
+        ];
+        return $return;
+    }
+
+    /**
+     * truncates fiels do DB-field size
+     *
+     * @param $string
+     * @param $length
+     * @param $dots
+     * @return string
+     */
+    private function truncate($string, $length, $dots = "...")
+    {
+        return (strlen($string) > $length) ? mb_strcut($string, 0, $length - strlen($dots)) . $dots : $string;
+    }
+
+    /**
+     * validate unsigned int values
+     *
+     * @param string $value
+     * @return int value
+     */
+    private function normalizeInteger($value)
+    {
+        // convert format '1/10' to '1' and '-1' to null
+        $tmp = explode('/', $value);
+        $tmp = explode('-', $tmp[0]);
+        $value = $tmp[0];
+        if (is_numeric($value) && ((int)$value) > 0) {
+            $value = (int)$value;
+        } else {
+            $value = 0;
+        }
+        return $value;
+    }
+
 }
