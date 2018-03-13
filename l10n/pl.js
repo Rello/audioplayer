@@ -5,7 +5,7 @@ OC.L10N.register(
 	"Audio Player" : "Odtwarzacz Audio",
 	"Add new tracks to library" : "Dodaj nową piosenkę do playlisty",
 	"Scan for new audio files" : "Skanowanie w poszukiwaniu nowych plików audio",
-	"New audio files available" : "Dostępne są nowe pliki audio",
+	"New or updated audio files available" : "New or updated audio files available",
 	"Help" : "Pomoc",
 	"Sort playlist" : "Sortuj Playlistę",
 	"Rename playlist" : "Zmiana nazwy Playlisty",
