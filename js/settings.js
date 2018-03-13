@@ -116,7 +116,7 @@ Audios.prototype.resetLibrary = function() {
     $('#activePlaylist').html('');
     $('.sm2-playlist-target').html('');
     $('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-    OC.Notification.showTemporary(t('audioplayer','New audio files available'));
+    OC.Notification.showTemporary(t('audioplayer','New or updated audio files available'));
 
     $.ajax({
         type : 'GET',
