@@ -691,7 +691,7 @@ class ScannerController extends Controller {
      */
     private function getScannerTimestamp()
     {
-        return $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_timestamp', 120);
+        return $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_timestamp', 300);
     }
 
     /**
