@@ -33,7 +33,7 @@
 		</li>
 		<li class="audio-settings-item" style="padding-top: 10px;">
 			<input class="checkbox" type="checkbox" id="cyrillic_user" <?php p($_['cyrillic']) ?>/>
-			<label for="cyrillic_user">&nbsp;&nbsp;&nbsp;<?php p($l->t('Cyrillic support')); ?></label>
+			<label for="cyrillic_user">&nbsp;<?php p($l->t('Cyrillic support')); ?></label>
 		</li>
 		<li class="audio-settings-item" style="padding-top: 10px;">
 			<label for="audio-path"><?php p($l->t('Search for audio files in')); ?>:</label>

@@ -1116,7 +1116,7 @@ Audios.prototype.checkNewTracks = function () {
         url: OC.generateUrl('apps/audioplayer/checknewtracks'),
         success: function (data) {
             if (data === 'true') {
-                OC.Notification.showTemporary(t('audioplayer', 'New audio files available'));
+                OC.Notification.showTemporary(t('audioplayer', 'New or updated audio files available'));
             }
         }
     });

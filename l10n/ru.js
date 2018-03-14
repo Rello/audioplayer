@@ -5,7 +5,7 @@ OC.L10N.register(
 	"Audio Player" : "Аудиоплеер",
 	"Add new tracks to library" : "Найти и добавить новую музыку",
 	"Scan for new audio files" : "Найти новые аудиофайлы...",
-	"New audio files available" : "New audio files available",
+	"New or updated audio files available" : "New or updated audio files available",
 	"Help" : "Help",
 	"Sort playlist" : "Упорядочить список воспроизведения",
 	"Rename playlist" : "Переименовать список воспроизведения",
