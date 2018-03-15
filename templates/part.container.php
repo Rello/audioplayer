@@ -24,3 +24,6 @@
   		<br style="clear:both;" />
   		<ul id="individual-playlist"></ul>
   	</div>
+
+<div id="empty-container">
+</div>

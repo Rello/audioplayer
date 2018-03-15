@@ -106,29 +106,31 @@ Audios.prototype.resetLibrary = function() {
         myAudios.AudioPlayer.actions.play(0);
         myAudios.AudioPlayer.actions.stop();
     }
+
+    $this.showInitScreen();
+
     $("#category_selector").val('');
     $this.set_uservalue('category',$this.category_selectors[0]+'-');
     $('#myCategory').html('');
     $('#alben').addClass('active');
-    myAudios.PlaylistContainer.hide();
-    $('#individual-playlist').html('');
-    $('.albumwrapper').removeClass('isPlaylist');
+    $('#individual-playlist').remove();
+    $('#individual-playlist-info').hide();
+    $('#individual-playlist-header').hide();
+    $(".coverrow").remove();
+    $(".songcontainer").remove();
     $('#activePlaylist').html('');
     $('.sm2-playlist-target').html('');
     $('.sm2-playlist-cover').css('background-color','#ffffff').html('');
-    OC.Notification.showTemporary(t('audioplayer','New or updated audio files available'));
 
     $.ajax({
         type : 'GET',
         url : OC.generateUrl('apps/audioplayer/resetmedialibrary'),
         success : function(jsondata) {
             if(jsondata.status === 'success'){
-                myAudios.loadAlbums();
                 OC.Notification.showTemporary(t('audioplayer','Resetting finished!'));
             }
         }
     });
-    $('#myCategory').html('');
 };
 
 Audios.prototype.openScannerDialog = function() {
@@ -192,7 +194,7 @@ Audios.prototype.scanSend = function() {
                         $("#category_selector").val($this.category_selectors[0]);
                         $this.loadCategory();
                     } else {
-                        $this.loadAlbums();
+                        $this.loadCategoryAlbums();
                     }
                 });
             }else{

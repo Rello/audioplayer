@@ -347,14 +347,14 @@ i#scanAudiosFirst {
     color: #A9302A;
 }
 
-#albums-container {
+#empty-container {
     margin: 0;
     width: 100%;
     position: relative;
     padding: 0;
     top: 70px;
     float: left;
-    display: block;
+    display: none;
     height: auto;
 }
 
@@ -735,6 +735,10 @@ i#scanAudiosFirst {
     font-weight: bold;
     line-height: 24px;
     padding-left: 25px;
+    width: calc(100% - 300px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .songcontainer h2 span {

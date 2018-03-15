@@ -13,6 +13,7 @@
 var Audios = function () {
     this.AudioPlayer = null;
     this.PlaylistContainer = $('#playlist-container');
+    this.EmptyContainer = $('#empty-container');
     this.ActivePlaylist = $('#activePlaylist');
     this.albums = [];
     this.imgSrc = false;
@@ -96,6 +97,8 @@ Audios.prototype.initKeyListener = function () {
 Audios.prototype.loadCategoryAlbums = function () {
     var $this = this;
 
+    $this.PlaylistContainer.show();
+    $this.EmptyContainer.hide();
     $('#loading').show();
     $('.toolTip').tooltip('hide');
     $('#alben').addClass('active');
@@ -118,11 +121,7 @@ Audios.prototype.loadCategoryAlbums = function () {
                 $('.sm2-bar-ui').show();
                 $this.buildCoverRow(jsondata.data);
             } else {
-                $('.sm2-bar-ui').hide();
-                $this.AlbumContainer.show();
-                $this.AlbumContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
-                $this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></i> ' + t('audioplayer', 'Add new tracks to library') + '</span>');
-                $this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>');
+                $this.showInitScreen();
             }
         }
     });
@@ -524,12 +523,7 @@ Audios.prototype.loadCategory = function () {
                     $this.loadIndividualCategory();
                 }
             } else {
-                $('.sm2-bar-ui').hide();
-                $this.PlaylistContainer.hide();
-                $this.AlbumContainer.show();
-                $this.AlbumContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
-                $this.AlbumContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></i> ' + t('audioplayer', 'Add new tracks to library') + '</span>');
-                $this.AlbumContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>');
+                $this.showInitScreen();
             }
         }
     });
@@ -544,6 +538,8 @@ Audios.prototype.buildCategoryItems = function (xxx) {
 Audios.prototype.loadIndividualCategory = function (evt) {
     var $this = this;
 
+    $this.PlaylistContainer.show();
+    $this.EmptyContainer.hide();
     $('#loading').show();
     $('.toolTip').tooltip('hide');
     $('#alben').removeClass('active');
@@ -674,15 +670,9 @@ Audios.prototype.loadIndividualCategory = function (evt) {
                 }
 
             } else if (PlaylistId.toString()[0] === 'X') {
-                $('.sm2-bar-ui').hide();
-                $this.PlaylistContainer.hide();
-                $this.AlbumContainer.show();
-                $this.AlbumContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
+                $this.showInitScreen('smart');
             } else {
-                $('.sm2-bar-ui').hide();
-                $this.PlaylistContainer.hide();
-                $this.AlbumContainer.show();
-                $this.AlbumContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>');
+                $this.showInitScreen('playlist');
             }
 
             if (category !== "Title") {
@@ -692,6 +682,24 @@ Audios.prototype.loadIndividualCategory = function (evt) {
             }
         }
     });
+};
+
+Audios.prototype.showInitScreen = function (mode) {
+    var $this = this;
+    $('.sm2-bar-ui').hide();
+    $this.PlaylistContainer.hide();
+    $this.EmptyContainer.show();
+    $this.EmptyContainer.html('');
+
+    if (mode === 'smart') {
+        $this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
+    } else if (mode === 'playlist') {
+        $this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>');
+    } else {
+        $this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
+        $this.EmptyContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></i> ' + t('audioplayer', 'Add new tracks to library') + '</span>');
+        $this.EmptyContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>');
+    }
 };
 
 Audios.prototype.DragElement = function (evt) {
@@ -1152,13 +1160,7 @@ window.onhashchange = function () {
 
         $('#searchresults').addClass('hidden');
         window.location.href = '#';
-        if (locHashTemp[0] === 'Album' && $this.category_selectors[0] === 'Albums') {
-            evt = {};
-            evt.albumId = locHashTemp[1];
-            myAudios.AlbumContainer.show();
-            myAudios.PlaylistContainer.hide();
-            myAudios.AlbumClickHandler(evt);
-        } else if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
+        if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
             $this.category_selectors = locHashTemp;
             $("#category_selector").val(locHashTemp[0]);
             myAudios.loadCategory();
@@ -1234,7 +1236,7 @@ $(document).ready(function () {
             myAudios.set_uservalue('navigation', 'false');
         }
         myAudios.loadCategoryAlbums();
-        $('.sm2-bar-ui').width(myAudios.AlbumContainer.width());
+        $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
 
     });
 
