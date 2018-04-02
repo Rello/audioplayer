@@ -11,13 +11,12 @@ A music player for FLAC, MP3, MP4, streams, and more with playlist support and s
 - Library scan and reset with command-line and browser
 - Specifying media folder (with exclude functionality)
 - Play shared files directly without downloading
-- Playlists and ID3 tag editor (incl. picture)
+- Smart & Standard Playlists and playlist files
 - One Click Play from Files app
 - External cover support
 - Mobile view support
 - Search integration
 - Favorites integration
-- Playlist files
 - Stream URLs
 
 ### Supported Formats
