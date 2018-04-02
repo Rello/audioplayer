@@ -19,6 +19,10 @@
     margin-top: 0 !important;
 }
 
+.popovermenu {
+    margin-top: 30px !important;
+}
+
 #audio-settings li > a {
     line-height: 30px;
     min-height: 30px;
@@ -374,7 +378,7 @@ i#scanAudiosFirst {
     margin-right: auto;
 }
 
-#individual-playlist li, #individual-playlist-header span {
+#individual-playlist > li, #individual-playlist-header span {
     height: 24px;
     line-height: 24px;
     color: #555;
@@ -555,7 +559,7 @@ i#scanAudiosFirst {
     color: #A9302A;
 }
 
-#individual-playlist li a.edit-song {
+#individual-playlist li span.edit-song {
     float: right;
     position: absolute;
     right: 0;
@@ -857,7 +861,7 @@ i#scanAudiosFirst {
 
 }
 
-.songcontainer .albumwrapper li a.edit-song {
+.songcontainer .albumwrapper li span.edit-song {
     float: left;
     position: relative;
     right: 0;
@@ -869,7 +873,7 @@ i#scanAudiosFirst {
 
 }
 
-.songcontainer .albumwrapper li:hover a.edit-song {
+.songcontainer .albumwrapper li:hover span.edit-song {
     opacity: 1;
 }
 
@@ -1128,23 +1132,15 @@ li.dropHover {
     margin: 0;
 }
 
-#audioplayerTabView table {
+#audioplayerTabView .table {
     margin-left: 2em;
-}
-
-#audioplayerTabView tr:hover {
-    background-color: transparent;
-}
-
-#audioplayerTabView td {
-    border: none;
-    padding: 0;
 }
 
 #audioplayerTabView .key {
     color: #999;
     padding-right: 1em;
     vertical-align: top;
+    display: table-cell;
 }
 
 #audioplayerTabView .value {
@@ -1152,6 +1148,7 @@ li.dropHover {
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 1px;
+    display: table-cell;
 }
 
 @media only screen and (max-width: 768px) {
@@ -1327,7 +1324,7 @@ li.dropHover {
 
     }
 
-    .songcontainer .albumwrapper li a.edit-song {
+    .songcontainer .albumwrapper li span.edit-song {
         display: none;
 
     }
@@ -1357,7 +1354,7 @@ li.dropHover {
     #individual-playlist li span.interpret,
     #individual-playlist li span.album-indi,
     #individual-playlist li span.ioc.ioc-delete,
-    #individual-playlist li a.edit-song {
+    #individual-playlist li span.edit-song {
         display: none;
     }
 

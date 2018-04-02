@@ -22,7 +22,10 @@ style('files', 'detailsView');
 	script('audioplayer', 'app');
     script('audioplayer', 'sidebar');
 	script('audioplayer', 'settings');
-    script('audioplayer', 'editor-min');
+if ($_['audioplayer_editor'] === 'true') {
+    script('audioplayer_editor', 'editor');
+    style('audioplayer_editor', 'style');
+}
 
 ?>
 <form style="display:none;" class="float" id="file_upload_form"
@@ -34,6 +37,7 @@ style('files', 'detailsView');
 	<input type="hidden" class="max_human_file_size" value="(max <?php p($_['uploadMaxHumanFilesize']); ?>)">
 	<input type="hidden" id="audioplayer_notification" value="<?php p($_['notification']); ?>">
     <input type="hidden" id="audioplayer_volume" value="<?php p($_['volume']); ?>">
+    <input type="hidden" id="audioplayer_editor" value="<?php p($_['audioplayer_editor']); ?>">
 	<input id="pinphoto_fileupload" type="file" accept="image/*" name="imagefile" />
 </form>
 <iframe style="display:none;" name="file_upload_target" id='file_upload_target' src=""></iframe>

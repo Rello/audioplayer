@@ -39,9 +39,6 @@
     <li id="tabHeaderID3Editor" class="tabHeader" data-tabid="2" data-tabindex="2">
         <a href="#">ID3 Editor</a>
     </li>
-    <li class="tabHeader" data-tabid="3" data-tabindex="3">
-        <a href="#">NC Tags?</a>
-    </li>
 </ul>
 <div class="tabsContainer">
     <div id="audioplayerTabView" class="tab audioplayerTabView">

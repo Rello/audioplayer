@@ -254,6 +254,16 @@ class DbController extends Controller
     }
 
     /**
+     * cleanup obsolete entries in linked tables
+     * @param int $userId
+     * @return true
+     */
+    public function cleanupDb($userId)
+    {
+        return true;
+    }
+
+    /**
      * write cover image data to album
      * @param int $userId
      * @param integer $iAlbumId
@@ -407,6 +417,25 @@ class DbController extends Controller
             'dublicate' => $dublicate,
         ];
         return $return;
+    }
+
+    /**
+     * Add track to db if not exist
+     * @param int $userId
+     * @param int $track_id
+     * @param string $editKey
+     * @param string $editValue
+     * @return array
+     */
+    public function updateTrack($userId, $track_id, $editKey, $editValue)
+    {
+        $SQL = 'UPDATE `*PREFIX*audioplayer_tracks` SET `' . $editKey . '` = ? WHERE `user_id` = ? AND `id` = ?';
+        $stmt = $this->db->prepare($SQL);
+        $stmt->execute(array($editValue,
+            $userId,
+            $track_id
+        ));
+        return true;
     }
 
     /**

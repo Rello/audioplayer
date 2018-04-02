@@ -29,8 +29,6 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'scanner#getProgress', 'url' => '/getprogress', 'verb' => 'POST'],
 	['name' => 'scanner#scanForAudios', 'url' => '/scanforaudiofiles', 'verb' => 'POST'],
 	['name' => 'scanner#checkNewTracks', 'url' => '/checknewtracks', 'verb' => 'POST'],
-	['name' => 'editor#editAudioFile', 'url' => '/editaudiofile', 'verb' => 'GET'],
-	['name' => 'editor#saveAudioFileData', 'url' => '/saveaudiofiledata', 'verb' => 'POST'],
 	['name' => 'music#getAudioStream', 'url' => '/getaudiostream', 'verb' => 'GET'],
     ['name' => 'db#resetMediaLibrary', 'url' => '/resetmedialibrary', 'verb' => 'GET'],
 	['name' => 'music#getPublicAudioInfo', 'url' => '/getpublicaudioinfo', 'verb' => 'GET'],

@@ -348,7 +348,8 @@ Audios.prototype.buildTitleRow = function (elem) {
     var spanNr = $('<span/>').addClass('number').text(elem.cl3);
     var spanTime = $('<span/>').addClass('time').text(elem.len);
     var streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
-    var spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.showSidebar.bind($this));
+    //   var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.showSidebar.bind($this));
+    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.fileActionsMenu.bind($this));
     var spanTitle;
 
     if (can_play[elem.mim] === true) {
@@ -632,15 +633,15 @@ Audios.prototype.loadIndividualCategory = function (evt) {
                         spanTitle = $('<span/>').addClass('title').text(el.cl1);
                         spanInterpret = spanInterpret.text(el.cl2);
                         spanAlbum = spanAlbum.text(el.cl3);
-                        spanEdit = $('<a/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click($this.showSidebar.bind($this));
+                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click($this.fileActionsMenu.bind($this));
                     } else {
                         spanTitle = $('<span/>').addClass('title').html('<i>' + el.cl1 + '</i>');
                         spanInterpret = spanInterpret.html('<i>' + el.cl2 + '</i>');
                         spanAlbum = spanAlbum.html('<i>' + el.cl3 + '</i>');
-                        spanEdit = $('<a/>').addClass('edit-song ioc-close').attr({'title': t('audioplayer', 'MIME type not supported by browser')}).css({
+                        spanEdit = $('<span/>').addClass('edit-song ioc-close').attr({'title': t('audioplayer', 'MIME type not supported by browser')}).css({
                             'opacity': 1,
                             'text-align': 'center'
-                        }).click($this.showSidebar.bind($this));
+                        }).click($this.fileActionsMenu.bind($this));
                     }
 
                     li.append(streamUrl);
@@ -734,32 +735,26 @@ Audios.prototype.favoriteUpdate = function (evt) {
 };
 
 Audios.prototype.fileActionsMenu = function (evt) {
-
+    $this = this;
     var trackid = $(evt.target).closest('li').attr('data-trackid');
-    var fileId = $(evt.target).closest('li').attr('data-fileid');
-    var mimetype = $(evt.target).closest('li').attr('mimetype');
     if ($(".popovermenu").attr('data-trackid') === trackid) {
         $(".popovermenu").remove();
     } else {
         $(".popovermenu").remove();
 
-        var category = $('#category_selector').val();
-        var PlaylistId = $('#myCategory li.active').data('id');
+        var category = $this.PlaylistContainer.data('playlist').split('-');
 
-        var html = '<div class="popovermenu open" data-trackid="' + trackid + '"><ul>' +
-            '<li><a href="#" class="menuitem"><span class="icon icon-details"></span><span>MIME: ' + mimetype + '</span></a></li>';
-        if (PlaylistId.toString()[0] !== 'S') {
-            html = html + '<li><a href="#" class="menuitem" data-action="edit" data-trackid="' + trackid + '" data-fileid="' + fileId + '"><span class="icon icon-rename"></span><span>' + t('audioplayer', 'Edit metadata') + '</span></a></li>';
-        }
+        var html = '<div class="popovermenu"><ul>' +
+            '<li><a href="#" class="menuitem" data-trackid="' + trackid + '" data-action="details" ><span class="icon icon-details"></span><span>' + t('audioplayer', 'Details') + '</span></a></li>';
 
-        if (category === 'Playlist' && PlaylistId.toString()[0] !== 'X' && PlaylistId.toString()[0] !== 'S' && PlaylistId !== '') {
-            html = html + '<li><a href="#" class="menuitem action action-delete permanent" data-action="delete" data-id="' + trackid + '"><span class="icon icon-delete"></span><span>' + t('audioplayer', 'Remove') + '</span></a></li>';
+        if (category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1].toString()[0] !== 'S' && category[1] !== '') {
+            html = html + '<li><a href="#" class="menuitem" data-trackid="' + trackid + '"data-action="delete" ><span class="icon icon-delete"></span><span>' + t('audioplayer', 'Remove') + '</span></a></li>';
         }
         html = html + '</ul></div>';
 
-        $(evt.target).closest('li').after(html);
+        $(evt.target).after(html);
         OC.showMenu(null, $(".popovermenu"));
-        $("a[data-action='edit']").click($this.fileActionsEvent.bind($this));
+        $("a[data-action='details']").click($this.fileActionsEvent.bind($this));
         $("a[data-action='delete']").click($this.fileActionsEvent.bind($this));
         $(".popovermenu").on('afterHide', function () {
             $(".popovermenu").remove();
@@ -770,21 +765,15 @@ Audios.prototype.fileActionsMenu = function (evt) {
 
 Audios.prototype.fileActionsEvent = function (evt) {
     $(".popovermenu").remove();
-    var $target = $(evt.target).closest('a');
-    var actionName = $target.attr('data-action');
+    var actionName = $(evt.target).closest('a').attr('data-action');
 
-    if (actionName === "edit") myAudios.editSong($target);
-    if (actionName === "delete") myAudios.removeSongFromPlaylist($target);
+    if (actionName === "details") myAudios.showSidebar(evt);
+    if (actionName === "delete") myAudios.removeSongFromPlaylist(evt);
 };
 
 Audios.prototype.removeSongFromPlaylist = function (evt) {
 
-    var songId;
-    if (typeof evt.target === 'string') {
-        songId = evt.target;
-    } else {
-        songId = $(evt).attr('data-id');
-    }
+    var songId = $(evt).attr('data-trackid');
     var plId = $('#myCategory li.active').attr('data-id');
 
     return $.getJSON(OC.generateUrl('apps/audioplayer/removetrackfromplaylist'), {

@@ -68,6 +68,7 @@ class PageController extends Controller {
 			'navigation' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
 			'notification' => $this->getNotification(),
+            'audioplayer_editor' => 'false',
 		));
 		return $response;
 	}

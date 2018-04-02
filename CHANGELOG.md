@@ -18,6 +18,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - double player on sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
 - highlight current track in album view [#282](https://github.com/rello/audioplayer/issues/282)
 
+### Removed
+- ID3 tag editor (separate app in development)  [#290](https://github.com/rello/audioplayer/issues/290)
+
 ## 2.2.5 - 2018-02-02
 ### Fixed
 - no standard playlist creation possible [#270](https://github.com/rello/audioplayer/issues/270)

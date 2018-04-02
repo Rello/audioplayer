@@ -46,10 +46,11 @@ class SidebarController extends Controller {
      * @return JSONResponse
      */
 	public function getAudioInfo($trackid) {
-        $SQL = "SELECT `AT`.`title` AS `Title`,`AG`.`name` AS `Genre`,`AB`.`name` AS `Album`,
-					`AT`.`length` AS `Length`,`AT`.`year` AS `Year`,`AA`.`name` AS `Artist`,
-					ROUND((`AT`.`bitrate` / 1000 ),0) AS `Bitrate`, `AT`.`disc` AS `Disc`,
-					`AT`.`number` AS `Track`, `AT`.`composer` AS `Composer`, `AT`.`subtitle` AS `Subtitle`, `AT`.`mimetype` AS `MIME type`
+        $SQL = "SELECT `AT`.`title` AS `Title`,`AA`.`name` AS `Artist`,`AB`.`name` AS `Album`, `AG`.`name` AS `Genre`,
+					`AT`.`length` AS `Length`,`AT`.`year` AS `Year`,
+					 `AT`.`disc` AS `Disc`,
+					`AT`.`number` AS `Track`, `AT`.`composer` AS `Composer`, `AT`.`subtitle` AS `Subtitle`,
+					 ROUND((`AT`.`bitrate` / 1000 ),0) AS `Bitrate`, `AT`.`mimetype` AS `MIME type`
 						FROM `*PREFIX*audioplayer_tracks` `AT`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`
