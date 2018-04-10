@@ -425,7 +425,7 @@ class DbController extends Controller
      * @param int $track_id
      * @param string $editKey
      * @param string $editValue
-     * @return array
+     * @return bool
      */
     public function updateTrack($userId, $track_id, $editKey, $editValue)
     {
@@ -468,6 +468,35 @@ class DbController extends Controller
             'dublicate' => $dublicate,
         ];
         return $return;
+    }
+
+    /**
+     * Get all playlists were track is added
+     * @param int $userId
+     * @param int $trackId
+     * @return array
+     */
+    public function getPlaylistsForTrack($userId, $trackId)
+    {
+        $SQL = null;
+        $playlists = array();
+        $SQL = "SELECT  `AP`.`playlist_id` , `AN`.`name`, LOWER(`AN`.`name`) AS `lower`
+						FROM `*PREFIX*audioplayer_playlist_tracks` `AP`
+						LEFT JOIN `*PREFIX*audioplayer_playlists` `AN` 
+						ON `AP`.`playlist_id` = `AN`.`id`
+			 			WHERE  `AN`.`user_id` = ?
+			 			AND `AP`.`track_id` = ?
+			 			ORDER BY LOWER(`AN`.`name`) ASC
+			 			";
+        $stmt = $this->db->prepare($SQL);
+        $stmt->execute(array($userId, $trackId));
+        $results = $stmt->fetchAll();
+        foreach ($results as $row) {
+            array_splice($row, 2, 1);
+            $playlists[] = $row;
+        }
+
+        return $playlists;
     }
 
     /**

@@ -849,11 +849,11 @@
                     if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper.isPlaylist li').removeClass('isActive');
                         $('.albumwrapper.isPlaylist li i.ioc').hide();
-                        $('.albumwrapper.isPlaylist li i.fav').show();
+                        $('.albumwrapper.isPlaylist li i.icon').show();
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
-                        $('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
+                        $('.albumwrapper.isPlaylist li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper.isPlaylist li').eq(playlistController.data.selectedIndex).addClass('isActive');
                     }
 
@@ -863,7 +863,7 @@
                     utils.css.swap(dom.o, 'playing', 'paused');
                     if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
-                        $('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
+                        $('.albumwrapper.isPlaylist li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up');
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-off');
                     }
@@ -873,7 +873,7 @@
                     utils.css.swap(dom.o, 'paused', 'playing');
                     if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
-                        $('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();
+                        $('.albumwrapper.isPlaylist li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
                         $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
                     }

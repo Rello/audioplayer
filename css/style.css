@@ -394,8 +394,8 @@ i#scanAudiosFirst {
 }
 
 #individual-playlist li:hover .edit-song,
-#individual-playlist li:hover .fav,
-#individual-playlist li:focus .fav {
+#individual-playlist li:hover .icon,
+#individual-playlist li:focus .icon {
     opacity: 0.3;
 }
 
@@ -474,15 +474,15 @@ i#scanAudiosFirst {
     display: none;
 }
 
-#individual-playlist .fav {
+#individual-playlist .icon {
     display: inline-block;
     vertical-align: middle;
     background-size: 16px 16px;
     opacity: 0;
 }
 
-#individual-playlist .fav:hover,
-#individual-playlist .fav:focus,
+#individual-playlist .icon:hover,
+#individual-playlist .icon:focus,
 #individual-playlist .edit-song:hover,
 #individual-playlist .edit-song:focus {
     opacity: 1 !important;
@@ -659,6 +659,7 @@ i#scanAudiosFirst {
     font-style: italic;
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .albumdescr span.albumname {
@@ -790,6 +791,7 @@ i#scanAudiosFirst {
 .songcontainer .songcontainer-cover.cover-small {
     width: 180px;
     height: 180px;
+    line-height: 180px;
 }
 
 .songcontainer .songlist {
@@ -825,7 +827,6 @@ i#scanAudiosFirst {
     display: block;
     width: 20px;
     height: 18px;
-    padding-left: 5px;
 }
 
 .songcontainer i.ioc {
@@ -1132,23 +1133,30 @@ li.dropHover {
     margin: 0;
 }
 
-#audioplayerTabView .table {
+#audioplayerTabView .table,
+#playlistsTabView .table {
     margin-left: 2em;
 }
 
-#audioplayerTabView .key {
+#audioplayerTabView .key,
+#playlistsTabView .key {
     color: #999;
     padding-right: 1em;
     vertical-align: top;
     display: table-cell;
 }
 
-#audioplayerTabView .value {
-    width: 100%;
+#audioplayerTabView .value,
+#playlistsTabView .value {
+    width: 75%;
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 1px;
     display: table-cell;
+}
+
+#playlistsTabView .icon {
+    padding: 0 0 0 16px;
 }
 
 @media only screen and (max-width: 768px) {

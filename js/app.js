@@ -38,7 +38,7 @@ Audios.prototype.init = function () {
             $("#category_selector").val($this.category_selectors[0]);
             myAudios.loadCategory();    // Category View
         } else {
-                $this.loadCategoryAlbums();
+            $this.loadCategoryAlbums();
         }
     });
     this.initKeyListener();
@@ -131,24 +131,7 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
     $this = this;
     var divAlbum = [];
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-
-    var counter = 0;
-    var maxNeben = 5;
-    var marginLeft = 20;
-    var audioContainerWidth = this.PlaylistContainer.width();
-
-    maxNeben = Math.floor(audioContainerWidth / 150) - 1;
-    marginLeft = (audioContainerWidth) - (maxNeben * 150) - 150;
-    marginLeft = Math.floor((marginLeft / maxNeben) / 2);
-
-    if (marginLeft <= 8) {
-        maxNeben = maxNeben - 1;
-        marginLeft = (audioContainerWidth) - (maxNeben * 150) - 150;
-        marginLeft = Math.floor((marginLeft / maxNeben) / 2) +3;
-    }
-    if (maxNeben === 1) {
-        marginLeft = 15;
-    }
+    var divRow = $('<div />').addClass('coverrow');
 
     $.each(aAlbums, function (i, album) {
         var addCss;
@@ -161,7 +144,7 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
             addCss = 'background-image:url(' + getcoverUrl + album.cid + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
         }
 
-        divAlbum[i] = $('<div/>').addClass('album').css('margin-left', marginLeft + 'px').attr({
+        divAlbum = $('<div/>').addClass('album').css('margin-left', '15px').attr({
             'data-album': album.id,
             'data-name': album.name     //required for songcontainer title
         }).click($this.loadIndividualAlbums.bind($this));
@@ -169,19 +152,11 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
         var divAlbumCover = $('<div/>').addClass('albumcover').attr({'style': addCss}).text(addDescr);
         var divAlbumDescr = $('<div/>').addClass('albumdescr').html('<span class="albumname">' + album.name + '</span><span class="artist">' + album.art + '</span>');
 
-        divAlbum[i].append(divAlbumCover);
-        divAlbum[i].append(divAlbumDescr);
-
-        if (counter === maxNeben || (i === (aAlbums.length - 1))) {
-            var divRow = $('<div />').addClass('coverrow');
-            divRow.append(divAlbum);
-            $this.PlaylistContainer.append(divRow);
-            divAlbum = null;
-            divAlbum = [];
-            counter = -1;
-        }
-        counter++;
+        divAlbum.append(divAlbumCover);
+        divAlbum.append(divAlbumDescr);
+        divRow.append(divAlbum);
     });
+    $this.PlaylistContainer.append(divRow);
 };
 
 Audios.prototype.loadIndividualAlbums = function (evt) {
@@ -206,11 +181,9 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
     if ($(activeAlbum).hasClass('is-active')) {
         $(activeAlbumContainer).slideUp(iSlideUp, function () {
             $('.album').removeClass('is-active').find('.artist').show();
-            $(activeAlbum).parent('.coverrow').css('margin-bottom', 0);
         });
     } else {
         $('.album').removeClass('is-active').find('.artist').show();
-        $('.coverrow').css('margin-bottom', 0);
         $this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
         $this.buildSongContainer(eventTarget);
 
@@ -227,7 +200,6 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
         appContent.animate({
             'scrollTop': scrollTop + $(activeAlbum).offset().top - iScroll
         }, iAnimateTime, 'linear', function () {
-            $(activeAlbum).parent('.coverrow').css('margin-bottom', $(activeAlbumContainer).height() + 20);
             $(activeAlbumContainer).slideDown(iSlideDown);
         });
 
@@ -235,7 +207,6 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
 };
 
 Audios.prototype.buildSongContainer = function (eventTarget) {
-
     var AlbumId = eventTarget.attr('data-album');
     var AlbumName = eventTarget.attr('data-name');
 
@@ -348,8 +319,8 @@ Audios.prototype.buildTitleRow = function (elem) {
     var spanNr = $('<span/>').addClass('number').text(elem.cl3);
     var spanTime = $('<span/>').addClass('time').text(elem.len);
     var streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
-    //   var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.showSidebar.bind($this));
-    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.fileActionsMenu.bind($this));
+    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.showSidebar.bind($this));
+    //var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.fileActionsMenu.bind($this));
     var spanTitle;
 
     if (can_play[elem.mim] === true) {
@@ -605,9 +576,14 @@ Audios.prototype.loadIndividualCategory = function (evt) {
                     var fav_action;
 
                     if (el.fav === 't') {
-                        fav_action = '<i class="fav icon-starred" style="opacity:0.3;"></i>';
+                        fav_action = $('<i/>').addClass('icon icon-starred')
+                            .css({'opacity': 0.3,})
+                            .attr({'data-fileid': el.fid})
+                            .click($this.favoriteUpdate.bind($this));
                     } else {
-                        fav_action = '<i class="fav icon-star"></i>';
+                        fav_action = $('<i/>').addClass('icon icon-star')
+                            .attr({'data-fileid': el.fid})
+                            .click($this.favoriteUpdate.bind($this));
                     }
 
                     var stream_type;
@@ -619,11 +595,16 @@ Audios.prototype.loadIndividualCategory = function (evt) {
                     if (el.mim === 'audio/mpegurl' || el.mim === 'audio/x-scpls' || el.mim === 'application/xspf+xml') {
                         stream_type = true;
                         streamUrl = $('<a/>').attr({'href': el.lin, 'type': el.mim});
-                        spanAction = $('<span/>').addClass('actionsSong').html(fav_action + '<i class="ioc ioc-volume-off"></i>&nbsp;');
+                        spanAction = $('<span/>')
+                            .addClass('actionsSong')
+                            .append(fav_action)
+                            .append($('<i/>').addClass('ioc ioc-volume-off'));
                     } else {
                         stream_type = false;
                         streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + el.lin, 'type': el.mim});
-                        spanAction = $('<span/>').addClass('actionsSong').html(fav_action + '<i class="ioc ioc-volume-off"></i>&nbsp;').click($this.favoriteUpdate.bind($this));
+                        spanAction = $('<span/>').addClass('actionsSong')
+                            .append(fav_action)
+                            .append($('<i/>').addClass('ioc ioc-volume-off'));
                     }
                     var spanInterpret = $('<span>').attr({'class': 'interpret'});
                     var spanAlbum = $('<span>').attr({'class': 'album-indi'});
@@ -633,7 +614,8 @@ Audios.prototype.loadIndividualCategory = function (evt) {
                         spanTitle = $('<span/>').addClass('title').text(el.cl1);
                         spanInterpret = spanInterpret.text(el.cl2);
                         spanAlbum = spanAlbum.text(el.cl3);
-                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click($this.fileActionsMenu.bind($this));
+//                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click($this.fileActionsMenu.bind($this));
+                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click($this.showSidebar.bind($this));
                     } else {
                         spanTitle = $('<span/>').addClass('title').html('<i>' + el.cl1 + '</i>');
                         spanInterpret = spanInterpret.html('<i>' + el.cl2 + '</i>');
@@ -641,8 +623,9 @@ Audios.prototype.loadIndividualCategory = function (evt) {
                         spanEdit = $('<span/>').addClass('edit-song ioc-close').attr({'title': t('audioplayer', 'MIME type not supported by browser')}).css({
                             'opacity': 1,
                             'text-align': 'center'
-                        }).click($this.fileActionsMenu.bind($this));
+                        }).click($this.showSidebar.bind($this));
                     }
+
 
                     li.append(streamUrl);
                     li.append(spanAction);
@@ -708,18 +691,17 @@ Audios.prototype.DragElement = function (evt) {
 };
 
 Audios.prototype.favoriteUpdate = function (evt) {
-    var $target = $(evt.target).closest('li');
-    var fileId = $target.attr('data-fileid');
+    var fileId = $(evt.target).attr('data-fileid');
     var isFavorite = false;
 
-    if ($(evt.target).hasClass('fav icon-starred')) {
+    if ($(evt.target).hasClass('icon icon-starred')) {
         isFavorite = true;
-        $(evt.target).removeClass('fav icon-starred');
-        $(evt.target).addClass('fav icon-star').removeAttr("style");
+        $(evt.target).removeClass('icon icon-starred');
+        $(evt.target).addClass('icon icon-star').removeAttr("style");
     } else {
         isFavorite = false;
-        $(evt.target).removeClass('fav icon-star');
-        $(evt.target).addClass('fav icon-starred').css('opacity', 1);
+        $(evt.target).removeClass('icon icon-star');
+        $(evt.target).addClass('icon icon-starred').css('opacity', 1);
     }
 
     $.ajax({
@@ -728,8 +710,6 @@ Audios.prototype.favoriteUpdate = function (evt) {
         data: {
             'fileId': fileId,
             'isFavorite': isFavorite
-        },
-        success: function (ajax_data) {
         }
     });
 };
@@ -769,21 +749,6 @@ Audios.prototype.fileActionsEvent = function (evt) {
 
     if (actionName === "details") myAudios.showSidebar(evt);
     if (actionName === "delete") myAudios.removeSongFromPlaylist(evt);
-};
-
-Audios.prototype.removeSongFromPlaylist = function (evt) {
-
-    var songId = $(evt).attr('data-trackid');
-    var plId = $('#myCategory li.active').attr('data-id');
-
-    return $.getJSON(OC.generateUrl('apps/audioplayer/removetrackfromplaylist'), {
-        playlistid: plId,
-        songid: songId
-    }).then(function (data) {
-        $('#myCategory li.active').find('.counter').text($('#myCategory li.active').find('.counter').text() - 1);
-        $('#individual-playlist li[data-trackid="' + songId + '"]').remove();
-        $('#activePlaylist li[data-trackid="' + songId + '"]').remove();
-    }.bind(this));
 };
 
 Audios.prototype.addSongToPlaylist = function (plId, songId) {
@@ -1119,26 +1084,27 @@ Audios.prototype.checkNewTracks = function () {
     });
 };
 
+Audios.prototype.resizePlaylist = function () {
+    $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
+
+    if (myAudios.PlaylistContainer.width() < 850) {
+        $('.songcontainer .songlist').addClass('one-column');
+        $('.songcontainer .songlist').removeClass('two-column');
+        $('.songcontainer .songcontainer-cover').addClass('cover-small');
+    } else {
+        $('.songcontainer .songlist').removeClass('one-column');
+        $('.songcontainer .songlist').addClass('two-column');
+        $('.songcontainer .songcontainer-cover').removeClass('cover-small');
+    }
+};
+
 var resizeTimeout = null;
 $(window).resize(_.debounce(function () {
     if (resizeTimeout) {
         clearTimeout(resizeTimeout);
     }
     resizeTimeout = setTimeout(function () {
-        $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
-
-        if (myAudios.PlaylistContainer.width() < 850) {
-            $('.songcontainer .songlist').addClass('one-column');
-            $('.songcontainer .songlist').removeClass('two-column');
-            $('.songcontainer .songcontainer-cover').addClass('cover-small');
-        } else {
-            $('.songcontainer .songlist').removeClass('one-column');
-            $('.songcontainer .songlist').addClass('two-column');
-            $('.songcontainer .songcontainer-cover').removeClass('cover-small');
-        }
-        if ($('#alben').hasClass('active')) {
-            myAudios.loadCategoryAlbums();
-        }
+        $this.resizePlaylist;
     }, 500);
 }));
 
@@ -1176,11 +1142,13 @@ $(document).ready(function () {
 
     $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
 
+    $this.resizePlaylist = _.debounce(_.bind($this.resizePlaylist, this), 250);
+    $('#app-content').on('appresized', $this.resizePlaylist);
+
     $('#addPlaylist').on('click', function () {
         $('#newPlaylistTxt').val('');
         $('#newPlaylist').removeClass('ap_hidden');
     });
-
 
     $('#newPlaylistBtn_cancel').on('click', function () {
         $('#newPlaylistTxt').val('');
@@ -1224,9 +1192,7 @@ $(document).ready(function () {
             $('#app-navigation').addClass('ap_hidden');
             myAudios.set_uservalue('navigation', 'false');
         }
-        myAudios.loadCategoryAlbums();
-        $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
-
+        myAudios.resizePlaylist();
     });
 
     $('#category_selector').change(function () {

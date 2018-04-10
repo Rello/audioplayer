@@ -21,7 +21,7 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 	['name' => 'playlist#addPlaylist', 'url' => '/addplaylist', 'verb' => 'GET'],
 	['name' => 'playlist#addTrackToPlaylist', 'url' => '/addtracktoplaylist', 'verb' => 'GET'],
-	['name' => 'playlist#removeTrackFromPlaylist', 'url' => '/removetrackfromplaylist', 'verb' => 'GET'],
+    ['name' => 'playlist#removeTrackFromPlaylist', 'url' => '/removetrackfromplaylist', 'verb' => 'POST'],
 	['name' => 'playlist#sortPlaylist', 'url' => '/sortplaylist', 'verb' => 'GET'],
 	['name' => 'playlist#removePlaylist', 'url' => '/removeplaylist', 'verb' => 'GET'],
 	['name' => 'playlist#updatePlaylist', 'url' => '/updateplaylist', 'verb' => 'GET'],
@@ -46,4 +46,5 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
 	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
     ['name' => 'sidebar#getAudioInfo', 'url' => '/getaudioinfo', 'verb' => 'GET'],
+    ['name' => 'sidebar#getPlaylists', 'url' => '/getplaylists', 'verb' => 'POST'],
 	]]);
