@@ -478,7 +478,6 @@ class DbController extends Controller
      */
     public function getPlaylistsForTrack($userId, $trackId)
     {
-        $SQL = null;
         $playlists = array();
         $SQL = "SELECT  `AP`.`playlist_id` , `AN`.`name`, LOWER(`AN`.`name`) AS `lower`
 						FROM `*PREFIX*audioplayer_playlist_tracks` `AP`

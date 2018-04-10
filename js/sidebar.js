@@ -137,9 +137,10 @@ Audios.prototype.audioplayerTabView = function () {
         url: OC.generateUrl('apps/audioplayer/getaudioinfo'),
         data: {trackid: trackid},
         success: function (jsondata) {
+            var table;
             if (jsondata.status === 'success') {
 
-                var table = $('<div>').css('display', 'table').addClass('table');
+                table = $('<div>').css('display', 'table').addClass('table');
                 var tablerow;
                 var m;
                 var tablekey;
@@ -190,9 +191,10 @@ Audios.prototype.playlistsTabView = function () {
         url: OC.generateUrl('apps/audioplayer/getplaylists'),
         data: {trackid: trackid},
         success: function (jsondata) {
+            var table;
             if (jsondata.status === 'success') {
 
-                var table = $('<div>').css('display', 'table').addClass('table');
+                table = $('<div>').css('display', 'table').addClass('table');
                 var tablerow;
                 var m;
                 var tablekey;

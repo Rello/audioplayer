@@ -1104,7 +1104,7 @@ $(window).resize(_.debounce(function () {
         clearTimeout(resizeTimeout);
     }
     resizeTimeout = setTimeout(function () {
-        $this.resizePlaylist;
+        $this.resizePlaylist();
     }, 500);
 }));
 

@@ -122,7 +122,7 @@ class SidebarController extends Controller
     public function getPlaylists($trackid)
     {
         $playlists = $this->DBController->getPlaylistsForTrack($this->userId, $trackid);
-        if ($playlists) {
+        if (!empty($playlists)) {
             $result = [
                 'status' => 'success',
                 'data' => $playlists];
