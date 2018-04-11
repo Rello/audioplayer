@@ -51,7 +51,7 @@ Audios.prototype.showSidebar = function (evt) {
         }
 
         $appsidebar.data('trackid', trackid);
-        $('.tabHeader.selected').click()
+        $('.tabHeader.selected').click();
     }
 };
 

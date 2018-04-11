@@ -714,43 +714,6 @@ Audios.prototype.favoriteUpdate = function (evt) {
     });
 };
 
-Audios.prototype.fileActionsMenu = function (evt) {
-    $this = this;
-    var trackid = $(evt.target).closest('li').attr('data-trackid');
-    if ($(".popovermenu").attr('data-trackid') === trackid) {
-        $(".popovermenu").remove();
-    } else {
-        $(".popovermenu").remove();
-
-        var category = $this.PlaylistContainer.data('playlist').split('-');
-
-        var html = '<div class="popovermenu"><ul>' +
-            '<li><a href="#" class="menuitem" data-trackid="' + trackid + '" data-action="details" ><span class="icon icon-details"></span><span>' + t('audioplayer', 'Details') + '</span></a></li>';
-
-        if (category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1].toString()[0] !== 'S' && category[1] !== '') {
-            html = html + '<li><a href="#" class="menuitem" data-trackid="' + trackid + '"data-action="delete" ><span class="icon icon-delete"></span><span>' + t('audioplayer', 'Remove') + '</span></a></li>';
-        }
-        html = html + '</ul></div>';
-
-        $(evt.target).after(html);
-        OC.showMenu(null, $(".popovermenu"));
-        $("a[data-action='details']").click($this.fileActionsEvent.bind($this));
-        $("a[data-action='delete']").click($this.fileActionsEvent.bind($this));
-        $(".popovermenu").on('afterHide', function () {
-            $(".popovermenu").remove();
-        });
-
-    }
-};
-
-Audios.prototype.fileActionsEvent = function (evt) {
-    $(".popovermenu").remove();
-    var actionName = $(evt.target).closest('a').attr('data-action');
-
-    if (actionName === "details") myAudios.showSidebar(evt);
-    if (actionName === "delete") myAudios.removeSongFromPlaylist(evt);
-};
-
 Audios.prototype.addSongToPlaylist = function (plId, songId) {
     var sort = parseInt($('#myPlayList li[data-id="' + plId + '"]').find('.counter').text());
     return $.getJSON(OC.generateUrl('apps/audioplayer/addtracktoplaylist'), {

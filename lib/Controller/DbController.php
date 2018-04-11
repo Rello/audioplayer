@@ -126,12 +126,7 @@ class DbController extends Controller
                 ];
             }
         }
-
-        if (is_array($searchresult)) {
-            return $searchresult;
-        } else {
-            return array();
-        }
+        return $searchresult;
     }
 
     /**
@@ -250,16 +245,6 @@ class DbController extends Controller
 
         $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_playlist_tracks` WHERE  `track_id` = ?');
         $stmt->execute(array($TrackId));
-        return true;
-    }
-
-    /**
-     * cleanup obsolete entries in linked tables
-     * @param int $userId
-     * @return true
-     */
-    public function cleanupDb($userId)
-    {
         return true;
     }
 

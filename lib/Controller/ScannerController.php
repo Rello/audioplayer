@@ -118,6 +118,7 @@ class ScannerController extends Controller {
 		$counter 				= 0;
 		$counter_new 			= 0;
 		$error_count 			= 0;
+        $duplicate_tracks = 0;
 		$error_file 			= 0;
 		$this->iAlbumCount 		= 0;
 		$this->iDublicate 		= 0;
@@ -187,13 +188,13 @@ class ScannerController extends Controller {
 
             $iGenreId = $this->DBController->writeGenreToDB($this->userId, $genre);
             $iArtistId = $this->DBController->writeArtistToDB($this->userId, $artist);
-								
-				# write albumartist if available
-				# if no albumartist, NO artist is stored on album level
+
+            # write albumartist if available
+            # if no albumartist, NO artist is stored on album level
             # in DBController loadArtistsToAlbum() takes over deriving the artists from the album tracks
-				# MP3, FLAC & MP4 have different tags for albumartist
-				$iAlbumArtistId = NULL;
-				$album_artist 	= $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'),'0');
+            # MP3, FLAC & MP4 have different tags for albumartist
+            $iAlbumArtistId = NULL;
+            $album_artist = $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'), '0');
 
             if ($album_artist !== '0') {
                 $iAlbumArtistId = $this->DBController->writeArtistToDB($this->userId, $album_artist);
@@ -202,39 +203,44 @@ class ScannerController extends Controller {
             $iAlbumId = $return['id'];
             $this->iAlbumCount = $this->iAlbumCount + $return['albumcount'];
 
-				$bitrate = 0;
-				if (isset($this->ID3Tags['bitrate'])) {
-					$bitrate = $this->ID3Tags['bitrate'];
-				}
+            $bitrate = 0;
+            if (isset($this->ID3Tags['bitrate'])) {
+                $bitrate = $this->ID3Tags['bitrate'];
+            }
 
-				$playTimeString = '';
-				if (isset($this->ID3Tags['playtime_string'])) {
-					$playTimeString = $this->ID3Tags['playtime_string'];
-				}
-				
-				$parentId = $audio->getParent()->getId();
-				$this->getAlbumArt($audio, $iAlbumId, $parentId, $output, $debug);
+            $playTimeString = '';
+            if (isset($this->ID3Tags['playtime_string'])) {
+                $playTimeString = $this->ID3Tags['playtime_string'];
+            }
 
-				$aTrack = [
-					'title' => $this->truncate($name, '256'),
-					'number' => $this->normalizeInteger($trackNr),
-					'artist_id' => (int) $iArtistId,
-					'album_id' =>(int) $iAlbumId,
-					'length' => $playTimeString,
-					'file_id' => (int) $audio->getId(),
-					'bitrate' => (int) $bitrate,
-					'mimetype' => $audio->getMimetype(),
-					'genre' => (int) $iGenreId,
-					'year' => $this->truncate($this->normalizeInteger($year), 4, ''),
-					'disc' => $this->normalizeInteger($disc),
-					'subtitle' => $this->truncate($subtitle, '256'),
-					'composer' => $this->truncate($composer, '256'),
-					'folder_id' => $parentId,
-				];
+            $parentId = $audio->getParent()->getId();
+            $this->getAlbumArt($audio, $iAlbumId, $parentId, $output, $debug);
+
+            $aTrack = [
+                'title' => $this->truncate($name, '256'),
+                'number' => $this->normalizeInteger($trackNr),
+                'artist_id' => (int)$iArtistId,
+                'album_id' => (int)$iAlbumId,
+                'length' => $playTimeString,
+                'file_id' => (int)$audio->getId(),
+                'bitrate' => (int)$bitrate,
+                'mimetype' => $audio->getMimetype(),
+                'genre' => (int)$iGenreId,
+                'year' => $this->truncate($this->normalizeInteger($year), 4, ''),
+                'disc' => $this->normalizeInteger($disc),
+                'subtitle' => $this->truncate($subtitle, '256'),
+                'composer' => $this->truncate($composer, '256'),
+                'folder_id' => $parentId,
+            ];
 
             $return = $this->DBController->writeTrackToDB($this->userId, $aTrack);
-            $this->iDublicate = $this->iDublicate + $return['dublicate'];
-				$counter_new++;
+            if ($return['dublicate'] !== '0') {
+                $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
+                if ($debug) $output->writeln("       This title is a duplicate and already existing");
+                $duplicate_tracks .= $audio->getPath() . '<br />';
+                $this->iDublicate = $this->iDublicate + $return['dublicate'];
+            }
+            $counter_new++;
 		}
 
 		if ($debug) $output->writeln("Start processing of <info>stream files</info>");
@@ -260,7 +266,12 @@ class ScannerController extends Controller {
 					'mimetype' => $stream->getMimetype(),
 				];
             $return = $this->DBController->writeStreamToDB($this->userId, $aStream);
-            $this->iDublicate = $this->iDublicate + $return['dublicate'];
+            if ($return['dublicate'] !== '0') {
+                $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
+                if ($debug) $output->writeln("       This title is a duplicate and already existing");
+                $duplicate_tracks .= $audio->getPath() . '<br />';
+                $this->iDublicate = $this->iDublicate + $return['dublicate'];
+            }
 				$counter_new++;
 		}
 
@@ -268,7 +279,6 @@ class ScannerController extends Controller {
 
 		$message = (string) $this->l10n->t('Scanning finished!').'<br />';
 		$message .= (string) $this->l10n->t('Audios found: ').$counter.'<br />';
-		$message .= (string) $this->l10n->t('Duplicates found: ').($this->iDublicate).'<br />';
 		$message .= (string) $this->l10n->t('Written to library: ').($counter_new - $this->iDublicate).'<br />';
 		$message .= (string) $this->l10n->t('Albums found: ').$this->iAlbumCount.'<br />';
 		if ($error_count >> 0) {
@@ -276,8 +286,14 @@ class ScannerController extends Controller {
 			$message .= (string) $this->l10n->t('If rescan does not solve this problem the files are broken').'</b>';
 			$message .= '<br />'.$error_file.'<br />';
 		}
-		
-		$result = [
+        if ($this->iDublicate >> 0) {
+            $message .= '<br /><b>' . (string)$this->l10n->t('Duplicates found: ') . ($this->iDublicate) . '</b>';
+            $message .= '<br />' . $duplicate_tracks . '<br />';
+        }
+
+        $error_file .= $audio->getName() . '<br />';
+
+        $result = [
 				'status' => 'success',
 				'message' => $message
 			];
