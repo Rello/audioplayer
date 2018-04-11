@@ -97,6 +97,7 @@ class SidebarController extends Controller
         $row['Album Artist'] = $artist;
 
         if ($row['Year'] === '0') $row['Year'] = $this->l10n->t('Unknown');
+        if ($row['Bitrate'] !== '') $row['Bitrate'] = $row['Bitrate'] . ' kbps';
 
         array_splice($row, 13, 2);
 

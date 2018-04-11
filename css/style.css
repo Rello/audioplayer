@@ -311,6 +311,7 @@ i#scanAudiosFirst {
     line-height: 30px;
     opacity: 0.3;
     right: -5px;
+    margin-top: 2px;
 }
 
 #myCategory li.active i.icon-rename:hover {
@@ -322,7 +323,7 @@ i#scanAudiosFirst {
     display: none;
     float: right;
     position: absolute;
-    right: 54px;
+    right: 57px;
     font-size: 18px;
     color: #cccccc;
 }
@@ -343,7 +344,7 @@ i#scanAudiosFirst {
     float: right;
     position: absolute;
     right: 38px;
-    font-size: 14px;
+    font-size: 16px;
     color: #cccccc;
 }
 
@@ -1157,6 +1158,7 @@ li.dropHover {
 
 #playlistsTabView .icon {
     padding: 0 0 0 16px;
+    opacity: 0.4;
 }
 
 @media only screen and (max-width: 768px) {

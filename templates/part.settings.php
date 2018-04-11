@@ -43,7 +43,7 @@
 			<label for="browser_support"><?php p($l->t('Formats not supported by the browser')); ?>:</label>
 			&nbsp;<em id="browser_no"></em>
 		</li>
-		<li class="audio-settings-item icon-info" style="padding-top: 10px;">
+        <li class="audio-settings-item icon-info">
 			<a href="https://github.com/rello/audioplayer/wiki"  target="_blank" style="padding: 0 20px;">
 				<?php p($l->t('More information…')); ?>
 			</a>

@@ -15,23 +15,19 @@ Audios.prototype.showSidebar = function (evt) {
     var $appsidebar = $("#app-sidebar");
 
     if ($appsidebar.data('trackid') === trackid) {
-        $appsidebar.data('trackid', '');
         $this.hideSidebar();
     } else {
-        $(".tabHeaders").empty();
-        $(".tabsContainer").empty();
-        $appsidebar.data('trackid', trackid);
         var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
         var trackData = $("li[data-trackid='" + trackid + "']");
         var cover = trackData.attr('data-cover');
 
         if (cover !== '') {
-            $('.thumbnailContainer').addClass('large');
+            //$('.thumbnailContainer').addClass('large');
             $('#sidebarThumbnail').attr({
                 'style': 'background-image:url(' + getcoverUrl + cover + ')'
             });
         } else {
-            $('.thumbnailContainer').removeClass('large');
+            //$('.thumbnailContainer').removeClass('large');
             $('#sidebarThumbnail').attr({
                 'style': ''
             });
@@ -42,15 +38,20 @@ Audios.prototype.showSidebar = function (evt) {
 
         $('#sidebarFavorite').attr({'data-fileid': fileid})
             .on('click', $this.favoriteUpdate.bind($this));
-        $('#sidebarClose').click($this.hideSidebar.bind($this));
 
-        $this.registerAudioplayerTab();
-        $this.registerID3EditorTab();
-        $this.registerPlaylistsTab();
+        if ($appsidebar.data('trackid') === '') {
+            $(".tabHeaders").empty();
+            $(".tabsContainer").empty();
+            $('#sidebarClose').click($this.hideSidebar.bind($this));
+            $this.registerAudioplayerTab();
+            $this.registerID3EditorTab();
+            $this.registerPlaylistsTab();
+            // noinspection JSUnresolvedFunction
+            OC.Apps.showAppSidebar();
+        }
 
-        $this.audioplayerTabView();
-        // noinspection JSUnresolvedFunction
-        OC.Apps.showAppSidebar();
+        $appsidebar.data('trackid', trackid);
+        $('.tabHeader.selected').click()
     }
 };
 
@@ -75,13 +76,13 @@ Audios.prototype.registerPlaylistsTab = function () {
 };
 
 Audios.prototype.registerAudioplayerTab = function () {
-    var li = $('<li/>').addClass('tabHeader')
+    var li = $('<li/>').addClass('tabHeader selected')
         .attr({
             'id': 'tabHeaderAudiplayer',
             'data-tabid': '1',
             'data-tabindex': '1'
         });
-    var atag = $('<a/>').text(t('audioplayer', 'Audio Player'));
+    var atag = $('<a/>').text(t('audioplayer', 'Metadata'));
     li.append(atag);
     $('.tabHeaders').append(li);
 
@@ -120,6 +121,7 @@ Audios.prototype.registerID3EditorTab = function () {
 
 Audios.prototype.hideSidebar = function () {
     // noinspection JSUnresolvedFunction
+    $("#app-sidebar").data('trackid', '');
     OC.Apps.hideAppSidebar();
     $(".tabHeaders").empty();
     $(".tabsContainer").empty();
@@ -218,7 +220,7 @@ Audios.prototype.playlistsTabView = function () {
                     table.append(tablerow);
                 }
             } else {
-                table = t('audioplayer', 'No Data');
+                table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No playlist member') + '</p></div>';
             }
 
             $('#playlistsTabView').html(table);
@@ -230,7 +232,7 @@ Audios.prototype.playlistsTabView = function () {
 Audios.prototype.ID3EditorTabView = function () {
     $this.resetView();
     $('#tabHeaderID3Editor').addClass('selected');
-    $('#ID3EditorTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p>' + t('audioplayer', 'No ID3 Editor installed') + '</p></div>');
+    $('#ID3EditorTabView').removeClass('hidden').html('<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No ID3 Editor installed') + '</p></div>');
 };
 
 Audios.prototype.resetView = function () {

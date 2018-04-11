@@ -12,7 +12,7 @@
 
 <div class="detailFileInfoContainer">
     <div class="mainFileInfoView">
-        <div class="thumbnailContainer large">
+        <div class="thumbnailContainer">
             <a id="sidebarThumbnail" href="#" class="thumbnail action-default">
                 <div class="stretcher"></div>
             </a>
