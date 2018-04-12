@@ -25,12 +25,12 @@ Audios.prototype.showSidebar = function (evt) {
             //$('.thumbnailContainer').addClass('large');
             $('#sidebarThumbnail').attr({
                 'style': 'background-image:url(' + getcoverUrl + cover + ')'
-            });
+            }).addClass('larger');
         } else {
             //$('.thumbnailContainer').removeClass('large');
             $('#sidebarThumbnail').attr({
                 'style': ''
-            });
+            }).removeClass('larger');
         }
 
         $('#sidebarTitle').html(trackData.attr('data-title'));

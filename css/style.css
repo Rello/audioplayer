@@ -1134,6 +1134,12 @@ li.dropHover {
     margin: 0;
 }
 
+#app-sidebar .thumbnail.larger {
+    width: 250px;
+    height: 250px;
+    background-size: 250px
+}
+
 #audioplayerTabView .table,
 #playlistsTabView .table {
     margin-left: 2em;
@@ -1381,6 +1387,7 @@ li.dropHover {
     #individual-playlist-header span.header-time {
         right: 10px;
         text-align: right;
+        width: unset;
     }
 
     #individual-playlist li {

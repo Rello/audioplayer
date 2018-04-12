@@ -185,13 +185,14 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
     } else {
         $('.album').removeClass('is-active').find('.artist').show();
         $this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
-        $this.buildSongContainer(eventTarget);
 
         var appContent = $('#app-content');
         scrollTop = appContent.scrollTop();
         $(activeAlbumContainer + ' .open-arrow').css('left', $(activeAlbum).position().left + iArrowLeft);
         $(activeAlbum).addClass('is-active');
         $(activeAlbum).find('.artist').hide();
+
+        $this.buildSongContainer(eventTarget);
 
         $(activeAlbumContainer).css({
             'top': scrollTop + $(activeAlbum).offset().top + iTop
@@ -220,14 +221,14 @@ Audios.prototype.buildSongContainer = function (eventTarget) {
     var h2SongHeader = $('<h2/>').text(AlbumName);
     var addCss;
     var addDescr;
-    var myCover = $('.album.is-active .albumcover');
+    var myCover = $('.album.is-active .albumcover').css('background-image');
 
-    if (!myCover.css('background-image')) {
+    if (myCover === 'none') {
         addCss = 'background-color: #D3D3D3;color: #333333;';
         addDescr = AlbumName.substring(0, 1);
     } else {
         addDescr = '';
-        addCss = 'background-image:url(' + getcoverUrl + AlbumId + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+        addCss = 'background-image:' + myCover + ';-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
     }
     var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({'style': addCss}).text(addDescr);
 
