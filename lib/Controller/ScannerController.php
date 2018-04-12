@@ -165,26 +165,26 @@ class ScannerController extends Controller {
                 $this->DBController->deleteFromDB($audio->getId(), $userId);
             }
 
-				$this->analyze($audio, $getID3, $output, $debug);				
+            $this->analyze($audio, $getID3, $output, $debug);
 
-				# catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
-				if (!isset($this->ID3Tags['bitrate']) AND !isset($this->ID3Tags['playtime_string'])) {
-                    $this->logger->debug('Error with getID3. Does not seem to be a valid audio file: '.$audio->getPath(), array('app' => 'audioplayer'));
-					if ($debug) $output->writeln("       Error with getID3. Does not seem to be a valid audio file");
-					$error_file .= $audio->getName().'<br />';
-					$error_count++;
-					continue;
-				}
+            # catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
+            if (!isset($this->ID3Tags['bitrate']) AND !isset($this->ID3Tags['playtime_string'])) {
+                $this->logger->debug('Error with getID3. Does not seem to be a valid audio file: ' . $audio->getPath(), array('app' => 'audioplayer'));
+                if ($debug) $output->writeln("       Error with getID3. Does not seem to be a valid audio file");
+                $error_file .= $audio->getName() . '<br />';
+                $error_count++;
+                continue;
+            }
 
-				$album 		= $this->getID3Value(array('album'));
-				$genre 		= $this->getID3Value(array('genre'));
-				$artist 	= $this->getID3Value(array('artist'));
-				$name 		= $this->getID3Value(array('title'),$audio->getName());
-				$trackNr	= $this->getID3Value(array('track_number'),'');
-				$composer 	= $this->getID3Value(array('composer'),'');
-				$year 		= $this->getID3Value(array('year', 'creation_date', 'date'),0);
-				$subtitle	= $this->getID3Value(array('subtitle', 'version'),'');
-				$disc		= $this->getID3Value(array('part_of_a_set', 'discnumber', 'partofset', 'disc_number'),1);
+            $album = $this->getID3Value(array('album'));
+            $genre = $this->getID3Value(array('genre'));
+            $artist = $this->getID3Value(array('artist'));
+            $name = $this->getID3Value(array('title'), $audio->getName());
+            $trackNr = $this->getID3Value(array('track_number'), '');
+            $composer = $this->getID3Value(array('composer'), '');
+            $year = $this->getID3Value(array('year', 'creation_date', 'date'), 0);
+            $subtitle = $this->getID3Value(array('subtitle', 'version'), '');
+            $disc = $this->getID3Value(array('part_of_a_set', 'discnumber', 'partofset', 'disc_number'), 1);
 
             $iGenreId = $this->DBController->writeGenreToDB($this->userId, $genre);
             $iArtistId = $this->DBController->writeArtistToDB($this->userId, $artist);
@@ -199,7 +199,9 @@ class ScannerController extends Controller {
             if ($album_artist !== '0') {
                 $iAlbumArtistId = $this->DBController->writeArtistToDB($this->userId, $album_artist);
             }
-            $return = $this->DBController->writeAlbumToDB($this->userId, $album, (int)$year, $iAlbumArtistId);
+
+            $parentId = $audio->getParent()->getId();
+            $return = $this->DBController->writeAlbumToDB($this->userId, $album, (int)$year, $iAlbumArtistId, $parentId);
             $iAlbumId = $return['id'];
             $this->iAlbumCount = $this->iAlbumCount + $return['albumcount'];
 
@@ -213,7 +215,6 @@ class ScannerController extends Controller {
                 $playTimeString = $this->ID3Tags['playtime_string'];
             }
 
-            $parentId = $audio->getParent()->getId();
             $this->getAlbumArt($audio, $iAlbumId, $parentId, $output, $debug);
 
             $aTrack = [

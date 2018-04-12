@@ -268,14 +268,15 @@ class DbController extends Controller
      * @param string $sAlbum
      * @param string $sYear
      * @param int $iArtistId
+     * @param int $parentId
      * @return array
      */
-    public function writeAlbumToDB($userId, $sAlbum, $sYear, $iArtistId)
+    public function writeAlbumToDB($userId, $sAlbum, $sYear, $iArtistId, $parentId)
     {
         $sAlbum = $this->truncate($sAlbum, '256');
         $sYear = $this->normalizeInteger($sYear);
         $AlbumCount = 0;
-        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $userId, 'name' => $sAlbum])) {
+        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $userId, 'name' => $sAlbum, 'folder_id' => $parentId])) {
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_albums');
             if ($iArtistId) {
                 $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
@@ -286,8 +287,8 @@ class DbController extends Controller
             }
             $AlbumCount = 1;
         } else {
-            $stmt = $this->db->prepare('SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ?');
-            $stmt->execute(array($userId, $sAlbum));
+            $stmt = $this->db->prepare('SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ? AND `folder_id` = ?');
+            $stmt->execute(array($userId, $sAlbum, $parentId));
             $row = $stmt->fetch();
             if ((int)$row['artist_id'] !== (int)$iArtistId) {
                 $various_id = $this->writeArtistToDB($userId, $this->l10n->t('Various Artists'));

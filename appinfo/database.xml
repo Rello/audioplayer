@@ -87,6 +87,11 @@
 				<type>integer</type>
 				<notnull>false</notnull>
 			</field>
+			<field>
+				<name>folder_id</name>
+				<type>integer</type>
+				<notnull>false</notnull>
+			</field>
 			<index>
 				<name>albums_user_id_idx</name>
 				<field>
