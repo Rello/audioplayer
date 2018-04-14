@@ -313,6 +313,7 @@ Audios.prototype.buildTitleRow = function (elem) {
         'data-artist': elem.cl2,
         'data-cover': elem.cid,
         'data-mimetype': elem.mim,
+        'data-path': elem.lin,
         'class': 'dragable'
     });
 

@@ -33,7 +33,7 @@ Audios.prototype.showSidebar = function (evt) {
             }).removeClass('larger');
         }
 
-        $('#sidebarTitle').html(trackData.attr('data-title'));
+        $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
         $('#sidebarMime').html(trackData.attr('data-mimetype'));
 
         $('#sidebarFavorite').attr({'data-fileid': fileid})
@@ -220,7 +220,7 @@ Audios.prototype.playlistsTabView = function () {
                     table.append(tablerow);
                 }
             } else {
-                table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No playlist member') + '</p></div>';
+                table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No playlist entry') + '</p></div>';
             }
 
             $('#playlistsTabView').html(table);

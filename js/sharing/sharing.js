@@ -50,6 +50,7 @@ $(document).ready(function () {
                         if (jsondata.data.bitrate !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Bitrate') + ': ')).append($('<span/>').text(jsondata.data.bitrate + ' kbps')));
                         if (jsondata.data.mimetype !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'MIME type') + ': ')).append($('<span/>').text(jsondata.data.mimetype)));
                         $('.directDownload').css({'padding-top':'20px'});
+                        $('.publicpreview').css({'padding-top': '20px'});
                     }
                 }
             });

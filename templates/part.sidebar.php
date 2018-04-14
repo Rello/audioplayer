@@ -18,10 +18,7 @@
             </a>
         </div>
         <div class="file-details-container">
-            <div class="fileName"><h3 id="sidebarTitle" class="ellipsis"></h3><a
-                        class="permalink" href="https://testserver/owncloud/f/2285" title=""
-                        data-original-title="Copy direct link (only works for users who have access to this file/folder)"><span
-                            class="icon icon-clippy"></span><span class="hidden-visually">Copy direct link (only works for users who have access to this file/folder)</span></a>
+            <div class="fileName"><h3 id="sidebarTitle"></h3>
             </div>
             <div class="file-details ellipsis">
                 <a href="#" class="action action-favorite favorite permanent">
