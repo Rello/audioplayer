@@ -573,6 +573,7 @@ Audios.prototype.loadIndividualCategory = function (evt) {
                         'data-artist': el.cl2,
                         'data-album': el.cl3,
                         'data-cover': el.cid,
+                        'data-path': el.lin,
                         'class': 'dragable'
                     });
                     var fav_action;
