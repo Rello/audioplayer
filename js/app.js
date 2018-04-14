@@ -714,6 +714,7 @@ Audios.prototype.favoriteUpdate = function (evt) {
             'isFavorite': isFavorite
         }
     });
+    return false;
 };
 
 Audios.prototype.addSongToPlaylist = function (plId, songId) {
