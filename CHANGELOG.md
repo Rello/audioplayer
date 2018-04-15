@@ -22,7 +22,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - highlight current track in album view [#282](https://github.com/rello/audioplayer/issues/282)
 
 ### Removed
-- ID3 tag editor (separate app in development)  [#290](https://github.com/rello/audioplayer/issues/290)
+- ID3 tag editor ([separate app](https://github.com/rello/audioplayer_editor) in development)  [#290](https://github.com/rello/audioplayer/issues/290)
 - support for Nextcloud 11
 
 ## 2.2.5 - 2018-02-02
