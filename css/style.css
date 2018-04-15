@@ -1151,6 +1151,7 @@ li.dropHover {
     padding-right: 1em;
     vertical-align: top;
     display: table-cell;
+    white-space: nowrap;
 }
 
 #audioplayerTabView .value,

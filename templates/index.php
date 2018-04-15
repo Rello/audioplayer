@@ -63,7 +63,7 @@ if ($_['audioplayer_editor'] === 'true') {
 
 </div>
 
-<div id="app-sidebar" data-trackid="" class="details-view scroll-container disappear">
+<div id="app-sidebar" class="details-view scroll-container disappear">
     <?php print_unescaped($this->inc('part.sidebar')); ?>
 </div>
 

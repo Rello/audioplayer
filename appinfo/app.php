@@ -13,31 +13,34 @@
  */
  
 namespace OCA\audioplayer\AppInfo;
- 
-$request = \OC::$server->getRequest();
 
-$eventDispatcher = \OC::$server->getEventDispatcher();
-$eventDispatcher->addListener(
-    'OCA\Files::loadAdditionalScripts',
-    function() {
-        \OCP\Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
-        \OCP\Util::addScript('audioplayer', 'viewer/viewer');
-        \OCP\Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
-    }
-);
-$eventDispatcher->addListener(
-    'OCA\Files_Sharing::loadAdditionalScripts',
-    function() {
-        \OCP\Util::addScript('audioplayer', 'viewer/viewer');
-        \OCP\Util::addScript('audioplayer', 'sharing/sharing');
-    }
-);
+use OCP\Util;
 
 $app = new Application();
 $app->registerFileHooks();
 $app->registerUserHooks();
 
 $c = $app->getContainer();
+
+$request = \OC::$server->getRequest();
+
+$eventDispatcher = \OC::$server->getEventDispatcher();
+$eventDispatcher->addListener(
+    'OCA\Files::loadAdditionalScripts',
+    function() {
+        Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
+        Util::addScript('audioplayer', 'viewer/viewer');
+        Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
+    }
+);
+$eventDispatcher->addListener(
+    'OCA\Files_Sharing::loadAdditionalScripts',
+    function() {
+        Util::addScript('audioplayer', 'viewer/viewer');
+        Util::addScript('audioplayer', 'sharing/sharing');
+    }
+);
+
 // add an navigation entry
 
 $navigationEntry = function() use ($c) {
