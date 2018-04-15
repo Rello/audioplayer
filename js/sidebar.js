@@ -232,7 +232,7 @@ Audios.prototype.playlistsTabView = function () {
 Audios.prototype.ID3EditorTabView = function () {
     $this.resetView();
     $('#tabHeaderID3Editor').addClass('selected');
-    $('#ID3EditorTabView').removeClass('hidden').html('<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No ID3 Editor installed') + '</p></div>');
+    $('#ID3EditorTabView').removeClass('hidden').html('<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No ID3 editor installed') + '</p></div>');
 };
 
 Audios.prototype.resetView = function () {
