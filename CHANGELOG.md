@@ -4,7 +4,8 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 2.3.0 - Unreleased
 ### Added
 - sidebar integration
-- support for PHP 7.2
+- support for PHP 7.2 [#277](https://github.com/rello/audioplayer/issues/277)
+- path and file name to sidebar [#283](https://github.com/rello/audioplayer/issues/283)
 - album artists to category selection [#286](https://github.com/rello/audioplayer/issues/286) and sharing screen
 - detect changed audio metadata of indexed files [#284](https://github.com/rello/audioplayer/issues/284)
 - output duplicate files in scanner [#273](https://github.com/rello/audioplayer/issues/273)
@@ -22,6 +23,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Removed
 - ID3 tag editor (separate app in development)  [#290](https://github.com/rello/audioplayer/issues/290)
+- support for Nextcloud 11
 
 ## 2.2.5 - 2018-02-02
 ### Fixed
