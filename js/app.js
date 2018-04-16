@@ -162,23 +162,11 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
 Audios.prototype.loadIndividualAlbums = function (evt) {
     var eventTarget = $(evt.target).parent();
     var AlbumId = eventTarget.attr('data-album');
-    var activeAlbum = '.album[data-album="' + AlbumId + '"]';
+    var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
     var activeAlbumContainer = '.songcontainer';
-
-    var scrollTop;
-    var iArrowLeft = 72;
-    var iTop = 80;
-    var iScroll = 120;
-    var iAnimateTime = 200;
-    var iSlideDown = 200;
     var iSlideUp = 200;
 
-    if ($('.coverrow:first-child .album').length === 2) {
-        iTop = 50;
-        iArrowLeft = 75;
-    }
-
-    if ($(activeAlbum).hasClass('is-active')) {
+    if (activeAlbum.hasClass('is-active')) {
         $(activeAlbumContainer).slideUp(iSlideUp, function () {
             $('.album').removeClass('is-active').find('.artist').show();
         });
@@ -186,35 +174,21 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
         $('.album').removeClass('is-active').find('.artist').show();
         $this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
 
-        var appContent = $('#app-content');
-        scrollTop = appContent.scrollTop();
-        $(activeAlbumContainer + ' .open-arrow').css('left', $(activeAlbum).position().left + iArrowLeft);
-        $(activeAlbum).addClass('is-active');
-        $(activeAlbum).find('.artist').hide();
-
+        activeAlbum.addClass('is-active');
+        activeAlbum.find('.artist').hide();
         $this.buildSongContainer(eventTarget);
-
-        $(activeAlbumContainer).css({
-            'top': scrollTop + $(activeAlbum).offset().top + iTop
-        });
-
-        appContent.animate({
-            'scrollTop': scrollTop + $(activeAlbum).offset().top - iScroll
-        }, iAnimateTime, 'linear', function () {
-            $(activeAlbumContainer).slideDown(iSlideDown);
-        });
-
     }
 };
 
 Audios.prototype.buildSongContainer = function (eventTarget) {
     var AlbumId = eventTarget.attr('data-album');
     var AlbumName = eventTarget.attr('data-name');
+    var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
+    var iArrowLeft = 72;
 
     $(".songcontainer").remove();
-    var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
     var divSongContainer = $('<div/>').addClass('songcontainer');
-    var divArrow = $('<i/>').addClass('open-arrow');
+    var divArrow = $('<i/>').addClass('open-arrow').css('left', activeAlbum.position().left + iArrowLeft);
     var divSongContainerInner = $('<div/>').addClass('songcontainer-inner');
     var listAlbumWrapper = $('<ul/>').addClass('albumwrapper').attr('data-album', AlbumId);
     var divSongList;
@@ -298,6 +272,23 @@ Audios.prototype.buildSongContainer = function (eventTarget) {
 //!!!!!!!!
 //        myAudios.AlbumClickHandler(evt);
     }
+
+
+    var iScroll = 120;
+    var iAnimateTime = 200;
+    var iSlideDown = 200;
+    var iTop = 80;
+    var appContent = $('#app-content');
+    scrollTop = appContent.scrollTop();
+    divSongContainer.css({
+        'top': scrollTop + activeAlbum.offset().top + iTop
+    });
+    appContent.animate({
+        'scrollTop': scrollTop + activeAlbum.offset().top - iScroll
+    }, iAnimateTime, 'linear', function () {
+        divSongContainer.slideDown(iSlideDown);
+    });
+
     return true;
 };
 
@@ -1053,6 +1044,9 @@ Audios.prototype.checkNewTracks = function () {
 
 Audios.prototype.resizePlaylist = function () {
     $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
+    if ($('.album.is-active').length !== 0) {
+        $this.buildSongContainer($('.album.is-active'));
+    }
 
     if (myAudios.PlaylistContainer.width() < 850) {
         $('.songcontainer .songlist').addClass('one-column');
