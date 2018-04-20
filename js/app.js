@@ -852,6 +852,7 @@ Audios.prototype.sortPlaylist = function (evt) {
                 items: "li",
                 axis: "y",
                 placeholder: "ui-state-highlight",
+                helper: 'clone',
                 stop: function (event, ui) {
                 }
             });
