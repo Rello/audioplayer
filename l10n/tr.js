@@ -40,6 +40,8 @@ OC.L10N.register(
 	"No playlist entry" : "No playlist entry",
 	"Lyrics" : "Lyrics",
 	"No lyrics found" : "No lyrics found",
+	"Reading data" : "Reading data",
+	"No data" : "No data",
 	"Remove" : "Kaldır",
 	"Options" : "Seçenekler",
 	"MIME type" : "MIME tipi",
