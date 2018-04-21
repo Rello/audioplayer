@@ -40,6 +40,8 @@ OC.L10N.register(
 	"No playlist entry" : "Kein Wiedergabelisten-Eintrag",
 	"Lyrics" : "Liedtexte",
 	"No lyrics found" : "Kein Liedtext gefunden",
+	"Reading data" : "Lese Daten",
+	"No data" : "Keine Daten",
 	"Remove" : "Entfernen",
 	"Options" : "Optionen",
 	"MIME type" : "MIME-Typ",
