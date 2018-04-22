@@ -232,7 +232,11 @@ Audios.prototype.playlistsTabView = function () {
 Audios.prototype.ID3EditorTabView = function () {
     $this.resetView();
     $('#tabHeaderID3Editor').addClass('selected');
-    $('#ID3EditorTabView').removeClass('hidden').html('<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No ID3 editor installed') + '</p></div>');
+    var html = '<div style="margin-left: 2em;" class="icon-info">';
+    html += '<a href="https://github.com/Rello/audioplayer_editor"  target="_blank" >';
+    html += '<p>' + t('audioplayer', 'No ID3 editor installed') + '</p>';
+    html += '</a></div>';
+    $('#ID3EditorTabView').removeClass('hidden').html(html);
 };
 
 Audios.prototype.resetView = function () {
