@@ -39,6 +39,8 @@ OC.L10N.register(
 	"No playlist entry" : "No playlist entry",
 	"Lyrics" : "Lyrics",
 	"No lyrics found" : "No lyrics found",
+	"Reading data" : "Reading data",
+	"No data" : "No data",
 	"Remove" : "Usuń",
 	"Options" : "Opcje",
 	"MIME type" : "Typ MIME",

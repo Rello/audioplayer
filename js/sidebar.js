@@ -173,7 +173,7 @@ Audios.prototype.audioplayerTabView = function () {
                     }
                 }
             } else {
-                table = t('audioplayer', 'No Data');
+                table = t('audioplayer', 'No data');
             }
 
             $('#audioplayerTabView').html(table);
