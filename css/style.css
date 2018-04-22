@@ -46,68 +46,6 @@
     font-size: 100px;
 }
 
-.ui-dialog {
-    background: #fff;
-    margin: 0;
-    box-shadow: 0 0 1em rgba(0, 0, 0, .5);
-    border: none;
-    padding: 5px;
-    border-radius: 8px;
-    z-index: 160;
-}
-
-.ui-dialog-titlebar.ui-widget-header {
-    border: none;
-    background: #fff;
-    height: 30px;
-    margin: 0;
-    color: #000;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 30px;
-    padding: 0 0 0 5px;
-    text-shadow: none;
-}
-
-.ui-dialog-titlebar.ui-widget-header .ui-dialog-titlebar-close {
-    border: none;
-    background: none;
-    height: 20px;
-    line-height: 20px;
-    text-shadow: none;
-}
-
-.ui-dialog-titlebar.ui-widget-header .ui-dialog-title {
-    line-height: 24px;
-    height: 24px;
-    text-shadow: none;
-}
-
-.ui-dialog .ui-dialog-content {
-    background: #fff;
-    margin: 0;
-    padding: 0 0 0 5px;
-}
-
-.ui-dialog .ui-dialog-buttonpane {
-    background: #fff;
-    margin-top: 0;
-
-}
-
-.ui-dialog-content.ui-widget-content#edit_photo_dialog {
-    padding: 5px;
-
-}
-
-.ui-dialog-titlebar.ui-widget-header .ui-dialog-titlebar-close .ui-icon-closethick {
-    top: 2px;
-    width: 26px;
-    height: 26px;
-    background-size: 24px 24px;
-    background: url('../../../core/img/actions/close.svg') no-repeat center;
-}
-
 .app-audios #searchresults {
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.5);
@@ -128,9 +66,6 @@
 i#scanAudiosFirst {
     font-size: 30px;
     cursor: pointer;
-}
-
-.innerNav {
 }
 
 .innerNav h3 {
@@ -937,59 +872,8 @@ li.dropHover {
 }
 
 /*edit*/
-.editDescr {
-    float: left;
-    width: 160px;
-    display: block;
-    font-weight: bold;
-    line-height: 28px;
-    height: 28px;
-}
-
-.edit-left, .edit-right {
-    position: relative;
-    display: block;
-    float: left;
-    width: 60%;
-}
-
-.edit-right {
-    width: 35%;
-    text-align: center;
-}
-
-.labelPhoto {
-    width: 120px;
-    display: block;
-    float: left;
-    padding-top: 10px;
-    height: 110px;
-
-}
-
-#noimage {
-    border: 4px dotted #ccc;
-    height: 70px;
-    border-radius: 8px;
-    line-height: 30px;
-    width: 100%;
-}
 
 /*dialog title info*/
-.infoLabel {
-    float: left;
-    width: 100px;
-    display: block;
-    font-weight: bold;
-    line-height: 28px;
-}
-
-.infoText {
-    float: left;
-    display: block;
-    width: 195px;
-    line-height: 28px;
-}
 
 #edit_photo_dialog_img {
     display: block;
@@ -1002,90 +886,8 @@ li.dropHover {
     height: 0;
 }
 
-#file_upload_target, #import_upload_target, #crop_target {
-    display: none;
-}
-
-#file_upload_start, #import_upload_start {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-    opacity: 0;
-    z-index: 1001;
-    width: 0;
-    height: 0;
-}
-
-.transparent {
-    opacity: 0.6;
-}
-
-#phototools .add,
-#phototools .delete,
-#phototools .mail,
-#phototools .globe,
-#phototools .upload,
-#phototools .download,
-#phototools .cloud,
-#phototools.share {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    margin: 0;
-    -webkit-background-size: 32px 32px;
-    background-size: 32px 32px;
-    float: left;
-    position: relative;
-    opacity: 0.1;
-}
-
-.add:hover, .delete:hover, .mail:hover, .globe:hover, .upload:hover, .download:hover, .cloud:hover, .share:hover {
-    opacity: 1.0
-}
-
 #cropbox {
     margin: auto;
-}
-
-#pin_details_photo_wrapper {
-    width: 95%;
-}
-
-#pin_details_photo_wrapper.wait {
-    opacity: 0.6;
-    filter: alpha(opacity=0.6);
-    z-index: 1000;
-    background: url('../../../core/img/loading.gif') no-repeat center center;
-    cursor: wait;
-}
-
-.pin_details_photo {
-    border-radius: 0.5em;
-    border: thin solid #bbb;
-    margin: 0.3em;
-    background: url('../../../core/img/loading.gif') no-repeat center center;
-    -moz-box-shadow: 0 1px 3px #777;
-    -webkit-box-shadow: 0 1px 3px #777;
-    box-shadow: 0 1px 3px #777;
-    opacity: 1;
-}
-
-.pin_details_photo:hover {
-    background: #fff;
-    cursor: default;
-}
-
-#phototools {
-    position: absolute;
-    top: 20px;
-    margin: 5px 0 0 5px;
-    width: auto;
-    padding: 4px;
-    background-color: #fff;
-    list-style-type: none;
-    border-radius: 0.5em;
-    -moz-box-shadow: 0 1px 3px #777;
-    -webkit-box-shadow: 0 1px 3px #777;
-    box-shadow: 0 1px 3px #777;
 }
 
 #phototools li {
@@ -1104,16 +906,6 @@ li.dropHover {
     opacity: 0.8;
 }
 
-#pinPhoto {
-
-    width: 80%;
-    display: block;
-    min-height: 120px;
-
-    font-size: 18px;
-    color: #888;
-}
-
 #audios_import_process,
 #audios_import_done {
     display: none;
@@ -1123,10 +915,6 @@ li.dropHover {
 #audios_import_process_progress,
 #audios_import_done_message {
     text-align: center;
-}
-
-.contacts_import_warning {
-    border-color: #fc3333;
 }
 
 #audios_import_dialog {

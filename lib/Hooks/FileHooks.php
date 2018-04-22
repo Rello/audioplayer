@@ -23,9 +23,10 @@ class FileHooks {
     }
 
     /**
-	 * delete track from library after file deletion
-	 * @param array $params
-	 */
+     * delete track from library after file deletion
+     * @param array $params
+     * @throws \OCP\AppFramework\QueryException
+     */
 	public static function deleteTrack($params) {
 
 		$view = \OC\Files\Filesystem::getView();

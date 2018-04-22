@@ -135,6 +135,7 @@ class DbController extends Controller
      * @param $output
      * @param $hook
      *
+     * @return bool|JSONResponse
      */
     public function resetMediaLibrary($userId = null, $output = null, $hook = null)
     {
@@ -270,6 +271,7 @@ class DbController extends Controller
      * @param int $iArtistId
      * @param int $parentId
      * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function writeAlbumToDB($userId, $sAlbum, $sYear, $iArtistId, $parentId)
     {
@@ -310,6 +312,7 @@ class DbController extends Controller
      * @param int $userId
      * @param string $sArtist
      * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function writeArtistToDB($userId, $sArtist)
     {
@@ -330,6 +333,7 @@ class DbController extends Controller
      * @param int $userId
      * @param string $sGenre
      * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function writeGenreToDB($userId, $sGenre)
     {

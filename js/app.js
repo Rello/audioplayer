@@ -16,8 +16,6 @@ var Audios = function () {
     this.EmptyContainer = $('#empty-container');
     this.ActivePlaylist = $('#activePlaylist');
     this.albums = [];
-    this.imgSrc = false;
-    this.imgMimeType = 'image/jpeg';
     this.progresskey = '';
     this.category_selectors = [];
     this.ajax_call_status = null;
@@ -497,8 +495,7 @@ Audios.prototype.loadCategory = function () {
     }
 };
 
-Audios.prototype.buildCategoryItems = function (xxx) {
-};
+
 
 Audios.prototype.loadIndividualCategory = function (evt) {
     var $this = this;
@@ -571,7 +568,7 @@ Audios.prototype.loadIndividualCategory = function (evt) {
 
                     if (el.fav === 't') {
                         fav_action = $('<i/>').addClass('icon icon-starred')
-                            .css({'opacity': 0.3,})
+                            .css({'opacity': 0.3})
                             .attr({'data-fileid': el.fid})
                             .click($this.favoriteUpdate.bind($this));
                     } else {
@@ -680,7 +677,7 @@ Audios.prototype.showInitScreen = function (mode) {
     }
 };
 
-Audios.prototype.DragElement = function (evt) {
+Audios.prototype.DragElement = function () {
     return $(this).clone().text($(this).find('.title').attr('data-title'));
 };
 
@@ -715,7 +712,7 @@ Audios.prototype.addSongToPlaylist = function (plId, songId) {
         playlistid: plId,
         songid: songId,
         sorting: (sort + 1)
-    }).then(function (data) {
+    }).then(function () {
         $('.toolTip').tooltip('hide');
         $this.category_selectors[0] = 'Playlist';
         myAudios.loadCategory();
@@ -749,7 +746,7 @@ Audios.prototype.renamePlaylist = function (evt) {
         var plId = eventTarget.data('editid');
         var plistName = eventTarget.data('name');
         var myClone = $('#pl-clone').clone();
-        var $this = this;
+
 
         $('#myCategory li[data-id="' + plId + '"]').after(myClone);
         myClone.attr('data-pl', plId).show();
@@ -853,7 +850,7 @@ Audios.prototype.sortPlaylist = function (evt) {
                 axis: "y",
                 placeholder: "ui-state-highlight",
                 helper: 'clone',
-                stop: function (event, ui) {
+                stop: function () {
                 }
             });
 
@@ -908,7 +905,7 @@ Audios.prototype.deletePlaylist = function (evt) {
                 $("#dialogSmall").html('');
                 oDialog.dialog("close");
             }
-        }],
+        }]
     });
     return false;
 
@@ -943,21 +940,10 @@ Audios.prototype.set_uservalue = function (user_type, user_value) {
                 'type': user_type,
                 'value': user_value
             },
-            success: function (ajax_data) {
+            success: function () {
             }
         });
     }
-};
-
-Audios.prototype.get_cover = function (user_type, callback) {
-    $.ajax({
-        type: 'GET',
-        url: OC.generateUrl('apps/audioplayer/getcover'),
-        data: {'album': '280'},
-        success: function (jsondata) {
-            //alert(jsondata);
-        }
-    });
 };
 
 Audios.prototype.set_statistics = function () {
@@ -967,7 +953,7 @@ Audios.prototype.set_statistics = function () {
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/setstatistics'),
             data: {'track_id': track_id},
-            success: function (ajax_data) {
+            success: function () {
             }
         });
     }

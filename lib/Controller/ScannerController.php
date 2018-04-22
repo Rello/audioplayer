@@ -421,14 +421,15 @@ class ScannerController extends Controller {
 			}
 		}
 		return $ThisFileInfo;
-	}			
+    }
 
-	/**
-	 * Add track to db if not exist
-	 * 
-	 *@param array $output
-	 * @return array
-	 */
+    /**
+     * Add track to db if not exist
+     *
+     * @param array $output
+     * @return array
+     * @throws \OCP\Files\NotFoundException
+     */
 	private function getAudioObjects($output = null, $debug = null) {
 		$audios_clean = array();
 		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
@@ -483,12 +484,13 @@ class ScannerController extends Controller {
 		return $audios_clean;
 	}
 
-	/**
-	 * Add track to db if not exist
-	 * 
-	 * @param array $output
-	 * @return array
-	 */
+    /**
+     * Add track to db if not exist
+     *
+     * @param array $output
+     * @return array
+     * @throws \OCP\Files\NotFoundException
+     */
 	private function getStreamObjects($output = null, $debug = null) {
 		$audios_clean = array();
 		$audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');

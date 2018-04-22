@@ -213,7 +213,7 @@ Audios.prototype.scanStop = function(progresskey) {
         url : OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
         data : {'progresskey': progresskey,
             'scanstop': true},
-        success : function(ajax_data) {
+        success: function () {
         }
     });
 };

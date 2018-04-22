@@ -206,16 +206,16 @@ Audios.prototype.playlistsTabView = function () {
                 for (m in audioinfo) {
                     var spanDelete = $('<a/>').attr({
                         'class': 'icon icon-delete toolTip',
-                        'data-listid': audioinfo[m]['playlist_id'],
+                        'data-listid': audioinfo[m].playlist_id,
                         'data-trackid': trackid,
                         'title': t('audioplayer', 'Remove')
                     }).click($this.removeSongFromPlaylist.bind($this));
 
-                    tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m]['playlist_id']});
+                    tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
                     tablekey = $('<div>').addClass('key').append(spanDelete);
 
                     tablevalue = $('<div>').addClass('value')
-                        .text(audioinfo[m]['name']);
+                        .text(audioinfo[m].name);
                     tablerow.append(tablekey).append(tablevalue);
                     table.append(tablerow);
                 }
@@ -264,7 +264,7 @@ Audios.prototype.removeSongFromPlaylist = function (evt) {
             if (jsondata === true) {
                 var currentCount = $('#myCategory li[data-id="' + playlist + '"]').find('.counter');
                 currentCount.text(currentCount.text() - 1);
-                $('#playlistsTabView div[data-id="' + playlist + '"]').remove()
+                $('#playlistsTabView div[data-id="' + playlist + '"]').remove();
             }
         }
     });
