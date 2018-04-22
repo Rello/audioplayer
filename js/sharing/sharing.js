@@ -51,7 +51,7 @@ $(document).ready(function () {
                         if (jsondata.data.mimetype !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'MIME type') + ': ')).append($('<span/>').text(jsondata.data.mimetype)));
                         if (jsondata.data.isrc !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'ISRC') + ': ')).append($('<span/>').text(jsondata.data.isrc)));
                         if (jsondata.data.copyright !== '') $id3.append($('<div/>').append($('<b/>').text(t('audioplayer', 'Copyright') + ' © ')).append($('<span/>').text(jsondata.data.copyright)));
-                        $('.directDownload').css({'padding-top':'20px'});©
+                        $('.directDownload').css({'padding-top':'20px'});
                         $('.publicpreview').css({'padding-top': '20px'});
                     }
                 }
