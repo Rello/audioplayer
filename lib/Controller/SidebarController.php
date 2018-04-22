@@ -71,6 +71,8 @@ class SidebarController extends Controller
 					  `AT`.`length` AS `Length`,
                       ROUND((`AT`.`bitrate` / 1000 ),0) AS `Bitrate`,
                       `AT`.`mimetype` AS `MIME type`,
+                      `AT`.`isrc` AS `ISRC`,
+                      `AT`.`copyright` AS `Copyright`,
 					  `AT`.`file_id`, 
 					  `AB`.`id` AS `album_id`
 						FROM `*PREFIX*audioplayer_tracks` `AT`
@@ -99,7 +101,7 @@ class SidebarController extends Controller
         if ($row['Year'] === '0') $row['Year'] = $this->l10n->t('Unknown');
         if ($row['Bitrate'] !== '') $row['Bitrate'] = $row['Bitrate'] . ' kbps';
 
-        array_splice($row, 13, 2);
+        array_splice($row, 15, 2);
 
         if ($row['Title']) {
             $result = [

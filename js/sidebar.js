@@ -168,7 +168,7 @@ Audios.prototype.audioplayerTabView = function () {
                         audioinfo[m] = '';
                     }
 
-                    if (audioinfo[m] !== '') {
+                    if (audioinfo[m] !== '' && audioinfo[m] !== null) {
                         table.append(tablerow);
                     }
                 }

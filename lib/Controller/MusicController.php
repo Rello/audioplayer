@@ -72,6 +72,7 @@ class MusicController extends Controller
 					`AT`.`length`,`AT`.`bitrate`,`AT`.`year`,`AA`.`name` AS `artist`,
 					ROUND((`AT`.`bitrate` / 1000 ),0) AS `bitrate`, `AT`.`disc`,
 					`AT`.`number`, `AT`.`composer`, `AT`.`subtitle`, `AT`.`mimetype`, `AB`.`id` AS `album_id` , `AB`.`artist_id` AS `albumArtist_id`
+					, `AT`.`isrc` , `AT`.`copyright`
 						FROM `*PREFIX*audioplayer_tracks` `AT`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`

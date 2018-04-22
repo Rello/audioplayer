@@ -313,6 +313,18 @@
 				<notnull>false</notnull>
 				<length>256</length>
 			</field>
+            <field>
+                <name>isrc</name>
+                <type>text</type>
+                <notnull>false</notnull>
+                <length>12</length>
+            </field>
+            <field>
+                <name>copyright</name>
+                <type>text</type>
+                <notnull>false</notnull>
+                <length>256</length>
+            </field>
 
 			<index>
 				<name>tracks_artist_id_idx</name>

@@ -378,7 +378,7 @@ class DbController extends Controller
         if (isset($row['id'])) {
             $dublicate = 1;
         } else {
-            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`,`disc`,`composer`,`subtitle`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`,`disc`,`composer`,`subtitle`,`isrc`,`copyright`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
             $stmt->execute(array($userId,
                 $aTrack['title'],
                 $aTrack['number'],
@@ -394,6 +394,8 @@ class DbController extends Controller
                 $aTrack['disc'],
                 $aTrack['composer'],
                 $aTrack['subtitle'],
+                $aTrack['isrc'],
+                $aTrack['copyright'],
             ));
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_tracks');
         }
