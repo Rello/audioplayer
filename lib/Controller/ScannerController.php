@@ -186,7 +186,7 @@ class ScannerController extends Controller {
             $subtitle = $this->getID3Value(array('subtitle', 'version'), '');
             $disc = $this->getID3Value(array('part_of_a_set', 'discnumber', 'partofset', 'disc_number'), 1);
             $isrc = $this->getID3Value(array('isrc'), '');
-            $copyright = $this->getID3Value(array('copyright_message'), '');
+            $copyright = $this->getID3Value(array('copyright_message', 'copyright'), '');
 
             $iGenreId = $this->DBController->writeGenreToDB($this->userId, $genre);
             $iArtistId = $this->DBController->writeArtistToDB($this->userId, $artist);
