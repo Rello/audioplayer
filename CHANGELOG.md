@@ -9,7 +9,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - album artists to category selection [#286](https://github.com/rello/audioplayer/issues/286) and sharing screen
 - detect changed audio metadata of indexed files [#284](https://github.com/rello/audioplayer/issues/284)
 - output duplicate files in scanner [#273](https://github.com/rello/audioplayer/issues/273)
-- add ISRC and Copyright metadata [#293](https://github.com/rello/audioplayer/issues/293)
+- `ISRC` and `COPYRIGHT` to metadata [#293](https://github.com/rello/audioplayer/issues/293)
+- tr translation [#289](https://github.com/rello/audioplayer/pull/289) @[mzeyrek](https://github.com/mzeyrek)
+
 
 ### Changed
 - rework of `.js` backend
