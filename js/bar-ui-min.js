@@ -33,13 +33,13 @@
         return offset;}
     function getNext(){if(data.selectedIndex!==null&&data.shuffleMode===true){var aShuffle=[];for(var i=0;i<data.playlist.length;i++){aShuffle[i]=i;}
         var randIndex=utils.array.shuffle(aShuffle);if(data.selectedIndex!==randIndex[0]){data.selectedIndex=randIndex[0];}else{data.selectedIndex=randIndex[1];}
-        externPlayList(data.selectedIndex);return getItem();}
+        return getItem();
+    }
         if(data.selectedIndex!==null){data.selectedIndex++;}
         if(data.playlist.length>1){if(data.selectedIndex>=data.playlist.length){if(data.loopMode){data.selectedIndex=0;}else{data.selectedIndex--;}}}else{data.selectedIndex=null;}
         return getItem();}
     function getPrevious(){data.selectedIndex--;if(data.selectedIndex<0){if(data.loopMode){data.selectedIndex=data.playlist.length-1;}else{data.selectedIndex++;}}
         return getItem();}
-    function externPlayList(index){if($this.PlaylistContainer.data('playlist')===$this.ActivePlaylist.data('playlist')){$('.albumwrapper.isPlaylist li').removeClass('isActive');$('.albumwrapper.isPlaylist li i.ioc').hide();$('.albumwrapper.isPlaylist li i.fav').show();if(index!==null){$('.albumwrapper.isPlaylist li i.ioc').eq(index).removeClass('ioc-volume-off');$('.albumwrapper.isPlaylist li i.ioc').eq(index).addClass('ioc-volume-up');$('.albumwrapper.isPlaylist li i.ioc').eq(index).show();$('.albumwrapper.isPlaylist li i.fav').eq(index).hide();$('.albumwrapper.isPlaylist li').eq(index).addClass('isActive');}}}
     function resetLastSelected(){var items,i,j;items=utils.dom.getAll(dom.playlist,'.'+css.selected);for(i=0,j=items.length;i<j;i++){utils.css.remove(items[i],css.selected);}}
     function select(item){var offset,itemTop,itemBottom,containerHeight,scrollTop,itemPadding;resetLastSelected();if(item){utils.css.add(item,css.selected);itemTop=item.offsetTop;itemBottom=itemTop+item.offsetHeight;containerHeight=dom.playlistContainer.offsetHeight;scrollTop=dom.playlist.scrollTop;itemPadding=8;if(itemBottom>containerHeight+scrollTop){dom.playlist.scrollTop=itemBottom-containerHeight+itemPadding;}else if(itemTop<scrollTop){dom.playlist.scrollTop=item.offsetTop-itemPadding;}}
         offset=findOffsetFromItem(item);data.selectedIndex=offset;}
@@ -55,7 +55,87 @@
     function getTime(msec,useString){var nSec=Math.floor(msec/1000),hh=Math.floor(nSec/3600),min=Math.floor(nSec/60)-Math.floor(hh*60),sec=Math.floor(nSec-(hh*3600)-(min*60));return(useString?((hh?hh+':':'')+(hh&&min<10?'0'+min:min)+':'+(sec<10?'0'+sec:sec)):{'min':min,'sec':sec});}
     function setTitle(item){var links=item.getElementsByTagName('a');if(links.length){item=links[0];}
         dom.playlistTarget.innerHTML='<ul class="sm2-playlist-bd"><li><b>'+$(item).parent().attr('data-title').replace(extras.loadFailedCharacter,'')+'</b> ('+$(item).parent().attr('data-artist').replace(extras.loadFailedCharacter,'')+')</li></ul>';if(dom.playlistTarget.getElementsByTagName('li')[0].scrollWidth>dom.playlistTarget.offsetWidth){dom.playlistTarget.innerHTML='<ul class="sm2-playlist-bd"><li><marquee>'+item.innerHTML+'</marquee></li></ul>';}}
-    function makeSound(url){var sound=soundManager.createSound({url:url,type:'audio/mp3',volume:defaultVolume,whileplaying:function(){var progressMaxLeft=100,left,width;left=Math.min(progressMaxLeft,Math.max(0,(progressMaxLeft*(this.position/this.durationEstimate))))+'%';width=Math.min(100,Math.max(0,(100*this.position/this.durationEstimate)))+'%';if(this.duration){dom.progress.style.left=left;dom.progressBar.style.width=width;dom.time.innerHTML=getTime(this.position,true);}},onbufferchange:function(isBuffering){if(isBuffering){utils.css.add(dom.o,'buffering');}else{utils.css.remove(dom.o,'buffering');}},onplay:function(){utils.css.swap(dom.o,'paused','playing');if($this.PlaylistContainer.data('playlist')===$this.ActivePlaylist.data('playlist')){$('.albumwrapper.isPlaylist li').removeClass('isActive');$('.albumwrapper.isPlaylist li i.ioc').hide();$('.albumwrapper.isPlaylist li i.fav').show();$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();$('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();$('.albumwrapper.isPlaylist li').eq(playlistController.data.selectedIndex).addClass('isActive');}},onpause:function(){utils.css.swap(dom.o,'playing','paused');if($this.PlaylistContainer.data('playlist')===$this.ActivePlaylist.data('playlist')){$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();$('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up');$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-off');}},onresume:function(){utils.css.swap(dom.o,'paused','playing');if($this.PlaylistContainer.data('playlist')===$this.ActivePlaylist.data('playlist')){$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();$('.albumwrapper.isPlaylist li i.fav').eq(playlistController.data.selectedIndex).hide();$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');$('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');}},whileloading:function(){if(!this.isHTML5){dom.duration.innerHTML=getTime(this.durationEstimate,true);}},onload:function(ok){if(ok){dom.duration.innerHTML=getTime(this.duration,true);}else if(this._iO&&this._iO.onerror){this._iO.onerror();}},onerror:function(){var item,element,html;item=playlistController.getItem();if(item){if(extras.loadFailedCharacter){dom.playlistTarget.innerHTML=dom.playlistTarget.innerHTML.replace('<li>','<li>'+extras.loadFailedCharacter+' ');if(playlistController.data.playlist&&playlistController.data.playlist[playlistController.data.selectedIndex]){element=playlistController.data.playlist[playlistController.data.selectedIndex].getElementsByTagName('a')[0];html=element.innerHTML;if(html.indexOf(extras.loadFailedCharacter)===-1){element.innerHTML=extras.loadFailedCharacter+' '+html;}}}}
+
+    function makeSound(url) {
+        var sound = soundManager.createSound({
+            url: url,
+            type: 'audio/mp3',
+            volume: defaultVolume,
+            whileplaying: function () {
+                var progressMaxLeft = 100, left, width;
+                left = Math.min(progressMaxLeft, Math.max(0, (progressMaxLeft * (this.position / this.durationEstimate)))) + '%';
+                width = Math.min(100, Math.max(0, (100 * this.position / this.durationEstimate))) + '%';
+                if (this.duration) {
+                    dom.progress.style.left = left;
+                    dom.progressBar.style.width = width;
+                    dom.time.innerHTML = getTime(this.position, true);
+                }
+            },
+            onbufferchange: function (isBuffering) {
+                if (isBuffering) {
+                    utils.css.add(dom.o, 'buffering');
+                } else {
+                    utils.css.remove(dom.o, 'buffering');
+                }
+            },
+            onplay: function () {
+                utils.css.swap(dom.o, 'paused', 'playing');
+                if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+                    $('.albumwrapper.isPlaylist li').removeClass('isActive');
+                    $('.albumwrapper.isPlaylist li i.ioc').hide();
+                    $('.albumwrapper.isPlaylist li i.icon').show();
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
+                    $('.albumwrapper.isPlaylist li i.icon').eq(playlistController.data.selectedIndex).hide();
+                    $('.albumwrapper.isPlaylist li').eq(playlistController.data.selectedIndex).addClass('isActive');
+                }
+            },
+            onpause: function () {
+                utils.css.swap(dom.o, 'playing', 'paused');
+                if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
+                    $('.albumwrapper.isPlaylist li i.icon').eq(playlistController.data.selectedIndex).hide();
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up');
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-off');
+                }
+            },
+            onresume: function () {
+                utils.css.swap(dom.o, 'paused', 'playing');
+                if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).show();
+                    $('.albumwrapper.isPlaylist li i.icon').eq(playlistController.data.selectedIndex).hide();
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off');
+                    $('.albumwrapper.isPlaylist li i.ioc').eq(playlistController.data.selectedIndex).addClass('ioc-volume-up');
+                }
+            },
+            whileloading: function () {
+                if (!this.isHTML5) {
+                    dom.duration.innerHTML = getTime(this.durationEstimate, true);
+                }
+            },
+            onload: function (ok) {
+                if (ok) {
+                    dom.duration.innerHTML = getTime(this.duration, true);
+                } else if (this._iO && this._iO.onerror) {
+                    this._iO.onerror();
+                }
+            },
+            onerror: function () {
+                var item, element, html;
+                item = playlistController.getItem();
+                if (item) {
+                    if (extras.loadFailedCharacter) {
+                        dom.playlistTarget.innerHTML = dom.playlistTarget.innerHTML.replace('<li>', '<li>' + extras.loadFailedCharacter + ' ');
+                        if (playlistController.data.playlist && playlistController.data.playlist[playlistController.data.selectedIndex]) {
+                            element = playlistController.data.playlist[playlistController.data.selectedIndex].getElementsByTagName('a')[0];
+                            html = element.innerHTML;
+                            if (html.indexOf(extras.loadFailedCharacter) === -1) {
+                                element.innerHTML = extras.loadFailedCharacter + ' ' + html;
+                            }
+                        }
+                    }
+                }
             if(navigator.userAgent.match(/mobile/i)){actions.next();}else{if(playlistController.data.timer){window.clearTimeout(playlistController.data.timer);}
                 playlistController.data.timer=window.setTimeout(actions.next,2000);}},onstop:function(){utils.css.remove(dom.o,'playing');},onfinish:function(){var lastIndex,item;utils.css.remove(dom.o,'playing');dom.progress.style.left='0%';lastIndex=playlistController.data.selectedIndex;item=playlistController.getNext();if(item&&(playlistController.data.selectedIndex!==lastIndex||(playlistController.data.playlist.length===1&&playlistController.data.loopMode))){playlistController.select(item);setTitle(item);$this.soundmanager_callback('onfinish');this.play({url:playlistController.getURL()});}else{this.stop();}}});return sound;}
     function isRightClick(e){if(e&&((e.which&&e.which===2)||(e.which===undefined&&e.button!==1))){return true;}}

@@ -871,41 +871,6 @@ li.dropHover {
     width: 300px;
 }
 
-/*edit*/
-
-/*dialog title info*/
-
-#edit_photo_dialog_img {
-    display: block;
-    min-width: 150px;
-    min-height: 200px;
-}
-
-#file_upload_form {
-    width: 0;
-    height: 0;
-}
-
-#cropbox {
-    margin: auto;
-}
-
-#phototools li {
-    display: inline;
-}
-
-#phototools li a {
-    float: left;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    opacity: 0.6;
-}
-
-#phototools li a:hover {
-    opacity: 0.8;
-}
-
 #audios_import_process,
 #audios_import_done {
     display: none;
