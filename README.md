@@ -37,6 +37,9 @@ English (en), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russ
 - [ownCloud Marketplace](https://marketplace.owncloud.com/apps/audioplayer)
 - [Known Issues](https://github.com/rello/audioplayer/wiki/installation-instructions#known-issues)
 
+## Add-ons
+- [Audio Player Editor](https://github.com/rello/audioplayer_editor "An ID3 editor for the Audio Player") – An ID3 editor for the Audio Player (**Work in progress! Not yet released!**)
+
 ## Bugs and Feature Requests
 Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only! For a changelog please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
 
