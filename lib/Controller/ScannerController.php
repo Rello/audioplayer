@@ -271,7 +271,7 @@ class ScannerController extends Controller {
 					'mimetype' => $stream->getMimetype(),
 				];
             $return = $this->DBController->writeStreamToDB($this->userId, $aStream);
-            if ($return['dublicate'] !== '0') {
+            if ($return['dublicate'] === 1) {
                 $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
                 if ($debug) $output->writeln("       This title is a duplicate and already existing");
                 $duplicate_tracks .= $audio->getPath() . '<br />';
