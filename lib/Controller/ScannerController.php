@@ -239,7 +239,7 @@ class ScannerController extends Controller {
             ];
 
             $return = $this->DBController->writeTrackToDB($this->userId, $aTrack);
-            if ($return['dublicate'] !== '0') {
+            if ($return['dublicate'] === 1) {
                 $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
                 if ($debug) $output->writeln("       This title is a duplicate and already existing");
                 $duplicate_tracks .= $audio->getPath() . '<br />';
@@ -295,8 +295,6 @@ class ScannerController extends Controller {
             $message .= '<br /><b>' . (string)$this->l10n->t('Duplicates found: ') . ($this->iDublicate) . '</b>';
             $message .= '<br />' . $duplicate_tracks . '<br />';
         }
-
-        $error_file .= $audio->getName() . '<br />';
 
         $result = [
 				'status' => 'success',
