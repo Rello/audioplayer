@@ -808,6 +808,25 @@ Audios.prototype.sort_playlist = function (evt) {
 Audios.prototype.soundmanager_callback = function (SMaction) {
     if (SMaction === 'setVolume') {
         $this.set_uservalue('volume', Math.round($this.AudioPlayer.actions.getVolume()));
+    } else {
+        var addCss;
+        var addDescr;
+        var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+        var activeLi = $('#activePlaylist li.selected');
+        var coverID = activeLi.data('cover');
+        if (coverID === '') {
+            addCss = 'background-color: #D3D3D3;color: #333333;';
+            if ($this.category_selectors[0] && $this.category_selectors[0] !== 'Albums') {
+                addDescr = activeLi.data('title').substring(0, 1);
+            } else {
+                addDescr = activeLi.data('album').substring(0, 1);
+            }
+        } else {
+            addDescr = '';
+            addCss = 'background-image:url(' + getcoverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+        }
+        $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
+        $this.set_statistics();
     }
 };
 Audios.prototype.checkNewTracks = function () {
