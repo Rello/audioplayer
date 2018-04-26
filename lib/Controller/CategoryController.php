@@ -406,7 +406,7 @@ class CategoryController extends Controller
                 $row['fav'] = "f";
             }
 
-            if ($favorite AND !in_array($row['fid'], $favorites)) {
+            if ($favorite AND is_array($favorites) AND !in_array($row['fid'], $favorites)) {
             } else {
                 $aTracks[] = $row;
             }
