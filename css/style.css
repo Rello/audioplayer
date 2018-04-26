@@ -716,7 +716,6 @@ i#scanAudiosFirst {
     display: block;
     float: right;
     margin-right: 15px;
-
     text-align: center;
     font-size: 80px;
     line-height: 250px;
@@ -782,7 +781,7 @@ i#scanAudiosFirst {
 
 .songcontainer span.title {
     position: relative;
-    width: 63%;
+    width: 61%;
     float: left;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -888,6 +887,12 @@ li.dropHover {
 }
 
 #app-sidebar .thumbnail.larger {
+    width: 180px;
+    height: 180px;
+    background-size: 180px
+}
+
+#app-sidebar .thumbnail.full {
     width: 250px;
     height: 250px;
     background-size: 250px

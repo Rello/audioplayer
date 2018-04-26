@@ -144,8 +144,14 @@ Audios.prototype.buildSongContainer = function (eventTarget) {
     if ($this.PlaylistContainer.width() < 850) {
         divSongContainerCover.addClass('cover-small');
         divSongList = $('<div/>').addClass('songlist one-column');
+        if ($('#sidebarThumbnail').hasClass('full')) {
+            $('#sidebarThumbnail').addClass('larger').removeClass('full');
+        }
     } else {
         divSongList = $('<div/>').addClass('songlist two-column');
+        if ($('#sidebarThumbnail').hasClass('larger')) {
+            $('#sidebarThumbnail').addClass('full').removeClass('larger');
+        }
     }
     var br = $('<br />').css('clear', 'both');
     var aClose = $('<a />').attr('href', '#').addClass('close ioc ioc-close').click(function () {

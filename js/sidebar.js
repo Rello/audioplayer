@@ -25,12 +25,17 @@ Audios.prototype.showSidebar = function (evt) {
             //$('.thumbnailContainer').addClass('large');
             $('#sidebarThumbnail').attr({
                 'style': 'background-image:url(' + getcoverUrl + cover + ')'
-            }).addClass('larger');
+            });
+            if ($this.PlaylistContainer.width() < 850) {
+                $('#sidebarThumbnail').addClass('larger');
+            } else {
+                $('#sidebarThumbnail').addClass('full');
+            }
         } else {
             //$('.thumbnailContainer').removeClass('large');
             $('#sidebarThumbnail').attr({
                 'style': ''
-            }).removeClass('larger');
+            }).removeClass('larger').removeClass('full');
         }
 
         $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
@@ -173,7 +178,7 @@ Audios.prototype.audioplayerTabView = function () {
                     }
                 }
             } else {
-                table = t('audioplayer', 'No data');
+                table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No data') + '</p></div>';
             }
 
             $('#audioplayerTabView').html(table);
