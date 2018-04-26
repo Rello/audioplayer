@@ -30,8 +30,8 @@ class AudioStream {
 		
 		if(is_null($user) || $user === ''){
 			$user = \OC::$server->getUserSession()->getUser()->getUID();
-		}	
-		$this->userView = new View('/' . $user . '/files');	
+		}
+        $this->userView = new View('/' . $user . '/files/');
 		
 		$this -> path = $filePath;
 		$fileInfo = $this->userView -> getFileInfo($filePath);

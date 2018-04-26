@@ -395,9 +395,11 @@ class CategoryController extends Controller
                 $row['cl3'] = $row['dsc'] . '-' . $row['num'];
             }
             array_splice($row, 8, 3);
-            $path = \OC\Files\Filesystem::getPath($row['fid']);
-            $path = rtrim($path, "/");
-            $row['lin'] = rawurlencode($path);
+            $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($row['fid']);
+            $file = array_shift($nodes);
+            $path = $file->getPath();
+            $segments = explode('/', trim($path, '/'), 3);
+            $row['lin'] = rawurlencode($segments[2]);
             if (in_array($row['fid'], $favorites)) {
                 $row['fav'] = "t";
             } else {
