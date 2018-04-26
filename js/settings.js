@@ -5,7 +5,7 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2017 Marcel Scherello
+ * @copyright 2016-2018 Marcel Scherello
  */
 
 $(document).ready(function() {

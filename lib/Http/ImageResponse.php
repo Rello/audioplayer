@@ -7,7 +7,7 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Olivier Paroz <galleryapps@oparoz.com>
- * @copyright 2017 Marcel Scherello
+ * @copyright 2016-2018 Marcel Scherello
  */
 
 namespace OCA\audioplayer\Http;
