@@ -447,7 +447,7 @@ class CategoryController extends Controller
                     $row['cl3'] = '';
                     $row['len'] = '';
                     $row['mim'] = $file_type;
-                    $row['cid'] = '0';
+                    $row['cid'] = '';
                     $row['lin'] = $matches[0][0];
                     $row['fav'] = 'f';
                     if ($title) $row['cl1'] = $title;
@@ -472,7 +472,7 @@ class CategoryController extends Controller
                     $row['cl3'] = '';
                     $row['len'] = '';
                     $row['mim'] = $file_type;
-                    $row['cid'] = '0';
+                    $row['cid'] = '';
                     $row['lin'] = $matches[0][0];
                     $row['fav'] = 'f';
                     if ($title) $row['cl1'] = $title;
