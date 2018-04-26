@@ -400,7 +400,7 @@ class CategoryController extends Controller
             $path = $file->getPath();
             $segments = explode('/', trim($path, '/'), 3);
             $row['lin'] = rawurlencode($segments[2]);
-            if (in_array($row['fid'], $favorites)) {
+            if (is_array($favorites) AND in_array($row['fid'], $favorites)) {
                 $row['fav'] = "t";
             } else {
                 $row['fav'] = "f";
@@ -508,7 +508,7 @@ class CategoryController extends Controller
      * Count the number of albums within the artist selection
      *
      * @param string $category
-     * @param integer $categoryId
+     * @param string $categoryId
      * @return integer
      */
     private function getAlbumCountForCategory($category, $categoryId)
