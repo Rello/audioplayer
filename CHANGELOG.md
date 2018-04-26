@@ -18,6 +18,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - albums cover display performance
 - 360° player/SoundManager 2 replaced by `AUDIO` tag on sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
 - separate multiple albums with the same name **!rescan required!** [#271](https://github.com/rello/audioplayer/issues/271) [#283](https://github.com/rello/audioplayer/issues/283)
+- pl translation [#294](https://github.com/rello/audioplayer/issue/294) @[andypl78](https://github.com/andypl78)
+- zh_TW translation [#297](https://github.com/rello/audioplayer/issues/297) @[sbr9150](https://github.com/sbr9150)
 
 ### Fixed
 - caching for cover arts enabled
