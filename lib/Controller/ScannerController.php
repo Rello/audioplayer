@@ -536,7 +536,7 @@ class ScannerController extends Controller {
 			} 
 		}
 		$this->numOfSongs = $this->numOfSongs + count($audios_clean);
-		if ($debug) $output->writeln("Final streaming files to be processed: ".count($audios_clean));
+		if ($debug) $output->writeln("Final stream files to be processed: ".count($audios_clean));
 		return $audios_clean;
 	}
 
