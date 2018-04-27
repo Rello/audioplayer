@@ -30,6 +30,7 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'scanner#scanForAudios', 'url' => '/scanforaudiofiles', 'verb' => 'POST'],
 	['name' => 'scanner#checkNewTracks', 'url' => '/checknewtracks', 'verb' => 'POST'],
 	['name' => 'music#getAudioStream', 'url' => '/getaudiostream', 'verb' => 'GET'],
+    ['name' => 'music#getPublicAudioStream', 'url' => '/getpublicaudiostream', 'verb' => 'GET'],
     ['name' => 'db#resetMediaLibrary', 'url' => '/resetmedialibrary', 'verb' => 'GET'],
 	['name' => 'music#getPublicAudioInfo', 'url' => '/getpublicaudioinfo', 'verb' => 'GET'],
     ['name' => 'cover#getCover', 'url' => '/getcover/{album}', 'verb' => 'GET'],

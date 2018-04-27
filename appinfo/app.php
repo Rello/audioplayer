@@ -36,6 +36,7 @@ $eventDispatcher->addListener(
 $eventDispatcher->addListener(
     'OCA\Files_Sharing::loadAdditionalScripts',
     function() {
+        Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
         Util::addScript('audioplayer', 'viewer/viewer');
         Util::addScript('audioplayer', 'sharing/sharing');
     }

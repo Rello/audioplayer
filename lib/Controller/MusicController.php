@@ -19,6 +19,7 @@ use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\Share\IManager;
+use OCP\Files\IRootFolder;
 use OCP\ILogger;
 
 /**
@@ -33,6 +34,7 @@ class MusicController extends Controller
     private $shareManager;
     private $logger;
     private $DBController;
+    private $rootFolder;
 
     public function __construct(
         $appName,
@@ -42,7 +44,8 @@ class MusicController extends Controller
         IDbConnection $db,
         IManager $shareManager,
         ILogger $logger,
-        DbController $DBController
+        DbController $DBController,
+        IRootFolder $rootFolder
     )
     {
         parent::__construct($appName, $request);
@@ -52,11 +55,16 @@ class MusicController extends Controller
         $this->shareManager = $shareManager;
         $this->logger = $logger;
         $this->DBController = $DBController;
+        $this->rootFolder = $rootFolder;
     }
 
     /**
      * @PublicPage
      * @NoCSRFRequired
+     * @param $token
+     * @return JSONResponse
+     * @throws \OCP\Files\NotFoundException
+     * @throws \OCP\Share\Exceptions\ShareNotFound
      */
     public function getPublicAudioInfo($token)
     {
@@ -108,8 +116,45 @@ class MusicController extends Controller
     }
 
     /**
+     * Stream files in OCP withing link-shared folder
+     * @PublicPage
+     * @NoCSRFRequired
+     * @param $token
+     * @param $file
+     */
+    public function getPublicAudioStream($token, $file)
+    {
+        if (!empty($token)) {
+            $linkItem = \OCP\Share::getShareByToken($token);
+            if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
+                exit;
+            }
+            // seems to be a valid share
+            $rootLinkItem = \OCP\Share::resolveReShare($linkItem);
+            $user = $rootLinkItem['uid_owner'];
+
+            // Setup filesystem
+            $nodes = $this->rootFolder->getUserFolder($user)->getById($linkItem['file_source']);
+            $pfile = array_shift($nodes);
+            $path = $pfile->getPath();
+            $segments = explode('/', trim($path, '/'), 3);
+            $startPath = rawurlencode($segments[2]);
+
+            if ((string)$linkItem['item_type'] === 'file') {
+                $filenameAudio = $startPath;
+            } else {
+                $filenameAudio = $startPath . '/' . rawurldecode($file);
+            }
+            \OC::$server->getSession()->close();
+            $stream = new \OCA\audioplayer\Http\AudioStream($filenameAudio, $user);
+            $stream->start();
+        }
+    }
+
+    /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @param $file
      */
     public function getAudioStream($file)
     {
@@ -119,5 +164,4 @@ class MusicController extends Controller
         $stream = new \OCA\audioplayer\Http\AudioStream($filename, $user);
         $stream->start();
     }
-
 }
