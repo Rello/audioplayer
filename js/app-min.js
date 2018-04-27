@@ -322,7 +322,7 @@ Audios.prototype.indicateCurrentPlayingTitle = function () {
         var playingListItem = $('.albumwrapper li[data-trackid="' + playingTrackId + '"]');
         playingListItem.addClass('isActive');
         playingListItem.find('i.ioc').removeClass('ioc-volume-off').addClass('ioc-volume-up').show();
-        playingListItem.find('i.fav').hide();
+        playingListItem.find('i.icon').hide();
     }
 };
 Audios.prototype.loadCategory = function () {
