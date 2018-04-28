@@ -138,7 +138,7 @@ class MusicController extends Controller
             $pfile = array_shift($nodes);
             $path = $pfile->getPath();
             $segments = explode('/', trim($path, '/'), 3);
-            $startPath = rawurlencode($segments[2]);
+            $startPath = $segments[2];
 
             if ((string)$linkItem['item_type'] === 'file') {
                 $filenameAudio = $startPath;

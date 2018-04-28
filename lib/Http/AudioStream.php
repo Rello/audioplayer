@@ -38,7 +38,8 @@ class AudioStream {
 		$this -> mimeType = $fileInfo['mimetype'];
 		$this -> mTime = $fileInfo['mtime'];
 		$this -> iSize = $fileInfo['size'];
-		
+        //\OCP\Util::writeLog('audioplayer','path:'.$filePath,\OCP\Util::DEBUG);
+
 	}
 
 	/**

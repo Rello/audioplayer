@@ -39,6 +39,7 @@ $eventDispatcher->addListener(
         Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
         Util::addScript('audioplayer', 'viewer/viewer');
         Util::addScript('audioplayer', 'sharing/sharing');
+        Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
     }
 );
 
