@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.3.0 - Unreleased
+## 2.3.0 - 2018-04-28
 ### Added
 - sidebar integration
 - support for PHP 7.2 [#277](https://github.com/rello/audioplayer/issues/277)
@@ -12,13 +12,13 @@ All notable changes to the Audio Player project will be documented in this file.
 - `ISRC` and `COPYRIGHT` to metadata [#293](https://github.com/rello/audioplayer/issues/293)
 - tr translation [#289](https://github.com/rello/audioplayer/pull/289) @[mzeyrek](https://github.com/mzeyrek)
 
-
 ### Changed
 - rework of `.js` backend
 - albums cover display performance
 - 360° player/SoundManager 2 replaced by `AUDIO` tag on sharing screen [#280](https://github.com/rello/audioplayer/issues/280)
 - separate multiple albums with the same name **!rescan required!** [#271](https://github.com/rello/audioplayer/issues/271) [#283](https://github.com/rello/audioplayer/issues/283)
 - pl translation [#294](https://github.com/rello/audioplayer/issue/294) @[andypl78](https://github.com/andypl78)
+- uk translation [#295](https://github.com/rello/audioplayer/issue/295) @[BODYA7979](https://github.com/BODYA7979)
 - zh_TW translation [#297](https://github.com/rello/audioplayer/issues/297) @[sbr9150](https://github.com/sbr9150)
 
 ### Fixed
