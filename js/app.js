@@ -367,8 +367,6 @@ Audios.prototype.TitleClickHandler = function () {
             if (can_play[activeLi.data('mimetype')] !== true) {
                 return false;
             }
-            albumWrapper.addClass('isPlaylist');
-
             if ($this.AudioPlayer === null) {
                 $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
                 $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
