@@ -15,9 +15,9 @@ Audios.prototype.init = function () {
         var locHashTemp = searchresult.split('-');
     }
     myAudios.get_uservalue('category', function () {
+        if (searchresult !== '') $this.category_selectors = locHashTemp;
         if ($this.category_selectors[0] && $this.category_selectors[0] !== 'Albums') {
             window.location.href = '#';
-            if (searchresult !== '') $this.category_selectors = locHashTemp;
             $("#category_selector").val($this.category_selectors[0]);
             myAudios.loadCategory();
         } else {
