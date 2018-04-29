@@ -34,7 +34,7 @@ Audios.prototype.showSidebar = function (evt) {
         } else {
             //$('.thumbnailContainer').removeClass('large');
             $('#sidebarThumbnail').attr({
-                'style': ''
+                'style': 'display: none;'
             }).removeClass('larger').removeClass('full');
         }
 
