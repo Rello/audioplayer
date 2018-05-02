@@ -60,7 +60,7 @@ OC.L10N.register(
 	"Select picture" : "选择照片",
 	"Picture generating, please wait…" : "图像生成, 请等待…",
 	"Drag picture here!" : "拖动图片到这里!",
-	"Settings" : "设定",
+	"Settings" : "选项",
 	"Select a single folder with audio files" : "选取一个含有音频的文件夹",
 	"Invalid path!" : "无效的路径！",
 	"saved" : "已保存",
