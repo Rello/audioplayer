@@ -26,7 +26,7 @@ FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio as well as M3U and PLS play
 Latest versions of Google Chrome, Mozilla Firefox, and Apple Safari. Mobile browsers and Microsoft Edge may be restricted in functionality and handling. Microsoft Internet Explorer is not supported.
 
 ### Languages
-English (en), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Turkish (tr), Ukrainian (uk), Chinese (Simplified) (zh_CN), Chinese (Traditional) (zh_TW)
+English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Turkish (tr), Ukrainian (uk), Chinese (Simplified) (zh_CN), Chinese (Traditional) (zh_TW)
 
 ## Documentation
 - [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
