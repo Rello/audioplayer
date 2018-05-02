@@ -3,7 +3,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## Unreleased
 ### Added
-- 
+- cs translation [#306](https://github.com/rello/audioplayer/pull/306) @[447937](https://github.com/447937)
 
 ### Changed
 - zh_CN translation [#304](https://github.com/rello/audioplayer/pull/304) @[limingqi](https://github.com/limingqi)
