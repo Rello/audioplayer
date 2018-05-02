@@ -23,7 +23,7 @@ Please use this template because the automatically pre-filled template of the Is
 
 
 ### Server configuration
-**Operating system**:
+**Operating system:**
 
 
 **Web server:**
@@ -44,13 +44,19 @@ Please use this template because the automatically pre-filled template of the Is
 **Audio Player version:** (see `/settings/apps`)
 
 
-**Where did you install Audio Player from:**
+**Where did you install Audio Player from?** `NC App Store/oC Marketplace/GitHub`
 
 
-**Are you using external storage, if yes which one:** `local/smb/sftp/...`
+**Are you using external storage? If yes, which one:** `local/smb/sftp/...`
 
 
-**Are you using encryption:** yes/no
+**Are you using encryption?** yes/no
+
+
+**Have you activated other multimedia apps?** `Music/Folder Player/...`
+
+
+**Audio Player media folder:** (see Settings) `root/Music/...`
 
 
 ### Client configuration
