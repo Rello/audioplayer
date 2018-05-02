@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Added
+- 
+
+### Changed
+- zh_CN translation [#304](https://github.com/rello/audioplayer/pull/304) @[limingqi](https://github.com/limingqi)
+
+### Deprecated
+- 
+
+### Removed
+- 
+
+### Fixed
+- 
+
+### Security
+- 
+
 ## 2.3.0 - 2018-04-28
 ### Added
 - sidebar integration
