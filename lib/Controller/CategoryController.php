@@ -184,7 +184,7 @@ class CategoryController extends Controller
                 }
                 if ($category === 'Album')
                     array_splice($row, 2, 1);
-                if ($row['name'] === '0') $row['name'] = $this->l10n->t('Unknown');
+                if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
                 $row['counter'] = $this->getCountForCategory($category, $row['id']);
                 $aPlaylists[] = $row;
             }
