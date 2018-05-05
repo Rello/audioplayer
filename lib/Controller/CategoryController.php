@@ -397,6 +397,11 @@ class CategoryController extends Controller
             array_splice($row, 8, 3);
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($row['fid']);
             $file = array_shift($nodes);
+            if ($file === null) {
+                \OCP\Util::writeLog('audioplayer',"removed/unshared file found => remove ".$row['fid'], \OCP\Util::DEBUG);
+                $this->DBController->deleteFromDB($row['fid'], $this->userId);
+                continue;
+            }
             $path = $file->getPath();
             $segments = explode('/', trim($path, '/'), 3);
             $row['lin'] = rawurlencode($segments[2]);
