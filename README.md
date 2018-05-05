@@ -11,7 +11,7 @@ A music player for FLAC, MP3, MP4, streams, and more with playlist support and s
 - Library scan and reset with command-line and browser
 - Specifying media folder (with exclude functionality)
 - Smart & Standard Playlists and playlist files
-- One Click Play from Files app
+- One Click Play in Files app
 - External cover support
 - Mobile view support
 - Favorites integration
@@ -26,7 +26,7 @@ FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio as well as M3U and PLS play
 Latest versions of Google Chrome, Mozilla Firefox, and Apple Safari. Mobile browsers and Microsoft Edge may be restricted in functionality and handling. Microsoft Internet Explorer is not supported.
 
 ### Languages
-English (en), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Turkish (tr), Ukrainian (uk), Chinese (Simplified) (zh_CN), Chinese (Traditional) (zh_TW)
+English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Turkish (tr), Ukrainian (uk), Chinese (Simplified) (zh_CN), Chinese (Traditional) (zh_TW)
 
 ## Documentation
 - [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
