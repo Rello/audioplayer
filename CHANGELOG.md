@@ -15,7 +15,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - 
 
 ### Fixed
-- external type 'local' folder displayed properly in "Folder" category
+- unshared files aren't recognized
+- `local` external storage folders aren't displayed properly in Folder category
+-  playback will not continue on albums without covers [#305](https://github.com/rello/audioplayer/issues/305)
 
 ### Security
 - 
