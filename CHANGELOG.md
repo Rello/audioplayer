@@ -7,6 +7,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Changed
 - zh_CN translation [#304](https://github.com/rello/audioplayer/pull/304) @[limingqi](https://github.com/limingqi)
+- ru translation [#309](https://github.com/rello/audioplayer/pull/309) @[r4sas](https://github.com/r4sas)
 
 ### Deprecated
 - 
