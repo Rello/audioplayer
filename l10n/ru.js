@@ -87,5 +87,5 @@ OC.L10N.register(
         "Length" : "Длина",
         "Bitrate" : "Битрейт",
         "Copyright" : "Авторские права"
-        },
+    },
 "");
