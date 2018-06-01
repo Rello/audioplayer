@@ -766,7 +766,6 @@ i#scanAudiosFirst {
 
 .songcontainer i.ioc {
     margin-top: 0;
-    float: left;
     display: none;
     line-height: 20px;
     font-size: 14px;
