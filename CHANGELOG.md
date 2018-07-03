@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.3.1 - 2018-06-xx
+## 2.3.1 - 2018-07-03
 ### Added
 - cs translation [#306](https://github.com/rello/audioplayer/pull/306) @[447937](https://github.com/447937)
 
@@ -9,20 +9,11 @@ All notable changes to the Audio Player project will be documented in this file.
 - zh_CN translation [#304](https://github.com/rello/audioplayer/pull/304) @[limingqi](https://github.com/limingqi)
 - ru translation [#309](https://github.com/rello/audioplayer/pull/309) @[r4sas](https://github.com/r4sas)
 
-### Deprecated
-- 
-
-### Removed
-- 
-
 ### Fixed
 - unshared files aren't recognized
 - `local` external storage folders aren't displayed properly in Folder category
 - playback will not continue on albums without covers [#305](https://github.com/rello/audioplayer/issues/305)
 - display issue with Firefox in album list display
-
-### Security
-- 
 
 ## 2.3.0 - 2018-04-28
 ### Added
