@@ -65,7 +65,7 @@ class PageController extends Controller {
 			'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),
 			'cyrillic' => $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic'),
 			'path' => $this->configManager->getUserValue($this->userId, $this->appName, 'path'),
-			'navigation' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
+			'navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
 			'notification' => $this->getNotification(),
             'audioplayer_editor' => 'false',
