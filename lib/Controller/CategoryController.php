@@ -398,7 +398,7 @@ class CategoryController extends Controller
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($row['fid']);
             $file = array_shift($nodes);
             if ($file === null) {
-                \OCP\Util::writeLog('audioplayer',"removed/unshared file found => remove ".$row['fid'], \OCP\Util::DEBUG);
+                $this->logger->debug('removed/unshared file found => remove '.$row['fid'], array('app' => 'audioplayer'));
                 $this->DBController->deleteFromDB($row['fid'], $this->userId);
                 continue;
             }

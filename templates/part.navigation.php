@@ -27,7 +27,7 @@
 				<option value="Year"><?php p($l->t('Years')); ?></option>
 				<option value="Folder"><?php p($l->t('Folders')); ?></option>
 			</select>
-			<button  class="icon-add ap_hidden" id="addPlaylist"></button>
+			<button  class="icon-add hidden" id="addPlaylist"></button>
 		</div>
 		<ul id="myCategory">
 		</ul>
@@ -40,7 +40,7 @@
 			</div>
 		</li>	
 		<!--my playlist clone -->
-		<div class="app-navigation-entry-edit ap_hidden" id="newPlaylist">
+		<div class="app-navigation-entry-edit hidden" id="newPlaylist">
 			<div id="newPlaylist_controls">
 				<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist')); ?>" /> 
 				<button class="icon-checkmark" id="newPlaylistBtn_ok"></button>

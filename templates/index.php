@@ -34,7 +34,7 @@ if ($_['audioplayer_editor'] === 'true') {
     <input type="hidden" id="audioplayer_volume" value="<?php p($_['volume']); ?>">
     <input type="hidden" id="audioplayer_editor" value="<?php p($_['audioplayer_editor']); ?>">
 
-<div id="app-navigation" <?php if ($_['navigationShown'] === 'false') echo 'class="ap_hidden"'; ?>>
+<div id="app-navigation" <?php if ($_['navigationShown'] === 'false') echo 'class="hidden"'; ?>>
 
 	<?php print_unescaped($this->inc('part.navigation')); ?>
 	

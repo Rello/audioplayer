@@ -11,10 +11,6 @@
  * @copyright 2015 Sebastian Doell
  */
 
-.ap_hidden {
-    display: none !important;
-}
-
 #searchresults {
     margin-top: 0 !important;
 }

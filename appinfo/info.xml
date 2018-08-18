@@ -18,8 +18,8 @@
 - Stream URLs
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
-    <version>2.3.1</version>
-	<licence>AGPL</licence>
+    <version>2.3.2-beta.1</version>
+	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
 	<documentation>
@@ -28,9 +28,9 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	</documentation>
 	<category>multimedia</category>
 	<website>https://rello.github.io/audioplayer</website>
+	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
-	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
 	<screenshot small-thumbnail="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main_small.png">https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png</screenshot>
 	<dependencies>
 		<php min-version="5.6" max-version="7.2"/>
