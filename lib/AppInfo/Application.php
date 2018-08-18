@@ -14,6 +14,7 @@
 namespace OCA\audioplayer\AppInfo;
 
 use OCP\AppFramework\App;
+use OCP\AppFramework\IAppContainer;
 use OCP\IContainer;
 use OCP\Util;
 
@@ -48,7 +49,7 @@ class Application extends App {
 		);
 
 		$container->registerService(
-			'Config', function(IContainer $c) {
+			'Config', function(IAppContainer $c) {
 				return $c->getServer()->getConfig();
 			}
 		);

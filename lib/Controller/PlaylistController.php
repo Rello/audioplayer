@@ -45,7 +45,8 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlist
+     * @return null|JSONResponse
      */
     public function addPlaylist($playlist)
     {
@@ -56,7 +57,7 @@ class PlaylistController extends Controller
                     'status' => 'success',
                     'data' => ['playlist' => $playlist]
                 ];
-            } elseif ($aResult['msg'] === 'exist') {
+            } else {
                 $result = [
                     'status' => 'success',
                     'data' => 'exist',

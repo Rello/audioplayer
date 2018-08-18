@@ -131,7 +131,7 @@ class DbController extends Controller
 
     /**
      * @NoAdminRequired
-     * @param int $userId
+     * @param string $userId
      * @param $output
      * @param $hook
      *

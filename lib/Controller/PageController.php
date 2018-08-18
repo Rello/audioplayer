@@ -74,11 +74,11 @@ class PageController extends Controller {
 	}
 
 	private function getNotification() {
-        $scanner_timestamp = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_timestamp', 0);
-        if ($scanner_timestamp === 0) {
+        $scanner_timestamp = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_timestamp', '0');
+        if ($scanner_timestamp === '0') {
             $this->configManager->setUserValue($this->userId, $this->appName, 'scanner_timestamp', time());
         }
-        $app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');
+        #$app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');
         $scanner_version = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_version', '0.0.0');
         //\OCP\Util::writeLog('audioplayer', 'scanner version: '.$scanner_version, \OCP\Util::DEBUG);
         if (version_compare($scanner_version, '2.3.0', '<')) {
