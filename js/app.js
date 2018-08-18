@@ -107,7 +107,7 @@ Audios.prototype.loadCategoryAlbums = function () {
     $(".songcontainer").remove();
 
     $('#myCategory li').removeClass('active');
-    $('#newPlaylist').addClass('hidden');
+    $('#newPlaylist').addClass('ap_hidden');
 
     $.ajax({
         type: 'GET',
@@ -1115,12 +1115,12 @@ $(document).ready(function () {
 
     $('#addPlaylist').on('click', function () {
         $('#newPlaylistTxt').val('');
-        $('#newPlaylist').removeClass('hidden');
+        $('#newPlaylist').removeClass('ap_hidden');
     });
 
     $('#newPlaylistBtn_cancel').on('click', function () {
         $('#newPlaylistTxt').val('');
-        $('#newPlaylist').addClass('hidden');
+        $('#newPlaylist').addClass('ap_hidden');
     });
 
     $('#newPlaylistBtn_ok').on('click', function () {
@@ -1128,7 +1128,7 @@ $(document).ready(function () {
             myAudios.newPlaylist($('#newPlaylistTxt').val());
             $('#newPlaylistTxt').val('');
             $('#newPlaylistTxt').focus();
-            $('#newPlaylist').addClass('hidden');
+            $('#newPlaylist').addClass('ap_hidden');
         }
     });
 
@@ -1137,7 +1137,7 @@ $(document).ready(function () {
             myAudios.newPlaylist($('#newPlaylistTxt').val());
             $('#newPlaylistTxt').val('');
             $('#newPlaylistTxt').focus();
-            $('#newPlaylist').addClass('hidden');
+            $('#newPlaylist').addClass('ap_hidden');
         }
     });
 
@@ -1152,7 +1152,7 @@ $(document).ready(function () {
     $('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
 
     $('#app-navigation-toggle_alternative').click(function () {
-        $('#newPlaylist').addClass('hidden');
+        $('#newPlaylist').addClass('ap_hidden');
         if ($('#app-navigation').hasClass('hidden')) {
             $('#app-navigation').removeClass('hidden');
             myAudios.set_uservalue('navigation', 'true');
@@ -1164,7 +1164,7 @@ $(document).ready(function () {
     });
 
     $('#category_selector').change(function () {
-        $('#newPlaylist').addClass('hidden');
+        $('#newPlaylist').addClass('ap_hidden');
         $this.category_selectors[0] = $('#category_selector').val();
         $this.category_selectors[1] = '';
         $('#myCategory').html('');
