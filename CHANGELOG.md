@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.3.2 - 2018-08-18
+## 2.3.2 - 2018-08-19
 ### Fixed
 - NC14 compatibility of navigation [#324](https://github.com/rello/audioplayer/pull/324) @[juliushaertl](https://github.com/juliushaertl)
 
