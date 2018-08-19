@@ -45,4 +45,7 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 			<step>OCA\audioplayer\Migration\Migration</step>
 		</post-migration>
 	</repair-steps>
+	<dashboard>
+		<widget>OCA\audioplayer\Widgets\AudioplayerWidget</widget>
+	</dashboard>
 </info>
