@@ -7,7 +7,7 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2018 Marcel Scherello
+ * @copyright 2018 Marcel Scherello
  */
 
 namespace OCA\audioplayer\Widgets;
@@ -43,7 +43,7 @@ class AudioplayerWidget implements IDashboardWidget {
      * @return string
      */
     public function getName(): string {
-        return $this->l10n->t('Audio Player');
+        return $this->l10n->t('Audio Player (beta)');
     }
 
 
@@ -51,7 +51,7 @@ class AudioplayerWidget implements IDashboardWidget {
      * @return string
      */
     public function getDescription(): string {
-        return $this->l10n->t('Audio Player');
+        return $this->l10n->t('Access your recently played or favorite titles from within the dashboard. Player is not yet working.');
     }
 
 
@@ -61,11 +61,11 @@ class AudioplayerWidget implements IDashboardWidget {
     public function getTemplate(): array {
         return [
             'app'      => 'audioplayer',
-            'icon'     => 'icon-clock',
-            'css'      => 'widgets/widget',
-            'js'       => 'widgets/widget',
+            'icon'     => 'icon-audioplayer',
+            'css'      => ['widgets/audioplayer','bar-ui-min','style-min'],
+            'js'       => 'widgets/audioplayer',
             'content'  => 'widgets/audioplayer',
-            'function' => 'OCA.AudioPlayer.widget.init'
+            'function' => 'OCA.DashBoard.widget.init'
         ];
     }
 
@@ -89,11 +89,20 @@ class AudioplayerWidget implements IDashboardWidget {
                     'height' => 4
                 ]
             ],
-            'jobs' => [
+            'settings' => [
                 [
-                    'delay'    => 1,
-                    'function' => 'OCA.AudioPlayer.widget.displayTime'
+                    'name'    => 'Favorites',
+                    'title'   => 'Favorites',
+                    'type'    => 'checkbox',
+                    'default' => true
+                ],
+                [
+                    'name'    => 'Recently',
+                    'title'   => 'Recently Played',
+                    'type'    => 'checkbox',
+                    'default' => false
                 ]
+
             ]
         ];
     }
