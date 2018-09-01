@@ -88,12 +88,12 @@ class CategoryController extends Controller
         $SQL = null;
         $aPlaylists = array();
         if ($category === 'Artist') {
-            $SQL = "SELECT  DISTINCT(AT.`artist_id`) AS `id`, AA.`name`, LOWER(AA.`name`) AS `lower` 
-						FROM `*PREFIX*audioplayer_tracks` AT
-						JOIN `*PREFIX*audioplayer_artists` AA
-						ON AA.`id` = AT.`artist_id`
-			 			WHERE  AT.`user_id` = ?
-			 			ORDER BY LOWER(AA.`name`) ASC
+            $SQL = "SELECT  DISTINCT(`AT`.`artist_id`) AS `id`, `AA`.`name`, LOWER(`AA`.`name`) AS `lower` 
+						FROM `*PREFIX*audioplayer_tracks` `AT`
+						JOIN `*PREFIX*audioplayer_artists` `AA`
+						ON `AA`.`id` = `AT`.`artist_id`
+			 			WHERE  `AT`.`user_id` = ?
+			 			ORDER BY LOWER(`AA`.`name`) ASC
 			 			";
         } elseif ($category === 'Genre') {
             $SQL = "SELECT  `id`, `name`, LOWER(`name`) AS `lower` 
@@ -143,19 +143,19 @@ class CategoryController extends Controller
 			 			";
 
         } elseif ($category === 'Folder') {
-            $SQL = "SELECT  DISTINCT(FC.`fileid`) AS `id`,FC.`name`, LOWER(FC.`name`) AS `lower` 
-						FROM `*PREFIX*audioplayer_tracks` AT
-						JOIN `*PREFIX*filecache` FC
-						ON FC.`fileid` = AT.`folder_id`
-			 			WHERE  AT.`user_id` = ?
-			 			ORDER BY LOWER(FC.`name`) ASC
+            $SQL = "SELECT  DISTINCT(`FC`.`fileid`) AS `id`, `FC`.`name`, LOWER(`FC`.`name`) AS `lower` 
+						FROM `*PREFIX*audioplayer_tracks` `AT`
+						JOIN `*PREFIX*filecache` `FC`
+						ON `FC`.`fileid` = `AT`.`folder_id`
+			 			WHERE `AT`.`user_id` = ?
+			 			ORDER BY LOWER(`FC`.`name`) ASC
 			 			";
         } elseif ($category === 'Album') {
             $SQL = "SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`id` AS `art`, `AB`.`cover` AS `cid` 
 						FROM `*PREFIX*audioplayer_albums` `AB`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` 
 						ON `AB`.`artist_id` = `AA`.`id`
-			 			WHERE  `AB`.`user_id` = ?
+			 			WHERE `AB`.`user_id` = ?
 			 			ORDER BY LOWER(`AB`.`name`) ASC
 			 			";
         } elseif ($category === 'Album Artist') {
@@ -163,7 +163,7 @@ class CategoryController extends Controller
 						FROM `*PREFIX*audioplayer_albums` `AB`
 						JOIN `*PREFIX*audioplayer_artists` `AA`
 						ON `AB`.`artist_id` = `AA`.`id`
-			 			WHERE  `AB`.`user_id` = ?
+			 			WHERE `AB`.`user_id` = ?
 			 			ORDER BY LOWER(`AA`.`name`) ASC
 			 			";
 
