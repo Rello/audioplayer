@@ -159,12 +159,12 @@ class CategoryController extends Controller
 			 			ORDER BY LOWER(`AB`.`name`) ASC
 			 			";
         } elseif ($category === 'Album Artist') {
-            $SQL = "SELECT  DISTINCT(AB.`artist_id`) AS `id`, AA.`name`, LOWER(AA.`name`) AS `lower` 
+            $SQL = "SELECT  DISTINCT(`AB`.`artist_id`) AS `id`, `AA`.`name`, LOWER(`AA`.`name`) AS `lower` 
 						FROM `*PREFIX*audioplayer_albums` `AB`
-						JOIN `*PREFIX*audioplayer_artists` AA
-						ON AB.`artist_id` = AA.`id`
-			 			WHERE  AB.`user_id` = ?
-			 			ORDER BY LOWER(AA.`name`) ASC
+						JOIN `*PREFIX*audioplayer_artists` `AA`
+						ON `AB`.`artist_id` = `AA`.`id`
+			 			WHERE  `AB`.`user_id` = ?
+			 			ORDER BY LOWER(`AA`.`name`) ASC
 			 			";
 
         }
