@@ -51,11 +51,15 @@ Audios.prototype.showSidebar = function (evt) {
             $this.registerAudioplayerTab();
             $this.registerID3EditorTab();
             $this.registerPlaylistsTab();
+            if ($('#audioplayer_sonos').val() === 'checked') {
+                $this.registerSONOSTab();
+            }
             // noinspection JSUnresolvedFunction
             OC.Apps.showAppSidebar();
         }
 
         $appsidebar.data('trackid', trackid);
+        $appsidebar.data('fileid', fileid);
         $('.tabHeader.selected').click();
     }
 };
@@ -122,6 +126,26 @@ Audios.prototype.registerID3EditorTab = function () {
     } else {
         $('#tabHeaderID3Editor').click($this.ID3EditorTabView.bind($this));
     }
+};
+
+Audios.prototype.registerSONOSTab = function () {
+    var li = $('<li/>').addClass('tabHeader')
+        .attr({
+            'id': 'tabHeaderSONOS',
+            'data-tabid': '4',
+            'data-tabindex': '4'
+        });
+    var atag = $('<a/>').text(t('audioplayer', 'SONOS'));
+    li.append(atag);
+    $('.tabHeaders').append(li);
+
+    var div = $('<div/>').addClass('tab SONOSTabView')
+        .attr({
+            'id': 'SONOSTabView'
+        });
+    $('.tabsContainer').append(div);
+
+    $('#tabHeaderSONOS').click($this.SONOSTabView.bind($this));
 };
 
 Audios.prototype.hideSidebar = function () {
@@ -244,13 +268,44 @@ Audios.prototype.ID3EditorTabView = function () {
     $('#ID3EditorTabView').removeClass('hidden').html(html);
 };
 
+Audios.prototype.SONOSTabView = function () {
+    var fileId = $("#app-sidebar").data('fileid');
+    $this.resetView();
+    $('#tabHeaderSONOS').addClass('selected');
+
+    var html = '<div style="margin-left: 2em; background-position: initial;" class="icon-info">';
+    html += '<p style="margin-left: 2em;">' + t('audioplayer', 'Details for error analysis') + '</p>';
+    html += '<br>';
+    html += '</div>';
+    $('#SONOSTabView').removeClass('hidden').html(html);
+
+    $.ajax({
+        type: 'POST',
+        url: OC.generateUrl('apps/audioplayer/sonosdebug'),
+        data: {'fileId': fileId},
+        success: function (jsondata) {
+            html = $('#SONOSTabView').html();
+            html += '<p style="margin-left: 2em;">' + t('audioplayer', 'SMB link from user settings:') + '</p>';
+            html += '<p style="margin-left: 2em;">' + jsondata.smb + '</p>';
+            html += '<br>';
+            html += '<p style="margin-left: 2em;">' + t('audioplayer', 'Combined link for your SONOS controller:') + '</p>';
+            html += '<p style="margin-left: 2em;">' + jsondata.sonos + '</p>';
+            $('#SONOSTabView').html(html);
+        }
+    });
+
+
+};
+
 Audios.prototype.resetView = function () {
     $('#tabHeaderAudiplayer').removeClass('selected');
     $('#tabHeaderPlaylists').removeClass('selected');
     $('#tabHeaderID3Editor').removeClass('selected');
+    $('#tabHeaderSONOS').removeClass('selected');
     $('#audioplayerTabView').addClass('hidden');
     $('#playlistsTabView').addClass('hidden');
     $('#ID3EditorTabView').addClass('hidden');
+    $('#SONOSTabView').addClass('hidden');
 };
 
 Audios.prototype.removeSongFromPlaylist = function (evt) {

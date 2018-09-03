@@ -48,4 +48,8 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<dashboard>
 		<widget>OCA\audioplayer\Widgets\AudioplayerWidget</widget>
 	</dashboard>
+	<settings>
+		<personal>OCA\audioplayer\Settings\Personal</personal>
+		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
+	</settings>
 </info>

@@ -364,6 +364,13 @@ Audios.prototype.TitleClickHandler = function () {
 
         $(el).find('.title').on('click', function () {
             var activeLi = $(this).closest('li');
+
+            if ($('#audioplayer_sonos').val() === 'checked') {
+                var liIndex = $(this).parents("li").index();
+                $this.PlaySonos(liIndex);
+                return;
+            }
+
             if (can_play[activeLi.data('mimetype')] !== true) {
                 return false;
             }

@@ -43,4 +43,10 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
     ['name' => 'sidebar#getAudioInfo', 'url' => '/getaudioinfo', 'verb' => 'GET'],
     ['name' => 'sidebar#getPlaylists', 'url' => '/getplaylists', 'verb' => 'POST'],
+    ['name' => 'sonos#sonosPlay', 'url' => '/sonosplay', 'verb' => 'POST'],
+    ['name' => 'sonos#sonosStatus', 'url' => '/sonosstatus', 'verb' => 'POST'],
+    ['name' => 'sonos#sonosStop', 'url' => '/sonosstop', 'verb' => 'POST'],
+    ['name' => 'sonos#sonosQueue', 'url' => '/sonosqueue', 'verb' => 'POST'],
+    ['name' => 'sonos#sonosControl', 'url' => '/sonoscontrol', 'verb' => 'POST'],
+    ['name' => 'sonos#sonosDebug', 'url' => '/sonosdebug', 'verb' => 'POST'],
 	]]);

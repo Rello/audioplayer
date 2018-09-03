@@ -18,62 +18,75 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\IURLGenerator;
 
 /**
  * Controller class for main page.
  */
-class PageController extends Controller {
-	
-	private $userId;
-	private $l10n;
-	private $configManager;
+class PageController extends Controller
+{
 
-	public function __construct(
-			$appName, 
-			IRequest $request, 
-			$userId, 
-			IConfig $configManager,
-			IL10N $l10n
-			) {
-		parent::__construct($appName, $request);
-		$this->appName = $appName;
-		$this->userId = $userId;
-		$this->configManager = $configManager;
-		$this->l10n = $l10n;
-	}
+    private $userId;
+    private $l10n;
+    private $configManager;
+    private $urlGenerator;
 
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
-	public function index() {
-				
-		$csp = new \OCP\AppFramework\Http\ContentSecurityPolicy();
-		$csp->addAllowedStyleDomain('data:');
-		$csp->addAllowedImageDomain('\'self\'');
-		$csp->addAllowedImageDomain('data:');
-		$csp->addAllowedImageDomain('*');
-		$csp->addAllowedMediaDomain('*');		
-		$csp->addAllowedFrameDomain('*');	
-		
-		$maxUploadFilesize = \OCP\Util::maxUploadFilesize('/');
+    public function __construct(
+        $appName,
+        IRequest $request,
+        $userId,
+        IConfig $configManager,
+        IL10N $l10n,
+        IURLGenerator $urlGenerator
+    )
+    {
+        parent::__construct($appName, $request);
+        $this->appName = $appName;
+        $this->userId = $userId;
+        $this->configManager = $configManager;
+        $this->l10n = $l10n;
+        $this->urlGenerator = $urlGenerator;
+    }
 
-		$response = new TemplateResponse('audioplayer', 'index');
-		$response->setContentSecurityPolicy($csp);
-		$response->setParams(array(
-			'uploadMaxFilesize' => $maxUploadFilesize,
-			'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),
-			'cyrillic' => $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic'),
-			'path' => $this->configManager->getUserValue($this->userId, $this->appName, 'path'),
-			'navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
-            'volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
-			'notification' => $this->getNotification(),
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function index()
+    {
+
+        $csp = new \OCP\AppFramework\Http\ContentSecurityPolicy();
+        $csp->addAllowedStyleDomain('data:');
+        $csp->addAllowedImageDomain('\'self\'');
+        $csp->addAllowedImageDomain('data:');
+        $csp->addAllowedImageDomain('*');
+        $csp->addAllowedMediaDomain('*');
+        $csp->addAllowedFrameDomain('*');
+
+        $maxUploadFilesize = \OCP\Util::maxUploadFilesize('/');
+
+        $response = new TemplateResponse('audioplayer', 'index');
+        $response->setContentSecurityPolicy($csp);
+        $response->setParams([
+            'uploadMaxFilesize' => $maxUploadFilesize,
+            'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),
+            'audioplayer_cyrillic' => $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic'),
+            'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
+            'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
+            'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false,
+            'audioplayer_settings_link' => $this->urlGenerator->getAbsoluteURL('settings/user/audioplayer'),
+            'audioplayer_notification' => $this->getNotification(),
             'audioplayer_editor' => 'false',
-		));
-		return $response;
-	}
+        ]);
+        return $response;
+    }
 
-	private function getNotification() {
+    /**
+     * @return null|string
+     * @throws \OCP\PreConditionNotMetException
+     */
+    private function getNotification()
+    {
         $scanner_timestamp = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_timestamp', '0');
         if ($scanner_timestamp === '0') {
             $this->configManager->setUserValue($this->userId, $this->appName, 'scanner_timestamp', time());
@@ -86,5 +99,5 @@ class PageController extends Controller {
         } else {
             return null;
         }
-	}	
+    }
 }

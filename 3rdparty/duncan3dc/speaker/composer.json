@@ -1,0 +1,29 @@
+{
+    "name": "duncan3dc/speaker",
+    "type": "library",
+    "description": "Convert text to speech using web services",
+    "keywords": ["text-to-speech", "tts", "speech"],
+    "homepage": "https://github.com/duncan3dc/speaker",
+    "license": "Apache-2.0",
+    "authors": [{
+        "name": "Craig Duncan",
+        "email": "git@duncanc.co.uk",
+        "homepage": "https://github.com/duncan3dc",
+        "role": "Developer"
+    }],
+    "require": {
+        "guzzlehttp/guzzle": "^6.0",
+        "symfony/process": "^2.3",
+        "php": "^5.6|^7.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.5",
+        "phpunit/phpunit": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "duncan3dc\\Speaker\\": "src/",
+            "duncan3dc\\Speaker\\Test\\": "tests/"
+        }
+    }
+}
