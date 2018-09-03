@@ -10,7 +10,7 @@
 
 $(document).ready(function () {
     $('#sonos').on('click', function () {
-        document.location = OC.generateUrl('settings/user/audioplayer')
+        document.location = OC.generateUrl('settings/user/audioplayer');
     });
 
     $(document).on('click', '#scanAudios, #scanAudiosFirst', function () {

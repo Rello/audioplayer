@@ -10,7 +10,7 @@
 
 $(document).ready(function () {
     $('#cyrillic_user').on('click', function () {
-        let user_value;
+        var user_value;
         if ($('#cyrillic_user').prop('checked')) {
             user_value = 'checked';
         }
@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
     $('#sonos').on('click', function () {
-        let user_value;
+        var user_value;
         if ($('#sonos').prop('checked')) {
             user_value = 'checked';
         }
@@ -52,7 +52,7 @@ $(document).ready(function () {
     });
 
     $('#sonos_controller_submit').on('click', function () {
-        let user_value = $('#sonos_controller').val();
+        var user_value = $('#sonos_controller').val();
         $.ajax({
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/setvalue'),
@@ -67,7 +67,7 @@ $(document).ready(function () {
     });
 
     $('#sonos_smb_path_submit').on('click', function () {
-        let user_value = $('#sonos_smb_path').val();
+        var user_value = $('#sonos_smb_path').val();
         $.ajax({
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/setvalue'),
@@ -84,7 +84,7 @@ $(document).ready(function () {
     /*
  * Collection path
  */
-    let $path = $('#audio-path');
+    var $path = $('#audio-path');
     $path.on('click', function () {
         OC.dialogs.filepicker(
             t('audioplayer', 'Select a single folder with audio files'),
@@ -106,7 +106,7 @@ $(document).ready(function () {
         );
     });
 
-    let audioPlayer = {};
+    var audioPlayer = {};
     soundManager.setup({
         url: OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
         onready: function () {

@@ -32,7 +32,7 @@
                 widget.divClock.append(title);
 
                 //var PlaylistId = 'X2';
-                var title = $('<div>/').text('Recently Added:').addClass('widget-audioplayer-header');
+                //title = $('<div>/').text('Recently Added:').addClass('widget-audioplayer-header');
                 //var html = widget.getTitles(PlaylistId);
                 //widget.divClock.append(title);
             },
