@@ -12,13 +12,11 @@ A music player for FLAC, MP3, MP4, streams, and more with playlist support and s
 - Specifying media folder (with exclude functionality)
 - Smart & Standard Playlists and playlist files
 - One Click Play in Files app
-- External cover support
-- Mobile view support
-- Favorites integration
-- Sidebar integration
-- Search integration
+- Favorites, Sidebar & Search integration
 - Stream URLs
+- Widget for Dashboard App (beta)
 - [SONOS player](https://github.com/rello/audioplayer/wiki/SONOS) integration
+
 
 ### Supported Formats
 FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio as well as M3U and PLS playlist files. Playing the formats supported by Audio Player depends on the browser. [More information…](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
