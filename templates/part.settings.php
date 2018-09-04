@@ -42,7 +42,7 @@
             </li>
             <li class="audio-settings-item icon-external">
                 <a href="https://github.com/rello/audioplayer/wiki/donate" target="_blank" style="padding: 0 20px;">
-                    <?php p($l->t('Please consider a small donation')); ?>
+                    <?php p($l->t('Do you like this app?')); ?>
                 </a>
             </li>
             <li class="audio-settings-item icon-info">

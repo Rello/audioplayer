@@ -65,7 +65,11 @@
     "Search for audio files in": "Папка з аудіофайлами",
     "Formats supported by the browser": "Формати, що підтримуються браузером",
     "Formats not supported by the browser": "Формати, що не підтримуються браузером",
-    "Please reset and rescan library to make use of new features.": "Будь ласка, скиньте та повторно проскантуйте бібліотеку, щоб використовувати нові функції."
+    "Please reset and rescan library to make use of new features.": "Будь ласка, скиньте та повторно проскантуйте бібліотеку, щоб використовувати нові функції.",
+    "Do you like this app?": "Gefällt Dir die App?",
+    "Name of the SONOS player or group": "Name of the SONOS player or group",
+    "All titles will be played on your SONOS speaker": "All titles will be played on your SONOS speaker",
+    "Server path to the SMB directory where all audio files are located": "Server path to the SMB directory where all audio files are located"
   },
   "pluralForm": ""
 }

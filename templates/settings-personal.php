@@ -27,23 +27,23 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
         <br>
     </div>
     <div>
-        <label for="cyrillic_user"><?php p($l->t('Cyrillic Support:')); ?></label>
+        <label for="cyrillic_user"><?php p($l->t('Cyrillic support:')); ?></label>
         <input type="checkbox" id="cyrillic_user" <?php p($_['audioplayer_cyrillic']); ?>/>
         <p>
             <em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em>
         </p>
         <p><em><a href="https://github.com/Rello/audioplayer/wiki/Cyrillic-symbol-handling"
-                  target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
+                  target="_blank"><?php p($l->t('More information…')); ?></a></em></p>
         <br>
     </div>
     <div>
-        <label for="browser_support"><?php p($l->t('Formats supported by your current browser:')); ?></label>
+        <label for="browser_support"><?php p($l->t('Formats supported by the browser')); ?>:</label>
         &nbsp;<em id="browser_yes"></em>
         <br>
-        <label for="browser_support"><?php p($l->t('Formats NOT supported by your current browser:')); ?></label>
+        <label for="browser_support"><?php p($l->t('Formats not supported by the browser')); ?>:</label>
         &nbsp;<em id="browser_no"></em>
         <p><em><a href="https://github.com/Rello/audioplayer/wiki/Audio-Files-and-MIME-Types#browser-support"
-                  target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
+                  target="_blank"><?php p($l->t('More information…')); ?></a></em></p>
     </div>
     <br>
     <br>
@@ -52,7 +52,7 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
         <label for="sonos_controller"><?php p($l->t('SONOS Player:')); ?></label>
         <input type="text" id="sonos_controller" value="<?php p($_['audioplayer_sonos_controller']); ?>"/>
         <input type="submit" id="sonos_controller_submit" value="<?php p($l->t('Save')); ?>">
-        <p><em><?php p($l->t('Name of the SONOS Controller to be used')); ?></em></p>
+        <p><em><?php p($l->t('Name of the SONOS player or group')); ?></em></p>
         <br>
     </div>
     <div>
@@ -60,7 +60,7 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
         <input type="text" id="sonos_smb_path" value="<?php p($_['audioplayer_sonos_smb_path']); ?>"/>
         <input type="submit" id="sonos_smb_path_submit" value="<?php p($l->t('Save')); ?>">
         <p>
-            <em><?php p($l->t('Server path to the SMB base directory for all audio files')); ?></em><br>
+            <em><?php p($l->t('Server path to the SMB directory where all audio files are located')); ?></em><br>
             <em>e.g.: qnap/Multimedia/iTunes/Music/</em>
         </p>
         <br>
@@ -68,9 +68,9 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
     <div>
         <label for="sonos"><?php p($l->t('SONOS Playback')); ?></label>
         <input type="checkbox" id="sonos" <?php p($_['audioplayer_sonos']); ?>/>
-        <p><em><?php p($l->t('Every play action will transfer the tracks to the SONOS controller')); ?></em></p>
+        <p><em><?php p($l->t('All titles will be played on your SONOS speaker')); ?></em></p>
         <p><em><a href="https://github.com/Rello/audioplayer/wiki/SONOS"
-                  target="_blank"><?php p($l->t('Read more')); ?></a></em></p>
+                  target="_blank"><?php p($l->t('More information…')); ?></a></em></p>
         <br>
     </div>
 </div>
