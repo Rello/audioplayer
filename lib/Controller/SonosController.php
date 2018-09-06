@@ -17,8 +17,8 @@ use OCP\IRequest;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
-use duncan3dc\Sonos\Network;
-
+use GuzzleHttp\Client;
+use PHPSonos;
 
 /**
  * Controller class for main page.
@@ -31,6 +31,9 @@ class SonosController extends Controller
     private $rootFolder;
     private $logger;
     private $smb_path;
+    private $room;
+    private $udn;
+    private $ip = '192.168.0.27';
 
     public function __construct(
         $appName,
@@ -50,56 +53,68 @@ class SonosController extends Controller
     }
 
     /**
-     * @NoAdminRequired
-     */
-    public function sonosStop()
-    {
-
-        $controller = $this->initController();
-        $queue = $controller->getQueue();
-        $queue->clear();
-    }
-
-    /**
-     * @return \duncan3dc\Sonos\Controller|null
-     */
-    private function initController()
-    {
-        require_once __DIR__ . "/../../3rdparty/autoload.php";
-        //require_once __DIR__ . "/../../3rdparty/duncan3dc/sonos/src/Network.php";
-        $sonos = new Network();
-
-        $controllerName = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller');
-        $this->smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
-        return $sonos->getControllerByRoom($controllerName);
-
-    }
-
-    /**
-     * Get array of fileIds to fill the SONOS queue
+     * Use array of fileIds to fill the SONOS queue
      * Selecte the queue; select the track; start playback
      *
      * @NoAdminRequired
      * @param $fileArray
      * @param $fileIndex
-     * @throws \duncan3dc\Sonos\Exceptions\SoapException
      */
     public function sonosQueue($fileArray, $fileIndex)
     {
 
-        $controller = $this->initController();
-        $queue = $controller->getQueue();
-        $queue->clear();
+        $sonos = $this->initController();
+        $sonos->ClearQueue();
 
         foreach ($fileArray as $fileId) {
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
             $file = array_shift($nodes);
             $link = $this->getSonosLink($file);
-            $queue->addTrack('x-file-cifs://' . $this->smb_path . $link);
+            $sonos->AddToQueue('x-file-cifs://' . $this->smb_path . $link);
         }
-        $controller->useQueue();
-        $controller->selectTrack($fileIndex);
-        $controller->play();
+
+        $sonos->SetQueue("x-rincon-queue:" . $this->udn . "#0");
+        $sonos->SetTrack($fileIndex + 1);
+        $sonos->Play();
+
+    }
+
+    /**
+     * @return PHPSonos
+     */
+    private function initController()
+    {
+        $this->smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
+
+        require_once __DIR__ . "/../../3rdparty/PHPSonos.inc.php";
+
+        $this->getControllerByIp($this->ip);
+        $sonos = new PHPSonos($this->ip);
+        return $sonos;
+    }
+
+    /**
+     * Get Controller udn & name via IP
+     *
+     * @param $ip
+     * @return string
+     */
+    private function getControllerByIp($ip)
+    {
+
+        $uri = "http://{$ip}:1400/xml/device_description.xml";
+        $xml = (string)(new Client)->get($uri)->getBody();
+        $xml = simplexml_load_string($xml);
+        $udn = $xml->device->UDN;
+        $this->room = $xml->device->roomName;
+
+        if (preg_match("/^uuid:(.*)$/", $udn, $matches)) {
+            $this->udn = $matches[1];
+        } else {
+            $this->udn = '';
+        }
+        return $this->udn;
+
     }
 
     /**
@@ -131,34 +146,13 @@ class SonosController extends Controller
      *
      * @NoAdminRequired
      * @param $fileId
-     * @throws \duncan3dc\Sonos\Exceptions\SoapException
      * @return JSONResponse
      */
     public function sonosPlay($fileId)
     {
 
-        $controller = $this->initController();
-        $queue = $controller->getQueue();
-
-        $this->logger->debug('fileId: ' . $fileId, array('app' => 'audioplayer'));
-        $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
-        $file = array_shift($nodes);
-        $link = $this->getSonosLink($file);
-
-        $this->logger->debug('$link: ' . $link, array('app' => 'audioplayer'));
-
-        //$this->logger->debug('$file: ' . $file->getMountPoint()->getStorageId() . '---' . $file->getMountPoint()->getStorageRootId() . '---' . $file->getMountPoint()->getMountPoint(), array('app' => 'audioplayer'));
-        //$link = str_replace(" ", "%20", $file->getInternalPath());
-
-        $queue->clear();
-        $queue->addTrack('x-file-cifs://' . $this->smb_path . $link);
-        $controller->useQueue();
-        $controller->play();
-
-        $response = new JSONResponse();
-        $response->setData($file);
-        return $response;
     }
+
 
     /**
      * get the current status of the SONOS controller for debuging purpose
@@ -166,26 +160,16 @@ class SonosController extends Controller
      * @NoAdminRequired
      * @return JSONResponse
      */
+
     public function sonosStatus()
     {
 
-        $controller = $this->initController();
-
-        $state = $controller->getStateDetails();
-        $queueUrl = $state->stream . $state->getUri() . $state->getMetaData();
-
-        $result = [
-            $controller->room => $controller->getStateName(),
-            '$state->getUri()' => $state->getUri(),
-            '$state->getMetaData()' => $state->getMetaData(),
-            '$state->title' => $state->title,
-            'stream' => $state->stream,
-            'Current queue' => $queueUrl
-        ];
+        $sonos = $this->initController();
 
         $response = new JSONResponse();
-        $response->setData($result);
+        $response->setData($this->udn);
         return $response;
+
     }
 
     /**
@@ -220,19 +204,23 @@ class SonosController extends Controller
      *
      * @NoAdminRequired
      * @param $action
-     * @throws \duncan3dc\Sonos\Exceptions\SoapException
      */
     public function sonosControl($action)
     {
 
-        $controller = $this->initController();
+        $sonos = $this->initController();
 
-        if ($action === 'play') $controller->play();
-        elseif ($action === 'next') $controller->next();
-        elseif ($action === 'previous') $controller->previous();
-        elseif ($action === 'pause') $controller->pause();
-        elseif ($action === 'up') $controller->adjustVolume(3);
-        elseif ($action === 'down') $controller->adjustVolume(-3);
+        if ($action === 'play') $sonos->play();
+        elseif ($action === 'next') $sonos->next();
+        elseif ($action === 'previous') $sonos->previous();
+        elseif ($action === 'pause') $sonos->pause();
+        elseif ($action === 'up') {
+            $volume = $sonos->GetVolume();
+            $sonos->SetVolume($volume + 3);
+        } elseif ($action === 'down') {
+            $volume = $sonos->GetVolume();
+            $sonos->SetVolume($volume - 3);
+        }
     }
 
 }
