@@ -66,10 +66,10 @@
     "Formats supported by the browser": "Formaty obsługiwane przez przeglądarkę",
     "Formats not supported by the browser": "Formaty nie obsługiwane przez przeglądarkę",
     "Please reset and rescan library to make use of new features.": "Proszę zresetuj i ponownie przeskanuj bibliotekę, aby korzystać z nowych funkcji.",
-    "Do you like this app?": "Gefällt Dir die App?",
-    "Name of the SONOS player or group": "Name of the SONOS player or group",
-    "All titles will be played on your SONOS speaker": "All titles will be played on your SONOS speaker",
-    "Server path to the SMB directory where all audio files are located": "Server path to the SMB directory where all audio files are located"
+    "Do you like this app?": "Czy podoba ci się ta aplikacja?",
+    "Name of the SONOS player or group": "Nazwa odtwarzacza SONOS lub grupy",
+    "All titles will be played on your SONOS speaker": "Wszystkie tytuły będą odtwarzane na twoim głośniku SONOS",
+    "Server path to the SMB directory where all audio files are located": "Ścieżka do katalogu na serwerze SMB, w którym znajdują się wszystkie pliki audio"
   },
   "pluralForm": ""
 }

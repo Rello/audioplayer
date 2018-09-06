@@ -66,10 +66,10 @@
     "Formats supported by the browser": "Форматы поддерживаемые браузером",
     "Formats not supported by the browser": "Форматы не поддерживаемые браузером",
     "Please reset and rescan library to make use of new features.": "Пожалуйста очистите и пересканируйте библиотеку для использования новых возможностей.",
-    "Do you like this app?": "Gefällt Dir die App?",
-    "Name of the SONOS player or group": "Name of the SONOS player or group",
-    "All titles will be played on your SONOS speaker": "All titles will be played on your SONOS speaker",
-    "Server path to the SMB directory where all audio files are located": "Server path to the SMB directory where all audio files are located"
+    "Do you like this app?": "Вам нравится это приложение?",
+    "Name of the SONOS player or group": "Имя SONOS плеера или группы",
+    "All titles will be played on your SONOS speaker": "Все треки будут воспроизведены на вашей аудиосистеме SONOS",
+    "Server path to the SMB directory where all audio files are located": "Путь до SMB каталога на сервере, где находятся все аудиофайлы"
   },
   "pluralForm": ""
 }
