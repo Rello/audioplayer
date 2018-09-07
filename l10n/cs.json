@@ -66,10 +66,10 @@
     "Formats supported by the browser": "Souborové formáty podporované prohlížečem",
     "Formats not supported by the browser": "Souborové formáty nepodporované prohlížečem",
     "Please reset and rescan library to make use of new features.": "Pro využití nových funkcí obnovte Vaši knihovnu skladeb prosím.",
-    "Do you like this app?": "Gefällt Dir die App?",
-    "Name of the SONOS player or group": "Name of the SONOS player or group",
-    "All titles will be played on your SONOS speaker": "All titles will be played on your SONOS speaker",
-    "Server path to the SMB directory where all audio files are located": "Server path to the SMB directory where all audio files are located"
+    "Do you like this app?": "Líbí se Vám tato aplikace?",
+    "Name of the SONOS player or group": "Název SONOS přehrávače nebo skupiny",
+    "All titles will be played on your SONOS speaker": "Všechny skladby budou přehrány na Vašem SONOS reproduktoru",
+    "Server path to the SMB directory where all audio files are located": "Umístění Vašich audio souborů na SMB serveru"
   },
   "pluralForm": ""
 }
