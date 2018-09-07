@@ -50,7 +50,9 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
     <h2><?php p($l->t('SONOS Player Plugin')); ?></h2>
     <div>
         <label for="sonos_controller"><?php p($l->t('SONOS Player:')); ?></label>
-        <input type="text" id="sonos_controller" value="<?php p($_['audioplayer_sonos_controller']); ?>"/>
+        <select id="sonos_controller" />
+        </select>
+        <input type="hidden" id="sonos_current" value="<?php p($_['audioplayer_sonos_controller']); ?>">
         <input type="submit" id="sonos_controller_submit" value="<?php p($l->t('Save')); ?>">
         <p><em><?php p($l->t('Name of the SONOS player or group')); ?></em></p>
         <br>

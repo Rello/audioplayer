@@ -129,4 +129,21 @@ $(document).ready(function () {
             $('#browser_no').html(nsupported_types);
         }
     });
+
+    $.ajax({
+        type: 'POST',
+        url: OC.generateUrl('apps/audioplayer/sonosdevices'),
+        data: {},
+        success: function (jsondata) {
+            $(jsondata).each(function (i, el) {
+                $('#sonos_controller').append($('<option>', {
+                    value: el[0],
+                    text: el[2][0]
+                }));
+            });
+            $('#sonos_controller').val($('#sonos_current').val());
+        }
+    });
+
+
 });

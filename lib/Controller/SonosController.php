@@ -26,6 +26,8 @@ use PHPSonos;
 class SonosController extends Controller
 {
 
+    protected $multicastAddress = "239.255.255.250";
+    protected $networkInterface;
     private $userId;
     private $configManager;
     private $rootFolder;
@@ -53,6 +55,23 @@ class SonosController extends Controller
     }
 
     /**
+     * @return PHPSonos
+     */
+    private function initController()
+    {
+        require_once __DIR__ . "/../../3rdparty/PHPSonos.inc.php";
+
+        $this->smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
+        $this->ip = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller');
+
+        $device = $this->getDeviceByIp($this->ip);
+        $this->udn = $device[1];
+        $this->room = $device[2];
+        $sonos = new PHPSonos($this->ip);
+        return $sonos;
+    }
+
+    /**
      * Use array of fileIds to fill the SONOS queue
      * Selecte the queue; select the track; start playback
      *
@@ -69,8 +88,8 @@ class SonosController extends Controller
         foreach ($fileArray as $fileId) {
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
             $file = array_shift($nodes);
-            $link = $this->getSonosLink($file);
-            $sonos->AddToQueue('x-file-cifs://' . $this->smb_path . $link);
+            $link = $this->smbFilePath($file);
+            $sonos->AddToQueue($link);
         }
 
         $sonos->SetQueue("x-rincon-queue:" . $this->udn . "#0");
@@ -80,40 +99,26 @@ class SonosController extends Controller
     }
 
     /**
-     * @return PHPSonos
-     */
-    private function initController()
-    {
-        $this->smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
-
-        require_once __DIR__ . "/../../3rdparty/PHPSonos.inc.php";
-
-        $this->getControllerByIp($this->ip);
-        $sonos = new PHPSonos($this->ip);
-        return $sonos;
-    }
-
-    /**
      * Get Controller udn & name via IP
      *
      * @param $ip
-     * @return string
+     * @return array
      */
-    private function getControllerByIp($ip)
+    private function getDeviceByIp($ip)
     {
 
         $uri = "http://{$ip}:1400/xml/device_description.xml";
         $xml = (string)(new Client)->get($uri)->getBody();
         $xml = simplexml_load_string($xml);
         $udn = $xml->device->UDN;
-        $this->room = $xml->device->roomName;
+        $room = $xml->device->roomName;
 
         if (preg_match("/^uuid:(.*)$/", $udn, $matches)) {
-            $this->udn = $matches[1];
+            $udn = $matches[1];
         } else {
-            $this->udn = '';
+            $udn = '';
         }
-        return $this->udn;
+        return array($ip, $udn, $room);
 
     }
 
@@ -125,7 +130,7 @@ class SonosController extends Controller
      * @param object $file
      * @return string
      */
-    private function getSonosLink($file)
+    private function smbFilePath($file)
     {
 
         $segments = explode(':', $file->getMountPoint()->getStorageId());
@@ -138,21 +143,95 @@ class SonosController extends Controller
         if ($type === 'smb') $link = $file->getInternalPath();
         if ($type === 'shared') $link = $path_segments[2];
 
-        return rawurlencode($link);
+        return 'x-file-cifs://' . $this->smb_path . rawurlencode($link);
     }
 
     /**
-     * Play a single file; tmp work in progress
+     * Get list of all devices with ip, udn, room
      *
      * @NoAdminRequired
-     * @param $fileId
-     * @return JSONResponse
+     * @return array
      */
-    public function sonosPlay($fileId)
+    public function getDeviceList()
     {
+
+        $devices = [];
+        $ips = $this->getDevices();
+
+        foreach ($ips as $ip) {
+            $device = $this->getDeviceByIp($ip);
+            $devices[] = $device;
+        }
+
+        return $devices;
 
     }
 
+    /**
+     * Get all the devices on the current network.
+     *
+     * @return string[] An array of ip addresses
+     */
+    private function getDevices()
+    {
+        $port = 1900;
+        $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        $level = getprotobyname("ip");
+        socket_set_option($sock, $level, IP_MULTICAST_TTL, 2);
+        if ($this->networkInterface !== null) {
+            socket_set_option($sock, $level, IP_MULTICAST_IF, $this->networkInterface);
+        }
+        $data = "M-SEARCH * HTTP/1.1\r\n";
+        $data .= "HOST: {$this->multicastAddress}:reservedSSDPport\r\n";
+        $data .= "MAN: ssdp:discover\r\n";
+        $data .= "MX: 1\r\n";
+        $data .= "ST: urn:schemas-upnp-org:device:ZonePlayer:1\r\n";
+
+        socket_sendto($sock, $data, strlen($data), null, $this->multicastAddress, $port);
+        $read = [$sock];
+        $write = [];
+        $except = [];
+        $name = null;
+        $port = null;
+        $tmp = "";
+        $response = "";
+        while (socket_select($read, $write, $except, 1)) {
+            socket_recvfrom($sock, $tmp, 2048, null, $name, $port);
+            $response .= $tmp;
+        }
+
+        $devices = [];
+        foreach (explode("\r\n\r\n", $response) as $reply) {
+            if (!$reply) {
+                continue;
+            }
+            $data = [];
+            foreach (explode("\r\n", $reply) as $line) {
+                if (!$pos = strpos($line, ":")) {
+                    continue;
+                }
+                $key = strtolower(substr($line, 0, $pos));
+                $val = trim(substr($line, $pos + 1));
+                $data[$key] = $val;
+            }
+            $devices[] = $data;
+        }
+        $return = [];
+        $unique = [];
+        foreach ($devices as $device) {
+            if ($device["st"] !== "urn:schemas-upnp-org:device:ZonePlayer:1") {
+                continue;
+            }
+            if (in_array($device["usn"], $unique)) {
+                continue;
+            }
+            $url = parse_url($device["location"]);
+            $ip = $url["host"];
+            $return[] = $ip;
+            $unique[] = $device["usn"];
+        }
+        return $return;
+    }
 
     /**
      * get the current status of the SONOS controller for debuging purpose
@@ -165,9 +244,10 @@ class SonosController extends Controller
     {
 
         $sonos = $this->initController();
+        $test = $this->getDevices();
 
         $response = new JSONResponse();
-        $response->setData($this->udn);
+        $response->setData($test);
         return $response;
 
     }
@@ -186,12 +266,12 @@ class SonosController extends Controller
         $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
         $file = array_shift($nodes);
 
-        $link = $this->getSonosLink($file);
+        $link = $this->smbFilePath($file);
 
         $result = [
             'smb' => $smb_path,
             'filelink' => $link,
-            'sonos' => 'x-file-cifs://' . $smb_path . $link
+            'sonos' => $link
         ];
 
         $response = new JSONResponse();
@@ -222,5 +302,6 @@ class SonosController extends Controller
             $sonos->SetVolume($volume - 3);
         }
     }
+
 
 }
