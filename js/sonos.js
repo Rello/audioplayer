@@ -87,11 +87,11 @@ $(document).ready(function () {
     });
 
     $('#sonos_up').on('click', function () {
-        myAudios.SonosAction('up')
+        myAudios.SonosAction('up');
     });
 
     $('#sonos_down').on('click', function () {
-        myAudios.SonosAction('down')
+        myAudios.SonosAction('down');
     });
 
 });

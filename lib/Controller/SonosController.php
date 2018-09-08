@@ -18,7 +18,6 @@ use OCP\Files\IRootFolder;
 use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IRequest;
-use PHPSonos;
 
 /**
  * SONOS controller
@@ -66,7 +65,7 @@ class SonosController extends Controller
     {
 
         $sonos = $this->initController();
-        if (!$sonos) return false;
+        if ($sonos === false) return false;
         $sonos->ClearQueue();
 
         foreach ($fileArray as $fileId) {
@@ -86,7 +85,7 @@ class SonosController extends Controller
     /**
      * Init the SONOS controller and deliver one SONOS instance for the player-ip from user settings
      *
-     * @return PHPSonos|bool
+     * @return \PHPSonos|bool
      */
     private function initController()
     {
@@ -97,10 +96,10 @@ class SonosController extends Controller
 
         $device = $this->getDeviceByIp($this->ip);
 
-        if ($device) {
+        if (! empty($device)) {
             $this->udn = $device[1];
             $this->room = $device[2];
-            $sonos = new PHPSonos($this->ip);
+            $sonos = new \PHPSonos($this->ip);
             return $sonos;
         } else {
             return false;
@@ -252,7 +251,7 @@ class SonosController extends Controller
 
         $sonos = $this->initController();
         //$test = $this->getDevices();
-        if (!$sonos) $sonos = 'no controller found';
+        if ($sonos === false) $sonos = 'no controller found';
 
         $response = new JSONResponse();
         $response->setData($sonos);
@@ -298,19 +297,33 @@ class SonosController extends Controller
     {
 
         $sonos = $this->initController();
-        if (!$sonos) return false;
+        if ($sonos === false) return false;
 
-        if ($action === 'play') $sonos->play();
-        elseif ($action === 'next') $sonos->next();
-        elseif ($action === 'previous') $sonos->previous();
-        elseif ($action === 'pause') $sonos->pause();
-        elseif ($action === 'up') {
+        if ($action === 'play') {
+            $sonos->play();
+            return true;
+        }
+        if ($action === 'next') {
+            $sonos->next();
+            return true;
+        }
+        if ($action === 'previous') {
+            $sonos->previous();
+            return true;
+        }
+        if ($action === 'pause') {
+            $sonos->pause();
+            return true;
+        }
+        if ($action === 'up') {
             $volume = (int)$sonos->GetVolume();
             $sonos->SetVolume($volume + 3);
-        } elseif ($action === 'down') {
+            return true;
+        }
+        if ($action === 'down') {
             $volume = $sonos->GetVolume();
             $sonos->SetVolume($volume - 3);
+            return true;
         }
-        return true;
     }
 }
