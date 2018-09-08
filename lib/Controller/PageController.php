@@ -70,7 +70,6 @@ class PageController extends Controller
         $response->setParams([
             'uploadMaxFilesize' => $maxUploadFilesize,
             'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),
-            'audioplayer_cyrillic' => $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic'),
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
             'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false,

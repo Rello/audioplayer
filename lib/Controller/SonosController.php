@@ -11,23 +11,22 @@
 
 namespace OCA\audioplayer\Controller;
 
+use GuzzleHttp\Client;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\IRequest;
-use OCP\IConfig;
 use OCP\Files\IRootFolder;
+use OCP\IConfig;
 use OCP\ILogger;
-use GuzzleHttp\Client;
+use OCP\IRequest;
 use PHPSonos;
 
 /**
- * Controller class for main page.
+ * SONOS controller
  */
 class SonosController extends Controller
 {
 
     protected $multicastAddress = "239.255.255.250";
-    protected $networkInterface;
     private $userId;
     private $configManager;
     private $rootFolder;
@@ -55,34 +54,19 @@ class SonosController extends Controller
     }
 
     /**
-     * @return PHPSonos
-     */
-    private function initController()
-    {
-        require_once __DIR__ . "/../../3rdparty/PHPSonos.inc.php";
-
-        $this->smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
-        $this->ip = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller');
-
-        $device = $this->getDeviceByIp($this->ip);
-        $this->udn = $device[1];
-        $this->room = $device[2];
-        $sonos = new PHPSonos($this->ip);
-        return $sonos;
-    }
-
-    /**
      * Use array of fileIds to fill the SONOS queue
      * Selecte the queue; select the track; start playback
      *
      * @NoAdminRequired
      * @param $fileArray
      * @param $fileIndex
+     * @return bool
      */
-    public function sonosQueue($fileArray, $fileIndex)
+    public function setQueue($fileArray, $fileIndex)
     {
 
         $sonos = $this->initController();
+        if (!$sonos) return false;
         $sonos->ClearQueue();
 
         foreach ($fileArray as $fileId) {
@@ -95,20 +79,47 @@ class SonosController extends Controller
         $sonos->SetQueue("x-rincon-queue:" . $this->udn . "#0");
         $sonos->SetTrack($fileIndex + 1);
         $sonos->Play();
+        return true;
 
     }
 
     /**
-     * Get Controller udn & name via IP
+     * Init the SONOS controller and deliver one SONOS instance for the player-ip from user settings
+     *
+     * @return PHPSonos|bool
+     */
+    private function initController()
+    {
+        require_once __DIR__ . "/../../3rdparty/PHPSonos.inc.php";
+
+        $this->smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
+        $this->ip = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller');
+
+        $device = $this->getDeviceByIp($this->ip);
+
+        if ($device) {
+            $this->udn = $device[1];
+            $this->room = $device[2];
+            $sonos = new PHPSonos($this->ip);
+            return $sonos;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get the device details like room & udn from xml/device_description.xml
      *
      * @param $ip
-     * @return array
+     * @return array|bool
      */
     private function getDeviceByIp($ip)
     {
 
+        if (!$ip) return false;
         $uri = "http://{$ip}:1400/xml/device_description.xml";
         $xml = (string)(new Client)->get($uri)->getBody();
+        if (!$xml) return false;
         $xml = simplexml_load_string($xml);
         $udn = $xml->device->UDN;
         $room = $xml->device->roomName;
@@ -123,7 +134,7 @@ class SonosController extends Controller
     }
 
     /**
-     * create the SONOS link
+     * create the SONOS SMB path
      * for SMB mapping, the first level needs to be cut because this is the self given name of the mount
      * for shared SMB folders, the first level needs to be kept
      *
@@ -147,7 +158,7 @@ class SonosController extends Controller
     }
 
     /**
-     * Get list of all devices with ip, udn, room
+     * Get list of all known devices with ip, udn, room
      *
      * @NoAdminRequired
      * @return array
@@ -156,7 +167,7 @@ class SonosController extends Controller
     {
 
         $devices = [];
-        $ips = $this->getDevices();
+        $ips = $this->discoverDevices();
 
         foreach ($ips as $ip) {
             $device = $this->getDeviceByIp($ip);
@@ -168,19 +179,16 @@ class SonosController extends Controller
     }
 
     /**
-     * Get all the devices on the current network.
+     * Discover all the devices on the current network via multicast
      *
      * @return string[] An array of ip addresses
      */
-    private function getDevices()
+    private function discoverDevices()
     {
         $port = 1900;
         $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         $level = getprotobyname("ip");
         socket_set_option($sock, $level, IP_MULTICAST_TTL, 2);
-        if ($this->networkInterface !== null) {
-            socket_set_option($sock, $level, IP_MULTICAST_IF, $this->networkInterface);
-        }
         $data = "M-SEARCH * HTTP/1.1\r\n";
         $data .= "HOST: {$this->multicastAddress}:reservedSSDPport\r\n";
         $data .= "MAN: ssdp:discover\r\n";
@@ -239,15 +247,15 @@ class SonosController extends Controller
      * @NoAdminRequired
      * @return JSONResponse
      */
-
-    public function sonosStatus()
+    public function getStatus()
     {
 
         $sonos = $this->initController();
-        $test = $this->getDevices();
+        //$test = $this->getDevices();
+        if (!$sonos) $sonos = 'no controller found';
 
         $response = new JSONResponse();
-        $response->setData($test);
+        $response->setData($sonos);
         return $response;
 
     }
@@ -260,7 +268,7 @@ class SonosController extends Controller
      * @param $fileId
      * @return JSONResponse
      */
-    public function sonosDebug($fileId)
+    public function getDebugInfo($fileId)
     {
         $smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
         $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
@@ -284,24 +292,25 @@ class SonosController extends Controller
      *
      * @NoAdminRequired
      * @param $action
+     * @return bool
      */
-    public function sonosControl($action)
+    public function setAction($action)
     {
 
         $sonos = $this->initController();
+        if (!$sonos) return false;
 
         if ($action === 'play') $sonos->play();
         elseif ($action === 'next') $sonos->next();
         elseif ($action === 'previous') $sonos->previous();
         elseif ($action === 'pause') $sonos->pause();
         elseif ($action === 'up') {
-            $volume = $sonos->GetVolume();
+            $volume = (int)$sonos->GetVolume();
             $sonos->SetVolume($volume + 3);
         } elseif ($action === 'down') {
             $volume = $sonos->GetVolume();
             $sonos->SetVolume($volume - 3);
         }
+        return true;
     }
-
-
 }

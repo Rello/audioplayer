@@ -18,15 +18,49 @@ Audios.prototype.PlaySonos = function (liIndex) {
         fileids.push(fileid);
     });
 
-    playIndicator.addClass('playing');
-
     $.ajax({
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/sonosqueue'),
         data: {
             'fileArray': fileids,
             'fileIndex': liIndex
-        }
+        },
+        success: function (jsondata) {
+            if (jsondata === false) {
+                myAudios.SonosGone();
+            }
+            playIndicator.addClass('playing');
+        },
+        error: function(){
+            myAudios.SonosGone();
+        },
+        timeout: 3000
+    });
+};
+
+Audios.prototype.SonosGone = function () {
+    OC.dialogs.alert(t('audioplayer', 'SONOS Player not availble.'), t('audioplayer', 'Error'), function(){
+        window.location = OC.linkTo('settings','user/audioplayer');
+    });
+};
+
+Audios.prototype.SonosAction = function (action) {
+    $.ajax({
+        type: 'POST',
+        url: OC.generateUrl('apps/audioplayer/sonosaction'),
+        data: {
+            'action': action
+        },
+        success: function (jsondata) {
+            if (jsondata === false) {
+                myAudios.SonosGone();
+            }
+            return true;
+        },
+        error: function(){
+            myAudios.SonosGone();
+        },
+        timeout: 3000
     });
 };
 
@@ -39,53 +73,25 @@ $(document).ready(function () {
             playIndicator.removeClass('playing');
             action = 'pause';
         } else {
-            playIndicator.addClass('playing');
             action = 'play';
         }
+        if(myAudios.SonosAction(action)) playIndicator.addClass('playing');
+    });
 
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/sonoscontrol'),
-            data: {
-                'action': action
-            }
-        });
-    });
     $('#sonos_prev').on('click', function () {
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/sonoscontrol'),
-            data: {
-                'action': 'previous'
-            }
-        });
+        myAudios.SonosAction('previous');
     });
+
     $('#sonos_next').on('click', function () {
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/sonoscontrol'),
-            data: {
-                'action': 'next'
-            }
-        });
+        myAudios.SonosAction('next');
     });
+
     $('#sonos_up').on('click', function () {
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/sonoscontrol'),
-            data: {
-                'action': 'up'
-            }
-        });
+        myAudios.SonosAction('up')
     });
+
     $('#sonos_down').on('click', function () {
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/sonoscontrol'),
-            data: {
-                'action': 'down'
-            }
-        });
+        myAudios.SonosAction('down')
     });
 
 });
