@@ -15,7 +15,7 @@ style('files', 'detailsView');
 style('audioplayer', '3rdparty/fontello/css/fontello');
 script('audioplayer', 'soundmanager2-nodebug-jsmin');
 script('files', 'jquery.fileupload');
-script('audioplayer', 'app');
+script('audioplayer', 'app-min');
 script('audioplayer', 'sidebar');
 script('audioplayer', 'settings');
 if ($_['audioplayer_editor'] === 'true') {

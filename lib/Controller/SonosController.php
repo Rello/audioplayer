@@ -251,7 +251,7 @@ class SonosController extends Controller
 
         $sonos = $this->initController();
         //$test = $this->getDevices();
-        if ($sonos === false) $sonos = 'no controller found';
+        if ($sonos === false) $sonos = array('no controller found');
 
         $response = new JSONResponse();
         $response->setData($sonos);
