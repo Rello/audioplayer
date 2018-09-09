@@ -309,7 +309,7 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     var appContent = $('#app-content');
     scrollTop = appContent.scrollTop();
 
-    if (directPlay != true) {
+    if (directPlay !== true) {
         divSongContainer.css({
             'top': scrollTop + activeAlbum.offset().top + iTop
         });
