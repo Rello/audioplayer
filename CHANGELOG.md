@@ -6,9 +6,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - Postgres issue in categories [#330](https://github.com/rello/audioplayer/pull/330) @[jpumc](https://github.com/jpumc)
 
 ### Added
-- Audioplayer widget for Dashboard App (beta) [#328](https://github.com/rello/audioplayer/issues/328)
 - SONOS player integration [#331](https://github.com/rello/audioplayer/issues/331)
-
+- Audioplayer widget for Dashboard App (beta) [#328](https://github.com/rello/audioplayer/issues/328)
+- Play button on album cover [#319](https://github.com/rello/audioplayer/issues/319)
 
 ## 2.3.2 - 2018-08-19
 ### Fixed

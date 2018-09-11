@@ -94,7 +94,7 @@ Audios.prototype.initKeyListener = function () {
 };
 
 Audios.prototype.loadCategoryAlbums = function () {
-    var $this = this;
+    $this = this;
 
     $this.PlaylistContainer.show();
     $this.EmptyContainer.hide();
@@ -149,8 +149,7 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
         }).click($this.loadIndividualAlbums.bind($this));
 
         var divPlayHref = $('<a/>');
-        var divPlayImage = $('<img/>').attr({
-            'src': 'img/play.png',
+        var divPlayImage = $('<img src="img/play.png"/>').attr({
             'style': 'position: absolute;display: block;height: 30px;width: 30px;top: 115px;left: 5px;',
             'id': 'albumPlay'
         }).click($this.loadIndividualAlbums.bind($this));
@@ -171,14 +170,8 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
 Audios.prototype.loadIndividualAlbums = function (evt) {
     evt.stopPropagation();
     evt.preventDefault();
-    var directPlay;
 
-    if (typeof $(evt.target).attr('id') === 'undefined') {
-        directPlay = false;
-    } else {
-        directPlay = true;
-    }
-
+    var directPlay = typeof $(evt.target).attr('id') !== 'undefined';
     var eventTarget = $(evt.target).parent();
     var AlbumId = eventTarget.attr('data-album');
     var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
@@ -224,17 +217,18 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
         addCss = 'background-image:' + myCover + ';-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
     }
     var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({'style': addCss}).text(addDescr);
+    var sidebarThumbnail = $('#sidebarThumbnail');
 
     if ($this.PlaylistContainer.width() < 850) {
         divSongContainerCover.addClass('cover-small');
         divSongList = $('<div/>').addClass('songlist one-column');
-        if ($('#sidebarThumbnail').hasClass('full')) {
-            $('#sidebarThumbnail').addClass('larger').removeClass('full');
+        if (sidebarThumbnail.hasClass('full')) {
+            sidebarThumbnail.addClass('larger').removeClass('full');
         }
     } else {
         divSongList = $('<div/>').addClass('songlist two-column');
-        if ($('#sidebarThumbnail').hasClass('larger')) {
-            $('#sidebarThumbnail').addClass('full').removeClass('larger');
+        if (sidebarThumbnail.hasClass('larger')) {
+            sidebarThumbnail.addClass('full').removeClass('larger');
         }
     }
 
@@ -294,30 +288,34 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     var searchresult = decodeURI(location.hash).substr(1);
     if (searchresult !== '') {
         var locHashTemp = searchresult.split('-');
-        evt = {};
+        var evt = {};
         evt.albumId = locHashTemp[1];
         window.location.href = '#';
 //!!!!!!!!
 //        myAudios.AlbumClickHandler(evt);
     }
 
-
-    var iScroll = 120;
-    var iAnimateTime = 200;
-    var iSlideDown = 200;
-    var iTop = 80;
-    var appContent = $('#app-content');
-    scrollTop = appContent.scrollTop();
-
     if (directPlay !== true) {
-        divSongContainer.css({
-            'top': scrollTop + activeAlbum.offset().top + iTop
-        });
-        appContent.animate({
-            'scrollTop': scrollTop + activeAlbum.offset().top - iScroll
-        }, iAnimateTime, 'linear', function () {
-            divSongContainer.slideDown(iSlideDown);
-        });
+
+        var iScroll = 120;
+        var iSlideDown = 200;
+        var iTop = 80;
+        var appContent;
+        var containerTop;
+        var appContentScroll;
+        if ($('#content-wrapper').length === 1) { //check old structure of NC13 and oC
+            appContent = $('#app-content');
+            var scrollTop = appContent.scrollTop();
+            containerTop = scrollTop + activeAlbum.offset().top + iTop;
+            appContentScroll = scrollTop + activeAlbum.offset().top - iScroll;
+        } else { //structure was changed with NC14
+            appContent = $(document);
+            containerTop = activeAlbum.offset().top + iTop;
+            appContentScroll = activeAlbum.offset().top - iScroll;
+        }
+
+        divSongContainer.css({'top': containerTop}).slideDown(iSlideDown);
+        appContent.scrollTop(appContentScroll);
     }
     return true;
 };
@@ -363,7 +361,7 @@ Audios.prototype.buildTitleRow = function (elem) {
 };
 
 Audios.prototype.TitleClickHandler = function () {
-    var $this = this;
+    $this = this;
     var albumWrapper = $('.albumwrapper');
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
     var category = $this.PlaylistContainer.data('playlist').split('-');
@@ -454,7 +452,7 @@ Audios.prototype.indicateCurrentPlayingTitle = function () {
 };
 
 Audios.prototype.loadCategory = function () {
-    var $this = this;
+    $this = this;
     var category = $this.category_selectors[0];
     $('#addPlaylist').addClass('hidden');
     $('#myCategory').html('');
@@ -534,7 +532,7 @@ Audios.prototype.loadCategory = function () {
 
 
 Audios.prototype.loadIndividualCategory = function (evt) {
-    var $this = this;
+    $this = this;
 
     $this.PlaylistContainer.show();
     $this.EmptyContainer.hide();
@@ -558,8 +556,9 @@ Audios.prototype.loadIndividualCategory = function (evt) {
         EventTarget.parent('li').addClass('active').addClass('active');
     }
 
-    var PlaylistId = $('#myCategory li.active').data('id');
-    var category_title = $('#myCategory li.active').find('span').first().text();
+    var categoryActive = $('#myCategory li.active');
+    var PlaylistId = categoryActive.data('id');
+    var category_title = categoryActive.find('span').first().text();
     $this.PlaylistContainer.data('playlist', category + '-' + PlaylistId);
 
 
@@ -696,7 +695,7 @@ Audios.prototype.loadIndividualCategory = function (evt) {
 };
 
 Audios.prototype.showInitScreen = function (mode) {
-    var $this = this;
+    $this = this;
     $('.sm2-bar-ui').hide();
     $this.PlaylistContainer.hide();
     $this.EmptyContainer.show();
@@ -853,6 +852,7 @@ Audios.prototype.renamePlaylist = function (evt) {
 
 Audios.prototype.sortPlaylist = function (evt) {
     var eventTarget = $(evt.target);
+    var notification = $('#notification');
     if ($('#myCategory li').hasClass('active')) {
         var plId = eventTarget.attr('data-sortid');
         if (eventTarget.hasClass('sortActive')) {
@@ -865,8 +865,8 @@ Audios.prototype.sortPlaylist = function (evt) {
                 if (jsondata.status === 'success') {
                     eventTarget.removeClass('sortActive');
                     $('#individual-playlist').sortable("destroy");
-                    $('#notification').text(jsondata.msg);
-                    $('#notification').slideDown();
+                    notification.text(jsondata.msg);
+                    notification.slideDown();
                     window.setTimeout(function () {
                         $('#notification').slideUp();
                     }, 3000);
@@ -875,8 +875,8 @@ Audios.prototype.sortPlaylist = function (evt) {
 
         } else {
 
-            $('#notification').text(t('audioplayer', 'Sort modus active'));
-            $('#notification').slideDown();
+            notification.text(t('audioplayer', 'Sort modus active'));
+            notification.slideDown();
             window.setTimeout(function () {
                 $('#notification').slideUp();
             }, 3000);
@@ -1082,18 +1082,19 @@ Audios.prototype.checkNewTracks = function () {
 };
 
 Audios.prototype.resizePlaylist = function () {
+    var songlist = $('.songcontainer .songlist');
     $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
     if ($('.album.is-active').length !== 0) {
         $this.buildSongContainer($('.album.is-active'));
     }
 
     if (myAudios.PlaylistContainer.width() < 850) {
-        $('.songcontainer .songlist').addClass('one-column');
-        $('.songcontainer .songlist').removeClass('two-column');
+        songlist.addClass('one-column');
+        songlist.removeClass('two-column');
         $('.songcontainer .songcontainer-cover').addClass('cover-small');
     } else {
-        $('.songcontainer .songlist').removeClass('one-column');
-        $('.songcontainer .songlist').addClass('two-column');
+        songlist.removeClass('one-column');
+        songlist.addClass('two-column');
         $('.songcontainer .songcontainer-cover').removeClass('cover-small');
     }
 };
@@ -1156,19 +1157,21 @@ $(document).ready(function () {
     });
 
     $('#newPlaylistBtn_ok').on('click', function () {
-        if ($('#newPlaylistTxt').val() !== '') {
-            myAudios.newPlaylist($('#newPlaylistTxt').val());
-            $('#newPlaylistTxt').val('');
-            $('#newPlaylistTxt').focus();
+        var newPlaylistTxt = $('#newPlaylistTxt');
+        if (newPlaylistTxt.val() !== '') {
+            myAudios.newPlaylist(newPlaylistTxt.val());
+            newPlaylistTxt.val('');
+            newPlaylistTxt.focus();
             $('#newPlaylist').addClass('ap_hidden');
         }
     });
 
     $('#newPlaylistTxt').bind('keydown', function (event) {
-        if (event.which === 13 && $('#newPlaylistTxt').val() !== '') {
-            myAudios.newPlaylist($('#newPlaylistTxt').val());
-            $('#newPlaylistTxt').val('');
-            $('#newPlaylistTxt').focus();
+        var newPlaylistTxt = $('#newPlaylistTxt');
+        if (event.which === 13 && newPlaylistTxt.val() !== '') {
+            myAudios.newPlaylist(newPlaylistTxt.val());
+            newPlaylistTxt.val('');
+            newPlaylistTxt.focus();
             $('#newPlaylist').addClass('ap_hidden');
         }
     });
