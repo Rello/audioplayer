@@ -4,6 +4,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 2.4.0 - unreleased
 ### Fixed
 - Postgres issue in categories [#330](https://github.com/rello/audioplayer/pull/330) @[jpumc](https://github.com/jpumc)
+- NC14: Album not scrolled into viewarea [#337](https://github.com/rello/audioplayer/issues/337)
 
 ### Added
 - SONOS player integration [#331](https://github.com/rello/audioplayer/issues/331)
