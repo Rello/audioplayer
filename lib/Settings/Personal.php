@@ -50,6 +50,15 @@ class Personal implements ISettings
         ];
         return new TemplateResponse('audioplayer', 'settings-personal', $parameters, '');
     }
+    
+   /**
+     * Print config section (ownCloud 10)
+     *
+     * @return TemplateResponse
+     */
+    public function getPanel() {
+        return $this->getForm();
+    }
 
     /**
      * @return string the section ID, e.g. 'sharing'
@@ -60,6 +69,15 @@ class Personal implements ISettings
         return 'audioplayer';
     }
 
+    /**
+     * Get section ID (ownCloud 10)
+     *
+     * @return string
+     */
+    public function getSectionID() {
+        $this->getSection();
+    }
+    
     /**
      * @return int whether the form should be rather on the top or bottom of
      * the admin section. The forms are arranged in ascending order of the
