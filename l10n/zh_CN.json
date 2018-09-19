@@ -31,7 +31,7 @@
     "- choose -": "- 选择 -",
     "Errors: ": "错误: ",
     "Edit picture": "编辑图片",
-    "If rescan does not solve this problem the files are broken": "请重新搜索，如果错误仍然发生，表示档案或者 ID3标签损毁。",
+    "If rescan does not solve this problem the files are broken": "请重新搜索，如果错误仍然发生，表示档案或者ID3标签损毁。",
     "Selection": "选择",
     "All": "全部",
     "Unknown": "不详",
@@ -60,16 +60,16 @@
     "Folders": "文件夹",
     "Genres": "流派",
     "Settings": "选项",
-    "Cyrillic support": "西里尔支持",
+    "Cyrillic support": "西里尔语支持",
     "More information…": "详细信息…",
     "Search for audio files in": "请选择想要搜索的文件夹",
     "Formats supported by the browser": "浏览器支持的格式",
     "Formats not supported by the browser": "浏览器不支持的格式",
     "Please reset and rescan library to make use of new features.": "为了使新功能生效，请重建资料库并重新扫描音频.",
-    "Do you like this app?": "Gefällt Dir die App?",
-    "Name of the SONOS player or group": "Name of the SONOS player or group",
-    "All titles will be played on your SONOS speaker": "All titles will be played on your SONOS speaker",
-    "Server path to the SMB directory where all audio files are located": "Server path to the SMB directory where all audio files are located"
+    "Do you like this app?": "你喜欢这个应用吗？",
+    "Name of the SONOS player or group": "SONOS播放器或组的名称",
+    "All titles will be played on your SONOS speaker": "将在你的SONOS扬声器上播放所有曲目",
+    "Server path to the SMB directory where all audio files are located": "所有音频文件所在SMB目录的服务器路径"
   },
   "pluralForm": ""
 }
