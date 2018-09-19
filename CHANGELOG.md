@@ -2,14 +2,21 @@
 All notable changes to the Audio Player project will be documented in this file.
 
 ## 2.4.0 - unreleased
-### Fixed
-- Postgres issue in categories [#330](https://github.com/rello/audioplayer/pull/330) @[jpumc](https://github.com/jpumc)
-- NC14: Album not scrolled into viewarea [#337](https://github.com/rello/audioplayer/issues/337)
-
 ### Added
 - SONOS player integration [#331](https://github.com/rello/audioplayer/issues/331)
 - Audioplayer widget for Dashboard App (beta) [#328](https://github.com/rello/audioplayer/issues/328)
 - Play button on album cover [#319](https://github.com/rello/audioplayer/issues/319)
+
+### Changed
+- Settings moved to user/personal settings menu
+- zh_CN translation [#342](https://github.com/rello/audioplayer/pull/342) @[limingqi](https://github.com/limingqi)
+- cs translation [#336](https://github.com/rello/audioplayer/pull/336) @[447937](https://github.com/447937)
+- pl translation [#335](https://github.com/rello/audioplayer/pull/335) @[andypl78](https://github.com/andypl78)
+- ru translation [#334](https://github.com/rello/audioplayer/pull/309) @[r4sas](https://github.com/r4sas)
+
+### Fixed
+- Postgres issue in categories [#330](https://github.com/rello/audioplayer/pull/330) @[jpumc](https://github.com/jpumc)
+- NC14: Album not scrolled into viewarea [#337](https://github.com/rello/audioplayer/issues/337)
 
 ## 2.3.2 - 2018-08-19
 ### Fixed
