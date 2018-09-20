@@ -50,7 +50,7 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
 	</settings>
-		<settings-sections>
-		<personal>OCA\audioplayer\Settings\PersonalSection</personal>
+	<settings-sections>
+		<personal>OCA\audioplayer\Settings\PersonalSectionOC</personal>
 	</settings-sections>
 </info>

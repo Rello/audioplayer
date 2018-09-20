@@ -13,9 +13,9 @@ namespace OCA\audioplayer\Settings;
 
 use OCP\IL10N;
 use OCP\IURLGenerator;
-use OCP\Settings\IIconSection;
+use OCP\Settings\ISection;
 
-class PersonalSection implements IIconSection
+class PersonalSectionOC implements ISection
 {
     /** @var IURLGenerator */
     private $urlGenerator;
@@ -29,13 +29,12 @@ class PersonalSection implements IIconSection
     }
 
     /**
-     * returns the relative path to an 16*16 icon describing the section.
+     * Icon name for ownCloud
      *
      * @returns string
      */
-    public function getIcon()
-    {
-        return $this->urlGenerator->imagePath('audioplayer', 'app-dark.svg');
+    public function getIconName() {
+        return 'app-dark';
     }
 
     /**
