@@ -36,7 +36,7 @@
                 <label for="sonos">&nbsp;<?php p($l->t('SONOS Playback')); ?></label>
             </li>
             <li class="audio-settings-item icon-settings">
-                <a href="<?php p($_['audioplayer_settings_link']) ?>" style="padding: 0 20px;">
+                <a href="#" style="padding: 0 20px;" id="audioplayerSettings">
                     <?php p($l->t('Advanced Settings')); ?>
                 </a>
             </li>

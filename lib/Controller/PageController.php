@@ -73,7 +73,6 @@ class PageController extends Controller
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
             'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false,
-            'audioplayer_settings_link' => $this->urlGenerator->getAbsoluteURL('settings/user/audioplayer'),
             'audioplayer_notification' => $this->getNotification(),
             'audioplayer_editor' => 'false',
         ]);

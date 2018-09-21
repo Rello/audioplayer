@@ -9,8 +9,21 @@
  */
 
 $(document).ready(function () {
+
+    var settings_link;
+    if (OC.config.versionstring.split('.')[0] <= 10) //ownCloud
+    {
+        settings_link = OC.generateUrl('settings/personal?sectionid=audioplayer');
+    } else { //Nextcloud
+        settings_link = OC.generateUrl('settings/user/audioplayer');
+    }
+
     $('#sonos').on('click', function () {
-        document.location = OC.generateUrl('settings/user/audioplayer');
+        document.location = settings_link;
+    });
+
+    $('#audioplayerSettings').on('click', function () {
+        document.location = settings_link;
     });
 
     $(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
