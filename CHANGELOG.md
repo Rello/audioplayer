@@ -9,6 +9,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Changed
 - Settings moved to user/personal settings menu
+- personal settings difference between ownCloud & Nextcloud [#344](https://github.com/rello/audioplayer/issues/344)
 - zh_CN translation [#342](https://github.com/rello/audioplayer/pull/342) @[limingqi](https://github.com/limingqi)
 - cs translation [#336](https://github.com/rello/audioplayer/pull/336) @[447937](https://github.com/447937)
 - pl translation [#335](https://github.com/rello/audioplayer/pull/335) @[andypl78](https://github.com/andypl78)
