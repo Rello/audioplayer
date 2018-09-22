@@ -581,6 +581,7 @@ class ScannerController extends Controller {
             }
             $this->parentId_prev = $parentId;
         }
+        return true;
     }
 
 	/**
@@ -639,7 +640,7 @@ class ScannerController extends Controller {
 	 * 
 	 * @param $audio object
 	 * @param $getID3 object
-	 * @return array
+	 * @return
 	 */
 	private function analyze($audio, $getID3, $output = null, $debug = null) {
 		if ($audio->getMimetype() === 'audio/mpegurl' or $audio->getMimetype() === 'audio/x-scpls' or $audio->getMimetype() === 'application/xspf+xml') {
@@ -676,10 +677,11 @@ class ScannerController extends Controller {
 		return;	
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * 
-	 */
+    /**
+     * @NoAdminRequired
+     *
+     * @throws \OCP\Files\NotFoundException
+     */
 	public function checkNewTracks() {
 		// get only the relevant audio files
 		$this->getAudioObjects();
