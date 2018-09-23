@@ -1,11 +1,11 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
-//  available at http://getid3.sourceforge.net                 //
-//            or http://www.getid3.org                         //
-//          also https://github.com/JamesHeinrich/getID3       //
-/////////////////////////////////////////////////////////////////
-// See readme.txt for more details                             //
+//  available at https://github.com/JamesHeinrich/getID3       //
+//            or https://www.getid3.org                        //
+//            or http://getid3.sourceforge.net                 //
+//  see readme.txt for more details                            //
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // module.audio.flac.php                                       //
@@ -24,6 +24,9 @@ class getid3_flac extends getid3_handler
 {
 	const syncword = 'fLaC';
 
+	/**
+	 * @return bool
+	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
 
@@ -41,6 +44,9 @@ class getid3_flac extends getid3_handler
 		return $this->parseMETAdata();
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function parseMETAdata() {
 		$info = &$this->getid3->info;
 		do {
@@ -53,7 +59,7 @@ class getid3_flac extends getid3_handler
 			$BlockTypeText = self::metaBlockTypeLookup($BlockType);
 
 			if (($BlockOffset + 4 + $BlockLength) > $info['avdataend']) {
-				$this->error('METADATA_BLOCK_HEADER.BLOCK_TYPE ('.$BlockTypeText.') at offset '.$BlockOffset.' extends beyond end of file');
+				$this->warning('METADATA_BLOCK_HEADER.BLOCK_TYPE ('.$BlockTypeText.') at offset '.$BlockOffset.' extends beyond end of file');
 				break;
 			}
 			if ($BlockLength < 1) {
@@ -194,12 +200,14 @@ class getid3_flac extends getid3_handler
 		return true;
 	}
 
-	private function parseSTREAMINFO($BlockData) {
-		$info = &$this->getid3->info;
 
-		$info['flac']['STREAMINFO'] = array();
-		$streaminfo = &$info['flac']['STREAMINFO'];
-
+	/**
+	 * @param string $BlockData
+	 *
+	 * @return array
+	 */
+	public static function parseSTREAMINFOdata($BlockData) {
+		$streaminfo = array();
 		$streaminfo['min_block_size']  = getid3_lib::BigEndian2Int(substr($BlockData, 0, 2));
 		$streaminfo['max_block_size']  = getid3_lib::BigEndian2Int(substr($BlockData, 2, 2));
 		$streaminfo['min_frame_size']  = getid3_lib::BigEndian2Int(substr($BlockData, 4, 3));
@@ -211,15 +219,28 @@ class getid3_flac extends getid3_handler
 		$streaminfo['bits_per_sample'] = getid3_lib::Bin2Dec(substr($SRCSBSS, 23,  5)) + 1;
 		$streaminfo['samples_stream']  = getid3_lib::Bin2Dec(substr($SRCSBSS, 28, 36));
 
-		$streaminfo['audio_signature'] = substr($BlockData, 18, 16);
+		$streaminfo['audio_signature'] =                           substr($BlockData, 18, 16);
 
-		if (!empty($streaminfo['sample_rate'])) {
+		return $streaminfo;
+	}
+
+	/**
+	 * @param string $BlockData
+	 *
+	 * @return bool
+	 */
+	private function parseSTREAMINFO($BlockData) {
+		$info = &$this->getid3->info;
+
+		$info['flac']['STREAMINFO'] = self::parseSTREAMINFOdata($BlockData);
+
+		if (!empty($info['flac']['STREAMINFO']['sample_rate'])) {
 
 			$info['audio']['bitrate_mode']    = 'vbr';
-			$info['audio']['sample_rate']     = $streaminfo['sample_rate'];
-			$info['audio']['channels']        = $streaminfo['channels'];
-			$info['audio']['bits_per_sample'] = $streaminfo['bits_per_sample'];
-			$info['playtime_seconds']         = $streaminfo['samples_stream'] / $streaminfo['sample_rate'];
+			$info['audio']['sample_rate']     = $info['flac']['STREAMINFO']['sample_rate'];
+			$info['audio']['channels']        = $info['flac']['STREAMINFO']['channels'];
+			$info['audio']['bits_per_sample'] = $info['flac']['STREAMINFO']['bits_per_sample'];
+			$info['playtime_seconds']         = $info['flac']['STREAMINFO']['samples_stream'] / $info['flac']['STREAMINFO']['sample_rate'];
 			if ($info['playtime_seconds'] > 0) {
 				if (!$this->isDependencyFor('matroska')) {
 					$info['audio']['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
@@ -236,6 +257,11 @@ class getid3_flac extends getid3_handler
 		return true;
 	}
 
+	/**
+	 * @param string $BlockData
+	 *
+	 * @return bool
+	 */
 	private function parseAPPLICATION($BlockData) {
 		$info = &$this->getid3->info;
 
@@ -246,6 +272,11 @@ class getid3_flac extends getid3_handler
 		return true;
 	}
 
+	/**
+	 * @param string $BlockData
+	 *
+	 * @return bool
+	 */
 	private function parseSEEKTABLE($BlockData) {
 		$info = &$this->getid3->info;
 
@@ -275,6 +306,11 @@ class getid3_flac extends getid3_handler
 		return true;
 	}
 
+	/**
+	 * @param string $BlockData
+	 *
+	 * @return bool
+	 */
 	private function parseVORBIS_COMMENT($BlockData) {
 		$info = &$this->getid3->info;
 
@@ -294,6 +330,11 @@ class getid3_flac extends getid3_handler
 		return true;
 	}
 
+	/**
+	 * @param string $BlockData
+	 *
+	 * @return bool
+	 */
 	private function parseCUESHEET($BlockData) {
 		$info = &$this->getid3->info;
 		$offset = 0;
@@ -346,9 +387,11 @@ class getid3_flac extends getid3_handler
 	}
 
 	/**
-	* Parse METADATA_BLOCK_PICTURE flac structure and extract attachment
-	* External usage: audio.ogg
-	*/
+	 * Parse METADATA_BLOCK_PICTURE flac structure and extract attachment
+	 * External usage: audio.ogg
+	 *
+	 * @return bool
+	 */
 	public function parsePICTURE() {
 		$info = &$this->getid3->info;
 
@@ -380,6 +423,11 @@ class getid3_flac extends getid3_handler
 		return true;
 	}
 
+	/**
+	 * @param int $blocktype
+	 *
+	 * @return string
+	 */
 	public static function metaBlockTypeLookup($blocktype) {
 		static $lookup = array(
 			0 => 'STREAMINFO',
@@ -393,6 +441,11 @@ class getid3_flac extends getid3_handler
 		return (isset($lookup[$blocktype]) ? $lookup[$blocktype] : 'reserved');
 	}
 
+	/**
+	 * @param int $applicationid
+	 *
+	 * @return string
+	 */
 	public static function applicationIDLookup($applicationid) {
 		// http://flac.sourceforge.net/id.html
 		static $lookup = array(
@@ -423,6 +476,11 @@ class getid3_flac extends getid3_handler
 		return (isset($lookup[$applicationid]) ? $lookup[$applicationid] : 'reserved');
 	}
 
+	/**
+	 * @param int $type_id
+	 *
+	 * @return string
+	 */
 	public static function pictureTypeLookup($type_id) {
 		static $lookup = array (
 			 0 => 'Other',
