@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.4.0 - unreleased
+## 2.4.0 - 2018-09-23
 ### Added
 - SONOS player integration [#331](https://github.com/rello/audioplayer/issues/331)
 - Audioplayer widget for Dashboard App (beta) [#328](https://github.com/rello/audioplayer/issues/328)
