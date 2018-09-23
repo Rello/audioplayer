@@ -51,6 +51,7 @@ class PageController extends Controller
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @throws \OCP\PreConditionNotMetException
      */
     public function index()
     {
@@ -63,13 +64,9 @@ class PageController extends Controller
         $csp->addAllowedMediaDomain('*');
         $csp->addAllowedFrameDomain('*');
 
-        $maxUploadFilesize = \OCP\Util::maxUploadFilesize('/');
-
         $response = new TemplateResponse('audioplayer', 'index');
         $response->setContentSecurityPolicy($csp);
         $response->setParams([
-            'uploadMaxFilesize' => $maxUploadFilesize,
-            'uploadMaxHumanFilesize' => \OCP\Util::humanFileSize($maxUploadFilesize),
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
             'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false,

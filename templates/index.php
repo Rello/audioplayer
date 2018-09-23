@@ -14,7 +14,6 @@ style('audioplayer', 'style-min');
 style('files', 'detailsView');
 style('audioplayer', '3rdparty/fontello/css/fontello');
 script('audioplayer', 'soundmanager2-nodebug-jsmin');
-script('files', 'jquery.fileupload');
 script('audioplayer', 'app-min');
 script('audioplayer', 'sidebar');
 script('audioplayer', 'settings');
@@ -33,8 +32,6 @@ if ($_['audioplayer_sonos'] !== 'checked') {
 ?>
 <input type="hidden" name="id" value="">
 <input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>">
-<input type="hidden" name="MAX_FILE_SIZE" value="<?php p($_['uploadMaxFilesize']) ?>" id="max_upload">
-<input type="hidden" class="max_human_file_size" value="(max <?php p($_['uploadMaxHumanFilesize']); ?>)">
 <input type="hidden" id="audioplayer_notification" value="<?php p($_['audioplayer_notification']); ?>">
 <input type="hidden" id="audioplayer_volume" value="<?php p($_['audioplayer_volume']); ?>">
 <input type="hidden" id="audioplayer_editor" value="<?php p($_['audioplayer_editor']); ?>">
