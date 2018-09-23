@@ -14,6 +14,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - cs translation [#336](https://github.com/rello/audioplayer/pull/336) @[447937](https://github.com/447937)
 - pl translation [#335](https://github.com/rello/audioplayer/pull/335) @[andypl78](https://github.com/andypl78)
 - ru translation [#334](https://github.com/rello/audioplayer/pull/309) @[r4sas](https://github.com/r4sas)
+- upgrade getID3 to version 1.9.15-201809221240 [#340](https://github.com/rello/audioplayer/issues/340)
 
 ### Fixed
 - Postgres issue in categories [#330](https://github.com/rello/audioplayer/pull/330) @[jpumc](https://github.com/jpumc)
