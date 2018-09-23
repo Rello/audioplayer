@@ -554,7 +554,7 @@ class ScannerController extends Controller {
             if ($this->folderpicture) {
                 if ($debug) $output->writeln("     Reusing previous folder image");
                 $this->processImageString($iAlbumId, $this->folderpicture->getContent());
-            } else {
+            } elseif (isset($this->ID3Tags['comments']['picture'][0]['data'])) {
                 $data = $this->ID3Tags['comments']['picture'][0]['data'];
                 $this->processImageString($iAlbumId, $data);
             }
