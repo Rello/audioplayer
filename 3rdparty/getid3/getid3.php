@@ -251,7 +251,7 @@ class getID3
 	 */
 	protected $startup_warning = '';
 
-	const VERSION           = '1.9.15-201809221240';
+	const VERSION           = '1.9.15-audioplayer';
 	const FREAD_BUFFER_SIZE = 32768;
 
 	const ATTACHMENTS_NONE   = false;
@@ -406,7 +406,7 @@ class getID3
 	 *
 	 * @throws getid3_exception
 	 */
-	public function openfile($filename, $filesize=null) {
+	public function openfile($filename, $fp=null, $filesize=null) {
 		try {
 			if (!empty($this->startup_error)) {
 				throw new getid3_exception($this->startup_error);
@@ -433,8 +433,10 @@ class getID3
 
 			// open local file
 			//if (is_readable($filename) && is_file($filename) && ($this->fp = fopen($filename, 'rb'))) { // see https://www.getid3.org/phpBB3/viewtopic.php?t=1720
-			if ((is_readable($filename) || file_exists($filename)) && is_file($filename) && ($this->fp = fopen($filename, 'rb'))) {
-				// great
+            if ($fp != null && (get_resource_type($fp) == 'file' || get_resource_type($fp) == 'stream')) {
+                $this->fp = $fp;
+            } else if ((is_readable($filename) || file_exists($filename)) && is_file($filename) && ($this->fp = fopen($filename, 'rb'))) {
+                // great
 			} else {
 				$errormessagelist = array();
 				if (!is_readable($filename)) {
@@ -514,9 +516,9 @@ class getID3
 	 *
 	 * @return array
 	 */
-	public function analyze($filename, $filesize=null, $original_filename='') {
+	public function analyze($filename, $fp=null, $filesize=null, $original_filename='') {
 		try {
-			if (!$this->openfile($filename, $filesize)) {
+			if (!$this->openfile($filename, $fp, $filesize)) {
 				return $this->info;
 			}
 
