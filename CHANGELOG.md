@@ -18,6 +18,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - Postgres issue in categories [#330](https://github.com/rello/audioplayer/pull/330) @[jpumc](https://github.com/jpumc)
 - NC14: Album not scrolled into viewarea [#337](https://github.com/rello/audioplayer/issues/337)
+- special characters in folder names (one click play) [#291](https://github.com/rello/audioplayer/issues/291)
 
 ## 2.3.2 - 2018-08-19
 ### Fixed
