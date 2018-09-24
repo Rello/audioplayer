@@ -1,7 +1,7 @@
 {
   "translations": {
     "Audio Player": "Audio-Player",
-    "Albums": "Albümlwe",
+    "Albums": "Albümler",
     "Create new playlist": "Yeni playlist oluştur",
     "GO": "GİT",
     "Scan for new audio files": "Yeni ses dosyaları için tarat",
@@ -65,10 +65,10 @@
     "Formats supported by the browser": "Tarayıcı tarafından desteklenen biçimler",
     "Formats not supported by the browser": "Tarayıcı tarafından desteklenmeyen biçimler",
     "Please reset and rescan library to make use of new features.": "Yeni özellikleri kullanabilmek için lütfen kütüphaneyi sıfırlayıp tekrar tarama yaptırın.",
-    "Do you like this app?": "Gefällt Dir die App?",
-    "Name of the SONOS player or group": "Name of the SONOS player or group",
-    "All titles will be played on your SONOS speaker": "All titles will be played on your SONOS speaker",
-    "Server path to the SMB directory where all audio files are located": "Server path to the SMB directory where all audio files are located"
+    "Do you like this app?": "Uygulamayı sevdiniz mi?",
+    "Name of the SONOS player or group": "SONOS player adı yada grubu",
+    "All titles will be played on your SONOS speaker": "Bütün başlıklar SONOS hoparlörünüzden çalınacaktır",
+    "Server path to the SMB directory where all audio files are located": "Tüm ses dosyaların bulunduğu SMB sunucu klasör yolu"
   },
   "pluralForm": ""
 }
