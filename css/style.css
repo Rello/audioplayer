@@ -14,6 +14,18 @@
 .ap_hidden {
     display: none !important;
 }
+#albumPlay {
+    position: absolute;
+    display: block;
+    height: 30px;
+    width: 30px;
+    top: 115px;
+    left: 5px;
+    background-image: none, url(../img/play.svg);
+    background-size: 30px;
+    opacity: 0.5;
+    cursor: pointer;
+}
 
 #searchresults {
     margin-top: 0 !important;

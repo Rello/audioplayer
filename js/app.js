@@ -149,8 +149,7 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
         }).click($this.loadIndividualAlbums.bind($this));
 
         var divPlayHref = $('<a/>');
-        var divPlayImage = $('<img src="img/play.png"/>').attr({
-            'style': 'position: absolute;display: block;height: 30px;width: 30px;top: 115px;left: 5px;',
+        var divPlayImage = $('<div/>').attr({
             'id': 'albumPlay'
         }).click($this.loadIndividualAlbums.bind($this));
 
