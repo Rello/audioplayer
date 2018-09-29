@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.4.1 - 2018-09-29
+### Fixed
+- Play button not displayed due to png format [#345](https://github.com/rello/audioplayer/issues/345)
+
+### Changed
+- zh_CN translation [#346](https://github.com/rello/audioplayer/pull/346) @[PYCG](https://github.com/PYCG)
+- tr translation [#344](https://github.com/rello/audioplayer/pull/344) @[mzeyrek](https://github.com/mzeyrek)
+
 ## 2.4.0 - 2018-09-23
 ### Added
 - SONOS player integration [#331](https://github.com/rello/audioplayer/issues/331)
