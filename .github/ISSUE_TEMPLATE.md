@@ -32,31 +32,13 @@ Please use this template because the automatically pre-filled template of the Is
 **Database:**
 
 
-**PHP version:**
-
-
 **Nextcloud/ownCloud version:** (see `/status.php`)
-
-
-**Updated from an older Nextcloud/ownCloud or fresh install:**
 
 
 **Audio Player version:** (see `/settings/apps`)
 
 
-**Where did you install Audio Player from?** `NC App Store/oC Marketplace/GitHub`
-
-
 **Are you using external storage? If yes, which one:** `local/smb/sftp/...`
-
-
-**Are you using encryption?** yes/no
-
-
-**Have you activated other multimedia apps?** `Music/Folder Player/...`
-
-
-**Audio Player media folder:** (see Settings) `root/Music/...`
 
 
 ### Client configuration
