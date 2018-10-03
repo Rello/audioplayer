@@ -16,7 +16,7 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
 <div class="section" id="audioplayer">
     <h2><?php p($l->t('Scanner Settings')); ?></h2>
     <div>
-        <label for="audio-path"><?php p($l->t('Search for audio files in ')); ?>:</label>
+        <label for="audio-path"><?php p($l->t('Search for audio files in')); ?>:</label>
         <input type="text" id="audio-path" value="<?php p($_['audioplayer_path']); ?>"/>
         <p>
             <em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.')); ?></em>
@@ -27,7 +27,7 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
         <br>
     </div>
     <div>
-        <label for="cyrillic_user"><?php p($l->t('Cyrillic support:')); ?></label>
+        <label for="cyrillic_user"><?php p($l->t('Cyrillic support')); ?>:</label>
         <input type="checkbox" id="cyrillic_user" <?php p($_['audioplayer_cyrillic']); ?>/>
         <p>
             <em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em>
