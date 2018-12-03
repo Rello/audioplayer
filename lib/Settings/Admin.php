@@ -16,7 +16,7 @@ use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
 use OCP\IConfig;
 
-class Personal implements ISettings
+class Admin implements ISettings
 {
 
     private $userId;
@@ -35,24 +35,6 @@ class Personal implements ISettings
     }
 
     /**
-     * @return TemplateResponse returns the instance with all parameters set, ready to be rendered
-     * @since 9.1
-     */
-    public function getForm()
-    {
-
-        $parameters = [
-            'audioplayer_cyrillic' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'cyrillic'),
-            'audioplayer_path' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'path'),
-            'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos'),
-            'audioplayer_sonos_admin' => $this->configManager->getAppValue('audioplayer', 'sonos'),
-            'audioplayer_sonos_controller' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller'),
-            'audioplayer_sonos_smb_path' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path'),
-        ];
-        return new TemplateResponse('audioplayer', 'settings/personal', $parameters, '');
-    }
-
-    /**
      * Print config section (ownCloud 10)
      *
      * @return TemplateResponse
@@ -60,6 +42,19 @@ class Personal implements ISettings
     public function getPanel()
     {
         return $this->getForm();
+    }
+
+    /**
+     * @return TemplateResponse returns the instance with all parameters set, ready to be rendered
+     * @since 9.1
+     */
+    public function getForm()
+    {
+
+        $parameters = [
+            'audioplayer_sonos_admin' => $this->configManager->getAppValue('audioplayer', 'sonos'),
+        ];
+        return new TemplateResponse('audioplayer', 'settings/admin', $parameters, '');
     }
 
     /**

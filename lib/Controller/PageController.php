@@ -64,12 +64,18 @@ class PageController extends Controller
         $csp->addAllowedMediaDomain('*');
         $csp->addAllowedFrameDomain('*');
 
+        if ($this->configManager->getAppValue('audioplayer', 'sonos') === "checked") {
+            $audioplayer_sonos = $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false;
+        } else {
+            $audioplayer_sonos = false;
+        }
+
         $response = new TemplateResponse('audioplayer', 'index');
         $response->setContentSecurityPolicy($csp);
         $response->setParams([
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
-            'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false,
+            'audioplayer_sonos' => $audioplayer_sonos,
             'audioplayer_notification' => $this->getNotification(),
             'audioplayer_editor' => 'false',
         ]);

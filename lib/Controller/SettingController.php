@@ -50,18 +50,36 @@ class SettingController extends Controller {
         $this->rootFolder = $rootFolder;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 */
+    /**
+     * @param $type
+     * @param $value
+     * @return JSONResponse
+     */
+    public function admin($type, $value)
+    {
+        //\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
+        $this->configManager->setAppValue($this->appName, $type, $value);
+        return new JSONResponse(array('success' => 'true'));
+    }
+
+    /**
+     * @NoAdminRequired
+     * @param $type
+     * @param $value
+     * @return JSONResponse
+     * @throws \OCP\PreConditionNotMetException
+     */
 	public function setValue($type, $value) {
 		//\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
 		$this->configManager->setUserValue($this->userId, $this->appName, $type, $value);
 		return new JSONResponse(array('success' => 'true'));
 	}
 
-	/**
-	 * @NoAdminRequired
-	 */
+    /**
+     * @NoAdminRequired
+     * @param $type
+     * @return JSONResponse
+     */
 	public function getValue($type) {
 		$value = $this->configManager->getUserValue($this->userId, $this->appName, $type);
 
@@ -84,9 +102,11 @@ class SettingController extends Controller {
 		return $response;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 */
+    /**
+     * @NoAdminRequired
+     * @param $value
+     * @return JSONResponse
+     */
 	public function userPath($value) {
 		$path = $value;
 			try {
@@ -107,7 +127,9 @@ class SettingController extends Controller {
 
     /**
      * @NoAdminRequired
-     *
+     * @param $fileId
+     * @param $isFavorite
+     * @return bool
      */
     public function setFavorite($fileId, $isFavorite) {
         $this->tagger = $this->tagManager->load('files');
@@ -122,6 +144,8 @@ class SettingController extends Controller {
 
     /**
      * @NoAdminRequired
+     * @param $track_id
+     * @return int|string
      */
     public function setStatistics($track_id) {
         $date = new \DateTime();
