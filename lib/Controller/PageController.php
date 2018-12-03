@@ -19,6 +19,7 @@ use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
+use OCP\AppFramework\Http\ContentSecurityPolicy;
 
 /**
  * Controller class for main page.
@@ -56,14 +57,6 @@ class PageController extends Controller
     public function index()
     {
 
-        $csp = new \OCP\AppFramework\Http\ContentSecurityPolicy();
-        $csp->addAllowedStyleDomain('data:');
-        $csp->addAllowedImageDomain('\'self\'');
-        $csp->addAllowedImageDomain('data:');
-        $csp->addAllowedImageDomain('*');
-        $csp->addAllowedMediaDomain('*');
-        $csp->addAllowedFrameDomain('*');
-
         if ($this->configManager->getAppValue('audioplayer', 'sonos') === "checked") {
             $audioplayer_sonos = $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false;
         } else {
@@ -71,6 +64,8 @@ class PageController extends Controller
         }
 
         $response = new TemplateResponse('audioplayer', 'index');
+        $csp = new ContentSecurityPolicy();
+        $csp->addAllowedMediaDomain('*'); //required for external m3u playlists
         $response->setContentSecurityPolicy($csp);
         $response->setParams([
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),

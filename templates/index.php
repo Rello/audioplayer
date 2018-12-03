@@ -16,7 +16,7 @@ style('audioplayer', '3rdparty/fontello/css/fontello');
 script('audioplayer', 'soundmanager2-nodebug-jsmin');
 script('audioplayer', 'app-min');
 script('audioplayer', 'sidebar');
-script('audioplayer', 'settings');
+script('audioplayer', 'settings/settings');
 if ($_['audioplayer_editor'] === 'true') {
     script('audioplayer_editor', 'editor');
     style('audioplayer_editor', 'style');
@@ -41,7 +41,7 @@ if ($_['audioplayer_sonos'] !== 'checked') {
 
     <?php print_unescaped($this->inc('part.navigation')); ?>
 
-    <?php print_unescaped($this->inc('part.settings')); ?>
+    <?php print_unescaped($this->inc('settings/part.settings')); ?>
 
 </div>
 
