@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.5.0 - open
+### Changed
+- ru translation [#350](https://github.com/rello/audioplayer/pull/350) @[r4sas](https://github.com/r4sas)
+
 ## 2.4.1 - 2018-09-29
 ### Fixed
 - Play button not displayed due to png format [#345](https://github.com/rello/audioplayer/issues/345)
@@ -21,7 +25,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - zh_CN translation [#342](https://github.com/rello/audioplayer/pull/342) @[limingqi](https://github.com/limingqi)
 - cs translation [#336](https://github.com/rello/audioplayer/pull/336) @[447937](https://github.com/447937)
 - pl translation [#335](https://github.com/rello/audioplayer/pull/335) @[andypl78](https://github.com/andypl78)
-- ru translation [#334](https://github.com/rello/audioplayer/pull/309) @[r4sas](https://github.com/r4sas)
+- ru translation [#309](https://github.com/rello/audioplayer/pull/309) @[r4sas](https://github.com/r4sas)
 - upgrade getID3 to version 1.9.15-201809221240 [#340](https://github.com/rello/audioplayer/issues/340)
 
 ### Fixed
