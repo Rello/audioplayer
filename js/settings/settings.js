@@ -126,7 +126,9 @@ Audios.prototype.processScan = function () {
     $('#audios_import_process').css('display', 'block');
 
     this.scanSend();
-    window.setTimeout(myAudios.scanUpdate(), 1500);
+    window.setTimeout(function () {
+        myAudios.scanUpdate();
+    }, 1500);
 };
 
 Audios.prototype.scanSend = function () {
@@ -182,7 +184,9 @@ Audios.prototype.scanUpdate = function () {
                 $('#audios_import_process_progress').text(data.prog);
                 $('#audios_import_process_message').text(data.msg);
                 if (data.percent < 100) {
-                    window.setTimeout(myAudios.scanUpdate(), 1500);
+                    window.setTimeout(function () {
+                        myAudios.scanUpdate();
+                    }, 1500);
                 } else {
                     $('#audios_import_process').css('display', 'none');
                     $('#audios_import_done').css('display', 'block');
