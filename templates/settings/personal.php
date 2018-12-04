@@ -47,11 +47,11 @@ script('audioplayer', 'soundmanager2-nodebug-jsmin');
     </div>
     <br>
     <br>
-    <h2><?php p($l->t('SONOS Player Plugin')); ?></h2>
+    <h2><?php p($l->t('SONOS Player Settings')); ?></h2>
     <?php if ($_['audioplayer_sonos_admin'] !== "checked") { ?>
         <div>
             <p>
-                <em><?php p($l->t('The SONOS player needs to be enabled globally by the admin')); ?></em>
+                <em><?php p($l->t('The SONOS plugin needs to be enabled by the administrator')); ?></em>
             </p>
         </div>
 

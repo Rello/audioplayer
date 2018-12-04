@@ -81,7 +81,9 @@
     "Volume": "Громкость",
     "Written to library: ": "Записано в библиотеку: ",
     "Year": "Год",
-    "Years": "Года"
+    "Years": "Года",
+    "The SONOS plugin needs to be enabled by the administrator": "The SONOS plugin needs to be enabled by the administrator",
+    "Enable for all users": "Enable for all users"
   },
   "pluralForm": ""
 }

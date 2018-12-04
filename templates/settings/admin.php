@@ -16,13 +16,14 @@ script('audioplayer', 'settings/admin');
     <h2><?php p($l->t('SONOS Player Plugin')); ?></h2>
     <div>
         <p>
-            <em><?php p($l->t('The SONOS player needs to be enabled globally by the admin')); ?></em>
+            <em><?php p($l->t('The SONOS plugin needs to be enabled by the administrator')); ?></em>
+            <br>
+            <em><a href="https://github.com/Rello/audioplayer/wiki/SONOS"
+                   target="_blank"><?php p($l->t('More information…')); ?></a></em>
         </p>
         <br>
-        <label for="sonos"><?php p($l->t('SONOS Playback')); ?>&nbsp;</label>
+        <label for="sonos"><?php p($l->t('Enable for all users')); ?>:&nbsp;</label>
         <input type="checkbox" id="sonos" <?php p($_['audioplayer_sonos_admin']); ?>/>
-        <p><em><a href="https://github.com/Rello/audioplayer/wiki/SONOS"
-                  target="_blank"><?php p($l->t('More information…')); ?></a></em></p>
         <br>
     </div>
 </div>

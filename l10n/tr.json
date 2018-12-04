@@ -68,7 +68,9 @@
     "Do you like this app?": "Uygulamayı sevdiniz mi?",
     "Name of the SONOS player or group": "SONOS player adı yada grubu",
     "All titles will be played on your SONOS speaker": "Bütün başlıklar SONOS hoparlörünüzden çalınacaktır",
-    "Server path to the SMB directory where all audio files are located": "Tüm ses dosyaların bulunduğu SMB sunucu klasör yolu"
+    "Server path to the SMB directory where all audio files are located": "Tüm ses dosyaların bulunduğu SMB sunucu klasör yolu",
+    "The SONOS plugin needs to be enabled by the administrator": "The SONOS plugin needs to be enabled by the administrator",
+    "Enable for all users": "Enable for all users"
   },
   "pluralForm": ""
 }

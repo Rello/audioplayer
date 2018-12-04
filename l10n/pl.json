@@ -69,7 +69,9 @@
     "Do you like this app?": "Czy podoba ci się ta aplikacja?",
     "Name of the SONOS player or group": "Nazwa odtwarzacza SONOS lub grupy",
     "All titles will be played on your SONOS speaker": "Wszystkie tytuły będą odtwarzane na twoim głośniku SONOS",
-    "Server path to the SMB directory where all audio files are located": "Ścieżka do katalogu na serwerze SMB, w którym znajdują się wszystkie pliki audio"
+    "Server path to the SMB directory where all audio files are located": "Ścieżka do katalogu na serwerze SMB, w którym znajdują się wszystkie pliki audio",
+    "The SONOS plugin needs to be enabled by the administrator": "The SONOS plugin needs to be enabled by the administrator",
+    "Enable for all users": "Enable for all users"
   },
   "pluralForm": ""
 }

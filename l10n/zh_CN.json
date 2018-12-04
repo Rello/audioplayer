@@ -69,7 +69,9 @@
     "Do you like this app?": "你喜欢这个应用吗？",
     "Name of the SONOS player or group": "SONOS播放器或组的名称",
     "All titles will be played on your SONOS speaker": "将在你的SONOS扬声器上播放所有曲目",
-    "Server path to the SMB directory where all audio files are located": "所有音频文件所在SMB目录的服务器路径"
+    "Server path to the SMB directory where all audio files are located": "所有音频文件所在SMB目录的服务器路径",
+    "The SONOS plugin needs to be enabled by the administrator": "The SONOS plugin needs to be enabled by the administrator",
+    "Enable for all users": "Enable for all users"
   },
   "pluralForm": ""
 }
