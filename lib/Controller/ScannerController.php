@@ -653,7 +653,7 @@ class ScannerController extends Controller {
 		} else {
 			$handle = $audio->fopen('rb');
 			if (@fseek($handle, -24, SEEK_END) === 0) {
-                $ThisFileInfo = $getID3->analyze($audio->getPath(), $handle, $audio->getSize());
+                $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
 			} else {
 				if (!$this->no_fseek) {
 					if ($debug) {

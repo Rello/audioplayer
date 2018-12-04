@@ -251,7 +251,7 @@ class getID3
 	 */
 	protected $startup_warning = '';
 
-	const VERSION           = '1.9.15-audioplayer';
+    const VERSION = '1.9.16-201812042150';
 	const FREAD_BUFFER_SIZE = 32768;
 
 	const ATTACHMENTS_NONE   = false;
@@ -406,7 +406,8 @@ class getID3
 	 *
 	 * @throws getid3_exception
 	 */
-	public function openfile($filename, $fp=null, $filesize=null) {
+    public function openfile($filename, $filesize = null, $fp = null)
+    {
 		try {
 			if (!empty($this->startup_error)) {
 				throw new getid3_exception($this->startup_error);
@@ -433,7 +434,7 @@ class getID3
 
 			// open local file
 			//if (is_readable($filename) && is_file($filename) && ($this->fp = fopen($filename, 'rb'))) { // see https://www.getid3.org/phpBB3/viewtopic.php?t=1720
-            if ($fp != null && (get_resource_type($fp) == 'file' || get_resource_type($fp) == 'stream')) {
+            if (($fp != null) && ((get_resource_type($fp) == 'file') || (get_resource_type($fp) == 'stream'))) {
                 $this->fp = $fp;
             } else if ((is_readable($filename) || file_exists($filename)) && is_file($filename) && ($this->fp = fopen($filename, 'rb'))) {
                 // great
@@ -516,9 +517,10 @@ class getID3
 	 *
 	 * @return array
 	 */
-	public function analyze($filename, $fp=null, $filesize=null, $original_filename='') {
+    public function analyze($filename, $filesize = null, $original_filename = '', $fp = null)
+    {
 		try {
-			if (!$this->openfile($filename, $fp, $filesize)) {
+            if (!$this->openfile($filename, $filesize, $fp)) {
 				return $this->info;
 			}
 
@@ -1253,6 +1255,16 @@ class getID3
 							'fail_id3'  => 'ERROR',
 							'fail_ape'  => 'ERROR',
 						),
+
+                // XZ   - data         - XZ compressed data
+                'xz' => array(
+                    'pattern' => '^\\xFD7zXZ\\x00',
+                    'group' => 'archive',
+                    'module' => 'xz',
+                    'mime_type' => 'application/x-xz',
+                    'fail_id3' => 'ERROR',
+                    'fail_ape' => 'ERROR',
+                ),
 
 
 				// Misc other formats
