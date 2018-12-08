@@ -82,8 +82,8 @@
     "Written to library: ": "Записано в библиотеку: ",
     "Year": "Год",
     "Years": "Года",
-    "The SONOS plugin needs to be enabled by the administrator": "The SONOS plugin needs to be enabled by the administrator",
-    "Enable for all users": "Enable for all users"
+    "The SONOS plugin needs to be enabled by the administrator": "Плагин SONOS должен быть включенным администратором",
+    "Enable for all users": "Включить для всех пользователей"
   },
   "pluralForm": ""
 }
