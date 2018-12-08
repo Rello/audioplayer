@@ -18,6 +18,8 @@ use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\ITagManager;
 use OCP\IDbConnection;
+use OCP\ISession;
+
 
 /**
  * Controller class for main page.
@@ -25,29 +27,33 @@ use OCP\IDbConnection;
 class SettingController extends Controller {
 	
 	private $userId;
-	private $configManager;
+    private $config;
 	private $rootFolder;
     private $tagger;
     private $tagManager;
     private $db;
+    private $session;
 
-	public function __construct(
-			$appName, 
-			IRequest $request, 
-			$userId, 
-			IConfig $configManager,
-            IDBConnection $db,
-            ITagManager $tagManager,
-            IRootFolder $rootFolder
-			) {
+    public function __construct(
+        $appName,
+        IRequest $request,
+        $userId,
+        IConfig $config,
+        IDBConnection $db,
+        ITagManager $tagManager,
+        IRootFolder $rootFolder,
+        ISession $session
+    )
+    {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
 		$this->userId = $userId;
-		$this->configManager = $configManager;
+        $this->config = $config;
         $this->db = $db;
         $this->tagManager = $tagManager;
         $this->tagger = null;
         $this->rootFolder = $rootFolder;
+        $this->session = $session;
 	}
 
     /**
@@ -58,7 +64,7 @@ class SettingController extends Controller {
     public function admin($type, $value)
     {
         //\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
-        $this->configManager->setAppValue($this->appName, $type, $value);
+        $this->config->setAppValue($this->appName, $type, $value);
         return new JSONResponse(array('success' => 'true'));
     }
 
@@ -71,7 +77,7 @@ class SettingController extends Controller {
      */
 	public function setValue($type, $value) {
 		//\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
-		$this->configManager->setUserValue($this->userId, $this->appName, $type, $value);
+        $this->config->setUserValue($this->userId, $this->appName, $type, $value);
 		return new JSONResponse(array('success' => 'true'));
 	}
 
@@ -81,7 +87,7 @@ class SettingController extends Controller {
      * @return JSONResponse
      */
 	public function getValue($type) {
-		$value = $this->configManager->getUserValue($this->userId, $this->appName, $type);
+        $value = $this->config->getUserValue($this->userId, $this->appName, $type);
 
 		//\OCP\Util::writeLog('audioplayer', 'settings load: '.$type.$value, \OCP\Util::DEBUG);
 
@@ -106,6 +112,7 @@ class SettingController extends Controller {
      * @NoAdminRequired
      * @param $value
      * @return JSONResponse
+     * @throws \OCP\PreConditionNotMetException
      */
 	public function userPath($value) {
 		$path = $value;
@@ -121,7 +128,7 @@ class SettingController extends Controller {
 			if ($path[strlen($path) - 1] !== '/') {
 				$path .= '/';
 			}
-			$this->configManager->setUserValue($this->userId, $this->appName, 'path', $path);
+        $this->config->setUserValue($this->userId, $this->appName, 'path', $path);
 		return new JSONResponse(array('success' => true));
 	}
 
@@ -167,4 +174,5 @@ class SettingController extends Controller {
             return $insertid;
         }
     }
+
 }

@@ -523,4 +523,47 @@ class DbController extends Controller
         return $value;
     }
 
+    /**
+     * @NoAdminRequired
+     * @param $type
+     * @param $value
+     * @return JSONResponse
+     * @throws \OCP\PreConditionNotMetException
+     */
+    public function setSessionValue($type, $value)
+    {
+        //$this->session->set($type, $value);
+        $SQL = 'SELECT `configvalue` FROM `*PREFIX*preferences` WHERE `userid`= ? AND `appid`= ? AND `configkey`= ?';
+        $stmt = $this->db->prepare($SQL);
+        $stmt->execute(array($this->userId, 'audioplayer', $type));
+        $row = $stmt->fetch();
+        if (isset($row['configvalue'])) {
+            $stmt = $this->db->prepare('UPDATE `*PREFIX*preferences` SET `configvalue`= ? WHERE `userid`= ? AND `appid`= ? AND `configkey`= ?');
+            $stmt->execute(array($value, $this->userId, 'audioplayer', $type));
+            \OCP\Util::writeLog('audioplayer', 'update: ' . $value, \OCP\Util::DEBUG);
+            return 'update';
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*preferences` (`userid`,`appid`,`configkey`,`configvalue`) VALUES(?,?,?,?)');
+            $stmt->execute(array($this->userId, 'audioplayer', $type, $value));
+            \OCP\Util::writeLog('audioplayer', 'insert: ' . $type . $value, \OCP\Util::DEBUG);
+            return 'insert';
+        }
+
+    }
+
+    /**
+     * @NoAdminRequired
+     * @param $type
+     * @return string
+     */
+    public function getSessionValue($type)
+    {
+        //return $this->session->get($type);
+        $SQL = 'SELECT `configvalue` FROM `*PREFIX*preferences` WHERE `userid`= ? AND `appid`= ? AND `configkey`= ?';
+        $stmt = $this->db->prepare($SQL);
+        $stmt->execute(array($this->userId, 'audioplayer', $type));
+        $row = $stmt->fetch();
+        return $row['configvalue'];
+    }
+
 }

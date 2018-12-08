@@ -97,20 +97,19 @@ Audios.prototype.scanInit = function () {
         modal: true,
         resizable: false,
         close: function () {
-            $this.scanStop($this.progresskey);
+            $this.scanStop();
             $('#audios_import_dialog').ocdialog('destroy');
             $('#audios_import').remove();
         }
     });
 
     $('#audios_import_done_close').click(function () {
-        $this.progresskey = '';
         $this.percentage = 0;
         $('#audios_import_dialog').ocdialog('close');
     });
 
     $('#audios_import_progress_cancel').click(function () {
-        $this.scanStop($this.progresskey);
+        $this.scanStop();
     });
 
     $('#audios_import_submit').click(function () {
@@ -118,7 +117,6 @@ Audios.prototype.scanInit = function () {
     });
 
     $('#audios_import_progressbar').progressbar({value: 0});
-    this.progresskey = $('#audios_import_progresskey').val();
 };
 
 Audios.prototype.processScan = function () {
@@ -133,9 +131,8 @@ Audios.prototype.processScan = function () {
 
 Audios.prototype.scanSend = function () {
     $.post(OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
-        {progresskey: this.progresskey}, function (data) {
+        {}, function (data) {
             if (data.status === 'success') {
-                $this.progresskey = '';
                 $('#audios_import_process').css('display', 'none');
                 $('#audios_import_done').css('display', 'block');
                 $('#audios_import_done_message').html(data.message);
@@ -149,21 +146,18 @@ Audios.prototype.scanSend = function () {
                     }
                 });
             } else {
-                $this.progresskey = '';
                 $('#audios_import_progressbar').progressbar('option', 'value', 100);
                 $('#audios_import_done_message').html(data.message);
             }
         }.bind(this));
 };
 
-Audios.prototype.scanStop = function (progresskey) {
-    $this.progresskey = '';
+Audios.prototype.scanStop = function () {
     $this.percentage = 0;
     $.ajax({
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
         data: {
-            'progresskey': progresskey,
             'scanstop': true
         },
         success: function () {
@@ -172,12 +166,9 @@ Audios.prototype.scanStop = function (progresskey) {
 };
 
 Audios.prototype.scanUpdate = function () {
-    if (this.progresskey === '') {
-        return false;
-    }
 
     $.post(OC.generateUrl('apps/audioplayer/getprogress'),
-        {progresskey: this.progresskey}, function (data) {
+        {}, function (data) {
             if (data.status === 'success') {
                 this.percentage = parseInt(data.percent);
                 $('#audios_import_progressbar').progressbar('option', 'value', parseInt(data.percent));
