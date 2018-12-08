@@ -527,7 +527,7 @@ class DbController extends Controller
      * @NoAdminRequired
      * @param $type
      * @param $value
-     * @return JSONResponse
+     * @return string
      * @throws \OCP\PreConditionNotMetException
      */
     public function setSessionValue($type, $value)
@@ -540,15 +540,12 @@ class DbController extends Controller
         if (isset($row['configvalue'])) {
             $stmt = $this->db->prepare('UPDATE `*PREFIX*preferences` SET `configvalue`= ? WHERE `userid`= ? AND `appid`= ? AND `configkey`= ?');
             $stmt->execute(array($value, $this->userId, 'audioplayer', $type));
-            \OCP\Util::writeLog('audioplayer', 'update: ' . $value, \OCP\Util::DEBUG);
             return 'update';
         } else {
             $stmt = $this->db->prepare('INSERT INTO `*PREFIX*preferences` (`userid`,`appid`,`configkey`,`configvalue`) VALUES(?,?,?,?)');
             $stmt->execute(array($this->userId, 'audioplayer', $type, $value));
-            \OCP\Util::writeLog('audioplayer', 'insert: ' . $type . $value, \OCP\Util::DEBUG);
             return 'insert';
         }
-
     }
 
     /**

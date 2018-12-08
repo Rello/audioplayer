@@ -98,10 +98,10 @@ class ScannerController extends Controller
     /**
      * @NoAdminRequired
      *
-     * @param null $userId
-     * @param null $output
-     * @param null $debug
-     * @param null $scanstop
+     * @param $userId
+     * @param $output
+     * @param $debug
+     * @param $scanstop
      * @return bool|JSONResponse
      * @throws \OCP\Files\NotFoundException
      * @throws \OCP\PreConditionNotMetException
