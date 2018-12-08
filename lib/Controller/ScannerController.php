@@ -325,8 +325,8 @@ class ScannerController extends Controller
 
     /**
      * @param $percentage
-     * @param null $output
-     * @param null $debug
+     * @param $output
+     * @param $debug
      * @return bool
      * @throws \OCP\PreConditionNotMetException
      */
