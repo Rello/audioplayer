@@ -13,7 +13,7 @@ namespace OCA\audioplayer\Settings;
 
 use OCP\IL10N;
 use OCP\IURLGenerator;
-use OCP\Settings\IIconSection;
+use OCP\Settings\ISection;
 
 class AdminSectionOC implements ISection
 {
