@@ -749,8 +749,9 @@ class ScannerController extends Controller
     public function checkNewTracks()
     {
         // get only the relevant audio files
-        $this->getAudioObjects();
-        $this->getStreamObjects();
+        $output = new NullOutput();
+        $this->getAudioObjects($output);
+        $this->getStreamObjects($output);
         if ($this->numOfSongs !== 0) {
             return 'true';
         } else {
