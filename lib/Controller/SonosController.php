@@ -185,7 +185,17 @@ class SonosController extends Controller
     private function discoverDevices()
     {
         $port = 1900;
-        $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        try {
+            //$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+            $sock = socket_create(AF_INET, SOCK_DGRAM, 21);
+        } catch (\Exception $e) {
+            $this->logger->error('SONOS discovery not possible; no socket setup on webserver; check Audio Player wiki', array('app' => 'audioplayer'));
+            return array();
+        }
+        if (!$sock) {
+            $this->logger->error('SONOS discovery not possible; connection issue; check Audio Player wiki', array('app' => 'audioplayer'));
+            return array();
+        }
         $level = getprotobyname("ip");
         socket_set_option($sock, $level, IP_MULTICAST_TTL, 2);
         $data = "M-SEARCH * HTTP/1.1\r\n";
