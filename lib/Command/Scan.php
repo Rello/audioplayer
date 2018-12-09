@@ -32,7 +32,7 @@ class Scan extends Command {
 	protected function configure() {
 		$this
 			->setName('audioplayer:scan')
-			->setDescription('scan for new audio files')
+            ->setDescription('scan for new audio files; use -v for debugging')
 			->addArgument(
 					'user_id',
 					InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
@@ -44,17 +44,16 @@ class Scan extends Command {
 					InputOption::VALUE_NONE,
 					'scan all audio files of all known users'
 			)
-			->addOption(
-					'debug',
-					null,
-					InputOption::VALUE_NONE,
-					'current processed audio file will be written for detailed analysis'
-			)
 		;
 	}
 	
 	protected function execute(InputInterface $input, OutputInterface $output) {
-		if ($input->getOption('all')) {
+        # restrict the verbosity level to VERBOSITY_VERY_VERBOSE
+        if ($output->getVerbosity() > OutputInterface::VERBOSITY_VERY_VERBOSE) {
+            $output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE);
+        }
+
+        if ($input->getOption('all')) {
 			$users = $this->userManager->search('');
 		} else {
 			$users = $input->getArgument('user_id');
@@ -74,7 +73,7 @@ class Scan extends Command {
 			} else {
 				$userId = $user->getUID();
 				$output->writeln("<info>Start scan for $userId</info>");
-				$this->scanner->scanForAudios($userId, $output, $input->getOption('debug'));
+                $this->scanner->scanForAudios($userId, $output);
 			}
 		}
 	}

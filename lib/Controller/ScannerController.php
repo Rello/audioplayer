@@ -16,6 +16,8 @@ namespace OCA\audioplayer\Controller;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -100,17 +102,15 @@ class ScannerController extends Controller
      *
      * @param $userId
      * @param $output
-     * @param $debug
      * @param $scanstop
      * @return bool|JSONResponse
      * @throws \OCP\Files\NotFoundException
-     * @throws \OCP\PreConditionNotMetException
      * @throws \getid3_exception
      */
-    public function scanForAudios($userId = null, $output = null, $debug = null, $scanstop = null)
+    public function scanForAudios($userId = null, $output = null, $scanstop = null)
     {
         if (isset($scanstop)) {
-            $this->DBController->setSessionValue('scanner_running', 'stopped');
+            $this->DBController->setSessionValue('scanner_running', 'stopped', $this->userId);
             $params = ['status' => 'stopped'];
             $response = new JSONResponse($params);
             return $response;
@@ -122,7 +122,11 @@ class ScannerController extends Controller
             $this->userId = $userId;
             $languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
             $this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
+        } else {
+            $output = new NullOutput();
         }
+
+        $output->writeln("Start processing of <info>audio files</info>");
 
         $counter = 0;
         $counter_new = 0;
@@ -130,9 +134,9 @@ class ScannerController extends Controller
         $duplicate_tracks = 0;
         $error_file = 0;
         $this->cyrillic = $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
-        $this->DBController->setSessionValue('scanner_running', 'active');
+        $this->DBController->setSessionValue('scanner_running', 'active', $this->userId);
 
-        $this->updateProgress(0, $output, $debug);
+        $this->updateProgress(0, $output);
         $this->setScannerVersion();
 
         if (!class_exists('getid3_exception')) {
@@ -148,11 +152,11 @@ class ScannerController extends Controller
             'option_tags_html' => false
         ]);
 
-        $audios = $this->getAudioObjects($output, $debug);
-        $streams = $this->getStreamObjects($output, $debug);
+        $audios = $this->getAudioObjects($output);
+        $streams = $this->getStreamObjects($output);
 
-        if ($debug AND $this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated");
-        if ($debug) $output->writeln("Start processing of <info>audio files</info>");
+        if ($this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated", OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
 
         foreach ($audios as $audio) {
 
@@ -163,7 +167,7 @@ class ScannerController extends Controller
             }
 
             $this->currentSong = $audio->getPath();
-            $this->updateProgress(intval(($this->abscount / $this->numOfSongs) * 100), $output, $debug);
+            $this->updateProgress(intval(($this->abscount / $this->numOfSongs) * 100), $output);
             $counter++;
             $this->abscount++;
 
@@ -171,12 +175,12 @@ class ScannerController extends Controller
                 $this->DBController->deleteFromDB($audio->getId(), $userId);
             }
 
-            $this->analyze($audio, $getID3, $output, $debug);
+            $this->analyze($audio, $getID3, $output);
 
             # catch issue when getID3 does not bring a result in case of corrupt file or fpm-timeout
             if (!isset($this->ID3Tags['bitrate']) AND !isset($this->ID3Tags['playtime_string'])) {
                 $this->logger->debug('Error with getID3. Does not seem to be a valid audio file: ' . $audio->getPath(), array('app' => 'audioplayer'));
-                if ($debug) $output->writeln("       Error with getID3. Does not seem to be a valid audio file");
+                $output->writeln("       Error with getID3. Does not seem to be a valid audio file", OutputInterface::VERBOSITY_VERBOSE);
                 $error_file .= $audio->getName() . '<br />';
                 $error_count++;
                 continue;
@@ -223,7 +227,7 @@ class ScannerController extends Controller
                 $playTimeString = $this->ID3Tags['playtime_string'];
             }
 
-            $this->getAlbumArt($audio, $iAlbumId, $parentId, $output, $debug);
+            $this->getAlbumArt($audio, $iAlbumId, $parentId, $output);
 
             $aTrack = [
                 'title' => $this->truncate($name, '256'),
@@ -247,14 +251,14 @@ class ScannerController extends Controller
             $return = $this->DBController->writeTrackToDB($this->userId, $aTrack);
             if ($return['dublicate'] === 1) {
                 $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
-                if ($debug) $output->writeln("       This title is a duplicate and already existing");
+                $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
                 $duplicate_tracks .= $audio->getPath() . '<br />';
                 $this->iDublicate = $this->iDublicate + $return['dublicate'];
             }
             $counter_new++;
         }
 
-        if ($debug) $output->writeln("Start processing of <info>stream files</info>");
+        $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
         foreach ($streams as $stream) {
             //check if scan is still supposed to run, or if dialog was closed in web already
             if (!$this->occ_job) {
@@ -263,7 +267,7 @@ class ScannerController extends Controller
             }
 
             $this->currentSong = $stream->getPath();
-            $this->updateProgress(intval(($this->abscount / $this->numOfSongs) * 100), $output, $debug);
+            $this->updateProgress(intval(($this->abscount / $this->numOfSongs) * 100), $output);
             $counter++;
             $this->abscount++;
 
@@ -279,7 +283,7 @@ class ScannerController extends Controller
             $return = $this->DBController->writeStreamToDB($this->userId, $aStream);
             if ($return['dublicate'] === 1) {
                 $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
-                if ($debug) $output->writeln("       This title is a duplicate and already existing");
+                $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
                 $duplicate_tracks .= $audio->getPath() . '<br />';
                 $this->iDublicate = $this->iDublicate + $return['dublicate'];
             }
@@ -304,8 +308,8 @@ class ScannerController extends Controller
 
         // different outputs when web or occ
         if (!$this->occ_job) {
-            $this->DBController->setSessionValue('scanner_running', '');
-            $this->DBController->setSessionValue('scanner_progress', '');
+            $this->DBController->setSessionValue('scanner_running', '', $this->userId);
+            $this->DBController->setSessionValue('scanner_progress', '', $this->userId);
             $result = [
                 'status' => 'success',
                 'message' => $message
@@ -325,12 +329,10 @@ class ScannerController extends Controller
 
     /**
      * @param $percentage
-     * @param $output
-     * @param $debug
+     * @param OutputInterface $output
      * @return bool
-     * @throws \OCP\PreConditionNotMetException
      */
-    private function updateProgress($percentage, $output = null, $debug = null)
+    private function updateProgress($percentage, OutputInterface $output = null)
     {
         $this->progress = $percentage;
 
@@ -342,9 +344,9 @@ class ScannerController extends Controller
                 'currentsong' => $this->currentSong
             ];
             $currentIntArray = json_encode($currentIntArray);
-            $this->DBController->setSessionValue('scanner_progress', $currentIntArray);
-        } elseif ($debug) {
-            $output->writeln("   " . $this->currentSong . "</info>");
+            $this->DBController->setSessionValue('scanner_progress', $currentIntArray, $this->userId);
+        } else {
+            $output->writeln("   " . $this->currentSong . "</info>", OutputInterface::VERBOSITY_VERY_VERBOSE);
         }
         return true;
     }
@@ -367,12 +369,11 @@ class ScannerController extends Controller
     /**
      * Add track to db if not exist
      *
-     * @param array $output
-     * @param bool $debug
+     * @param OutputInterface $output
      * @return array
      * @throws \OCP\Files\NotFoundException
      */
-    private function getAudioObjects($output = null, $debug = null)
+    private function getAudioObjects(OutputInterface $output = null)
     {
         $audios_clean = array();
         $audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
@@ -389,11 +390,9 @@ class ScannerController extends Controller
         $audios_flac = $userView->searchByMime('audio/flac');
         $audios = array_merge($audios_mp3, $audios_m4a, $audios_ogg, $audios_wav, $audios_flac);
 
-        if ($debug) {
-            $output->writeln("Scanned Folder: " . $userView->getPath());
-            $output->writeln("<info>Total audio files:</info> " . count($audios));
-            $output->writeln("Checking audio files to be skipped");
-        }
+        $output->writeln("Scanned Folder: " . $userView->getPath(), OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln("<info>Total audio files:</info> " . count($audios), OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln("Checking audio files to be skipped", OutputInterface::VERBOSITY_VERBOSE);
 
         // get all fileids which are in an excluded folder
         $stmt = $this->db->prepare('SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)');
@@ -410,20 +409,20 @@ class ScannerController extends Controller
         foreach ($audios as $audio) {
             $current_id = $audio->getID();
             if (in_array($current_id, $resultExclude)) {
-                if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded");
+                $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
             } elseif (in_array($current_id, $resultExisting)) {
                 if ($this->checkFileChanged($audio)) {
-                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed title changed => reindex");
+                    $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed title changed => reindex", OutputInterface::VERBOSITY_VERY_VERBOSE);
                     array_push($audios_clean, $audio);
                 } else {
-                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed");
+                    $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed", OutputInterface::VERBOSITY_VERY_VERBOSE);
                 }
             } else {
                 array_push($audios_clean, $audio);
             }
         }
         $this->numOfSongs = count($audios_clean);
-        if ($debug) $output->writeln("Final audio files to be processed: " . $this->numOfSongs);
+        $output->writeln("Final audio files to be processed: " . $this->numOfSongs, OutputInterface::VERBOSITY_VERBOSE);
         return $audios_clean;
     }
 
@@ -456,11 +455,11 @@ class ScannerController extends Controller
     /**
      * Add track to db if not exist
      *
-     * @param array $output
+     * @param OutputInterface $output
      * @return array
      * @throws \OCP\Files\NotFoundException
      */
-    private function getStreamObjects($output = null, $debug = null)
+    private function getStreamObjects(OutputInterface $output = null)
     {
         $audios_clean = array();
         $audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
@@ -474,10 +473,8 @@ class ScannerController extends Controller
         $audios_scpls = $userView->searchByMime('audio/x-scpls');
         $audios_xspf = $userView->searchByMime('application/xspf+xml');
         $audios = array_merge($audios_mpegurl, $audios_scpls, $audios_xspf);
-        if ($debug) {
-            $output->writeln("<info>Total stream files:</info> " . count($audios));
-            $output->writeln("Checking stream files to be skipped");
-        }
+        $output->writeln("<info>Total stream files:</info> " . count($audios), OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln("Checking stream files to be skipped", OutputInterface::VERBOSITY_VERBOSE);
 
         // get all fileids which are in an excluded folder
         $stmt = $this->db->prepare('SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)');
@@ -495,20 +492,20 @@ class ScannerController extends Controller
             $current_id = $audio->getID();
 
             if (in_array($current_id, $resultExclude)) {
-                if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded");
+                $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
             } elseif (in_array($current_id, $resultExisting)) {
                 if ($this->checkFileChanged($audio)) {
-                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed file changed => reindex");
+                    $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed file changed => reindex", OutputInterface::VERBOSITY_VERY_VERBOSE);
                     array_push($audios_clean, $audio);
                 } else {
-                    if ($debug) $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed");
+                    $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed", OutputInterface::VERBOSITY_VERY_VERBOSE);
                 }
             } else {
                 array_push($audios_clean, $audio);
             }
         }
         $this->numOfSongs = $this->numOfSongs + count($audios_clean);
-        if ($debug) $output->writeln("Final stream files to be processed: " . count($audios_clean));
+        $output->writeln("Final stream files to be processed: " . count($audios_clean), OutputInterface::VERBOSITY_VERBOSE);
         return $audios_clean;
     }
 
@@ -519,9 +516,10 @@ class ScannerController extends Controller
      *
      * @param $audio object
      * @param $getID3 object
-     * @return
+     * @param OutputInterface $output
+     * @return void
      */
-    private function analyze($audio, $getID3, $output = null, $debug = null)
+    private function analyze($audio, $getID3, OutputInterface $output = null)
     {
         if ($audio->getMimetype() === 'audio/mpegurl' or $audio->getMimetype() === 'audio/x-scpls' or $audio->getMimetype() === 'application/xspf+xml') {
             $ThisFileInfo = array();
@@ -536,9 +534,7 @@ class ScannerController extends Controller
                 $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
             } else {
                 if (!$this->no_fseek) {
-                    if ($debug) {
-                        $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.");
-                    }
+                    $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.", OutputInterface::VERBOSITY_VERBOSE);
                     $this->logger->debug('Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', array('app' => 'audioplayer'));
                     $this->no_fseek = true;
                 }
@@ -598,7 +594,6 @@ class ScannerController extends Controller
      *
      * @param string[] $ID3Value
      * @param string $defaultValue
-     *
      * @return string
      */
     private function getID3Value($ID3Value, $defaultValue = null)
@@ -623,13 +618,14 @@ class ScannerController extends Controller
      * @param object $audio
      * @param integer $iAlbumId
      * @param integer $parentId
+     * @param OutputInterface|null $output
      * @return boolean|null
      */
-    private function getAlbumArt($audio, $iAlbumId, $parentId, $output = null, $debug = null)
+    private function getAlbumArt($audio, $iAlbumId, $parentId, OutputInterface $output = null)
     {
         if ($parentId === $this->parentId_prev) {
             if ($this->folderpicture) {
-                if ($debug) $output->writeln("     Reusing previous folder image");
+                $output->writeln("     Reusing previous folder image", OutputInterface::VERBOSITY_VERY_VERBOSE);
                 $this->processImageString($iAlbumId, $this->folderpicture->getContent());
             } elseif (isset($this->ID3Tags['comments']['picture'][0]['data'])) {
                 $data = $this->ID3Tags['comments']['picture'][0]['data'];
@@ -651,7 +647,7 @@ class ScannerController extends Controller
 
             if ($this->folderpicture) {
                 $this->processImageString($iAlbumId, $this->folderpicture->getContent());
-                if ($debug) $output->writeln("     Alternative album art: " . $this->folderpicture->getInternalPath());
+                $output->writeln("     Alternative album art: " . $this->folderpicture->getInternalPath(), OutputInterface::VERBOSITY_VERY_VERBOSE);
             } elseif (isset($this->ID3Tags['comments']['picture'])) {
                 $data = $this->ID3Tags['comments']['picture'][0]['data'];
                 $this->processImageString($iAlbumId, $data);

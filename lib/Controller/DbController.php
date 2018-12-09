@@ -312,7 +312,6 @@ class DbController extends Controller
      * @param int $userId
      * @param string $sArtist
      * @return int
-     * @throws \Doctrine\DBAL\DBALException
      */
     public function writeArtistToDB($userId, $sArtist)
     {
@@ -333,7 +332,6 @@ class DbController extends Controller
      * @param int $userId
      * @param string $sGenre
      * @return int
-     * @throws \Doctrine\DBAL\DBALException
      */
     public function writeGenreToDB($userId, $sGenre)
     {
@@ -527,11 +525,12 @@ class DbController extends Controller
      * @NoAdminRequired
      * @param $type
      * @param $value
+     * @param $userId
      * @return string
-     * @throws \OCP\PreConditionNotMetException
      */
-    public function setSessionValue($type, $value)
+    public function setSessionValue($type, $value, $userId)
     {
+        if ($userId) $this->userId = $userId;
         //$this->session->set($type, $value);
         $SQL = 'SELECT `configvalue` FROM `*PREFIX*preferences` WHERE `userid`= ? AND `appid`= ? AND `configkey`= ?';
         $stmt = $this->db->prepare($SQL);
