@@ -505,7 +505,10 @@ Audios.prototype.loadCategory = function () {
                         li.append(spanName);
                         li.append(spanCounter);
                     } else {
-                        spanName = $('<span/>').attr({'class': 'pl-name'}).text(el.name).click($this.loadIndividualCategory.bind($this));
+                        spanName = $('<span/>').attr({
+                            'class': 'pl-name',
+                            'title': el.name
+                        }).text(el.name).click($this.loadIndividualCategory.bind($this));
                         li.append(spanName);
                         li.append(spanCounter);
                     }

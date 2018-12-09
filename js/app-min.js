@@ -19,7 +19,90 @@ var Audios=function(){this.AudioPlayer=null;this.PlaylistContainer=$('#playlist-
             if($this.AudioPlayer===null){$this.AudioPlayer=new SM2BarPlayer($('.sm2-bar-ui')[0]);$this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());}
             if(!activeLi.hasClass('isActive')){if($this.PlaylistContainer.data('playlist')!==$this.ActivePlaylist.data('playlist')){myAudios.set_uservalue('category',$this.PlaylistContainer.data('playlist'));var ClonePlaylist=albumWrapper.find('li').clone();$this.ActivePlaylist.html('');$this.ActivePlaylist.append(ClonePlaylist);$this.ActivePlaylist.find('span').remove();$this.ActivePlaylist.find('.noPlaylist').remove();$this.ActivePlaylist.data('playlist',$this.PlaylistContainer.data('playlist'));}
                 var addCss;var addDescr;var coverID=activeLi.data('cover');if(coverID===''){addCss='background-color: #D3D3D3;color: #333333;';addDescr=activeLi.data('title').substring(0,1);}else{addDescr='';addCss='background-image:url('+getcoverUrl+coverID+');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';}
-                $('.sm2-playlist-cover').attr({'style':addCss}).text(addDescr);if($this.AudioPlayer.playlistController.data.selectedIndex===null)$this.AudioPlayer.playlistController.data.selectedIndex=0;$this.AudioPlayer.actions.play(activeLi.index());$this.set_statistics();}else{if($('.sm2-bar-ui').hasClass('playing')){$this.AudioPlayer.actions.stop();}else{$this.AudioPlayer.actions.play();}}});});};Audios.prototype.indicateCurrentPlayingTitle=function(){if($this.PlaylistContainer.data('playlist')===$this.ActivePlaylist.data('playlist')){var playingTrackId=$('#activePlaylist li.selected').data('trackid');var playingListItem=$('.albumwrapper li[data-trackid="'+playingTrackId+'"]');playingListItem.addClass('isActive');playingListItem.find('i.ioc').removeClass('ioc-volume-off').addClass('ioc-volume-up').show();playingListItem.find('i.icon').hide();}};Audios.prototype.loadCategory=function(){$this=this;var category=$this.category_selectors[0];$('#addPlaylist').addClass('hidden');$('#myCategory').html('');$('.toolTip').tooltip('hide');$.ajax({type:'GET',url:OC.generateUrl('apps/audioplayer/getcategory'),data:{category:category},success:function(jsondata){if(jsondata.status==='success'){$(jsondata.data).each(function(i,el){var li=$('<li/>').attr({'data-id':el.id,'data-name':el.name});var spanCounter=$('<span/>').attr('class','counter').text(el.counter);var spanName;if(category==='Playlist'&&el.id.toString()[0]!=='X'&&el.id!==''&&el.id.toString()[0]!=='S'){spanName=$('<span/>').attr({'class':'pl-name-play'}).text(el.name).click($this.loadIndividualCategory.bind($this));var spanSort=$('<i/>').attr({'class':'ioc ioc-sort toolTip','data-sortid':el.id,'title':t('audioplayer','Sort playlist')}).click($this.sortPlaylist.bind($this));var spanEdit=$('<i/>').attr({'class':'icon icon-rename toolTip','data-name':el.name,'data-editid':el.id,'title':t('audioplayer','Rename playlist')}).click($this.renamePlaylist.bind($this));var spanDelete=$('<i/>').attr({'class':'ioc ioc-delete toolTip','data-deleteid':el.id,'title':t('audioplayer','Delete playlist')}).click($this.deletePlaylist.bind($this));li.droppable({activeClass:"activeHover",hoverClass:"dropHover",accept:'li.dragable',over:function(){},drop:function(event,ui){$this.addSongToPlaylist($(this).attr('data-id'),ui.draggable.attr('data-trackid'));}});li.append(spanName);li.append(spanEdit);li.append(spanSort);li.append(spanDelete);li.append(spanCounter);}else if(el.id===''){spanName=$('<span/>').text(el.name).css({'float':'left','min-height':'10px'});li.append(spanName);li.append(spanCounter);}else{spanName=$('<span/>').attr({'class':'pl-name'}).text(el.name).click($this.loadIndividualCategory.bind($this));li.append(spanName);li.append(spanCounter);}
+                $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
+                if ($this.AudioPlayer.playlistController.data.selectedIndex === null) $this.AudioPlayer.playlistController.data.selectedIndex = 0;
+                $this.AudioPlayer.actions.play(activeLi.index());
+                $this.set_statistics();
+            } else {
+                if ($('.sm2-bar-ui').hasClass('playing')) {
+                    $this.AudioPlayer.actions.stop();
+                } else {
+                    $this.AudioPlayer.actions.play();
+                }
+            }
+        });
+    });
+};
+Audios.prototype.indicateCurrentPlayingTitle = function () {
+    if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+        var playingTrackId = $('#activePlaylist li.selected').data('trackid');
+        var playingListItem = $('.albumwrapper li[data-trackid="' + playingTrackId + '"]');
+        playingListItem.addClass('isActive');
+        playingListItem.find('i.ioc').removeClass('ioc-volume-off').addClass('ioc-volume-up').show();
+        playingListItem.find('i.icon').hide();
+    }
+};
+Audios.prototype.loadCategory = function () {
+    $this = this;
+    var category = $this.category_selectors[0];
+    $('#addPlaylist').addClass('hidden');
+    $('#myCategory').html('');
+    $('.toolTip').tooltip('hide');
+    $.ajax({
+        type: 'GET',
+        url: OC.generateUrl('apps/audioplayer/getcategory'),
+        data: {category: category},
+        success: function (jsondata) {
+            if (jsondata.status === 'success') {
+                $(jsondata.data).each(function (i, el) {
+                    var li = $('<li/>').attr({'data-id': el.id, 'data-name': el.name});
+                    var spanCounter = $('<span/>').attr('class', 'counter').text(el.counter);
+                    var spanName;
+                    if (category === 'Playlist' && el.id.toString()[0] !== 'X' && el.id !== '' && el.id.toString()[0] !== 'S') {
+                        spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).click($this.loadIndividualCategory.bind($this));
+                        var spanSort = $('<i/>').attr({
+                            'class': 'ioc ioc-sort toolTip',
+                            'data-sortid': el.id,
+                            'title': t('audioplayer', 'Sort playlist')
+                        }).click($this.sortPlaylist.bind($this));
+                        var spanEdit = $('<i/>').attr({
+                            'class': 'icon icon-rename toolTip',
+                            'data-name': el.name,
+                            'data-editid': el.id,
+                            'title': t('audioplayer', 'Rename playlist')
+                        }).click($this.renamePlaylist.bind($this));
+                        var spanDelete = $('<i/>').attr({
+                            'class': 'ioc ioc-delete toolTip',
+                            'data-deleteid': el.id,
+                            'title': t('audioplayer', 'Delete playlist')
+                        }).click($this.deletePlaylist.bind($this));
+                        li.droppable({
+                            activeClass: "activeHover",
+                            hoverClass: "dropHover",
+                            accept: 'li.dragable',
+                            over: function () {
+                            },
+                            drop: function (event, ui) {
+                                $this.addSongToPlaylist($(this).attr('data-id'), ui.draggable.attr('data-trackid'));
+                            }
+                        });
+                        li.append(spanName);
+                        li.append(spanEdit);
+                        li.append(spanSort);
+                        li.append(spanDelete);
+                        li.append(spanCounter);
+                    } else if (el.id === '') {
+                        spanName = $('<span/>').text(el.name).css({'float': 'left', 'min-height': '10px'});
+                        li.append(spanName);
+                        li.append(spanCounter);
+                    } else {
+                        spanName = $('<span/>').attr({
+                            'class': 'pl-name',
+                            'title': el.name
+                        }).text(el.name).click($this.loadIndividualCategory.bind($this));
+                        li.append(spanName);
+                        li.append(spanCounter);
+                    }
         $('#myCategory').append(li);});$('.toolTip').tooltip();if($('#category_selector').val()===category&&$this.category_selectors[1]&&$this.category_selectors[1]!=='undefined'){$('#myCategory li[data-id="'+$this.category_selectors[1]+'"]').addClass('active');var appNavigation=$("#app-navigation");appNavigation.scrollTop(appNavigation.scrollTop()+$('#myCategory li.active').first().position().top-25);$this.loadIndividualCategory();}}else{$this.showInitScreen();}}});if(category==='Playlist'){$('#addPlaylist').removeClass('hidden');}};Audios.prototype.loadIndividualCategory=function(evt){$this=this;$this.PlaylistContainer.show();$this.EmptyContainer.hide();$('#loading').show();$('.toolTip').tooltip('hide');$('#alben').removeClass('active');$('#individual-playlist').remove();$('#individual-playlist-info').show();$('#individual-playlist-header').show();$(".coverrow").remove();$(".songcontainer").remove();$this.PlaylistContainer.append('<ul id="individual-playlist" class="albumwrapper"></ul>');var category=$('#category_selector').val();var getAudiostreamUrl=OC.generateUrl('apps/audioplayer/getaudiostream')+'?file=';if(typeof evt!=='undefined'){$('#myCategory li').removeClass('active').removeClass('active');EventTarget=$(evt.target);EventTarget.parent('li').addClass('active').addClass('active');}
     var categoryActive=$('#myCategory li.active');var PlaylistId=categoryActive.data('id');var category_title=categoryActive.find('span').first().text();$this.PlaylistContainer.data('playlist',category+'-'+PlaylistId);if($('#individual-playlist').data('ui-sortable'))$('#individual-playlist').sortable("destroy");$('.header-title').data('order','');$('.header-artist').data('order','');$('.header-album').data('order','');var can_play=soundManager.html5;var stream_array=['audio/mpegurl','audio/x-scpls','application/xspf+xml'];for(var s=0;s<stream_array.length;s++){can_play[stream_array[s]]=true;}
     if($this.ajax_call_status!==null){$this.ajax_call_status.abort();}
