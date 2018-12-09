@@ -174,11 +174,9 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
     var eventTarget = $(evt.target).parent();
     var AlbumId = eventTarget.attr('data-album');
     var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
-    var activeAlbumContainer = '.songcontainer';
-    var iSlideUp = 200;
 
     if (activeAlbum.hasClass('is-active')) {
-        $(activeAlbumContainer).slideUp(iSlideUp, function () {
+        $('.songcontainer').slideUp(200, function () {
             $('.album').removeClass('is-active').find('.artist').show();
         });
     } else {
@@ -232,13 +230,8 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     }
 
     var br = $('<br />').css('clear', 'both');
-    var aClose = $('<a />').attr('href', '#').addClass('close ioc ioc-close').click(function () {
-        var activeAlbum = $(this).parent('.songcontainer');
-        $(activeAlbum).slideUp(200, function () {
-            $('.album').removeClass('is-active').find('.artist').show();
-            $('.coverrow').css('margin-bottom', 0);
-            return false;
-        });
+    var aClose = $('<a />').addClass('close ioc ioc-close').click(function () {
+        $('.is-active').click();
     });
 
     divSongList.append(listAlbumWrapper);
