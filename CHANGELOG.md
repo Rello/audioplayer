@@ -7,12 +7,14 @@ All notable changes to the Audio Player project will be documented in this file.
 - SONOS: enable/disable the plugin globally as admin [#363](https://github.com/rello/audioplayer/issues/363)
 - harden ContentSecurityPolicy
 - update getID3 to version 1.9.16-201812050141
-- switch scanner progress from cache to table storage [#362](https://github.com/rello/audioplayer/issues/362)
+- switch scanner progress (UI) from cache to table storage [#362](https://github.com/rello/audioplayer/issues/362)
 - switch from --debug to verbosity levels in occ [#352](https://github.com/rello/audioplayer/issues/352)
+- widget migration to Dashboard 6.0.0 [#366](https://github.com/rello/audioplayer/pull/366) @[daita](https://github.com/daita)
 
 ### Fixed
 - show "title" tag for mouse hover in category list [#354](https://github.com/rello/audioplayer/issues/354)
 - Closing tracklist on album jumps to top [#351](https://github.com/rello/audioplayer/issues/351)
+- SONOS socket backend error handling [#348](https://github.com/rello/audioplayer/issues/348)
 
 ## 2.4.1 - 2018-09-29
 ### Fixed
