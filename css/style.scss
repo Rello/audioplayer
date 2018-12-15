@@ -22,7 +22,7 @@
   width: 30px;
   top: 115px;
   left: 5px;
-  background-image: none, url(../img/albumplay.svg);
+  @include icon-color('albumplay', 'audioplayer', '#FFFFFF', 1);
   background-size: 30px;
   opacity: 0.5;
   cursor: pointer;
