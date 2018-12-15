@@ -424,7 +424,7 @@
 }
 
 .sm2-inline-button.menu {
-  background-image: none, url(../img/list2.svg);
+  @include icon-color('list2', 'audioplayer', $color-black, 1);
   background-size: 58%;
   background-position: 54% 51%;
 }
@@ -470,7 +470,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: none, url(../img/spinner.svg);
+  @include icon-color('spinner', 'audioplayer', $color-black, 1);
   background-size: 72%;
   background-position: 50%;
   background-repeat: no-repeat;

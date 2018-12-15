@@ -18,12 +18,12 @@
 #albumPlay {
   position: absolute;
   display: block;
-  height: 30px;
-  width: 30px;
-  top: 115px;
+  height: 25px;
+  width: 25px;
+  top: 120px;
   left: 5px;
   @include icon-color('albumplay', 'audioplayer', '#FFFFFF', 1);
-  background-size: 30px;
+  background-size: 25px;
   opacity: 0.5;
   cursor: pointer;
 }
