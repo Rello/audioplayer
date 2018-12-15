@@ -46,7 +46,7 @@ class AudioplayerWidget implements IDashboardWidget {
 	 * @return string
 	 */
 	public function getName(): string {
-		return $this->l10n->t('Audio Player (beta)');
+        return $this->l10n->t('Audio Player (alpha - no playback yet)');
 	}
 
 
@@ -125,7 +125,7 @@ class AudioplayerWidget implements IDashboardWidget {
 	 */
 	public function getWidgetTemplate(): WidgetTemplate {
 		$template = new WidgetTemplate();
-		$template->setCss(['widgets/audioplayer', 'bar-ui-min', 'style-min'])
+        $template->setCss(['widgets/audioplayer', 'bar-ui', 'style'])
 				 ->addJs('widgets/audioplayer')
 				 ->setIcon('icon-audioplayer')
 				 ->setContent('widgets/audioplayer')
