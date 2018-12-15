@@ -1,16 +1,19 @@
 <?php
 /**
- * PHPSonos.php
  *
- * PHPSonos class originally released as: Sonos PHP Script - Copyright: Michael Maroszek - Version: 1.0, 09.07.2009
- * adopted and updated by Oliver Lewald 2016
+ * class to control a Sonos Multiroom System
  *
- * urn:schemas-upnp-org:device:ZonePlayer:1
- * http://player.ip:1400/xml/zone_player.xml
+ *
+ * Version:        2.1.3
+ * Date:            20.11.2017
+ * Auto:            Oliver Lewald
+ * published in:    http://plugins.loxberry.de/
+ *
+ *
+ *
  **/
 
-# Available commands to interact with Sonos System. Those commands require another php script to be called.
-# List of functions:
+# Available commands to interact with Sonos System:
 
 # - ListAlarms()
 # - UpdateAlarm($id, $startzeit, $duration, $welchetage, $an, $roomid, $programm, $programmeta, $playmode, $volume, $linkedzone)
@@ -47,7 +50,7 @@
 # - GetTreble()
 # - GetBass()
 # - GetLoudness()
-# - Sleeptimer($timer) 
+# - Sleeptimer($timer)
 # - SetVolume($volume)
 # - GetVolume()
 # - SetMute($mute)
@@ -70,35 +73,39 @@
 # - GetPlaylist($value)
 # - Browse($value,$meta="BrowseDirectChildren",$filter="",$sindex="0",$rcount="1000",$sc="")
 # - RadiotimeGetNowPlaying()
-# - 
-# - 
+# - DelegateGroupCoordinationTo($RinconID, $Rejoin)
+# - DelSonosPlaylist($id)
+# - CreateStereoPair($ChannelMapSet)
+# - SeperateStereoPair($ChannelMapSet)
+// V2.1.1
+# - GetVolumeMode($mode, $uuid)
+# - SetVolumeMode($uuid)
+// V3.4.0
+# - AddFavoritesToQueue
+# - SetBalance($direction, $volume)
+# - ResetBasicEQ()
 
 
 class PHPSonos
 {
     private $address = "";
 
+    # private $port = "1400";
+
     public function __construct($address)
     {
         $this->address = $address;
+        #$this->port = $port;
     }
-    /*
-     * urn:upnp-org:serviceId:AlarmClock
-     *   Not fully implemented
-     */
+
 
     /**
-     * Returns a list of alarms from sonos device
-     *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:AlarmClock
+     * Returns a list of alarms from device
      *
      * @return Array
      *
-     * @link http://www.ip-symcon.de/forum/f53/php-sonos-klasse-ansteuern-einzelner-player-7676/index9.html#post120731 Forum-Post
      */
+
     public function ListAlarms()
     {
 
@@ -141,15 +148,9 @@ Content-Length: ' . strlen($xml) . '
         return $liste;
     }
 
+
     /**
      * Updates an existing alarm
-     *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:AlarmClock
-     * - <b>Returns:</b> None
-     * - <b>NOTE:</b> fill in
      *
      * @param string $id Id of the Alarm
      * @param string $startzeit StartLocalTime
@@ -165,8 +166,8 @@ Content-Length: ' . strlen($xml) . '
      *
      * @return Void
      *
-     * @link http://www.ip-symcon.de/forum/f53/php-sonos-klasse-ansteuern-einzelner-player-7676/index9.html#post120710 Forum-post
      */
+
     public function UpdateAlarm($id, $startzeit, $duration, $welchetage, $an, $roomid, $programm, $programmeta, $playmode, $volume, $linkedzone)
     {
         $payload = '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
@@ -198,24 +199,15 @@ SOAPACTION: "urn:schemas-upnp-org:service:AlarmClock:1#UpdateAlarm"
     }
 
 
-    /* urn:upnp-org:serviceId:AudioIn */
-    // Not fully implemented
 
     /**
      * Get information of devices inputs
      *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:AudioIn
-     * - <b>Returns:</b> Array
-     * - <b>NOTE:</b> fill in
-     *
      * @return Array
      *
-     * @link http://www.ip-symcon.de/forum/f53/php-sonos-klasse-ansteuern-einzelner-player-7676/index15.html#post131481 Forum-Post
      */
-    public function GetAudioInputAttributes() // added br
+
+    public function GetAudioInputAttributes()
     {
 
         $header = 'POST /AudioIn/Control HTTP/1.1
@@ -243,6 +235,7 @@ Content-Length: ' . strlen($xml) . '
         xml_parser_free($xmlParser);
 
 
+
         $AudioInReturn = Array();
 
         $key = "CurrentName"; // Lookfor
@@ -264,30 +257,14 @@ Content-Length: ' . strlen($xml) . '
     }
 
 
-    /* urn:upnp-org:serviceId:DeviceProperties */
-
-
     /**
      * Reads Zone Attributes
      *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:DeviceProperties
-     * - <b>Returns:</b> Example:
-     * <code> Array
-     * (
-     *  [CurrentZoneName] => Kxz Boxyz
-     *  [CurrentIcon] => x-rincon-roomicon:office
-     * )
-     * </code>
      * @return Array
-     *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      *
      **/
 
-    public function GetZoneAttributes() // added br
+    public function GetZoneAttributes()
     {
         $header = 'POST /DeviceProperties/Control HTTP/1.1
 SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#GetZoneAttributes"
@@ -337,14 +314,9 @@ Content-Length: ' . strlen($xml) . '
     /**
      * Reads Zone Information
      *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:DeviceProperties
-     * - <b>Returns:</b> Example:
-     * <code> Array
+     * Array
      * (
-     *   [SerialNumber] => 00-zz-58-32-yy-xx:5
+     *    [SerialNumber] => 00-zz-58-32-yy-xx:5
      *    [SoftwareVersion] => 15.4-442xx
      *    [DisplaySoftwareVersion] => 3.5.x
      *    [HardwareVersion] => 1.16.3.z-y
@@ -353,13 +325,11 @@ Content-Length: ' . strlen($xml) . '
      *    [CopyrightInfo] => ? 2004-2007 Sonos, Inc. All Rights Reserved.
      *    [ExtraInfo] => OTP: 1.1.x(1-yy-3-0.x)
      *)
-     * </code>
-     *
      * @return Array
      *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
-    public function GetZoneInfo() // added br
+
+    public function GetZoneInfo()
     {
         $header = 'POST /DeviceProperties/Control HTTP/1.1
 SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#GetZoneInfo"
@@ -451,8 +421,7 @@ Content-Length: ' . strlen($xml) . '
         if (isset($index[strtoupper($key)][0]) and isset($vals[$index[strtoupper($key)][0]]['value'])) {
             $ZoneInfo[$key] = $vals[$index[strtoupper($key)][0]]['value'];
         } else {
-            $ZoneInfo[$key] = "";
-        }
+            $ZoneInfo[$key] = ""; }
 
 
         return $ZoneInfo; //Assoziatives Array
@@ -461,17 +430,11 @@ Content-Length: ' . strlen($xml) . '
     /**
      * Sets the state of the white LED
      *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:DeviceProperties
-     *
      * @param string $state true||false value or On / Off
      *
      * @return Boolean
-     *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
+
     public function SetLEDState($state) // added br
     {
         if ($state == "On") {
@@ -503,16 +466,10 @@ SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#SetLEDState"
     /**
      * Gets the state of the white LED
      *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:DeviceProperties
-     *
-     *
      * @return Boolean
      *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
+
     public function GetLEDState() // added br
     {
 
@@ -534,19 +491,12 @@ SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#GetLEDState"
     /**
      * Sets ZP to visible or unvisable
      *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:DeviceProperties
-     * - <b>Returns:</b> True or False for invisble status
-     * - <b>NOTE:</b> It is highly *NOT* recommended to try this function if you don?t know what it will do. Don?t cry if you miss a Zoneplayer!!
-     *
      * @param string $state integer true||false value or string True/ False
      *
      * @return Boolean
      *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
+
     public function SetInvisible($state) // added br 110916
     {
         if ($state == "True") {
@@ -578,18 +528,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#SetInvisible"
     /**
      * Gets ZP invisible information
      *
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b> urn:upnp-org:serviceId:DeviceProperties
-     * - <b>Returns:</b> True or False for invisble status
-     * - <b>NOTE:</b> If you miss a Zoneplayer try this!!
-     *
      * @return Boolean
      *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
-    public function GetInvisible() // added br 110916
+
+    public function GetInvisible()
     {
 
         $content = 'POST /DeviceProperties/Control HTTP/1.1
@@ -607,14 +550,18 @@ SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#GetInvisible"
     }
 
 
-    /* urn:upnp-org:serviceId:GroupManagement */
-
+    /**
+     * Necessary to handle group management
+     *
+     * @return Boolean to IP
+     *
+     */
 
     function SubscribeZPGroupManagement($callback)
     { // added br
         $content = 'SUBSCRIBE /GroupManagement/Event HTTP/1.1
 HOST: ' . $this->address . ':1400
-CALLBACK: <' . $callback . '>
+CALLBACK: <' . $callback .'>
 NT: upnp:event
 TIMEOUT: Second-300
 Content-Length: 0
@@ -624,21 +571,13 @@ Content-Length: 0
     }
 
 
+
     /**
      * Adds a Member to a existing ZoneGroup
-     * (a single player is also considered a existing group)
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b>  urn:upnp-org:serviceId:GroupManagement
-     * - <b>Returns:</b> array with CurrentTransportsettings and GroupUUIDJoined as keys
-     *
-     *
      * @param string $MemberID LocalUUID/ Rincon of Player to add
      *
      * @return Array
      *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
 
     public function AddMember($MemberID) // added br
@@ -689,21 +628,12 @@ Content-Length: ' . strlen($xml) . '
 
     /**
      * Removes a Member from an existing ZoneGroup
-     * (a single player is also considered an existing group and the action will result in muting the player)
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:ZonePlayer:1
-     * - <b>WSDL:</b> http://play.er.i.p:1400/xml/zone_player.xml
-     * - <b>Service:</b>  urn:upnp-org:serviceId:GroupManagement
-     * - <b>Returns:</b>  for now the sendPacketAnswer
-     *
      * @param string $MemberID LocalUUID/ Rincon of Player to remove
      *
      * @return Sring
      *
-     * @todo br 20110909   return $this->sendPacket($content);  this Line was commented out; i dont understand why... changed this
-     *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
+
     public function RemoveMember($MemberID) // added br
 
     {
@@ -724,43 +654,19 @@ Content-Length: ' . strlen($xml) . '
     }
 
 
-
-
-
-    /* urn:upnp-org:serviceId:MusicServices */
-    // Not implemented
-    /* urn:upnp-org:serviceId:SystemProperties */
-    // Not implemented
-    /* urn:upnp-org:serviceId:ZoneGroupTopology */
-    // Not implemented
-
-
-    /******************* urn:schemas-upnp-org:device:MediaRenderer:1 ***********
-     ***************************************************************************/
-
-    /* urn:upnp-org:serviceId:RenderingControl */
-
     /**
      * Ramps Volume to $volume using $ramp_type ; different algorithms are possible
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b>  urn:upnp-org:serviceId:RenderingControl
-     * - <b>Returns:</b> Function Should return Rampseconds but this is NOT implemented!
-     * @todo Function Should return Rampseconds but this is NOT implemented!
-     * @param string $ramp_type Ramp_type<br>
-     *   Ramps Volume to $volume using the Method mentioned in $ramp_type as string:<br>
-     *   "SLEEP_TIMER_RAMP_TYPE" - mutes and ups Volume per default within 17 seconds to desiredVolume<br>
-     *   "ALARM_RAMP_TYPE" -Switches audio off and slowly goes to volume<br>
-     *   "AUTOPLAY_RAMP_TYPE" - very fast and smooth; Implemented from Sonos for the autoplay feature.<br>
+     *   Ramps Volume to $volume using the Method mentioned in $ramp_type as string:
+     *   "SLEEP_TIMER_RAMP_TYPE" - mutes and ups Volume per default within 17 seconds to desiredVolume
+     *   "ALARM_RAMP_TYPE" -Switches audio off and slowly goes to volume
+     *   "AUTOPLAY_RAMP_TYPE" - very fast and smooth; Implemented from Sonos for the autoplay feature.
      *
      * @param string $volume DesiredVolume
      *
      * @return Void
-     *
-     *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
+
     public function RampToVolume($ramp_type, $volume) //added br // added soap parameters 20111021
     {
 
@@ -782,15 +688,10 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#RampToVolume"
         return (int)$this->sendPacket($content);
 
     }
-    /* urn:upnp-org:serviceId:AVTransport */
+
 
     /**
      * TEST Function for MediaRenderAVT Callback and IPS Register Vars
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1 none
-     * - <b>Returns:</b> Sendpacket contents
      *
      * @param string $callback CallbackURL Well gat a HTTP Callback at this URl (SOAP)
      * @return Void
@@ -812,19 +713,11 @@ Content-Length: 0
     /**
      * Save current queue off to sonos
      *
-     * - <b>NOTE:</b> If you don?t set the id to the playlist?s id you want to edit, you?ll get duplicate playlists with the same name $title!!
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Sendpacket contents
-     *
-     *
      * @param string $title Title of Playlist
      * @param string $id Playlists ID (optional)
      *
      * @return string
      *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
     public function SaveQueue($title, $id = "") // added br
     {
@@ -844,19 +737,16 @@ Content-Length: ' . strlen($xml) . '
 ' . $xml;
 
         $returnContent = $this->sendPacket($content);
+
     }
 
     /**
-     * Get info on actual crossfademode
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Boolean
+     * Get info on actual crossfade mode
      *
      *
      * @return Boolean
      */
+
     public function GetCrossfadeMode() // added br
     {
 
@@ -878,17 +768,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetCrossfadeMode"
     /**
      * Set crossfade to true or false
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Void; shoud return sendpacket return
-     *
      * @param string $mode Enable/ Disable = 1/0 (string) = true /false (boolean)
      *
      * @return Void
-     *
-     * @link http://www.ip-symcon.de/wiki/PHPSonos Wiki
      */
+
     public function SetCrossfadeMode($mode) // added br
     {
 
@@ -913,19 +797,12 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#SetCrossfadeMode"
 
 
     }
-
     /**
-     * STOP Stops playback
-     *
-     * - <b>NOTE:</b> It is sometimes necessary to send a stop after removing a zone from a group
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Void
-     * @todo return should be sendpacket contents
+     * Stops playing
      *
      * @return Void
      */
+
     public function Stop()
     {
         $content = 'POST /MediaRenderer/AVTransport/Control HTTP/1.1
@@ -942,18 +819,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Stop"
 
 
     /**
-     * PAUSE pauses playback
-     *
-     * - <b>NOTE:</b> It is NOT always possible to send a PAUSE command (so you may get an error)!!
-     * Please look at the Soap Method GetCurrentTransportActions (which returns valid actions)
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Void
-     * @todo return should be sendpacket contents
+     * Pauses playing
      *
      * @return Void
      */
+
     public function Pause()
     {
         $content = 'POST /MediaRenderer/AVTransport/Control HTTP/1.1
@@ -969,17 +839,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Pause"
     }
 
     /**
-     * PLAY plays or continues playback
-     *
-     * - <b>NOTE:</b> It is sometimes necessary to send a play after messing with zonegroups and/or starting a new play on a new uri
-     * Please look at the Soap Method GetCurrentTransportActions (which returns valid actions)
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Void; shoud be sendpacket contents
+     * Play or continue playback
      *
      * @return Void
      */
+
     public function Play()
     {
 
@@ -998,14 +862,9 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Play"
     /**
      * NEXT
      *
-     * - <b>NOTE:</b>  Please look at the Soap Method GetCurrentTransportActions (which returns valid actions)
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Void; shoud be sendpacket contents
-     *
      * @return Void
      */
+
     public function Next()
     {
 
@@ -1024,14 +883,9 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Next"
     /**
      * PREVIOUS
      *
-     * - <b>NOTE:</b>  Please look at the Soap Method GetCurrentTransportActions (which returns valid actions)
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Void; shoud be sendpacket contents
-     *
      * @return Void
      */
+
     public function Previous()
     {
 
@@ -1050,20 +904,14 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Previous"
     /**
      * SEEK
      *
-     * - <b>NOTE:</b>  Please look at the Soap Method GetCurrentTransportActions (which returns valid actions)
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String; shoud be sendpacket contents as array
-     *
      * @param string $arg1 Unit ("TRACK_NR" || "REL_TIME" || "SECTION")
      * @param string $arg2 Target (if this Arg is not set Arg1 is considered to be "REL_TIME and the real arg1 value is set as arg2 value)
      *
      * @return String
      */
+
     public function Seek($arg1, $arg2 = "NONE")
     {
-// Abw?rtskompatibel zu Paresys Original sein // edited by br
         if ($arg2 == "NONE") {
             $Unit = "REL_TIME";
             $position = $arg1;
@@ -1087,22 +935,15 @@ Content-Length: ' . strlen($xml) . '
         $returnContent = $this->sendPacket($content);
 
 
+
     }
 
     /**
      * REWIND
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String
-     * @todo should be sendpacket Return
-     *
-     * - <b>SOAP</b> this Functions calls seek REL_TIME with target set to 00:00:00
-     * There is a also a function called previous.
-     *
      * @return String
      */
+
     public function Rewind()
     {
 
@@ -1118,6 +959,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Seek"
         $this->sendPacket($content);
     }
 
+    /**
+     * Get mute mode of the current group
+     *
+     * @return boolean
+     */
 
     public function GetGroupMute()
     {
@@ -1132,6 +978,11 @@ Content-Length: 276
         return (bool)$this->sendPacket($content);
     }
 
+    /**
+     * Get mute mode of the current group
+     *
+     * @return string
+     */
     public function SetGroupMute($mute)
     {
         if ($mute) {
@@ -1149,8 +1000,14 @@ Content-Length: 304
 <s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><u:SetGroupMute xmlns:u="urn:schemas-upnp-org:service:GroupRenderingControl:1"><InstanceID>0</InstanceID><DesiredMute>' . $mute . '</DesiredMute></u:SetGroupMute></s:Body></s:Envelope>';
 
 
-        return (int)$this->sendPacket($content); // return (int) hinzugef�gt
+        return (int)$this->sendPacket($content);
     }
+
+    /**
+     * Set Volume of the current group
+     *
+     * @return: none
+     */
 
     public function SetGroupVolume($volume)
     {
@@ -1171,6 +1028,13 @@ Content-Length: ' . $length . '
         $this->sendPacket($content);
     }
 
+
+    /**
+     * Get Volume of the current group
+     *
+     * @return: String
+     */
+
     public function GetGroupVolume()
     {
         $content = 'POST /MediaRenderer/GroupRenderingControl/Control HTTP/1.1
@@ -1184,6 +1048,12 @@ Content-Length: 280
         return (int)$this->sendPacket($content);
     }
 
+
+    /**
+     * Get current Volume of all group members
+     *
+     * @return: String
+     */
 
     public function SnapshotGroupVolume()
     {
@@ -1199,6 +1069,13 @@ Content-Length: 290
         # $this->sendPacket($content);
         return (int)$this->sendPacket($content);
     }
+
+
+    /**
+     * Set relative Volume of all group members in percentage to current volume
+     *
+     * @return: none
+     */
 
     public function SetRelativeGroupVolume($volume)
     {
@@ -1221,6 +1098,11 @@ Content-Length: ' . $length . '
     }
 
 
+    /**
+     * Remove Zone from Group to be his own Coordinator
+     *
+     * @return: none
+     */
     public function BecomeCoordinatorOfStandaloneGroup()
     {
 
@@ -1235,6 +1117,11 @@ Content-Length: 310
         $this->sendPacket($content);
     }
 
+    /**
+     * Deletes playlist
+     *
+     * @return: none
+     */
 
     public function DelSonosPlaylist($id)
     {
@@ -1252,26 +1139,90 @@ SOAPACTION: "urn:schemas-upnp-org:service:ContentDirectory:1#DestroyObject"
     }
 
 
+    /**
+     * Delegates GroupCoordinator to another Zone
+     *
+     * @param string $RinconID , $Rejoin)
+     *
+     * @return: String
+     */
+
     public function DelegateGroupCoordinationTo($RinconID, $Rejoin)
     {
 
-        # 0 = RejoinGroup --> false
-        # 1 = RejoinGroup --> true
+# 0 = RejoinGroup --> false
+# 1 = RejoinGroup --> true
 
         $content = 'POST /MediaRenderer/AVTransport/Control HTTP/1.1
 SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#DelegateGroupCoordinationTo"
 CONTENT-TYPE: text/xml; charset="utf-8"
 HOST: ' . $this->address . ':1400
-Content-Length: 381
+Content-Length: 419
 
-<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>
-<u:DelegateGroupCoordinationTo xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"><InstanceID>0</InstanceID>
-<NewCoordinator>' . $RinconID . '</NewCoordinator><RejoinGroup>' . $Rejoin . '</RejoinGroup></u:DelegateGroupCoordinationTo></s:Body></s:Envelope>';
+<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <u:DelegateGroupCoordinationTo xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+         <InstanceID>0</InstanceID>
+         <NewCoordinator>' . $RinconID . '</NewCoordinator>
+         <RejoinGroup>' . $Rejoin . '</RejoinGroup>
+      </u:DelegateGroupCoordinationTo>
+   </s:Body>
+</s:Envelope>';
+
 
         $this->sendPacket($content);
     }
 
 
+    /**
+     * Creates a Stereo Pair of two single zones
+     *
+     * @param string RinconID, LEFT and RinconID RIGHT
+     *
+     * @return: None
+     */
+
+    public function CreateStereoPair($ChannelMapSet)
+    {
+        $content = 'POST /DeviceProperties/Control HTTP/1.1
+SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#CreateStereoPair"
+CONTENT-TYPE: text/xml; charset="utf-8"
+HOST: ' . $this->address . ':1400
+Content-Length: 381
+
+<?xml version="1.0" encoding="utf-8"?><s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>
+<u:CreateStereoPair xmlns:u="urn:schemas-upnp-org:service:DeviceProperties:1"><ChannelMapSet>' . $ChannelMapSet . '</ChannelMapSet></u:CreateStereoPair></s:Body></s:Envelope>';
+
+        $this->sendPacket($content);
+    }
+
+
+    /**
+     * Seperates a Stereo Pair in two single zones
+     *
+     * @param string RinconID, LEFT and RinconID RIGHT
+     *
+     * @return: None
+     */
+
+    public function SeperateStereoPair($ChannelMapSet)
+    {
+        $content = 'POST /DeviceProperties/Control HTTP/1.1
+SOAPACTION: "urn:schemas-upnp-org:service:DeviceProperties:1#SeparateStereoPair"
+CONTENT-TYPE: text/xml; charset="utf-8"
+HOST: ' . $this->address . ':1400
+Content-Length: 387
+
+<?xml version="1.0" encoding="utf-8"?><s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>
+<u:SeparateStereoPair xmlns:u="urn:schemas-upnp-org:service:DeviceProperties:1"><ChannelMapSet>' . $ChannelMapSet . '</ChannelMapSet></u:SeparateStereoPair></s:Body></s:Envelope>';
+
+        $this->sendPacket($content);
+    }
+
+
+
+# to be checked if necessary
     public function GetZoneGroupState()
     {
         return $this->processSoapCall("/ZoneGroupTopology/Control",
@@ -1364,6 +1315,14 @@ Content-Length: 381
     }
 
 
+    /**
+     * Sets Treble for Zone
+     *
+     * @param string Treble
+     *
+     * @return: None
+     */
+
     public function SetTreble($Treble)
     {
         $laenge = 296 + (strlen($Treble));
@@ -1380,6 +1339,14 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#SetTreble"
     }
 
 
+    /**
+     * Sets Bass for Zone
+     *
+     * @param string Treble
+     *
+     * @return: None
+     */
+
     public function SetBass($Bass)
     {
         $laenge = 288 + (strlen($Bass));
@@ -1394,6 +1361,15 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#SetBass"
 
         $this->sendPacket($content);
     }
+
+
+    /**
+     * Sets Loudness for Zone
+     *
+     * @param string (0 or 1)
+     *
+     * @return: None
+     */
 
 
     public function SetLoudness($loud)
@@ -1416,6 +1392,14 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#SetLoudness"
     }
 
 
+    /**
+     * Gets Loudness for Zone
+     *
+     * @param: none
+     *
+     * @return: boolean
+     */
+
     public function GetLoudness()
     {
         $content = 'POST /MediaRenderer/RenderingControl/Control HTTP/1.1
@@ -1431,6 +1415,14 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#GetLoudness"
     }
 
 
+    /**
+     * Gets Treble for Zone
+     *
+     * @param: none
+     *
+     * @return: string
+     */
+
     public function GetTreble()
     {
         $content = 'POST /MediaRenderer/RenderingControl/Control HTTP/1.1
@@ -1445,6 +1437,14 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#GetTreble"
         return (int)$this->sendPacket($content);
     }
 
+
+    /**
+     * Gets Bass for Zone
+     *
+     * @param: None
+     *
+     * @return: String
+     */
 
     public function GetBass()
     {
@@ -1463,6 +1463,9 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#GetBass"
     /**
      * Sleeptimer in Minutes (0-59)
      *
+     * @params string
+     *
+     * @return: None
      */
 
     public function Sleeptimer($timer)
@@ -1482,16 +1485,11 @@ Content-Length: 335
     /**
      * Sets volume for a player
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String; sendpacket Return
-     *
-     *
      * @param string $volume Volume in percent
      *
      * @return String
      */
+
     public function SetVolume($volume)
     {
 
@@ -1507,16 +1505,61 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#SetVolume"
         $this->sendPacket($content);
     }
 
+
     /**
-     * Gets current volume information from player
+     * Sets balance volume for player
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String; sendpacket Return
+     * @param string $volume (Volume in percent), Left or right speaker
      *
      * @return String
      */
+
+    public function SetBalance($direction, $volume)
+    {
+
+        $content = 'POST /MediaRenderer/RenderingControl/Control HTTP/1.1
+CONNECTION: close
+HOST: ' . $this->address . ':1400
+CONTENT-LENGTH: ' . (317 + strlen($volume)) . '
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#SetVolume"
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:SetVolume xmlns:u="urn:schemas-upnp-org:service:RenderingControl:1"><InstanceID>0</InstanceID><Channel>' . strtoupper($direction) . '</Channel><DesiredVolume>' . $volume . '</DesiredVolume></u:SetVolume></s:Body></s:Envelope>';
+
+        $this->sendPacket($content);
+    }
+
+
+    /**
+     * Sets balance, bass and treble to standard
+     *
+     * @param string
+     *
+     * @return String
+     */
+    public function ResetBasicEQ()
+    {
+
+        $content = 'POST /MediaRenderer/RenderingControl/Control HTTP/1.1
+CONNECTION: close
+HOST: ' . $this->address . ':1400
+USER-AGENT: Linux UPnP/1.0 Sonos/42.2-52113 (WDCR:Microsoft Windows NT 6.1.7601 Service Pack 1)
+CONTENT-LENGTH: 271
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#ResetBasicEQ"
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:ResetBasicEQ xmlns:u="urn:schemas-upnp-org:service:RenderingControl:1"><InstanceID>0</InstanceID></u:ResetBasicEQ></s:Body></s:Envelope>';
+
+        $this->sendPacket($content);
+    }
+
+
+    /**
+     * Gets current volume information from player
+     *
+     * @return String
+     */
+
     public function GetVolume()
     {
 
@@ -1532,18 +1575,15 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#GetVolume"
         return (int)$this->sendPacket($content);
     }
 
+
     /**
-     * Sets mute/ unmute for a player
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String; sendpacket Return
+     * Sets mute/unmute for a player
      *
      * @param string $mute Mute unmute as (boolean)true/false or (string)1/0
      *
      * @return String
      */
+
     public function SetMute($mute)
     {
 
@@ -1566,12 +1606,7 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#SetMute"
     }
 
     /**
-     * Gets mute/ unmute status for a player
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String; sendpacket Return
+     * Gets mute/unmute status for a player
      *
      * @return string
      */
@@ -1595,12 +1630,6 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#GetMute"
     /**
      * Sets Playmode for a renderer (could affect more than one zone!)
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String; sendpacket Return
-     * - <b>NOTE:</b>
-     * <PRE>
      * NORMAL = SHUFFLE and REPEAT -->FALSE
      * REPEAT_ALL = REPEAT --> TRUE, Shuffle --> FALSE
      * SHUFFLE_NOREPEAT = SHUFFLE -->TRUE / REPEAT = FALSE
@@ -1610,6 +1639,7 @@ SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#GetMute"
      *
      * @return String
      */
+
     public function SetPlayMode($mode)
     {
 
@@ -1625,23 +1655,67 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#SetPlayMode"
         $this->sendPacket($content);
     }
 
+
+    /**
+     * Set for Sonos CONNECT the Volume to fixed or variable
+     *
+     * @params '0' = variable, '1' = fixed
+     * @return string
+     */
+
+    public function SetVolumeMode($mode, $uuid)
+    {
+        $content = 'POST /MediaRenderer/RenderingControl/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: ' . $this->address . ':1400
+USER-AGENT: Linux UPnP/1.0 Sonos/38.9-46251 (WDCR:Microsoft Windows NT 6.1.7601 Service Pack 1)
+CONTENT-LENGTH: 305
+CONTENT-TYPE: text/xml; charset="utf-8"
+X-SONOS-TARGET-UDN: uuid:' . $uuid . '
+SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#SetOutputFixed"
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:SetOutputFixed xmlns:u="urn:schemas-upnp-org:service:RenderingControl:1"><InstanceID>0</InstanceID><DesiredFixed>' . $mode . '</DesiredFixed></u:SetOutputFixed></s:Body></s:Envelope>';
+
+        return $this->sendPacket($content);
+    }
+
+
+    /**
+     * Get for Sonos CONNECT the Volume mode
+     *
+     * @params
+     * @return '0' = variable, '1' = fixed
+     */
+
+    public function GetVolumeMode($uuid)
+    {
+        $content = 'POST /MediaRenderer/RenderingControl/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: ' . $this->address . ':1400
+USER-AGENT: Linux UPnP/1.0 Sonos/38.9-46251 (WDCR:Microsoft Windows NT 6.1.7601 Service Pack 1)
+CONTENT-LENGTH: 275
+CONTENT-TYPE: text/xml; charset="utf-8"
+X-SONOS-TARGET-UDN: uuid:' . $uuid . '
+SOAPACTION: "urn:schemas-upnp-org:service:RenderingControl:1#GetOutputFixed"
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:GetOutputFixed xmlns:u="urn:schemas-upnp-org:service:RenderingControl:1"><InstanceID>0</InstanceID></u:GetOutputFixed></s:Body></s:Envelope>';
+
+        return (bool)$this->sendPacket($content);
+    }
+
+
     /**
      * Gets transport settings for a renderer
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Array with "repeat" and "shuffle" as keys and true/false as value
-     * - <b>NOTE:</b>
-     * <PRE>
-     * SOAP return sometimes is PLAYING; I don?t know what this means, maybe only Radio (see the code below).
      *
-     * NORMAL = SHUFFLE and REPEAT -->FALSE
-     * REPEAT_ALL = REPEAT --> TRUE, Shuffle --> FALSE
-     * SHUFFLE_NOREPEAT = SHUFFLE -->TRUE / REPEAT = FALSE
-     * SHUFFLE = SHUFFLE and REPEAT -->TRUE </PRE>
-     *
-     * @todo: what is PLAYING??? TAG_NOTE_BR
+     * NORMAL = SHUFFLE and REPEAT and REPEAT ON -->FALSE
+     * REPEAT_ALL = REPEAT --> TRUE, SHUFFLE --> FALSE, REPEAT ONE --> FALSE
+     * SHUFFLE_NOREPEAT = SHUFFLE -->TRUE, REPEAT = FALSE, REPEAT ONE --> FALSE
+     * SHUFFLE = SHUFFLE and REPEAT -->TRUE, REPEAT ONE --> FALSE </PRE>
+     * SHUFFLE_REPEAT_ONE = SHUFFLE --> TRUE, REPEAT --> FALSE, REPEAT ONE --> TRUE
+     * REPEAT_ONE = SHUFFLE --> FALSE, REPEAT --> FALSE, REPEAT ONE --> TRUE
      *
      * @return Array
      */
@@ -1664,48 +1738,53 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetTransportSettings"
         if (strstr($returnContent, "NORMAL") !== false) {
             return Array(
                 "repeat" => false,
+                "repeat one" => false,
                 "shuffle" => false
             );
         } elseif (strstr($returnContent, "REPEAT_ALL") !== false) {
             return Array(
                 "repeat" => true,
+                "repeat one" => false,
                 "shuffle" => false
             );
 
         } elseif (strstr($returnContent, "SHUFFLE_NOREPEAT") !== false) {
             return Array(
                 "repeat" => false,
+                "repeat one" => false,
+                "shuffle" => true
+            );
+
+        } elseif (strstr($returnContent, "SHUFFLE_REPEAT_ONE") !== false) {
+            return Array(
+                "repeat" => false,
+                "repeat one" => true,
                 "shuffle" => true
             );
 
         } elseif (strstr($returnContent, "SHUFFLE") !== false) {
             return Array(
                 "repeat" => true,
+                "repeat one" => false,
                 "shuffle" => true
             );
+
+        } elseif (strstr($returnContent, "REPEAT_ONE") !== false) {
+            return Array(
+                "repeat" => false,
+                "repeat one" => true,
+                "shuffle" => false
+            );
+
         }
-
-
-        /*   } elseif (strstr($returnContent, "PLAYING") !== false) {
-              return Array (
-                 "repeat" => false,
-                 "shuffle" => true
-              );
-           } */
-
     }
 
     /**
      * Gets transport settings for a renderer
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> String (comma sep.) with available actions
-     * - <b>NOTE:</b>
-     *
      * @return String
      */
+
     public function GetCurrentTransportActions()
     {
 
@@ -1731,14 +1810,9 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetCurrentTransportActio
     /**
      * Gets transport settings for a renderer
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Array with "repeat" and "shuffle" as keys and true/false as value
-     * - <b>NOTE:</b> SOAP return sometimes is PLAYING; I don?t know what this means, maybe only Radio (see the code below).
-     *
      * @return Array
      */
+
     public function GetTransportInfo()
     {
 
@@ -1766,18 +1840,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo"
     /**
      * Gets Media Info
      *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b>
-     * <code>
      * Array    (
      * [CurrentURI] => http://192.168.0.2:10243/WMPNSSv4/1458092455/0_ezg1ODYxQzMwLTEyNzgtNDc0Ri05MkQ0LTQxNzE1MDQ0MjMyMX0uMC40.mp3
      * [CurrentURIMetaData] => <DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">    <item id="{85861C30-1278-474F-92D4-417150442321}.0.4" restricted="0" parentID="4">        <dc:title>Car Crazy Cutie</dc:title>        <dc:creator>Beach Boys</dc:creator>        <res size="2753092" duration="0:02:50.000" bitrate="16000" protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_OP=01;DLNA.ORG_FLAGS=01500000000000000000000000000000" sampleFrequency="44100" bitsPerSample="16" nrAudioChannels="2" microsoft:codec="{00000055-0000-0010-8000-00AA00389B71}" xmlns:microsoft="urn:schemas-microsoft-com:WMPNSS-1-0/">http://192.168.0.2:10243/WMPNSSv4/1458092455/0_ezg1ODYxQzMwLTEyNzgtNDc0Ri05MkQ0LTQxNzE1MDQ0MjMyMX0uMC40.mp3</res>        <res duration="0:02:50.000" bitrate="16000" protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_PN=MP3;DLNA.ORG_OP=10;DLNA.ORG_CI=1;DLNA.ORG_FLAGS=01500000000000000000000000000000" sampleFrequency="44100" nrAudioChannels="1" microso
      * [title] => Car Crazy Cutie                         )
      *  </code>
-     *
-     * - <b>NOTE:</b> SOAP returns CurrentURIMetaData this has to be parsed
      *
      * @return Array
      */
@@ -1795,13 +1862,16 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetMediaInfo"
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:GetMediaInfo xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"><InstanceID>0</InstanceID></u:GetMediaInfo></s:Body></s:Envelope>';
 
         $returnContent = $this->XMLsendPacket($content);
+        #print_r($returnContent);
 
         $xmlParser = xml_parser_create("UTF-8");
         xml_parser_set_option($xmlParser, XML_OPTION_TARGET_ENCODING, "ISO-8859-1");
         xml_parse_into_struct($xmlParser, $returnContent, $vals, $index);
         xml_parser_free($xmlParser);
 
+        // print_r($index);
         $mediaInfo = Array();
+
 
 
         if (isset($vals[$index["CURRENTURI"][0]]["value"])) {
@@ -1822,8 +1892,8 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetMediaInfo"
             xml_parse_into_struct($xmlParser, $mediaInfo["CurrentURIMetaData"], $vals, $index);
             xml_parser_free($xmlParser);
 
-            //print_r($index);
-            //print_r($vals);
+            // print_r($index);
+            // print_r($vals);
 
             if (isset($index["DC:TITLE"]) and isset($vals[$index["DC:TITLE"][0]]["value"])) {
                 $mediaInfo["title"] = $vals[$index["DC:TITLE"][0]]["value"];
@@ -1840,13 +1910,8 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetMediaInfo"
     /**
      * Gets position info
      *
-     * - <b>NOTE:</b> this is one of the most interesting and complex functions with most interesting informations! You may get radio and zonegroup info out of parsing this information!
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Example:
-     * <code> Array
+     * Example:
+     * Array
      *  (
      *    [position] => 0:00:59
      *    [RelTime] => 0:00:59
@@ -1863,10 +1928,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetMediaInfo"
      *    [streamContent] =>
      *    [trackURI] =>
      *    [Track] => 1
-     *  ) </code>
+     *  )
      *
      * @return Array
      */
+
     public function GetPositionInfo()
     {
         $content = 'POST /MediaRenderer/AVTransport/Control HTTP/1.1
@@ -1879,13 +1945,13 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo"
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:GetPositionInfo xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"><InstanceID>0</InstanceID></u:GetPositionInfo></s:Body></s:Envelope>';
 
         $returnContent = $this->sendPacket($content);
+        $returnContentMeta = $returnContent;
 
         $position = substr($returnContent, stripos($returnContent, "NOT_IMPLEMENTED") - 7, 7);
 
         $returnContent = substr($returnContent, stripos($returnContent, '&lt;'));
         $returnContent = substr($returnContent, 0, strrpos($returnContent, '&gt;') + 4);
         $returnContent = str_replace(array("&lt;", "&gt;", "&quot;", "&amp;", "%3a", "%2f", "%25"), array("<", ">", "\"", "&", ":", "/", "%"), $returnContent);
-
 
         $xmlParser = xml_parser_create("UTF-8");
         xml_parser_set_option($xmlParser, XML_OPTION_TARGET_ENCODING, "UTF-8");
@@ -1897,7 +1963,6 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo"
         $positionInfo["position"] = $position;
         $positionInfo["RelTime"] = $position;
 
-
         if (isset($index["RES"]) and isset($vals[$index["RES"][0]]["attributes"]["DURATION"])) {
             $positionInfo["duration"] = $vals[$index["RES"][0]]["attributes"]["DURATION"];
             $positionInfo["TrackDuration"] = $vals[$index["RES"][0]]["attributes"]["DURATION"];
@@ -1905,7 +1970,7 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo"
             $positionInfo["duration"] = "";
             $positionInfo["TrackDuration"] = "";
         }
-
+#print_r($index);
         if (isset($index["RES"]) and isset($vals[$index["RES"][0]]["value"])) {
             $positionInfo["URI"] = $vals[$index["RES"][0]]["value"];
             $positionInfo["TrackURI"] = $vals[$index["RES"][0]]["value"];
@@ -2011,6 +2076,8 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo"
         } else {
             $positionInfo["Track"] = "";
         }
+        #$positionInfo["TrackMetaData"] = htmlentities(substr($returnContentMeta, strpos($returnContentMeta, "DIDL-Lite") - 4, strripos($returnContentMeta, "DIDL-Lite") + 5));
+        $positionInfo["TrackMetaData"] = substr($returnContentMeta, strpos($returnContentMeta, "DIDL-Lite") - 4, strripos($returnContentMeta, "DIDL-Lite") + 5);
 
         return $positionInfo;
     }
@@ -2019,42 +2086,32 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo"
     /**
      * Play Radio station
      *
-     * - <b>NOTE:</b> This is only a SetAVTransportURI Wrapper to switch to a radio station
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Array with $radio and $ MetaData as key
-     *
      * @param string $radio radio url
-     * @param string $Name Name of station (optional, default IP-Symcon Radio)
+     * @param string $Name Name of station (optional)
      * @param string $id ID of Station (optional, default R:0/0/0)
      * @param string $parentID parentID (optional, default R:0/0)
      * @return array
      */
-    public function SetRadio($radio, $Name = "default", $id = "R:0/0/0", $parentID = "R:0/0")
+
+    #public function SetRadio($radio, $name, $id="R:0/0/0", $parentID="R:0/0")
+    public function SetRadio($radio, $name, $id = "R:0/0/43", $parentID = "R:0/0")
     {
-        $MetaData = "&lt;DIDL-Lite xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:r=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot; xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot;&gt;&lt;item id=&quot;" . $id . "&quot; parentID=&quot;" . $parentID . "&quot; restricted=&quot;true&quot;&gt;&lt;dc:title&gt;" . $Name . "&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.audioBroadcast&lt;/upnp:class&gt;&lt;desc id=&quot;cdudn&quot; nameSpace=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot;&gt;SA_RINCON65031_&lt;/desc&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;";
+        $MetaData = "&lt;DIDL-Lite xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:r=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot; xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot;&gt;&lt;item id=&quot;" . $id . "&quot; parentID=&quot;" . $parentID . "&quot; restricted=&quot;true&quot;&gt;&lt;dc:title&gt;" . $name . "&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.audioBroadcast&lt;/upnp:class&gt;&lt;desc id=&quot;cdudn&quot; nameSpace=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot;&gt;SA_RINCON65031_&lt;/desc&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;";
 
         $this->SetAVTransportURI($radio, $MetaData);
 
     }
 
+
     /**
      * Sets Av Transport URI
-     *
-     * - <b>NOTE:</b> Main SOAP method to set play URI - this is the plain SetAVTransportURI
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> sendpacket return
      *
      * @param string $tspuri Transport URI
      * @param string $MetaData (optional for MetaData)
      *
      * @return String
      */
+
     public function SetAVTransportURI($tspuri, $MetaData = "")
     {
 
@@ -2074,19 +2131,12 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI"
     /**
      * Sets Queue
      *
-     * - <b>NOTE:</b> This is only a Wrapper for setting a queue via SetAVTransportURI
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Void
-     * @todo SHOULD return something else
-     *
      * @param string $queue transport URI or Queue
      * @param string $MetaData (optional for MetaData)
      *
      * @return Void
      */
+
     public function SetQueue($queue, $MetaData = "")
     {
         $this->SetAVTransportURI($queue, $MetaData);
@@ -2096,15 +2146,9 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI"
     /**
      * Clears devices Queue
      *
-     * - <b>NOTE:</b> This function clears the actual playing queue but not the actually selected playlist
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Sendpacket returns
-     *
      * @return String
      */
+
     public function ClearQueue()
     {
 
@@ -2120,20 +2164,15 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#RemoveAllTracksFromQueue
         $this->sendPacket($content);
     }
 
+
     /**
      * Adds URI to Queue (not the Playlist!!)
-     *
-     * - <b>NOTE:</b> Works on queue
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Sendpacket returns
      *
      * @param string $file Uri or Filename
      *
      * @return String
      */
+
     public function AddToQueue($file)
     {
 
@@ -2149,20 +2188,44 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#AddURIToQueue"
         $this->sendPacket($content);
     }
 
+
+    /**
+     * Adds URI to Queue (not the Playlist!!)
+     *
+     * @param string $file Uri or Filename
+     *
+     * @return String
+     */
+
+    public function AddFavoritesToQueue($file, $meta)
+    {
+
+        $content = 'POST /MediaRenderer/AVTransport/Control HTTP/1.1
+CONNECTION: close
+HOST: ' . $this->address . ':1400
+CONTENT-LENGTH: ' . (438 + strlen(htmlspecialchars($file)) + strlen(htmlspecialchars($meta))) . '
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#AddURIToQueue"
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body><u:AddURIToQueue xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"><InstanceID>0</InstanceID>
+<EnqueuedURI>' . htmlspecialchars($file) . '</EnqueuedURI>
+<EnqueuedURIMetaData>' . htmlspecialchars($meta) . '</EnqueuedURIMetaData>
+<DesiredFirstTrackNumberEnqueued>0</DesiredFirstTrackNumberEnqueued><EnqueueAsNext>1</EnqueueAsNext></u:AddURIToQueue></s:Body></s:Envelope>';
+#var_dump(htmlspecialchars($meta));
+
+        $this->sendPacket($content);
+    }
+
+
     /**
      * Removes track from queue (not the Playlist!!)
-     *
-     * - <b>NOTE:</b> Works on queue
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Sendpacket returns
      *
      * @param string $track Tracknumber/id to remove from current sonos queue (!)
      *
      * @return string
      */
+
     public function RemoveFromQueue($track)
     {
 
@@ -2181,17 +2244,11 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#RemoveTrackFromQueue"
     /**
      * Jumps directly to the track
      *
-     * - <b>NOTE:</b> I think I never used this method (br) ... ever used direkt seek call. So note this is only a wrapper!
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaRenderer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:schemas-upnp-org:service:AVTransport:1
-     * - <b>Returns:</b> Sendpacket returns
-     *
      * @param string $track Number/ID of the track to play in queue
      *
      * @return string
      */
+
     public function SetTrack($track)
     {
 
@@ -2207,23 +2264,12 @@ SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Seek"
     }
 
 
-    /******************* // urn:schemas-upnp-org:device:MediaServer:1 ***********
-     ***************************************************************************/
-
-    /* urn:upnp-org:serviceId:ContentDirectory */
-
     /**
      * Returns an array with the songs of the actual sonos queue
      *
-     * - <b>NOTE:</b> Wrapper for Browse
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaServer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:upnp-org:serviceId:ContentDirectory
-     * - <b>Returns:</b> (String) Playlist ID
-     *
      * @return String
      */
+
     public function GetCurrentPlaylist()
     {
         $header = 'POST /MediaServer/ContentDirectory/Control HTTP/1.1
@@ -2281,15 +2327,9 @@ Content-Length: ' . strlen($xml) . '
     /**
      * Returns an array with all sonos playlists
      *
-     * - <b>NOTE:</b> Wrapper for Browse
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaServer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:upnp-org:serviceId:ContentDirectory
-     * - <b>Returns:</b> Array with all Sonos Pl
-     *
      * @return Array
      */
+
     public function GetSonosPlaylists()
     {
         $header = 'POST /MediaServer/ContentDirectory/Control HTTP/1.1
@@ -2330,18 +2370,13 @@ Content-Length: ' . strlen($xml) . '
         return $liste;
     }
 
+
     /**
      * Returns an array with all imported PL
      *
-     * - <b>NOTE:</b> Wrapper for Browse
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaServer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:upnp-org:serviceId:ContentDirectory
-     * - <b>Returns:</b> Array with all imported PL (Share, Mediaplayer, itunes....)
-     *
      * @return Array
      */
+
     public function GetImportedPlaylists()
     {
         $header = 'POST /MediaServer/ContentDirectory/Control HTTP/1.1
@@ -2384,20 +2419,15 @@ Content-Length: ' . strlen($xml) . '
         return $liste;
     }
 
+
     /**
      * Returns an array with all songs of a specific Playlist
-     *
-     * - <b>NOTE:</b> Wrapper for Browse
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaServer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:upnp-org:serviceId:ContentDirectory
-     * - <b>Returns:</b> Array with MetaData on the songs
      *
      * @param string $value Id of the playlist
      *
      * @return Array
      */
+
     public function GetPlaylist($value)
     {
         $header = 'POST /MediaServer/ContentDirectory/Control HTTP/1.1
@@ -2451,15 +2481,9 @@ Content-Length: ' . strlen($xml) . '
         return $liste;
     }
 
+
     /**
      * Universal function to browse ContentDirectory
-     *
-     * - <b>NOTE:</b> please use upnp and sonos documentation to get an idea of the return
-     *
-     * - <b>Device:</b> urn:schemas-upnp-org:device:MediaServer:1
-     * - <b>WSDL:</b> fill in
-     * - <b>Service:</b> urn:upnp-org:serviceId:ContentDirectory
-     * - <b>Returns:</b> Array with metadata; please use upnp and sonos documentation to get an idea of the return
      *
      * @param string $value ObjectID
      * @param string $meta BrowseFlag
@@ -2470,6 +2494,7 @@ Content-Length: ' . strlen($xml) . '
      *
      * @return Array
      */
+
     public function Browse($value, $meta = "BrowseDirectChildren", $filter = "", $sindex = "0", $rcount = "1000", $sc = "")
     {
 
@@ -2533,6 +2558,7 @@ Content-Length: ' . strlen($xml) . '
             $titel = $aktrow->xpath("dc:title");
             $interpret = $aktrow->xpath("dc:creator");
             $album = $aktrow->xpath("upnp:album");
+
             if (isset($aktrow->res)) {
                 $res = (string)$aktrow->res;
                 $liste[$i]['res'] = urlencode($res);
@@ -2541,11 +2567,11 @@ Content-Length: ' . strlen($xml) . '
                 $liste[$i]['res'] = "leer";
             }
             $resattr = $aktrow->res->attributes();
-            if (isset($resattr['duration'])) {
-                $liste[$i]['duration'] = (string)$resattr['duration'];
-            } else {
-                $liste[$i]['duration'] = "leer";
-            }
+            # if(isset($resattr['duration'])){
+            #   $liste[$i]['duration']=(string)$resattr['duration'];
+            #}else{
+            #   $liste[$i]['duration']="leer";
+            #}
             if (isset($albumart[0])) {
                 $liste[$i]['albumArtURI'] = "http://" . $this->address . ":1400" . (string)$albumart[0];
             } else {
@@ -2573,29 +2599,161 @@ Content-Length: ' . strlen($xml) . '
                 $liste[$i]['album'] = "leer";
             }
 
+
         }
         return $liste;
     }
 
-    /***************************************************************************
-     * Radiotime / Tunein
-     ***************************************************************************/
 
     /**
+     * Universal function to browse ContentDirectory
      *
-     * Get Now Playing information from Radiotime via opml
-     *
-     * - <b>NOTE:</b> it?s maybe better to use SOAP to get this information
-     *
-     * - <b>Device:</b>       -
-     * - <b>WSDL:</b>       -
-     * - <b>Service:</b>    -
-     * - <b>Returns:</b> Array with Status, Version info and Logos
+     * @param string $value ObjectID
+     * @param string $meta BrowseFlag
+     * @param string $filter Filter
+     * @param string $sindex SearchIndex
+     * @param string $rcount ResultCount
+     * @param string $sc SortCriteria
      *
      * @return Array
      */
 
-// Note: Our partnerId is in here
+    public function GetSonosFavorites($value, $meta = "BrowseDirectChildren", $filter = "", $sindex = "0", $rcount = "1000", $sc = "")
+    {
+
+        switch ($meta) {
+            case 'BrowseDirectChildren':
+            case 'c':
+            case 'child':
+                $meta = "BrowseDirectChildren";
+                break;
+            case 'BrowseMetadata':
+            case 'm':
+            case 'meta':
+                $meta = "BrowseMetadata";
+                break;
+            default:
+                return false;
+        }
+        $header = 'POST /MediaServer/ContentDirectory/Control HTTP/1.1
+SOAPACTION: "urn:schemas-upnp-org:service:ContentDirectory:1#Browse"
+CONTENT-TYPE: text/xml; charset="utf-8"
+HOST: ' . $this->address . ':1400';
+        $xml = '<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+<s:Body>
+<u:Browse xmlns:u="urn:schemas-upnp-org:service:ContentDirectory:1"><ObjectID>' . htmlspecialchars($value) . '</ObjectID><BrowseFlag>' . $meta . '</BrowseFlag><Filter>' . $filter . '</Filter><StartingIndex>' . $sindex . '</StartingIndex><RequestedCount>' . $rcount . '</RequestedCount><SortCriteria>' . $sc . '</SortCriteria></u:Browse>
+</s:Body>
+</s:Envelope>';
+        $content = $header . '
+Content-Length: ' . strlen($xml) . '
+
+' . $xml;
+
+        $returnContent = $this->sendPacket($content);
+
+
+        $xmlParser = xml_parser_create();
+        $returnContent = substr($returnContent, stripos($returnContent, '&lt;'));
+        $returnContent = substr($returnContent, 0, strrpos($returnContent, '&gt;') + 4);
+        $returnContent = str_replace(array("&lt;", "&gt;", "&quot;", "&amp;", "%3a", "%2f", "%25"), array("<", ">", "\"", "&", ":", "/", "%"), $returnContent);
+
+        $xml = new SimpleXMLElement($returnContent);
+
+        $liste = array();
+        for ($i = 0, $size = count($xml); $i < $size; $i++) {
+
+            //Wenn Container vorhanden, dann ist es ein Browse Element
+            //Wenn Item vorhanden, dann ist es ein Song.
+            if (isset($xml->container[$i])) {
+                $aktrow = $xml->container[$i];
+                $attr = $xml->container[$i]->attributes();
+                $liste[$i]['typ'] = "container";
+            } else if (isset($xml->item[$i])) {
+                //Item vorhanden also nur noch Musik
+                $aktrow = $xml->item[$i];
+                $attr = $xml->item[$i]->attributes();
+                $liste[$i]['typ'] = "item";
+            } else {
+                //Fehler aufgetreten
+                return;
+            }
+            print_r($returnContent);
+
+
+            $id = $attr['id'];
+            $parentid = $attr['parentID'];
+            $albumart = $aktrow->xpath("upnp:albumArtURI");
+            $titel = $aktrow->xpath("dc:title");
+            $interpret[0] = $aktrow->xpath("r:description");
+            $album = $aktrow->xpath("upnp:album");
+            if (isset($aktrow->res)) {
+                $res = (string)$aktrow->res;
+                #$liste[$i]['res'] = urlencode($res);
+                $liste[$i]['res'] = ($res);
+
+            } else {
+                $liste[$i]['res'] = "leer";
+            }
+            $resattr = $aktrow->res->attributes();
+            if (isset($resattr['duration'])) {
+                $liste[$i]['duration'] = (string)$resattr['duration'];
+            } else {
+                $liste[$i]['duration'] = "leer";
+            }
+            if (isset($resattr['protocolInfo'])) {
+                $liste[$i]['TypeOfAudio'] = (string)$resattr['protocolInfo'];
+            } else {
+                $liste[$i]['TypeOfAudio'] = "leer";
+            }
+            if (isset($resattr['//DIDL-Lite'])) {
+                $liste[$i]['DIDL-Lite'] = (string)$resattr['//DIDL-Lite'];
+            } else {
+                $liste[$i]['DIDL-Lite'] = "leer";
+            }
+            if (isset($albumart[0])) {
+                #$liste[$i]['albumArtURI']="http://" . $this->address . ":1400".(string)$albumart[0];
+                $liste[$i]['albumArtURI'] = (string)$albumart[0];
+            } else {
+                $liste[$i]['albumArtURI'] = "leer";
+            }
+            $liste[$i]['title'] = (string)$titel[0];
+            if (isset($interpret[0])) {
+                $liste[$i]['artist'] = (string)$interpret[0][0];
+            } else {
+                $liste[$i]['artist'] = "leer";
+            }
+            if (isset($id) && !empty($id)) {
+                #$liste[$i]['id']=urlencode((string)$id);
+                $liste[$i]['id'] = (string)$id;
+            } else {
+                $liste[$i]['id'] = "leer";
+            }
+            if (isset($parentid) && !empty($parentid)) {
+                #$liste[$i]['parentid']=urlencode((string)$parentid);
+                $liste[$i]['parentid'] = (string)$parentid;
+            } else {
+                $liste[$i]['parentid'] = "leer";
+            }
+            if (isset($album[0])) {
+                $liste[$i]['album'] = (string)$album[0];
+            } else {
+                $liste[$i]['album'] = "leer";
+            }
+
+
+        }
+        return $liste;
+    }
+
+
+    /**
+     * Get Now Playing information from Radiotime via opml
+     *
+     * @return Array
+     */
+
     public function RadiotimeGetNowPlaying() // added br
     {
         $list["version"] = "";
@@ -2633,6 +2791,8 @@ Content-Length: ' . strlen($xml) . '
         }
         return $list;
     }
+
+
 
 
     /***************************************************************************
@@ -2747,16 +2907,6 @@ Content-Length: ' . strlen($xml) . '
 
         return $result;
     }
-}
-
-
-function SonosBY_SendSOAP($IPaddress, $content)
-{
-    $fp = fsockopen($IPaddress, 1400);
-    fputs($fp, $content);
-    $result = stream_get_contents($fp, -1);
-    fclose($fp);
-    return $result;
 }
 
 ?>

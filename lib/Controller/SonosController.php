@@ -89,7 +89,7 @@ class SonosController extends Controller
      */
     private function initController()
     {
-        require_once __DIR__ . "/../../3rdparty/PHPSonos.inc.php";
+        require_once __DIR__ . "/../../3rdparty/PHPSonos.php";
 
         $this->smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
         $this->ip = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller');
@@ -186,8 +186,7 @@ class SonosController extends Controller
     {
         $port = 1900;
         try {
-            //$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-            $sock = socket_create(AF_INET, SOCK_DGRAM, 21);
+            $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         } catch (\Exception $e) {
             $this->logger->error('SONOS discovery not possible; no socket setup on webserver; check Audio Player wiki', array('app' => 'audioplayer'));
             return array();
