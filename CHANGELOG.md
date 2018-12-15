@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.5.0 - open
+## 2.5.0 - 2018-12-15
 ### Added
 - Dark design and theming compatibility [#367](https://github.com/rello/audioplayer/issues/367)
 
@@ -14,6 +14,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - switch from --debug to verbosity levels in occ [#352](https://github.com/rello/audioplayer/issues/352)
 - widget migration to Dashboard 6.0.0 [#366](https://github.com/rello/audioplayer/pull/366) @[daita](https://github.com/daita)
 - update PHPSonos to V2.1.3
+- switch from css to scss stylesheets using global variables
 
 ### Fixed
 - show "title" tag for mouse hover in category list [#354](https://github.com/rello/audioplayer/issues/354)
