@@ -1135,8 +1135,10 @@ $(document).ready(function () {
     myAudios = new Audios();
     myAudios.init();
     myAudios.checkNewTracks();
-    $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
-    $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
+    if ($('#audioplayer_sonos').val() !== 'checked') {
+        $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
+        $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
+    }
 
     var notify = $('#audioplayer_notification').val();
     if (notify !== '') {
