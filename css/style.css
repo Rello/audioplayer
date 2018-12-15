@@ -14,6 +14,7 @@
 .ap_hidden {
     display: none !important;
 }
+
 #albumPlay {
     position: absolute;
     display: block;
@@ -200,7 +201,7 @@ i#scanAudiosFirst {
     display: block;
     float: left;
     background-color: #000;
-    color: var(--color-main-text);
+    color: #fff;
     font-size: 12px;
     font-weight: bold;
     text-align: center;
@@ -337,7 +338,6 @@ i#scanAudiosFirst {
 #individual-playlist li.dragable:hover {
     transition: background-color 0.3s ease;
     background: #f8f8f8;
-    background: var(--color-background-dark);
 }
 
 #individual-playlist li:hover .edit-song,
@@ -462,7 +462,6 @@ i#scanAudiosFirst {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-
 }
 
 #individual-playlist li span.album-indi {
@@ -473,7 +472,6 @@ i#scanAudiosFirst {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-
 }
 
 #individual-playlist li span.time {
@@ -597,7 +595,6 @@ i#scanAudiosFirst {
     width: 100%;
     float: left;
     color: #888888;
-    color: var(--color-text-maxcontrast);
     font-size: 12px;
     font-style: italic;
     text-overflow: ellipsis;
@@ -954,10 +951,6 @@ li.dropHover {
 
     }
 
-    .sm2-inline-element.sm2-button-element.sm2-shuffle {
-        /*display:none;*/
-    }
-
     #individual-playlist-header span span.header-artist,
     #individual-playlist-header span span.header-album,
     #individual-playlist-header span span.header-opt,
@@ -975,11 +968,9 @@ li.dropHover {
 
     #individual-playlist li span.title {
         width: 80%;
-
     }
 
     #individual-playlist li {
-        font-family: "Helvetica Neue", verdana, serif;
         font-weight: 200;
         font-size: 16px;
         height: 24px;
@@ -1153,7 +1144,6 @@ li.dropHover {
     }
 
     #individual-playlist li {
-        font-family: "Helvetica Neue", verdana;
         font-weight: 200;
     }
 }
