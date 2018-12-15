@@ -2,6 +2,9 @@
 All notable changes to the Audio Player project will be documented in this file.
 
 ## 2.5.0 - open
+### Added
+- Dark design and theming compatibility [#367](https://github.com/rello/audioplayer/issues/367)
+
 ### Changed
 - ru translation [#364](https://github.com/rello/audioplayer/pull/364) @[r4sas](https://github.com/r4sas)
 - SONOS: enable/disable the plugin globally as admin [#363](https://github.com/rello/audioplayer/issues/363)

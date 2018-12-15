@@ -136,15 +136,7 @@ Audios.prototype.scanSend = function () {
                 $('#audios_import_process').css('display', 'none');
                 $('#audios_import_done').css('display', 'block');
                 $('#audios_import_done_message').html(data.message);
-
-                $this.get_uservalue('category', function () {
-                    if ($this.category_selectors[0] && $this.category_selectors[0] !== 'Albums') {
-                        $("#category_selector").val($this.category_selectors[0]);
-                        $this.loadCategory();
-                    } else {
-                        $this.loadCategoryAlbums();
-                    }
-                });
+                $this.init();
             } else {
                 $('#audios_import_progressbar').progressbar('option', 'value', 100);
                 $('#audios_import_done_message').html(data.message);

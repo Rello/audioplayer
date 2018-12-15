@@ -9,29 +9,30 @@
  * @copyright 2016-2018 Marcel Scherello
  */
 
-style('audioplayer', 'bar-ui-min');
-style('audioplayer', 'style-min');
-style('files', 'detailsView');
-style('audioplayer', '3rdparty/fontello/css/fontello');
-script('audioplayer', 'soundmanager2-nodebug-jsmin');
-script('audioplayer', 'app-min');
-script('audioplayer', 'sidebar');
-script('audioplayer', 'settings/settings');
+use OCP\Util;
+
+Util::addStyle('audioplayer', 'bar-ui');
+Util::addStyle('audioplayer', 'style');
+Util::addStyle('files', 'detailsView');
+Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
+Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
+Util::addScript('audioplayer', 'app');
+Util::addScript('audioplayer', 'sidebar');
+Util::addScript('audioplayer', 'settings/settings');
 if ($_['audioplayer_editor'] === 'true') {
-    script('audioplayer_editor', 'editor');
-    style('audioplayer_editor', 'style');
+    Util::addScript('audioplayer_editor', 'editor');
+    Util::addStyle('audioplayer_editor', 'style');
 }
 if ($_['audioplayer_sonos'] !== 'checked') {
-    script('audioplayer', 'bar-ui-min');
-    style('audioplayer', '3rdparty/fontello/css/animation');
+    Util::addScript('audioplayer', 'bar-ui-min');
+    Util::addStyle('audioplayer', '3rdparty/fontello/css/animation');
 } else {
-    script('audioplayer', 'sonos');
-    style('audioplayer', 'sonos');
+    Util::addScript('audioplayer', 'sonos');
+    Util::addStyle('audioplayer', 'sonos');
 }
 
 ?>
 <input type="hidden" name="id" value="">
-<input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>">
 <input type="hidden" id="audioplayer_notification" value="<?php p($_['audioplayer_notification']); ?>">
 <input type="hidden" id="audioplayer_volume" value="<?php p($_['audioplayer_volume']); ?>">
 <input type="hidden" id="audioplayer_editor" value="<?php p($_['audioplayer_editor']); ?>">

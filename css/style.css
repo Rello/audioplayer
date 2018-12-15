@@ -21,7 +21,7 @@
     width: 30px;
     top: 115px;
     left: 5px;
-    background-image: none, url(../img/play.svg);
+    background-image: none, url(../img/albumplay.svg);
     background-size: 30px;
     opacity: 0.5;
     cursor: pointer;
@@ -104,15 +104,15 @@ i#scanAudiosFirst {
 }
 
 #albenoverview li i {
-    color: #ccc;
     font-size: 16px;
     float: right;
     padding: 0 6px;
     cursor: pointer;
+    opacity: 0.57;
 }
 
 #albenoverview li i:hover {
-    color: #000;
+    opacity: 1;
 }
 
 #category_area {
@@ -128,7 +128,6 @@ i#scanAudiosFirst {
 
 #app-navigation-toggle_alternative {
     position: fixed;
-    background-color: #fff;
     opacity: 1;
     height: 40px;
     width: 45px;
@@ -201,7 +200,7 @@ i#scanAudiosFirst {
     display: block;
     float: left;
     background-color: #000;
-    color: #fff;
+    color: var(--color-main-text);
     font-size: 12px;
     font-weight: bold;
     text-align: center;
@@ -329,8 +328,6 @@ i#scanAudiosFirst {
 #individual-playlist > li, #individual-playlist-header span {
     height: 24px;
     line-height: 24px;
-    color: #555;
-
 }
 
 #individual-playlist li .ioc-delete {
@@ -338,7 +335,9 @@ i#scanAudiosFirst {
 }
 
 #individual-playlist li.dragable:hover {
+    transition: background-color 0.3s ease;
     background: #f8f8f8;
+    background: var(--color-background-dark);
 }
 
 #individual-playlist li:hover .edit-song,
@@ -357,7 +356,6 @@ i#scanAudiosFirst {
     display: block;
     float: left;
     height: 26px;
-    color: #999;
     font-size: 12px;
 }
 
@@ -444,7 +442,6 @@ i#scanAudiosFirst {
     height: 24px;
     text-align: right;
     padding-right: 5px;
-
 }
 
 #individual-playlist li span.title {
@@ -455,7 +452,6 @@ i#scanAudiosFirst {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-
 }
 
 #individual-playlist li span.interpret {
@@ -523,7 +519,6 @@ i#scanAudiosFirst {
 
 .no-songs-found {
     font-size: 30px;
-    color: #ccc;
     font-weight: bold;
     width: 100%;
     display: block;
@@ -532,7 +527,6 @@ i#scanAudiosFirst {
 
 .no-songs-found-pl {
     font-size: 20px;
-    color: #ccc;
     font-weight: bold;
     width: 80%;
     margin-left: auto;
@@ -603,6 +597,7 @@ i#scanAudiosFirst {
     width: 100%;
     float: left;
     color: #888888;
+    color: var(--color-text-maxcontrast);
     font-size: 12px;
     font-style: italic;
     text-overflow: ellipsis;
@@ -614,9 +609,7 @@ i#scanAudiosFirst {
     position: relative;
     width: 100%;
     float: left;
-
     font-size: 13px;
-    color: #000;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -916,7 +909,6 @@ li.dropHover {
 
 #audioplayerTabView .key,
 #playlistsTabView .key {
-    color: #999;
     padding-right: 1em;
     vertical-align: top;
     display: table-cell;
