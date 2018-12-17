@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.6.0 - open
+### Added
+- favicons
+
 ## 2.5.0 - 2018-12-15
 ### Added
 - Dark design and theming compatibility [#367](https://github.com/rello/audioplayer/issues/367)
