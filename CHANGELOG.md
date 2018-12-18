@@ -4,6 +4,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 2.6.0 - open
 ### Added
 - favicons
+- php7.3
 
 ## 2.5.0 - 2018-12-15
 ### Added

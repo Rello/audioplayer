@@ -1,9 +1,8 @@
 {
 	"require": {
-      "php": ">=7.0.0"
+		"php": ">=7.3.0"
 	},
 	"require-dev": {
-      "christophwurst/nextcloud": "^14.0.0",
-		"phpunit/phpunit": "^5.7"
+		"christophwurst/nextcloud": "^14.0.0"
 	}
 }

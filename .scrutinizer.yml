@@ -6,7 +6,7 @@ build:
             tests:
                 override: [php-scrutinizer-run]
     environment:
-        php: 7.2
+        php: 7.3
         mysql: 5.6
 
 filter:
