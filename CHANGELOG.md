@@ -1,10 +1,13 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.6.0 - open
+## 2.5.1 - open
 ### Added
 - favicons
 - php7.3
+
+### Changed
+- Update owncloud version [#370](https://github.com/rello/audioplayer/pull/370) @[ho4ho](https://github.com/ho4ho)
 
 ## 2.5.0 - 2018-12-15
 ### Added
