@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.5.1 - 2019-01-xx
+### Fixed
+- JS Player not loaded on shared folder [#371](https://github.com/rello/audioplayer/issues/371)
+
 ## 2.5.1 - 2018-12-23
 ### Added
 - favicons
