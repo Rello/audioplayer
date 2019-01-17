@@ -121,32 +121,25 @@ class MusicController extends Controller
      * @NoCSRFRequired
      * @param $token
      * @param $file
+     * @throws \OCP\Files\NotFoundException
      */
     public function getPublicAudioStream($token, $file)
     {
         if (!empty($token)) {
-            $linkItem = \OCP\Share::getShareByToken($token);
-            if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
-                exit;
-            }
-            // seems to be a valid share
-            $rootLinkItem = \OCP\Share::resolveReShare($linkItem);
-            $user = $rootLinkItem['uid_owner'];
+            $share = $this->shareManager->getShareByToken($token);
+            $fileowner = $share->getShareOwner();
 
             // Setup filesystem
-            $nodes = $this->rootFolder->getUserFolder($user)->getById($linkItem['file_source']);
+            $nodes = $this->rootFolder->getUserFolder($fileowner)->getById($share->getNodeId());
             $pfile = array_shift($nodes);
             $path = $pfile->getPath();
             $segments = explode('/', trim($path, '/'), 3);
             $startPath = $segments[2];
 
-            if ((string)$linkItem['item_type'] === 'file') {
-                $filenameAudio = $startPath;
-            } else {
-                $filenameAudio = $startPath . '/' . rawurldecode($file);
-            }
+            $filenameAudio = $startPath . '/' . rawurldecode($file);
+
             \OC::$server->getSession()->close();
-            $stream = new \OCA\audioplayer\Http\AudioStream($filenameAudio, $user);
+            $stream = new \OCA\audioplayer\Http\AudioStream($filenameAudio, $fileowner);
             $stream->start();
         }
     }
