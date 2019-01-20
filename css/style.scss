@@ -930,11 +930,6 @@ li.dropHover {
 }
 
 @media only screen and (max-width: 768px) {
-  #app-navigation-toggle {
-    position: fixed;
-    background-color: #fff;
-    opacity: 1;
-  }
 
   #app-navigation-toggle_alternative {
     display: none;
@@ -989,14 +984,6 @@ li.dropHover {
 }
 
 @media only screen and (max-width: 480px) {
-
-  #app-navigation-toggle {
-    position: fixed;
-    background-color: #fff;
-    opacity: 1;
-    height: 40px;
-    width: 45px;
-  }
 
   .sm2-bar-ui.fixed {
     margin-left: 45px;
