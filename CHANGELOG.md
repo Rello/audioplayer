@@ -3,8 +3,10 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## 2.5.2 - 2019-01-xx
 ### Fixed
-- JS Player not loaded on shared folder [#371](https://github.com/rello/audioplayer/issues/371)
+- player not loaded on shared folder [#371](https://github.com/rello/audioplayer/issues/371) @[Ark74](https://github.com/Ark74)
 - copyright 2019
+- dark design and theming compatibility [#367](https://github.com/rello/audioplayer/issues/367)
+- replace deprecated insertIfNotExist()
 
 ## 2.5.1 - 2018-12-23
 ### Added
@@ -12,11 +14,11 @@ All notable changes to the Audio Player project will be documented in this file.
 - php7.3
 
 ### Changed
-- Update owncloud version [#370](https://github.com/rello/audioplayer/pull/370) @[ho4ho](https://github.com/ho4ho)
+- update owncloud version [#370](https://github.com/rello/audioplayer/pull/370) @[ho4ho](https://github.com/ho4ho)
 
 ## 2.5.0 - 2018-12-15
 ### Added
-- Dark design and theming compatibility [#367](https://github.com/rello/audioplayer/issues/367)
+- dark design and theming compatibility [#367](https://github.com/rello/audioplayer/issues/367)
 
 ### Changed
 - ru translation [#364](https://github.com/rello/audioplayer/pull/364) @[r4sas](https://github.com/r4sas)

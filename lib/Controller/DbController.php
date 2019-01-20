@@ -20,6 +20,7 @@ use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\Share\IManager;
 use OCP\ILogger;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * Controller class for main page.
@@ -278,7 +279,20 @@ class DbController extends Controller
         $sAlbum = $this->truncate($sAlbum, '256');
         $sYear = $this->normalizeInteger($sYear);
         $AlbumCount = 0;
-        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_albums', ['user_id' => $userId, 'name' => $sAlbum, 'folder_id' => $parentId])) {
+
+        $stmt = $this->db->prepare('SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ? AND `folder_id` = ?');
+        $stmt->execute(array($userId, $sAlbum, $parentId));
+        $row = $stmt->fetch();
+        if ($row) {
+            if ((int)$row['artist_id'] !== (int)$iArtistId) {
+                $various_id = $this->writeArtistToDB($userId, $this->l10n->t('Various Artists'));
+                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
+                $stmt->execute(array($various_id, $row['id'], $userId));
+            }
+            $insertid = $row['id'];
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_albums` (`user_id`,`name`,`folder_id`) VALUES(?,?,?)');
+            $stmt->execute(array($userId, $sAlbum, $parentId));
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_albums');
             if ($iArtistId) {
                 $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
@@ -288,23 +302,47 @@ class DbController extends Controller
                 $stmt->execute(array((int)$sYear, $insertid, $userId));
             }
             $AlbumCount = 1;
-        } else {
-            $stmt = $this->db->prepare('SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ? AND `folder_id` = ?');
-            $stmt->execute(array($userId, $sAlbum, $parentId));
-            $row = $stmt->fetch();
-            if ((int)$row['artist_id'] !== (int)$iArtistId) {
-                $various_id = $this->writeArtistToDB($userId, $this->l10n->t('Various Artists'));
-                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
-                $stmt->execute(array($various_id, $row['id'], $userId));
-            }
-            $insertid = $row['id'];
         }
+
         $return = [
             'id' => $insertid,
             'state' => true,
             'albumcount' => $AlbumCount,
         ];
         return $return;
+    }
+
+    /**
+     * truncates fiels do DB-field size
+     *
+     * @param $string
+     * @param $length
+     * @param $dots
+     * @return string
+     */
+    private function truncate($string, $length, $dots = "...")
+    {
+        return (strlen($string) > $length) ? mb_strcut($string, 0, $length - strlen($dots)) . $dots : $string;
+    }
+
+    /**
+     * validate unsigned int values
+     *
+     * @param string $value
+     * @return int value
+     */
+    private function normalizeInteger($value)
+    {
+        // convert format '1/10' to '1' and '-1' to null
+        $tmp = explode('/', $value);
+        $tmp = explode('-', $tmp[0]);
+        $value = $tmp[0];
+        if (is_numeric($value) && ((int)$value) > 0) {
+            $value = (int)$value;
+        } else {
+            $value = 0;
+        }
+        return $value;
     }
 
     /**
@@ -316,14 +354,17 @@ class DbController extends Controller
     public function writeArtistToDB($userId, $sArtist)
     {
         $sArtist = $this->truncate($sArtist, '256');
-        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_artists', ['user_id' => $userId, 'name' => $sArtist])) {
+
+        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ? AND `name` = ?');
+        $stmt->execute(array($userId, $sArtist));
+        $row = $stmt->fetch();
+        if ($row) {
+            return $row['id'];
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_artists` (`user_id`,`name`) VALUES(?,?)');
+            $stmt->execute(array($userId, $sArtist));
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_artists');
             return $insertid;
-        } else {
-            $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ? AND `name` = ?');
-            $stmt->execute(array($userId, $sArtist));
-            $row = $stmt->fetch();
-            return $row['id'];
         }
     }
 
@@ -336,14 +377,17 @@ class DbController extends Controller
     public function writeGenreToDB($userId, $sGenre)
     {
         $sGenre = $this->truncate($sGenre, '256');
-        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_genre', ['user_id' => $userId, 'name' => $sGenre])) {
+
+        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ? AND `name` = ?');
+        $stmt->execute(array($userId, $sGenre));
+        $row = $stmt->fetch();
+        if ($row) {
+            return $row['id'];
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_genre` (`user_id`,`name`) VALUES(?,?)');
+            $stmt->execute(array($userId, $sGenre));
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_genre');
             return $insertid;
-        } else {
-            $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ? AND `name` = ?');
-            $stmt->execute(array($userId, $sGenre));
-            $row = $stmt->fetch();
-            return $row['id'];
         }
     }
 
@@ -486,39 +530,6 @@ class DbController extends Controller
         }
 
         return $playlists;
-    }
-
-    /**
-     * truncates fiels do DB-field size
-     *
-     * @param $string
-     * @param $length
-     * @param $dots
-     * @return string
-     */
-    private function truncate($string, $length, $dots = "...")
-    {
-        return (strlen($string) > $length) ? mb_strcut($string, 0, $length - strlen($dots)) . $dots : $string;
-    }
-
-    /**
-     * validate unsigned int values
-     *
-     * @param string $value
-     * @return int value
-     */
-    private function normalizeInteger($value)
-    {
-        // convert format '1/10' to '1' and '-1' to null
-        $tmp = explode('/', $value);
-        $tmp = explode('-', $tmp[0]);
-        $value = $tmp[0];
-        if (is_numeric($value) && ((int)$value) > 0) {
-            $value = (int)$value;
-        } else {
-            $value = 0;
-        }
-        return $value;
     }
 
     /**

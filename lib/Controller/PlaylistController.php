@@ -72,6 +72,26 @@ class PlaylistController extends Controller
     }
 
     /**
+     * @param $sName
+     * @return array
+     */
+    private function writePlaylistToDB($sName)
+    {
+        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ? AND `name` = ?');
+        $stmt->execute(array($this->userId, $sName));
+        $row = $stmt->fetch();
+        if ($row) {
+            $result = ['msg' => 'exist', 'id' => $row['id']];
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_playlists` (`user_id`,`name`) VALUES(?,?)');
+            $stmt->execute(array($this->userId, $sName));
+            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_playlists');
+            $result = ['msg' => 'new', 'id' => $insertid];
+        }
+        return $result;
+    }
+
+    /**
      * @NoAdminRequired
      *
      * @param integer $plId
@@ -95,29 +115,6 @@ class PlaylistController extends Controller
         return $response;
     }
 
-    private function writePlaylistToDB($sName)
-    {
-
-
-        if ($this->db->insertIfNotExist('*PREFIX*audioplayer_playlists', ['user_id' => $this->userId, 'name' => $sName])) {
-
-            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_playlists');
-
-            $result = ['msg' => 'new', 'id' => $insertid];
-
-            return $result;
-
-        } else {
-            $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ? AND `name` = ?');
-            $stmt->execute(array($this->userId, $sName));
-            $row = $stmt->fetch();
-
-            $result = ['msg' => 'exist', 'id' => $row['id']];
-            return $result;
-        }
-
-    }
-
     private function updatePlaylistToDB($id, $sName)
     {
         $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_playlists` SET `name` = ? WHERE `user_id`= ? AND `id`= ?');
@@ -131,17 +128,16 @@ class PlaylistController extends Controller
      */
     public function addTrackToPlaylist($playlistid, $songid, $sorting)
     {
-        try {
-            $this->db->insertIfNotExist('*PREFIX*audioplayer_playlist_tracks',
-                array(
-                    'playlist_id' => $playlistid,
-                    'track_id' => $songid,
-                    'sortorder' => (int)$sorting,
-                ));
-        } catch (\Exception $e) {
+        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ? AND `track_id` = ?');
+        $stmt->execute(array($playlistid, $songid));
+        $row = $stmt->fetch();
+        if ($row) {
             return false;
+        } else {
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_playlist_tracks` (`playlist_id`,`track_id`,`sortorder`) VALUES(?,?,?)');
+            $stmt->execute(array($playlistid, $songid, (int)$sorting));
+            return true;
         }
-        return true;
     }
 
     /**
