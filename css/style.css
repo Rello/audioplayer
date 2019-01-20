@@ -937,10 +937,6 @@ li.dropHover {
         display: none;
     }
 
-    #app-content {
-        background: #fff;
-    }
-
     #app-navigation {
         display: unset;
     }
@@ -997,10 +993,6 @@ li.dropHover {
         opacity: 1;
         height: 40px;
         width: 45px;
-    }
-
-    #app-content {
-        background: #fff;
     }
 
     .sm2-bar-ui.fixed {
