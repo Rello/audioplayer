@@ -7,6 +7,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - copyright 2019
 - dark design and theming compatibility [#367](https://github.com/rello/audioplayer/issues/367)
 - replace deprecated insertIfNotExist()
+- Album Artist category wrong title counters
 
 ## 2.5.1 - 2018-12-23
 ### Added
