@@ -434,8 +434,8 @@ class CategoryController extends Controller
         $title = null;
         $userView = $this->rootFolder->getUserFolder($this->userId);
         //\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
-        $streamfile = $userView->getById($fileId);
 
+        $streamfile = $userView->getById($fileId);
         $file_type = $streamfile[0]->getMimetype();
         $file_content = $streamfile[0]->getContent();
 
@@ -485,7 +485,29 @@ class CategoryController extends Controller
                     $row['lin'] = $matches[0][0];
                     $row['fav'] = 'f';
                     if ($title) $row['cl1'] = $title;
+                    $title = null;
                     $aTracks[] = $row;
+                } elseif (preg_match('/^[^*?"<>|:#]*$/',$line)) {
+                    $path = explode('/', $streamfile[0]->getInternalPath());
+                    array_shift($path);
+                    array_pop($path);
+                    array_push($path, $line);
+                    $path = implode('/', $path);
+                    $x++;
+                    $row = array();
+                    $row['id'] = $fileId . $x;
+                    $row['fid'] = $fileId . $x;
+                    $row['cl1'] = $line;
+                    $row['cl2'] = '';
+                    $row['cl3'] = '';
+                    $row['len'] = '';
+                    $row['mim'] = 'audio/mpeg';
+                    $row['cid'] = '';
+                    $row['lin'] = $path;
+                    $row['fav'] = 'f';
+                    if ($title) $row['cl1'] = $title;
+                    $aTracks[] = $row;
+                    $title = null;
                 }
             }
         }

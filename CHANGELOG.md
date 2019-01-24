@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.6.0 - 2019-01-xx
+### Added
+- local (relative) playlists in M3U files [#325](https://github.com/rello/audioplayer/issues/325)
+
 ## 2.5.2 - 2019-01-22
 ### Fixed
 - player not loaded on shared folder [#371](https://github.com/rello/audioplayer/issues/371) @[Ark74](https://github.com/Ark74)
