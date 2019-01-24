@@ -20,7 +20,6 @@ use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\Share\IManager;
 use OCP\ILogger;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * Controller class for main page.
