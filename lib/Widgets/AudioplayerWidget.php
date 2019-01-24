@@ -46,7 +46,7 @@ class AudioplayerWidget implements IDashboardWidget {
 	 * @return string
 	 */
 	public function getName(): string {
-        return $this->l10n->t('Audio Player (alpha - no playback yet)');
+        return $this->l10n->t('Audio Player (beta - no playback)');
 	}
 
 
