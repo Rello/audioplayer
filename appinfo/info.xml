@@ -8,12 +8,13 @@
 - Multiple views (albums with covers and more)
 - Library scan and reset with command-line and browser
 - Specifying media folder (with exclude functionality)
-- Smart & Standard Playlists and playlist files
+- Smart & Standard Playlists
+- Stream URLs
 - One Click Play in Files app
 - Favorites, Sidebar & Search integration
-- Stream URLs
 - Widget for Dashboard App (beta)
 - [SONOS player](https://github.com/rello/audioplayer/wiki/SONOS) integration
+- **NEW:** local playlists
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
     <version>2.6.0-rc1</version>
