@@ -533,7 +533,7 @@ class CategoryController extends Controller
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
         } elseif ($category === 'Album') {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc') . '-' . $this->l10n->t('Track'), 'col4' => $this->l10n->t('Length')];
-        } elseif ($category === 'x_Stream') {
+        } elseif ($category === 'x_Stream') { //temporary disabled; need to separate streams and playlists
             return ['col1' => $this->l10n->t('URL'), 'col2' => $this->l10n->t(''), 'col3' => $this->l10n->t(''), 'col4' => $this->l10n->t('')];
         } else {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album'), 'col4' => $this->l10n->t('Length')];

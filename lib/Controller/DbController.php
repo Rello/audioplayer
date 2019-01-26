@@ -458,14 +458,12 @@ class DbController extends Controller
 
     /**
      * Get audio info for single track
-     * @param null $trackId
-     * @param null $fileId
+     * @param int $trackId
+     * @param int $fileId
      * @return array
      */
     public function getTrackInfo($trackId = null, $fileId = null)
     {
-
-        \OCP\Util::writeLog('audioplayer', 'trackId: '.$trackId.'fileId: '.$fileId, \OCP\Util::DEBUG);
 
         $SQL = "SELECT `AT`.`title` AS `Title`,
                       `AT`.`subtitle` AS `Subtitle`,
@@ -490,11 +488,11 @@ class DbController extends Controller
 						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`
 						LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
 
-        if ($trackId != null) {
+        if ($trackId) {
             $SQL .= " WHERE  `AT`.`user_id` = ? AND `AT`.`id` = ?
 			 		ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC ";
             $selectId = $trackId;
-        } elseif ($fileId) {
+        } else {
             $SQL .= " WHERE  `AT`.`user_id` = ? AND `AT`.`file_id` = ?
 			 		ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC ";
             $selectId = $fileId;
