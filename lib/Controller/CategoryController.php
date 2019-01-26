@@ -276,6 +276,7 @@ class CategoryController extends Controller
     {
         $albums = 0;
         if ($categoryId[0] === "S") $category = "Stream";
+        if ($categoryId[0] === "P") $category = "Playlist";
         $itmes = $this->getItemsforCatagory($category, $categoryId);
         $headers = $this->getHeadersforCatagory($category);
         if ($category === 'Artist') $albums = $this->getAlbumCountForCategory($category, $categoryId);
@@ -426,10 +427,12 @@ class CategoryController extends Controller
      *
      * @param integer $fileId
      * @return array
+     * @throws \OCP\Files\NotFoundException
+     * @throws \OCP\Files\InvalidPathException
      */
     private function StreamParser($fileId)
     {
-        $aTracks = array();
+        $tracks = array();
         $x = 0;
         $title = null;
         $userView = $this->rootFolder->getUserFolder($this->userId);
@@ -460,7 +463,7 @@ class CategoryController extends Controller
                     $row['lin'] = $matches[0][0];
                     $row['fav'] = 'f';
                     if ($title) $row['cl1'] = $title;
-                    $aTracks[] = $row;
+                    $tracks[] = $row;
                 }
             }
         } else {
@@ -486,7 +489,7 @@ class CategoryController extends Controller
                     $row['fav'] = 'f';
                     if ($title) $row['cl1'] = $title;
                     $title = null;
-                    $aTracks[] = $row;
+                    $tracks[] = $row;
                 } elseif (preg_match('/^[^*?"<>|:#]*$/',$line)) {
                     $path = explode('/', $streamfile[0]->getInternalPath());
                     array_shift($path);
@@ -494,24 +497,28 @@ class CategoryController extends Controller
                     array_push($path, $line);
                     $path = implode('/', $path);
                     $x++;
+
+                    $fileId = $this->rootFolder->getUserFolder($this->userId)->get($path)->getId();
+                    $track = $this->DBController->getTrackInfo(null,$fileId);
+
                     $row = array();
-                    $row['id'] = $fileId . $x;
-                    $row['fid'] = $fileId . $x;
-                    $row['cl1'] = $line;
-                    $row['cl2'] = '';
-                    $row['cl3'] = '';
-                    $row['len'] = '';
-                    $row['mim'] = 'audio/mpeg';
+                    $row['id'] = $track['id'];
+                    $row['fid'] = $track['file_id'];
+                    $row['cl1'] = $track['Title'];
+                    $row['cl2'] = $track['Artist'];
+                    $row['cl3'] = $track['Album'];
+                    $row['len'] = $track['Length'];
+                    $row['mim'] = $track['MIME type'];
                     $row['cid'] = '';
                     $row['lin'] = $path;
-                    $row['fav'] = 'f';
+                    $row['fav'] = $track['fav'];
                     if ($title) $row['cl1'] = $title;
-                    $aTracks[] = $row;
+                    $tracks[] = $row;
                     $title = null;
                 }
             }
         }
-        return $aTracks;
+        return $tracks;
     }
 
     /**
@@ -526,7 +533,7 @@ class CategoryController extends Controller
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
         } elseif ($category === 'Album') {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Disc') . '-' . $this->l10n->t('Track'), 'col4' => $this->l10n->t('Length')];
-        } elseif ($category === 'Stream') {
+        } elseif ($category === 'x_Stream') {
             return ['col1' => $this->l10n->t('URL'), 'col2' => $this->l10n->t(''), 'col3' => $this->l10n->t(''), 'col4' => $this->l10n->t('')];
         } else {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album'), 'col4' => $this->l10n->t('Length')];

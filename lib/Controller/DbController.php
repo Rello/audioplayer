@@ -14,12 +14,13 @@
 namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\JSONResponse as JSONResponseAlias;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\Share\IManager;
 use OCP\ILogger;
+use OCP\ITagManager;
 
 /**
  * Controller class for main page.
@@ -32,6 +33,7 @@ class DbController extends Controller
     private $db;
     private $occ_job;
     private $shareManager;
+    private $tagManager;
     private $logger;
 
     public function __construct(
@@ -40,6 +42,7 @@ class DbController extends Controller
         $userId,
         IL10N $l10n,
         IDbConnection $db,
+        ITagManager $tagManager,
         IManager $shareManager,
         ILogger $logger
     )
@@ -49,6 +52,7 @@ class DbController extends Controller
         $this->l10n = $l10n;
         $this->db = $db;
         $this->shareManager = $shareManager;
+        $this->tagManager = $tagManager;
         $this->logger = $logger;
     }
 
@@ -135,7 +139,7 @@ class DbController extends Controller
      * @param $output
      * @param $hook
      *
-     * @return bool|JSONResponse
+     * @return bool|JSONResponseAlias
      */
     public function resetMediaLibrary($userId = null, $output = null, $hook = null)
     {
@@ -185,7 +189,7 @@ class DbController extends Controller
 
         // applies if scanner is not started via occ
         if (!$this->occ_job) {
-            $response = new JSONResponse();
+            $response = new JSONResponseAlias();
             $response->setData($result);
             return $response;
         } elseif ($hook === null) {
@@ -451,6 +455,65 @@ class DbController extends Controller
         ];
         return $return;
     }
+
+    /**
+     * Get audio info for single track
+     * @param null $trackId
+     * @param null $fileId
+     * @return array
+     */
+    public function getTrackInfo($trackId = null, $fileId = null)
+    {
+
+        \OCP\Util::writeLog('audioplayer', 'trackId: '.$trackId.'fileId: '.$fileId, \OCP\Util::DEBUG);
+
+        $SQL = "SELECT `AT`.`title` AS `Title`,
+                      `AT`.`subtitle` AS `Subtitle`,
+                      `AA`.`name` AS `Artist`,
+                      `AB`.`artist_id` AS `Album Artist`,
+                      `AT`.`composer` AS `Composer`,
+                      `AB`.`name` AS `Album`,
+                      `AG`.`name` AS `Genre`,
+					  `AT`.`year` AS `Year`,
+                      `AT`.`disc` AS `Disc`,
+                      `AT`.`number` AS `Track`,
+					  `AT`.`length` AS `Length`,
+                      ROUND((`AT`.`bitrate` / 1000 ),0) AS `Bitrate`,
+                      `AT`.`mimetype` AS `MIME type`,
+                      `AT`.`isrc` AS `ISRC`,
+                      `AT`.`copyright` AS `Copyright`,
+					  `AT`.`file_id`, 
+					  `AB`.`id` AS `album_id`,
+                      `AT`.`id`
+						FROM `*PREFIX*audioplayer_tracks` `AT`
+						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
+						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`
+						LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
+
+        if ($trackId != null) {
+            $SQL .= " WHERE  `AT`.`user_id` = ? AND `AT`.`id` = ?
+			 		ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC ";
+            $selectId = $trackId;
+        } elseif ($fileId) {
+            $SQL .= " WHERE  `AT`.`user_id` = ? AND `AT`.`file_id` = ?
+			 		ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC ";
+            $selectId = $fileId;
+        }
+
+        $stmt = $this->db->prepare($SQL);
+        $stmt->execute(array($this->userId, $selectId));
+        $row = $stmt->fetch();
+
+        $favorites = $this->tagManager->load('files')->getFavorites();
+        if (in_array($row['file_id'], $favorites)) {
+            $row['fav'] = "t";
+        } else {
+            $row['fav'] = "f";
+        }
+
+        return $row;
+    }
+
 
     /**
      * Add track to db if not exist

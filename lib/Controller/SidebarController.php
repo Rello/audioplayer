@@ -58,50 +58,15 @@ class SidebarController extends Controller
      */
     public function getAudioInfo($trackid)
     {
-        $SQL = "SELECT `AT`.`title` AS `Title`,
-                      `AT`.`subtitle` AS `Subtitle`,
-                      `AA`.`name` AS `Artist`,
-                      `AB`.`artist_id` AS `Album Artist`,
-                      `AT`.`composer` AS `Composer`,
-                      `AB`.`name` AS `Album`,
-                      `AG`.`name` AS `Genre`,
-					  `AT`.`year` AS `Year`,
-                      `AT`.`disc` AS `Disc`,
-                      `AT`.`number` AS `Track`,
-					  `AT`.`length` AS `Length`,
-                      ROUND((`AT`.`bitrate` / 1000 ),0) AS `Bitrate`,
-                      `AT`.`mimetype` AS `MIME type`,
-                      `AT`.`isrc` AS `ISRC`,
-                      `AT`.`copyright` AS `Copyright`,
-					  `AT`.`file_id`, 
-					  `AB`.`id` AS `album_id`
-						FROM `*PREFIX*audioplayer_tracks` `AT`
-						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`
-						LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`
-			 			WHERE  `AT`.`user_id` = ? AND `AT`.`id` = ?
-			 			ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC
-			 			";
 
-        $stmt = $this->db->prepare($SQL);
-        $stmt->execute(array($this->userId, $trackid));
-        $row = $stmt->fetch();
-
-        $this->tagger = $this->tagManager->load('files');
-        $favorites = $this->tagger->getFavorites();
-        if (in_array($row['file_id'], $favorites)) {
-            $row['fav'] = "t";
-        } else {
-            $row['fav'] = "f";
-        }
-
+        $row = $this->DBController->getTrackInfo($trackid);
         $artist = $this->DBController->loadArtistsToAlbum($row['album_id'], $row['Album Artist']);
         $row['Album Artist'] = $artist;
 
         if ($row['Year'] === '0') $row['Year'] = $this->l10n->t('Unknown');
         if ($row['Bitrate'] !== '') $row['Bitrate'] = $row['Bitrate'] . ' kbps';
 
-        array_splice($row, 15, 2);
+        array_splice($row, 15, 3);
 
         if ($row['Title']) {
             $result = [
