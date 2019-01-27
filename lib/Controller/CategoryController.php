@@ -470,6 +470,7 @@ class CategoryController extends Controller
             }
         } else {
             foreach (preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line) {
+                if ($line === '') continue;
                 if (substr($line, 0, 8) === '#EXTINF:') {
                     $extinf = explode(',', substr($line, 8));
                     $title = $extinf[1];
