@@ -488,7 +488,7 @@ class DbController extends Controller
 						LEFT JOIN `*PREFIX*audioplayer_genre` `AG` ON `AT`.`genre_id` = `AG`.`id`
 						LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
 
-        if ($trackId) {
+        if ($trackId !== null) {
             $SQL .= " WHERE  `AT`.`user_id` = ? AND `AT`.`id` = ?
 			 		ORDER BY `AT`.`album_id` ASC,`AT`.`number` ASC ";
             $selectId = $trackId;

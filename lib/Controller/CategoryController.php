@@ -13,12 +13,14 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\Files\InvalidPathException;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
+use OCP\Files\NotFoundException;
 
 /**
  * Controller class for main page.
@@ -436,7 +438,7 @@ class CategoryController extends Controller
         $x = 0;
         $title = null;
         $userView = $this->rootFolder->getUserFolder($this->userId);
-        //\OCP\Util::writeLog('audioplayer',substr($categoryId, 1), \OCP\Util::DEBUG);
+        //$this->logger->debug('removed/unshared file found => remove '.$row['fid'], array('app' => 'audioplayer'));
 
         $streamfile = $userView->getById($fileId);
         $file_type = $streamfile[0]->getMimetype();
@@ -490,7 +492,7 @@ class CategoryController extends Controller
                     if ($title) $row['cl1'] = $title;
                     $title = null;
                     $tracks[] = $row;
-                } elseif (preg_match('/^[^*?"<>|:#]*$/',$line)) {
+                } elseif (preg_match('/^[^"<>|:]*$/',$line)) {
                     $path = explode('/', $streamfile[0]->getInternalPath());
                     array_shift($path);
                     array_pop($path);
@@ -498,23 +500,27 @@ class CategoryController extends Controller
                     $path = implode('/', $path);
                     $x++;
 
-                    $fileId = $this->rootFolder->getUserFolder($this->userId)->get($path)->getId();
-                    $track = $this->DBController->getTrackInfo(null,$fileId);
+                    try {
+                        $fileId = $this->rootFolder->getUserFolder($this->userId)->get($path)->getId();
+                        $track = $this->DBController->getTrackInfo(null,$fileId);
 
-                    $row = array();
-                    $row['id'] = $track['id'];
-                    $row['fid'] = $track['file_id'];
-                    $row['cl1'] = $track['Title'];
-                    $row['cl2'] = $track['Artist'];
-                    $row['cl3'] = $track['Album'];
-                    $row['len'] = $track['Length'];
-                    $row['mim'] = $track['MIME type'];
-                    $row['cid'] = '';
-                    $row['lin'] = $path;
-                    $row['fav'] = $track['fav'];
-                    if ($title) $row['cl1'] = $title;
-                    $tracks[] = $row;
-                    $title = null;
+                        $row = array();
+                        $row['id'] = $track['id'];
+                        $row['fid'] = $track['file_id'];
+                        $row['cl1'] = $track['Title'];
+                        $row['cl2'] = $track['Artist'];
+                        $row['cl3'] = $track['Album'];
+                        $row['len'] = $track['Length'];
+                        $row['mim'] = $track['MIME type'];
+                        $row['cid'] = '';
+                        $row['lin'] = rawurlencode($path);
+                        $row['fav'] = $track['fav'];
+                        if ($title) $row['cl1'] = $title;
+                        $tracks[] = $row;
+                        $title = null;
+                    } catch (NotFoundException $e) {
+                        //File is not known in the filecache and will be ignored;
+                    }
                 }
             }
         }
