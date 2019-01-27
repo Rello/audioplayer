@@ -271,9 +271,9 @@ class ScannerController extends Controller
             $counter++;
             $this->abscount++;
 
-            $name = $stream->getName();
+            $title = $this->truncate($stream->getName(), '256');
             $aStream = [
-                'title' => $this->truncate($name, '256'),
+                'title' => substr($title, 0, strrpos($title, ".")),
                 'artist_id' => 0,
                 'album_id' => 0,
                 'file_id' => (int)$stream->getId(),
