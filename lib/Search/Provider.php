@@ -38,7 +38,7 @@ class Provider extends \OCP\Search\Provider {
 	 */
 	function search($query) {
 		$searchresults = array();
-        $results = $this->DBController->searchProperties($query);
+        $results = $this->DBController->search($query);
 		
 		foreach($results as $result) {
 			$returnData = array();

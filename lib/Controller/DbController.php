@@ -89,7 +89,7 @@ class DbController extends Controller
      * @param $searchquery
      * @return array
      */
-    public function searchProperties($searchquery)
+    public function search($searchquery)
     {
         $searchresult = array();
         $SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_albums` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
@@ -105,7 +105,11 @@ class DbController extends Controller
             }
         }
 
-        $SQL = "SELECT `id`,`name` FROM `*PREFIX*audioplayer_artists` WHERE (LOWER(`name`) LIKE LOWER(?)) AND `user_id` = ?";
+        $SQL = "SELECT `AA`.`id`, `AA`.`name` 
+                FROM `*PREFIX*audioplayer_artists` `AA`
+                JOIN `*PREFIX*audioplayer_tracks` `AT`
+				ON `AA`.`id` = `AT`.`artist_id`
+                WHERE (LOWER(`AA`.`name`) LIKE LOWER(?)) AND `AA`.`user_id` = ?";
         $stmt = $this->db->prepare($SQL);
         $stmt->execute(array('%' . addslashes($searchquery) . '%', $this->userId));
         $results = $stmt->fetchAll();
