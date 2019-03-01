@@ -128,10 +128,10 @@ class PlaylistController extends Controller
      */
     public function addTrackToPlaylist($playlistid, $songid, $sorting)
     {
-        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ? AND `track_id` = ?');
+        $stmt = $this->db->prepare('SELECT COUNT(*) AS tracks FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ? AND `track_id` = ?');
         $stmt->execute(array($playlistid, $songid));
         $row = $stmt->fetch();
-        if ($row) {
+        if ($row['tracks']) {
             return false;
         } else {
             $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_playlist_tracks` (`playlist_id`,`track_id`,`sortorder`) VALUES(?,?,?)');
