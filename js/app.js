@@ -928,21 +928,14 @@ Audios.prototype.sortPlaylist = function (evt) {
 Audios.prototype.deletePlaylist = function (evt) {
     $this = this;
     var plId = $(evt.target).attr('data-deleteid');
-    $("#dialogSmall").text(t('audioplayer', 'Are you sure?'));
-    $("#dialogSmall").dialog({
-        resizable: false,
-        title: t('audioplayer', 'Delete playlist'),
-        width: 210,
-        modal: true,
-        buttons: [{
-            text: t('audioplayer', 'No'),
-            click: function () {
-                $("#dialogSmall").html('');
-                $(this).dialog("close");
-            }
-        }, {
-            text: t('audioplayer', 'Yes'),
-            click: function () {
+
+    OC.dialogs.message(
+        t('audioplayer', 'Are you sure?'),
+        t('audioplayer', 'Delete playlist'),
+        null,
+        OCdialogs.YES_NO_BUTTONS,
+        function (e) {
+            if (e === true) {
                 var oDialog = $(this);
                 $.ajax({
                     type: 'GET',
@@ -959,11 +952,10 @@ Audios.prototype.deletePlaylist = function (evt) {
                         }
                     }
                 });
-                $("#dialogSmall").html('');
-                oDialog.dialog("close");
             }
-        }]
-    });
+        },
+        true
+    );
     return false;
 
 };

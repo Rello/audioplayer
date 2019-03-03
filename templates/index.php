@@ -63,5 +63,3 @@ if ($_['audioplayer_sonos'] !== 'checked') {
 <div id="app-sidebar" class="details-view scroll-container disappear" data-trackid="">
     <?php print_unescaped($this->inc('part.sidebar')); ?>
 </div>
-
-<div id="dialogSmall" style="width:0;height:0;top:0;left:0;display:none;"></div>
