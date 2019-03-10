@@ -21,7 +21,7 @@
             $row.find('td.icon')
                 .css('background-image', 'url(' + OC.imagePath('audioplayer', 'app-dark') + ')')
                 .css('opacity', '.4');
-            return $row
+            return $row;
         }
     };
     OCA.Search.Audiplayer = Audiplayer;
