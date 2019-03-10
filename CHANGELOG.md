@@ -1,10 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.6.1 - 2019-02-xx
+## 2.6.1 - 2019-03-10
 ### Fixed
 - Artist search not working correctly [#380](https://github.com/rello/audioplayer/issues/380)
-- Adding a track to a playlist via drag & drop does not work [#381](https://github.com/rello/audioplayer/issues/381)  @[r4sas](https://github.com/r4sas)
+- Adding track to playlist [#381](https://github.com/rello/audioplayer/issues/381)  @[r4sas](https://github.com/r4sas)
 
 ### Added
 - Audio Player icon in search results [#380](https://github.com/rello/audioplayer/issues/380)
