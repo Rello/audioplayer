@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.6.2 - work in progress
+### Fixed
+- JS error in favoriteUpdate() [#389](https://github.com/rello/audioplayer/issues/389)
+
+### Added
+- NC 16 support
+
 ## 2.6.1 - 2019-03-10
 ### Fixed
 - Artist search not working correctly [#380](https://github.com/rello/audioplayer/issues/380)
