@@ -13,7 +13,6 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Files\InvalidPathException;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
@@ -62,7 +61,8 @@ class CategoryController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $category
+     * @return JSONResponse
      */
     public function getCategory($category)
     {
@@ -302,6 +302,8 @@ class CategoryController extends Controller
      * @param string $category
      * @param string $categoryId
      * @return array
+     * @throws InvalidPathException
+     * @throws NotFoundException
      */
     private function getItemsforCatagory($category, $categoryId)
     {
@@ -429,7 +431,6 @@ class CategoryController extends Controller
      *
      * @param integer $fileId
      * @return array
-     * @throws \OCP\Files\NotFoundException
      * @throws \OCP\Files\InvalidPathException
      */
     private function StreamParser($fileId)

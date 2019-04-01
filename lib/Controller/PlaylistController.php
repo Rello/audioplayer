@@ -124,7 +124,10 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @param $songid
+     * @param $sorting
+     * @return bool
      */
     public function addTrackToPlaylist($playlistid, $songid, $sorting)
     {
@@ -142,7 +145,9 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @param $songids
+     * @return JSONResponse
      */
     public function sortPlaylist($playlistid, $songids)
     {
@@ -165,7 +170,9 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @param $songid
+     * @return bool
      */
     public function removeTrackFromPlaylist($playlistid, $songid)
     {
@@ -182,7 +189,8 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @return bool|JSONResponse
      */
     public function removePlaylist($playlistid)
     {

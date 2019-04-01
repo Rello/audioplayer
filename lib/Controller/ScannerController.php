@@ -24,7 +24,6 @@ use OCP\IL10N;
 use OCP\L10N\IFactory;
 use OCP\IDbConnection;
 use OCP\Files\IRootFolder;
-use OCP\Files\Folder;
 use OCP\ILogger;
 use OCP\IDateTimeZone;
 

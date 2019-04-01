@@ -17,7 +17,6 @@
     /* http://files.christophzillgens.com/webkit-font-smoothing.html */
     /* font-smoothing: subpixel-antialiased; */
     /* general font niceness? */
-    font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     min-width: 20em;
     max-width: 30em;
@@ -545,10 +544,8 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: none, url(../img/spinner.svg);
     background-size: 72%;
-    background-position: 50%;
-    background-repeat: no-repeat;
+    background: none url(../img/spinner.svg) no-repeat 50%;
     display: none;
 }
 

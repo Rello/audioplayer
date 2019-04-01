@@ -82,7 +82,7 @@
                                 widget.divClock.append(li);
                             }); // end each loop
                         }
-                        return;
+
                     }
                 });
             }

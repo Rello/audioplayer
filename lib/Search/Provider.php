@@ -30,12 +30,12 @@ class Provider extends \OCP\Search\Provider {
         $this->DBController = $container->query(\OCA\audioplayer\Controller\DbController::class);
 		$this->l10n = $container->query('L10N');
 	}
-	
-	/**
-	 * 
-	 * @param string $query
-	 * @return \OCP\Search\Result
-	 */
+
+    /**
+     *
+     * @param string $query
+     * @return array
+     */
 	function search($query) {
 		$searchresults = array();
         $results = $this->DBController->search($query);

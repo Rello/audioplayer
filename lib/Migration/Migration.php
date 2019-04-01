@@ -25,10 +25,12 @@ class Migration implements IRepairStep {
 	/** @var IConfig */
 	protected $config;
     private $logger;
-	/**
-	 * @param IDBConnection $connection
-	 * @param IConfig $config
-	 */
+
+    /**
+     * @param IDBConnection $connection
+     * @param IConfig $config
+     * @param ILogger $logger
+     */
 	public function __construct(
 	        IDBConnection $connection,
             IConfig $config,

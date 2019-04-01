@@ -13,8 +13,6 @@
 
 namespace OCA\audioplayer\AppInfo;
 
-use \OCA\audioplayer\AppInfo\Application;
-
 $application = new Application();
 
 $application->registerRoutes($this, ['routes' => [

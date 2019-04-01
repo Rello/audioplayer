@@ -153,6 +153,7 @@ class SettingController extends Controller {
      * @NoAdminRequired
      * @param $track_id
      * @return int|string
+     * @throws \Exception
      */
     public function setStatistics($track_id) {
         $date = new \DateTime();

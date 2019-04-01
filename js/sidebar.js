@@ -20,20 +20,21 @@ Audios.prototype.showSidebar = function (evt) {
         var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
         var trackData = $("li[data-trackid='" + trackid + "']");
         var cover = trackData.attr('data-cover');
+        var sidebarThumbnail = $('#sidebarThumbnail');
 
         if (cover !== '') {
             //$('.thumbnailContainer').addClass('large');
-            $('#sidebarThumbnail').attr({
+            sidebarThumbnail.attr({
                 'style': 'background-image:url(' + getcoverUrl + cover + ')'
             });
             if ($this.PlaylistContainer.width() < 850) {
-                $('#sidebarThumbnail').addClass('larger');
+                sidebarThumbnail.addClass('larger');
             } else {
-                $('#sidebarThumbnail').addClass('full');
+                sidebarThumbnail.addClass('full');
             }
         } else {
             //$('.thumbnailContainer').removeClass('large');
-            $('#sidebarThumbnail').attr({
+            sidebarThumbnail.attr({
                 'style': 'display: none;'
             }).removeClass('larger').removeClass('full');
         }

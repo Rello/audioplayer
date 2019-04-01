@@ -57,11 +57,9 @@ Audios.prototype.presetDisplay = function () {
             appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
             $this.loadIndividualCategory(null, function () {                        // select the last played title
                 if ($this.category_selectors[2] && $this.category_selectors[2] !== 'undefined') {
-                    //$('#individual-playlist li[data-trackid="' + $this.category_selectors[2] + '"]').find('.title').click();
-                    //$('.albumwrapper li i.icon').eq(0).hide();
-                    //$('.albumwrapper li i.ioc').eq(0).removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
-                    $('#individual-playlist li[data-trackid="' + $this.category_selectors[2] + '"]').find('.icon').hide();
-                    $('#individual-playlist li[data-trackid="' + $this.category_selectors[2] + '"]').find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
+                    var item = $('#individual-playlist li[data-trackid="' + $this.category_selectors[2] + '"]');
+                    item.find('.icon').hide();
+                    item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
                 }
             });
         }
@@ -472,7 +470,8 @@ Audios.prototype.loadCategory = function (callback) {
     $this = this;
     //var category = $this.category_selectors[0]; // use the variable and not the drop_down value???
     var category = $('#category_selector').val();
-    $('#addPlaylist').addClass('hidden');
+    var addPlaylist = $('#addPlaylist');
+    addPlaylist.addClass('hidden');
     $('#myCategory').html('');
     $('.toolTip').tooltip('hide');
     $.ajax({
@@ -543,7 +542,7 @@ Audios.prototype.loadCategory = function (callback) {
         }
     });
     if (category === 'Playlist') {
-        $('#addPlaylist').removeClass('hidden');
+        addPlaylist.removeClass('hidden');
     }
     return true;
 };
@@ -557,7 +556,8 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
     $('#loading').show();
     $('.toolTip').tooltip('hide');
     $('#alben').removeClass('active');
-    $('#individual-playlist').remove();
+    var individual_playlist = $('#individual-playlist');
+    individual_playlist.remove();
     $('#individual-playlist-info').show();
     $('#individual-playlist-header').show();
     $(".coverrow").remove();
@@ -581,7 +581,7 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
     $this.PlaylistContainer.data('playlist', category + '-' + PlaylistId);
 
 
-    if ($('#individual-playlist').data('ui-sortable')) $('#individual-playlist').sortable("destroy");
+    if (individual_playlist.data('ui-sortable')) $('#individual-playlist').sortable("destroy");
     $('.header-title').data('order', '');
     $('.header-artist').data('order', '');
     $('.header-album').data('order', '');
@@ -786,8 +786,7 @@ Audios.prototype.newPlaylist = function (plName) {
                 myAudios.loadCategory();
             }
             if (jsondata.status === 'error') {
-                $('#notification').text(t('audioplayer', 'No playlist selected!'));
-                $('#notification').slideDown();
+                $('#notification').text(t('audioplayer', 'No playlist selected!')).slideDown();
                 window.setTimeout(function () {
                     $('#notification').slideUp();
                 }, 3000);
@@ -944,8 +943,7 @@ Audios.prototype.deletePlaylist = function (evt) {
                     success: function (jsondata) {
                         if (jsondata.status === 'success') {
                             myAudios.loadCategory();
-                            $('#notification').text(t('audioplayer', 'Playlist successfully deleted!'));
-                            $('#notification').slideDown();
+                            $('#notification').text(t('audioplayer', 'Playlist successfully deleted!')).slideDown();
                             window.setTimeout(function () {
                                 $('#notification').slideUp();
                             }, 3000);
@@ -1190,8 +1188,7 @@ $(document).ready(function () {
     });
 
 
-    $('#alben').addClass('active');
-    $('#alben').on('click', function () {
+    $('#alben').addClass('active').on('click', function () {
         $this.loadCategoryAlbums();
         myAudios.set_uservalue('category', 'Albums');
     });
