@@ -739,7 +739,7 @@ Audios.prototype.favoriteUpdate = function (evt) {
     var fileId = $(evt.target).attr('data-fileid');
     var isFavorite = false;
 
-    if ($this.category_selectors[1].substring(0, 1) === "S") return;
+    if ($this.category_selectors[1].toString().substring(0, 1) === "S") return;
 
     if ($(evt.target).hasClass('icon icon-starred')) {
         isFavorite = true;
