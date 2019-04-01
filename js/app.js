@@ -81,17 +81,17 @@ Audios.prototype.initKeyListener = function () {
 
             var currentVolume;
             var newVolume;
-            if (evt.keyCode === 32) {//Space pause/play
+            if (evt.key === " ") {//Space pause/play
                 if ($('.sm2-bar-ui').hasClass('playing')) {
                     this.AudioPlayer.actions.stop();
                 } else {
                     this.AudioPlayer.actions.play();
                 }
-            } else if (evt.keyCode === 39) {// right
+            } else if (evt.key === "ArrowRight") {// right
                 this.AudioPlayer.actions.next();
-            } else if (evt.keyCode === 37) {//left
+            } else if (evt.key === "ArrowLeft") {//left
                 this.AudioPlayer.actions.prev();
-            } else if (evt.keyCode === 38) {//up sound up
+            } else if (evt.key === "ArrowUp") {//up sound up
                 currentVolume = this.AudioPlayer.actions.getVolume();
                 if (currentVolume > 0 && currentVolume <= 100) {
                     newVolume = currentVolume + 10;
@@ -100,7 +100,7 @@ Audios.prototype.initKeyListener = function () {
                     }
                     this.AudioPlayer.actions.setVolume(newVolume);
                 }
-            } else if (evt.keyCode === 40) {//up sound down
+            } else if (evt.key === "ArrowDown") {//down sound down
                 //this.AudioPlayer.actions.setVolume(0);
                 currentVolume = this.AudioPlayer.actions.getVolume();
 
@@ -1029,7 +1029,7 @@ Audios.prototype.sort_playlist = function (evt) {
             a = a.toLowerCase();
             b = b.toLowerCase();
         }
-        return ((a < b) ? -1 * factor : ((a > b) ? 1 * factor : 0));
+        return ((a < b) ? -1 * factor : ((a > b) ? factor : 0));
     });
     $('#individual-playlist').append(elems);
 
@@ -1045,7 +1045,7 @@ Audios.prototype.sort_playlist = function (evt) {
                 a = a.toLowerCase();
                 b = b.toLowerCase();
             }
-            return ((a < b) ? -1 * factor : ((a > b) ? 1 * factor : 0));
+            return ((a < b) ? -1 * factor : ((a > b) ? factor : 0));
         });
         $this.ActivePlaylist.append(elems);
     }
