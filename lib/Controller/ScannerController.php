@@ -568,7 +568,7 @@ class ScannerController extends Controller
                 // Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
                 foreach (array('album', 'artist', 'title', 'band', 'genre') as $tkey) {
                     if (isset($ThisFileInfo['tags'][$ttype][$tkey])) {
-                        if (preg_match('#[\\xA8\\B8\\x80-\\xFF]{4,}#', iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]))) {
+                        if (preg_match('#[\\xA8\\B8\\x80-\\xFF]{4,}#', iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $ThisFileInfo['tags'][$ttype][$tkey][0]))) {
                             $ruTag = 1;
                             break;
                         }
@@ -578,7 +578,7 @@ class ScannerController extends Controller
                 if ($ruTag === 1) {
                     foreach (array('album', 'artist', 'title', 'band', 'genre') as $tkey) {
                         if (isset($ThisFileInfo['tags'][$ttype][$tkey])) {
-                            $ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('UTF-8', 'ISO-8859-1', $ThisFileInfo['tags'][$ttype][$tkey][0]);
+                            $ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $ThisFileInfo['tags'][$ttype][$tkey][0]);
                             $ThisFileInfo['tags'][$ttype][$tkey][0] = iconv('Windows-1251', 'UTF-8', $ThisFileInfo['tags'][$ttype][$tkey][0]);
                         }
                     }
