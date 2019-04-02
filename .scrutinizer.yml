@@ -7,7 +7,7 @@ build:
                 override: [php-scrutinizer-run]
     environment:
         php: 7.3
-        mysql: 5.6
+        mysql: 5.5
 
 filter:
     excluded_paths:

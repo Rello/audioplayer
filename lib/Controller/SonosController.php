@@ -191,7 +191,7 @@ class SonosController extends Controller
             $this->logger->error('SONOS discovery not possible; no socket setup on webserver; check Audio Player wiki', array('app' => 'audioplayer'));
             return array();
         }
-        if (!$sock) {
+        if (!isset($sock)) {
             $this->logger->error('SONOS discovery not possible; connection issue; check Audio Player wiki', array('app' => 'audioplayer'));
             return array();
         }

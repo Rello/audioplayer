@@ -50,7 +50,7 @@ class ScannerController extends Controller
     private $ID3Tags;
     private $cyrillic;
     private $logger;
-    private $parentId_prev = false;
+    private $parentId_prev = 0;
     private $folderpicture = false;
     private $DBController;
     private $IDateTimeZone;

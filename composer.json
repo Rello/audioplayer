@@ -4,6 +4,7 @@
 	},
 	"require-dev": {
 		"christophwurst/nextcloud": "^15.0.0",
-        "symfony/symfony": "^4.2.3"
+        "symfony/symfony": "^4.2.3",
+		"guzzlehttp/guzzle": "^6.3.0"
 	}
 }
