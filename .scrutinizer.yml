@@ -14,9 +14,6 @@ filter:
         - '3rdparty/*'
         - 'js/soundmanager2*'
         - 'js/bar*'
-        - 'js/sharing/berniecode*'
-        - 'js/jquery*'
-        - 'js/sharing/360player*'          
 
 imports:
     - javascript
