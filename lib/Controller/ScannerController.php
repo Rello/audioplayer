@@ -479,13 +479,13 @@ class ScannerController extends Controller
         $stmt = $this->db->prepare('SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)');
         $stmt->execute(array('.noAudio', '.noaudio'));
         $results = $stmt->fetchAll();
-        $resultExisting = array_column($results, 'fileid');
+        $resultExclude = array_column($results, 'fileid');
 
         // get all fileids which are already in the Audio Player Database
         $stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? ');
         $stmt->execute(array($this->userId));
         $results = $stmt->fetchAll();
-        $resultExclude = array_column($results, 'file_id');
+        $resultExisting = array_column($results, 'file_id');
 
         foreach ($audios as $audio) {
             $current_id = $audio->getID();
