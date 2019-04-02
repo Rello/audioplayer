@@ -4,6 +4,6 @@
 	},
 	"require-dev": {
 		"christophwurst/nextcloud": "^16.0.0",
-        "symfony/symfony": ""
+        "symfony/symfony": "^4.2.3"
 	}
 }
