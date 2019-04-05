@@ -95,7 +95,9 @@ i#scanAudiosFirst {
   line-height: 44px;
   padding-left: 40px;
   background-size: 18px 18px;
-  background: url('../img/albums.svg') no-repeat 11px center;
+  @include icon-color('albums', 'audioplayer', '#CCCCCC', 1);
+  background-repeat: no-repeat;
+  background-position: 11px;
   margin: 6px 0;
   opacity: 0.57;
 }
