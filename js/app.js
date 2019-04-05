@@ -200,14 +200,14 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
 
     if (activeAlbum.hasClass('is-active')) {
         $('.songcontainer').slideUp(200, function () {
-            $('.album').removeClass('is-active').find('.artist').show();
+            $('.album').removeClass('is-active').find('.artist').css("visibility", "visible");
         });
     } else {
-        $('.album').removeClass('is-active').find('.artist').show();
+        $('.album').removeClass('is-active').find('.artist').css("visibility", "visible");
         $this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
 
         activeAlbum.addClass('is-active');
-        activeAlbum.find('.artist').hide();
+        activeAlbum.find('.artist').css("visibility", "hidden");
         $this.buildSongContainer(eventTarget, directPlay);
     }
 };

@@ -5,6 +5,8 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - JS error in favoriteUpdate() [#389](https://github.com/rello/audioplayer/issues/389)
 - iconv error for cyrillic symbols [#386](https://github.com/rello/audioplayer/issues/386)
+- incorrect occ -vv output for streams
+- Albums below the selected one are relocated [#377](https://github.com/rello/audioplayer/issues/377)
 
 ### Added
 - NC 16 support
