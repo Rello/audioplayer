@@ -36,7 +36,9 @@ Audios.prototype.init = function () {
         }
     } else {
         myAudios.get_uservalue('category', function () {       // read saved values from user values
-            if ($this.category_selectors[0] && $this.category_selectors[0] !== 'Albums') {
+            if ($this.category_selectors === 'false') {
+                $this.showInitScreen();
+            } else if ($this.category_selectors[0] && $this.category_selectors[0] !== 'Albums') {
                 myAudios.presetDisplay();
             } else {
                 $this.loadCategoryAlbums();
@@ -966,6 +968,9 @@ Audios.prototype.get_uservalue = function (user_type, callback) {
         success: function (jsondata) {
             if (jsondata.status === 'success' && user_type === 'category') {
                 $this.category_selectors = jsondata.value.split('-');
+                callback($this.category_selectors);
+            } else if (jsondata.status === 'false' && user_type === 'category'){
+                $this.category_selectors = 'false';
                 callback($this.category_selectors);
             }
         }
