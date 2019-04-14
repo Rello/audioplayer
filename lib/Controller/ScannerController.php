@@ -130,8 +130,8 @@ class ScannerController extends Controller
         $counter = 0;
         $counter_new = 0;
         $error_count = 0;
-        $duplicate_tracks = 0;
-        $error_file = 0;
+        $duplicate_tracks = '';
+        $error_file = '';
         $this->cyrillic = $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
         $this->DBController->setSessionValue('scanner_running', 'active', $this->userId);
 
