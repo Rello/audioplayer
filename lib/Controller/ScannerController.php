@@ -659,8 +659,8 @@ class ScannerController extends Controller
             }
 
             if ($this->folderpicture) {
-                $this->processImageString($iAlbumId, $this->folderpicture->getContent());
                 $output->writeln("     Alternative album art: " . $this->folderpicture->getInternalPath(), OutputInterface::VERBOSITY_VERY_VERBOSE);
+                $this->processImageString($iAlbumId, $this->folderpicture->getContent());
             } elseif (isset($this->ID3Tags['comments']['picture'])) {
                 $data = $this->ID3Tags['comments']['picture'][0]['data'];
                 $this->processImageString($iAlbumId, $data);
