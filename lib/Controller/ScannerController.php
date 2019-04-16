@@ -516,12 +516,12 @@ class ScannerController extends Controller
      * @param $audio object
      * @param $getID3 object
      * @param OutputInterface $output
-     * @return void
      */
     private function analyze($audio, $getID3, OutputInterface $output = null)
     {
+        $this->ID3Tags = array();
+        $ThisFileInfo = array();
         if ($audio->getMimetype() === 'audio/mpegurl' or $audio->getMimetype() === 'audio/x-scpls' or $audio->getMimetype() === 'application/xspf+xml') {
-            $ThisFileInfo = array();
             $ThisFileInfo['comments']['genre'][0] = 'Stream';
             $ThisFileInfo['comments']['artist'][0] = 'Stream';
             $ThisFileInfo['comments']['album'][0] = 'Stream';
@@ -544,12 +544,10 @@ class ScannerController extends Controller
                     unlink($fileName);
                 }
             }
+            if ($this->cyrillic === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
+            \getid3_lib::CopyTagsToComments($ThisFileInfo);
         }
-        if ($this->cyrillic === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
-        \getid3_lib::CopyTagsToComments($ThisFileInfo);
-
         $this->ID3Tags = $ThisFileInfo;
-        return;
     }
 
     /**
