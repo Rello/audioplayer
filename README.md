@@ -4,7 +4,7 @@
 
 A music player for FLAC, MP3, MP4, streams, … with playlist support and SONOS integration.
 
-<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png" alt="Main" width="640" height="478" title="Main view with navigation, settings, and sidebar.">
+<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png" alt="Main" width="350" height="261" title="Main view with navigation, settings, and sidebar.">
 
 ## Features
 - Multiple views (albums with covers and more)
