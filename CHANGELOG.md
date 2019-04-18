@@ -1,7 +1,14 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.6.2 - work in progress
+## 2.7.0 - work in progress
+### Added
+- NC 16 support
+- es translation [#390](https://github.com/rello/audioplayer/pull/390) @[MaxGitHubAccount](https://github.com/MaxGitHubAccount)
+
+### Changed
+- appstore redesign
+
 ### Fixed
 - JS error in favoriteUpdate() [#389](https://github.com/rello/audioplayer/issues/389)
 - iconv error for cyrillic symbols [#386](https://github.com/rello/audioplayer/issues/386)
@@ -9,9 +16,6 @@ All notable changes to the Audio Player project will be documented in this file.
 - Albums below the selected one are relocated [#377](https://github.com/rello/audioplayer/issues/377)
 - Additional AlbumArts files [#387](https://github.com/Rello/audioplayer/pull/387) @[tidoni](https://github.com/tidoni)
 - scanner stuck due to corrupt artwork file [#362](https://github.com/rello/audioplayer/issues/362)
-
-### Added
-- NC 16 support
 
 ## 2.6.1 - 2019-03-10
 ### Fixed
