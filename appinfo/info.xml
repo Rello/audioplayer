@@ -2,7 +2,7 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>audioplayer</id>
 	<name>Audio Player</name>
-	<summary>Audio Player for Nextcloud and ownCloud</summary>
+	<summary>play / stream / organize</summary>
 	<description><![CDATA[A music player for FLAC, MP3, MP4, streams, … with playlist support and SONOS integration.
 
 - Multiple views (albums with covers and more)
@@ -17,7 +17,7 @@
 - local playlists
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
-    <version>2.6.1</version>
+    <version>2.7.0</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
@@ -30,7 +30,8 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
-	<screenshot small-thumbnail="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main_small.png">https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_logo.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png</screenshot>
 	<dependencies>
         <php min-version="7.0" max-version="7.3"/>
 		<nextcloud min-version="14" max-version="16"/>
