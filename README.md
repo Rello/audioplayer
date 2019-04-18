@@ -4,7 +4,7 @@
 
 A music player for FLAC, MP3, MP4, streams, … with playlist support and SONOS integration.
 
-<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png" alt="Main" width="800" height="389" title="Main view with navigation, settings, and sidebar.">
+<img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png" alt="Main" width="640" height="478" title="Main view with navigation, settings, and sidebar.">
 
 ## Features
 - Multiple views (albums with covers and more)
@@ -25,7 +25,7 @@ FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio as well as M3U and PLS play
 Latest versions of Google Chrome, Mozilla Firefox, and Apple Safari. Mobile browsers and Microsoft Edge may be restricted in functionality and handling. Microsoft Internet Explorer is not supported.
 
 ### Languages
-English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Turkish (tr), Ukrainian (uk), Chinese (Simplified) (zh_CN), Chinese (Traditional) (zh_TW), French (fr)
+English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Turkish (tr), Ukrainian (uk), Chinese (Simplified) (zh_CN), Chinese (Traditional) (zh_TW), French (fr), Spain (es)
 
 ## Documentation
 - [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
