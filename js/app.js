@@ -255,9 +255,6 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     }
 
     var br = $('<br />').css('clear', 'both');
-    var aClose = $('<a />').addClass('close ioc ioc-close').click(function () {
-        $('.is-active').click();
-    });
 
     divSongList.append(listAlbumWrapper);
     divSongContainerInner.append(divSongContainerCover);
@@ -267,7 +264,6 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     divSongContainerInner.append(br);
     divSongContainer.append(divArrow);
     divSongContainer.append(divSongContainerInner);
-    divSongContainer.append(aClose);
     $this.PlaylistContainer.append(divSongContainer);
 
     if ($this.ajax_call_status !== null) {
