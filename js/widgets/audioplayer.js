@@ -55,8 +55,8 @@
                                     'data-mimetype': el.mim,
                                     'mimetype': el.mim,
                                     'data-title': el.cl1,
-                                    'data-artist': el.cl2,
-                                    'data-album': el.cl3,
+                                    'data-album': el.cl2,
+                                    'data-year': el.cl3,
                                     'data-cover': el.cid,
                                     'data-path': el.lin,
                                     'class': 'dragable'
