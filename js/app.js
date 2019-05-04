@@ -430,18 +430,7 @@ Audios.prototype.TitleClickHandler = function (callback) {
                     $this.ActivePlaylist.data('playlist', $this.PlaylistContainer.data('playlist'));
                 }
 
-                var addCss;
-                var addDescr;
-                var coverID = activeLi.data('cover');
-                if (coverID === '') {
-                    addCss = 'background-color: #D3D3D3;color: #333333;';
-                    addDescr = activeLi.data('title').substring(0, 1);
-                } else {
-                    addDescr = '';
-                    addCss = 'background-image:url(' + getcoverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
-                }
-                $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
-
+                $this.current_song_ui_change(getcoverUrl, activeLi);
                 if ($this.AudioPlayer.playlistController.data.selectedIndex === null) $this.AudioPlayer.playlistController.data.selectedIndex = 0;
                 $this.AudioPlayer.actions.play(activeLi.index());
                 $this.set_statistics();
@@ -1056,24 +1045,28 @@ Audios.prototype.sort_playlist = function (evt) {
     }
 };
 
+Audios.prototype.current_song_ui_change = function (coverUrl, activeLi) {
+    var addCss;
+    var addDescr;
+    var coverID = activeLi.data('cover');
+    if (coverID === '') {
+        addCss = 'background-color: #D3D3D3;color: #333333;';
+        addDescr = activeLi.data('title').substring(0, 1);
+    } else {
+        addCss = 'background-image:url(' + coverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+        addDescr = '';
+    }
+    $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
+};
+
 Audios.prototype.soundmanager_callback = function (SMaction) {
     if (SMaction === 'setVolume') {
         $this.set_uservalue('volume', Math.round($this.AudioPlayer.actions.getVolume()));
     } else {
-        var addCss;
-        var addDescr;
-        var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-        var activeLi = $('#activePlaylist li.selected');
-        var coverID = activeLi.data('cover');
-
-        if (coverID === '') {
-            addCss = 'background-color: #D3D3D3;color: #333333;';
-            addDescr = activeLi.data('title').substring(0, 1);
-        } else {
-            addDescr = '';
-            addCss = 'background-image:url(' + getcoverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
-        }
-        $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
+        $this.current_song_ui_change(
+            OC.generateUrl('apps/audioplayer/getcover/'),
+            $('#activePlaylist li.selected')
+        );
         $this.set_statistics();
     }
 };
