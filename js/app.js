@@ -1057,6 +1057,7 @@ Audios.prototype.current_song_ui_change = function (coverUrl, activeLi) {
         addDescr = '';
     }
     $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
+    document.title = activeLi.data('title') + '—' + activeLi.data('album');
 };
 
 Audios.prototype.soundmanager_callback = function (SMaction) {
