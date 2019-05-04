@@ -1048,16 +1048,16 @@ Audios.prototype.sort_playlist = function (evt) {
 Audios.prototype.current_song_ui_change = function (coverUrl, activeLi) {
     var addCss;
     var addDescr;
-    var coverID = activeLi.data('cover');
+    const coverID = activeLi.data('cover');
     if (coverID === '') {
         addCss = 'background-color: #D3D3D3;color: #333333;';
         addDescr = activeLi.data('title').substring(0, 1);
     } else {
-        addCss = 'background-image:url(' + coverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+        addCss = `background-image:url(${coverUrl}${coverID});-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;`;
         addDescr = '';
     }
     $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
-    document.title = activeLi.data('title') + '—' + activeLi.data('album');
+    document.title = `${activeLi.data('title')}—${activeLi.data('album')}`;
 };
 
 Audios.prototype.soundmanager_callback = function (SMaction) {
