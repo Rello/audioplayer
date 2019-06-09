@@ -32,7 +32,7 @@ class ImageResponse extends Response
         $this->preview = $image['content'];
         $this->setStatus($statusCode);
         $this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');
-        $this->addHeader('Cache-Control', 'max-age=1800, must-revalidate');
+        $this->cacheFor(365 * 24 * 60 * 60);
         $etag = md5($image['content']);
         $this->setETag($etag);
     }
