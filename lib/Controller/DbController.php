@@ -519,7 +519,7 @@ class DbController extends Controller
     /**
      * Get file id for single track
      * @param int $trackId
-     * @return array
+     * @return int
      */
     public function getFileId($trackId)
     {

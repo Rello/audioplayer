@@ -33,7 +33,8 @@ class SonosController extends Controller
     private $smb_path;
     private $room;
     private $udn;
-    private $ip = '192.168.0.27';
+    private $ip;
+    private $DBController;
 
     public function __construct(
         $appName,
@@ -41,7 +42,8 @@ class SonosController extends Controller
         $userId,
         IConfig $configManager,
         ILogger $logger,
-        IRootFolder $rootFolder
+        IRootFolder $rootFolder,
+        DbController $DBController
     )
     {
         parent::__construct($appName, $request);
@@ -50,6 +52,7 @@ class SonosController extends Controller
         $this->configManager = $configManager;
         $this->logger = $logger;
         $this->rootFolder = $rootFolder;
+        $this->DBController = $DBController;
     }
 
     /**
