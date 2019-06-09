@@ -516,6 +516,19 @@ class DbController extends Controller
         return $row;
     }
 
+    /**
+     * Get file id for single track
+     * @param int $trackId
+     * @return array
+     */
+    public function getFileId($trackId)
+    {
+        $SQL = "SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE  `user_id` = ? AND `id` = ?";
+        $stmt = $this->db->prepare($SQL);
+        $stmt->execute(array($this->userId, $trackId));
+        $row = $stmt->fetch();
+        return $row['file_id'];
+    }
 
     /**
      * Add track to db if not exist

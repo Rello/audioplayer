@@ -11,7 +11,6 @@
 Audios.prototype.showSidebar = function (evt) {
 
     var trackid = $(evt.target).closest('li').attr('data-trackid');
-    var fileid = $(evt.target).closest('li').attr('data-fileid');
     var $appsidebar = $("#app-sidebar");
 
     if ($appsidebar.data('trackid') === trackid) {
@@ -42,7 +41,7 @@ Audios.prototype.showSidebar = function (evt) {
         $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
         $('#sidebarMime').html(trackData.attr('data-mimetype'));
 
-        $('#sidebarFavorite').attr({'data-fileid': fileid})
+        $('#sidebarFavorite').attr({'data-trackid': trackid})
             .on('click', $this.favoriteUpdate.bind($this));
 
         if ($appsidebar.data('trackid') === '') {
@@ -60,7 +59,6 @@ Audios.prototype.showSidebar = function (evt) {
         }
 
         $appsidebar.data('trackid', trackid);
-        $appsidebar.data('fileid', fileid);
         $('.tabHeader.selected').click();
     }
 };
@@ -270,7 +268,7 @@ Audios.prototype.ID3EditorTabView = function () {
 };
 
 Audios.prototype.SONOSTabView = function () {
-    var fileId = $("#app-sidebar").data('fileid');
+    var trackid = $("#app-sidebar").data('trackid');
     $this.resetView();
     $('#tabHeaderSONOS').addClass('selected');
 
@@ -283,7 +281,7 @@ Audios.prototype.SONOSTabView = function () {
     $.ajax({
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/sonosdebug'),
-        data: {'fileId': fileId},
+        data: {'trackid': trackid},
         success: function (jsondata) {
             html = $('#SONOSTabView').html();
             html += '<p style="margin-left: 2em;">' + t('audioplayer', 'SMB link from user settings:') + '</p>';

@@ -51,7 +51,6 @@
                             $(jsondata.data).each(function (i, el) {
                                 var li = $('<li/>').attr({
                                     'data-trackid': el.id,
-                                    'data-fileid': el.fid,
                                     'data-mimetype': el.mim,
                                     'mimetype': el.mim,
                                     'data-title': el.cl1,

@@ -304,8 +304,6 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
         var evt = {};
         evt.albumId = locHashTemp[1];
         window.location.href = '#';
-//!!!!!!!!
-//        myAudios.AlbumClickHandler(evt);
     }
 
     if (directPlay !== true) {
@@ -340,7 +338,6 @@ Audios.prototype.buildTitleRow = function (elem) {
 
     var li = $('<li/>').attr({
         'data-trackid': elem.id,
-        'data-fileid': elem.fid,
         'data-title': elem.cl1,
         'data-artist': elem.cl2,
         'data-cover': elem.cid,
@@ -354,7 +351,6 @@ Audios.prototype.buildTitleRow = function (elem) {
     var spanTime = $('<span/>').addClass('time').text(elem.len);
     var streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
     var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.showSidebar.bind($this));
-    //var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.fileActionsMenu.bind($this));
     var spanTitle;
 
     if (can_play[elem.mim] === true) {
@@ -606,7 +602,6 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
 
                     var li = $('<li/>').attr({
                         'data-trackid': el.id,
-                        'data-fileid': el.fid,
                         'data-mimetype': el.mim,
                         'mimetype': el.mim,
                         'data-title': el.cl1,
@@ -621,11 +616,11 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                     if (el.fav === 't') {
                         fav_action = $('<i/>').addClass('icon icon-starred')
                             .css({'opacity': 0.3})
-                            .attr({'data-fileid': el.fid})
+                            .attr({'data-trackid': el.id})
                             .click($this.favoriteUpdate.bind($this));
                     } else {
                         fav_action = $('<i/>').addClass('icon icon-star')
-                            .attr({'data-fileid': el.fid})
+                            .attr({'data-trackid': el.id})
                             .click($this.favoriteUpdate.bind($this));
                     }
 
@@ -734,7 +729,7 @@ Audios.prototype.DragElement = function () {
 };
 
 Audios.prototype.favoriteUpdate = function (evt) {
-    var fileId = $(evt.target).attr('data-fileid');
+    var trackid = $(evt.target).attr('data-trackid');
     var isFavorite = false;
 
     if ($this.category_selectors[1].toString().substring(0, 1) === "S") return;
@@ -753,7 +748,7 @@ Audios.prototype.favoriteUpdate = function (evt) {
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/setfavorite'),
         data: {
-            'fileId': fileId,
+            'trackid': trackid,
             'isFavorite': isFavorite
         }
     });

@@ -11,18 +11,18 @@
 Audios.prototype.PlaySonos = function (liIndex) {
 
     var playIndicator = $('#sonos_play');
-    var fileids = [];
+    var trackids = [];
 
     $( '.albumwrapper li' ).each(function() {
-        fileid = $(this).data('fileid');
-        fileids.push(fileid);
+        trackid = $(this).data('trackid');
+        trackids.push(trackid);
     });
 
     $.ajax({
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/sonosqueue'),
         data: {
-            'fileArray': fileids,
+            '$trackArray': trackids,
             'fileIndex': liIndex
         },
         success: function (jsondata) {

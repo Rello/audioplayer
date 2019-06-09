@@ -33,6 +33,7 @@ class SettingController extends Controller {
     private $tagManager;
     private $db;
     private $session;
+    private $DBController;
 
     public function __construct(
         $appName,
@@ -42,7 +43,8 @@ class SettingController extends Controller {
         IDBConnection $db,
         ITagManager $tagManager,
         IRootFolder $rootFolder,
-        ISession $session
+        ISession $session,
+        DbController $DBController
     )
     {
 		parent::__construct($appName, $request);
@@ -54,6 +56,7 @@ class SettingController extends Controller {
         $this->tagger = null;
         $this->rootFolder = $rootFolder;
         $this->session = $session;
+        $this->DBController = $DBController;
 	}
 
     /**
@@ -134,12 +137,14 @@ class SettingController extends Controller {
 
     /**
      * @NoAdminRequired
-     * @param $fileId
+     * @param $trackid
      * @param $isFavorite
      * @return bool
      */
-    public function setFavorite($fileId, $isFavorite) {
+    public function setFavorite($trackid, $isFavorite)
+    {
         $this->tagger = $this->tagManager->load('files');
+        $fileId = $this->DBController->getFileId($trackid);
 
         if ($isFavorite === "true") {
             $return = $this->tagger->removeFromFavorites($fileId);

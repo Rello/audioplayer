@@ -61,14 +61,15 @@ class SonosController extends Controller
      * @param $fileIndex
      * @return bool
      */
-    public function setQueue($fileArray, $fileIndex)
+    public function setQueue($trackArray, $fileIndex)
     {
 
         $sonos = $this->initController();
         if ($sonos === false) return false;
         $sonos->ClearQueue();
 
-        foreach ($fileArray as $fileId) {
+        foreach ($trackArray as $track_id) {
+            $fileId = $this->DBController->getFileId($track_id);
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
             $file = array_shift($nodes);
             $link = $this->smbFilePath($file);
@@ -273,13 +274,13 @@ class SonosController extends Controller
      * used within the sidebar => SONOS Tab
      *
      * @NoAdminRequired
-     * @param $fileId
+     * @param $trackid
      * @return JSONResponse
      */
-    public function getDebugInfo($fileId)
+    public function getDebugInfo($trackid)
     {
         $smb_path = $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path');
-        $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
+        $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($trackid);
         $file = array_shift($nodes);
 
         $link = $this->smbFilePath($file);

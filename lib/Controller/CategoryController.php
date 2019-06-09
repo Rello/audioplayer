@@ -414,12 +414,13 @@ class CategoryController extends Controller
             $row['lin'] = rawurlencode($segments[2]);
             if (is_array($favorites) AND in_array($row['fid'], $favorites)) {
                 $row['fav'] = "t";
-            } else {
-                $row['fav'] = "f";
             }
 
             if ($favorite AND is_array($favorites) AND !in_array($row['fid'], $favorites)) {
+                //special handling for Favorites smart playlist;
+                //do not display anything that is NOT a fav
             } else {
+                array_splice($row, 5, 1);
                 $aTracks[] = $row;
             }
         }

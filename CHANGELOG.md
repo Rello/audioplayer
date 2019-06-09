@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.7.1 - pending
+### Fixed
+- performance: caching for album cover arts
+- performance: reduce json data amount by removing information
+
 ## 2.7.0 - 2019-04-21
 ### Added
 - NC 16 support
