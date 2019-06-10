@@ -43,15 +43,15 @@ class ScannerController extends Controller
     private $numOfSongs;
     private $db;
     private $configManager;
-    private $occ_job = false;
-    private $no_fseek = false;
+    private $occJob = false;
+    private $noFseek = false;
     private $languageFactory;
     private $rootFolder;
     private $ID3Tags;
     private $cyrillic;
     private $logger;
-    private $parentId_prev = 0;
-    private $folderpicture = false;
+    private $parentIdPrevious = 0;
+    private $folderPicture = false;
     private $DBController;
     private $IDateTimeZone;
     private $SettingController;
@@ -117,7 +117,7 @@ class ScannerController extends Controller
 
         // check if scanner is started from web or occ
         if ($userId !== null) {
-            $this->occ_job = true;
+            $this->occJob = true;
             $this->userId = $userId;
             $languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
             $this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
@@ -160,7 +160,7 @@ class ScannerController extends Controller
         foreach ($audios as $audio) {
 
             //check if scan is still supposed to run, or if dialog was closed in web already
-            if (!$this->occ_job) {
+            if (!$this->occJob) {
                 $scan_running = $this->DBController->getSessionValue('scanner_running');
                 if ($scan_running === 'stopped') break;
             }
@@ -229,7 +229,7 @@ class ScannerController extends Controller
             $this->getAlbumArt($audio, $iAlbumId, $parentId, $output);
 
             $aTrack = [
-                'title' => $this->truncate($name, '256'),
+                'title' => $this->truncateStrings($name, '256'),
                 'number' => $this->normalizeInteger($trackNr),
                 'artist_id' => (int)$iArtistId,
                 'album_id' => (int)$iAlbumId,
@@ -238,13 +238,13 @@ class ScannerController extends Controller
                 'bitrate' => (int)$bitrate,
                 'mimetype' => $audio->getMimetype(),
                 'genre' => (int)$iGenreId,
-                'year' => $this->truncate($this->normalizeInteger($year), 4, ''),
+                'year' => $this->truncateStrings($this->normalizeInteger($year), 4, ''),
                 'disc' => $this->normalizeInteger($disc),
-                'subtitle' => $this->truncate($subtitle, '256'),
-                'composer' => $this->truncate($composer, '256'),
+                'subtitle' => $this->truncateStrings($subtitle, '256'),
+                'composer' => $this->truncateStrings($composer, '256'),
                 'folder_id' => $parentId,
-                'isrc' => $this->truncate($isrc, '12'),
-                'copyright' => $this->truncate($copyright, '256'),
+                'isrc' => $this->truncateStrings($isrc, '12'),
+                'copyright' => $this->truncateStrings($copyright, '256'),
             ];
 
             $return = $this->DBController->writeTrackToDB($this->userId, $aTrack);
@@ -260,7 +260,7 @@ class ScannerController extends Controller
         $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
         foreach ($streams as $stream) {
             //check if scan is still supposed to run, or if dialog was closed in web already
-            if (!$this->occ_job) {
+            if (!$this->occJob) {
                 $scan_running = $this->DBController->getSessionValue('scanner_running');
                 if ($scan_running !== 'active') break;
             }
@@ -270,7 +270,7 @@ class ScannerController extends Controller
             $counter++;
             $this->abscount++;
 
-            $title = $this->truncate($stream->getName(), '256');
+            $title = $this->truncateStrings($stream->getName(), '256');
             $aStream = [
                 'title' => substr($title, 0, strrpos($title, ".")),
                 'artist_id' => 0,
@@ -306,7 +306,7 @@ class ScannerController extends Controller
         }
 
         // different outputs when web or occ
-        if (!$this->occ_job) {
+        if (!$this->occJob) {
             $this->DBController->setSessionValue('scanner_running', '', $this->userId);
             $this->DBController->setSessionValue('scanner_progress', '', $this->userId);
             $result = [
@@ -335,7 +335,7 @@ class ScannerController extends Controller
     {
         $this->progress = $percentage;
 
-        if (!$this->occ_job) {
+        if (!$this->occJob) {
             $currentIntArray = [
                 'percent' => $this->progress,
                 'all' => $this->numOfSongs,
@@ -532,10 +532,10 @@ class ScannerController extends Controller
             if (@fseek($handle, -24, SEEK_END) === 0) {
                 $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
             } else {
-                if (!$this->no_fseek) {
+                if (!$this->noFseek) {
                     $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.", OutputInterface::VERBOSITY_VERBOSE);
                     $this->logger->debug('Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', array('app' => 'audioplayer'));
-                    $this->no_fseek = true;
+                    $this->noFseek = true;
                 }
                 $fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());
                 $ThisFileInfo = $getID3->analyze($fileName);
@@ -544,19 +544,19 @@ class ScannerController extends Controller
                     unlink($fileName);
                 }
             }
-            if ($this->cyrillic === 'checked') $ThisFileInfo = $this->cyrillic($ThisFileInfo);
+            if ($this->cyrillic === 'checked') $ThisFileInfo = $this->convertCyrillic($ThisFileInfo);
             \getid3_lib::CopyTagsToComments($ThisFileInfo);
         }
         $this->ID3Tags = $ThisFileInfo;
     }
 
     /**
-     * Add track to db if not exist
+     * Concert cyrillic characters
      *
      * @param array $ThisFileInfo
      * @return array
      */
-    private function cyrillic($ThisFileInfo)
+    private function convertCyrillic($ThisFileInfo)
     {
         //$this->logger->debug('cyrillic handling activated', array('app' => 'audioplayer'));
         // Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
@@ -620,50 +620,50 @@ class ScannerController extends Controller
      */
     private function getAlbumArt($audio, $iAlbumId, $parentId, OutputInterface $output = null)
     {
-        if ($parentId === $this->parentId_prev) {
-            if ($this->folderpicture) {
+        if ($parentId === $this->parentIdPrevious) {
+            if ($this->folderPicture) {
                 $output->writeln("     Reusing previous folder image", OutputInterface::VERBOSITY_VERY_VERBOSE);
-                $this->processImageString($iAlbumId, $this->folderpicture->getContent());
+                $this->processImageString($iAlbumId, $this->folderPicture->getContent());
             } elseif (isset($this->ID3Tags['comments']['picture'][0]['data'])) {
                 $data = $this->ID3Tags['comments']['picture'][0]['data'];
                 $this->processImageString($iAlbumId, $data);
             }
         } else {
-            $this->folderpicture = false;
+            $this->folderPicture = false;
             if ($audio->getParent()->nodeExists('cover.jpg')) {
-                $this->folderpicture = $audio->getParent()->get('cover.jpg');
+                $this->folderPicture = $audio->getParent()->get('cover.jpg');
             } elseif ($audio->getParent()->nodeExists('Cover.jpg')) {
-                $this->folderpicture = $audio->getParent()->get('Cover.jpg');
+                $this->folderPicture = $audio->getParent()->get('Cover.jpg');
             } elseif ($audio->getParent()->nodeExists('cover.png')) {
-                $this->folderpicture = $audio->getParent()->get('cover.png');
+                $this->folderPicture = $audio->getParent()->get('cover.png');
             } elseif ($audio->getParent()->nodeExists('Cover.png')) {
-                $this->folderpicture = $audio->getParent()->get('Cover.png');
+                $this->folderPicture = $audio->getParent()->get('Cover.png');
             } elseif ($audio->getParent()->nodeExists('folder.jpg')) {
-                $this->folderpicture = $audio->getParent()->get('folder.jpg');
+                $this->folderPicture = $audio->getParent()->get('folder.jpg');
             } elseif ($audio->getParent()->nodeExists('Folder.jpg')) {
-                $this->folderpicture = $audio->getParent()->get('Folder.jpg');
+                $this->folderPicture = $audio->getParent()->get('Folder.jpg');
             } elseif ($audio->getParent()->nodeExists('folder.png')) {
-                $this->folderpicture = $audio->getParent()->get('folder.png');
+                $this->folderPicture = $audio->getParent()->get('folder.png');
             } elseif ($audio->getParent()->nodeExists('Folder.png')) {
-                $this->folderpicture = $audio->getParent()->get('Folder.png');
+                $this->folderPicture = $audio->getParent()->get('Folder.png');
             } elseif ($audio->getParent()->nodeExists('front.jpg')) {
-                $this->folderpicture = $audio->getParent()->get('front.jpg');
+                $this->folderPicture = $audio->getParent()->get('front.jpg');
             } elseif ($audio->getParent()->nodeExists('Front.jpg')) {
-                $this->folderpicture = $audio->getParent()->get('Front.jpg');
+                $this->folderPicture = $audio->getParent()->get('Front.jpg');
             } elseif ($audio->getParent()->nodeExists('front.png')) {
-                $this->folderpicture = $audio->getParent()->get('front.png');
+                $this->folderPicture = $audio->getParent()->get('front.png');
             } elseif ($audio->getParent()->nodeExists('Front.png')) {
-                $this->folderpicture = $audio->getParent()->get('Front.png');
+                $this->folderPicture = $audio->getParent()->get('Front.png');
             }
 
-            if ($this->folderpicture) {
-                $output->writeln("     Alternative album art: " . $this->folderpicture->getInternalPath(), OutputInterface::VERBOSITY_VERY_VERBOSE);
-                $this->processImageString($iAlbumId, $this->folderpicture->getContent());
+            if ($this->folderPicture) {
+                $output->writeln("     Alternative album art: " . $this->folderPicture->getInternalPath(), OutputInterface::VERBOSITY_VERY_VERBOSE);
+                $this->processImageString($iAlbumId, $this->folderPicture->getContent());
             } elseif (isset($this->ID3Tags['comments']['picture'])) {
                 $data = $this->ID3Tags['comments']['picture'][0]['data'];
                 $this->processImageString($iAlbumId, $data);
             }
-            $this->parentId_prev = $parentId;
+            $this->parentIdPrevious = $parentId;
         }
         return true;
     }
@@ -695,7 +695,7 @@ class ScannerController extends Controller
      * @param $dots
      * @return string
      */
-    private function truncate($string, $length, $dots = "...")
+    private function truncateStrings($string, $length, $dots = "...")
     {
         return (strlen($string) > $length) ? mb_strcut($string, 0, $length - strlen($dots)) . $dots : $string;
     }
