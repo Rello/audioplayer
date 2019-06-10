@@ -24,7 +24,7 @@ if ($_['audioplayer_editor'] === 'true') {
     Util::addStyle('audioplayer_editor', 'style');
 }
 if ($_['audioplayer_sonos'] !== 'checked') {
-    Util::addScript('audioplayer', 'bar-ui-min');
+    Util::addScript('audioplayer', 'bar-ui');
     Util::addStyle('audioplayer', '3rdparty/fontello/css/animation');
 } else {
     Util::addScript('audioplayer', 'sonos');
