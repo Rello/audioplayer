@@ -59,7 +59,7 @@ Audios.prototype.resetLibrary = function () {
     $this.showInitScreen();
 
     $("#category_selector").val('');
-    $this.set_uservalue('category', $this.category_selectors[0] + '-');
+    $this.setUserValue('category', $this.CategorySelectors[0] + '-');
     $('#myCategory').html('');
     $('#alben').addClass('active');
     $('#individual-playlist').remove();

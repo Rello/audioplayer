@@ -16,9 +16,9 @@ var Audios = function () {
     this.EmptyContainer = $('#empty-container');
     this.ActivePlaylist = $('#activePlaylist');
     this.albums = [];
-    this.category_selectors = [];
-    this.ajax_call_status = null;
-    this.albumPlay = null;
+    this.CategorySelectors = [];
+    this.AjaxCallStatus = null;
+    this.AlbumPlay = null;
 };
 
 Audios.prototype.init = function () {
@@ -31,14 +31,14 @@ Audios.prototype.init = function () {
         $('#searchresults').addClass('hidden');
         window.location.href = '#';
         if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
-            $this.category_selectors = locHashTemp;
+            $this.CategorySelectors = locHashTemp;
             myAudios.presetDisplay();
         }
     } else {
-        myAudios.get_uservalue('category', function () {       // read saved values from user values
-            if ($this.category_selectors === 'false') {
+        myAudios.getUserValue('category', function () {       // read saved values from user values
+            if ($this.CategorySelectors === 'false') {
                 $this.showInitScreen();
-            } else if ($this.category_selectors[0] && $this.category_selectors[0] !== 'Albums') {
+            } else if ($this.CategorySelectors[0] && $this.CategorySelectors[0] !== 'Albums') {
                 myAudios.presetDisplay();
             } else {
                 $this.loadCategoryAlbums();
@@ -51,15 +51,15 @@ Audios.prototype.init = function () {
 };
 
 Audios.prototype.presetDisplay = function () {
-    $("#category_selector").val($this.category_selectors[0]);
+    $("#category_selector").val($this.CategorySelectors[0]);
     myAudios.loadCategory(function () {                                             // load the last selected category
-        if ($this.category_selectors[1] && $this.category_selectors[1] !== 'undefined') {
-            $('#myCategory li[data-id="' + $this.category_selectors[1] + '"]').addClass('active');
+        if ($this.CategorySelectors[1] && $this.CategorySelectors[1] !== 'undefined') {
+            $('#myCategory li[data-id="' + $this.CategorySelectors[1] + '"]').addClass('active');
             var appNavigation = $("#app-navigation");
             appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
             $this.loadIndividualCategory(null, function () {                        // select the last played title
-                if ($this.category_selectors[2] && $this.category_selectors[2] !== 'undefined') {
-                    var item = $('#individual-playlist li[data-trackid="' + $this.category_selectors[2] + '"]');
+                if ($this.CategorySelectors[2] && $this.CategorySelectors[2] !== 'undefined') {
+                    var item = $('#individual-playlist li[data-trackid="' + $this.CategorySelectors[2] + '"]');
                     item.find('.icon').hide();
                     item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
                 }
@@ -175,7 +175,7 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
 
         var divPlayHref = $('<a/>');
         var divPlayImage = $('<div/>').attr({
-            'id': 'albumPlay'
+            'id': 'AlbumPlay'
         }).click($this.loadIndividualAlbums.bind($this));
 
         divPlayHref.append(divPlayImage);
@@ -278,7 +278,7 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
             if (jsondata.status === 'success') {
                 var songcounter = 0;
                 $(jsondata.data).each(function (i, el) {
-                    listAlbumWrapper.append($this.buildTitleRow(el));
+                    listAlbumWrapper.append($this.buildTrackRow(el));
                     songcounter++;
                 });
                 if (songcounter % 2 !== 0) {
@@ -288,8 +288,8 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
                     li.addClass('noPlaylist');
                     listAlbumWrapper.append(li); //add a blank row in case of uneven records=>avoid a Chrome bug to strangely split the records across columns
                 }
-                $this.TitleClickHandler();
-                $this.indicateCurrentPlayingTitle();
+                $this.trackClickHandler();
+                $this.indicateCurrentPlayingTrack();
                 if (directPlay === true) {
                     $('.albumwrapper').find('.title').first().click();
 
@@ -331,7 +331,7 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     return true;
 };
 
-Audios.prototype.buildTitleRow = function (elem) {
+Audios.prototype.buildTrackRow = function (elem) {
 
     var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
     var can_play = soundManager.html5;
@@ -367,7 +367,7 @@ Audios.prototype.buildTitleRow = function (elem) {
     return li;
 };
 
-Audios.prototype.TitleClickHandler = function (callback) {
+Audios.prototype.trackClickHandler = function (callback) {
     $this = this;
     var albumWrapper = $('.albumwrapper');
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
@@ -384,7 +384,7 @@ Audios.prototype.TitleClickHandler = function (callback) {
         } else {
             $(el).draggable({
                 appendTo: "body",
-                helper: $this.DragElement,
+                helper: $this.dragElement,
                 cursor: "move",
                 delay: 500,
                 start: function (event, ui) {
@@ -400,7 +400,7 @@ Audios.prototype.TitleClickHandler = function (callback) {
             if ($('#audioplayer_sonos').val() === 'checked') {
                 var liIndex = $(this).parents("li").index();
                 $this.PlaySonos(liIndex);
-                $this.set_statistics();
+                $this.setStatistics();
                 return;
             }
 
@@ -424,10 +424,10 @@ Audios.prototype.TitleClickHandler = function (callback) {
                     $this.ActivePlaylist.data('playlist', $this.PlaylistContainer.data('playlist'));
                 }
 
-                $this.current_song_ui_change(getcoverUrl, activeLi);
+                $this.currentTrackUiChange(getcoverUrl, activeLi);
                 if ($this.AudioPlayer.playlistController.data.selectedIndex === null) $this.AudioPlayer.playlistController.data.selectedIndex = 0;
                 $this.AudioPlayer.actions.play(activeLi.index());
-                $this.set_statistics();
+                $this.setStatistics();
             }
         });
     });
@@ -437,7 +437,7 @@ Audios.prototype.TitleClickHandler = function (callback) {
     }
 };
 
-Audios.prototype.indicateCurrentPlayingTitle = function () {
+Audios.prototype.indicateCurrentPlayingTrack = function () {
     if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
         var playingTrackId = $('#activePlaylist li.selected').data('trackid');
         var playingListItem = $('.albumwrapper li[data-trackid="' + playingTrackId + '"]');
@@ -449,7 +449,7 @@ Audios.prototype.indicateCurrentPlayingTitle = function () {
 
 Audios.prototype.loadCategory = function (callback) {
     $this = this;
-    //var category = $this.category_selectors[0]; // use the variable and not the drop_down value???
+    //var category = $this.CategorySelectors[0]; // use the variable and not the drop_down value???
     var category = $('#category_selector').val();
     var addPlaylist = $('#addPlaylist');
     addPlaylist.addClass('hidden');
@@ -557,7 +557,7 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
 
     var categoryActive = $('#myCategory li.active');
     var PlaylistId = categoryActive.data('id');
-    $this.category_selectors[1] = PlaylistId;
+    $this.CategorySelectors[1] = PlaylistId;
     var category_title = categoryActive.find('span').first().text();
     $this.PlaylistContainer.data('playlist', category + '-' + PlaylistId);
 
@@ -572,11 +572,11 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
         can_play[stream_array[s]] = true;
     }
 
-    if ($this.ajax_call_status !== null) {
-        $this.ajax_call_status.abort();
+    if ($this.AjaxCallStatus !== null) {
+        $this.AjaxCallStatus.abort();
     }
 
-    $this.ajax_call_status = $.ajax({
+    $this.AjaxCallStatus = $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
         data: {category: category, categoryId: PlaylistId},
@@ -664,8 +664,8 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                     $('#individual-playlist').append(li);
                 }); // end each loop
 
-                $this.TitleClickHandler(callback);
-                $this.indicateCurrentPlayingTitle();
+                $this.trackClickHandler(callback);
+                $this.indicateCurrentPlayingTrack();
 
                 $('.header-title').text(jsondata.header.col1);
                 $('.header-artist').text(jsondata.header.col2);
@@ -711,7 +711,7 @@ Audios.prototype.showInitScreen = function (mode) {
     }
 };
 
-Audios.prototype.DragElement = function () {
+Audios.prototype.dragElement = function () {
     return $(this).clone().text($(this).find('.title').attr('data-title'));
 };
 
@@ -719,7 +719,7 @@ Audios.prototype.favoriteUpdate = function (evt) {
     var trackid = $(evt.target).attr('data-trackid');
     var isFavorite = false;
 
-    if ($this.category_selectors[1].toString().substring(0, 1) === "S") return;
+    if ($this.CategorySelectors[1].toString().substring(0, 1) === "S") return;
 
     if ($(evt.target).hasClass('icon icon-starred')) {
         isFavorite = true;
@@ -750,7 +750,7 @@ Audios.prototype.addSongToPlaylist = function (plId, songId) {
         sorting: (sort + 1)
     }).then(function () {
         $('.toolTip').tooltip('hide');
-        $this.category_selectors[0] = 'Playlist';
+        $this.CategorySelectors[0] = 'Playlist';
         myAudios.loadCategory();
     }.bind(this));
 };
@@ -938,26 +938,26 @@ Audios.prototype.deletePlaylist = function (evt) {
 
 };
 
-Audios.prototype.get_uservalue = function (user_type, callback) {
+Audios.prototype.getUserValue = function (user_type, callback) {
     $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/getvalue'),
         data: {'type': user_type},
         success: function (jsondata) {
             if (jsondata.status === 'success' && user_type === 'category') {
-                $this.category_selectors = jsondata.value.split('-');
-                callback($this.category_selectors);
+                $this.CategorySelectors = jsondata.value.split('-');
+                callback($this.CategorySelectors);
             } else if (jsondata.status === 'false' && user_type === 'category'){
-                $this.category_selectors = 'false';
-                callback($this.category_selectors);
+                $this.CategorySelectors = 'false';
+                callback($this.CategorySelectors);
             }
         }
     });
 };
 
-Audios.prototype.set_uservalue = function (user_type, user_value) {
+Audios.prototype.setUserValue = function (user_type, user_value) {
     if (user_type) {
-        if (user_type === 'category') $this.category_selectors = user_value.split('-');
+        if (user_type === 'category') $this.CategorySelectors = user_value.split('-');
         $.ajax({
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/setvalue'),
@@ -971,7 +971,7 @@ Audios.prototype.set_uservalue = function (user_type, user_value) {
     }
 };
 
-Audios.prototype.set_statistics = function () {
+Audios.prototype.setStatistics = function () {
     var track_id = $('#activePlaylist li.selected').data('trackid');
     if (track_id) {
         $.ajax({
@@ -981,12 +981,12 @@ Audios.prototype.set_statistics = function () {
             success: function () {
             }
         });
-        $this.set_uservalue('category', $this.category_selectors[0] + '-' + $this.category_selectors[1] + '-' + track_id);
+        $this.setUserValue('category', $this.CategorySelectors[0] + '-' + $this.CategorySelectors[1] + '-' + track_id);
     }
 
 };
 
-Audios.prototype.sort_playlist = function (evt) {
+Audios.prototype.sortPlaylist = function (evt) {
     var column = $(evt.target).attr('class').split('-')[1];
     var order = $(evt.target).data('order');
     var factor = 1;
@@ -1038,7 +1038,7 @@ Audios.prototype.sort_playlist = function (evt) {
     }
 };
 
-Audios.prototype.current_song_ui_change = function (coverUrl, activeLi) {
+Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
     var addCss;
     var addDescr;
     var coverID = activeLi.data('cover');
@@ -1053,15 +1053,15 @@ Audios.prototype.current_song_ui_change = function (coverUrl, activeLi) {
     document.title = activeLi.data('title') + ' — ' + activeLi.data('album');
 };
 
-Audios.prototype.soundmanager_callback = function (SMaction) {
+Audios.prototype.soundmanagerCallback = function (SMaction) {
     if (SMaction === 'setVolume') {
-        $this.set_uservalue('volume', Math.round($this.AudioPlayer.actions.getVolume()));
+        $this.setUserValue('volume', Math.round($this.AudioPlayer.actions.getVolume()));
     } else {
-        $this.current_song_ui_change(
+        $this.currentTrackUiChange(
             OC.generateUrl('apps/audioplayer/getcover/'),
             $('#activePlaylist li.selected')
         );
-        $this.set_statistics();
+        $this.setStatistics();
     }
 };
 
@@ -1113,7 +1113,7 @@ window.onhashchange = function () {
         $('#searchresults').addClass('hidden');
         window.location.href = '#';
         if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
-            $this.category_selectors = locHashTemp;
+            $this.CategorySelectors = locHashTemp;
             myAudios.presetDisplay();
         }
     }
@@ -1178,7 +1178,7 @@ $(document).ready(function () {
 
     $('#alben').addClass('active').on('click', function () {
         $this.loadCategoryAlbums();
-        myAudios.set_uservalue('category', 'Albums');
+        myAudios.setUserValue('category', 'Albums');
     });
 
 
@@ -1188,27 +1188,27 @@ $(document).ready(function () {
         $('#newPlaylist').addClass('ap_hidden');
         if ($('#app-navigation').hasClass('hidden')) {
             $('#app-navigation').removeClass('hidden');
-            myAudios.set_uservalue('navigation', 'true');
+            myAudios.setUserValue('navigation', 'true');
         } else {
             $('#app-navigation').addClass('hidden');
-            myAudios.set_uservalue('navigation', 'false');
+            myAudios.setUserValue('navigation', 'false');
         }
         myAudios.resizePlaylist();
     });
 
     $('#category_selector').change(function () {
         $('#newPlaylist').addClass('ap_hidden');
-        $this.category_selectors[0] = $('#category_selector').val();
-        $this.category_selectors[1] = '';
+        $this.CategorySelectors[0] = $('#category_selector').val();
+        $this.CategorySelectors[1] = '';
         $('#myCategory').html('');
-        if ($this.category_selectors[0] !== '') {
+        if ($this.CategorySelectors[0] !== '') {
             myAudios.loadCategory();
         }
     });
 
-    $('.header-title').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
-    $('.header-artist').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
-    $('.header-album').click($this.sort_playlist.bind($this)).css('cursor', 'pointer');
+    $('.header-title').click($this.sortPlaylist.bind($this)).css('cursor', 'pointer');
+    $('.header-artist').click($this.sortPlaylist.bind($this)).css('cursor', 'pointer');
+    $('.header-album').click($this.sortPlaylist.bind($this)).css('cursor', 'pointer');
 
     var timer = window.setTimeout(function () {
         $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());

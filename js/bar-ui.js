@@ -962,7 +962,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        $this.soundmanager_callback('onfinish');
+                        $this.soundmanagerCallback('onfinish');
 
                         // play next
                         this.play({
@@ -1406,7 +1406,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        $this.soundmanager_callback('next');
+                        $this.soundmanagerCallback('next');
                     }
                 }
             },
@@ -1425,7 +1425,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        $this.soundmanager_callback('prev');
+                        $this.soundmanagerCallback('prev');
                     }
                 }
             },
@@ -1533,7 +1533,7 @@
                 // **********************************************************
                 // Notify Audio Player about next track e.g. for cover updates
                 // **********************************************************
-                $this.soundmanager_callback('setVolume');
+                $this.soundmanagerCallback('setVolume');
 
                 return utils.events.preventDefault(e);
 
