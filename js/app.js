@@ -348,7 +348,6 @@ Audios.prototype.buildTitleRow = function (elem) {
 
     var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
     var spanNr = $('<span/>').addClass('number').text(elem.cl3);
-    var spanTime = $('<span/>').addClass('time').text(elem.len);
     var streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
     var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.showSidebar.bind($this));
     var spanTitle;
@@ -363,7 +362,6 @@ Audios.prototype.buildTitleRow = function (elem) {
     li.append(spanAction);
     li.append(spanNr);
     li.append(spanTitle);
-    li.append(spanTime);
     li.append(spanEdit);
 
     return li;

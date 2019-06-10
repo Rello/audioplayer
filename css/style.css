@@ -777,25 +777,18 @@ i#scanAudiosFirst {
     position: relative;
     width: 30px;
     float: left;
-
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .songcontainer span.title {
     position: relative;
-    width: 61%;
+    width: 70%;
     float: left;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-}
-
-.songcontainer span.time {
-    position: relative;
-    float: left;
-    /*right:5px;
-    width:60px;*/
-    text-align: right;
-
+    margin-left: 5px;
 }
 
 .songcontainer .albumwrapper li span.edit-song {
