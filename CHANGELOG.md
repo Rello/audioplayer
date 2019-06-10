@@ -6,6 +6,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - performance: caching for album cover arts
 - performance: reduce json data amount by removing information
 
+### Changed
+- Show song info in title [#393](https://github.com/rello/audioplayer/pull/393) @[mmatous](https://github.com/mmatous)
+
 ## 2.7.0 - 2019-04-21
 ### Added
 - NC 16 support
