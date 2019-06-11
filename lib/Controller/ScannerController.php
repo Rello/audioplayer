@@ -180,7 +180,7 @@ class ScannerController extends Controller
             if (!isset($this->ID3Tags['bitrate']) AND !isset($this->ID3Tags['playtime_string'])) {
                 $this->logger->debug('Error with getID3. Does not seem to be a valid audio file: ' . $audio->getPath(), array('app' => 'audioplayer'));
                 $output->writeln("       Error with getID3. Does not seem to be a valid audio file", OutputInterface::VERBOSITY_VERBOSE);
-                $error_file .= $audio->getName() . '<br />';
+                $error_file .= $audio->getPath() . '<br />';
                 $error_count++;
                 continue;
             }
