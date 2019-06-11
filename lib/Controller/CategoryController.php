@@ -66,7 +66,7 @@ class CategoryController extends Controller
      */
     public function getCategory($category)
     {
-        $playlists = $this->getCategoryforUser($category);
+        $playlists = $this->getCategoryDetails($category);
 
         $result = empty($playlists) ? [
             'status' => 'nodata'
@@ -85,7 +85,7 @@ class CategoryController extends Controller
      * @param string $category
      * @return array
      */
-    private function getCategoryforUser($category)
+    private function getCategoryDetails($category)
     {
         $SQL = null;
         $aPlaylists = array();
@@ -187,7 +187,7 @@ class CategoryController extends Controller
                 if ($category === 'Album')
                     array_splice($row, 2, 1);
                 if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
-                $row['counter'] = $this->getCountForCategory($category, $row['id']);
+                $row['counter'] = $this->getCategoryCount($category, $row['id']);
                 $aPlaylists[] = $row;
             }
         }
@@ -201,7 +201,7 @@ class CategoryController extends Controller
      * @param integer $categoryId
      * @return integer
      */
-    private function getCountForCategory($category, $categoryId)
+    private function getCategoryCount($category, $categoryId)
     {
         $SQL = null;
         if ($category === 'Artist') {
@@ -279,8 +279,8 @@ class CategoryController extends Controller
         $albums = 0;
         if ($categoryId[0] === "S") $category = "Stream";
         if ($categoryId[0] === "P") $category = "Playlist";
-        $items = $this->getItemsforCatagory($category, $categoryId);
-        $headers = $this->getHeadersforCatagory($category);
+        $items = $this->getCatagoryItemsDetails($category, $categoryId);
+        $headers = $this->getCategoryHeaders($category);
         if ($category === 'Artist') $albums = $this->getAlbumCountForCategory($category, $categoryId);
 
         $result = !empty($items) ? [
@@ -305,7 +305,7 @@ class CategoryController extends Controller
      * @throws InvalidPathException
      * @throws NotFoundException
      */
-    private function getItemsforCatagory($category, $categoryId)
+    private function getCatagoryItemsDetails($category, $categoryId)
     {
         $SQL = null;
         $favorite = false;
@@ -536,7 +536,7 @@ class CategoryController extends Controller
      * @param string $category
      * @return array
      */
-    private function getHeadersforCatagory($category)
+    private function getCategoryHeaders($category)
     {
         if ($category === 'Artist') {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
