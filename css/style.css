@@ -15,7 +15,7 @@
     display: none !important;
 }
 
-#albumPlay {
+#AlbumPlay {
     position: absolute;
     display: block;
     height: 30px;
@@ -783,7 +783,7 @@ i#scanAudiosFirst {
 
 .songcontainer span.title {
     position: relative;
-    width: 70%;
+    width: 65%;
     float: left;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -818,7 +818,7 @@ i#scanAudiosFirst {
 .sm2-playlist-cover {
     display: block;
     float: left;
-    width: 100%;
+    width: 40px;
     height: 40px;
     line-height: 40px;
     font-weight: bold;
@@ -922,41 +922,38 @@ li.dropHover {
 
     }
 
-    #individual-playlist-header span span.header-artist,
-    #individual-playlist-header span span.header-album,
-    #individual-playlist-header span span.header-opt,
+    #individual-playlist-header span.header-artist,
+    #individual-playlist-header span.header-album,
+    #individual-playlist-header span.header-time,
+    #individual-playlist-header span.header-opt,
     #individual-playlist li span.number,
     #individual-playlist li span.interpret,
     #individual-playlist li span.album-indi,
-    #individual-playlist li span.ioc-trash {
+    #individual-playlist li span.edit-song,
+    #individual-playlist li span.time {
         display: none;
     }
 
-    #individual-playlist-header span span.header-num {
-        width: 17px;
-        visibility: hidden
+    #individual-playlist-header span.actionsSong,
+    #individual-playlist li span.number {
+        width: 20px;
     }
 
+    #individual-playlist-header span.header-opt,
     #individual-playlist li span.title {
         width: 80%;
     }
 
     #individual-playlist li {
         font-weight: 200;
+    }
+
+
+    #individual-playlistx lix {
+        font-weight: 200;
         font-size: 16px;
         height: 24px;
         line-height: 24px;
-    }
-
-    #individual-playlist li .actionsSong {
-        height: 20px;
-        line-height: 20px;
-    }
-
-    #individual-playlist li .actionsSong i.ioc {
-        font-size: 20px;
-        height: 20px;
-        line-height: 20px;
     }
 }
 
@@ -1012,12 +1009,11 @@ li.dropHover {
         display: none;
     }
 
-    .songcontainer {
-
-    }
-
-    .songcontainer h3, .songcontainer h2 {
-        padding-left: 30px;
+    .songcontainer h3,
+    .songcontainer h2,
+    .songcontainer .songlist {
+        padding-left: 20px;
+        width: 100%;
     }
 
     .songcontainer .songlist.albumwrapper {
@@ -1073,36 +1069,5 @@ li.dropHover {
 
     .songcontainer .albumwrapper li:hover {
         background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    #individual-playlist-header span span.header-artist,
-    #individual-playlist-header span span.header-album,
-    #individual-playlist-header span span.header-opt,
-    #individual-playlist li span.number,
-    #individual-playlist li span.interpret,
-    #individual-playlist li span.album-indi,
-    #individual-playlist li span.ioc.ioc-delete,
-    #individual-playlist li span.edit-song {
-        display: none;
-    }
-
-    #individual-playlist-header span span.header-num {
-        width: 17px;
-        visibility: hidden
-    }
-
-    #individual-playlist li span.title {
-        width: 70%;
-    }
-
-    #individual-playlist li span.time,
-    #individual-playlist-header span.header-time {
-        right: 10px;
-        text-align: right;
-        width: unset;
-    }
-
-    #individual-playlist li {
-        font-weight: 200;
     }
 }
