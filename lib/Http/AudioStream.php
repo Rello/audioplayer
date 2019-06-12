@@ -55,18 +55,14 @@ class AudioStream {
 	 * Set proper header to serve the video content
 	 */
 	private function setHeader() {
-		if (@ob_get_clean() === false) {
-		};
-		header("Content-Type: ".$this -> mimeType);
+        header("Content-Type: " . $this->mimeType . "; charset=utf-8");
 		header("Cache-Control: max-age=2592000, public");
 		header("Expires: " . gmdate('D, d M Y H:i:s', time() + 2592000) . ' GMT');
 		header("Last-Modified: " . gmdate('D, d M Y H:i:s', $this -> mTime) . ' GMT');
 
 		$this -> iStart = 0;
 		$this -> iEnd = $this -> iSize - 1;
-		
-		header("Accept-Ranges: bytes");
-		
+
 		if (isset($_SERVER['HTTP_RANGE'])) {
 			$c_end = $this -> iEnd;
 			$this->isStream = true;
@@ -93,9 +89,12 @@ class AudioStream {
 			}
 			$this -> iStart = $c_start;
 			$this -> iEnd = $c_end;
+            $length = $c_end - $c_start + 1;
 			if($this -> iStart > 0){
 				fseek($this -> stream, $this -> iStart);
 			}
+            header("Accept-Ranges: bytes");
+            header("Content-Length: $length");
 			header('HTTP/1.1 206 Partial Content');
 			header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 			//\OCP\Util::writeLog('audioplayer','SEQ:'.$this->iStart."-".$this->iEnd."/".$this->iSize.'length:'.$length,\OCP\Util::DEBUG);
