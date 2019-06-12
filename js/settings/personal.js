@@ -108,7 +108,6 @@ $(document).ready(function () {
 
     var audioPlayer = {};
     soundManager.setup({
-        url: OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
         onready: function () {
             audioPlayer.player = soundManager.createSound({});
             var can_play = soundManager.html5;

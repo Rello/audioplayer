@@ -40,7 +40,6 @@ function playFile(file, data) {
 
     if (audioPlayer.player === null) {
         soundManager.setup({
-            url: OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
             onready: function () {
                 audioPlayer.player = soundManager.createSound({
                     id: data.$file.attr('data-id'),
@@ -63,7 +62,6 @@ function registerFileActions() {
     //mime_array = mime_array.concat(stream_array);
 
     soundManager.setup({
-        url: OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
         onready: function () {
             audioPlayer.player = soundManager.createSound({});
 
