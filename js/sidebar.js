@@ -24,7 +24,7 @@ Audios.prototype.showSidebar = function (evt) {
         if (cover !== '') {
             //$('.thumbnailContainer').addClass('large');
             sidebarThumbnail.attr({
-                'style': 'background-imafavoriteUpdatege:url(' + getcoverUrl + cover + ')'
+                'style': 'background-image:url(' + getcoverUrl + cover + ')'
             });
             if ($this.PlaylistContainer.width() < 850) {
                 sidebarThumbnail.addClass('larger');
@@ -60,7 +60,7 @@ Audios.prototype.showSidebar = function (evt) {
         }
 
         $appsidebar.data('trackid', trackid);
-        $('.tabHeader.selected').click();
+        $('.tabHeader.selected').trigger("click");
     }
 };
 
