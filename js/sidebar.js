@@ -41,8 +41,9 @@ Audios.prototype.showSidebar = function (evt) {
         $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
         $('#sidebarMime').html(trackData.attr('data-mimetype'));
 
-        $('#sidebarFavorite').attr({'data-trackid': trackid})
-            .on('click', $this.favoriteUpdate.bind($this));
+        var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
+        starIcon.off();
+        starIcon.on('click', $this.favoriteUpdate.bind($this));
 
         if ($appsidebar.data('trackid') === '') {
             $(".tabHeaders").empty();
