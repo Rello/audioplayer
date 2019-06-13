@@ -24,7 +24,7 @@ Audios.prototype.showSidebar = function (evt) {
         if (cover !== '') {
             //$('.thumbnailContainer').addClass('large');
             sidebarThumbnail.attr({
-                'style': 'background-image:url(' + getcoverUrl + cover + ')'
+                'style': 'background-imafavoriteUpdatege:url(' + getcoverUrl + cover + ')'
             });
             if ($this.PlaylistContainer.width() < 850) {
                 sidebarThumbnail.addClass('larger');
@@ -47,7 +47,7 @@ Audios.prototype.showSidebar = function (evt) {
         if ($appsidebar.data('trackid') === '') {
             $(".tabHeaders").empty();
             $(".tabsContainer").empty();
-            $('#sidebarClose').click($this.hideSidebar.bind($this));
+            $('#sidebarClose').on('click', $this.hideSidebar.bind($this));
             $this.registerAudioplayerTab();
             $this.registerID3EditorTab();
             $this.registerPlaylistsTab();
@@ -80,7 +80,7 @@ Audios.prototype.registerPlaylistsTab = function () {
         });
     $('.tabsContainer').append(div);
 
-    $('#tabHeaderPlaylists').click($this.playlistsTabView.bind($this));
+    $('#tabHeaderPlaylists').on('click', $this.playlistsTabView.bind($this));
 };
 
 Audios.prototype.registerAudioplayerTab = function () {
@@ -100,7 +100,7 @@ Audios.prototype.registerAudioplayerTab = function () {
         });
     $('.tabsContainer').append(div);
 
-    $('#tabHeaderAudiplayer').click($this.audioplayerTabView.bind($this));
+    $('#tabHeaderAudiplayer').on('click', $this.audioplayerTabView.bind($this));
 };
 
 Audios.prototype.registerID3EditorTab = function () {
@@ -121,9 +121,9 @@ Audios.prototype.registerID3EditorTab = function () {
     $('.tabsContainer').append(div);
 
     if ($('#audioplayer_editor').val() === 'true') {
-        $('#tabHeaderID3Editor').click($this.APEditorTabView.bind($this));
+        $('#tabHeaderID3Editor').on('click', $this.APEditorTabView.bind($this));
     } else {
-        $('#tabHeaderID3Editor').click($this.ID3EditorTabView.bind($this));
+        $('#tabHeaderID3Editor').on('click', $this.ID3EditorTabView.bind($this));
     }
 };
 
@@ -144,7 +144,7 @@ Audios.prototype.registerSONOSTab = function () {
         });
     $('.tabsContainer').append(div);
 
-    $('#tabHeaderSONOS').click($this.SONOSTabView.bind($this));
+    $('#tabHeaderSONOS').on('click', $this.SONOSTabView.bind($this));
 };
 
 Audios.prototype.hideSidebar = function () {
@@ -237,7 +237,7 @@ Audios.prototype.playlistsTabView = function () {
                         'data-listid': audioinfo[m].playlist_id,
                         'data-trackid': trackid,
                         'title': t('audioplayer', 'Remove')
-                    }).click($this.removeSongFromPlaylist.bind($this));
+                    }).on('click', $this.removeSongFromPlaylist.bind($this));
 
                     tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
                     tablekey = $('<div>').addClass('key').append(spanDelete);
