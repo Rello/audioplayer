@@ -4,7 +4,9 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 2.7.1 - pending
 ### Fixed
 - performance: caching for album cover arts
-- performance: reduce json data amount by removing information
+- performance: reduce json data amount by optimizing content
+- better mobile css compatibility
+- Fix favourite star in sidebar [#400](https://github.com/rello/audioplayer/pull/400) @[mmatous](https://github.com/mmatous)
 
 ### Changed
 - Show song info in title [#393](https://github.com/rello/audioplayer/pull/393) @[mmatous](https://github.com/mmatous)

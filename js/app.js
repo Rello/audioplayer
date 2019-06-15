@@ -19,10 +19,13 @@ var Audios = function () {
     this.CategorySelectors = [];
     this.AjaxCallStatus = null;
     this.AlbumPlay = null;
+    this.initialDocumentTitle = null;
 };
 
 Audios.prototype.init = function () {
     $this = this;
+
+    $this.initialDocumentTitle = $('title').html().trim();
 
     var locHash = decodeURI(location.hash).substr(1);
     if (locHash !== '') {
@@ -171,12 +174,12 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
         divAlbum = $('<div/>').addClass('album').css('margin-left', '15px').attr({
             'data-album': album.id,
             'data-name': album.name     //required for songcontainer title
-        }).click($this.loadIndividualAlbums.bind($this));
+        }).on('click', $this.loadIndividualAlbums.bind($this));
 
         var divPlayHref = $('<a/>');
         var divPlayImage = $('<div/>').attr({
             'id': 'AlbumPlay'
-        }).click($this.loadIndividualAlbums.bind($this));
+        }).on('click', $this.loadIndividualAlbums.bind($this));
 
         divPlayHref.append(divPlayImage);
 
@@ -266,11 +269,11 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     divSongContainer.append(divSongContainerInner);
     $this.PlaylistContainer.append(divSongContainer);
 
-    if ($this.ajax_call_status !== null) {
-        $this.ajax_call_status.abort();
+    if ($this.AjaxCallStatus !== null) {
+        $this.AjaxCallStatus.abort();
     }
 
-    $this.ajax_call_status = $.ajax({
+    $this.AjaxCallStatus = $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
         data: {category: 'Album', categoryId: AlbumId},
@@ -291,7 +294,7 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
                 $this.trackClickHandler();
                 $this.indicateCurrentPlayingTrack();
                 if (directPlay === true) {
-                    $('.albumwrapper').find('.title').first().click();
+                    $('.albumwrapper').find('.title').first().trigger('click');
 
                 }
             }
@@ -316,9 +319,9 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
         var appContentScroll;
         if ($('#content-wrapper').length === 1) { //check old structure of NC13 and oC
             appContent = $('#app-content');
-            var scrollTop = appContent.scrollTop();
-            containerTop = scrollTop + activeAlbum.offset().top + iTop;
-            appContentScroll = scrollTop + activeAlbum.offset().top - iScroll;
+            var scrollTopValue = appContent.scrollTop();
+            containerTop = scrollTopValue + activeAlbum.offset().top + iTop;
+            appContentScroll = scrollTopValue + activeAlbum.offset().top - iScroll;
         } else { //structure was changed with NC14
             appContent = $(document);
             containerTop = activeAlbum.offset().top + iTop;
@@ -349,7 +352,7 @@ Audios.prototype.buildTrackRow = function (elem) {
     var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
     var spanNr = $('<span/>').addClass('number').text(elem.cl3);
     var streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
-    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click(this.showSidebar.bind($this));
+    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', this.showSidebar.bind($this));
     var spanTitle;
 
     if (can_play[elem.mim] === true) {
@@ -467,23 +470,23 @@ Audios.prototype.loadCategory = function (callback) {
                     var spanName;
 
                     if (category === 'Playlist' && el.id.toString()[0] !== 'X' && el.id !== '' && el.id.toString()[0] !== 'S') {
-                        spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).click($this.loadIndividualCategory.bind($this));
+                        spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).on('click', $this.loadIndividualCategory.bind($this));
                         var spanSort = $('<i/>').attr({
                             'class': 'ioc ioc-sort toolTip',
                             'data-sortid': el.id,
                             'title': t('audioplayer', 'Sort playlist')
-                        }).click($this.sortPlaylist.bind($this));
+                        }).on('click', $this.sortPlaylist.bind($this));
                         var spanEdit = $('<i/>').attr({
                             'class': 'icon icon-rename toolTip',
                             'data-name': el.name,
                             'data-editid': el.id,
                             'title': t('audioplayer', 'Rename playlist')
-                        }).click($this.renamePlaylist.bind($this));
+                        }).on('click', $this.renamePlaylist.bind($this));
                         var spanDelete = $('<i/>').attr({
                             'class': 'ioc ioc-delete toolTip',
                             'data-deleteid': el.id,
                             'title': t('audioplayer', 'Delete playlist')
-                        }).click($this.deletePlaylist.bind($this));
+                        }).on('click', $this.deletePlaylist.bind($this));
                         li.droppable({
                             activeClass: "activeHover",
                             hoverClass: "dropHover",
@@ -507,7 +510,7 @@ Audios.prototype.loadCategory = function (callback) {
                         spanName = $('<span/>').attr({
                             'class': 'pl-name',
                             'title': el.name
-                        }).text(el.name).click($this.loadIndividualCategory.bind($this));
+                        }).text(el.name).on('click', $this.loadIndividualCategory.bind($this));
                         li.append(spanName);
                         li.append(spanCounter);
                     }
@@ -604,11 +607,11 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                         fav_action = $('<i/>').addClass('icon icon-starred')
                             .css({'opacity': 0.3})
                             .attr({'data-trackid': el.id})
-                            .click($this.favoriteUpdate.bind($this));
+                            .on('click', $this.favoriteUpdate.bind($this));
                     } else {
                         fav_action = $('<i/>').addClass('icon icon-star')
                             .attr({'data-trackid': el.id})
-                            .click($this.favoriteUpdate.bind($this));
+                            .on('click', $this.favoriteUpdate.bind($this));
                     }
 
                     var stream_type;
@@ -639,8 +642,8 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                         spanTitle = $('<span/>').addClass('title').text(el.cl1);
                         spanInterpret = spanInterpret.text(el.cl2);
                         spanAlbum = spanAlbum.text(el.cl3);
-//                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click($this.fileActionsMenu.bind($this));
-                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).click($this.showSidebar.bind($this));
+//                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', $this.fileActionsMenu.bind($this));
+                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', $this.showSidebar.bind($this));
                     } else {
                         spanTitle = $('<span/>').addClass('title').html('<i>' + el.cl1 + '</i>');
                         spanInterpret = spanInterpret.html('<i>' + el.cl2 + '</i>');
@@ -648,7 +651,7 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                         spanEdit = $('<span/>').addClass('edit-song ioc-close').attr({'title': t('audioplayer', 'MIME type not supported by browser')}).css({
                             'opacity': 1,
                             'text-align': 'center'
-                        }).click($this.showSidebar.bind($this));
+                        }).on('click', $this.showSidebar.bind($this));
                     }
 
 
@@ -814,7 +817,7 @@ Audios.prototype.renamePlaylist = function (evt) {
                     }
                 }
             })
-            .val(plistName).focus();
+            .val(plistName).trigger('focus');
 
 
         myClone.on('keyup', function (evt) {
@@ -1050,7 +1053,7 @@ Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
         addDescr = '';
     }
     $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
-    document.title = activeLi.data('title') + ' — ' + activeLi.data('album');
+    document.title = activeLi.data('title') + ' (' + activeLi.data('artist') + ' ) @ ' + $this.initialDocumentTitle;
 };
 
 Audios.prototype.soundmanagerCallback = function (SMaction) {
@@ -1096,7 +1099,7 @@ Audios.prototype.resizePlaylist = function () {
 };
 
 var resizeTimeout = null;
-$(window).resize(_.debounce(function () {
+$(window).on('resize', _.debounce(function () {
     if (resizeTimeout) {
         clearTimeout(resizeTimeout);
     }
@@ -1160,7 +1163,7 @@ $(document).ready(function () {
         if (newPlaylistTxt.val() !== '') {
             myAudios.newPlaylist(newPlaylistTxt.val());
             newPlaylistTxt.val('');
-            newPlaylistTxt.focus();
+            newPlaylistTxt.trigger('focus');
             $('#newPlaylist').addClass('ap_hidden');
         }
     });
@@ -1170,7 +1173,7 @@ $(document).ready(function () {
         if (event.which === 13 && newPlaylistTxt.val() !== '') {
             myAudios.newPlaylist(newPlaylistTxt.val());
             newPlaylistTxt.val('');
-            newPlaylistTxt.focus();
+            newPlaylistTxt.trigger('focus');
             $('#newPlaylist').addClass('ap_hidden');
         }
     });
@@ -1184,7 +1187,7 @@ $(document).ready(function () {
 
     $('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
 
-    $('#app-navigation-toggle_alternative').click(function () {
+    $('#app-navigation-toggle_alternative').on('click', function () {
         $('#newPlaylist').addClass('ap_hidden');
         if ($('#app-navigation').hasClass('hidden')) {
             $('#app-navigation').removeClass('hidden');
@@ -1206,9 +1209,9 @@ $(document).ready(function () {
         }
     });
 
-    $('.header-title').click($this.sortPlaylist.bind($this)).css('cursor', 'pointer');
-    $('.header-artist').click($this.sortPlaylist.bind($this)).css('cursor', 'pointer');
-    $('.header-album').click($this.sortPlaylist.bind($this)).css('cursor', 'pointer');
+    $('.header-title').on('click', $this.sortPlaylist.bind($this)).css('cursor', 'pointer');
+    $('.header-artist').on('click', $this.sortPlaylist.bind($this)).css('cursor', 'pointer');
+    $('.header-album').on('click', $this.sortPlaylist.bind($this)).css('cursor', 'pointer');
 
     var timer = window.setTimeout(function () {
         $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
