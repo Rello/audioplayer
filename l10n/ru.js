@@ -83,4 +83,4 @@ OC.L10N.register(
         'Bitrate' : 'Битрейт',
         'Copyright' : 'Авторские права'
     },
-'');
+    '');
