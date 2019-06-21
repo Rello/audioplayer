@@ -11,7 +11,7 @@
      * http://schillmania.com/projects/soundmanager2/license.txt
      */
 
-    "use strict";
+    'use strict';
 
     var Player,
         players = [],

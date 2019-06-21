@@ -11,13 +11,13 @@
 Audios.prototype.showSidebar = function (evt) {
 
     var trackid = $(evt.target).closest('li').attr('data-trackid');
-    var $appsidebar = $("#app-sidebar");
+    var $appsidebar = $('#app-sidebar');
 
     if ($appsidebar.data('trackid') === trackid) {
         $this.hideSidebar();
     } else {
         var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-        var trackData = $("li[data-trackid='" + trackid + "']");
+        var trackData = $('li[data-trackid=\'' + trackid + '\']');
         var cover = trackData.attr('data-cover');
         var sidebarThumbnail = $('#sidebarThumbnail');
 
@@ -46,8 +46,8 @@ Audios.prototype.showSidebar = function (evt) {
         starIcon.on('click', $this.favoriteUpdate.bind($this));
 
         if ($appsidebar.data('trackid') === '') {
-            $(".tabHeaders").empty();
-            $(".tabsContainer").empty();
+            $('.tabHeaders').empty();
+            $('.tabsContainer').empty();
             $('#sidebarClose').on('click', $this.hideSidebar.bind($this));
             $this.registerAudioplayerTab();
             $this.registerID3EditorTab();
@@ -60,7 +60,7 @@ Audios.prototype.showSidebar = function (evt) {
         }
 
         $appsidebar.data('trackid', trackid);
-        $('.tabHeader.selected').trigger("click");
+        $('.tabHeader.selected').trigger('click');
     }
 };
 
@@ -150,14 +150,14 @@ Audios.prototype.registerSONOSTab = function () {
 
 Audios.prototype.hideSidebar = function () {
     // noinspection JSUnresolvedFunction
-    $("#app-sidebar").data('trackid', '');
+    $('#app-sidebar').data('trackid', '');
     OC.Apps.hideAppSidebar();
-    $(".tabHeaders").empty();
-    $(".tabsContainer").empty();
+    $('.tabHeaders').empty();
+    $('.tabsContainer').empty();
 };
 
 Audios.prototype.audioplayerTabView = function () {
-    var trackid = $("#app-sidebar").data('trackid');
+    var trackid = $('#app-sidebar').data('trackid');
 
     $this.resetView();
     $('#tabHeaderAudiplayer').addClass('selected');
@@ -211,7 +211,7 @@ Audios.prototype.audioplayerTabView = function () {
 };
 
 Audios.prototype.playlistsTabView = function () {
-    var trackid = $("#app-sidebar").data('trackid');
+    var trackid = $('#app-sidebar').data('trackid');
 
     $this.resetView();
     $('#tabHeaderPlaylists').addClass('selected');
@@ -269,7 +269,7 @@ Audios.prototype.ID3EditorTabView = function () {
 };
 
 Audios.prototype.SONOSTabView = function () {
-    var trackid = $("#app-sidebar").data('trackid');
+    var trackid = $('#app-sidebar').data('trackid');
     $this.resetView();
     $('#tabHeaderSONOS').addClass('selected');
 

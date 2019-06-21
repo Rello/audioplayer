@@ -32,7 +32,7 @@
 
 (function(window, _undefined) {
 
-"use strict";
+'use strict';
 
 if (!window || !window.document) {
 

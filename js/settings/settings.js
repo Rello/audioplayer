@@ -58,15 +58,15 @@ Audios.prototype.resetLibrary = function () {
 
     $this.showInitScreen();
 
-    $("#category_selector").val('');
+    $('#category_selector').val('');
     $this.setUserValue('category', $this.CategorySelectors[0] + '-');
     $('#myCategory').html('');
     $('#alben').addClass('active');
     $('#individual-playlist').remove();
     $('#individual-playlist-info').hide();
     $('#individual-playlist-header').hide();
-    $(".coverrow").remove();
-    $(".songcontainer").remove();
+    $('.coverrow').remove();
+    $('.songcontainer').remove();
     $('#activePlaylist').html('');
     $('.sm2-playlist-target').html('');
     $('.sm2-playlist-cover').css('background-color', '#ffffff').html('');

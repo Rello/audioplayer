@@ -1,5 +1,5 @@
 
-(function(window){"use strict";var Player,players=[],playerSelector='.sm2-bar-ui',utils;soundManager.setup({html5PollingInterval:50,});soundManager.onready(function(){});utils={array:(function(){function compare(property){var result;return function(a,b){if(a[property]<b[property]){result=-1;}else if(a[property]>b[property]){result=1;}else{result=0;}
+(function(window){'use strict';var Player,players=[],playerSelector='.sm2-bar-ui',utils;soundManager.setup({html5PollingInterval:50,});soundManager.onready(function(){});utils={array:(function(){function compare(property){var result;return function(a,b){if(a[property]<b[property]){result=-1;}else if(a[property]>b[property]){result=1;}else{result=0;}
         return result;};}
         function shuffle(array){var i,j,temp;for(i=array.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));temp=array[i];array[i]=array[j];array[j]=temp;}
             return array;}
