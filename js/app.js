@@ -54,11 +54,11 @@ Audios.prototype.init = function () {
 };
 
 Audios.prototype.presetDisplay = function () {
-    $("#category_selector").val($this.CategorySelectors[0]);
+    $('#category_selector').val($this.CategorySelectors[0]);
     myAudios.loadCategory(function () {                                             // load the last selected category
         if ($this.CategorySelectors[1] && $this.CategorySelectors[1] !== 'undefined') {
             $('#myCategory li[data-id="' + $this.CategorySelectors[1] + '"]').addClass('active');
-            var appNavigation = $("#app-navigation");
+            var appNavigation = $('#app-navigation');
             appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
             $this.loadIndividualCategory(null, function () {                        // select the last played title
                 if ($this.CategorySelectors[2] && $this.CategorySelectors[2] !== 'undefined') {
@@ -79,24 +79,24 @@ Audios.prototype.initKeyListener = function () {
             if (evt.target) {
                 var nodeName = evt.target.nodeName.toUpperCase();
                 //don't activate shortcuts when the user is in an input, textarea or select element
-                if (nodeName === "INPUT" || nodeName === "TEXTAREA" || nodeName === "SELECT") {
+                if (nodeName === 'INPUT' || nodeName === 'TEXTAREA' || nodeName === 'SELECT') {
                     return;
                 }
             }
 
             var currentVolume;
             var newVolume;
-            if (evt.key === " ") {//Space pause/play
+            if (evt.key === ' ') {//Space pause/play
                 if ($('.sm2-bar-ui').hasClass('playing')) {
                     this.AudioPlayer.actions.stop();
                 } else {
                     this.AudioPlayer.actions.play();
                 }
-            } else if (evt.key === "ArrowRight") {// right
+            } else if (evt.key === 'ArrowRight') {// right
                 this.AudioPlayer.actions.next();
-            } else if (evt.key === "ArrowLeft") {//left
+            } else if (evt.key === 'ArrowLeft') {//left
                 this.AudioPlayer.actions.prev();
-            } else if (evt.key === "ArrowUp") {//up sound up
+            } else if (evt.key === 'ArrowUp') {//up sound up
                 currentVolume = this.AudioPlayer.actions.getVolume();
                 if (currentVolume > 0 && currentVolume <= 100) {
                     newVolume = currentVolume + 10;
@@ -105,7 +105,7 @@ Audios.prototype.initKeyListener = function () {
                     }
                     this.AudioPlayer.actions.setVolume(newVolume);
                 }
-            } else if (evt.key === "ArrowDown") {//down sound down
+            } else if (evt.key === 'ArrowDown') {//down sound down
                 //this.AudioPlayer.actions.setVolume(0);
                 currentVolume = this.AudioPlayer.actions.getVolume();
 
@@ -132,8 +132,8 @@ Audios.prototype.loadCategoryAlbums = function () {
     $('#individual-playlist').remove();
     $('#individual-playlist-info').hide();
     $('#individual-playlist-header').hide();
-    $(".coverrow").remove();
-    $(".songcontainer").remove();
+    $('.coverrow').remove();
+    $('.songcontainer').remove();
 
     $('#myCategory li').removeClass('active');
     $('#newPlaylist').addClass('ap_hidden');
@@ -205,14 +205,14 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
 
     if (activeAlbum.hasClass('is-active')) {
         $('.songcontainer').slideUp(200, function () {
-            $('.album').removeClass('is-active').find('.artist').css("visibility", "visible");
+            $('.album').removeClass('is-active').find('.artist').css('visibility', 'visible');
         });
     } else {
-        $('.album').removeClass('is-active').find('.artist').css("visibility", "visible");
+        $('.album').removeClass('is-active').find('.artist').css('visibility', 'visible');
         $this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
 
         activeAlbum.addClass('is-active');
-        activeAlbum.find('.artist').css("visibility", "hidden");
+        activeAlbum.find('.artist').css('visibility', 'hidden');
         $this.buildSongContainer(eventTarget, directPlay);
     }
 };
@@ -223,7 +223,7 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
     var iArrowLeft = 72;
 
-    $(".songcontainer").remove();
+    $('.songcontainer').remove();
     var divSongContainer = $('<div/>').addClass('songcontainer');
     var divArrow = $('<i/>').addClass('open-arrow').css('left', activeAlbum.position().left + iArrowLeft);
     var divSongContainerInner = $('<div/>').addClass('songcontainer-inner');
@@ -386,9 +386,9 @@ Audios.prototype.trackClickHandler = function (callback) {
         if (category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '') {
         } else {
             $(el).draggable({
-                appendTo: "body",
+                appendTo: 'body',
                 helper: $this.dragElement,
-                cursor: "move",
+                cursor: 'move',
                 delay: 500,
                 start: function (event, ui) {
                     ui.helper.addClass('draggingSong');
@@ -401,7 +401,7 @@ Audios.prototype.trackClickHandler = function (callback) {
 
             // if enabled, play sonos and skip the rest of the processing
             if ($('#audioplayer_sonos').val() === 'checked') {
-                var liIndex = $(this).parents("li").index();
+                var liIndex = $(this).parents('li').index();
                 $this.PlaySonos(liIndex);
                 $this.setStatistics();
                 return;
@@ -488,8 +488,8 @@ Audios.prototype.loadCategory = function (callback) {
                             'title': t('audioplayer', 'Delete playlist')
                         }).on('click', $this.deletePlaylist.bind($this));
                         li.droppable({
-                            activeClass: "activeHover",
-                            hoverClass: "dropHover",
+                            activeClass: 'activeHover',
+                            hoverClass: 'dropHover',
                             accept: 'li.dragable',
                             over: function () {
                             },
@@ -544,8 +544,8 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
     individual_playlist.remove();
     $('#individual-playlist-info').show();
     $('#individual-playlist-header').show();
-    $(".coverrow").remove();
-    $(".songcontainer").remove();
+    $('.coverrow').remove();
+    $('.songcontainer').remove();
 
     $this.PlaylistContainer.append('<ul id="individual-playlist" class="albumwrapper"></ul>');
 
@@ -565,7 +565,7 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
     $this.PlaylistContainer.data('playlist', category + '-' + PlaylistId);
 
 
-    if (individual_playlist.data('ui-sortable')) $('#individual-playlist').sortable("destroy");
+    if (individual_playlist.data('ui-sortable')) $('#individual-playlist').sortable('destroy');
     $('.header-title').data('order', '');
     $('.header-artist').data('order', '');
     $('.header-album').data('order', '');
@@ -687,7 +687,7 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                 $this.showInitScreen('playlist');
             }
 
-            if (category !== "Title") {
+            if (category !== 'Title') {
                 $('#individual-playlist-info').html(t('audioplayer', 'Selected ' + category) + ': ' + category_title + albumcount);
             } else {
                 $('#individual-playlist-info').html(t('audioplayer', 'Selected') + ': ' + category_title + albumcount);
@@ -722,12 +722,12 @@ Audios.prototype.favoriteUpdate = function (evt) {
     var trackid = $(evt.target).attr('data-trackid');
     var isFavorite = false;
 
-    if ($this.CategorySelectors[1].toString().substring(0, 1) === "S") return;
+    if ($this.CategorySelectors[1].toString().substring(0, 1) === 'S') return;
 
     if ($(evt.target).hasClass('icon icon-starred')) {
         isFavorite = true;
         $(evt.target).removeClass('icon icon-starred');
-        $(evt.target).addClass('icon icon-star').removeAttr("style");
+        $(evt.target).addClass('icon icon-star').removeAttr('style');
     } else {
         isFavorite = false;
         $(evt.target).removeClass('icon icon-star');
@@ -860,14 +860,14 @@ Audios.prototype.sortPlaylist = function (evt) {
         var plId = eventTarget.attr('data-sortid');
         if (eventTarget.hasClass('sortActive')) {
 
-            var idsInOrder = $("#individual-playlist").sortable('toArray', {attribute: 'data-trackid'});
+            var idsInOrder = $('#individual-playlist').sortable('toArray', {attribute: 'data-trackid'});
             $.getJSON(OC.generateUrl('apps/audioplayer/sortplaylist'), {
                 playlistid: plId,
                 songids: idsInOrder.join(';')
             }, function (jsondata) {
                 if (jsondata.status === 'success') {
                     eventTarget.removeClass('sortActive');
-                    $('#individual-playlist').sortable("destroy");
+                    $('#individual-playlist').sortable('destroy');
                     notification.text(jsondata.msg);
                     notification.slideDown();
                     window.setTimeout(function () {
@@ -884,10 +884,10 @@ Audios.prototype.sortPlaylist = function (evt) {
                 $('#notification').slideUp();
             }, 3000);
 
-            $("#individual-playlist").sortable({
-                items: "li",
-                axis: "y",
-                placeholder: "ui-state-highlight",
+            $('#individual-playlist').sortable({
+                items: 'li',
+                axis: 'y',
+                placeholder: 'ui-state-highlight',
                 helper: 'clone',
                 stop: function () {
                 }
