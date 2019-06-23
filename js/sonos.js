@@ -22,7 +22,7 @@ Audios.prototype.PlaySonos = function (liIndex) {
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/sonosqueue'),
         data: {
-            '$trackArray': trackids,
+            'trackArray': trackids,
             'fileIndex': liIndex
         },
         success: function (jsondata) {
