@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.8.0 - unreleased
+### Changed
+- Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) @[mmatous](https://github.com/mmatous)
+
+### Added
+- Create lint configuration [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)
+
+## 2.7.2 - 2019-06-23
+### Fixed
+- SONOS playback issue
+
 ## 2.7.1 - 2019-06-17
 ### Fixed
 - performance: caching for album cover arts
