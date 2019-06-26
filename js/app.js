@@ -47,6 +47,8 @@ Audios.prototype.init = function () {
 };
 
 Audios.prototype.displayCategory = function () {
+    'use strict';
+
     if (this.CategorySelectors === 'false') {
         this.showInitScreen();
     } else if (this.CategorySelectors[0] && this.CategorySelectors[0] !== 'Albums') {
