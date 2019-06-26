@@ -23,9 +23,9 @@ var Audios = function () {
 };
 
 Audios.prototype.init = function () {
-    $this = this;
+    'use strict';
 
-    $this.initialDocumentTitle = $('title').html().trim();
+    this.initialDocumentTitle = $('title').html().trim();
 
     var locHash = decodeURI(location.hash).substr(1);
     if (locHash !== '') {
@@ -34,17 +34,17 @@ Audios.prototype.init = function () {
         $('#searchresults').addClass('hidden');
         window.location.href = '#';
         if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
-            $this.CategorySelectors = locHashTemp;
-            myAudios.presetDisplay();
+            this.CategorySelectors = locHashTemp;
+            this.presetDisplay();
         }
     } else {
-        myAudios.getUserValue('category', function () {       // read saved values from user values
-            if ($this.CategorySelectors === 'false') {
-                $this.showInitScreen();
-            } else if ($this.CategorySelectors[0] && $this.CategorySelectors[0] !== 'Albums') {
-                myAudios.presetDisplay();
+        this.getUserValue('category', function () {       // read saved values from user values
+            if (this.CategorySelectors === 'false') {
+                this.showInitScreen();
+            } else if (this.CategorySelectors[0] && this.CategorySelectors[0] !== 'Albums') {
+                this.presetDisplay();
             } else {
-                $this.loadCategoryAlbums();
+                this.loadCategoryAlbums();
             }
         });
     }
