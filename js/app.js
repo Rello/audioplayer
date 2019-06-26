@@ -357,8 +357,11 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
 };
 
 Audios.prototype.buildTrackRow = function (elem) {
+    'use strict';
 
     var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
+    /* global soundManager */
+    // OK because ./js/soundmanager2.js is sourced before in html
     var can_play = soundManager.html5;
 
     var li = $('<li/>').attr({
@@ -374,7 +377,7 @@ Audios.prototype.buildTrackRow = function (elem) {
     var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
     var spanNr = $('<span/>').addClass('number').text(elem.cl3);
     var streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
-    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind($this));
+    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind(this));
     var spanTitle;
 
     if (can_play[elem.mim] === true) {
