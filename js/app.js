@@ -66,6 +66,8 @@ Audios.prototype.presetDisplay = function () {
 };
 
 Audios.prototype.loadLatestCategory = function () {
+    'use strict';
+
     if (this.CategorySelectors[1] && this.CategorySelectors[1] !== 'undefined') {
         $('#myCategory li[data-id="' + this.CategorySelectors[1] + '"]').addClass('active');
         var appNavigation = $('#app-navigation');
