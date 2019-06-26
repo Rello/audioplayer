@@ -38,19 +38,22 @@ Audios.prototype.init = function () {
             this.presetDisplay();
         }
     } else {
-        this.getUserValue('category', function () {       // read saved values from user values
-            if (this.CategorySelectors === 'false') {
-                this.showInitScreen();
-            } else if (this.CategorySelectors[0] && this.CategorySelectors[0] !== 'Albums') {
-                this.presetDisplay();
-            } else {
-                this.loadCategoryAlbums();
-            }
-        });
+        // read saved values from user values
+        this.getUserValue('category', this.displayCategory.bind(this));
     }
 
     this.initKeyListener();
     $('.toolTip').tooltip();
+};
+
+Audios.prototype.displayCategory = function () {
+    if (this.CategorySelectors === 'false') {
+        this.showInitScreen();
+    } else if (this.CategorySelectors[0] && this.CategorySelectors[0] !== 'Albums') {
+        this.presetDisplay();
+    } else {
+        this.loadCategoryAlbums();
+    }
 };
 
 Audios.prototype.presetDisplay = function () {
@@ -942,17 +945,19 @@ Audios.prototype.deletePlaylist = function (evt) {
 };
 
 Audios.prototype.getUserValue = function (user_type, callback) {
+    'use strict';
+
     $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/getvalue'),
         data: {'type': user_type},
         success: function (jsondata) {
             if (jsondata.status === 'success' && user_type === 'category') {
-                $this.CategorySelectors = jsondata.value.split('-');
-                callback($this.CategorySelectors);
+                this.CategorySelectors = jsondata.value.split('-');
+                callback(this.CategorySelectors);
             } else if (jsondata.status === 'false' && user_type === 'category'){
-                $this.CategorySelectors = 'false';
-                callback($this.CategorySelectors);
+                this.CategorySelectors = 'false';
+                callback(this.CategorySelectors);
             }
         }
     });
