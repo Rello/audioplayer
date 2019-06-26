@@ -238,6 +238,8 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
 };
 
 Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
+    'use strict';
+
     var AlbumId = eventTarget.attr('data-album');
     var AlbumName = eventTarget.attr('data-name');
     var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
@@ -264,7 +266,7 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({'style': addCss}).text(addDescr);
     var sidebarThumbnail = $('#sidebarThumbnail');
 
-    if ($this.PlaylistContainer.width() < 850) {
+    if (this.PlaylistContainer.width() < 850) {
         divSongContainerCover.addClass('cover-small');
         divSongList = $('<div/>').addClass('songlist one-column');
         if (sidebarThumbnail.hasClass('full')) {
@@ -287,13 +289,13 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
     divSongContainerInner.append(br);
     divSongContainer.append(divArrow);
     divSongContainer.append(divSongContainerInner);
-    $this.PlaylistContainer.append(divSongContainer);
+    this.PlaylistContainer.append(divSongContainer);
 
-    if ($this.AjaxCallStatus !== null) {
-        $this.AjaxCallStatus.abort();
+    if (this.AjaxCallStatus !== null) {
+        this.AjaxCallStatus.abort();
     }
 
-    $this.AjaxCallStatus = $.ajax({
+    this.AjaxCallStatus = $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
         data: {category: 'Album', categoryId: AlbumId},
@@ -301,9 +303,9 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
             if (jsondata.status === 'success') {
                 var songcounter = 0;
                 $(jsondata.data).each(function (i, el) {
-                    listAlbumWrapper.append($this.buildTrackRow(el));
+                    listAlbumWrapper.append(this.buildTrackRow(el));
                     songcounter++;
-                });
+                }.bind(this));
                 if (songcounter % 2 !== 0) {
                     var li = $('<li/>');
                     var spanNr = $('<span/>').addClass('number').text('\u00A0');
@@ -311,14 +313,14 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
                     li.addClass('noPlaylist');
                     listAlbumWrapper.append(li); //add a blank row in case of uneven records=>avoid a Chrome bug to strangely split the records across columns
                 }
-                $this.trackClickHandler();
-                $this.indicateCurrentPlayingTrack();
+                this.trackClickHandler();
+                this.indicateCurrentPlayingTrack();
                 if (directPlay === true) {
                     $('.albumwrapper').find('.title').first().trigger('click');
 
                 }
             }
-        }
+        }.bind(this)
     });
 
     var searchresult = decodeURI(location.hash).substr(1);
