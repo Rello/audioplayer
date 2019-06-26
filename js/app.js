@@ -83,6 +83,8 @@ Audios.prototype.loadLatestCategory = function () {
 };
 
 Audios.prototype.initKeyListener = function () {
+    'use strict';
+
     $(document).keyup(function (evt) {
         if (this.AudioPlayer !== null && $('#activePlaylist li').length > 0) {
 
