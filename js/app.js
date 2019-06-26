@@ -171,12 +171,14 @@ Audios.prototype.loadCategoryAlbumsResponse = function (jsondata) {
 };
 
 Audios.prototype.buildCoverRow = function (aAlbums) {
-    $this = this;
+    'use strict';
+
     var divAlbum = [];
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
     var divRow = $('<div />').addClass('coverrow');
 
-    $.each(aAlbums, function (i, album) {
+    var boundLoadIndividualAlbums = this.loadIndividualAlbums.bind(this);
+    for (var album of aAlbums) {
         var addCss;
         var addDescr;
         if (album.cid === '') {
@@ -190,12 +192,12 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
         divAlbum = $('<div/>').addClass('album').css('margin-left', '15px').attr({
             'data-album': album.id,
             'data-name': album.name     //required for songcontainer title
-        }).on('click', $this.loadIndividualAlbums.bind($this));
+        }).on('click', boundLoadIndividualAlbums);
 
         var divPlayHref = $('<a/>');
         var divPlayImage = $('<div/>').attr({
             'id': 'AlbumPlay'
-        }).on('click', $this.loadIndividualAlbums.bind($this));
+        }).on('click', boundLoadIndividualAlbums);
 
         divPlayHref.append(divPlayImage);
 
@@ -206,8 +208,8 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
         divAlbum.append(divAlbumDescr);
         divAlbum.append(divPlayImage);
         divRow.append(divAlbum);
-    });
-    $this.PlaylistContainer.append(divRow);
+    }
+    this.PlaylistContainer.append(divRow);
 };
 
 Audios.prototype.loadIndividualAlbums = function (evt) {
