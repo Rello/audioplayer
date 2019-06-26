@@ -213,6 +213,8 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
 };
 
 Audios.prototype.loadIndividualAlbums = function (evt) {
+    'use strict';
+
     evt.stopPropagation();
     evt.preventDefault();
 
@@ -227,11 +229,11 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
         });
     } else {
         $('.album').removeClass('is-active').find('.artist').css('visibility', 'visible');
-        $this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
+        this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
 
         activeAlbum.addClass('is-active');
         activeAlbum.find('.artist').css('visibility', 'hidden');
-        $this.buildSongContainer(eventTarget, directPlay);
+        this.buildSongContainer(eventTarget, directPlay);
     }
 };
 
