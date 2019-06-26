@@ -59,22 +59,25 @@ Audios.prototype.displayCategory = function () {
 };
 
 Audios.prototype.presetDisplay = function () {
-    $('#category_selector').val($this.CategorySelectors[0]);
-    myAudios.loadCategory(function () {                                             // load the last selected category
-        if ($this.CategorySelectors[1] && $this.CategorySelectors[1] !== 'undefined') {
-            $('#myCategory li[data-id="' + $this.CategorySelectors[1] + '"]').addClass('active');
-            var appNavigation = $('#app-navigation');
-            appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
-            $this.loadIndividualCategory(null, function () {                        // select the last played title
-                if ($this.CategorySelectors[2] && $this.CategorySelectors[2] !== 'undefined') {
-                    var item = $('#individual-playlist li[data-trackid="' + $this.CategorySelectors[2] + '"]');
-                    item.find('.icon').hide();
-                    item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
-                }
-            });
-        }
-    });
+    'use strict';
 
+    $('#category_selector').val(this.CategorySelectors[0]);
+    this.loadCategory(this.loadLatestCategory.bind(this));
+};
+
+Audios.prototype.loadLatestCategory = function () {
+    if (this.CategorySelectors[1] && this.CategorySelectors[1] !== 'undefined') {
+        $('#myCategory li[data-id="' + this.CategorySelectors[1] + '"]').addClass('active');
+        var appNavigation = $('#app-navigation');
+        appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
+        this.loadIndividualCategory(null, function () {                        // select the last played title
+            if (this.CategorySelectors[2] && this.CategorySelectors[2] !== 'undefined') {
+                var item = $('#individual-playlist li[data-trackid="' + this.CategorySelectors[2] + '"]');
+                item.find('.icon').hide();
+                item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
+            }
+        });
+    }
 };
 
 Audios.prototype.initKeyListener = function () {
