@@ -1123,13 +1123,16 @@ window.onhashchange = function () {
 };
 
 $(document).ready(function () {
+    'use strict;';
 
-    myAudios = new Audios();
+    var myAudios = new Audios();
     myAudios.init();
     myAudios.checkNewTracks();
     if ($('#audioplayer_sonos').val() !== 'checked') {
-        $this.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
-        $this.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
+        /* global SM2BarPlayer */
+        // OK, because ./js/soundmanager2.js is sourced before in html
+        myAudios.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
+        myAudios.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
     }
 
     var notify = $('#audioplayer_notification').val();
@@ -1145,8 +1148,8 @@ $(document).ready(function () {
 
     $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
 
-    $this.resizePlaylist = _.debounce(_.bind($this.resizePlaylist, this), 250);
-    $('#app-content').on('appresized', $this.resizePlaylist);
+    myAudios.resizePlaylist = _.debounce(_.bind(myAudios.resizePlaylist, this), 250);
+    $('#app-content').on('appresized', myAudios.resizePlaylist);
 
     $('#addPlaylist').on('click', function () {
         $('#newPlaylistTxt').val('');
@@ -1180,7 +1183,7 @@ $(document).ready(function () {
 
 
     $('#alben').addClass('active').on('click', function () {
-        $this.loadCategoryAlbums();
+        myAudios.loadCategoryAlbums();
         myAudios.setUserValue('category', 'Albums');
     });
 
@@ -1201,19 +1204,19 @@ $(document).ready(function () {
 
     $('#category_selector').change(function () {
         $('#newPlaylist').addClass('ap_hidden');
-        $this.CategorySelectors[0] = $('#category_selector').val();
-        $this.CategorySelectors[1] = '';
+        myAudios.CategorySelectors[0] = $('#category_selector').val();
+        myAudios.CategorySelectors[1] = '';
         $('#myCategory').html('');
-        if ($this.CategorySelectors[0] !== '') {
+        if (myAudios.CategorySelectors[0] !== '') {
             myAudios.loadCategory();
         }
     });
 
-    $('.header-title').on('click', $this.sortPlaylist.bind($this)).css('cursor', 'pointer');
-    $('.header-artist').on('click', $this.sortPlaylist.bind($this)).css('cursor', 'pointer');
-    $('.header-album').on('click', $this.sortPlaylist.bind($this)).css('cursor', 'pointer');
+    $('.header-title').on('click', myAudios.sortPlaylist.bind(myAudios)).css('cursor', 'pointer');
+    $('.header-artist').on('click', myAudios.sortPlaylist.bind(myAudios)).css('cursor', 'pointer');
+    $('.header-album').on('click', myAudios.sortPlaylist.bind(myAudios)).css('cursor', 'pointer');
 
-    var timer = window.setTimeout(function () {
+    window.setTimeout(function () {
         $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
     }, 1000);
 });
