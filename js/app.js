@@ -134,10 +134,10 @@ Audios.prototype.initKeyListener = function () {
 };
 
 Audios.prototype.loadCategoryAlbums = function () {
-    $this = this;
+    'use strict';
 
-    $this.PlaylistContainer.show();
-    $this.EmptyContainer.hide();
+    this.PlaylistContainer.show();
+    this.EmptyContainer.hide();
     $('#loading').show();
     $('.toolTip').tooltip('hide');
     $('#alben').addClass('active');
@@ -154,16 +154,20 @@ Audios.prototype.loadCategoryAlbums = function () {
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/getcategory'),
         data: {category: 'Album'},
-        success: function (jsondata) {
-            $('#loading').hide();
-            if (jsondata.status === 'success') {
-                $('.sm2-bar-ui').show();
-                $this.buildCoverRow(jsondata.data);
-            } else {
-                $this.showInitScreen();
-            }
-        }
+        success: this.loadCategoryAlbumsResponse.bind(this)
     });
+};
+
+Audios.prototype.loadCategoryAlbumsResponse = function (jsondata) {
+    'use strict';
+
+    $('#loading').hide();
+    if (jsondata.status === 'success') {
+        $('.sm2-bar-ui').show();
+        this.buildCoverRow(jsondata.data);
+    } else {
+        this.showInitScreen();
+    }
 };
 
 Audios.prototype.buildCoverRow = function (aAlbums) {
