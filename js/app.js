@@ -1111,14 +1111,16 @@ Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
 };
 
 Audios.prototype.soundmanagerCallback = function (SMaction) {
+    'use strict';
+
     if (SMaction === 'setVolume') {
-        $this.setUserValue('volume', Math.round($this.AudioPlayer.actions.getVolume()));
+        this.setUserValue('volume', Math.round(this.AudioPlayer.actions.getVolume()));
     } else {
-        $this.currentTrackUiChange(
+        this.currentTrackUiChange(
             OC.generateUrl('apps/audioplayer/getcover/'),
             $('#activePlaylist li.selected')
         );
-        $this.setStatistics();
+        this.setStatistics();
     }
 };
 
