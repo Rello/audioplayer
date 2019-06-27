@@ -396,10 +396,11 @@ Audios.prototype.buildTrackRow = function (elem) {
 };
 
 Audios.prototype.trackClickHandler = function (callback) {
-    $this = this;
+    'use strict';
+
     var albumWrapper = $('.albumwrapper');
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-    var category = $this.PlaylistContainer.data('playlist').split('-');
+    var category = this.PlaylistContainer.data('playlist').split('-');
 
     var can_play = soundManager.html5;
     var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
@@ -407,61 +408,78 @@ Audios.prototype.trackClickHandler = function (callback) {
         can_play[stream_array[s]] = true;
     }
 
-    albumWrapper.find('li').each(function (i, el) {
-        if (category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '') {
-        } else {
-            $(el).draggable({
-                appendTo: 'body',
-                helper: $this.dragElement,
-                cursor: 'move',
-                delay: 500,
-                start: function (event, ui) {
-                    ui.helper.addClass('draggingSong');
-                }
-            });
-        }
-
-        $(el).find('.title').on('click', function () {
-            var activeLi = $(this).closest('li');
-
-            // if enabled, play sonos and skip the rest of the processing
-            if ($('#audioplayer_sonos').val() === 'checked') {
-                var liIndex = $(this).parents('li').index();
-                $this.PlaySonos(liIndex);
-                $this.setStatistics();
-                return;
-            }
-
-            if (can_play[activeLi.data('mimetype')] !== true) return false;
-
-            if (activeLi.hasClass('isActive')) {
-                if ($('.sm2-bar-ui').hasClass('playing')) {
-                    $this.AudioPlayer.actions.stop();
-                } else {
-                    $this.AudioPlayer.actions.play();
-                }
-            } else {
-                // the visible playlist has to be copied to the player queue
-                // this disconnects the free navigation in AP while continuing to play a playlist
-                if ($this.PlaylistContainer.data('playlist') !== $this.ActivePlaylist.data('playlist')) {
-                    var ClonePlaylist = albumWrapper.find('li').clone();
-                    $this.ActivePlaylist.html('');
-                    $this.ActivePlaylist.append(ClonePlaylist);
-                    $this.ActivePlaylist.find('span').remove();
-                    $this.ActivePlaylist.find('.noPlaylist').remove();
-                    $this.ActivePlaylist.data('playlist', $this.PlaylistContainer.data('playlist'));
-                }
-
-                $this.currentTrackUiChange(getcoverUrl, activeLi);
-                if ($this.AudioPlayer.playlistController.data.selectedIndex === null) $this.AudioPlayer.playlistController.data.selectedIndex = 0;
-                $this.AudioPlayer.actions.play(activeLi.index());
-                $this.setStatistics();
-            }
-        });
-    });
+    var playlist = albumWrapper.find('li');
+    var boundProcessAlbum = this.processAlbum.bind(this, category, getcoverUrl, can_play, playlist);
+    playlist.each(
+        boundProcessAlbum
+    );
     // the callback is used for the the init function to get feedback when all title rows are ready
     if (typeof callback === 'function') {
         callback();
+    }
+};
+
+Audios.prototype.processAlbum = function (category, coverUrl, can_play, playlist, i, el) {
+    'use strict';
+
+    var element = $(el);
+
+    if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
+        element.draggable({
+            appendTo: 'body',
+            helper: this.dragElement,
+            cursor: 'move',
+            delay: 500,
+            start: function (event, ui) {
+                ui.helper.addClass('draggingSong');
+            }
+        });
+    }
+
+    element.find('.title').on('click',
+        this.onTitleClick.bind(this, coverUrl, can_play, playlist, element)
+    );
+};
+
+
+Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element) {
+    'use strict';
+
+    var activeLi = element.closest('li');
+    // if enabled, play sonos and skip the rest of the processing
+    if ($('#audioplayer_sonos').val() === 'checked') {
+        var liIndex = element.parents('li').index();
+        this.PlaySonos(liIndex);
+        this.setStatistics();
+        return;
+    }
+    if (can_play[activeLi.data('mimetype')] !== true) {
+        console.warn(`can't play ${activeLi.data('mimetype')}`);
+        return false;
+    }
+    if (activeLi.hasClass('isActive')) {
+        if ($('.sm2-bar-ui').hasClass('playing')) {
+            this.AudioPlayer.actions.stop();
+        } else {
+            this.AudioPlayer.actions.play();
+        }
+    } else {
+        // the visible playlist has to be copied to the player queue
+        // this disconnects the free navigation in AP while continuing to play a playlist
+        if (this.PlaylistContainer.data('playlist') !== this.ActivePlaylist.data('playlist')) {
+            var ClonePlaylist = playlist.clone();
+            this.ActivePlaylist.html('');
+            this.ActivePlaylist.append(ClonePlaylist);
+            this.ActivePlaylist.find('span').remove();
+            this.ActivePlaylist.find('.noPlaylist').remove();
+            this.ActivePlaylist.data('playlist', this.PlaylistContainer.data('playlist'));
+        }
+        this.currentTrackUiChange(coverUrl, activeLi);
+        if (this.AudioPlayer.playlistController.data.selectedIndex === null) {
+            this.AudioPlayer.playlistController.data.selectedIndex = 0;
+        }
+        this.AudioPlayer.actions.play(activeLi.index());
+        this.setStatistics();
     }
 };
 
