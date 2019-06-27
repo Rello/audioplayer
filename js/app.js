@@ -1137,13 +1137,15 @@ Audios.prototype.checkNewTracks = function () {
 };
 
 Audios.prototype.resizePlaylist = function () {
+    'use strict';
+
     var songlist = $('.songcontainer .songlist');
-    $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
+    $('.sm2-bar-ui').width(this.PlaylistContainer.width());
     if ($('.album.is-active').length !== 0) {
-        $this.buildSongContainer($('.album.is-active'));
+        this.buildSongContainer($('.album.is-active'));
     }
 
-    if (myAudios.PlaylistContainer.width() < 850) {
+    if (this.PlaylistContainer.width() < 850) {
         songlist.addClass('one-column');
         songlist.removeClass('two-column');
         $('.songcontainer .songcontainer-cover').addClass('cover-small');
@@ -1204,7 +1206,7 @@ $(document).ready(function () {
 
     $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
 
-    myAudios.resizePlaylist = _.debounce(_.bind(myAudios.resizePlaylist, this), 250);
+    myAudios.resizePlaylist = _.debounce(myAudios.resizePlaylist.bind(myAudios), 250);
     $('#app-content').on('appresized', myAudios.resizePlaylist);
 
     $('#addPlaylist').on('click', function () {
@@ -1255,7 +1257,7 @@ $(document).ready(function () {
             $('#app-navigation').addClass('hidden');
             myAudios.setUserValue('navigation', 'false');
         }
-        myAudios.resizePlaylist();
+        myAudios.resizePlaylist.call(myAudios);
     });
 
     $('#category_selector').change(function () {
