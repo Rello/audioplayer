@@ -892,6 +892,7 @@ Audios.prototype.generateRenameRequest = function (playlistId, playlistClone) {
 };
 
 Audios.prototype.sortPlaylist = function (evt) {
+    'use strict';
     var eventTarget = $(evt.target);
     var notification = $('#notification');
     if ($('#myCategory li').hasClass('active')) {
