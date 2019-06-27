@@ -115,19 +115,19 @@ OCA.Audioplayer.Sidebar = {
         for (tab in items) {
             var li = $('<li/>').addClass('tabHeader')
                 .attr({
-                    'id': items[tab]['id'],
-                    'tabindex': items[tab]['tabindex']
+                    'id': items[tab].id,
+                    'tabindex': items[tab].tabindex
                 });
-            var atag = $('<a/>').text(items[tab]['name']);
+            var atag = $('<a/>').text(items[tab].name);
             li.append(atag);
             $('.tabHeaders').append(li);
 
-            var div = $('<div/>').addClass('tab ' + items[tab]['class'])
+            var div = $('<div/>').addClass('tab ' + items[tab].class)
                 .attr({
-                    'id': items[tab]['class']
+                    'id': items[tab].class
                 });
             $('.tabsContainer').append(div);
-            $('#' + items[tab]['id']).on('click', items[tab]['action'].bind($this));
+            $('#' + items[tab].id).on('click', items[tab].action.bind($this));
         }
     },
 
