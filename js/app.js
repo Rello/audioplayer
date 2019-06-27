@@ -1042,11 +1042,11 @@ Audios.prototype.setStatistics = function () {
 };
 
 Audios.prototype.sortPlaylist = function (evt) {
+    'use strict';
+
     var column = $(evt.target).attr('class').split('-')[1];
     var order = $(evt.target).data('order');
     var factor = 1;
-    var a;
-    var b;
 
     if (order === 'descending') {
         factor = -1;
@@ -1056,7 +1056,7 @@ Audios.prototype.sortPlaylist = function (evt) {
     }
 
     var elems = $('#individual-playlist').children('li').get();
-    var reg_check = $(elems).first().data(column).toString().match(/^\d{1,2}\-\d{1,2}$/);
+    var reg_check = $(elems).first().data(column).toString().match(/^\d{1,2}-\d{1,2}$/);
     elems.sort(function (a, b) {
         a = $(a).data(column).toString();
         b = $(b).data(column).toString();
@@ -1071,8 +1071,8 @@ Audios.prototype.sortPlaylist = function (evt) {
     });
     $('#individual-playlist').append(elems);
 
-    if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
-        elems = $this.ActivePlaylist.children('li').get();
+    if (this.PlaylistContainer.data('playlist') === this.ActivePlaylist.data('playlist')) {
+        elems = this.ActivePlaylist.children('li').get();
         elems.sort(function (a, b) {
             a = $(a).data(column).toString();
             b = $(b).data(column).toString();
@@ -1085,11 +1085,11 @@ Audios.prototype.sortPlaylist = function (evt) {
             }
             return ((a < b) ? -1 * factor : ((a > b) ? factor : 0));
         });
-        $this.ActivePlaylist.append(elems);
+        this.ActivePlaylist.append(elems);
     }
 
-    if ($this.AudioPlayer) {
-        $this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
+    if (this.AudioPlayer) {
+        this.AudioPlayer.playlistController.data.selectedIndex = $('#activePlaylist li.selected').index();
     }
 };
 
@@ -1272,9 +1272,10 @@ $(document).ready(function () {
         }
     });
 
-    $('.header-title').on('click', myAudios.sortPlaylist.bind(myAudios)).css('cursor', 'pointer');
-    $('.header-artist').on('click', myAudios.sortPlaylist.bind(myAudios)).css('cursor', 'pointer');
-    $('.header-album').on('click', myAudios.sortPlaylist.bind(myAudios)).css('cursor', 'pointer');
+    var boundSortPlaylist = myAudios.sortPlaylist.bind(myAudios);
+    $('.header-title').on('click', boundSortPlaylist).css('cursor', 'pointer');
+    $('.header-artist').on('click', boundSortPlaylist).css('cursor', 'pointer');
+    $('.header-album').on('click', boundSortPlaylist).css('cursor', 'pointer');
 
     window.setTimeout(function () {
         $('.sm2-bar-ui').width(myAudios.PlaylistContainer.width());
