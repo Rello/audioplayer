@@ -1125,6 +1125,8 @@ Audios.prototype.soundmanagerCallback = function (SMaction) {
 };
 
 Audios.prototype.checkNewTracks = function () {
+    'use strict';
+
     $.ajax({
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/checknewtracks'),
