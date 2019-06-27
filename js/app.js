@@ -805,14 +805,14 @@ Audios.prototype.addSongToPlaylist = function (plId, songId) {
 };
 
 Audios.prototype.newPlaylist = function (plName) {
-    $this = this;
+    'use strict';
     $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/addplaylist'),
         data: {'playlist': plName},
         success: function (jsondata) {
             if (jsondata.status === 'success') {
-                myAudios.loadCategory();
+                this.loadCategory();
             }
             if (jsondata.status === 'error') {
                 $('#notification').text(t('audioplayer', 'No playlist selected!')).slideDown();
@@ -820,7 +820,7 @@ Audios.prototype.newPlaylist = function (plName) {
                     $('#notification').slideUp();
                 }, 3000);
             }
-        }
+        }.bind(this)
     });
 };
 
