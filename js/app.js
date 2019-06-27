@@ -1022,6 +1022,8 @@ Audios.prototype.setUserValue = function (user_type, user_value) {
 };
 
 Audios.prototype.setStatistics = function () {
+    'use strict';
+
     var track_id = $('#activePlaylist li.selected').data('trackid');
     if (track_id) {
         $.ajax({
@@ -1031,7 +1033,7 @@ Audios.prototype.setStatistics = function () {
             success: function () {
             }
         });
-        $this.setUserValue('category', $this.CategorySelectors[0] + '-' + $this.CategorySelectors[1] + '-' + track_id);
+        this.setUserValue('category', this.CategorySelectors[0] + '-' + this.CategorySelectors[1] + '-' + track_id);
     }
 
 };
