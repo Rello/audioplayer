@@ -63,6 +63,8 @@ class PageController extends Controller
             $audioplayer_sonos = false;
         }
 
+        \OC::$server->getEventDispatcher()->dispatch('OCA\audioplayer::loadAdditionalScripts');
+
         $response = new TemplateResponse('audioplayer', 'index');
         $csp = new ContentSecurityPolicy();
         $csp->addAllowedMediaDomain('*'); //required for external m3u playlists
@@ -72,7 +74,6 @@ class PageController extends Controller
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
             'audioplayer_sonos' => $audioplayer_sonos,
             'audioplayer_notification' => $this->getNotification(),
-            'audioplayer_editor' => 'false',
         ]);
         return $response;
     }

@@ -2,6 +2,10 @@
 All notable changes to the Audio Player project will be documented in this file.
 
 ## 2.8.0 - unreleased
+
+### Added
+- APIs & events to enable Audio Player add-ons [#408](https://github.com/rello/audioplayer/issues/408)
+
 ### Changed
 - Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) @[mmatous](https://github.com/mmatous)
 

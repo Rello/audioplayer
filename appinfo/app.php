@@ -45,7 +45,6 @@ $eventDispatcher->addListener(
 );
 
 // add an navigation entry
-
 $navigationEntry = function() use ($c) {
 	return [
 		'id' => $c->getAppName(),
@@ -58,5 +57,3 @@ $navigationEntry = function() use ($c) {
 $c->getServer()->getNavigationManager()->add($navigationEntry);
 
 $c->getServer()->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app'=>'audioplayer', 'apps' => array('files')));	
-
-#\OCP\App::registerPersonal($c->query('AppName'), 'lib/Settings/User');

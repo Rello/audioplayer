@@ -352,7 +352,7 @@ Audios.prototype.buildTrackRow = function (elem) {
     var spanAction = $('<span/>').addClass('actionsSong').html('<i class="ioc ioc-volume-off"></i>&nbsp;');
     var spanNr = $('<span/>').addClass('number').text(elem.cl3);
     var streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
-    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', this.showSidebar.bind($this));
+    var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind($this));
     var spanTitle;
 
     if (can_play[elem.mim] === true) {
@@ -643,7 +643,7 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                         spanInterpret = spanInterpret.text(el.cl2);
                         spanAlbum = spanAlbum.text(el.cl3);
 //                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', $this.fileActionsMenu.bind($this));
-                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', $this.showSidebar.bind($this));
+                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind($this));
                     } else {
                         spanTitle = $('<span/>').addClass('title').html('<i>' + el.cl1 + '</i>');
                         spanInterpret = spanInterpret.html('<i>' + el.cl2 + '</i>');
@@ -651,7 +651,7 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
                         spanEdit = $('<span/>').addClass('edit-song ioc-close').attr({'title': t('audioplayer', 'MIME type not supported by browser')}).css({
                             'opacity': 1,
                             'text-align': 'center'
-                        }).on('click', $this.showSidebar.bind($this));
+                        }).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind($this));
                     }
 
 

@@ -884,12 +884,12 @@ li.dropHover {
   background-size: 250px
 }
 
-#audioplayerTabView .table,
+#metadataTabView .table,
 #playlistsTabView .table {
   margin-left: 2em;
 }
 
-#audioplayerTabView .key,
+#metadataTabView .key,
 #playlistsTabView .key {
   padding-right: 1em;
   vertical-align: top;
@@ -897,7 +897,7 @@ li.dropHover {
   white-space: nowrap;
 }
 
-#audioplayerTabView .value,
+#metadataTabView .value,
 #playlistsTabView .value {
   width: 75%;
   text-overflow: ellipsis;
