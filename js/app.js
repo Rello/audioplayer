@@ -1091,6 +1091,8 @@ Audios.prototype.sortPlaylist = function (evt) {
 };
 
 Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
+    'use strict';
+
     var addCss;
     var addDescr;
     var coverID = activeLi.data('cover');
@@ -1102,7 +1104,7 @@ Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
         addDescr = '';
     }
     $('.sm2-playlist-cover').attr({'style': addCss}).text(addDescr);
-    document.title = activeLi.data('title') + ' (' + activeLi.data('artist') + ' ) @ ' + $this.initialDocumentTitle;
+    document.title = activeLi.data('title') + ' (' + activeLi.data('artist') + ' ) @ ' + this.initialDocumentTitle;
 };
 
 Audios.prototype.soundmanagerCallback = function (SMaction) {
