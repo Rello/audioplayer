@@ -1007,8 +1007,10 @@ Audios.prototype.getUserValue = function (user_type, callback) {
 };
 
 Audios.prototype.setUserValue = function (user_type, user_value) {
+    'use strict';
+
     if (user_type) {
-        if (user_type === 'category') $this.CategorySelectors = user_value.split('-');
+        if (user_type === 'category') { this.CategorySelectors = user_value.split('-'); }
         $.ajax({
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/setvalue'),
