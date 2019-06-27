@@ -954,7 +954,8 @@ Audios.prototype.sortPlaylist = function (evt) {
 };
 
 Audios.prototype.deletePlaylist = function (evt) {
-    $this = this;
+    'use strict';
+
     var plId = $(evt.target).attr('data-deleteid');
 
     OC.dialogs.message(
@@ -964,23 +965,22 @@ Audios.prototype.deletePlaylist = function (evt) {
         OCdialogs.YES_NO_BUTTONS,
         function (e) {
             if (e === true) {
-                var oDialog = $(this);
                 $.ajax({
                     type: 'GET',
                     url: OC.generateUrl('apps/audioplayer/removeplaylist'),
                     data: {'playlistid': plId},
                     success: function (jsondata) {
                         if (jsondata.status === 'success') {
-                            myAudios.loadCategory();
+                            this.loadCategory();
                             $('#notification').text(t('audioplayer', 'Playlist successfully deleted!')).slideDown();
                             window.setTimeout(function () {
                                 $('#notification').slideUp();
                             }, 3000);
                         }
-                    }
+                    }.bind(this)
                 });
             }
-        },
+        }.bind(this),
         true
     );
     return false;
