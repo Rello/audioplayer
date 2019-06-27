@@ -484,7 +484,9 @@ Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element)
 };
 
 Audios.prototype.indicateCurrentPlayingTrack = function () {
-    if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+    'use strict';
+
+    if (this.PlaylistContainer.data('playlist') === this.ActivePlaylist.data('playlist')) {
         var playingTrackId = $('#activePlaylist li.selected').data('trackid');
         var playingListItem = $('.albumwrapper li[data-trackid="' + playingTrackId + '"]');
         playingListItem.addClass('isActive');
