@@ -792,6 +792,7 @@ Audios.prototype.favoriteUpdate = function (evt) {
 };
 
 Audios.prototype.addSongToPlaylist = function (plId, songId) {
+    'use strict';
     var sort = parseInt($('#myPlayList li[data-id="' + plId + '"]').find('.counter').text());
     return $.getJSON(OC.generateUrl('apps/audioplayer/addtracktoplaylist'), {
         playlistid: plId,
@@ -799,8 +800,8 @@ Audios.prototype.addSongToPlaylist = function (plId, songId) {
         sorting: (sort + 1)
     }).then(function () {
         $('.toolTip').tooltip('hide');
-        $this.CategorySelectors[0] = 'Playlist';
-        myAudios.loadCategory();
+        this.CategorySelectors[0] = 'Playlist';
+        this.loadCategory();
     }.bind(this));
 };
 
