@@ -825,6 +825,7 @@ Audios.prototype.newPlaylist = function (plName) {
 };
 
 Audios.prototype.renamePlaylist = function (evt) {
+    'use strict';
     var eventTarget = $(evt.target);
     if ($('.plclone').length === 1) {
         var plId = eventTarget.data('editid');
@@ -836,27 +837,12 @@ Audios.prototype.renamePlaylist = function (evt) {
         myClone.attr('data-pl', plId).show();
         $('#myCategory li[data-id="' + plId + '"]').hide();
 
+        var boundGenerateRenameRequest = this.generateRenameRequest.bind(this);
         myClone.find('input[name="playlist"]')
             .bind('keydown', function (event) {
                 if (event.which === 13) {
                     if (myClone.find('input[name="playlist"]').val() !== '') {
-                        var saveForm = $('.plclone[data-pl="' + plId + '"]');
-                        var plname = saveForm.find('input[name="playlist"]').val();
-
-                        $.getJSON(OC.generateUrl('apps/audioplayer/updateplaylist'), {
-                            plId: plId,
-                            newname: plname
-                        }, function (jsondata) {
-                            if (jsondata.status === 'success') {
-                                myAudios.loadCategory();
-                                myClone.remove();
-                            }
-                            if (jsondata.status === 'error') {
-                                alert('could not update playlist');
-                            }
-
-                        });
-
+                        boundGenerateRenameRequest(plId, myClone);
                     } else {
                         myClone.remove();
                         $('#myCategory li[data-id="' + plId + '"]').show();
@@ -873,30 +859,35 @@ Audios.prototype.renamePlaylist = function (evt) {
             }
         });
         myClone.find('button.icon-checkmark').on('click', function () {
-            var saveForm = $('.plclone[data-pl="' + plId + '"]');
-            var plname = saveForm.find('input[name="playlist"]').val();
             if (myClone.find('input[name="playlist"]').val() !== '') {
-                $.getJSON(OC.generateUrl('apps/audioplayer/updateplaylist'), {
-                    plId: plId,
-                    newname: plname
-                }, function (jsondata) {
-                    if (jsondata.status === 'success') {
-                        myAudios.loadCategory();
-                        myClone.remove();
-                    }
-                    if (jsondata.status === 'error') {
-                        alert('could not update playlist');
-                    }
-
-                });
+                boundGenerateRenameRequest(plId, myClone);
             }
-
         });
         myClone.find('button.icon-close').on('click', function () {
-            myAudios.loadCategory();
+            this.loadCategory();
             myClone.remove();
         });
     }
+};
+
+Audios.prototype.generateRenameRequest = function (playlistId, playlistClone) {
+    'use strict';
+
+    var saveForm = $('.plclone[data-pl="' + playlistId + '"]');
+    var plname = saveForm.find('input[name="playlist"]').val();
+
+    $.getJSON(OC.generateUrl('apps/audioplayer/updateplaylist'), {
+        plId: playlistId,
+        newname: plname
+    }, function (jsondata) {
+        if (jsondata.status === 'success') {
+            this.loadCategory();
+            playlistClone.remove();
+        }
+        if (jsondata.status === 'error') {
+            alert('could not update playlist');
+        }
+    }.bind(this));
 };
 
 Audios.prototype.sortPlaylist = function (evt) {
