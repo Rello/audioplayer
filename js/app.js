@@ -43,6 +43,7 @@ Audios.prototype.init = function () {
     }
 
     this.initKeyListener();
+    soundManager.audiosInstance = this;
     $('.toolTip').tooltip();
 };
 
