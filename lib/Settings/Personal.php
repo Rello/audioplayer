@@ -19,7 +19,6 @@ class Personal implements ISettings
 {
 
     private $userId;
-    private $urlGenerator;
     private $configManager;
 
     public function __construct(
