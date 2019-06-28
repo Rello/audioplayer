@@ -743,20 +743,20 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
 };
 
 Audios.prototype.showInitScreen = function (mode) {
-    $this = this;
+    'use strict';
     $('.sm2-bar-ui').hide();
-    $this.PlaylistContainer.hide();
-    $this.EmptyContainer.show();
-    $this.EmptyContainer.html('');
+    this.PlaylistContainer.hide();
+    this.EmptyContainer.show();
+    this.EmptyContainer.html('');
 
     if (mode === 'smart') {
-        $this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
+        this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
     } else if (mode === 'playlist') {
-        $this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>');
+        this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>');
     } else {
-        $this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
-        $this.EmptyContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></i> ' + t('audioplayer', 'Add new tracks to library') + '</span>');
-        $this.EmptyContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>');
+        this.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
+        this.EmptyContainer.append('<span class="no-songs-found-pl"><i class="ioc ioc-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></i> ' + t('audioplayer', 'Add new tracks to library') + '</span>');
+        this.EmptyContainer.append('<a class="no-songs-found-pl" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>');
     }
 };
 
