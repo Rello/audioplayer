@@ -579,10 +579,10 @@ Audios.prototype.loadCategory = function (callback) {
 
 
 Audios.prototype.loadIndividualCategory = function (evt, callback) {
-    $this = this;
+    'use strict';
 
-    $this.PlaylistContainer.show();
-    $this.EmptyContainer.hide();
+    this.PlaylistContainer.show();
+    this.EmptyContainer.hide();
     $('#loading').show();
     $('.toolTip').tooltip('hide');
     $('#alben').removeClass('active');
@@ -593,153 +593,154 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
     $('.coverrow').remove();
     $('.songcontainer').remove();
 
-    $this.PlaylistContainer.append('<ul id="individual-playlist" class="albumwrapper"></ul>');
+    this.PlaylistContainer.append('<ul id="individual-playlist" class="albumwrapper"></ul>');
 
     var category = $('#category_selector').val();
-    var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
 
     if (typeof evt !== 'undefined' && evt !== null) {
         $('#myCategory li').removeClass('active').removeClass('active');
-        EventTarget = $(evt.target);
-        EventTarget.parent('li').addClass('active').addClass('active');
+        var eventTarget = $(evt.target);
+        eventTarget.parent('li').addClass('active').addClass('active');
     }
 
     var categoryActive = $('#myCategory li.active');
     var PlaylistId = categoryActive.data('id');
-    $this.CategorySelectors[1] = PlaylistId;
-    var category_title = categoryActive.find('span').first().text();
-    $this.PlaylistContainer.data('playlist', category + '-' + PlaylistId);
+    this.CategorySelectors[1] = PlaylistId;
+    this.PlaylistContainer.data('playlist', category + '-' + PlaylistId);
 
 
-    if (individual_playlist.data('ui-sortable')) $('#individual-playlist').sortable('destroy');
+    if (individual_playlist.data('ui-sortable')) { $('#individual-playlist').sortable('destroy'); }
     $('.header-title').data('order', '');
     $('.header-artist').data('order', '');
     $('.header-album').data('order', '');
+
+    if (this.AjaxCallStatus !== null) {
+        this.AjaxCallStatus.abort();
+    }
+
+    this.AjaxCallStatus = $.ajax({
+        type: 'GET',
+        url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
+        data: {category: category, categoryId: PlaylistId},
+        success: this.onGetCategoryItemsResponse.bind(this, callback, category, categoryActive, PlaylistId)
+    });
+};
+
+Audios.prototype.onGetCategoryItemsResponse = function (callback, category, categoryActive, playlistId, jsondata) {
+    'use strict';
+    var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
+    var albumcount = '';
     var can_play = soundManager.html5;
     var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
     for (var s = 0; s < stream_array.length; s++) {
         can_play[stream_array[s]] = true;
     }
+    var category_title = categoryActive.find('span').first().text();
+    $('#loading').hide();
+    if (jsondata.status === 'success') {
+        $('.sm2-bar-ui').show();
+        $(jsondata.data).each(function (i, el) {
 
-    if ($this.AjaxCallStatus !== null) {
-        $this.AjaxCallStatus.abort();
+            var li = $('<li/>').attr({
+                'data-trackid': el.id,
+                'data-mimetype': el.mim,
+                'mimetype': el.mim,
+                'data-title': el.cl1,
+                'data-artist': el.cl2,
+                'data-album': el.cl3,
+                'data-cover': el.cid,
+                'data-path': el.lin,
+                'class': 'dragable'
+            });
+            var fav_action;
+
+            if (el.fav === 't') {
+                fav_action = $('<i/>').addClass('icon icon-starred')
+                    .css({'opacity': 0.3})
+                    .attr({'data-trackid': el.id})
+                    .on('click', this.favoriteUpdate.bind(this));
+            } else {
+                fav_action = $('<i/>').addClass('icon icon-star')
+                    .attr({'data-trackid': el.id})
+                    .on('click', this.favoriteUpdate.bind(this));
+            }
+
+            var stream_type;
+            var streamUrl;
+            var spanAction;
+            var spanEdit;
+            var spanTitle;
+
+            if (el.mim === 'audio/mpegurl' || el.mim === 'audio/x-scpls' || el.mim === 'application/xspf+xml') {
+                stream_type = true;
+                streamUrl = $('<a/>').attr({'href': el.lin, 'type': el.mim});
+                spanAction = $('<span/>')
+                    .addClass('actionsSong')
+                    .append(fav_action)
+                    .append($('<i/>').addClass('ioc ioc-volume-off'));
+            } else {
+                stream_type = false;
+                streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + el.lin, 'type': el.mim});
+                spanAction = $('<span/>').addClass('actionsSong')
+                    .append(fav_action)
+                    .append($('<i/>').addClass('ioc ioc-volume-off'));
+            }
+            var spanInterpret = $('<span>').attr({'class': 'interpret'});
+            var spanAlbum = $('<span>').attr({'class': 'album-indi'});
+            var spanTime = $('<span/>').addClass('time').text(el.len);
+
+            if (can_play[el.mim] === true || stream_type === true) {
+                spanTitle = $('<span/>').addClass('title').text(el.cl1);
+                spanInterpret = spanInterpret.text(el.cl2);
+                spanAlbum = spanAlbum.text(el.cl3);
+                spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind(this));
+            } else {
+                spanTitle = $('<span/>').addClass('title').html('<i>' + el.cl1 + '</i>');
+                spanInterpret = spanInterpret.html('<i>' + el.cl2 + '</i>');
+                spanAlbum = spanAlbum.html('<i>' + el.cl3 + '</i>');
+                spanEdit = $('<span/>').addClass('edit-song ioc-close').attr({'title': t('audioplayer', 'MIME type not supported by browser')}).css({
+                    'opacity': 1,
+                    'text-align': 'center'
+                }).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind(this));
+            }
+
+
+            li.append(streamUrl);
+            li.append(spanAction);
+            li.append(spanTitle);
+            li.append(spanInterpret);
+            li.append(spanAlbum);
+            li.append(spanTime);
+            li.append(spanEdit);
+
+            $('#individual-playlist').append(li);
+        }.bind(this)); // end each loop
+
+        this.trackClickHandler(callback);
+        this.indicateCurrentPlayingTrack();
+
+        $('.header-title').text(jsondata.header.col1);
+        $('.header-artist').text(jsondata.header.col2);
+        $('.header-album').text(jsondata.header.col3);
+        $('.header-time').text(jsondata.header.col4);
+
+        if (jsondata.albums >> 1) {
+            albumcount = ' (' + jsondata.albums + ' ' + t('audioplayer', 'Albums') + ')';
+        } else {
+            albumcount = '';
+        }
+
+    } else if (playlistId.toString()[0] === 'X') {
+        this.showInitScreen('smart');
+    } else {
+        this.showInitScreen('playlist');
     }
 
-    $this.AjaxCallStatus = $.ajax({
-        type: 'GET',
-        url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
-        data: {category: category, categoryId: PlaylistId},
-        success: function (jsondata) {
-            $('#loading').hide();
-            var albumcount = '';
-            if (jsondata.status === 'success') {
-                $('.sm2-bar-ui').show();
-                $(jsondata.data).each(function (i, el) {
-
-                    var li = $('<li/>').attr({
-                        'data-trackid': el.id,
-                        'data-mimetype': el.mim,
-                        'mimetype': el.mim,
-                        'data-title': el.cl1,
-                        'data-artist': el.cl2,
-                        'data-album': el.cl3,
-                        'data-cover': el.cid,
-                        'data-path': el.lin,
-                        'class': 'dragable'
-                    });
-                    var fav_action;
-
-                    if (el.fav === 't') {
-                        fav_action = $('<i/>').addClass('icon icon-starred')
-                            .css({'opacity': 0.3})
-                            .attr({'data-trackid': el.id})
-                            .on('click', $this.favoriteUpdate.bind($this));
-                    } else {
-                        fav_action = $('<i/>').addClass('icon icon-star')
-                            .attr({'data-trackid': el.id})
-                            .on('click', $this.favoriteUpdate.bind($this));
-                    }
-
-                    var stream_type;
-                    var streamUrl;
-                    var spanAction;
-                    var spanEdit;
-                    var spanTitle;
-
-                    if (el.mim === 'audio/mpegurl' || el.mim === 'audio/x-scpls' || el.mim === 'application/xspf+xml') {
-                        stream_type = true;
-                        streamUrl = $('<a/>').attr({'href': el.lin, 'type': el.mim});
-                        spanAction = $('<span/>')
-                            .addClass('actionsSong')
-                            .append(fav_action)
-                            .append($('<i/>').addClass('ioc ioc-volume-off'));
-                    } else {
-                        stream_type = false;
-                        streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + el.lin, 'type': el.mim});
-                        spanAction = $('<span/>').addClass('actionsSong')
-                            .append(fav_action)
-                            .append($('<i/>').addClass('ioc ioc-volume-off'));
-                    }
-                    var spanInterpret = $('<span>').attr({'class': 'interpret'});
-                    var spanAlbum = $('<span>').attr({'class': 'album-indi'});
-                    var spanTime = $('<span/>').addClass('time').text(el.len);
-
-                    if (can_play[el.mim] === true || stream_type === true) {
-                        spanTitle = $('<span/>').addClass('title').text(el.cl1);
-                        spanInterpret = spanInterpret.text(el.cl2);
-                        spanAlbum = spanAlbum.text(el.cl3);
-//                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', $this.fileActionsMenu.bind($this));
-                        spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind($this));
-                    } else {
-                        spanTitle = $('<span/>').addClass('title').html('<i>' + el.cl1 + '</i>');
-                        spanInterpret = spanInterpret.html('<i>' + el.cl2 + '</i>');
-                        spanAlbum = spanAlbum.html('<i>' + el.cl3 + '</i>');
-                        spanEdit = $('<span/>').addClass('edit-song ioc-close').attr({'title': t('audioplayer', 'MIME type not supported by browser')}).css({
-                            'opacity': 1,
-                            'text-align': 'center'
-                        }).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind($this));
-                    }
-
-
-                    li.append(streamUrl);
-                    li.append(spanAction);
-                    li.append(spanTitle);
-                    li.append(spanInterpret);
-                    li.append(spanAlbum);
-                    li.append(spanTime);
-                    li.append(spanEdit);
-                    //li.find('span').css('color', '#555');
-
-                    $('#individual-playlist').append(li);
-                }); // end each loop
-
-                $this.trackClickHandler(callback);
-                $this.indicateCurrentPlayingTrack();
-
-                $('.header-title').text(jsondata.header.col1);
-                $('.header-artist').text(jsondata.header.col2);
-                $('.header-album').text(jsondata.header.col3);
-                $('.header-time').text(jsondata.header.col4);
-
-                if (jsondata.albums >> 1) {
-                    albumcount = ' (' + jsondata.albums + ' ' + t('audioplayer', 'Albums') + ')';
-                } else {
-                    albumcount = '';
-                }
-
-            } else if (PlaylistId.toString()[0] === 'X') {
-                $this.showInitScreen('smart');
-            } else {
-                $this.showInitScreen('playlist');
-            }
-
-            if (category !== 'Title') {
-                $('#individual-playlist-info').html(t('audioplayer', 'Selected ' + category) + ': ' + category_title + albumcount);
-            } else {
-                $('#individual-playlist-info').html(t('audioplayer', 'Selected') + ': ' + category_title + albumcount);
-            }
-        }
-    });
+    if (category !== 'Title') {
+        $('#individual-playlist-info').html(t('audioplayer', 'Selected ' + category) + ': ' + category_title + albumcount);
+    } else {
+        $('#individual-playlist-info').html(t('audioplayer', 'Selected') + ': ' + category_title + albumcount);
+    }
 };
 
 Audios.prototype.showInitScreen = function (mode) {
