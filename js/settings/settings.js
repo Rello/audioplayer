@@ -8,6 +8,11 @@
  * @copyright 2016-2019 Marcel Scherello
  */
 
+/* global Audios */
+// OK because ./js/app.js is sourced before in html
+
+'use strict';
+
 $(document).ready(function () {
 
     var settings_link;
@@ -27,12 +32,12 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
-        myAudios.openScannerDialog();
-    });
+        this.openScannerDialog();
+    }.bind(this));
 
     $(document).on('click', '#resetAudios', function () {
-        myAudios.openResetDialog();
-    });
+        this.openResetDialog();
+    }.bind(this));
 });
 
 Audios.prototype.openResetDialog = function () {
@@ -43,23 +48,23 @@ Audios.prototype.openResetDialog = function () {
         OCdialogs.YES_NO_BUTTONS,
         function (e) {
             if (e === true) {
-                myAudios.resetLibrary();
+                this.resetLibrary();
             }
-        },
+        }.bind(this),
         true
     );
 };
 
 Audios.prototype.resetLibrary = function () {
     if ($('.sm2-bar-ui').hasClass('playing')) {
-        myAudios.AudioPlayer.actions.play(0);
-        myAudios.AudioPlayer.actions.stop();
+        this.AudioPlayer.actions.play(0);
+        this.AudioPlayer.actions.stop();
     }
 
-    $this.showInitScreen();
+    this.showInitScreen();
 
     $('#category_selector').val('');
-    $this.setUserValue('category', $this.CategorySelectors[0] + '-');
+    this.setUserValue('category', this.CategorySelectors[0] + '-');
     $('#myCategory').html('');
     $('#alben').addClass('active');
     $('#individual-playlist').remove();
@@ -91,30 +96,29 @@ Audios.prototype.openScannerDialog = function () {
 
 Audios.prototype.scanInit = function () {
 
-    var $this = this;
     $('#audios_import_dialog').ocdialog({
         width: 500,
         modal: true,
         resizable: false,
         close: function () {
-            $this.scanStop();
+            this.scanStop();
             $('#audios_import_dialog').ocdialog('destroy');
             $('#audios_import').remove();
-        }
+        }.bind(this)
     });
 
     $('#audios_import_done_close').click(function () {
-        $this.percentage = 0;
+        this.percentage = 0;
         $('#audios_import_dialog').ocdialog('close');
-    });
+    }.bind(this));
 
     $('#audios_import_progress_cancel').click(function () {
-        $this.scanStop();
-    });
+        this.scanStop();
+    }.bind(this));
 
     $('#audios_import_submit').click(function () {
-        $this.processScan();
-    });
+        this.processScan();
+    }.bind(this));
 
     $('#audios_import_progressbar').progressbar({value: 0});
 };
@@ -125,8 +129,8 @@ Audios.prototype.processScan = function () {
 
     this.scanSend();
     window.setTimeout(function () {
-        myAudios.scanUpdate();
-    }, 1500);
+        this.scanUpdate();
+    }.bind(this), 1500);
 };
 
 Audios.prototype.scanSend = function () {
@@ -136,7 +140,7 @@ Audios.prototype.scanSend = function () {
                 $('#audios_import_process').css('display', 'none');
                 $('#audios_import_done').css('display', 'block');
                 $('#audios_import_done_message').html(data.message);
-                $this.init();
+                this.init();
             } else {
                 $('#audios_import_progressbar').progressbar('option', 'value', 100);
                 $('#audios_import_done_message').html(data.message);
@@ -145,7 +149,7 @@ Audios.prototype.scanSend = function () {
 };
 
 Audios.prototype.scanStop = function () {
-    $this.percentage = 0;
+    this.percentage = 0;
     $.ajax({
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
@@ -168,8 +172,8 @@ Audios.prototype.scanUpdate = function () {
                 $('#audios_import_process_message').text(data.msg);
                 if (data.percent < 100) {
                     window.setTimeout(function () {
-                        myAudios.scanUpdate();
-                    }, 1500);
+                        this.scanUpdate();
+                    }.bind(this), 1500);
                 } else {
                     $('#audios_import_process').css('display', 'none');
                     $('#audios_import_done').css('display', 'block');
