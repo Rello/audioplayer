@@ -10,6 +10,9 @@
  * @copyright 2015 Sebastian Doell
  */
 
+/* global SM2BarPlayer soundManager */
+// OK because ./js/soundmanager2.js is sourced before in html
+
 'use strict';
 
 var Audios = function () {
@@ -341,8 +344,6 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
 
 Audios.prototype.buildTrackRow = function (elem) {
     var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
-    /* global soundManager */
-    // OK because ./js/soundmanager2.js is sourced before in html
     var can_play = soundManager.html5;
 
     var li = $('<li/>').attr({
@@ -1101,8 +1102,6 @@ $(document).ready(function () {
     myAudios.init();
     myAudios.checkNewTracks();
     if ($('#audioplayer_sonos').val() !== 'checked') {
-        /* global SM2BarPlayer */
-        // OK, because ./js/soundmanager2.js is sourced before in html
         myAudios.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
         myAudios.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
     }
