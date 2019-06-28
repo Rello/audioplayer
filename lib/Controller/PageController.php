@@ -18,7 +18,6 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\IURLGenerator;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 
 /**
@@ -30,15 +29,13 @@ class PageController extends Controller
     private $userId;
     private $l10n;
     private $configManager;
-    private $urlGenerator;
 
     public function __construct(
         $appName,
         IRequest $request,
         $userId,
         IConfig $configManager,
-        IL10N $l10n,
-        IURLGenerator $urlGenerator
+        IL10N $l10n
     )
     {
         parent::__construct($appName, $request);
@@ -46,7 +43,6 @@ class PageController extends Controller
         $this->userId = $userId;
         $this->configManager = $configManager;
         $this->l10n = $l10n;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**

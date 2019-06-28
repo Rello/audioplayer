@@ -20,18 +20,15 @@ class Admin implements ISettings
 {
 
     private $userId;
-    private $urlGenerator;
     private $configManager;
 
     public function __construct(
         $userId,
-        IConfig $configManager,
-        IURLGenerator $urlGenerator
+        IConfig $configManager
     )
     {
         $this->userId = $userId;
         $this->configManager = $configManager;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**

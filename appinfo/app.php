@@ -11,7 +11,7 @@
  * @copyright 2016-2019 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
- 
+
 namespace OCA\audioplayer\AppInfo;
 
 use OCP\Util;
@@ -20,23 +20,19 @@ $app = new Application();
 $app->registerFileHooks();
 $app->registerUserHooks();
 
-$c = $app->getContainer();
-
-$request = \OC::$server->getRequest();
-
-$eventDispatcher = \OC::$server->getEventDispatcher();
-$eventDispatcher->addListener(
+\OC::$server->getEventDispatcher()->addListener(
     'OCA\Files::loadAdditionalScripts',
-    function() {
+    function () {
         Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
         Util::addScript('audioplayer', 'viewer/viewer');
         Util::addScript('audioplayer', 'viewer/search');
         Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
     }
 );
-$eventDispatcher->addListener(
+
+\OC::$server->getEventDispatcher()->addListener(
     'OCA\Files_Sharing::loadAdditionalScripts',
-    function() {
+    function () {
         Util::addScript('audioplayer', 'soundmanager2-nodebug-jsmin');
         Util::addScript('audioplayer', 'viewer/viewer');
         Util::addScript('audioplayer', 'sharing/sharing');
@@ -44,16 +40,15 @@ $eventDispatcher->addListener(
     }
 );
 
-// add an navigation entry
-$navigationEntry = function() use ($c) {
-	return [
-		'id' => $c->getAppName(),
-		'order' => 6,
-		'name' => $c->query('L10N')->t('Audio Player'),
-		'href' => $c->query('URLGenerator')->linkToRoute('audioplayer.page.index'),
-		'icon' => $c->query('URLGenerator')->imagePath('audioplayer', 'app.svg'),
-	];
+$navigationEntry = function () {
+    return [
+        'id' => 'audioplayer',
+        'order' => 6,
+        'name' => \OC::$server->getL10N('audioplayer')->t('Audio Player'),
+        'href' => \OC::$server->getURLGenerator()->linkToRoute('audioplayer.page.index'),
+        'icon' => \OC::$server->getURLGenerator()->imagePath('audioplayer', 'app.svg'),
+    ];
 };
-$c->getServer()->getNavigationManager()->add($navigationEntry);
+\OC::$server->getNavigationManager()->add($navigationEntry);
 
-$c->getServer()->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app'=>'audioplayer', 'apps' => array('files')));	
+\OC::$server->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app' => 'audioplayer', 'apps' => array('files')));

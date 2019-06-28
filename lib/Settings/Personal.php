@@ -12,7 +12,6 @@
 namespace OCA\audioplayer\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
 use OCP\IConfig;
 
@@ -25,13 +24,11 @@ class Personal implements ISettings
 
     public function __construct(
         $userId,
-        IConfig $configManager,
-        IURLGenerator $urlGenerator
+        IConfig $configManager
     )
     {
         $this->userId = $userId;
         $this->configManager = $configManager;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
