@@ -10,6 +10,8 @@
  * @copyright 2015 Sebastian Doell
  */
 
+'use strict';
+
 var Audios = function () {
     this.AudioPlayer = null;
     this.PlaylistContainer = $('#playlist-container');
@@ -23,8 +25,6 @@ var Audios = function () {
 };
 
 Audios.prototype.init = function () {
-    'use strict';
-
     this.initialDocumentTitle = $('title').html().trim();
 
     var locHash = decodeURI(location.hash).substr(1);
@@ -48,8 +48,6 @@ Audios.prototype.init = function () {
 };
 
 Audios.prototype.displayCategory = function () {
-    'use strict';
-
     if (this.CategorySelectors === 'false') {
         this.showInitScreen();
     } else if (this.CategorySelectors[0] && this.CategorySelectors[0] !== 'Albums') {
@@ -60,15 +58,11 @@ Audios.prototype.displayCategory = function () {
 };
 
 Audios.prototype.presetDisplay = function () {
-    'use strict';
-
     $('#category_selector').val(this.CategorySelectors[0]);
     this.loadCategory(this.loadLatestCategory.bind(this));
 };
 
 Audios.prototype.loadLatestCategory = function () {
-    'use strict';
-
     if (this.CategorySelectors[1] && this.CategorySelectors[1] !== 'undefined') {
         $('#myCategory li[data-id="' + this.CategorySelectors[1] + '"]').addClass('active');
         var appNavigation = $('#app-navigation');
@@ -84,8 +78,6 @@ Audios.prototype.loadLatestCategory = function () {
 };
 
 Audios.prototype.initKeyListener = function () {
-    'use strict';
-
     $(document).keyup(function (evt) {
         if (this.AudioPlayer !== null && $('#activePlaylist li').length > 0) {
 
@@ -135,8 +127,6 @@ Audios.prototype.initKeyListener = function () {
 };
 
 Audios.prototype.loadCategoryAlbums = function () {
-    'use strict';
-
     this.PlaylistContainer.show();
     this.EmptyContainer.hide();
     $('#loading').show();
@@ -160,8 +150,6 @@ Audios.prototype.loadCategoryAlbums = function () {
 };
 
 Audios.prototype.loadCategoryAlbumsResponse = function (jsondata) {
-    'use strict';
-
     $('#loading').hide();
     if (jsondata.status === 'success') {
         $('.sm2-bar-ui').show();
@@ -172,8 +160,6 @@ Audios.prototype.loadCategoryAlbumsResponse = function (jsondata) {
 };
 
 Audios.prototype.buildCoverRow = function (aAlbums) {
-    'use strict';
-
     var divAlbum = [];
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
     var divRow = $('<div />').addClass('coverrow');
@@ -214,8 +200,6 @@ Audios.prototype.buildCoverRow = function (aAlbums) {
 };
 
 Audios.prototype.loadIndividualAlbums = function (evt) {
-    'use strict';
-
     evt.stopPropagation();
     evt.preventDefault();
 
@@ -239,8 +223,6 @@ Audios.prototype.loadIndividualAlbums = function (evt) {
 };
 
 Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
-    'use strict';
-
     var AlbumId = eventTarget.attr('data-album');
     var AlbumName = eventTarget.attr('data-name');
     var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
@@ -358,8 +340,6 @@ Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
 };
 
 Audios.prototype.buildTrackRow = function (elem) {
-    'use strict';
-
     var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
     /* global soundManager */
     // OK because ./js/soundmanager2.js is sourced before in html
@@ -397,8 +377,6 @@ Audios.prototype.buildTrackRow = function (elem) {
 };
 
 Audios.prototype.trackClickHandler = function (callback) {
-    'use strict';
-
     var albumWrapper = $('.albumwrapper');
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
     var category = this.PlaylistContainer.data('playlist').split('-');
@@ -421,8 +399,6 @@ Audios.prototype.trackClickHandler = function (callback) {
 };
 
 Audios.prototype.processAlbum = function (category, coverUrl, can_play, playlist, i, el) {
-    'use strict';
-
     var element = $(el);
 
     if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
@@ -444,8 +420,6 @@ Audios.prototype.processAlbum = function (category, coverUrl, can_play, playlist
 
 
 Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element) {
-    'use strict';
-
     var activeLi = element.closest('li');
     // if enabled, play sonos and skip the rest of the processing
     if ($('#audioplayer_sonos').val() === 'checked') {
@@ -485,8 +459,6 @@ Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element)
 };
 
 Audios.prototype.indicateCurrentPlayingTrack = function () {
-    'use strict';
-
     if (this.PlaylistContainer.data('playlist') === this.ActivePlaylist.data('playlist')) {
         var playingTrackId = $('#activePlaylist li.selected').data('trackid');
         var playingListItem = $('.albumwrapper li[data-trackid="' + playingTrackId + '"]');
@@ -497,7 +469,6 @@ Audios.prototype.indicateCurrentPlayingTrack = function () {
 };
 
 Audios.prototype.loadCategory = function (callback) {
-    'use strict';
     var category = $('#category_selector').val();
     var addPlaylist = $('#addPlaylist');
     addPlaylist.addClass('hidden');
@@ -578,8 +549,6 @@ Audios.prototype.loadCategory = function (callback) {
 
 
 Audios.prototype.loadIndividualCategory = function (evt, callback) {
-    'use strict';
-
     this.PlaylistContainer.show();
     this.EmptyContainer.hide();
     $('#loading').show();
@@ -626,7 +595,6 @@ Audios.prototype.loadIndividualCategory = function (evt, callback) {
 };
 
 Audios.prototype.onGetCategoryItemsResponse = function (callback, category, categoryActive, playlistId, jsondata) {
-    'use strict';
     var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
     var albumcount = '';
     var can_play = soundManager.html5;
@@ -743,7 +711,6 @@ Audios.prototype.onGetCategoryItemsResponse = function (callback, category, cate
 };
 
 Audios.prototype.showInitScreen = function (mode) {
-    'use strict';
     $('.sm2-bar-ui').hide();
     this.PlaylistContainer.hide();
     this.EmptyContainer.show();
@@ -761,12 +728,10 @@ Audios.prototype.showInitScreen = function (mode) {
 };
 
 Audios.prototype.dragElement = function () {
-    'use strict';
     return $(this).clone().text($(this).find('.title').attr('data-title'));
 };
 
 Audios.prototype.favoriteUpdate = function (evt) {
-    'use strict';
     var trackid = $(evt.target).attr('data-trackid');
     var isFavorite = false;
 
@@ -794,7 +759,6 @@ Audios.prototype.favoriteUpdate = function (evt) {
 };
 
 Audios.prototype.addSongToPlaylist = function (plId, songId) {
-    'use strict';
     var sort = parseInt($('#myPlayList li[data-id="' + plId + '"]').find('.counter').text());
     return $.getJSON(OC.generateUrl('apps/audioplayer/addtracktoplaylist'), {
         playlistid: plId,
@@ -808,7 +772,6 @@ Audios.prototype.addSongToPlaylist = function (plId, songId) {
 };
 
 Audios.prototype.newPlaylist = function (plName) {
-    'use strict';
     $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/addplaylist'),
@@ -828,7 +791,6 @@ Audios.prototype.newPlaylist = function (plName) {
 };
 
 Audios.prototype.renamePlaylist = function (evt) {
-    'use strict';
     var eventTarget = $(evt.target);
     if ($('.plclone').length === 1) {
         var plId = eventTarget.data('editid');
@@ -874,8 +836,6 @@ Audios.prototype.renamePlaylist = function (evt) {
 };
 
 Audios.prototype.generateRenameRequest = function (playlistId, playlistClone) {
-    'use strict';
-
     var saveForm = $('.plclone[data-pl="' + playlistId + '"]');
     var plname = saveForm.find('input[name="playlist"]').val();
 
@@ -894,7 +854,6 @@ Audios.prototype.generateRenameRequest = function (playlistId, playlistClone) {
 };
 
 Audios.prototype.sortPlaylist = function (evt) {
-    'use strict';
     var eventTarget = $(evt.target);
     var notification = $('#notification');
     if ($('#myCategory li').hasClass('active')) {
@@ -949,8 +908,6 @@ Audios.prototype.sortPlaylist = function (evt) {
 };
 
 Audios.prototype.deletePlaylist = function (evt) {
-    'use strict';
-
     var plId = $(evt.target).attr('data-deleteid');
 
     OC.dialogs.message(
@@ -983,8 +940,6 @@ Audios.prototype.deletePlaylist = function (evt) {
 };
 
 Audios.prototype.getUserValue = function (user_type, callback) {
-    'use strict';
-
     $.ajax({
         type: 'GET',
         url: OC.generateUrl('apps/audioplayer/getvalue'),
@@ -1002,8 +957,6 @@ Audios.prototype.getUserValue = function (user_type, callback) {
 };
 
 Audios.prototype.setUserValue = function (user_type, user_value) {
-    'use strict';
-
     if (user_type) {
         if (user_type === 'category') { this.CategorySelectors = user_value.split('-'); }
         $.ajax({
@@ -1020,8 +973,6 @@ Audios.prototype.setUserValue = function (user_type, user_value) {
 };
 
 Audios.prototype.setStatistics = function () {
-    'use strict';
-
     var track_id = $('#activePlaylist li.selected').data('trackid');
     if (track_id) {
         $.ajax({
@@ -1037,8 +988,6 @@ Audios.prototype.setStatistics = function () {
 };
 
 Audios.prototype.sortPlaylist = function (evt) {
-    'use strict';
-
     var column = $(evt.target).attr('class').split('-')[1];
     var order = $(evt.target).data('order');
     var factor = 1;
@@ -1089,8 +1038,6 @@ Audios.prototype.sortPlaylist = function (evt) {
 };
 
 Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
-    'use strict';
-
     var addCss;
     var addDescr;
     var coverID = activeLi.data('cover');
@@ -1106,8 +1053,6 @@ Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
 };
 
 Audios.prototype.soundmanagerCallback = function (SMaction) {
-    'use strict';
-
     if (SMaction === 'setVolume') {
         this.setUserValue('volume', Math.round(this.AudioPlayer.actions.getVolume()));
     } else {
@@ -1120,8 +1065,6 @@ Audios.prototype.soundmanagerCallback = function (SMaction) {
 };
 
 Audios.prototype.checkNewTracks = function () {
-    'use strict';
-
     $.ajax({
         type: 'POST',
         url: OC.generateUrl('apps/audioplayer/checknewtracks'),
@@ -1134,8 +1077,6 @@ Audios.prototype.checkNewTracks = function () {
 };
 
 Audios.prototype.resizePlaylist = function () {
-    'use strict';
-
     var songlist = $('.songcontainer .songlist');
     $('.sm2-bar-ui').width(this.PlaylistContainer.width());
     if ($('.album.is-active').length !== 0) {
@@ -1155,7 +1096,6 @@ Audios.prototype.resizePlaylist = function () {
 
 var resizeTimeout = null;
 $(document).ready(function () {
-    'use strict;';
 
     var myAudios = new Audios();
     myAudios.init();
