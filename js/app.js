@@ -82,7 +82,7 @@ Audios.prototype.loadLatestCategory = function () {
                 item.find('.icon').hide();
                 item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
             }
-        });
+        }.bind(this));
     }
 };
 
