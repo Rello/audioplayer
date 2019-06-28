@@ -58,7 +58,9 @@ OCA.Audioplayer.Sidebar = {
 
             var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
             starIcon.off();
-            starIcon.on('click', $this.favoriteUpdate.bind($this));
+            starIcon.on('click',
+                OCA.Audioplayer.audiosInstance.favoriteUpdate.bind(OCA.Audioplayer.audiosInstance)
+            );
 
             if ($appsidebar.data('trackid') === '') {
                 $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar);
@@ -222,7 +224,7 @@ OCA.Audioplayer.Sidebar = {
                             'data-listid': audioinfo[m].playlist_id,
                             'data-trackid': trackid,
                             'title': t('audioplayer', 'Remove')
-                        }).on('click', $this.removeSongFromPlaylist.bind($this));
+                        }).on('click', OCA.Audioplayer.audiosInstance.removeSongFromPlaylist.bind(OCA.Audioplayer.audiosInstance));
 
                         tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
                         tablekey = $('<div>').addClass('key').append(spanDelete);
@@ -258,8 +260,8 @@ OCA.Audioplayer.Sidebar = {
     },
 
     resetView: function () {
-        $('.tabHeader.selected').removeClass('selected')
-        $('.tab').addClass('hidden')
+        $('.tabHeader.selected').removeClass('selected');
+        $('.tab').addClass('hidden');
     },
 
     removeSongFromPlaylist: function (evt) {
@@ -311,7 +313,7 @@ OCA.Audioplayer.Sidebar = {
     },
     SONOSTabView: function () {
         var trackid = $('#app-sidebar').data('trackid');
-        $this.resetView();
+        OCA.Audioplayer.audiosInstance.resetView();
         $('#tabHeaderSONOS').addClass('selected');
 
         var html = '<div style="margin-left: 2em; background-position: initial;" class="icon-info">';
