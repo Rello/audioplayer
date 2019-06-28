@@ -765,10 +765,11 @@ Audios.prototype.dragElement = function () {
 };
 
 Audios.prototype.favoriteUpdate = function (evt) {
+    'use strict';
     var trackid = $(evt.target).attr('data-trackid');
     var isFavorite = false;
 
-    if ($this.CategorySelectors[1].toString().substring(0, 1) === 'S') return;
+    if (this.CategorySelectors[1].toString().substring(0, 1) === 'S') { return; }
 
     if ($(evt.target).hasClass('icon icon-starred')) {
         isFavorite = true;
