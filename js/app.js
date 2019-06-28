@@ -497,8 +497,7 @@ Audios.prototype.indicateCurrentPlayingTrack = function () {
 };
 
 Audios.prototype.loadCategory = function (callback) {
-    $this = this;
-    //var category = $this.CategorySelectors[0]; // use the variable and not the drop_down value???
+    'use strict';
     var category = $('#category_selector').val();
     var addPlaylist = $('#addPlaylist');
     addPlaylist.addClass('hidden');
@@ -516,23 +515,23 @@ Audios.prototype.loadCategory = function (callback) {
                     var spanName;
 
                     if (category === 'Playlist' && el.id.toString()[0] !== 'X' && el.id !== '' && el.id.toString()[0] !== 'S') {
-                        spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).on('click', $this.loadIndividualCategory.bind($this));
+                        spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).on('click', this.loadIndividualCategory.bind(this));
                         var spanSort = $('<i/>').attr({
                             'class': 'ioc ioc-sort toolTip',
                             'data-sortid': el.id,
                             'title': t('audioplayer', 'Sort playlist')
-                        }).on('click', $this.sortPlaylist.bind($this));
+                        }).on('click', this.sortPlaylist.bind(this));
                         var spanEdit = $('<i/>').attr({
                             'class': 'icon icon-rename toolTip',
                             'data-name': el.name,
                             'data-editid': el.id,
                             'title': t('audioplayer', 'Rename playlist')
-                        }).on('click', $this.renamePlaylist.bind($this));
+                        }).on('click', this.renamePlaylist.bind(this));
                         var spanDelete = $('<i/>').attr({
                             'class': 'ioc ioc-delete toolTip',
                             'data-deleteid': el.id,
                             'title': t('audioplayer', 'Delete playlist')
-                        }).on('click', $this.deletePlaylist.bind($this));
+                        }).on('click', this.deletePlaylist.bind(this));
                         li.droppable({
                             activeClass: 'activeHover',
                             hoverClass: 'dropHover',
@@ -540,7 +539,7 @@ Audios.prototype.loadCategory = function (callback) {
                             over: function () {
                             },
                             drop: function (event, ui) {
-                                $this.addSongToPlaylist($(this).attr('data-id'), ui.draggable.attr('data-trackid'));
+                                this.addSongToPlaylist($(this).attr('data-id'), ui.draggable.attr('data-trackid'));
                             }
                         });
                         li.append(spanName);
@@ -556,20 +555,20 @@ Audios.prototype.loadCategory = function (callback) {
                         spanName = $('<span/>').attr({
                             'class': 'pl-name',
                             'title': el.name
-                        }).text(el.name).on('click', $this.loadIndividualCategory.bind($this));
+                        }).text(el.name).on('click', this.loadIndividualCategory.bind(this));
                         li.append(spanName);
                         li.append(spanCounter);
                     }
                     $('#myCategory').append(li);
-                });
+                }.bind(this));
                 if (typeof callback === 'function') {
                     callback();
                 }
                 $('.toolTip').tooltip();
             } else {
-                $this.showInitScreen();
+                this.showInitScreen();
             }
-        }
+        }.bind(this)
     });
     if (category === 'Playlist') {
         addPlaylist.removeClass('hidden');
