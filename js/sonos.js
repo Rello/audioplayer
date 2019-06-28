@@ -8,13 +8,18 @@
  * @copyright 2016-2019 Marcel Scherello
  */
 
+/* global Audios */
+// OK because ./js/app.js is sourced before in html
+
+'use strict';
+
 Audios.prototype.PlaySonos = function (liIndex) {
 
     var playIndicator = $('#sonos_play');
     var trackids = [];
 
     $( '.albumwrapper li' ).each(function() {
-        trackid = $(this).data('trackid');
+        var trackid = $(this).data('trackid');
         trackids.push(trackid);
     });
 
@@ -27,12 +32,12 @@ Audios.prototype.PlaySonos = function (liIndex) {
         },
         success: function (jsondata) {
             if (jsondata === false) {
-                myAudios.SonosGone();
+                OCA.Audioplayer.audiosInstance.SonosGone();
             }
             playIndicator.addClass('playing');
         },
         error: function(){
-            myAudios.SonosGone();
+            OCA.Audioplayer.audiosInstance.SonosGone();
         },
         timeout: 3000
     });
@@ -53,12 +58,12 @@ Audios.prototype.SonosAction = function (action) {
         },
         success: function (jsondata) {
             if (jsondata === false) {
-                myAudios.SonosGone();
+                OCA.Audioplayer.audiosInstance.SonosGone();
             }
             return true;
         },
         error: function(){
-            myAudios.SonosGone();
+            OCA.Audioplayer.audiosInstance.SonosGone();
         },
         timeout: 3000
     });
@@ -75,23 +80,23 @@ $(document).ready(function () {
         } else {
             action = 'play';
         }
-        if(myAudios.SonosAction(action)) playIndicator.addClass('playing');
+        if(OCA.Audioplayer.audiosInstance.SonosAction(action)) playIndicator.addClass('playing');
     });
 
     $('#sonos_prev').on('click', function () {
-        myAudios.SonosAction('previous');
+        OCA.Audioplayer.audiosInstance.SonosAction('previous');
     });
 
     $('#sonos_next').on('click', function () {
-        myAudios.SonosAction('next');
+        OCA.Audioplayer.audiosInstance.SonosAction('next');
     });
 
     $('#sonos_up').on('click', function () {
-        myAudios.SonosAction('up');
+        OCA.Audioplayer.audiosInstance.SonosAction('up');
     });
 
     $('#sonos_down').on('click', function () {
-        myAudios.SonosAction('down');
+        OCA.Audioplayer.audiosInstance.SonosAction('down');
     });
 
 });
