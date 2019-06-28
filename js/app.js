@@ -761,6 +761,7 @@ Audios.prototype.showInitScreen = function (mode) {
 };
 
 Audios.prototype.dragElement = function () {
+    'use strict';
     return $(this).clone().text($(this).find('.title').attr('data-title'));
 };
 
