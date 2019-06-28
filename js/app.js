@@ -46,8 +46,14 @@ Audios.prototype.init = function () {
     }
 
     this.initKeyListener();
-    soundManager.audiosInstance = this;
     $('.toolTip').tooltip();
+
+    // temporary solution until code gets more self-contained
+    soundManager.audiosInstance = this;
+    if (!OCA.Audioplayer) {
+        OCA.Audioplayer = {};
+    }
+    OCA.Audioplayer.audiosInstance = this;
 };
 
 Audios.prototype.displayCategory = function () {
