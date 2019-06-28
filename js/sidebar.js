@@ -8,6 +8,8 @@
  * @copyright 2016-2019 Marcel Scherello
  */
 
+'use strict';
+
 if (!OCA.Audioplayer) {
     /**
      * @namespace
@@ -59,10 +61,9 @@ OCA.Audioplayer.Sidebar = {
             starIcon.on('click', $this.favoriteUpdate.bind($this));
 
             if ($appsidebar.data('trackid') === '') {
-                $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar.bind($this));
+                $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar);
 
                 OCA.Audioplayer.Sidebar.constructTabs();
-                // noinspection JSUnresolvedFunction
                 $('#tabHeaderMetadata').addClass('selected');
                 OC.Apps.showAppSidebar();
             }
@@ -88,7 +89,7 @@ OCA.Audioplayer.Sidebar = {
             class: 'addonsTabView',
             tabindex: '9',
             name: t('audioplayer', 'Add-ons'),
-            action: OCA.Audioplayer.Sidebar.addonsTabView.bind($this),
+            action: OCA.Audioplayer.Sidebar.addonsTabView,
         });
 
         OCA.Audioplayer.Sidebar.registerSidebarTab({
@@ -107,7 +108,7 @@ OCA.Audioplayer.Sidebar = {
             action: OCA.Audioplayer.Sidebar.playlistsTabView,
         });
 
-        items = _.map(OCA.Audioplayer.Sidebar.sidebar_tabs, function (item) {
+        var items = _.map(OCA.Audioplayer.Sidebar.sidebar_tabs, function (item) {
             return item;
         });
         items.sort(OCA.Audioplayer.Sidebar.sortByName);
@@ -127,12 +128,11 @@ OCA.Audioplayer.Sidebar = {
                     'id': items[tab].class
                 });
             $('.tabsContainer').append(div);
-            $('#' + items[tab].id).on('click', items[tab].action.bind($this));
+            $('#' + items[tab].id).on('click', items[tab].action);
         }
     },
 
     hideSidebar: function () {
-        // noinspection JSUnresolvedFunction
         $('#app-sidebar').data('trackid', '');
         OC.Apps.hideAppSidebar();
         $('.tabHeaders').empty();
@@ -306,7 +306,7 @@ OCA.Audioplayer.Sidebar = {
             });
         $('.tabsContainer').append(div);
 
-        $('#tabHeaderSONOS').on('click', OCA.Audioplayer.Sidebar.SONOSTabView.bind($this));
+        $('#tabHeaderSONOS').on('click', OCA.Audioplayer.Sidebar.SONOSTabView);
     },
     SONOSTabView: function () {
         var trackid = $('#app-sidebar').data('trackid');
