@@ -32,12 +32,12 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
-        this.openScannerDialog();
-    }.bind(this));
+        OCA.Audioplayer.audiosInstance.openScannerDialog();
+    }.bind(OCA.Audioplayer.audiosInstance));
 
     $(document).on('click', '#resetAudios', function () {
-        this.openResetDialog();
-    }.bind(this));
+        OCA.Audioplayer.audiosInstance.openResetDialog();
+    }.bind(OCA.Audioplayer.audiosInstance));
 });
 
 Audios.prototype.openResetDialog = function () {
