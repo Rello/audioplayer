@@ -1007,6 +1007,8 @@ Audios.prototype.sortPlaylist = function (evt) {
     }
 
     var elems = $('#individual-playlist').children('li').get();
+    if (elems.length === 0) { return; }
+
     var reg_check = $(elems).first().data(column).toString().match(/^\d{1,2}-\d{1,2}$/);
     elems.sort(function (a, b) {
         a = $(a).data(column).toString();
