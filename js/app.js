@@ -838,7 +838,7 @@ Audios.prototype.renamePlaylist = function (evt) {
         myClone.find('button.icon-close').on('click', function () {
             this.loadCategory();
             myClone.remove();
-        });
+        }.bind(this));
     }
 };
 
@@ -959,7 +959,7 @@ Audios.prototype.getUserValue = function (user_type, callback) {
                 this.CategorySelectors = 'false';
                 callback(this.CategorySelectors);
             }
-        }
+        }.bind(this)
     });
 };
 
