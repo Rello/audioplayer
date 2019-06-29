@@ -69,6 +69,7 @@ OCA.Audioplayer.Sidebar = {
             }
 
             $appsidebar.data('trackid', trackid);
+            document.getElementById('app-sidebar').dataset.trackid = trackid; //start moving to vanilla js
             $('.tabHeader.selected').trigger('click');
         }
     },
