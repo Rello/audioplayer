@@ -6,13 +6,16 @@ module.exports = {
     },
     'extends': 'eslint:recommended',
     'globals': {
+        '_': 'readonly', // from js/dist/main.js
         'OC': 'readonly',
         'OCA': 'readonly',
+        'OCdialogs': 'readonly', // from /js/core/merged-template-prepend.js
         't': 'readonly'
     },
     'parserOptions': {
+        'ecmaFeatures': 'impliedStrict',
         'ecmaVersion': 6,
-        'sourceType': 'module'
+        'sourceType': 'script'
     },
     'rules': {
         'brace-style': [

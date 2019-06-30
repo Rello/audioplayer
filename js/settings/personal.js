@@ -8,6 +8,8 @@
  * @copyright 2016-2019 Marcel Scherello
  */
 
+'use strict';
+
 $(document).ready(function () {
     $('#cyrillic_user').on('click', function () {
         var user_value;

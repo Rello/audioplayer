@@ -846,7 +846,8 @@
 
                 onplay: function() {
                     utils.css.swap(dom.o, 'paused', 'playing');
-                    if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+                    var ap = soundManager.audiosInstance;
+                    if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper li').removeClass('isActive');
                         $('.albumwrapper li i.ioc').hide();
                         $('.albumwrapper li i.icon').show();
@@ -859,7 +860,8 @@
 
                 onpause: function() {
                     utils.css.swap(dom.o, 'playing', 'paused');
-                    if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+                    var ap = soundManager.audiosInstance;
+                    if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
                     }
@@ -867,7 +869,8 @@
 
                 onresume: function() {
                     utils.css.swap(dom.o, 'paused', 'playing');
-                    if ($this.PlaylistContainer.data('playlist') === $this.ActivePlaylist.data('playlist')) {
+                    var ap = soundManager.audiosInstance;
+                    if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off').addClass('ioc-volume-up').show();
                     }
@@ -962,7 +965,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        $this.soundmanagerCallback('onfinish');
+                        soundManager.audiosInstance.soundmanagerCallback('onfinish');
 
                         // play next
                         this.play({
@@ -1406,7 +1409,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        $this.soundmanagerCallback('next');
+                        soundManager.audiosInstance.soundmanagerCallback('next');
                     }
                 }
             },
@@ -1425,7 +1428,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        $this.soundmanagerCallback('prev');
+                        soundManager.audiosInstance.soundmanagerCallback('prev');
                     }
                 }
             },
@@ -1533,7 +1536,7 @@
                 // **********************************************************
                 // Notify Audio Player about next track e.g. for cover updates
                 // **********************************************************
-                $this.soundmanagerCallback('setVolume');
+                soundManager.audiosInstance.soundmanagerCallback('setVolume');
 
                 return utils.events.preventDefault(e);
 

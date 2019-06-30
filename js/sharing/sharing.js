@@ -10,6 +10,8 @@
  * @copyright 2015 Sebastian Doell
  */
 
+'use strict';
+
 $(document).ready(function () {
     if ($('#header').hasClass('share-file')) {
         var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];

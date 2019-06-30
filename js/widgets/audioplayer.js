@@ -8,9 +8,7 @@
  * @copyright 2016-2019 Marcel Scherello
  */
 
-/** global: OCA */
-/** global: net */
-
+'use strict';
 
 (function () {
 
@@ -60,13 +58,13 @@
                                     'data-path': el.lin,
                                     'class': 'dragable'
                                 }).addClass('widget-audioplayer-item');
-                                spanTitle = $('<span/>').attr({'class': 'widget-audioplayer-title'}).html(el.cl1);
+                                var spanTitle = $('<span/>').attr({'class': 'widget-audioplayer-title'}).html(el.cl1);
 
                                 var coverID = el.cid;
                                 var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
                                 if (coverID === '') {
-                                    addCss = 'background-color: #D3D3D3;color: #333333;';
-                                    addDescr = el.cl1.substring(0, 1);
+                                    var addCss = 'background-color: #D3D3D3;color: #333333;';
+                                    var addDescr = el.cl1.substring(0, 1);
                                 } else {
                                     addDescr = '';
                                     addCss = 'background-image:url(' + getcoverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
