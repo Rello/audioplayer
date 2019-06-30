@@ -10,6 +10,11 @@
  * @copyright 2015 Sebastian Doell
  */
 
+/* global soundManager */
+// OK because ./js/soundmanager2.js is sourced before in html
+
+'use strict';
+
 var audioPlayer = {
     mime: null,
     file: null,
