@@ -40,10 +40,6 @@ class Personal implements ISettings
         $parameters = [
             'audioplayer_cyrillic' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'cyrillic'),
             'audioplayer_path' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'path'),
-            'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos'),
-            'audioplayer_sonos_admin' => $this->configManager->getAppValue('audioplayer', 'sonos'),
-            'audioplayer_sonos_controller' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller'),
-            'audioplayer_sonos_smb_path' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path'),
         ];
         return new TemplateResponse('audioplayer', 'settings/personal', $parameters, '');
     }

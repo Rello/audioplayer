@@ -15,8 +15,9 @@ A music player for FLAC, MP3, MP4, streams, … with playlist support and SONOS 
 - One Click Play in Files app
 - Favorites, Sidebar & Search integration
 - Widget for Dashboard App (beta)
-- [SONOS player](https://github.com/rello/audioplayer/wiki/SONOS) integration
 - local playlists
+- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
+- [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
 ### Supported Formats
 FLAC, MP3, MP4, Ogg Vorbis, Opus, and Waveform Audio as well as M3U and PLS playlist files. Playing the formats supported by Audio Player depends on the browser. [More information…](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
@@ -37,7 +38,8 @@ English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polis
 - [Known Issues](https://github.com/rello/audioplayer/wiki/installation-instructions#known-issues)
 
 ### Add-ons
-- [Audio Player Editor](https://github.com/rello/audioplayer_editor "An ID3 editor for the Audio Player") – An ID3 editor for the Audio Player (**Work in progress! Not yet released!**)
+- [ID3 editor](https://github.com/rello/audioplayer_editor "ID3 editor for the Audio Player") – ID3 editor for the Audio Player
+- [SONOS](https://github.com/rello/audioplayer_sonos "SONOS Playback for the Audio Player") – SONOS Playback for the Audio Player
 
 ## Bugs and Feature Requests
 Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only! For a changelog please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).

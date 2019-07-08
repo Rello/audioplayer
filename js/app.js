@@ -431,7 +431,7 @@ Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element)
     // if enabled, play sonos and skip the rest of the processing
     if ($('#audioplayer_sonos').val() === 'checked') {
         var liIndex = element.parents('li').index();
-        this.PlaySonos(liIndex);
+        OCA.Audioplayer.Sonos.playSonos(liIndex);
         this.setStatistics();
         return;
     }

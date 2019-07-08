@@ -8,6 +8,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Changed
 - Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) @[mmatous](https://github.com/mmatous)
+- Remove SONOS Playback into separate add-on [#411](https://github.com/rello/audioplayer/issues/411)
 
 ### Added
 - Create lint configuration [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)

@@ -13,8 +13,9 @@
 - One Click Play in Files app
 - Favorites, Sidebar & Search integration
 - Widget for Dashboard App (beta)
-- [SONOS player](https://github.com/rello/audioplayer/wiki/SONOS) integration
 - local playlists
+- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
+- [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
     <version>2.8.0-beta1</version>
@@ -51,7 +52,6 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<settings>
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
-		<admin>OCA\audioplayer\Settings\Admin</admin>
 		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
 	</settings>
 	<settings-sections>

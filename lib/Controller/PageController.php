@@ -53,8 +53,8 @@ class PageController extends Controller
     public function index()
     {
 
-        if ($this->configManager->getAppValue('audioplayer', 'sonos') === "checked") {
-            $audioplayer_sonos = $this->configManager->getUserValue($this->userId, $this->appName, 'sonos') ?: false;
+        if ($this->configManager->getAppValue('audioplayer_sonos', 'sonos') === "checked") {
+            $audioplayer_sonos = $this->configManager->getUserValue($this->userId, 'audioplayer_sonos', 'sonos') ?: false;
         } else {
             $audioplayer_sonos = false;
         }

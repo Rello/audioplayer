@@ -22,9 +22,6 @@ Util::addScript('audioplayer', 'settings/settings');
 if ($_['audioplayer_sonos'] !== 'checked') {
     Util::addScript('audioplayer', 'bar-ui');
     Util::addStyle('audioplayer', '3rdparty/fontello/css/animation');
-} else {
-    Util::addScript('audioplayer', 'sonos');
-    Util::addStyle('audioplayer', 'sonos');
 }
 
 ?>
