@@ -35,11 +35,14 @@ English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polis
 ## Installation
 - [Nextcloud App Store](https://apps.nextcloud.com/apps/audioplayer)
 - [ownCloud Marketplace](https://marketplace.owncloud.com/apps/audioplayer)
-- [Known Issues](https://github.com/rello/audioplayer/wiki/installation-instructions#known-issues)
 
 ### Add-ons
 - [ID3 editor](https://github.com/rello/audioplayer_editor "ID3 editor for the Audio Player") – ID3 editor for the Audio Player
 - [SONOS](https://github.com/rello/audioplayer_sonos "SONOS Playback for the Audio Player") – SONOS Playback for the Audio Player
+
+### APIs
+- Eventdispatcher 'OCA\audioplayer::loadAdditionalScripts'
+- Sidebar Tabs: OCA.Audioplayer.Sidebar.registerSidebarTab
 
 ## Bugs and Feature Requests
 Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only! For a changelog please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
