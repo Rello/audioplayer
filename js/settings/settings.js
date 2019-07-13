@@ -13,7 +13,7 @@
 
 'use strict';
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
 
     var settings_link;
     if (OC.config.versionstring.split('.')[0] <= 10) //ownCloud

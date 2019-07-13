@@ -12,7 +12,7 @@
 
 'use strict';
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     if ($('#header').hasClass('share-file')) {
         var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
         var mimeType = $('#mimetype').val();

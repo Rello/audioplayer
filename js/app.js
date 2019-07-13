@@ -1104,7 +1104,7 @@ Audios.prototype.resizePlaylist = function () {
 };
 
 var resizeTimeout = null;
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
 
     var myAudios = new Audios();
     myAudios.init();

@@ -92,7 +92,7 @@ function registerFileActions() {
     });
 }
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     if (typeof OCA !== 'undefined' && typeof OCA.Files !== 'undefined' && typeof OCA.Files.fileActions !== 'undefined' && $('#header').hasClass('share-file') === false) {
         registerFileActions();
     }

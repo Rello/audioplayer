@@ -10,7 +10,7 @@
 
 'use strict';
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     $('#cyrillic_user').on('click', function () {
         var user_value;
         if ($('#cyrillic_user').prop('checked')) {
