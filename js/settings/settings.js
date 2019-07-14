@@ -41,14 +41,14 @@ OCA.Audioplayer.Settings = {
 
     resetLibrary: function () {
         if ($('.sm2-bar-ui').hasClass('playing')) {
-            this.AudioPlayer.actions.play(0);
-            this.AudioPlayer.actions.stop();
+            OCA.Audioplayer.Player.actions.play(0);
+            OCA.Audioplayer.Player.actions.stop();
         }
 
-        OCA.Audioplayer.audiosInstance.showInitScreen();
+        OCA.Audioplayer.UI.showInitScreen();
 
         $('#category_selector').val('');
-        OCA.Audioplayer.audiosInstance.setUserValue('category', OCA.Audioplayer.audiosInstance.CategorySelectors[0] + '-');
+        OCA.Audioplayer.Backend.setUserValue('category', OCA.Audioplayer.Core.CategorySelectors[0] + '-');
         $('#myCategory').html('');
         $('#alben').addClass('active');
         $('#individual-playlist').remove();
@@ -124,7 +124,7 @@ OCA.Audioplayer.Settings = {
                     $('#audios_import_process').css('display', 'none');
                     $('#audios_import_done').css('display', 'block');
                     $('#audios_import_done_message').html(data.message);
-                    OCA.Audioplayer.audiosInstance.init();
+                    OCA.Audioplayer.Core.init();
                 } else {
                     $('#audios_import_progressbar').progressbar('option', 'value', 100);
                     $('#audios_import_done_message').html(data.message);

@@ -144,7 +144,7 @@
                 if (item && (playlistController.data.selectedIndex !== lastIndex || (playlistController.data.playlist.length === 1 && playlistController.data.loopMode))) {
                     playlistController.select(item);
                     setTitle(item);
-                    $this.soundmanagerCallback('onfinish');
+                    OCA.Audioplayer.UI.soundmanagerCallback('onfinish');
                     this.play({url: playlistController.getURL()});
                 } else {
                     this.stop();
@@ -185,7 +185,7 @@
             item = playlistController.getNext(true);
             if (item && playlistController.data.selectedIndex !== lastIndex) {
                 playLink(item.getElementsByTagName('a')[0]);
-                $this.soundmanagerCallback('next');
+                OCA.Audioplayer.UI.soundmanagerCallback('next');
             }
         }
         },
@@ -196,7 +196,7 @@
                 item = playlistController.getPrevious();
                 if (item && playlistController.data.selectedIndex !== lastIndex) {
                     playLink(item.getElementsByTagName('a')[0]);
-                    $this.soundmanagerCallback('prev');
+                    OCA.Audioplayer.UI.soundmanagerCallback('prev');
                 }
             }
         },
@@ -227,7 +227,7 @@
                 return actions.setVolume.apply(this,arguments);}
             backgroundMargin=(100-actionData.volume.backgroundSize)/2;value=Math.max(0,Math.min(1,(e.clientX-actionData.volume.x)/actionData.volume.width));target.style.clip='rect(0px, '+(actionData.volume.width*value)+'px, '+actionData.volume.height+'px, '+(actionData.volume.width*(backgroundMargin/100))+'px)';pixelMargin=((backgroundMargin/100)*actionData.volume.width);volume=Math.max(0,Math.min(1,((e.clientX-actionData.volume.x)-pixelMargin)/(actionData.volume.width-(pixelMargin*2))))*100;if(soundObject){soundObject.setVolume(volume);}
             defaultVolume = volume;
-            $this.soundmanagerCallback('setVolume');
+            OCA.Audioplayer.UI.soundmanagerCallback('setVolume');
             return utils.events.preventDefault(e);
         },
         releaseVolume: function () {

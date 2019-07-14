@@ -846,7 +846,7 @@
 
                 onplay: function() {
                     utils.css.swap(dom.o, 'paused', 'playing');
-                    var ap = soundManager.audiosInstance;
+                    var ap = OCA.Audioplayer.UI;
                     if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper li').removeClass('isActive');
                         $('.albumwrapper li i.ioc').hide();
@@ -860,7 +860,7 @@
 
                 onpause: function() {
                     utils.css.swap(dom.o, 'playing', 'paused');
-                    var ap = soundManager.audiosInstance;
+                    var ap = OCA.Audioplayer.UI;
                     if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
@@ -869,7 +869,7 @@
 
                 onresume: function() {
                     utils.css.swap(dom.o, 'paused', 'playing');
-                    var ap = soundManager.audiosInstance;
+                    var ap = OCA.Audioplayer.UI;
                     if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
                         $('.albumwrapper li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off').addClass('ioc-volume-up').show();
@@ -965,7 +965,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        soundManager.audiosInstance.soundmanagerCallback('onfinish');
+                        OCA.Audioplayer.UI.soundmanagerCallback('onfinish');
 
                         // play next
                         this.play({
@@ -1409,7 +1409,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        soundManager.audiosInstance.soundmanagerCallback('next');
+                        OCA.Audioplayer.UI.soundmanagerCallback('next');
                     }
                 }
             },
@@ -1428,7 +1428,7 @@
                         // **********************************************************
                         // Notify Audio Player about next track e.g. for cover updates
                         // **********************************************************
-                        soundManager.audiosInstance.soundmanagerCallback('prev');
+                        OCA.Audioplayer.UI.soundmanagerCallback('prev');
                     }
                 }
             },
@@ -1536,7 +1536,7 @@
                 // **********************************************************
                 // Notify Audio Player about next track e.g. for cover updates
                 // **********************************************************
-                soundManager.audiosInstance.soundmanagerCallback('setVolume');
+                OCA.Audioplayer.UI.soundmanagerCallback('setVolume');
 
                 return utils.events.preventDefault(e);
 
