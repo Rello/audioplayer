@@ -107,9 +107,9 @@ OCA.Audioplayer.Core = {
             OCA.Audioplayer.UI.showInitScreen();
         } else if (OCA.Audioplayer.Core.CategorySelectors[0] && OCA.Audioplayer.Core.CategorySelectors[0] !== 'Albums') {
             $('#category_selector').val(OCA.Audioplayer.Core.CategorySelectors[0]);
-            OCA.Audioplayer.Category.loadCategory(OCA.Audioplayer.Core.selectCategoryItemFromPreset.bind(this));
+            OCA.Audioplayer.Category.load(OCA.Audioplayer.Core.selectCategoryItemFromPreset.bind(this));
         } else {
-            OCA.Audioplayer.Albums.loadCategoryAlbums();
+            OCA.Audioplayer.Albums.load();
         }
     },
 
@@ -118,7 +118,7 @@ OCA.Audioplayer.Core = {
             $('#myCategory li[data-id="' + OCA.Audioplayer.Core.CategorySelectors[1] + '"]').addClass('active');
             var appNavigation = $('#app-navigation');
             appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
-            OCA.Audioplayer.Category.loadIndividualCategory(null, function () {                        // select the last played title
+            OCA.Audioplayer.Category.loadItems(null, function () {                        // select the last played title
                 if (OCA.Audioplayer.Core.CategorySelectors[2] && OCA.Audioplayer.Core.CategorySelectors[2] !== 'undefined') {
                     var item = $('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]');
                     item.find('.icon').hide();
@@ -135,7 +135,7 @@ OCA.Audioplayer.Core = {
  */
 OCA.Audioplayer.Albums = {
 
-    loadCategoryAlbums: function () {
+    load: function () {
         OCA.Audioplayer.UI.PlaylistContainer.show();
         OCA.Audioplayer.UI.EmptyContainer.hide();
         $('#loading').show();
@@ -171,7 +171,7 @@ OCA.Audioplayer.Albums = {
         var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
         var divRow = $('<div />').addClass('coverrow');
 
-        var boundLoadIndividualAlbums = OCA.Audioplayer.Albums.loadIndividualAlbum.bind(this);
+        var boundLoadIndividualAlbums = OCA.Audioplayer.Albums.loadItems.bind(this);
         for (var album of aAlbums) {
             var addCss;
             var addDescr;
@@ -206,7 +206,7 @@ OCA.Audioplayer.Albums = {
         OCA.Audioplayer.UI.PlaylistContainer.append(divRow);
     },
 
-    loadIndividualAlbum: function (evt) {
+    loadItems: function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
 
@@ -353,7 +353,7 @@ OCA.Audioplayer.Albums = {
  */
 OCA.Audioplayer.Category = {
 
-    loadCategory: function (callback) {
+    load: function (callback) {
         var category = $('#category_selector').val();
         var addPlaylist = $('#addPlaylist');
         addPlaylist.addClass('hidden');
@@ -381,7 +381,7 @@ OCA.Audioplayer.Category = {
                             spanName = $('<span/>').attr({
                                 'class': 'pl-name',
                                 'title': el.name
-                            }).text(el.name).on('click', OCA.Audioplayer.Category.loadIndividualCategory.bind(this));
+                            }).text(el.name).on('click', OCA.Audioplayer.Category.loadItems.bind(this));
                             li.append(spanName);
                             li.append(spanCounter);
                         }
@@ -402,7 +402,7 @@ OCA.Audioplayer.Category = {
         return true;
     },
 
-    loadIndividualCategory: function (evt, callback) {
+    loadItems: function (evt, callback) {
         OCA.Audioplayer.UI.PlaylistContainer.show();
         OCA.Audioplayer.UI.EmptyContainer.hide();
         $('#loading').show();
@@ -926,7 +926,7 @@ OCA.Audioplayer.Playlists = {
         }).then(function () {
             $('.toolTip').tooltip('hide');
             OCA.Audioplayer.Core.CategorySelectors[0] = 'Playlist';
-            OCA.Audioplayer.Category.loadCategory();
+            OCA.Audioplayer.Category.load();
         });
     },
 
@@ -935,7 +935,7 @@ OCA.Audioplayer.Playlists = {
             playlist: playlistName
         }, function (jsondata) {
             if (jsondata.status === 'success') {
-                OCA.Audioplayer.Category.loadCategory();
+                OCA.Audioplayer.Category.load();
             }
             if (jsondata.status === 'error') {
                 $('#notification').text(t('audioplayer', 'No playlist selected!')).slideDown();
@@ -996,7 +996,7 @@ OCA.Audioplayer.Playlists = {
             newname: playlistName
         }, function (jsondata) {
             if (jsondata.status === 'success') {
-                OCA.Audioplayer.Category.loadCategory();
+                OCA.Audioplayer.Category.load();
                 playlistClone.remove();
             }
             if (jsondata.status === 'error') {
@@ -1073,7 +1073,7 @@ OCA.Audioplayer.Playlists = {
                         playlistid: plId
                     }, function (jsondata) {
                         if (jsondata.status === 'success') {
-                            OCA.Audioplayer.Category.loadCategory();
+                            OCA.Audioplayer.Category.load();
                             $('#notification').text(t('audioplayer', 'Playlist successfully deleted!')).slideDown();
                             window.setTimeout(function () {
                                 $('#notification').slideUp();
@@ -1088,7 +1088,7 @@ OCA.Audioplayer.Playlists = {
     },
 
     buildPlaylistCategoryRow: function (el, li) {
-        var spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).on('click', OCA.Audioplayer.Category.loadIndividualCategory.bind(this));
+        var spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).on('click', OCA.Audioplayer.Category.loadItems.bind(this));
         var spanSort = $('<i/>').attr({
             'class': 'ioc ioc-sort toolTip',
             'data-sortid': el.id,
@@ -1203,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $('#alben').addClass('active').on('click', function () {
-        OCA.Audioplayer.Albums.loadCategoryAlbums();
+        OCA.Audioplayer.Albums.load();
         OCA.Audioplayer.Backend.setUserValue('category', 'Albums');
     });
 
@@ -1228,7 +1228,7 @@ document.addEventListener('DOMContentLoaded', function () {
         OCA.Audioplayer.Core.CategorySelectors[1] = '';
         $('#myCategory').html('');
         if (OCA.Audioplayer.Core.CategorySelectors[0] !== '') {
-            OCA.Audioplayer.Category.loadCategory();
+            OCA.Audioplayer.Category.load();
         }
     });
 
