@@ -17,12 +17,12 @@ $application = new Application();
 
 $application->registerRoutes($this, ['routes' => [
 	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	['name' => 'playlist#addPlaylist', 'url' => '/addplaylist', 'verb' => 'GET'],
-	['name' => 'playlist#addTrackToPlaylist', 'url' => '/addtracktoplaylist', 'verb' => 'GET'],
+    ['name' => 'playlist#addTrackToPlaylist', 'url' => '/addtracktoplaylist', 'verb' => 'POST'],
+    ['name' => 'playlist#addPlaylist', 'url' => '/addplaylist', 'verb' => 'POST'],
+    ['name' => 'playlist#updatePlaylist', 'url' => '/updateplaylist', 'verb' => 'POST'],
+    ['name' => 'playlist#sortPlaylist', 'url' => '/sortplaylist', 'verb' => 'POST'],
+    ['name' => 'playlist#removePlaylist', 'url' => '/removeplaylist', 'verb' => 'POST'],
     ['name' => 'playlist#removeTrackFromPlaylist', 'url' => '/removetrackfromplaylist', 'verb' => 'POST'],
-	['name' => 'playlist#sortPlaylist', 'url' => '/sortplaylist', 'verb' => 'GET'],
-	['name' => 'playlist#removePlaylist', 'url' => '/removeplaylist', 'verb' => 'GET'],
-	['name' => 'playlist#updatePlaylist', 'url' => '/updateplaylist', 'verb' => 'GET'],
 	['name' => 'scanner#getImportTpl', 'url' => '/getimporttpl', 'verb' => 'GET'],
 	['name' => 'scanner#getProgress', 'url' => '/getprogress', 'verb' => 'POST'],
 	['name' => 'scanner#scanForAudios', 'url' => '/scanforaudiofiles', 'verb' => 'POST'],

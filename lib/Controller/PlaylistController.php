@@ -174,13 +174,13 @@ class PlaylistController extends Controller
      * @param $songid
      * @return bool
      */
-    public function removeTrackFromPlaylist($playlistid, $songid)
+    public function removeTrackFromPlaylist($playlistid, $trackid)
     {
         try {
             $sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
                 . 'WHERE `playlist_id` = ? AND `track_id` = ?';
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($playlistid, $songid));
+            $stmt->execute(array($playlistid, $trackid));
         } catch (\Exception $e) {
             return false;
         }

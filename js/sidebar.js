@@ -224,7 +224,7 @@ OCA.Audioplayer.Sidebar = {
                             'data-listid': audioinfo[m].playlist_id,
                             'data-trackid': trackid,
                             'title': t('audioplayer', 'Remove')
-                        }).on('click', OCA.Audioplayer.audiosInstance.removeSongFromPlaylist.bind(OCA.Audioplayer.audiosInstance));
+                        }).on('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist.bind(OCA.Audioplayer.Playlists));
 
                         tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
                         tablekey = $('<div>').addClass('key').append(spanDelete);
@@ -262,28 +262,6 @@ OCA.Audioplayer.Sidebar = {
     resetView: function () {
         $('.tabHeader.selected').removeClass('selected');
         $('.tab').addClass('hidden');
-    },
-
-    removeSongFromPlaylist: function (evt) {
-
-        var trackid = $(evt.target).attr('data-trackid');
-        var playlist = $(evt.target).attr('data-listid');
-
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/removetrackfromplaylist'),
-            data: {
-                'playlistid': playlist,
-                'songid': trackid
-            },
-            success: function (jsondata) {
-                if (jsondata === true) {
-                    var currentCount = $('#myCategory li[data-id="' + playlist + '"]').find('.counter');
-                    currentCount.text(currentCount.text() - 1);
-                    $('#playlistsTabView div[data-id="' + playlist + '"]').remove();
-                }
-            }
-        });
     },
 
     sortByName: function (a, b) {
