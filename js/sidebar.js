@@ -59,7 +59,7 @@ OCA.Audioplayer.Sidebar = {
             var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
             starIcon.off();
             starIcon.on('click',
-                OCA.Audioplayer.audiosInstance.favoriteUpdate.bind(OCA.Audioplayer.audiosInstance)
+                OCA.Audioplayer.Backend.favoriteUpdate.bind(this)
             );
 
             if ($appsidebar.data('trackid') === '') {

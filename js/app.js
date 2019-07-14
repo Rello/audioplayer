@@ -30,22 +30,13 @@ var Audios = function () {
 Audios.prototype.init = function () {
     this.initialDocumentTitle = $('title').html().trim();
 
-    var locHash = decodeURI(location.hash).substr(1);
-    if (locHash !== '') {
-        var locHashTemp = locHash.split('-');
-
-        $('#searchresults').addClass('hidden');
-        window.location.href = '#';
-        if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
-            this.CategorySelectors = locHashTemp;
-            this.presetDisplay();
-        }
+    if (decodeURI(location.hash).substr(1) !== '') {
+        OCA.Audioplayer.audiosInstance.processSearchResult();
     } else {
         // read saved values from user values
-        this.getUserValue('category', this.displayCategory.bind(this));
+        OCA.Audioplayer.Backend.getUserValue('category', this.processCategoryFromPreset.bind(this));
     }
 
-    this.initKeyListener();
     $('.toolTip').tooltip();
 
     // temporary solution until code gets more self-contained
@@ -54,36 +45,6 @@ Audios.prototype.init = function () {
         OCA.Audioplayer = {};
     }
     OCA.Audioplayer.audiosInstance = this;
-};
-
-Audios.prototype.displayCategory = function () {
-    if (this.CategorySelectors === 'false') {
-        this.showInitScreen();
-    } else if (this.CategorySelectors[0] && this.CategorySelectors[0] !== 'Albums') {
-        this.presetDisplay();
-    } else {
-        this.loadCategoryAlbums();
-    }
-};
-
-Audios.prototype.presetDisplay = function () {
-    $('#category_selector').val(this.CategorySelectors[0]);
-    this.loadCategory(this.loadLatestCategory.bind(this));
-};
-
-Audios.prototype.loadLatestCategory = function () {
-    if (this.CategorySelectors[1] && this.CategorySelectors[1] !== 'undefined') {
-        $('#myCategory li[data-id="' + this.CategorySelectors[1] + '"]').addClass('active');
-        var appNavigation = $('#app-navigation');
-        appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
-        this.loadIndividualCategory(null, function () {                        // select the last played title
-            if (this.CategorySelectors[2] && this.CategorySelectors[2] !== 'undefined') {
-                var item = $('#individual-playlist li[data-trackid="' + this.CategorySelectors[2] + '"]');
-                item.find('.icon').hide();
-                item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
-            }
-        }.bind(this));
-    }
 };
 
 Audios.prototype.initKeyListener = function () {
@@ -135,217 +96,260 @@ Audios.prototype.initKeyListener = function () {
     }.bind(this));
 };
 
-Audios.prototype.loadCategoryAlbums = function () {
-    this.PlaylistContainer.show();
-    this.EmptyContainer.hide();
-    $('#loading').show();
-    $('.toolTip').tooltip('hide');
-    $('#alben').addClass('active');
-    $('#individual-playlist').remove();
-    $('#individual-playlist-info').hide();
-    $('#individual-playlist-header').hide();
-    $('.coverrow').remove();
-    $('.songcontainer').remove();
+Audios.prototype.processSearchResult = function () {
+    var locHash = decodeURI(location.hash).substr(1);
+    var locHashTemp = locHash.split('-');
 
-    $('#myCategory li').removeClass('active');
-    $('#newPlaylist').addClass('ap_hidden');
-
-    $.ajax({
-        type: 'GET',
-        url: OC.generateUrl('apps/audioplayer/getcategory'),
-        data: {category: 'Album'},
-        success: this.loadCategoryAlbumsResponse.bind(this)
-    });
+    $('#searchresults').addClass('hidden');
+    window.location.href = '#';
+    if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
+        this.CategorySelectors = locHashTemp;
+        this.processCategoryFromPreset();
+    }
 };
 
-Audios.prototype.loadCategoryAlbumsResponse = function (jsondata) {
-    $('#loading').hide();
-    if (jsondata.status === 'success') {
-        $('.sm2-bar-ui').show();
-        this.buildCoverRow(jsondata.data);
-    } else {
+Audios.prototype.processCategoryFromPreset = function () {
+    if (this.CategorySelectors === 'false') {
         this.showInitScreen();
+    } else if (this.CategorySelectors[0] && this.CategorySelectors[0] !== 'Albums') {
+        $('#category_selector').val(this.CategorySelectors[0]);
+        this.loadCategory(this.selectCategoryItemFromPreset.bind(this));
+    } else {
+        OCA.Audioplayer.Albums.loadCategoryAlbums();
     }
 };
 
-Audios.prototype.buildCoverRow = function (aAlbums) {
-    var divAlbum = [];
-    var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-    var divRow = $('<div />').addClass('coverrow');
-
-    var boundLoadIndividualAlbums = this.loadIndividualAlbums.bind(this);
-    for (var album of aAlbums) {
-        var addCss;
-        var addDescr;
-        if (album.cid === '') {
-            addCss = 'background-color: #D3D3D3;color: #333333;';
-            addDescr = album.name.substring(0, 1);
-        } else {
-            addDescr = '';
-            addCss = 'background-image:url(' + getcoverUrl + album.cid + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
-        }
-
-        divAlbum = $('<div/>').addClass('album').css('margin-left', '15px').attr({
-            'data-album': album.id,
-            'data-name': album.name     //required for songcontainer title
-        }).on('click', boundLoadIndividualAlbums);
-
-        var divPlayHref = $('<a/>');
-        var divPlayImage = $('<div/>').attr({
-            'id': 'AlbumPlay'
-        }).on('click', boundLoadIndividualAlbums);
-
-        divPlayHref.append(divPlayImage);
-
-        var divAlbumCover = $('<div/>').addClass('albumcover').attr({'style': addCss}).text(addDescr);
-        var divAlbumDescr = $('<div/>').addClass('albumdescr').html('<span class="albumname">' + album.name + '</span><span class="artist">' + album.art + '</span>');
-
-        divAlbum.append(divAlbumCover);
-        divAlbum.append(divAlbumDescr);
-        divAlbum.append(divPlayImage);
-        divRow.append(divAlbum);
-    }
-    this.PlaylistContainer.append(divRow);
-};
-
-Audios.prototype.loadIndividualAlbums = function (evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-
-    var directPlay = typeof $(evt.target).attr('id') !== 'undefined';
-    var eventTarget = $(evt.target).parent();
-    var AlbumId = eventTarget.attr('data-album');
-    var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
-
-    if (activeAlbum.hasClass('is-active')) {
-        $('.songcontainer').slideUp(200, function () {
-            $('.album').removeClass('is-active').find('.artist').css('visibility', 'visible');
-        });
-    } else {
-        $('.album').removeClass('is-active').find('.artist').css('visibility', 'visible');
-        this.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
-
-        activeAlbum.addClass('is-active');
-        activeAlbum.find('.artist').css('visibility', 'hidden');
-        this.buildSongContainer(eventTarget, directPlay);
+Audios.prototype.selectCategoryItemFromPreset = function () {
+    if (this.CategorySelectors[1] && this.CategorySelectors[1] !== 'undefined') {
+        $('#myCategory li[data-id="' + this.CategorySelectors[1] + '"]').addClass('active');
+        var appNavigation = $('#app-navigation');
+        appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
+        this.loadIndividualCategory(null, function () {                        // select the last played title
+            if (this.CategorySelectors[2] && this.CategorySelectors[2] !== 'undefined') {
+                var item = $('#individual-playlist li[data-trackid="' + this.CategorySelectors[2] + '"]');
+                item.find('.icon').hide();
+                item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
+            }
+        }.bind(this));
     }
 };
 
-Audios.prototype.buildSongContainer = function (eventTarget, directPlay) {
-    var AlbumId = eventTarget.attr('data-album');
-    var AlbumName = eventTarget.attr('data-name');
-    var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
-    var iArrowLeft = 72;
+/**
+ * @namespace OCA.Audioplayer.Albums
+ */
+OCA.Audioplayer.Albums = {
 
-    $('.songcontainer').remove();
-    var divSongContainer = $('<div/>').addClass('songcontainer');
-    var divArrow = $('<i/>').addClass('open-arrow').css('left', activeAlbum.position().left + iArrowLeft);
-    var divSongContainerInner = $('<div/>').addClass('songcontainer-inner');
-    var listAlbumWrapper = $('<ul/>').addClass('albumwrapper').attr('data-album', AlbumId);
-    var divSongList;
-    var h2SongHeader = $('<h2/>').text(AlbumName);
-    var addCss;
-    var addDescr;
-    var myCover = $('.album.is-active .albumcover').css('background-image');
+    loadCategoryAlbums: function () {
+        OCA.Audioplayer.audiosInstance.PlaylistContainer.show();
+        OCA.Audioplayer.audiosInstance.EmptyContainer.hide();
+        $('#loading').show();
+        $('.toolTip').tooltip('hide');
+        $('#alben').addClass('active');
+        $('#individual-playlist').remove();
+        $('#individual-playlist-info').hide();
+        $('#individual-playlist-header').hide();
+        $('.coverrow').remove();
+        $('.songcontainer').remove();
 
-    if (myCover === 'none') {
-        addCss = 'background-color: #D3D3D3;color: #333333;';
-        addDescr = AlbumName.substring(0, 1);
-    } else {
-        addDescr = '';
-        addCss = 'background-image:' + myCover + ';-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
-    }
-    var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({'style': addCss}).text(addDescr);
-    var sidebarThumbnail = $('#sidebarThumbnail');
+        $('#myCategory li').removeClass('active');
+        $('#newPlaylist').addClass('ap_hidden');
 
-    if (this.PlaylistContainer.width() < 850) {
-        divSongContainerCover.addClass('cover-small');
-        divSongList = $('<div/>').addClass('songlist one-column');
-        if (sidebarThumbnail.hasClass('full')) {
-            sidebarThumbnail.addClass('larger').removeClass('full');
-        }
-    } else {
-        divSongList = $('<div/>').addClass('songlist two-column');
-        if (sidebarThumbnail.hasClass('larger')) {
-            sidebarThumbnail.addClass('full').removeClass('larger');
-        }
-    }
-
-    var br = $('<br />').css('clear', 'both');
-
-    divSongList.append(listAlbumWrapper);
-    divSongContainerInner.append(divSongContainerCover);
-    divSongContainerInner.append(h2SongHeader);
-    divSongContainerInner.append('<br/>');
-    divSongContainerInner.append(divSongList);
-    divSongContainerInner.append(br);
-    divSongContainer.append(divArrow);
-    divSongContainer.append(divSongContainerInner);
-    this.PlaylistContainer.append(divSongContainer);
-
-    if (this.AjaxCallStatus !== null) {
-        this.AjaxCallStatus.abort();
-    }
-
-    this.AjaxCallStatus = $.ajax({
-        type: 'GET',
-        url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
-        data: {category: 'Album', categoryId: AlbumId},
-        success: function (jsondata) {
-            if (jsondata.status === 'success') {
-                var songcounter = 0;
-                $(jsondata.data).each(function (i, el) {
-                    listAlbumWrapper.append(this.buildTrackRow(el));
-                    songcounter++;
-                }.bind(this));
-                if (songcounter % 2 !== 0) {
-                    var li = $('<li/>');
-                    var spanNr = $('<span/>').addClass('number').text('\u00A0');
-                    li.append(spanNr);
-                    li.addClass('noPlaylist');
-                    listAlbumWrapper.append(li); //add a blank row in case of uneven records=>avoid a Chrome bug to strangely split the records across columns
-                }
-                this.trackClickHandler();
-                this.indicateCurrentPlayingTrack();
-                if (directPlay === true) {
-                    $('.albumwrapper').find('.title').first().trigger('click');
-
+        $.ajax({
+            type: 'GET',
+            url: OC.generateUrl('apps/audioplayer/getcategory'),
+            data: {category: 'Album'},
+            success: function (jsondata) {
+                $('#loading').hide();
+                if (jsondata.status === 'success') {
+                    $('.sm2-bar-ui').show();
+                    OCA.Audioplayer.Albums.buildAlbumCoverRow(jsondata.data);
+                } else {
+                    OCA.Audioplayer.audiosInstance.showInitScreen();
                 }
             }
-        }.bind(this)
-    });
+        });
+    },
 
-    var searchresult = decodeURI(location.hash).substr(1);
-    if (searchresult !== '') {
-        var locHashTemp = searchresult.split('-');
-        var evt = {};
-        evt.albumId = locHashTemp[1];
-        window.location.href = '#';
-    }
+    buildAlbumCoverRow: function (aAlbums) {
+        var divAlbum = [];
+        var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+        var divRow = $('<div />').addClass('coverrow');
 
-    if (directPlay !== true) {
+        var boundLoadIndividualAlbums = OCA.Audioplayer.Albums.loadIndividualAlbum.bind(this);
+        for (var album of aAlbums) {
+            var addCss;
+            var addDescr;
+            if (album.cid === '') {
+                addCss = 'background-color: #D3D3D3;color: #333333;';
+                addDescr = album.name.substring(0, 1);
+            } else {
+                addDescr = '';
+                addCss = 'background-image:url(' + getcoverUrl + album.cid + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+            }
 
-        var iScroll = 120;
-        var iSlideDown = 200;
-        var iTop = 80;
-        var appContent;
-        var containerTop;
-        var appContentScroll;
-        if ($('#content-wrapper').length === 1) { //check old structure of NC13 and oC
-            appContent = $('#app-content');
-            var scrollTopValue = appContent.scrollTop();
-            containerTop = scrollTopValue + activeAlbum.offset().top + iTop;
-            appContentScroll = scrollTopValue + activeAlbum.offset().top - iScroll;
-        } else { //structure was changed with NC14
-            appContent = $(document);
-            containerTop = activeAlbum.offset().top + iTop;
-            appContentScroll = activeAlbum.offset().top - iScroll;
+            divAlbum = $('<div/>').addClass('album').css('margin-left', '15px').attr({
+                'data-album': album.id,
+                'data-name': album.name     //required for songcontainer title
+            }).on('click', boundLoadIndividualAlbums);
+
+            var divPlayHref = $('<a/>');
+            var divPlayImage = $('<div/>').attr({
+                'id': 'AlbumPlay'
+            }).on('click', boundLoadIndividualAlbums);
+
+            divPlayHref.append(divPlayImage);
+
+            var divAlbumCover = $('<div/>').addClass('albumcover').attr({'style': addCss}).text(addDescr);
+            var divAlbumDescr = $('<div/>').addClass('albumdescr').html('<span class="albumname">' + album.name + '</span><span class="artist">' + album.art + '</span>');
+
+            divAlbum.append(divAlbumCover);
+            divAlbum.append(divAlbumDescr);
+            divAlbum.append(divPlayImage);
+            divRow.append(divAlbum);
+        }
+        OCA.Audioplayer.audiosInstance.PlaylistContainer.append(divRow);
+    },
+
+    loadIndividualAlbum: function (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        var directPlay = typeof $(evt.target).attr('id') !== 'undefined';
+        var eventTarget = $(evt.target).parent();
+        var AlbumId = eventTarget.attr('data-album');
+        var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
+
+        if (activeAlbum.hasClass('is-active')) {
+            $('.songcontainer').slideUp(200, function () {
+                $('.album').removeClass('is-active').find('.artist').css('visibility', 'visible');
+            });
+        } else {
+            $('.album').removeClass('is-active').find('.artist').css('visibility', 'visible');
+            OCA.Audioplayer.audiosInstance.PlaylistContainer.data('playlist', 'Albums-' + AlbumId);
+
+            activeAlbum.addClass('is-active');
+            activeAlbum.find('.artist').css('visibility', 'hidden');
+            OCA.Audioplayer.Albums.buildSongContainer(eventTarget, directPlay);
+        }
+    },
+
+    buildSongContainer: function (eventTarget, directPlay) {
+        var AlbumId = eventTarget.attr('data-album');
+        var AlbumName = eventTarget.attr('data-name');
+        var activeAlbum = $('.album[data-album="' + AlbumId + '"]');
+        var iArrowLeft = 72;
+
+        $('.songcontainer').remove();
+        var divSongContainer = $('<div/>').addClass('songcontainer');
+        var divArrow = $('<i/>').addClass('open-arrow').css('left', activeAlbum.position().left + iArrowLeft);
+        var divSongContainerInner = $('<div/>').addClass('songcontainer-inner');
+        var listAlbumWrapper = $('<ul/>').addClass('albumwrapper').attr('data-album', AlbumId);
+        var divSongList;
+        var h2SongHeader = $('<h2/>').text(AlbumName);
+        var addCss;
+        var addDescr;
+        var myCover = $('.album.is-active .albumcover').css('background-image');
+
+        if (myCover === 'none') {
+            addCss = 'background-color: #D3D3D3;color: #333333;';
+            addDescr = AlbumName.substring(0, 1);
+        } else {
+            addDescr = '';
+            addCss = 'background-image:' + myCover + ';-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+        }
+        var divSongContainerCover = $('<div/>').addClass('songcontainer-cover').attr({'style': addCss}).text(addDescr);
+        var sidebarThumbnail = $('#sidebarThumbnail');
+
+        if (OCA.Audioplayer.audiosInstance.PlaylistContainer.width() < 850) {
+            divSongContainerCover.addClass('cover-small');
+            divSongList = $('<div/>').addClass('songlist one-column');
+            if (sidebarThumbnail.hasClass('full')) {
+                sidebarThumbnail.addClass('larger').removeClass('full');
+            }
+        } else {
+            divSongList = $('<div/>').addClass('songlist two-column');
+            if (sidebarThumbnail.hasClass('larger')) {
+                sidebarThumbnail.addClass('full').removeClass('larger');
+            }
         }
 
-        divSongContainer.css({'top': containerTop}).slideDown(iSlideDown);
-        appContent.scrollTop(appContentScroll);
-    }
-    return true;
+        var br = $('<br />').css('clear', 'both');
+
+        divSongList.append(listAlbumWrapper);
+        divSongContainerInner.append(divSongContainerCover);
+        divSongContainerInner.append(h2SongHeader);
+        divSongContainerInner.append('<br/>');
+        divSongContainerInner.append(divSongList);
+        divSongContainerInner.append(br);
+        divSongContainer.append(divArrow);
+        divSongContainer.append(divSongContainerInner);
+        OCA.Audioplayer.audiosInstance.PlaylistContainer.append(divSongContainer);
+
+        if (OCA.Audioplayer.audiosInstance.AjaxCallStatus !== null) {
+            OCA.Audioplayer.audiosInstance.AjaxCallStatus.abort();
+        }
+
+        OCA.Audioplayer.audiosInstance.AjaxCallStatus = $.ajax({
+            type: 'GET',
+            url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
+            data: {category: 'Album', categoryId: AlbumId},
+            success: function (jsondata) {
+                if (jsondata.status === 'success') {
+                    var songcounter = 0;
+                    $(jsondata.data).each(function (i, el) {
+                        listAlbumWrapper.append(OCA.Audioplayer.audiosInstance.buildTrackRow(el));
+                        songcounter++;
+                    }.bind(this));
+                    if (songcounter % 2 !== 0) {
+                        var li = $('<li/>');
+                        var spanNr = $('<span/>').addClass('number').text('\u00A0');
+                        li.append(spanNr);
+                        li.addClass('noPlaylist');
+                        listAlbumWrapper.append(li); //add a blank row in case of uneven records=>avoid a Chrome bug to strangely split the records across columns
+                    }
+                    OCA.Audioplayer.audiosInstance.trackClickHandler();
+                    OCA.Audioplayer.audiosInstance.indicateCurrentPlayingTrack();
+                    if (directPlay === true) {
+                        $('.albumwrapper').find('.title').first().trigger('click');
+
+                    }
+                }
+            }.bind(this)
+        });
+
+        var searchresult = decodeURI(location.hash).substr(1);
+        if (searchresult !== '') {
+            var locHashTemp = searchresult.split('-');
+            var evt = {};
+            evt.albumId = locHashTemp[1];
+            window.location.href = '#';
+        }
+
+        if (directPlay !== true) {
+
+            var iScroll = 120;
+            var iSlideDown = 200;
+            var iTop = 80;
+            var appContent;
+            var containerTop;
+            var appContentScroll;
+            if ($('#content-wrapper').length === 1) { //check old structure of NC13 and oC
+                appContent = $('#app-content');
+                var scrollTopValue = appContent.scrollTop();
+                containerTop = scrollTopValue + activeAlbum.offset().top + iTop;
+                appContentScroll = scrollTopValue + activeAlbum.offset().top - iScroll;
+            } else { //structure was changed with NC14
+                appContent = $(document);
+                containerTop = activeAlbum.offset().top + iTop;
+                appContentScroll = activeAlbum.offset().top - iScroll;
+            }
+
+            divSongContainer.css({'top': containerTop}).slideDown(iSlideDown);
+            appContent.scrollTop(appContentScroll);
+        }
+        return true;
+    },
+
 };
 
 Audios.prototype.buildTrackRow = function (elem) {
@@ -386,7 +390,7 @@ Audios.prototype.buildTrackRow = function (elem) {
 Audios.prototype.trackClickHandler = function (callback) {
     var albumWrapper = $('.albumwrapper');
     var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-    var category = this.PlaylistContainer.data('playlist').split('-');
+    var category = OCA.Audioplayer.audiosInstance.PlaylistContainer.data('playlist').split('-');
 
     var can_play = soundManager.html5;
     var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
@@ -395,36 +399,30 @@ Audios.prototype.trackClickHandler = function (callback) {
     }
 
     var playlist = albumWrapper.find('li');
-    var boundProcessAlbum = this.processAlbum.bind(this, category, getcoverUrl, can_play, playlist);
-    playlist.each(
-        boundProcessAlbum
-    );
+    playlist.each(function (index, elm) {
+        var element = $(elm);
+
+        if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
+            element.draggable({
+                appendTo: 'body',
+                helper: OCA.Audioplayer.Playlists.dragElement,
+                cursor: 'move',
+                delay: 500,
+                start: function (event, ui) {
+                    ui.helper.addClass('draggingSong');
+                }
+            });
+        }
+
+        element.find('.title').on('click',
+            OCA.Audioplayer.audiosInstance.onTitleClick.bind(OCA.Audioplayer.audiosInstance, getcoverUrl, can_play, playlist, element)
+        );
+    });
     // the callback is used for the the init function to get feedback when all title rows are ready
     if (typeof callback === 'function') {
         callback();
     }
 };
-
-Audios.prototype.processAlbum = function (category, coverUrl, can_play, playlist, i, el) {
-    var element = $(el);
-
-    if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
-        element.draggable({
-            appendTo: 'body',
-            helper: this.dragElement,
-            cursor: 'move',
-            delay: 500,
-            start: function (event, ui) {
-                ui.helper.addClass('draggingSong');
-            }
-        });
-    }
-
-    element.find('.title').on('click',
-        this.onTitleClick.bind(this, coverUrl, can_play, playlist, element)
-    );
-};
-
 
 Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element) {
     var activeLi = element.closest('li');
@@ -432,7 +430,7 @@ Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element)
     if ($('#audioplayer_sonos').val() === 'checked') {
         var liIndex = element.parents('li').index();
         OCA.Audioplayer.Sonos.playSonos(liIndex);
-        this.setStatistics();
+        OCA.Audioplayer.Backend.setStatistics();
         return;
     }
     if (can_play[activeLi.data('mimetype')] !== true) {
@@ -461,7 +459,7 @@ Audios.prototype.onTitleClick = function (coverUrl, can_play, playlist, element)
             this.AudioPlayer.playlistController.data.selectedIndex = 0;
         }
         this.AudioPlayer.actions.play(activeLi.index());
-        this.setStatistics();
+        OCA.Audioplayer.Backend.setStatistics();
     }
 };
 
@@ -523,7 +521,6 @@ Audios.prototype.loadCategory = function (callback) {
     }
     return true;
 };
-
 
 Audios.prototype.loadIndividualCategory = function (evt, callback) {
     this.PlaylistContainer.show();
@@ -604,11 +601,11 @@ Audios.prototype.onGetCategoryItemsResponse = function (callback, category, cate
                 fav_action = $('<i/>').addClass('icon icon-starred')
                     .css({'opacity': 0.3})
                     .attr({'data-trackid': el.id})
-                    .on('click', this.favoriteUpdate.bind(this));
+                    .on('click', OCA.Audioplayer.Backend.favoriteUpdate.bind(this));
             } else {
                 fav_action = $('<i/>').addClass('icon icon-star')
                     .attr({'data-trackid': el.id})
-                    .on('click', this.favoriteUpdate.bind(this));
+                    .on('click', OCA.Audioplayer.Backend.favoriteUpdate.bind(this));
             }
 
             var stream_type;
@@ -706,89 +703,6 @@ Audios.prototype.showInitScreen = function (mode) {
     }
 };
 
-Audios.prototype.dragElement = function () {
-    return $(this).clone().text($(this).find('.title').attr('data-title'));
-};
-
-Audios.prototype.favoriteUpdate = function (evt) {
-    var trackid = $(evt.target).attr('data-trackid');
-    var isFavorite = false;
-
-    if (this.CategorySelectors[1].toString().substring(0, 1) === 'S') {
-        return;
-    }
-
-    if ($(evt.target).hasClass('icon icon-starred')) {
-        isFavorite = true;
-        $(evt.target).removeClass('icon icon-starred');
-        $(evt.target).addClass('icon icon-star').removeAttr('style');
-    } else {
-        isFavorite = false;
-        $(evt.target).removeClass('icon icon-star');
-        $(evt.target).addClass('icon icon-starred').css('opacity', 1);
-    }
-
-    $.ajax({
-        type: 'GET',
-        url: OC.generateUrl('apps/audioplayer/setfavorite'),
-        data: {
-            'trackid': trackid,
-            'isFavorite': isFavorite
-        }
-    });
-    return false;
-};
-
-Audios.prototype.getUserValue = function (user_type, callback) {
-    $.ajax({
-        type: 'GET',
-        url: OC.generateUrl('apps/audioplayer/getvalue'),
-        data: {'type': user_type},
-        success: function (jsondata) {
-            if (jsondata.status === 'success' && user_type === 'category') {
-                this.CategorySelectors = jsondata.value.split('-');
-                callback(this.CategorySelectors);
-            } else if (jsondata.status === 'false' && user_type === 'category') {
-                this.CategorySelectors = 'false';
-                callback(this.CategorySelectors);
-            }
-        }.bind(this)
-    });
-};
-
-Audios.prototype.setUserValue = function (user_type, user_value) {
-    if (user_type) {
-        if (user_type === 'category') {
-            this.CategorySelectors = user_value.split('-');
-        }
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/setvalue'),
-            data: {
-                'type': user_type,
-                'value': user_value
-            },
-            success: function () {
-            }
-        });
-    }
-};
-
-Audios.prototype.setStatistics = function () {
-    var track_id = $('#activePlaylist li.selected').data('trackid');
-    if (track_id) {
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/setstatistics'),
-            data: {'track_id': track_id},
-            success: function () {
-            }
-        });
-        this.setUserValue('category', this.CategorySelectors[0] + '-' + this.CategorySelectors[1] + '-' + track_id);
-    }
-
-};
-
 Audios.prototype.currentTrackUiChange = function (coverUrl, activeLi) {
     var addCss;
     var addDescr;
@@ -812,20 +726,8 @@ Audios.prototype.soundmanagerCallback = function (SMaction) {
             OC.generateUrl('apps/audioplayer/getcover/'),
             $('#activePlaylist li.selected')
         );
-        this.setStatistics();
+        OCA.Audioplayer.Backend.setStatistics();
     }
-};
-
-Audios.prototype.checkNewTracks = function () {
-    $.ajax({
-        type: 'POST',
-        url: OC.generateUrl('apps/audioplayer/checknewtracks'),
-        success: function (data) {
-            if (data === 'true') {
-                OC.Notification.showTemporary(t('audioplayer', 'New or updated audio files available'));
-            }
-        }
-    });
 };
 
 Audios.prototype.sortPlaylist = function (evt) {
@@ -900,6 +802,102 @@ Audios.prototype.resizePlaylist = function () {
     }
 };
 
+/**
+ * @namespace OCA.Audioplayer.Backend
+ */
+OCA.Audioplayer.Backend = {
+    favoriteUpdate: function (evt) {
+        var trackid = $(evt.target).attr('data-trackid');
+        var isFavorite = false;
+
+        if (OCA.Audioplayer.audiosInstance.CategorySelectors[1].toString().substring(0, 1) === 'S') {
+            return;
+        }
+
+        if ($(evt.target).hasClass('icon icon-starred')) {
+            isFavorite = true;
+            $(evt.target).removeClass('icon icon-starred');
+            $(evt.target).addClass('icon icon-star').removeAttr('style');
+        } else {
+            isFavorite = false;
+            $(evt.target).removeClass('icon icon-star');
+            $(evt.target).addClass('icon icon-starred').css('opacity', 1);
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: OC.generateUrl('apps/audioplayer/setfavorite'),
+            data: {
+                'trackid': trackid,
+                'isFavorite': isFavorite
+            }
+        });
+        return false;
+    },
+
+    getUserValue: function (user_type, callback) {
+        $.ajax({
+            type: 'GET',
+            url: OC.generateUrl('apps/audioplayer/getvalue'),
+            data: {'type': user_type},
+            success: function (jsondata) {
+                if (jsondata.status === 'success' && user_type === 'category') {
+                    OCA.Audioplayer.audiosInstance.CategorySelectors = jsondata.value.split('-');
+                    callback(OCA.Audioplayer.audiosInstance.CategorySelectors);
+                } else if (jsondata.status === 'false' && user_type === 'category') {
+                    OCA.Audioplayer.audiosInstance.CategorySelectors = 'false';
+                    callback(OCA.Audioplayer.audiosInstance.CategorySelectors);
+                }
+            }.bind(this)
+        });
+    },
+
+    setUserValue: function (user_type, user_value) {
+        if (user_type) {
+            if (user_type === 'category') {
+                OCA.Audioplayer.audiosInstance.CategorySelectors = user_value.split('-');
+            }
+            $.ajax({
+                type: 'GET',
+                url: OC.generateUrl('apps/audioplayer/setvalue'),
+                data: {
+                    'type': user_type,
+                    'value': user_value
+                },
+                success: function () {
+                }
+            });
+        }
+    },
+
+    setStatistics: function () {
+        var track_id = $('#activePlaylist li.selected').data('trackid');
+        if (track_id) {
+            $.ajax({
+                type: 'GET',
+                url: OC.generateUrl('apps/audioplayer/setstatistics'),
+                data: {'track_id': track_id},
+                success: function () {
+                }
+            });
+            OCA.Audioplayer.Backend.setUserValue('category', OCA.Audioplayer.audiosInstance.CategorySelectors[0] + '-' + OCA.Audioplayer.audiosInstance.CategorySelectors[1] + '-' + track_id);
+        }
+
+    },
+
+    checkNewTracks: function () {
+        $.ajax({
+            type: 'POST',
+            url: OC.generateUrl('apps/audioplayer/checknewtracks'),
+            success: function (data) {
+                if (data === 'true') {
+                    OC.Notification.showTemporary(t('audioplayer', 'New or updated audio files available'));
+                }
+            }
+        });
+    },
+
+};
 
 /**
  * @namespace OCA.Audioplayer.Playlists
@@ -1126,15 +1124,19 @@ OCA.Audioplayer.Playlists = {
         });
     },
 
-};
+    dragElement: function () {
+        return $(this).clone().text($(this).find('.title').attr('data-title'));
+    },
 
+};
 
 var resizeTimeout = null;
 document.addEventListener('DOMContentLoaded', function () {
 
     var myAudios = new Audios();
     myAudios.init();
-    myAudios.checkNewTracks();
+    OCA.Audioplayer.audiosInstance.initKeyListener();
+    OCA.Audioplayer.Backend.checkNewTracks();
     if ($('#audioplayer_sonos').val() !== 'checked') {
         myAudios.AudioPlayer = new SM2BarPlayer($('.sm2-bar-ui')[0]);
         myAudios.AudioPlayer.actions.setVolume($('#audioplayer_volume').val());
@@ -1188,8 +1190,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $('#alben').addClass('active').on('click', function () {
-        myAudios.loadCategoryAlbums();
-        myAudios.setUserValue('category', 'Albums');
+        OCA.Audioplayer.Albums.loadCategoryAlbums();
+        OCA.Audioplayer.Backend.setUserValue('category', 'Albums');
     });
 
 
@@ -1199,10 +1201,10 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#newPlaylist').addClass('ap_hidden');
         if ($('#app-navigation').hasClass('hidden')) {
             $('#app-navigation').removeClass('hidden');
-            myAudios.setUserValue('navigation', 'true');
+            OCA.Audioplayer.Backend.setUserValue('navigation', 'true');
         } else {
             $('#app-navigation').addClass('hidden');
-            myAudios.setUserValue('navigation', 'false');
+            OCA.Audioplayer.Backend.setUserValue('navigation', 'false');
         }
         myAudios.resizePlaylist.call(myAudios);
     });
@@ -1236,16 +1238,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }));
 
     window.onhashchange = function () {
-        var locHash = decodeURI(location.hash).substr(1);
-        if (locHash !== '') {
-            var locHashTemp = locHash.split('-');
-
-            $('#searchresults').addClass('hidden');
-            window.location.href = '#';
-            if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
-                myAudios.CategorySelectors = locHashTemp;
-                myAudios.presetDisplay();
-            }
+        if (decodeURI(location.hash).substr(1) !== '') {
+            OCA.Audioplayer.audiosInstance.processSearchResult();
         }
     };
 });
