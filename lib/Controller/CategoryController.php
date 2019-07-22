@@ -276,18 +276,15 @@ class CategoryController extends Controller
      */
     public function getCategoryItems($category, $categoryId)
     {
-        $albums = 0;
         if ($categoryId[0] === "S") $category = "Stream";
         if ($categoryId[0] === "P") $category = "Playlist";
         $items = $this->getCatagoryItemsDetails($category, $categoryId);
         $headers = $this->getCategoryHeaders($category);
-        if ($category === 'Artist') $albums = $this->getAlbumCountForCategory($category, $categoryId);
 
         $result = !empty($items) ? [
             'status' => 'success',
             'data' => $items,
             'header' => $headers,
-            'albums' => $albums,
         ] : [
             'status' => 'nodata',
         ];
