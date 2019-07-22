@@ -14,6 +14,7 @@
 namespace OCA\audioplayer\AppInfo;
 
 use OCP\AppFramework\App;
+use OCP\IContainer;
 use OCP\Util;
 
 class Application extends App {
@@ -22,8 +23,15 @@ class Application extends App {
     {
 
 		parent::__construct('audioplayer', $urlParams);
+        $container = $this->getContainer();
 
-	}
+        $container->registerService(
+            'L10N', function (IContainer $c) {
+            return $c->query('ServerContainer')
+                ->getL10N($c->query('AppName'));
+        }
+        );
+    }
 
 	public function registerFileHooks() {
 		Util::connectHook(
