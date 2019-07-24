@@ -5,10 +5,13 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Added
 - APIs & events to enable Audio Player add-ons [#408](https://github.com/rello/audioplayer/issues/408)
+- ID3 Editor as separate add-on
 
 ### Changed
 - Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) @[mmatous](https://github.com/mmatous)
 - Remove SONOS Playback into separate add-on [#411](https://github.com/rello/audioplayer/issues/411)
+- JS cleanup & simplification
+- JS introduction of namespaces
 
 ### Added
 - Create lint configuration [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)

@@ -212,6 +212,7 @@ i#scanAudiosFirst {
     float: left;
     position: relative;
     width: 185px;
+    min-height: 10px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
