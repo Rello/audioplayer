@@ -546,29 +546,4 @@ class CategoryController extends Controller
         }
     }
 
-    /**
-     * Count the number of albums within the artist selection
-     *
-     * @param string $category
-     * @param string $categoryId
-     * @return integer
-     */
-    private function getAlbumCountForCategory($category, $categoryId)
-    {
-        $SQL = null;
-        if ($category === 'Artist') {
-            $SQL = "SELECT  COUNT(DISTINCT `AT`.`album_id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-			 		WHERE  `AT`.`artist_id` = ? 
-			 		AND `AT`.`user_id` = ?
-			 		";
-        }
-
-        $stmt = $this->db->prepare($SQL);
-        $stmt->execute(array($categoryId, $this->userId));
-        $results = $stmt->fetch();
-        return $results['count'];
-    }
-
 }
