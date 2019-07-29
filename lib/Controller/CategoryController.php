@@ -20,6 +20,7 @@ use OCP\IDbConnection;
 use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
+use \OCP\Files\NotFoundException;
 
 /**
  * Controller class for main page.
@@ -449,7 +450,7 @@ class CategoryController extends Controller
      *
      * @param integer $fileId
      * @return array
-     * @throws \OCP\Files\InvalidPathException
+     * @throws InvalidPathException
      */
     private function StreamParser($fileId)
     {
