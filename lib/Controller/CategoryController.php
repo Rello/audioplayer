@@ -13,13 +13,13 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\Files\InvalidPathException;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
-use OCP\Files\NotFoundException;
 
 /**
  * Controller class for main page.
@@ -168,7 +168,6 @@ class CategoryController extends Controller
 			 			WHERE `AB`.`user_id` = ?
 			 			ORDER BY LOWER(`AA`.`name`) ASC
 			 			";
-
         }
 
         if (isset($SQL)) {
@@ -184,10 +183,73 @@ class CategoryController extends Controller
                         $row['cid'] = '';
                     }
                 }
-                if ($category === 'Album')
-                    array_splice($row, 2, 1);
+                array_splice($row, 2, 1);
                 if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
-                $row['counter'] = $this->getCategoryCount($category, $row['id']);
+                $row['cnt'] = $this->getCategoryCount($category, $row['id']);
+                $aPlaylists[] = $row;
+            }
+        }
+        return $aPlaylists;
+    }
+
+    /**
+     * @NoAdminRequired
+     * @param $category
+     * @param $categoryId
+     * @return JSONResponse
+     */
+    public function getCategoryCover($category, $categoryId)
+    {
+        $playlists = $this->getCatagoryCoverDetails($category, $categoryId);
+
+        $result = empty($playlists) ? [
+            'status' => 'nodata'
+        ] : [
+            'status' => 'success',
+            'data' => $playlists
+        ];
+        $response = new JSONResponse();
+        $response->setData($result);
+        return $response;
+    }
+
+    /**
+     * Get details for the cover view
+     *
+     * @param string $category
+     * @param string $categoryId
+     * @return array
+     */
+    private function getCatagoryCoverDetails($category, $categoryId)
+    {
+        $whereMatching = array('Artist' => '`AT`.`artist_id`', 'Genre' => '`AT`.`genre_id`', 'Album' => '`AB`.`id`', 'Album Artist' => '`AB`.`artist_id`', 'Year' => '`AT`.`year`', 'Folder' => '`AT`.`folder_id`');
+
+        $aPlaylists = array();
+        $SQL = "SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`id` AS `art`, `AB`.`cover` AS `cid`";
+        $SQL .= " FROM `*PREFIX*audioplayer_tracks` `AT`";
+        $SQL .= " LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`";
+        $SQL .= " LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`";
+        $SQL .= ' WHERE `AT`.`user_id` = ? ';
+        if ($categoryId) $SQL .= 'AND ' . $whereMatching[$category] . '= ?';
+        $SQL .= " GROUP BY `AB`.`id` ORDER BY LOWER(`AB`.`name`) ASC";
+
+        if (isset($SQL)) {
+            $stmt = $this->db->prepare($SQL);
+            if ($categoryId) {
+                $stmt->execute(array($this->userId, $categoryId));
+            } else {
+                $stmt->execute(array($this->userId));
+            }
+            $results = $stmt->fetchAll();
+            foreach ($results as $row) {
+                $row['art'] = $this->DBController->loadArtistsToAlbum($row['id'], $row['art']);
+                if ($row['cid'] !== null) {
+                    $row['cid'] = $row['id'];
+                } else {
+                    $row['cid'] = '';
+                }
+                array_splice($row, 2, 1);
+                if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
                 $aPlaylists[] = $row;
             }
         }
@@ -203,60 +265,17 @@ class CategoryController extends Controller
      */
     private function getCategoryCount($category, $categoryId)
     {
-        $SQL = null;
-        if ($category === 'Artist') {
-            $SQL = "SELECT  COUNT(`AT`.`id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
-			 		WHERE  `AT`.`artist_id` = ? 
-			 		AND `AT`.`user_id` = ?
-			 		";
-        } elseif ($category === 'Genre') {
-            $SQL = "SELECT  COUNT(`AT`.`id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`genre_id` = ?  
-					AND `AT`.`user_id` = ?
-					";
-        } elseif ($category === 'Year') {
-            $SQL = "SELECT  COUNT(`AT`.`id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`year` = ? 
-					AND `AT`.`user_id` = ?
-					";
-        } elseif ($category === 'Title') {
-            $SQL = "SELECT  COUNT(`AT`.`id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`id` > ? 
-					AND `AT`.`user_id` = ?
-					";
-        } elseif ($category === 'Playlist') {
-            $SQL = "SELECT  COUNT(`AP`.`track_id`) AS `count`
-					FROM `*PREFIX*audioplayer_playlist_tracks` `AP` 
-			 		WHERE  `AP`.`playlist_id` = ?
-			 		";
-        } elseif ($category === 'Folder') {
-            $SQL = "SELECT  COUNT(`AT`.`id`) AS `count`
-					FROM `*PREFIX*audioplayer_tracks` `AT`
-					WHERE `AT`.`folder_id` = ? 
-					AND `AT`.`user_id` = ?
-					";
-        } elseif ($category === 'Album') {
-            $SQL = "SELECT  COUNT(`id`) AS `count` 
-					FROM `*PREFIX*audioplayer_tracks`
-					WHERE `album_id` = ? 
-					AND `user_id` = ?
-			 		";
-        } elseif ($category === 'Album Artist') {
-            $SQL = "SELECT  COUNT(`AT`.`id`) AS `count`
-					FROM `*PREFIX*audioplayer_albums` `AB` 
-                    JOIN `*PREFIX*audioplayer_tracks` `AT`
-					ON `AB`.`id` = `AT`.`album_id`
-			 		WHERE  `AB`.`artist_id` = ? 
-			 		AND `AB`.`user_id` = ?
-			 		";
-        }
+        $SQL = array();
+        $SQL['Artist'] = "SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_tracks` `AT` LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id` WHERE  `AT`.`artist_id` = ? AND `AT`.`user_id` = ?";
+        $SQL['Genre'] = "SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_tracks` `AT` WHERE  `AT`.`genre_id` = ? AND `AT`.`user_id` = ?";
+        $SQL['Year'] = "SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_tracks` `AT` WHERE  `AT`.`year` = ? AND `AT`.`user_id` = ?";
+        $SQL['Title'] = "SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_tracks` `AT` WHERE  `AT`.`id` > ? AND `AT`.`user_id` = ?";
+        $SQL['Playlist'] = "SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_playlist_tracks` `AT` WHERE  `AP`.`playlist_id` = ?";
+        $SQL['Folder'] = "SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_tracks` `AT` WHERE  `AT`.`folder_id` = ? AND `AT`.`user_id` = ?";
+        $SQL['Album'] = "SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_tracks` `AT` WHERE  `AT`.`album_id` = ? AND `AT`.`user_id` = ?";
+        $SQL['Album Artist'] = "SELECT COUNT(`AT`.`id`) AS `count`FROM `*PREFIX*audioplayer_albums` `AB` JOIN `*PREFIX*audioplayer_tracks` `AT` ON `AB`.`id` = `AT`.`album_id` WHERE  `AB`.`artist_id` = ? AND `AB`.`user_id` = ?";
 
-        $stmt = $this->db->prepare($SQL);
+        $stmt = $this->db->prepare($SQL[$category]);
         if ($category === 'Playlist') {
             $stmt->execute(array($categoryId));
         } else {
@@ -273,6 +292,7 @@ class CategoryController extends Controller
      * @param string $category
      * @param string $categoryId
      * @return JSONResponse
+     * @throws InvalidPathException
      */
     public function getCategoryItems($category, $categoryId)
     {
