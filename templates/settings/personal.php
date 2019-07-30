@@ -10,7 +10,7 @@
  */
 
 script('audioplayer', 'settings/personal');
-script('audioplayer', 'soundmanager2-nodebug-jsmin');
+script('audioplayer', 'soundmanager2');
 ?>
 
 <div class="section" id="audioplayer">
