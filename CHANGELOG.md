@@ -4,6 +4,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 2.8.0 - unreleased
 
 ### Added
+- Graphical view selectable for all categories [#165](https://github.com/rello/audioplayer/issues/165)
 - APIs & events to enable Audio Player add-ons [#408](https://github.com/rello/audioplayer/issues/408)
 - ID3 Editor as separate add-on
 

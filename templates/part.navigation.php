@@ -15,6 +15,9 @@
 				<?php p($l->t('Albums')); ?></span>  
 			</li>
 		</ul>
+<input type="checkbox" class="hidden-visually" id="showgridview" checked="checked">
+<label id="view-toggle" for="showgridview" class="button icon-toggle-filelist" title=""
+       data-original-title="Rasteransicht umschalten"></label>
 		<div id="category_area">
 			<select id="category_selector">
 				<option value=""selected><?php p($l->t('Selection')); ?></option>
