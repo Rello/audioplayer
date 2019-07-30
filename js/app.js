@@ -69,6 +69,7 @@ OCA.Audioplayer.Core = {
                     } else {
                         OCA.Audioplayer.Core.Player.actions.play();
                     }
+                    e.preventDefault();
                 } else if (e.key === 'ArrowRight') {// right
                     OCA.Audioplayer.Core.Player.actions.next();
                 } else if (e.key === 'ArrowLeft') {//left
@@ -80,6 +81,7 @@ OCA.Audioplayer.Core = {
                         if (newVolume >= 100) newVolume = 100;
                         OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
                     }
+                    e.preventDefault();
                 } else if (e.key === 'ArrowDown') {//down sound down
                     currentVolume = OCA.Audioplayer.Core.Player.actions.getVolume();
                     if (currentVolume > 0) {
@@ -87,6 +89,7 @@ OCA.Audioplayer.Core = {
                         if (newVolume <= 0) newVolume = 0;
                         OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
                     }
+                    e.preventDefault();
                 }
             }
         })
