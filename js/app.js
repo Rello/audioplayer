@@ -51,45 +51,51 @@ OCA.Audioplayer.Core = {
 
     initKeyListener: function () {
         document.body.addEventListener('keydown', function (e) {
-            if (OCA.Audioplayer.Core.Player !== null && $('#activePlaylist li').length > 0) {
-
-                if (e.target) {
-                    var nodeName = e.target.nodeName.toUpperCase();
-                    //don't activate shortcuts when the user is in an input, textarea or select element
-                    if (nodeName === 'INPUT' || nodeName === 'TEXTAREA' || nodeName === 'SELECT') {
-                        return;
-                    }
-                }
-
-                var currentVolume;
-                var newVolume;
-                if (e.key === 'Space') {//Space pause/play
-                    if ($('.sm2-bar-ui').hasClass('playing')) {
-                        OCA.Audioplayer.Core.Player.actions.stop();
-                    } else {
-                        OCA.Audioplayer.Core.Player.actions.play();
-                    }
-                } else if (e.key === 39) {// right
-                    OCA.Audioplayer.Core.Player.actions.next();
-                } else if (e.key === 'ArrowLeft') {//left
-                    OCA.Audioplayer.Core.Player.actions.prev();
-                } else if (e.key === 'ArrowUp') {//up sound up
-                    currentVolume = OCA.Audioplayer.Core.Player.actions.getVolume();
-                    if (currentVolume < 100) {
-                        newVolume = currentVolume + 10;
-                        if (newVolume >= 100) newVolume = 100;
-                        OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
-                    }
-                } else if (e.key === 'ArrowDown') {//down sound down
-                    currentVolume = OCA.Audioplayer.Core.Player.actions.getVolume();
-                    if (currentVolume > 0) {
-                        newVolume = currentVolume - 10;
-                        if (newVolume <= 0) newVolume = 0;
-                        OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
-                    }
+            if (e.target) {
+                var nodeName = e.target.nodeName.toUpperCase();
+                //don't activate shortcuts when the user is in an input, textarea or select element
+                if (nodeName === 'INPUT' || nodeName === 'TEXTAREA' || nodeName === 'SELECT') {
+                    return;
                 }
             }
-        })
+
+            if (OCA.Audioplayer.Core.Player && $('#activePlaylist li').length > 0) {
+                var currentVolume;
+                var newVolume;
+                switch (e.key) {
+                case ' ':
+                    if ($('.sm2-bar-ui').hasClass('playing')) {
+                        OCA.Audioplayer.Core.Player.actions.pause();
+                    } else {
+                        OCA.Audioplayer.Core.Player.actions.resume();
+                    }
+                    e.preventDefault();
+                    break;
+                case 'ArrowRight':
+                    OCA.Audioplayer.Core.Player.actions.next();
+                    break;
+                case 'ArrowLeft':
+                    OCA.Audioplayer.Core.Player.actions.prev();
+                    break;
+                case 'ArrowUp':
+                    currentVolume = OCA.Audioplayer.Core.Player.actions.getVolume();
+                    if (currentVolume < 100) {
+                        newVolume = Math.min(currentVolume + 10, 100);
+                        OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
+                    }
+                    e.preventDefault();
+                    break;
+                case 'ArrowDown':
+                    currentVolume = OCA.Audioplayer.Core.Player.actions.getVolume();
+                    if (currentVolume > 0) {
+                        newVolume = Math.max(currentVolume - 10, 0);
+                        OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
+                    }
+                    e.preventDefault();
+                    break;
+                }
+            }
+        });
     },
 
     processSearchResult: function () {
