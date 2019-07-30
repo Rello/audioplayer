@@ -78,7 +78,7 @@ OCA.Audioplayer.Core = {
                     currentVolume = OCA.Audioplayer.Core.Player.actions.getVolume();
                     if (currentVolume < 100) {
                         newVolume = currentVolume + 10;
-                        if (newVolume >= 100) newVolume = 100;
+                        if (newVolume >= 100) { newVolume = 100; }
                         OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
                     }
                     e.preventDefault();
@@ -86,13 +86,13 @@ OCA.Audioplayer.Core = {
                     currentVolume = OCA.Audioplayer.Core.Player.actions.getVolume();
                     if (currentVolume > 0) {
                         newVolume = currentVolume - 10;
-                        if (newVolume <= 0) newVolume = 0;
+                        if (newVolume <= 0) { newVolume = 0; }
                         OCA.Audioplayer.Core.Player.actions.setVolume(newVolume);
                     }
                     e.preventDefault();
                 }
             }
-        })
+        });
     },
 
     processSearchResult: function () {
