@@ -63,13 +63,13 @@ OCA.Audioplayer.Core = {
 
                 var currentVolume;
                 var newVolume;
-                if (e.key === 'Space') {//Space pause/play
+                if (e.key === ' ') {//Space pause/play
                     if ($('.sm2-bar-ui').hasClass('playing')) {
                         OCA.Audioplayer.Core.Player.actions.stop();
                     } else {
                         OCA.Audioplayer.Core.Player.actions.play();
                     }
-                } else if (e.key === 39) {// right
+                } else if (e.key === 'ArrowRight') {// right
                     OCA.Audioplayer.Core.Player.actions.next();
                 } else if (e.key === 'ArrowLeft') {//left
                     OCA.Audioplayer.Core.Player.actions.prev();
