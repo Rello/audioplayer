@@ -567,10 +567,9 @@ OCA.Audioplayer.UI = {
     indicateFavorite: function (fav, id) {
         var fav_action;
         if (fav === 't') {
-            fav_action = $('<i/>').addClass('icon icon-starred')
-                .css({'opacity': 0.3})
+            fav_action = $('<i/>').addClass('icon icon-starred');
         } else {
-            fav_action = $('<i/>').addClass('icon icon-star')
+            fav_action = $('<i/>').addClass('icon icon-star');
         }
         fav_action.attr({'data-trackid': id})
             .on('click', OCA.Audioplayer.Backend.favoriteUpdate.bind(this));
@@ -775,6 +774,16 @@ OCA.Audioplayer.UI = {
         }
     },
 
+    toggleFavorite: function(target) {
+        var classes = target.classList;
+        if (classes.contains('icon-starred')) {
+            classes.replace('icon-starred', 'icon-star');
+            return true;
+        } else {
+            classes.replace('icon-star', 'icon-starred');
+            return false;
+        }
+    }
 };
 
 /**
@@ -782,22 +791,14 @@ OCA.Audioplayer.UI = {
  */
 OCA.Audioplayer.Backend = {
     favoriteUpdate: function (evt) {
-        var trackid = $(evt.target).attr('data-trackid');
-        var isFavorite = false;
+        var target = $(evt.target);
+        var trackid = target.attr('data-trackid');
 
         if (OCA.Audioplayer.Core.CategorySelectors[1][0] === 'S') {
             return;
         }
 
-        if ($(evt.target).hasClass('icon icon-starred')) {
-            isFavorite = true;
-            $(evt.target).removeClass('icon icon-starred');
-            $(evt.target).addClass('icon icon-star').removeAttr('style');
-        } else {
-            isFavorite = false;
-            $(evt.target).removeClass('icon icon-star');
-            $(evt.target).addClass('icon icon-starred').css('opacity', 1);
-        }
+        var isFavorite = OCA.Audioplayer.UI.toggleFavorite(evt.target);
 
         $.ajax({
             type: 'GET',
@@ -807,7 +808,6 @@ OCA.Audioplayer.Backend = {
                 'isFavorite': isFavorite
             }
         });
-        return false;
     },
 
     getUserValue: function (user_type, callback) {

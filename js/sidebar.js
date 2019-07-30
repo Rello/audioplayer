@@ -30,8 +30,8 @@ OCA.Audioplayer.Sidebar = {
     sidebar_tabs: {},
 
     showSidebar: function (evt) {
-
-        var trackid = $(evt.target).closest('li').attr('data-trackid');
+        var targetPlaylistItem = evt.target.closest('li');
+        var trackid = targetPlaylistItem.getAttribute('data-trackid');
         var $appsidebar = $('#app-sidebar');
 
         if ($appsidebar.data('trackid') === trackid) {
@@ -56,11 +56,13 @@ OCA.Audioplayer.Sidebar = {
             $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
             $('#sidebarMime').html(trackData.attr('data-mimetype'));
 
+            var playlistStar = targetPlaylistItem.getElementsByClassName('icon')[0];
             var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
             starIcon.off();
-            starIcon.on('click',
-                OCA.Audioplayer.Backend.favoriteUpdate.bind(this)
-            );
+            starIcon.on('click', function(clickEvt) {
+                OCA.Audioplayer.Backend.favoriteUpdate(clickEvt);
+                OCA.Audioplayer.UI.toggleFavorite(playlistStar);
+            });
 
             if ($appsidebar.data('trackid') === '') {
                 $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar);
