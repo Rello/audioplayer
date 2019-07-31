@@ -56,13 +56,9 @@ OCA.Audioplayer.Sidebar = {
             $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
             $('#sidebarMime').html(trackData.attr('data-mimetype'));
 
-            var playlistStar = targetPlaylistItem.getElementsByClassName('icon')[0];
             var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
             starIcon.off();
-            starIcon.on('click', function(clickEvt) {
-                OCA.Audioplayer.Backend.favoriteUpdate(clickEvt);
-                OCA.Audioplayer.UI.toggleFavorite(playlistStar);
-            });
+            starIcon.on('click', OCA.Audioplayer.Core.toggleFavorite);
 
             if ($appsidebar.data('trackid') === '') {
                 $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar);

@@ -136,6 +136,19 @@ OCA.Audioplayer.Core = {
         }
     },
 
+    toggleFavorite: function(evt) {
+        if (OCA.Audioplayer.Core.CategorySelectors[1][0] === 'S') {
+            return;
+        }
+
+        var target = evt.target;
+        var trackId = target.getAttribute('data-trackid');
+
+        var isFavorite = OCA.Audioplayer.UI.toggleFavorite(target, trackId);
+
+        OCA.Audioplayer.Backend.favoriteUpdate(trackId, isFavorite);
+    }
+
 }
 
 /**
@@ -571,8 +584,7 @@ OCA.Audioplayer.UI = {
         } else {
             fav_action = $('<i/>').addClass('icon icon-star');
         }
-        fav_action.attr({'data-trackid': id})
-            .on('click', OCA.Audioplayer.Backend.favoriteUpdate.bind(this));
+        fav_action.attr({'data-trackid': id}).on('click', OCA.Audioplayer.Core.toggleFavorite);
         return fav_action;
     },
 
@@ -774,13 +786,26 @@ OCA.Audioplayer.UI = {
         }
     },
 
-    toggleFavorite: function(target) {
+    toggleFavorite: function(target, trackId) {
+        if (target.tagName === 'SPAN') {
+            var queryElem = 'i';
+        } else {
+            queryElem = 'span';
+        }
+        var other = document.querySelector(`${queryElem}[data-trackid="${trackId}"]`);
+
         var classes = target.classList;
         if (classes.contains('icon-starred')) {
             classes.replace('icon-starred', 'icon-star');
+            if (other) {
+                other.classList.replace('icon-starred', 'icon-star');
+            }
             return true;
         } else {
             classes.replace('icon-star', 'icon-starred');
+            if (other) {
+                other.classList.replace('icon-star', 'icon-starred');
+            }
             return false;
         }
     }
@@ -790,16 +815,7 @@ OCA.Audioplayer.UI = {
  * @namespace OCA.Audioplayer.Backend
  */
 OCA.Audioplayer.Backend = {
-    favoriteUpdate: function (evt) {
-        var target = $(evt.target);
-        var trackid = target.attr('data-trackid');
-
-        if (OCA.Audioplayer.Core.CategorySelectors[1][0] === 'S') {
-            return;
-        }
-
-        var isFavorite = OCA.Audioplayer.UI.toggleFavorite(evt.target);
-
+    favoriteUpdate: function (trackid, isFavorite) {
         $.ajax({
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/setfavorite'),
