@@ -550,7 +550,8 @@ OCA.Audioplayer.UI = {
         var spanAlbum = $('<span>').attr({'class': 'album-indi'}).text(elem.cl3);
         var spanTime = $('<span/>').addClass('time').text(elem.len);
         var spanNr = $('<span/>').addClass('number').text(elem.cl3);
-        var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind(this));
+        var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')})
+            .on('click', OCA.Audioplayer.UI.handleOptionsClicked);
 
         if (canPlayMimeType[elem.mim]) {
             spanTitle = $('<span/>').addClass('title').text(elem.cl1);
@@ -577,6 +578,11 @@ OCA.Audioplayer.UI = {
         return li;
     },
 
+    handleOptionsClicked: function(event) {
+        OCA.Audioplayer.Sidebar.showSidebar(event);
+        event.stopPropagation();
+    },
+
     indicateFavorite: function (fav, id) {
         var fav_action;
         if (fav === 't') {
@@ -584,8 +590,13 @@ OCA.Audioplayer.UI = {
         } else {
             fav_action = $('<i/>').addClass('icon icon-star');
         }
-        fav_action.attr({'data-trackid': id}).on('click', OCA.Audioplayer.Core.toggleFavorite);
+        fav_action.attr({'data-trackid': id}).on('click', OCA.Audioplayer.UI.handleStarClicked);
         return fav_action;
+    },
+
+    handleStarClicked: function(event) {
+        OCA.Audioplayer.Core.toggleFavorite(event);
+        event.stopPropagation();
     },
 
     trackClickHandler: function (callback) {
@@ -611,9 +622,9 @@ OCA.Audioplayer.UI = {
                 });
             }
 
-            element.find('.title').on('click',
-                OCA.Audioplayer.UI.onTitleClick.bind(OCA.Audioplayer.UI, getcoverUrl, canPlayMimeType, playlist, element)
-            );
+            element.on('click', function() {
+                OCA.Audioplayer.UI.onTitleClick(getcoverUrl, canPlayMimeType, playlist, element);
+            });
         });
         // the callback is used for the the init function to get feedback when all title rows are ready
         if (typeof callback === 'function') {
