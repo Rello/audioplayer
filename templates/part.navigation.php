@@ -9,15 +9,9 @@
  * @copyright 2016-2019 Marcel Scherello
  */
  ?>
-		<ul id="albenoverview">
-			<li id="alben">
-				<span style="vertical-align: top; font-size: 15px;">
-				<?php p($l->t('Albums')); ?></span>  
-			</li>
-		</ul>
-<input type="checkbox" class="hidden-visually" id="showgridview" checked="checked">
-<label id="view-toggle" for="showgridview" class="button icon-toggle-filelist" title=""
-       data-original-title="Rasteransicht umschalten"></label>
+<div id="view-toggle" class="icon-toggle-filelist"
+     style="padding: 15px 40px; background-position: 15px; cursor: pointer; min-height: 50px;">List View
+</div>
 		<div id="category_area">
 			<select id="category_selector">
 				<option value=""selected><?php p($l->t('Selection')); ?></option>

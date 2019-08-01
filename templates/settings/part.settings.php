@@ -20,6 +20,12 @@
     </div>
 
     <div id="app-settings-content">
+        <ul id="albenoverview">
+            <li id="alben">
+				<span style="vertical-align: top; font-size: 15px;">
+				<?php p($l->t('Albums')); ?></span>
+            </li>
+        </ul>
         <ul id="audio-settings">
             <li class="audio-settings-item icon-search">
                 <a href="#" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios" style="padding: 0 20px;">

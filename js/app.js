@@ -405,9 +405,6 @@ OCA.Audioplayer.Category = {
     },
 
     loadItems: function (evt, callback) {
-
-        OCA.Audioplayer.Category.buildListView(evt);
-
         if (evt) {
             document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').classList.remove('active') : false;
             evt.target.parentNode.classList.add('active');
@@ -418,8 +415,13 @@ OCA.Audioplayer.Category = {
         OCA.Audioplayer.Core.CategorySelectors[1] = categoryItem;
         OCA.Audioplayer.UI.PlaylistContainer.data('playlist', category + '-' + categoryItem);
 
-        //OCA.Audioplayer.Albums.load(category, categoryItem);
-        OCA.Audioplayer.Category.getItems(callback, category, categoryItem, false);
+        var classes = document.getElementById('view-toggle').classList;
+        if (classes.contains('icon-toggle-pictures') && category !== 'Playlist') {
+            OCA.Audioplayer.Albums.load(category, categoryItem);
+        } else {
+            OCA.Audioplayer.Category.buildListView(evt);
+            OCA.Audioplayer.Category.getItems(callback, category, categoryItem, false);
+        }
     },
 
     buildListView: function (evt) {
@@ -598,6 +600,21 @@ OCA.Audioplayer.UI = {
         OCA.Audioplayer.Core.toggleFavorite(event);
         event.stopPropagation();
     },
+
+    handleViewToggleClicked: function (event) {
+        var div = document.getElementById('view-toggle');
+        var classes = div.classList;
+        if (classes.contains('icon-toggle-filelist')) {
+            classes.replace('icon-toggle-filelist', 'icon-toggle-pictures');
+            div.innerText = 'Album Covers';
+        } else {
+            classes.replace('icon-toggle-pictures', 'icon-toggle-filelist');
+            div.innerText = 'List View';
+        }
+        OCA.Audioplayer.Category.loadItems();
+        event.stopPropagation();
+    },
+
 
     trackClickHandler: function (callback) {
         var albumWrapper = $('.albumwrapper');
@@ -1195,6 +1212,8 @@ document.addEventListener('DOMContentLoaded', function () {
         OCA.Audioplayer.Albums.load('Album');
         OCA.Audioplayer.Backend.setUserValue('category', 'Albums');
     });
+
+    $('#view-toggle').on('click', OCA.Audioplayer.UI.handleViewToggleClicked);
 
 
     $('#toggle_alternative').prepend('<div id="app-navigation-toggle_alternative" class="icon-menu" style="float: left; box-sizing: border-box;"></div>');
