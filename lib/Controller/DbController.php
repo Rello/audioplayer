@@ -375,6 +375,16 @@ class DbController extends Controller
         }
     }
 
+    public function beginTransaction()
+    {
+        $this->db->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->db->commit();
+    }
+
     /**
      * Add genre to db if not exist
      * @param int $userId
