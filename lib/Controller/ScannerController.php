@@ -157,6 +157,7 @@ class ScannerController extends Controller
         if ($this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated", OutputInterface::VERBOSITY_VERBOSE);
         $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
 
+        $this->DBController->beginTransaction();
         foreach ($audios as $audio) {
 
             //check if scan is still supposed to run, or if dialog was closed in web already
@@ -304,6 +305,7 @@ class ScannerController extends Controller
             $message .= '<br /><b>' . (string)$this->l10n->t('Duplicates found: ') . ($this->iDublicate) . '</b>';
             $message .= '<br />' . $duplicate_tracks . '<br />';
         }
+        $this->DBController->commit();
 
         // different outputs when web or occ
         if (!$this->occJob) {
