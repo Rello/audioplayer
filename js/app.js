@@ -136,6 +136,19 @@ OCA.Audioplayer.Core = {
         }
     },
 
+    toggleFavorite: function(evt) {
+        if (OCA.Audioplayer.Core.CategorySelectors[1][0] === 'S') {
+            return;
+        }
+
+        var target = evt.target;
+        var trackId = target.getAttribute('data-trackid');
+
+        var isFavorite = OCA.Audioplayer.UI.toggleFavorite(target, trackId);
+
+        OCA.Audioplayer.Backend.favoriteUpdate(trackId, isFavorite);
+    }
+
 }
 
 /**
@@ -537,7 +550,8 @@ OCA.Audioplayer.UI = {
         var spanAlbum = $('<span>').attr({'class': 'album-indi'}).text(elem.cl3);
         var spanTime = $('<span/>').addClass('time').text(elem.len);
         var spanNr = $('<span/>').addClass('number').text(elem.cl3);
-        var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')}).on('click', OCA.Audioplayer.Sidebar.showSidebar.bind(this));
+        var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')})
+            .on('click', OCA.Audioplayer.UI.handleOptionsClicked);
 
         if (canPlayMimeType[elem.mim]) {
             spanTitle = $('<span/>').addClass('title').text(elem.cl1);
@@ -564,17 +578,25 @@ OCA.Audioplayer.UI = {
         return li;
     },
 
+    handleOptionsClicked: function(event) {
+        OCA.Audioplayer.Sidebar.showSidebar(event);
+        event.stopPropagation();
+    },
+
     indicateFavorite: function (fav, id) {
         var fav_action;
         if (fav === 't') {
-            fav_action = $('<i/>').addClass('icon icon-starred')
-                .css({'opacity': 0.3})
+            fav_action = $('<i/>').addClass('icon icon-starred');
         } else {
-            fav_action = $('<i/>').addClass('icon icon-star')
+            fav_action = $('<i/>').addClass('icon icon-star');
         }
-        fav_action.attr({'data-trackid': id})
-            .on('click', OCA.Audioplayer.Backend.favoriteUpdate.bind(this));
+        fav_action.attr({'data-trackid': id}).on('click', OCA.Audioplayer.UI.handleStarClicked);
         return fav_action;
+    },
+
+    handleStarClicked: function(event) {
+        OCA.Audioplayer.Core.toggleFavorite(event);
+        event.stopPropagation();
     },
 
     trackClickHandler: function (callback) {
@@ -600,9 +622,9 @@ OCA.Audioplayer.UI = {
                 });
             }
 
-            element.find('.title').on('click',
-                OCA.Audioplayer.UI.onTitleClick.bind(OCA.Audioplayer.UI, getcoverUrl, canPlayMimeType, playlist, element)
-            );
+            element.on('click', function() {
+                OCA.Audioplayer.UI.onTitleClick(getcoverUrl, canPlayMimeType, playlist, element);
+            });
         });
         // the callback is used for the the init function to get feedback when all title rows are ready
         if (typeof callback === 'function') {
@@ -775,30 +797,36 @@ OCA.Audioplayer.UI = {
         }
     },
 
+    toggleFavorite: function(target, trackId) {
+        if (target.tagName === 'SPAN') {
+            var queryElem = 'i';
+        } else {
+            queryElem = 'span';
+        }
+        var other = document.querySelector(`${queryElem}[data-trackid="${trackId}"]`);
+
+        var classes = target.classList;
+        if (classes.contains('icon-starred')) {
+            classes.replace('icon-starred', 'icon-star');
+            if (other) {
+                other.classList.replace('icon-starred', 'icon-star');
+            }
+            return true;
+        } else {
+            classes.replace('icon-star', 'icon-starred');
+            if (other) {
+                other.classList.replace('icon-star', 'icon-starred');
+            }
+            return false;
+        }
+    }
 };
 
 /**
  * @namespace OCA.Audioplayer.Backend
  */
 OCA.Audioplayer.Backend = {
-    favoriteUpdate: function (evt) {
-        var trackid = $(evt.target).attr('data-trackid');
-        var isFavorite = false;
-
-        if (OCA.Audioplayer.Core.CategorySelectors[1][0] === 'S') {
-            return;
-        }
-
-        if ($(evt.target).hasClass('icon icon-starred')) {
-            isFavorite = true;
-            $(evt.target).removeClass('icon icon-starred');
-            $(evt.target).addClass('icon icon-star').removeAttr('style');
-        } else {
-            isFavorite = false;
-            $(evt.target).removeClass('icon icon-star');
-            $(evt.target).addClass('icon icon-starred').css('opacity', 1);
-        }
-
+    favoriteUpdate: function (trackid, isFavorite) {
         $.ajax({
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/setfavorite'),
@@ -807,7 +835,6 @@ OCA.Audioplayer.Backend = {
                 'isFavorite': isFavorite
             }
         });
-        return false;
     },
 
     getUserValue: function (user_type, callback) {
