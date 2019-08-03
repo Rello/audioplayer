@@ -22,8 +22,6 @@ use OCP\Share\IManager;
 use OCP\ILogger;
 use OCP\ITagManager;
 
-use OCA\audioplayer\Service\StatementService;
-
 /**
  * Controller class for main page.
  */
@@ -37,7 +35,6 @@ class DbController extends Controller
     private $shareManager;
     private $tagManager;
     private $logger;
-    private $statements;
 
     public function __construct(
         $appName,
@@ -47,8 +44,7 @@ class DbController extends Controller
         IDbConnection $db,
         ITagManager $tagManager,
         IManager $shareManager,
-        ILogger $logger,
-        StatementService $statements
+        ILogger $logger
     )
     {
         parent::__construct($appName, $request);
@@ -58,7 +54,6 @@ class DbController extends Controller
         $this->shareManager = $shareManager;
         $this->tagManager = $tagManager;
         $this->logger = $logger;
-        $this->statements = $statements;
     }
 
     public function loadArtistsToAlbum($iAlbumId, $ARtistID)
@@ -275,7 +270,7 @@ class DbController extends Controller
      */
     public function writeCoverToAlbum($userId, $iAlbumId, $sImage)
     {
-        $stmt = $this->statements->updateAlbumCover();
+        $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `cover`= ?, `bgcolor`= ? WHERE `id` = ? AND `user_id` = ?');
         $stmt->execute(array($sImage, '', $iAlbumId, $userId));
         return true;
     }
@@ -296,25 +291,25 @@ class DbController extends Controller
         $sYear = $this->normalizeInteger($sYear);
         $AlbumCount = 0;
 
-        $stmt = $this->statements->selectAlbumIdArtistId();
+        $stmt = $this->db->prepare('SELECT `id`, `artist_id` FROM `*PREFIX*audioplayer_albums` WHERE `user_id` = ? AND `name` = ? AND `folder_id` = ?');
         $stmt->execute(array($userId, $sAlbum, $parentId));
         $row = $stmt->fetch();
         if ($row) {
             if ((int)$row['artist_id'] !== (int)$iArtistId) {
                 $various_id = $this->writeArtistToDB($userId, $this->l10n->t('Various Artists'));
-                $stmt = $this->statements->updateAlbumArtistId();
+                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
                 $stmt->execute(array($various_id, $row['id'], $userId));
             }
             $insertid = $row['id'];
         } else {
-            $stmt = $this->statements->insertAlbum();
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_albums` (`user_id`,`name`,`folder_id`) VALUES(?,?,?)');
             $stmt->execute(array($userId, $sAlbum, $parentId));
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_albums');
             if ($iArtistId) {
-                $stmt = $this->statements->updateAlbumYearArtistId();
+                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ?, `artist_id`= ? WHERE `id` = ? AND `user_id` = ?');
                 $stmt->execute(array((int)$sYear, $iArtistId, $insertid, $userId));
             } else {
-                $stmt = $this->statements->updateAlbumYear();
+                $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_albums` SET `year`= ? WHERE `id` = ? AND `user_id` = ?');
                 $stmt->execute(array((int)$sYear, $insertid, $userId));
             }
             $AlbumCount = 1;
@@ -371,13 +366,13 @@ class DbController extends Controller
     {
         $sArtist = $this->truncate($sArtist, '256');
 
-        $stmt = $this->statements->selectArtistId();
+        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_artists` WHERE `user_id` = ? AND `name` = ?');
         $stmt->execute(array($userId, $sArtist));
         $row = $stmt->fetch();
         if ($row) {
             return $row['id'];
         } else {
-            $stmt = $this->statements->insertArtist();
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_artists` (`user_id`,`name`) VALUES(?,?)');
             $stmt->execute(array($userId, $sArtist));
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_artists');
             return $insertid;
@@ -404,13 +399,13 @@ class DbController extends Controller
     {
         $sGenre = $this->truncate($sGenre, '256');
 
-        $stmt = $this->statements->selectGenreId();
+        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_genre` WHERE `user_id` = ? AND `name` = ?');
         $stmt->execute(array($userId, $sGenre));
         $row = $stmt->fetch();
         if ($row) {
             return $row['id'];
         } else {
-            $stmt = $this->statements->insertGenre();
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_genre` (`user_id`,`name`) VALUES(?,?)');
             $stmt->execute(array($userId, $sGenre));
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_genre');
             return $insertid;
@@ -427,7 +422,11 @@ class DbController extends Controller
     {
         $dublicate = 0;
         $insertid = 0;
-        $stmt = $this->statements->selectTrackId();
+        $SQL = 'SELECT `id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id`= ? AND `title`= ? AND `number`= ? 
+				AND `artist_id`= ? AND `album_id`= ? AND `length`= ? AND `bitrate`= ? 
+				AND `mimetype`= ? AND `genre_id`= ? AND `year`= ?
+				AND `disc`= ? AND `composer`= ? AND `subtitle`= ?';
+        $stmt = $this->db->prepare($SQL);
         $stmt->execute(array($userId,
             $aTrack['title'],
             $aTrack['number'],
@@ -446,7 +445,7 @@ class DbController extends Controller
         if (isset($row['id'])) {
             $dublicate = 1;
         } else {
-            $stmt = $this->statements->insertTrack();
+            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_tracks` (`user_id`,`title`,`number`,`artist_id`,`album_id`,`length`,`file_id`,`bitrate`,`mimetype`,`genre_id`,`year`,`folder_id`,`disc`,`composer`,`subtitle`,`isrc`,`copyright`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
             $stmt->execute(array($userId,
                 $aTrack['title'],
                 $aTrack['number'],
@@ -657,7 +656,9 @@ class DbController extends Controller
      */
     public function getSessionValue($type)
     {
-        $stmt = $this->statements->getSessionValue($SQL);
+        //return $this->session->get($type);
+        $SQL = 'SELECT `configvalue` FROM `*PREFIX*preferences` WHERE `userid`= ? AND `appid`= ? AND `configkey`= ?';
+        $stmt = $this->db->prepare($SQL);
         $stmt->execute(array($this->userId, 'audioplayer', $type));
         $row = $stmt->fetch();
         return $row['configvalue'];
