@@ -67,6 +67,7 @@ class PageController extends Controller
         $response->setContentSecurityPolicy($csp);
         $response->setParams([
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
+            'audioplayer_view' => $this->configManager->getUserValue($this->userId, $this->appName, 'view') ?: 'pictures',
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
             'audioplayer_sonos' => $audioplayer_sonos,
             'audioplayer_notification' => $this->getNotification(),
