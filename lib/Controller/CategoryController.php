@@ -61,32 +61,13 @@ class CategoryController extends Controller
     }
 
     /**
+     * Get the items for the selected category
+     *
      * @NoAdminRequired
      * @param $category
      * @return JSONResponse
      */
-    public function getCategory($category)
-    {
-        $playlists = $this->getCategoryDetails($category);
-
-        $result = empty($playlists) ? [
-            'status' => 'nodata'
-        ] : [
-            'status' => 'success',
-            'data' => $playlists
-        ];
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
-    }
-
-    /**
-     * Get the categories items for a user
-     *
-     * @param string $category
-     * @return array
-     */
-    private function getCategoryDetails($category)
+    public function getCategoryItems($category)
     {
         $SQL = null;
         $aPlaylists = array();
@@ -186,28 +167,16 @@ class CategoryController extends Controller
                 }
                 array_splice($row, 2, 1);
                 if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
-                $row['cnt'] = $this->getCategoryCount($category, $row['id']);
+                $row['cnt'] = $this->getTrackCount($category, $row['id']);
                 $aPlaylists[] = $row;
             }
         }
-        return $aPlaylists;
-    }
 
-    /**
-     * @NoAdminRequired
-     * @param $category
-     * @param $categoryId
-     * @return JSONResponse
-     */
-    public function getCategoryCover($category, $categoryId)
-    {
-        $playlists = $this->getCatagoryCoverDetails($category, $categoryId);
-
-        $result = empty($playlists) ? [
+        $result = empty($aPlaylists) ? [
             'status' => 'nodata'
         ] : [
             'status' => 'success',
-            'data' => $playlists
+            'data' => $aPlaylists
         ];
         $response = new JSONResponse();
         $response->setData($result);
@@ -215,13 +184,14 @@ class CategoryController extends Controller
     }
 
     /**
-     * Get details for the cover view
+     * Get the covers for the "Album Covers" view
      *
-     * @param string $category
-     * @param string $categoryId
-     * @return array
+     * @NoAdminRequired
+     * @param $category
+     * @param $categoryId
+     * @return JSONResponse
      */
-    private function getCatagoryCoverDetails($category, $categoryId)
+    public function getCategoryItemCovers($category, $categoryId)
     {
         $whereMatching = array('Artist' => '`AT`.`artist_id`', 'Genre' => '`AT`.`genre_id`', 'Album' => '`AB`.`id`', 'Album Artist' => '`AB`.`artist_id`', 'Year' => '`AT`.`year`', 'Folder' => '`AT`.`folder_id`');
 
@@ -254,17 +224,25 @@ class CategoryController extends Controller
                 $aPlaylists[] = $row;
             }
         }
-        return $aPlaylists;
+        $result = empty($aPlaylists) ? [
+            'status' => 'nodata'
+        ] : [
+            'status' => 'success',
+            'data' => $aPlaylists
+        ];
+        $response = new JSONResponse();
+        $response->setData($result);
+        return $response;
     }
 
     /**
-     * Get the number of items for a category item
+     * Get the number of tracks for a category item
      *
      * @param string $category
      * @param integer $categoryId
      * @return integer
      */
-    private function getCategoryCount($category, $categoryId)
+    private function getTrackCount($category, $categoryId)
     {
         $SQL = array();
         $SQL['Artist'] = 'SELECT COUNT(`AT`.`id`) AS `count` FROM `*PREFIX*audioplayer_tracks` `AT` LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id` WHERE  `AT`.`artist_id` = ? AND `AT`.`user_id` = ?';
@@ -287,20 +265,21 @@ class CategoryController extends Controller
     }
 
     /**
-     * AJAX function to get playlist titles for a selected category
-     * @NoAdminRequired
+     * get the tracks for a selected category or album
      *
+     * @NoAdminRequired
      * @param string $category
      * @param string $categoryId
      * @return JSONResponse
      * @throws InvalidPathException
+     * @throws NotFoundException
      */
-    public function getCategoryItems($category, $categoryId)
+    public function getTracks($category, $categoryId)
     {
         if ($categoryId[0] === 'S') $category = 'Stream';
         if ($categoryId[0] === 'P') $category = 'Playlist';
-        $items = $this->getCatagoryItemsDetails($category, $categoryId);
-        $headers = $this->getCategoryHeaders($category);
+        $items = $this->getTracksDetails($category, $categoryId);
+        $headers = $this->getListViewHeaders($category);
 
         $result = !empty($items) ? [
             'status' => 'success',
@@ -315,15 +294,14 @@ class CategoryController extends Controller
     }
 
     /**
-     * Get playlist titles for a selected category
+     * Get the tracks for a selected category or album
      *
      * @param string $category
      * @param string $categoryId
      * @return array
      * @throws InvalidPathException
-     * @throws NotFoundException
      */
-    private function getCatagoryItemsDetails($category, $categoryId)
+    private function getTracksDetails($category, $categoryId)
     {
         $SQL = null;
         $favorite = false;
@@ -549,12 +527,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * Get playlist dependend headers
+     * Get selection dependend headers for the list view
      *
      * @param string $category
      * @return array
      */
-    private function getCategoryHeaders($category)
+    private function getListViewHeaders($category)
     {
         if ($category === 'Artist') {
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Album'), 'col3' => $this->l10n->t('Year'), 'col4' => $this->l10n->t('Length')];
@@ -566,5 +544,4 @@ class CategoryController extends Controller
             return ['col1' => $this->l10n->t('Title'), 'col2' => $this->l10n->t('Artist'), 'col3' => $this->l10n->t('Album'), 'col4' => $this->l10n->t('Length')];
         }
     }
-
 }

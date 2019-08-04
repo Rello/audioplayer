@@ -38,9 +38,9 @@ $application->registerRoutes($this, ['routes' => [
     ['name' => 'setting#setFavorite', 'url' => '/setfavorite', 'verb' => 'GET'],
     ['name' => 'setting#setStatistics', 'url' => '/setstatistics', 'verb' => 'GET'],
     ['name' => 'setting#admin', 'url' => '/admin', 'verb' => 'POST'],
-	['name' => 'category#getCategory', 'url' => '/getcategory', 'verb' => 'GET'],
-    ['name' => 'category#getCategoryCover', 'url' => '/getcategorycover', 'verb' => 'GET'],
 	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
+    ['name' => 'category#getCategoryItemCovers', 'url' => '/getcategoryitemcovers', 'verb' => 'GET'],
+    ['name' => 'category#getTracks', 'url' => '/gettracks', 'verb' => 'GET'],
     ['name' => 'sidebar#getAudioInfo', 'url' => '/getaudioinfo', 'verb' => 'GET'],
     ['name' => 'sidebar#getPlaylists', 'url' => '/getplaylists', 'verb' => 'POST'],
 	]]);

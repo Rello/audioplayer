@@ -111,7 +111,11 @@ OCA.Audioplayer.Core = {
     },
 
     processCategoryFromPreset: function () {
-        if (OCA.Audioplayer.Core.CategorySelectors) {
+        if (OCA.Audioplayer.Core.CategorySelectors) { // handle exiting Albums selection from old AP version
+            if (OCA.Audioplayer.Core.CategorySelectors[0] === 'Albums') {
+                OCA.Audioplayer.Core.CategorySelectors[0] = 'Title';
+                OCA.Audioplayer.Core.CategorySelectors[1] = '0';
+            }
             $('#category_selector').val(OCA.Audioplayer.Core.CategorySelectors[0]);
             OCA.Audioplayer.Category.load(OCA.Audioplayer.Core.selectCategoryItemFromPreset.bind(this));
         } else {
@@ -168,7 +172,7 @@ OCA.Audioplayer.Cover = {
 
         $.ajax({
             type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getcategorycover'),
+            url: OC.generateUrl('apps/audioplayer/getcategoryitemcovers'),
             data: {category: category, categoryId: categoryId},
             success: function (jsondata) {
                 document.getElementById('loading').style.display = 'none';
@@ -341,7 +345,7 @@ OCA.Audioplayer.Category = {
 
         $.ajax({
             type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getcategory'),
+            url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
             data: {category: category},
             success: function (jsondata) {
                 if (jsondata.status === 'success') {
@@ -440,7 +444,7 @@ OCA.Audioplayer.Category = {
 
         OCA.Audioplayer.Core.AjaxCallStatus = $.ajax({
             type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
+            url: OC.generateUrl('apps/audioplayer/gettracks'),
             data: {category: category, categoryId: categoryItem},
             success: function (jsondata) {
                 document.getElementById('loading').style.display = 'none';
