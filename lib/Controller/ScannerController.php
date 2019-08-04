@@ -36,7 +36,6 @@ class ScannerController extends Controller
 
     private $userId;
     private $l10n;
-    private $abscount = 0;
     private $iDublicate = 0;
     private $iAlbumCount = 0;
     private $numOfSongs;
@@ -131,7 +130,6 @@ class ScannerController extends Controller
         $output->writeln("Start processing of <info>audio files</info>");
 
         $counter = 0;
-        $counter_new = 0;
         $error_count = 0;
         $duplicate_tracks = '';
         $error_file = '';
@@ -165,20 +163,17 @@ class ScannerController extends Controller
                 if ($this->scanCancelled()) { break; }
 
                 $counter++;
-                $this->abscount++;
                 $scanResult = $this->scanAudio($audio, $getID3, $output);
                 if ($scanResult === 'error') {
                     $error_file .= $audio->getPath() . '<br />';
                     $error_count++;
-                    continue;
                 } else if ($scanResult === 'duplicate') {
                     $duplicate_tracks .= $audio->getPath() . '<br />';
                     $this->iDublicate++;
                 }
-                $counter_new++;
 
                 if ($this->timeForUpdate()) {
-                    $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
+                    $this->updateProgress($counter, $audio->getPath(), $output);
                 }
             }
 
@@ -187,16 +182,14 @@ class ScannerController extends Controller
                 if ($this->scanCancelled()) { break; }
 
                 $counter++;
-                $this->abscount++;
                 $scanResult = $this->scanStream($stream, $output);
                 if ($scanResult === 'duplicate') {
                     $duplicate_tracks .= $stream->getPath() . '<br />';
                     $this->iDublicate++;
                 }
-                $counter_new++;
 
                 if ($this->timeForUpdate()) {
-                    $this->updateProgress($this->abscount, $this->numOfSongs, $stream->getPath(), $output);
+                    $this->updateProgress($counter, $stream->getPath(), $output);
                 }
             }
             $this->setScannerTimestamp();
@@ -208,8 +201,7 @@ class ScannerController extends Controller
 
         // different outputs when web or occ
         if (!$this->occJob) {
-            $message = $this->composeResponseMessage($counter, $counter_new, $error_count,
-                                                    $duplicate_tracks, $error_file);
+            $message = $this->composeResponseMessage($counter, $error_count, $duplicate_tracks, $error_file);
             $this->DBController->setSessionValue('scanner_running', '', $this->userId);
             $response = [
                 'message' => $message
@@ -221,7 +213,7 @@ class ScannerController extends Controller
         } else {
             $output->writeln("Audios found: " . ($counter) . "");
             $output->writeln("Duplicates found: " . ($this->iDublicate) . "");
-            $output->writeln("Written to library: " . ($counter_new - $this->iDublicate) . "");
+            $output->writeln("Written to library: " . ($counter - $this->iDublicate - $error_count) . "");
             $output->writeln("Albums found: " . ($this->iAlbumCount) . "");
             $output->writeln("Errors: " . ($error_count) . "");
             return true;
@@ -341,13 +333,12 @@ class ScannerController extends Controller
     }
 
     private function composeResponseMessage($counter,
-                                            $counter_new,
                                             $error_count,
                                             $duplicate_tracks,
                                             $error_file) {
         $message = (string)$this->l10n->t('Scanning finished!') . '<br />';
         $message .= (string)$this->l10n->t('Audios found: ') . $counter . '<br />';
-        $message .= (string)$this->l10n->t('Written to library: ') . ($counter_new - $this->iDublicate) . '<br />';
+        $message .= (string)$this->l10n->t('Written to library: ') . ($counter - $this->iDublicate - $error_count) . '<br />';
         $message .= (string)$this->l10n->t('Albums found: ') . $this->iAlbumCount . '<br />';
         if ($error_count >> 0) {
             $message .= '<br /><b>' . (string)$this->l10n->t('Errors: ') . $error_count . '<br />';
@@ -366,12 +357,12 @@ class ScannerController extends Controller
      * @param OutputInterface $output
      * @return bool
      */
-    private function updateProgress($filesProcessed, $filesTotal, $currentFile, OutputInterface $output = null)
+    private function updateProgress($filesProcessed, $currentFile, OutputInterface $output = null)
     {
         if (!$this->occJob) {
             $response = [
                 'filesProcessed' => $filesProcessed,
-                'filesTotal' => $filesTotal,
+                'filesTotal' => $this->numOfSongs,
                 'currentFile' => $currentFile
             ];
             $response = json_encode($response);
@@ -788,10 +779,6 @@ class ScannerController extends Controller
         $output = new NullOutput();
         $this->getAudioObjects($output);
         $this->getStreamObjects($output);
-        if ($this->numOfSongs !== 0) {
-            return 'true';
-        } else {
-            return 'false';
-        }
+        return ($this->numOfSongs !== 0);
     }
 }
