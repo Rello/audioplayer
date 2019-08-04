@@ -194,7 +194,7 @@ class ScannerController extends Controller
             }
             $this->setScannerTimestamp();
             $this->DBController->commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Error while building library: '. $e);
             $this->DBController->rollBack();
         }
