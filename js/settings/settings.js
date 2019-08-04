@@ -110,32 +110,21 @@ OCA.Audioplayer.Settings = {
     processScan: function () {
         $('#audios_import_form').css('display', 'none');
         $('#audios_import_process').css('display', 'block');
-
         OCA.Audioplayer.Settings.startScan();
-        window.setTimeout(function () {
-            OCA.Audioplayer.Settings.updateScanProgress();
-        }, 1500);
     },
 
     startScan: function () {
-        var jqXHR = $.post(OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
-            {}, function (data) {
-                if (data.status === 'success') {
-                    $('#audios_import_process').css('display', 'none');
-                    $('#audios_import_done').css('display', 'block');
-                    $('#audios_import_done_message').html(data.message);
-                    OCA.Audioplayer.Core.init();
-                } else {
-                    $('#audios_import_progressbar').progressbar('option', 'value', 100);
-                    $('#audios_import_done_message').html(data.message);
-                }
-            });
+        var scanUrl = OC.generateUrl('apps/audioplayer/scanforaudiofiles');
+        var source = new OC.EventSource(scanUrl);
+        source.listen('progress', OCA.Audioplayer.Settings.updateScanProgress);
+        source.listen('done', OCA.Audioplayer.Settings.scanDone);
+        source.listen('error', OCA.Audioplayer.Settings.scanError);
     },
 
     stopScan: function () {
         OCA.Audioplayer.Settings.percentage = 0;
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
             data: {
                 'scanstop': true
@@ -145,27 +134,26 @@ OCA.Audioplayer.Settings = {
         });
     },
 
-    updateScanProgress: function () {
-        $.post(OC.generateUrl('apps/audioplayer/getprogress'),
-            {}, function (data) {
-                if (data.status === 'success') {
-                    OCA.Audioplayer.Settings.percentage = parseInt(data.percent);
-                    $('#audios_import_progressbar').progressbar('option', 'value', parseInt(data.percent));
-                    $('#audios_import_process_progress').text(data.prog);
-                    $('#audios_import_process_message').text(data.msg);
-                    if (data.percent < 100) {
-                        window.setTimeout(function () {
-                            OCA.Audioplayer.Settings.updateScanProgress();
-                        }, 1500);
-                    } else {
-                        $('#audios_import_process').css('display', 'none');
-                        $('#audios_import_done').css('display', 'block');
-                    }
-                } else {
-                    //alert("getprogress error");
-                }
-            });
-        return 0;
+    updateScanProgress: function (message) {
+        var data = JSON.parse(message);
+        OCA.Audioplayer.Settings.percentage = data.filesProcessed / data.filesTotal * 100;
+        $('#audios_import_progressbar').progressbar('option', 'value', OCA.Audioplayer.Settings.percentage);
+        $('#audios_import_process_progress').text(`${data.filesProcessed}/${data.filesTotal}`);
+        $('#audios_import_process_message').text(data.currentFile);
+    },
+
+    scanDone: function (message) {
+        var data = JSON.parse(message);
+        $('#audios_import_process').css('display', 'none');
+        $('#audios_import_done').css('display', 'block');
+        $('#audios_import_done_message').html(data.message);
+        OCA.Audioplayer.Core.init();
+    },
+
+    scanError: function (message) {
+        var data = JSON.parse(message);
+        $('#audios_import_progressbar').progressbar('option', 'value', 100);
+        $('#audios_import_done_message').text(data.message);
     },
 };
 

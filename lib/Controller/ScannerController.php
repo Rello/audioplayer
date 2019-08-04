@@ -26,6 +26,7 @@ use OCP\IDbConnection;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
 use OCP\IDateTimeZone;
+use OCP\IEventSource;
 
 /**
  * Controller class for main page.
@@ -36,8 +37,6 @@ class ScannerController extends Controller
     private $userId;
     private $l10n;
     private $abscount = 0;
-    private $progress;
-    private $currentSong;
     private $iDublicate = 0;
     private $iAlbumCount = 0;
     private $numOfSongs;
@@ -55,6 +54,8 @@ class ScannerController extends Controller
     private $DBController;
     private $IDateTimeZone;
     private $SettingController;
+    private $eventSource;
+    private $lastUpdated;
 
     public function __construct(
         $appName,
@@ -83,6 +84,8 @@ class ScannerController extends Controller
         $this->DBController = $DBController;
         $this->SettingController = $SettingController;
         $this->IDateTimeZone = $IDateTimeZone;
+        $this->eventSource = \OC::$server->createEventSource();
+        $this->lastUpdated = time();
     }
 
     /**
@@ -135,7 +138,6 @@ class ScannerController extends Controller
         $this->cyrillic = $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
         $this->DBController->setSessionValue('scanner_running', 'active', $this->userId);
 
-        $this->updateProgress(0, $output);
         $this->setScannerVersion();
 
         if (!class_exists('getid3_exception')) {
@@ -166,8 +168,6 @@ class ScannerController extends Controller
                 if ($scan_running === 'stopped') break;
             }
 
-            $this->currentSong = $audio->getPath();
-            $this->updateProgress(intval(($this->abscount / $this->numOfSongs) * 100), $output);
             $counter++;
             $this->abscount++;
 
@@ -256,6 +256,10 @@ class ScannerController extends Controller
                 $this->iDublicate = $this->iDublicate + $return['dublicate'];
             }
             $counter_new++;
+
+            if ($this->timeForUpdate()) {
+                $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
+            }
         }
 
         $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
@@ -266,8 +270,6 @@ class ScannerController extends Controller
                 if ($scan_running !== 'active') break;
             }
 
-            $this->currentSong = $stream->getPath();
-            $this->updateProgress(intval(($this->abscount / $this->numOfSongs) * 100), $output);
             $counter++;
             $this->abscount++;
 
@@ -288,6 +290,10 @@ class ScannerController extends Controller
                 $this->iDublicate = $this->iDublicate + $return['dublicate'];
             }
             $counter_new++;
+
+            if ($this->timeForUpdate()) {
+                $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
+            }
         }
 
         $this->setScannerTimestamp();
@@ -311,13 +317,13 @@ class ScannerController extends Controller
         if (!$this->occJob) {
             $this->DBController->setSessionValue('scanner_running', '', $this->userId);
             $this->DBController->setSessionValue('scanner_progress', '', $this->userId);
-            $result = [
-                'status' => 'success',
+            $response = [
                 'message' => $message
             ];
-            $response = new JSONResponse();
-            $response->setData($result);
-            return $response;
+            $response = json_encode($response);
+            $this->eventSource->send('done', $response);
+            $this->eventSource->close();
+            return new JSONResponse();
         } else {
             $output->writeln("Audios found: " . ($counter) . "");
             $output->writeln("Duplicates found: " . ($this->iDublicate) . "");
@@ -333,23 +339,36 @@ class ScannerController extends Controller
      * @param OutputInterface $output
      * @return bool
      */
-    private function updateProgress($percentage, OutputInterface $output = null)
+    private function updateProgress($filesProcessed, $filesTotal, $currentFile, OutputInterface $output = null)
     {
-        $this->progress = $percentage;
-
         if (!$this->occJob) {
-            $currentIntArray = [
-                'percent' => $this->progress,
-                'all' => $this->numOfSongs,
-                'current' => $this->abscount,
-                'currentsong' => $this->currentSong
+            $response = [
+                'filesProcessed' => $filesProcessed,
+                'filesTotal' => $filesTotal,
+                'currentFile' => $currentFile
             ];
-            $currentIntArray = json_encode($currentIntArray);
-            $this->DBController->setSessionValue('scanner_progress', $currentIntArray, $this->userId);
+            $response = json_encode($response);
+            $this->eventSource->send('progress', $response);
         } else {
-            $output->writeln("   " . $this->currentSong . "</info>", OutputInterface::VERBOSITY_VERY_VERBOSE);
+            $output->writeln("   " . $currentFile . "</info>", OutputInterface::VERBOSITY_VERY_VERBOSE);
         }
-        return true;
+    }
+
+    /**
+     * Prevent flood over the wire
+     * @return bool
+     */
+    private function timeForUpdate()
+    {
+        if ($this->occJob) {
+            return true;
+        }
+        $now = time();
+        if ($now - $this->lastUpdated >= 1) {
+            $this->lastUpdated = $now;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -729,29 +748,6 @@ class ScannerController extends Controller
     private function setScannerTimestamp()
     {
         $this->configManager->setUserValue($this->userId, $this->appName, 'scanner_timestamp', time());
-    }
-
-    /**
-     * Report scanning Progress back to web frontend - e.g. progress bar
-     * @NoAdminRequired
-     *
-     */
-    public function getProgress()
-    {
-        $aCurrent = $this->DBController->getSessionValue('scanner_progress');
-        if ($aCurrent !== '') {
-            $aCurrent = json_decode($aCurrent);
-            $numSongs = (isset($aCurrent->{'all'}) ? $aCurrent->{'all'} : 0);
-            $currentSongCount = (isset($aCurrent->{'current'}) ? $aCurrent->{'current'} : 0);
-            $currentSong = (isset($aCurrent->{'currentsong'}) ? $aCurrent->{'currentsong'} : '');
-            $percent = (isset($aCurrent->{'percent'}) ? $aCurrent->{'percent'} : 0);
-
-            $params = ['status' => 'success', 'percent' => $percent, 'msg' => $currentSong, 'prog' => $percent . '% (' . $currentSongCount . ' / ' . $numSongs . ')'];
-        } else {
-            $params = ['status' => 'false'];
-        }
-        $response = new JSONResponse($params);
-        return $response;
     }
 
     /**
