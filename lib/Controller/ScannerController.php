@@ -190,13 +190,13 @@ class ScannerController extends Controller
                 $this->abscount++;
                 $scanResult = $this->scanStream($stream, $output);
                 if ($scanResult === 'duplicate') {
-                    $duplicate_tracks .= $audio->getPath() . '<br />';
+                    $duplicate_tracks .= $stream->getPath() . '<br />';
                     $this->iDublicate++;
                 }
                 $counter_new++;
 
                 if ($this->timeForUpdate()) {
-                    $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
+                    $this->updateProgress($this->abscount, $this->numOfSongs, $stream->getPath(), $output);
                 }
             }
             $this->setScannerTimestamp();
@@ -333,7 +333,7 @@ class ScannerController extends Controller
         ];
         $return = $this->DBController->writeStreamToDB($this->userId, $aStream);
         if ($return['dublicate'] === 1) {
-            $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
+            $this->logger->debug('Duplicate file: ' . $stream->getPath(), array('app' => 'audioplayer'));
             $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
             return 'duplicate';
         }
