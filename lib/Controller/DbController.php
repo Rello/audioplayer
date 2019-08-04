@@ -389,6 +389,11 @@ class DbController extends Controller
         $this->db->commit();
     }
 
+    public function rollBack()
+    {
+        $this->db->rollBack();
+    }
+
     /**
      * Add genre to db if not exist
      * @param int $userId

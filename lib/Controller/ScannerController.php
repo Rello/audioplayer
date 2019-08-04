@@ -160,46 +160,51 @@ class ScannerController extends Controller
         $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
 
         $this->DBController->beginTransaction();
-        foreach ($audios as $audio) {
-            if ($this->scanCancelled()) { break; }
+        try {
+            foreach ($audios as $audio) {
+                if ($this->scanCancelled()) { break; }
 
-            $counter++;
-            $this->abscount++;
-            $scanResult = $this->scanAudio($audio, $getID3, $output);
-            if ($scanResult === 'error') {
-                $error_file .= $audio->getPath() . '<br />';
-                $error_count++;
-                continue;
-            } else if ($scanResult === 'duplicate') {
-                $duplicate_tracks .= $audio->getPath() . '<br />';
-                $this->iDublicate++;
-            }
-            $counter_new++;
+                $counter++;
+                $this->abscount++;
+                $scanResult = $this->scanAudio($audio, $getID3, $output);
+                if ($scanResult === 'error') {
+                    $error_file .= $audio->getPath() . '<br />';
+                    $error_count++;
+                    continue;
+                } else if ($scanResult === 'duplicate') {
+                    $duplicate_tracks .= $audio->getPath() . '<br />';
+                    $this->iDublicate++;
+                }
+                $counter_new++;
 
-            if ($this->timeForUpdate()) {
-                $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
+                if ($this->timeForUpdate()) {
+                    $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
+                }
             }
+
+            $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
+            foreach ($streams as $stream) {
+                if ($this->scanCancelled()) { break; }
+
+                $counter++;
+                $this->abscount++;
+                $scanResult = $this->scanStream($stream, $output);
+                if ($scanResult === 'duplicate') {
+                    $duplicate_tracks .= $audio->getPath() . '<br />';
+                    $this->iDublicate++;
+                }
+                $counter_new++;
+
+                if ($this->timeForUpdate()) {
+                    $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
+                }
+            }
+            $this->setScannerTimestamp();
+            $this->DBController->commit();
+        } catch (Exception $e) {
+            $this->logger->error('Error while building library: '. $e);
+            $this->DBController->rollBack();
         }
-
-        $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
-        foreach ($streams as $stream) {
-            if ($this->scanCancelled()) { break; }
-
-            $counter++;
-            $this->abscount++;
-            $scanResult = $this->scanStream($stream, $output);
-            if ($scanResult === 'duplicate') {
-                $duplicate_tracks .= $audio->getPath() . '<br />';
-                $this->iDublicate++;
-            }
-            $counter_new++;
-
-            if ($this->timeForUpdate()) {
-                $this->updateProgress($this->abscount, $this->numOfSongs, $audio->getPath(), $output);
-            }
-        }
-        $this->setScannerTimestamp();
-        $this->DBController->commit();
 
         // different outputs when web or occ
         if (!$this->occJob) {
