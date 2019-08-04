@@ -220,6 +220,10 @@ class ScannerController extends Controller
         }
     }
 
+    /**
+     * Check whether scan got cancelled by user
+     * @return bool
+     */
     private function scanCancelled() {
         //check if scan is still supposed to run, or if dialog was closed in web already
         if (!$this->occJob) {
@@ -228,6 +232,13 @@ class ScannerController extends Controller
         }
     }
 
+    /**
+     * Process audio track and insert it into DB
+     * @param object $audio audio object to scan
+     * @param object $getID3 ID3 tag helper from getid3 library
+     * @param OutputInterface|null $output
+     * @return string
+     */
     private function scanAudio($audio, $getID3, $output) {
         if ($this->checkFileChanged($audio)) {
             $this->DBController->deleteFromDB($audio->getId(), $this->userId);
@@ -310,9 +321,16 @@ class ScannerController extends Controller
             $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
             return 'duplicate';
         }
-        return true;
+        return 'success';
     }
 
+    /**
+     * Process stream and insert it into DB
+     * @param object $stream stream object to scan
+     * @param object $getID3 ID3 tag helper from getid3 library
+     * @param OutputInterface|null $output
+     * @return string
+     */
     private function scanStream($stream, $output) {
         $title = $this->truncateStrings($stream->getName(), '256');
         $aStream = [
@@ -329,9 +347,17 @@ class ScannerController extends Controller
             $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
             return 'duplicate';
         }
-        return true;
+        return 'success';
     }
 
+    /**
+     * Summarize scan results in a message
+     * @param integer $stream number of processed files
+     * @param integer $error_count number of invalid files
+     * @param string $duplicate_tracks list of duplicates
+     * @param string $duplicate_tracks list of invalid files
+     * @return string
+     */
     private function composeResponseMessage($counter,
                                             $error_count,
                                             $duplicate_tracks,
@@ -353,9 +379,10 @@ class ScannerController extends Controller
     }
 
     /**
-     * @param $percentage
-     * @param OutputInterface $output
-     * @return bool
+     * Give feedback to user via appropriate output
+     * @param integer $filesProcessed
+     * @param string $currentFile
+     * @param OutputInterface|null $output
      */
     private function updateProgress($filesProcessed, $currentFile, OutputInterface $output = null)
     {
