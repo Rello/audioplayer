@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.8.0 - unreleased 
+## 2.8.0 - unreleased
 
 ### Added
 - Graphical view selectable for all categories [#165](https://github.com/rello/audioplayer/issues/165)
@@ -19,6 +19,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Fixed
 - Fix hotkey clashing [#416](https://github.com/rello/audioplayer/pull/416) @[mmatous](https://github.com/mmatous) 
+
 ## 2.7.2 - 2019-06-23
 ### Fixed
 - SONOS playback issue
