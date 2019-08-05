@@ -155,6 +155,7 @@ class DbController extends Controller
             $this->occ_job = false;
         }
 
+        $this->db->beginTransaction();
         $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ?');
         $stmt->execute(array($this->userId));
 
@@ -168,6 +169,7 @@ class DbController extends Controller
         $stmt->execute(array($this->userId));
 
         $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ?');
+
         $stmt->execute(array($this->userId));
         $results = $stmt->fetchAll();
         if (!is_null($results)) {
@@ -185,6 +187,8 @@ class DbController extends Controller
 
         $stmt = $this->db->prepare('DELETE FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ?');
         $stmt->execute(array($this->userId));
+
+        $this->db->commit();
 
         $result = [
             'status' => 'success',
@@ -373,6 +377,21 @@ class DbController extends Controller
             $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_artists');
             return $insertid;
         }
+    }
+
+    public function beginTransaction()
+    {
+        $this->db->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->db->commit();
+    }
+
+    public function rollBack()
+    {
+        $this->db->rollBack();
     }
 
     /**
