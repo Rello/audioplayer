@@ -612,15 +612,15 @@ OCA.Audioplayer.UI = {
     },
 
     trackClickHandler: function (callback) {
-        var albumWrapper = $('.albumwrapper');
+        var albumWrapper = document.getElementById('individual-playlist');
         var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
         var category = OCA.Audioplayer.UI.PlaylistContainer.data('playlist').split('-');
 
         var canPlayMimeType = OCA.Audioplayer.Core.canPlayMimeType;
-        var playlist = albumWrapper.find('li');
+        var playlist = albumWrapper.getElementsByTagName('li');
 
-        playlist.each(function (index, elm) {
-            var element = $(elm);
+        for (var track of playlist) {
+            var element = $(track);
 
             if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
                 element.draggable({
@@ -637,7 +637,7 @@ OCA.Audioplayer.UI = {
             element.on('click', function() {
                 OCA.Audioplayer.UI.onTitleClick(getcoverUrl, canPlayMimeType, playlist, element);
             });
-        });
+        }
         // the callback is used for the the init function to get feedback when all title rows are ready
         if (typeof callback === 'function') {
             callback();
@@ -667,7 +667,7 @@ OCA.Audioplayer.UI = {
             // the visible playlist has to be copied to the player queue
             // this disconnects the free navigation in AP while continuing to play a playlist
             if (OCA.Audioplayer.UI.PlaylistContainer.data('playlist') !== OCA.Audioplayer.UI.ActivePlaylist.data('playlist')) {
-                var ClonePlaylist = playlist.clone();
+                var ClonePlaylist = $(playlist).clone();
                 OCA.Audioplayer.UI.ActivePlaylist.html('');
                 OCA.Audioplayer.UI.ActivePlaylist.append(ClonePlaylist);
                 OCA.Audioplayer.UI.ActivePlaylist.find('span').remove();
