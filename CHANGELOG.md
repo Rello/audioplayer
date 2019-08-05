@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.8.0 - unreleased
+## 2.8.0 - unreleased 
 
 ### Added
 - Graphical view selectable for all categories [#165](https://github.com/rello/audioplayer/issues/165)
