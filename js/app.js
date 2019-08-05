@@ -619,11 +619,9 @@ OCA.Audioplayer.UI = {
         var canPlayMimeType = OCA.Audioplayer.Core.canPlayMimeType;
         var playlist = albumWrapper.getElementsByTagName('li');
 
-        for (var track of playlist) {
-            var element = $(track);
-
-            if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
-                element.draggable({
+        if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
+            for (var track of playlist) {
+                $(track).draggable({
                     appendTo: 'body',
                     helper: OCA.Audioplayer.Playlists.dragElement,
                     cursor: 'move',
