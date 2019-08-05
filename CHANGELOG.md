@@ -11,6 +11,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Changed
 - Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) @[mmatous](https://github.com/mmatous)
+- Scan optimizations [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
 - Remove SONOS Playback into separate add-on [#411](https://github.com/rello/audioplayer/issues/411)
 - JS cleanup & simplification
 - JS introduction of namespaces

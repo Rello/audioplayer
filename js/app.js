@@ -596,11 +596,13 @@ OCA.Audioplayer.UI = {
         var div = document.getElementById('view-toggle');
         var classes = div.classList;
         if (classes.contains('icon-toggle-filelist')) {
-            classes.replace('icon-toggle-filelist', 'icon-toggle-pictures');
+            classes.remove('icon-toggle-filelist');
+            classes.add('icon-toggle-pictures');
             div.innerText = t('audioplayer', 'Album Covers');
             OCA.Audioplayer.Backend.setUserValue('view', 'pictures');
         } else {
-            classes.replace('icon-toggle-pictures', 'icon-toggle-filelist');
+            classes.remove('icon-toggle-pictures');
+            classes.add('icon-toggle-filelist');
             div.innerText = t('audioplayer', 'List View');
             OCA.Audioplayer.Backend.setUserValue('view', 'filelist');
         }
