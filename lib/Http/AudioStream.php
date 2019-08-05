@@ -70,7 +70,7 @@ class AudioStream {
 			list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 			
 			if (strpos($range, ',') !== false) {
-				header('HTTP/1.1 416 Requested Range Not Satisfiable');
+				http_response_code(416);
 				header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 				exit ;
 			}
@@ -83,7 +83,7 @@ class AudioStream {
 			}
 			$c_end = ($c_end > $this -> iEnd) ? $this -> iEnd : $c_end;
 			if ($c_start > $c_end || $c_start > $this -> iSize - 1 || $c_end >= $this -> iSize) {
-				header('HTTP/1.1 416 Requested Range Not Satisfiable');
+				http_response_code(416);
 				header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 				exit ;
 			}
@@ -95,7 +95,7 @@ class AudioStream {
 			}
             header("Accept-Ranges: bytes");
             header("Content-Length: $length");
-			header('HTTP/1.1 206 Partial Content');
+			http_response_code(206);
 			header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 			//\OCP\Util::writeLog('audioplayer','SEQ:'.$this->iStart."-".$this->iEnd."/".$this->iSize.'length:'.$length,\OCP\Util::DEBUG);
 		} else {
