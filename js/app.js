@@ -633,11 +633,10 @@ OCA.Audioplayer.UI = {
                     }
                 });
             }
-
-            element.on('click', function() {
-                OCA.Audioplayer.UI.onTitleClick(getcoverUrl, canPlayMimeType, playlist, element);
-            });
         }
+        albumWrapper.addEventListener('click', function(event) {
+            OCA.Audioplayer.UI.onTitleClick(getcoverUrl, canPlayMimeType, playlist, event.target);
+        });
         // the callback is used for the the init function to get feedback when all title rows are ready
         if (typeof callback === 'function') {
             callback();
@@ -645,7 +644,7 @@ OCA.Audioplayer.UI = {
     },
 
     onTitleClick: function (coverUrl, canPlayMimeType, playlist, element) {
-        var activeLi = element.closest('li');
+        var activeLi = $(element).closest('li');
         // if enabled, play sonos and skip the rest of the processing
         if ($('#audioplayer_sonos').val() === 'checked') {
             var liIndex = element.parents('li').index();
