@@ -15,7 +15,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - Remove SONOS Playback into separate add-on [#411](https://github.com/rello/audioplayer/issues/411)
 - Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) @[mmatous](https://github.com/mmatous)
 - JS introduction of namespaces
-- Use non-minified Soundmanager [#417](https://github.com/rello/audioplayer/pull/417) @[mmatous](https://github.com/mmatous)    
+- Use non-minified Soundmanager [#417](https://github.com/rello/audioplayer/pull/417) @[mmatous](https://github.com/mmatous)  
+- trackClickHandler optimizations [#422](https://github.com/rello/audioplayer/pull/422) @[mmatous](https://github.com/mmatous) 
 
 ### Fixed
 - Fix hotkey clashing [#416](https://github.com/rello/audioplayer/pull/416) @[mmatous](https://github.com/mmatous) 
