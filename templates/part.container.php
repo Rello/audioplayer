@@ -22,7 +22,7 @@
   			</span>
   		</span>
   		<br style="clear:both;" />
-  		<ul id="individual-playlist"></ul>
+        <ul id="individual-playlist" class="albumwrapper"></ul>
   	</div>
 
 <div id="empty-container">

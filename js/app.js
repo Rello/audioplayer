@@ -157,7 +157,7 @@ OCA.Audioplayer.Cover = {
 
     load: function (category, categoryId) {
         OCA.Audioplayer.UI.PlaylistContainer.show();
-        OCA.Audioplayer.UI.EmptyContainer.hide();
+        OCA.Audioplayer.UI.EmptyContainer.style.display = 'none';
         document.getElementById('loading').style.display = 'block';
         $('.toolTip').tooltip('hide');
         if (!categoryId) {
@@ -418,20 +418,21 @@ OCA.Audioplayer.Category = {
 
     buildListView: function (evt) {
         $('.toolTip').tooltip('hide');
-        OCA.Audioplayer.UI.PlaylistContainer.show();
-        OCA.Audioplayer.UI.EmptyContainer.hide();
+        var playlistContainer = document.getElementById('playlist-container');
+        playlistContainer.style.display = 'block';
+        OCA.Audioplayer.UI.EmptyContainer.style.display = 'none';
         document.getElementById('loading').style.display = 'block';
-        document.querySelector('.coverrow') ? document.querySelector('.coverrow').remove() : false;
-        document.querySelector('.songcontainer') ? document.querySelector('.songcontainer').remove() : false;
-        document.getElementById('individual-playlist') ? document.getElementById('individual-playlist').remove() : false;
+        if (document.querySelector('.coverrow')) document.querySelector('.coverrow').remove();
+        if (document.querySelector('.songcontainer')) document.querySelector('.songcontainer').remove();
+        if (document.getElementById('individual-playlist')) document.getElementById('individual-playlist').remove();
         document.getElementById('individual-playlist-info').style.display = 'block';
         document.getElementById('individual-playlist-header').style.display = 'block';
 
         OCA.Audioplayer.UI.PlaylistContainer.append('<ul id="individual-playlist" class="albumwrapper"></ul>');
 
-        $('.header-title').data('order', '');
-        $('.header-artist').data('order', '');
-        $('.header-album').data('order', '');
+        document.querySelector('.header-title').dataset.order = '';
+        document.querySelector('.header-artist').dataset.order = '';
+        document.querySelector('.header-album').dataset.order = '';
 
         return true;
     },
@@ -453,7 +454,7 @@ OCA.Audioplayer.Category = {
                     var titleCounter = 0;
                     var itemRows = document.createDocumentFragment();
                     for (var itemData of jsondata.data) {
-                        var tempItem = $(OCA.Audioplayer.UI.buildTrackRow(itemData, covers))[0];
+                        var tempItem = OCA.Audioplayer.UI.buildTrackRow(itemData, covers);
                         itemRows.appendChild(tempItem);
                         titleCounter++;
                     }
@@ -501,71 +502,93 @@ OCA.Audioplayer.Category = {
  */
 OCA.Audioplayer.UI = {
 
-    EmptyContainer: $('#empty-container'),
+    EmptyContainer: document.getElementById('empty-container'),
     PlaylistContainer: $('#playlist-container'),
     ActivePlaylist: $('#activePlaylist'),
+    getAudiostreamUrl: OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=',
 
     buildTrackRow: function (elem, covers) {
-        var getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
         var canPlayMimeType = OCA.Audioplayer.Core.canPlayMimeType;
 
-        var li = $('<li/>').attr({
-            'data-trackid': elem.id,
-            'data-title': elem.cl1,
-            'data-artist': elem.cl2,
-            'data-album': elem.cl3,
-            'data-cover': elem.cid,
-            'data-mimetype': elem.mim,
-            'data-path': elem.lin,
-            'class': 'dragable'
-        });
+        var li = document.createElement('li');
+        li.classList.add('dragable');
+        li.dataset.trackid = elem.id;
+        li.dataset.title = elem.cl1;
+        li.dataset.artist = elem.cl2;
+        li.dataset.album = elem.cl3;
+        li.dataset.cover = elem.cid;
+        li.dataset.mimetype = elem.mim;
+        li.dataset.path = elem.lin;
 
         var favAction = OCA.Audioplayer.UI.indicateFavorite(elem.fav, elem.id);
 
-        var stream_type, streamUrl, spanAction, spanTitle;
+        var stream_type, streamUrl, spanAction, spanTitle, iAction;
+
+        spanAction = document.createElement('span');
+        spanAction.classList.add('actionsSong');
+        iAction = document.createElement('i');
+        iAction.classList.add('ioc');
+        iAction.classList.add('ioc-volume-off');
+        spanAction.appendChild(favAction);
+        spanAction.appendChild(iAction);
 
         if (elem.mim === 'audio/mpegurl' || elem.mim === 'audio/x-scpls' || elem.mim === 'application/xspf+xml') {
             stream_type = true;
-            streamUrl = $('<a/>').attr({'href': elem.lin, 'type': elem.mim});
-            spanAction = $('<span/>')
-                .addClass('actionsSong')
-                .append(favAction)
-                .append($('<i/>').addClass('ioc ioc-volume-off'));
+            streamUrl = document.createElement('a');
+            streamUrl.setAttribute('href', elem.lin);
+            streamUrl.setAttribute('type', elem.mim);
         } else {
             stream_type = false;
-            streamUrl = $('<a/>').attr({'href': getAudiostreamUrl + elem.lin, 'type': elem.mim});
-            spanAction = $('<span/>').addClass('actionsSong')
-                .append(favAction)
-                .append($('<i/>').addClass('ioc ioc-volume-off'));
+            streamUrl = document.createElement('a');
+            streamUrl.setAttribute('href', OCA.Audioplayer.UI.getAudiostreamUrl + elem.lin);
+            streamUrl.setAttribute('type', elem.mim);
         }
 
-        var spanInterpret = $('<span>').attr({'class': 'interpret'}).text(elem.cl2);
-        var spanAlbum = $('<span>').attr({'class': 'album-indi'}).text(elem.cl3);
-        var spanTime = $('<span/>').addClass('time').text(elem.len);
-        var spanNr = $('<span/>').addClass('number').text(elem.cl3);
-        var spanEdit = $('<span/>').addClass('edit-song icon-more').attr({'title': t('audioplayer', 'Options')})
-            .on('click', OCA.Audioplayer.UI.handleOptionsClicked);
+        var spanInterpret = document.createElement('span');
+        spanInterpret.classList.add('interpret');
+        spanInterpret.innerText = elem.cl2;
+
+        var spanAlbum = document.createElement('span');
+        spanAlbum.classList.add('album-indi');
+        spanAlbum.innerText = elem.cl3;
+
+        var spanTime = document.createElement('span');
+        spanTime.classList.add('time');
+        spanTime.innerText = elem.len;
+
+        var spanNr = document.createElement('span');
+        spanNr.classList.add('number');
+        spanNr.innerText = elem.cl3;
+
+        var spanEdit = document.createElement('span');
+        spanEdit.classList.add('edit-song');
+        spanEdit.classList.add('icon-more');
+        spanEdit.setAttribute('title', t('audioplayer', 'Options'));
+        spanEdit.addEventListener('click', OCA.Audioplayer.UI.handleOptionsClicked);
+
+        var spanTitle = document.createElement('span');
+        spanTitle.classList.add('title');
 
         if (canPlayMimeType[elem.mim]) {
-            spanTitle = $('<span/>').addClass('title').text(elem.cl1);
+            spanTitle.innerText = elem.cl1;
         } else {
-            spanTitle = $('<span/>').addClass('title').html('<i>' + elem.cl1 + '</i>');
+            spanTitle.innerHTML = '<i>' + elem.cl1 + '</i>';
         }
 
         if (covers) {
-            li.append(streamUrl);
-            li.append(spanAction);
-            li.append(spanNr);
-            li.append(spanTitle);
-            li.append(spanEdit);
+            li.appendChild(streamUrl);
+            li.appendChild(spanAction);
+            li.appendChild(spanNr);
+            li.appendChild(spanTitle);
+            li.appendChild(spanEdit);
         } else {
-            li.append(streamUrl);
-            li.append(spanAction);
-            li.append(spanTitle);
-            li.append(spanInterpret);
-            li.append(spanAlbum);
-            li.append(spanTime);
-            li.append(spanEdit);
+            li.appendChild(streamUrl);
+            li.appendChild(spanAction);
+            li.appendChild(spanTitle);
+            li.appendChild(spanInterpret);
+            li.appendChild(spanAlbum);
+            li.appendChild(spanTime);
+            li.appendChild(spanEdit);
         }
 
         return li;
@@ -579,11 +602,16 @@ OCA.Audioplayer.UI = {
     indicateFavorite: function (fav, id) {
         var fav_action;
         if (fav === 't') {
-            fav_action = $('<i/>').addClass('icon icon-starred');
+            var fav_action = document.createElement('i');
+            fav_action.classList.add('icon');
+            fav_action.classList.add('icon-starred');
         } else {
-            fav_action = $('<i/>').addClass('icon icon-star');
+            var fav_action = document.createElement('i');
+            fav_action.classList.add('icon');
+            fav_action.classList.add('icon-star');
         }
-        fav_action.attr({'data-trackid': id}).on('click', OCA.Audioplayer.UI.handleStarClicked);
+        fav_action.setAttribute('data-trackid', id);
+        fav_action.addEventListener('click', OCA.Audioplayer.UI.handleStarClicked);
         return fav_action;
     },
 
@@ -612,7 +640,7 @@ OCA.Audioplayer.UI = {
     },
 
     trackClickHandler: function (callback) {
-        var albumWrapper = document.getElementById('individual-playlist');
+        var albumWrapper = document.querySelector('.albumwrapper');
         var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
         var category = OCA.Audioplayer.UI.PlaylistContainer.data('playlist').split('-');
 
@@ -693,15 +721,15 @@ OCA.Audioplayer.UI = {
     showInitScreen: function (mode) {
         document.querySelector('.sm2-bar-ui').style.display = 'none';
         OCA.Audioplayer.UI.PlaylistContainer.hide();
-        OCA.Audioplayer.UI.EmptyContainer.show();
-        OCA.Audioplayer.UI.EmptyContainer.html('');
+        OCA.Audioplayer.UI.EmptyContainer.style.display = 'block';
+        OCA.Audioplayer.UI.EmptyContainer.innerHTML = '';
 
         if (mode === 'smart') {
-            OCA.Audioplayer.UI.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
+            OCA.Audioplayer.UI.EmptyContainer.innerHTML = '<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>';
         } else if (mode === 'playlist') {
-            OCA.Audioplayer.UI.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>');
+            OCA.Audioplayer.UI.EmptyContainer.innerHTML = '<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>';
         } else {
-            OCA.Audioplayer.UI.EmptyContainer.html('<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>');
+            OCA.Audioplayer.UI.EmptyContainer.innerHTML = '<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>';
             OCA.Audioplayer.UI.EmptyContainer.append('<span class="no-songs-found"><i class="ioc ioc-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></i> ' + t('audioplayer', 'Add new tracks to library') + '</span>');
             OCA.Audioplayer.UI.EmptyContainer.append('<a class="no-songs-found" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>');
         }
