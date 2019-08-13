@@ -21,7 +21,7 @@
             <div class="fileName"><h3 id="sidebarTitle"></h3>
             </div>
             <div class="file-details ellipsis">
-                <a href="#" class="action action-favorite favorite permanent">
+                <a href="javascript:void(0)" class="action action-favorite favorite permanent">
                     <span id="sidebarFavorite" class="icon icon-star" title=""></span>
                 </a>
                 <span id="sidebarMime"></span>
