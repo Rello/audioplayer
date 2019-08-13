@@ -178,9 +178,7 @@ class CategoryController extends Controller
             'status' => 'success',
             'data' => $aPlaylists
         ];
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 
     /**
@@ -230,9 +228,7 @@ class CategoryController extends Controller
             'status' => 'success',
             'data' => $aPlaylists
         ];
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 
     /**
@@ -288,9 +284,7 @@ class CategoryController extends Controller
         ] : [
             'status' => 'nodata',
         ];
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 
     /**

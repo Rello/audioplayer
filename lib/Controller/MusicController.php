@@ -107,9 +107,7 @@ class MusicController extends Controller
                     'status' => 'error',
                     'data' => 'nodata'];
             }
-            $response = new JSONResponse();
-            $response->setData($result);
-            return $response;
+            return new JSONResponse($result);
 
             \OC::$server->getSession()->close();
         }

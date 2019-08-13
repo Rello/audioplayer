@@ -94,8 +94,7 @@ class ScannerController extends Controller
     public function getImportTpl()
     {
         $params = [];
-        $response = new TemplateResponse('audioplayer', 'part.import', $params, '');
-        return $response;
+        return new TemplateResponse('audioplayer', 'part.import', $params, '');
     }
 
     /**
@@ -113,8 +112,7 @@ class ScannerController extends Controller
         if (isset($scanstop)) {
             $this->DBController->setSessionValue('scanner_running', 'stopped', $this->userId);
             $params = ['status' => 'stopped'];
-            $response = new JSONResponse($params);
-            return $response;
+            return new JSONResponse($params);
         }
 
         // check if scanner is started from web or occ

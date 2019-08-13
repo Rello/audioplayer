@@ -77,9 +77,7 @@ class SidebarController extends Controller
                 'status' => 'error',
                 'data' => 'nodata'];
         }
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 
     /**
@@ -99,9 +97,7 @@ class SidebarController extends Controller
                 'status' => 'error',
                 'data' => 'nodata'];
         }
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 
 }

@@ -14,9 +14,9 @@
 	  	<span id="individual-playlist-header">
  	 		<span class="header-indi">
  	 			<span class="header-num"></span>
-  				<span class="header-title"><?php p($l->t('Title')); ?></span>
-  				<span class="header-artist"><?php p($l->t('Artist')); ?></span>
-  				<span class="header-album"><?php p($l->t('Album')); ?></span>
+  				<span class="header-title" style="cursor: pointer;"><?php p($l->t('Title')); ?></span>
+  				<span class="header-artist" style="cursor: pointer;"><?php p($l->t('Artist')); ?></span>
+  				<span class="header-album" style="cursor: pointer;"><?php p($l->t('Album')); ?></span>
 				<span class="header-time"><?php p($l->t('Length')); ?></span>
   				<span class="header-opt">&nbsp;</span>
   			</span>

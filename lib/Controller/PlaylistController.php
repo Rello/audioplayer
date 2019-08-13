@@ -63,9 +63,7 @@ class PlaylistController extends Controller
                     'data' => 'exist',
                 ];
             }
-            $response = new JSONResponse();
-            $response->setData($result);
-            return $response;
+            return new JSONResponse($result);
         } else {
             return null;
         }
@@ -111,8 +109,7 @@ class PlaylistController extends Controller
             ];
         }
 
-        $response = new JSONResponse($params);
-        return $response;
+        return new JSONResponse($params);
     }
 
     private function updatePlaylistToDB($id, $sName)
@@ -162,10 +159,7 @@ class PlaylistController extends Controller
             'status' => 'success',
             'msg' => (string)$this->l10n->t('Sorting Playlist success! Playlist reloaded!')
         ];
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
-
+        return new JSONResponse($result);
     }
 
     /**
@@ -213,8 +207,6 @@ class PlaylistController extends Controller
             'data' => ['playlist' => $playlistid]
         ];
 
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 }

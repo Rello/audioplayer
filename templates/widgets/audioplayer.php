@@ -11,7 +11,7 @@
  */
 
 ?>
-<div class="sm2-bar-ui" style="padding-left: 10px;min-width: initial;width: 200px;">
+<div id="sm-bar-ui" class="sm2-bar-ui" style="padding-left: 10px;min-width: initial;width: 200px;">
     <div class="bd sm2-main-controls">
         <div class="sm2-inline-texture"></div>
         <div class="sm2-inline-gradient"></div>

@@ -105,10 +105,7 @@ class SettingController extends Controller {
 					'value' =>'nodata'
 				];
 		}
-		
-		$response = new JSONResponse();
-		$response -> setData($result);
-		return $response;
+        return new JSONResponse($result);
 	}
 
     /**

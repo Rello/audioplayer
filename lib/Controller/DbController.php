@@ -14,7 +14,7 @@
 namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse as JSONResponseAlias;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
@@ -197,9 +197,7 @@ class DbController extends Controller
 
         // applies if scanner is not started via occ
         if (!$this->occ_job) {
-            $response = new JSONResponseAlias();
-            $response->setData($result);
-            return $response;
+            return new JSONResponse($result);
         } elseif ($hook === null) {
             $output->writeln("Reset finished");
         } else {
