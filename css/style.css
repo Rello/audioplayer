@@ -433,7 +433,14 @@ i#scanAudiosFirst {
     display: inline-block;
     vertical-align: middle;
     background-size: 16px 16px;
-    opacity: 0;
+}
+
+#individual-playlist .icon-star {
+  opacity: 0;
+}
+
+.icon-starred {
+  opacity: 0.3;
 }
 
 #individual-playlist .icon:hover,
