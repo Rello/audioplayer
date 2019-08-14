@@ -403,7 +403,9 @@ OCA.Audioplayer.Category = {
                         categoryRows.appendChild(li);
                     }
 
-                    document.getElementById('myCategory').appendChild(categoryRows);
+                    var categoryList = document.getElementById('myCategory');
+                    categoryList.appendChild(categoryRows);
+                    categoryList.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
                     if (typeof callback === 'function') {
                         callback();
                     }
@@ -424,16 +426,16 @@ OCA.Audioplayer.Category = {
         spanName.setAttribute('class', 'pl-name');
         spanName.setAttribute('title', categoryData.name);
         spanName.innerText = categoryData.name;
-        if (categoryData.id !== '') spanName.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
         li.appendChild(spanName);
     },
 
     handleCategoryClicked: function (evt, callback) {
         var activeCategory = document.querySelector('#myCategory .active');
         if (evt) {
-            if (activeCategory) activeCategory.classList.remove('active');
-            evt.target.parentNode.classList.add('active');
-            activeCategory = document.querySelector('#myCategory .active');
+            if (activeCategory) { activeCategory.classList.remove('active'); }
+            var parentLi = evt.target.closest('li');
+            parentLi.classList.add('active');
+            activeCategory = parentLi;
         }
 
         var category = document.getElementById('category_selector').value;

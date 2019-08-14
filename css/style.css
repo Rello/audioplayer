@@ -196,6 +196,7 @@ i#scanAudiosFirst {
     float: left;
     padding: 0 6px 0 12px;
     opacity: 0.57;
+    cursor: pointer;
 }
 
 #myCategory .ui-droppable {
@@ -224,7 +225,7 @@ i#scanAudiosFirst {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    cursor: pointer;
+    cursor:inherit;
 }
 
 #myCategory li span.pl-name-play {
@@ -234,7 +235,7 @@ i#scanAudiosFirst {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    cursor: pointer;
+    cursor:inherit;
 }
 
 #albenoverview li:hover,
@@ -248,6 +249,7 @@ i#scanAudiosFirst {
     position: absolute;
     width: 24px;
     text-align: center;
+    cursor:inherit;
 }
 
 .ui-state-highlight {
