@@ -42,7 +42,7 @@ OCA.Audioplayer.Core = {
             OCA.Audioplayer.Core.processSearchResult();
         } else {
             // read saved values from user values
-            OCA.Audioplayer.Backend.getUserValue('category', OCA.Audioplayer.Core.processCategoryFromPreset.bind());
+            OCA.Audioplayer.Backend.getUserValue('category', OCA.Audioplayer.Core.processCategoryFromPreset);
         }
 
         OCA.Audioplayer.Core.canPlayMimeType = soundManager.html5;
@@ -122,7 +122,7 @@ OCA.Audioplayer.Core = {
                 OCA.Audioplayer.Core.CategorySelectors[1] = '0';
             }
             document.getElementById('category_selector').value = OCA.Audioplayer.Core.CategorySelectors[0];
-            OCA.Audioplayer.Category.load(OCA.Audioplayer.Core.selectCategoryItemFromPreset.bind(this));
+            OCA.Audioplayer.Category.load(OCA.Audioplayer.Core.selectCategoryItemFromPreset);
         } else {
             OCA.Audioplayer.UI.showInitScreen();
         }
@@ -139,7 +139,7 @@ OCA.Audioplayer.Core = {
                     item.find('.icon').hide();
                     item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
                 }
-            }.bind(this));
+            });
         }
     },
 
@@ -194,7 +194,6 @@ OCA.Audioplayer.Cover = {
         var divRow = document.createElement('div');
         divRow.classList.add('coverrow');
 
-        var boundLoadIndividualAlbums = OCA.Audioplayer.Cover.handleCoverClicked.bind();
         for (var album of aAlbums) {
             var addCss;
             var addDescr;
@@ -211,11 +210,11 @@ OCA.Audioplayer.Cover = {
             divAlbum.setAttribute('style', 'margin-left: 15px');
             divAlbum.dataset.album = album.id;
             divAlbum.dataset.name = album.name;
-            divAlbum.addEventListener('click', boundLoadIndividualAlbums);
+            divAlbum.addEventListener('click', OCA.Audioplayer.Cover.handleCoverClicked);
 
             var divPlayImage = document.createElement('div');
             divPlayImage.setAttribute('id', 'AlbumPlay');
-            divPlayImage.addEventListener('click', boundLoadIndividualAlbums);
+            divPlayImage.addEventListener('click', OCA.Audioplayer.Cover.handleCoverClicked);
 
             var divAlbumCover = document.createElement('div');
             divAlbumCover.classList.add('albumcover');
@@ -412,7 +411,7 @@ OCA.Audioplayer.Category = {
                 } else {
                     OCA.Audioplayer.UI.showInitScreen();
                 }
-            }.bind()
+            }
         });
         if (category === 'Playlist') {
             document.getElementById('addPlaylist').classList.remove('hidden');
@@ -425,7 +424,7 @@ OCA.Audioplayer.Category = {
         spanName.setAttribute('class', 'pl-name');
         spanName.setAttribute('title', categoryData.name);
         spanName.innerText = categoryData.name;
-        if (categoryData.id !== '') spanName.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked.bind());
+        if (categoryData.id !== '') spanName.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
         li.appendChild(spanName);
     },
 
@@ -524,7 +523,7 @@ OCA.Audioplayer.Category = {
                 } else {
                     OCA.Audioplayer.UI.showInitScreen('playlist');
                 }
-            }.bind()
+            }
         });
         var category_title = document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').firstChild.title : false;
         if (category !== 'Title') {
@@ -915,7 +914,7 @@ OCA.Audioplayer.Backend = {
                     OCA.Audioplayer.Core.CategorySelectors = [];
                     callback(OCA.Audioplayer.Core.CategorySelectors);
                 }
-            }.bind()
+            }
         });
     },
 
@@ -1005,7 +1004,7 @@ OCA.Audioplayer.Playlists = {
         var playlistName = eventTarget.data('name');
         var originalItem = $('#myCategory li[data-id="' + playlistId + '"]');
         var myClone = $('#pl-clone').clone();
-        var boundGenerateRenameRequest = OCA.Audioplayer.Playlists.generateRenameRequest.bind(OCA.Audioplayer.Playlists);
+        var boundGenerateRenameRequest = OCA.Audioplayer.Playlists.generateRenameRequest;
 
         originalItem.after(myClone);
         originalItem.hide();
@@ -1143,23 +1142,23 @@ OCA.Audioplayer.Playlists = {
 
     buildCategoryRow: function (el, li) {
         li = $(li); // temporary workaround to apply the .droppable to a vanilla JS element
-        var spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).on('click', OCA.Audioplayer.Category.handleCategoryClicked.bind(this));
+        var spanName = $('<span/>').attr({'class': 'pl-name-play'}).text(el.name).on('click', OCA.Audioplayer.Category.handleCategoryClicked);
         var spanSort = $('<i/>').attr({
             'class': 'ioc ioc-sort toolTip',
             'data-sortid': el.id,
             'title': t('audioplayer', 'Sort playlist')
-        }).on('click', OCA.Audioplayer.Playlists.sortPlaylist.bind());
+        }).on('click', OCA.Audioplayer.Playlists.sortPlaylist);
         var spanEdit = $('<i/>').attr({
             'class': 'icon icon-rename toolTip',
             'data-name': el.name,
             'data-editid': el.id,
             'title': t('audioplayer', 'Rename playlist')
-        }).on('click', OCA.Audioplayer.Playlists.renamePlaylist.bind());
+        }).on('click', OCA.Audioplayer.Playlists.renamePlaylist);
         var spanDelete = $('<i/>').attr({
             'class': 'ioc ioc-delete toolTip',
             'data-deleteid': el.id,
             'title': t('audioplayer', 'Delete playlist')
-        }).on('click', OCA.Audioplayer.Playlists.deletePlaylist.bind());
+        }).on('click', OCA.Audioplayer.Playlists.deletePlaylist);
         li.droppable({
             activeClass: 'activeHover',
             hoverClass: 'dropHover',
@@ -1255,7 +1254,7 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     }
 
-    OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist.bind(OCA.Audioplayer.UI), 250);
+    OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist, 250);
     $('#app-content').on('appresized', OCA.Audioplayer.UI.resizePlaylist);
 
     document.getElementById('view-toggle').addEventListener('click', OCA.Audioplayer.UI.handleViewToggleClicked);
@@ -1269,7 +1268,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('app-navigation').classList.add('hidden');
             OCA.Audioplayer.Backend.setUserValue('navigation', 'false');
         }
-        OCA.Audioplayer.UI.resizePlaylist.call(OCA.Audioplayer.UI);
+        OCA.Audioplayer.UI.resizePlaylist();
     });
 
     document.getElementById('category_selector').addEventListener('change', function () {
@@ -1282,10 +1281,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    var boundSortPlaylist = OCA.Audioplayer.UI.sortPlaylist.bind();
-    document.querySelector('.header-title').addEventListener('click', boundSortPlaylist);
-    document.querySelector('.header-artist').addEventListener('click', boundSortPlaylist);
-    document.querySelector('.header-album').addEventListener('click', boundSortPlaylist);
+    document.querySelector('.header-title').addEventListener('click', OCA.Audioplayer.UI.sortPlaylist);
+    document.querySelector('.header-artist').addEventListener('click', OCA.Audioplayer.UI.sortPlaylist);
+    document.querySelector('.header-album').addEventListener('click', OCA.Audioplayer.UI.sortPlaylist);
 
     window.setTimeout(function () {
         document.getElementById('sm2-bar-ui').style.width = OCA.Audioplayer.UI.PlaylistContainer.width() + 'px'

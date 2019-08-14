@@ -222,7 +222,7 @@ OCA.Audioplayer.Sidebar = {
                             'data-listid': audioinfo[m].playlist_id,
                             'data-trackid': trackid,
                             'title': t('audioplayer', 'Remove')
-                        }).on('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist.bind(OCA.Audioplayer.Playlists));
+                        }).on('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist);
 
                         tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
                         tablekey = $('<div>').addClass('key').append(spanDelete);

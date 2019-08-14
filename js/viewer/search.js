@@ -13,11 +13,10 @@
      */
     Audiplayer.prototype = {
         initialize: function() {
-            var self = this;
             OC.Plugins.register('OCA.Search.Core', this);
         },
         attach: function(search) {
-            search.setRenderer('audioplayer', this.renderResult.bind(this));
+            search.setRenderer('audioplayer', this.renderResult);
         },
         renderResult: function($row, item) {
             $row.find('td.icon')
