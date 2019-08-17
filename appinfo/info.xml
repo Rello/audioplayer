@@ -22,6 +22,9 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
+	<types>
+		<filesystem/>
+	</types>
 	<documentation>
 		<user>https://github.com/rello/audioplayer/wiki#user-documentation</user>
 		<admin>https://github.com/rello/audioplayer/wiki#admin-documentation</admin>
@@ -38,22 +41,19 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
         <nextcloud min-version="14" max-version="17"/>
 		<owncloud min-version="9" max-version="10"/>
 	</dependencies>
-	<types>
-   		<filesystem/>
- 	</types>
  	<repair-steps>
 		<post-migration>
 			<step>OCA\audioplayer\Migration\Migration</step>
 		</post-migration>
 	</repair-steps>
+	<settings>
+		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
+		<personal>OCA\audioplayer\Settings\Personal</personal>
+		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
+	</settings>
 	<dashboard>
 		<widget>OCA\audioplayer\Widgets\AudioplayerWidget</widget>
 	</dashboard>
-	<settings>
-		<personal>OCA\audioplayer\Settings\Personal</personal>
-		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
-		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
-	</settings>
 	<settings-sections>
 		<personal>OCA\audioplayer\Settings\PersonalSectionOC</personal>
 		<admin>OCA\audioplayer\Settings\AdminSectionOC</admin>

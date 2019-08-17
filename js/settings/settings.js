@@ -25,11 +25,9 @@ OCA.Audioplayer.Settings = {
     percentage: 0,
 
     openResetDialog: function () {
-        OC.dialogs.message(
+        OC.dialogs.confirm(
             t('audioplayer', 'Are you sure?') + ' ' + t('audioplayer', 'All library entries will be deleted!'),
             t('audioplayer', 'Reset library'),
-            'notice',
-            OCdialogs.YES_NO_BUTTONS,
             function (e) {
                 if (e === true) {
                     OCA.Audioplayer.Settings.resetLibrary();

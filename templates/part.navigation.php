@@ -10,7 +10,7 @@
  */
  ?>
 <div id="view-toggle" class="icon-toggle-<?php p($_['audioplayer_view']); ?>"
-     style="padding: 15px 40px; background-position: 15px; cursor: pointer; min-height: 50px;"><?php $_['audioplayer_view'] == 'pictures' ? p($l->t('Album Covers')) : p($l->t('List View')); ?>
+     style="padding: 15px 40px; background-position: 15px; cursor: pointer; min-height: 50px;"><?php $_['audioplayer_view'] === 'pictures' ? p($l->t('Album Covers')) : p($l->t('List View')); ?>
 </div>
 		<div id="category_area">
 			<select id="category_selector">
