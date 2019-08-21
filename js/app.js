@@ -430,6 +430,11 @@ OCA.Audioplayer.Category = {
     },
 
     handleCategoryClicked: function (evt, callback) {
+        // do not react when playlist edit input window is active
+        if (evt && evt.target.nodeName === 'INPUT') {
+            return;
+        }
+
         var activeCategory = document.querySelector('#myCategory .active');
         if (evt) {
             if (activeCategory) { activeCategory.classList.remove('active'); }
@@ -698,8 +703,7 @@ OCA.Audioplayer.UI = {
         var activeLi = $(element).closest('li');
         // if enabled, play sonos and skip the rest of the processing
         if ($('#audioplayer_sonos').val() === 'checked') {
-            var liIndex = element.parents('li').index();
-            OCA.Audioplayer.Sonos.playSonos(liIndex);
+            OCA.Audioplayer.Sonos.playSonos(element);
             OCA.Audioplayer.Backend.setStatistics();
             return;
         }
@@ -1014,7 +1018,7 @@ OCA.Audioplayer.Playlists = {
         myClone.find('input[name="playlist"]').val(playlistName).trigger('focus');
 
         myClone.on('keydown', function (evt) {
-            if (evt.keyCode === 13) {
+            if (evt.key === 'Enter') {
                 if (myClone.find('input[name="playlist"]').val() !== '') {
                     boundGenerateRenameRequest(playlistId, myClone);
                 } else {
@@ -1024,12 +1028,6 @@ OCA.Audioplayer.Playlists = {
             }
         });
 
-        myClone.on('keyup', function (evt) {
-            if (evt.keyCode === 27) {
-                myClone.remove();
-                $('#myCategory li[data-id="' + playlistId + '"]').show();
-            }
-        });
         myClone.find('button.icon-checkmark').on('click', function () {
             if (myClone.find('input[name="playlist"]').val() !== '') {
                 boundGenerateRenameRequest(playlistId, myClone);
@@ -1116,11 +1114,9 @@ OCA.Audioplayer.Playlists = {
     deletePlaylist: function (evt) {
         var plId = $(evt.target).attr('data-deleteid');
 
-        OC.dialogs.message(
+        OC.dialogs.confirm(
             t('audioplayer', 'Are you sure?'),
             t('audioplayer', 'Delete playlist'),
-            null,
-            OCdialogs.YES_NO_BUTTONS,
             function (e) {
                 if (e) {
                     $.post(OC.generateUrl('apps/audioplayer/removeplaylist'), {

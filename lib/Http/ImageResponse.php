@@ -29,7 +29,6 @@ class ImageResponse extends Response
      */
     public function __construct(array $image, $statusCode = Http::STATUS_OK)
     {
-        parent::__construct();
         $this->preview = $image['content'];
         $this->setStatus($statusCode);
         $this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');

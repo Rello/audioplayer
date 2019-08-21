@@ -121,6 +121,7 @@ OCA.Audioplayer.Sidebar = {
                     'tabindex': items[tab].tabindex
                 });
             var atag = $('<a/>').text(items[tab].name);
+            atag.prop('title', items[tab].name);
             li.append(atag);
             $('.tabHeaders').append(li);
 
@@ -267,4 +268,4 @@ OCA.Audioplayer.Sidebar = {
         var bName = b.tabindex;
         return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
     },
-};
+}

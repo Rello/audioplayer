@@ -29,7 +29,7 @@
 		<ul id="myCategory">
 		</ul>
         <!--my playlist clone -->
-		<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
+<li class="plclone" id="pl-clone" data-pl="">
 			<div id="playlist_controls">	
 				<input type="text" name="playlist" id="playlist" value=""  />
 				<button class="icon-checkmark"></button>
@@ -37,7 +37,7 @@
 			</div>
 		</li>	
 		<!--my playlist clone -->
-		<div class="app-navigation-entry-edit ap_hidden" id="newPlaylist">
+<div class="ap_hidden" id="newPlaylist">
 			<div id="newPlaylist_controls">
 				<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist')); ?>" /> 
 				<button class="icon-checkmark" id="newPlaylistBtn_ok"></button>

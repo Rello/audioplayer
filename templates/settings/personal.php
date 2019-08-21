@@ -27,8 +27,8 @@ script('audioplayer', 'soundmanager2');
         <br>
     </div>
     <div>
-        <label for="cyrillic_user"><?php p($l->t('Cyrillic support')); ?>:</label>
-        <input type="checkbox" id="cyrillic_user" <?php p($_['audioplayer_cyrillic']); ?>/>
+        <input type="checkbox" class="checkbox" id="cyrillic_user" <?php p($_['audioplayer_cyrillic']); ?>/>
+        <label for="cyrillic_user"><?php p($l->t('Cyrillic support')); ?></label>
         <p>
             <em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em>
         </p>
