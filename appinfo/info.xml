@@ -51,9 +51,6 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
 	</settings>
-	<dashboard>
-		<widget>OCA\audioplayer\Widgets\AudioplayerWidget</widget>
-	</dashboard>
 	<settings-sections>
 		<personal>OCA\audioplayer\Settings\PersonalSectionOC</personal>
 		<admin>OCA\audioplayer\Settings\AdminSectionOC</admin>
