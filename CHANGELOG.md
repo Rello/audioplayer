@@ -7,16 +7,15 @@ All notable changes to the Audio Player project will be documented in this file.
 - Cover view selectable for all categories [#165](https://github.com/rello/audioplayer/issues/165)
 - APIs & events to enable Audio Player add-ons [#408](https://github.com/rello/audioplayer/issues/408)
 - ID3 Editor as separate add-on
-- Create lint configuration [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)
 
 ### Changed
-- UI performance enhacement
-- Scan performance enhacement [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
+- Big UI performance enhacement
+- Big scan performance enhacement [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
 - Remove SONOS Playback into separate add-on [#411](https://github.com/rello/audioplayer/issues/411)
-- Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) @[mmatous](https://github.com/mmatous)
+- Remove Dashboard Widget into separate add-on [#431](https://github.com/rello/audioplayer/issues/431)
+- Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)
 - JS introduction of namespaces
 - Use non-minified Soundmanager [#417](https://github.com/rello/audioplayer/pull/417) @[mmatous](https://github.com/mmatous)  
-- trackClickHandler optimizations [#422](https://github.com/rello/audioplayer/pull/422) @[mmatous](https://github.com/mmatous) 
 
 ### Fixed
 - Fix hotkey clashing [#416](https://github.com/rello/audioplayer/pull/416) @[mmatous](https://github.com/mmatous) 
