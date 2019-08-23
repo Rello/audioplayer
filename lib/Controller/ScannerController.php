@@ -469,24 +469,23 @@ class ScannerController extends Controller
         $results = $stmt->fetchAll();
         $resultExisting = array_column($results, 'file_id');
 
-        foreach ($audios as $audio) {
+        foreach ($audios as $key => $audio) {
             $current_id = $audio->getID();
             if (in_array($current_id, $resultExclude)) {
                 $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
+                unset($audios[$key]);
             } elseif (in_array($current_id, $resultExisting)) {
                 if ($this->checkFileChanged($audio)) {
                     $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed title changed => reindex", OutputInterface::VERBOSITY_VERY_VERBOSE);
-                    array_push($audios_clean, $audio);
                 } else {
                     $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed", OutputInterface::VERBOSITY_VERY_VERBOSE);
+                    unset($audios[$key]);
                 }
-            } else {
-                array_push($audios_clean, $audio);
             }
         }
-        $this->numOfSongs = count($audios_clean);
+        $this->numOfSongs = count($audios);
         $output->writeln("Final audio files to be processed: " . $this->numOfSongs, OutputInterface::VERBOSITY_VERBOSE);
-        return $audios_clean;
+        return $audios;
     }
 
     /**
@@ -551,25 +550,23 @@ class ScannerController extends Controller
         $results = $stmt->fetchAll();
         $resultExisting = array_column($results, 'file_id');
 
-        foreach ($audios as $audio) {
+        foreach ($audios as $key => $audio) {
             $current_id = $audio->getID();
-
             if (in_array($current_id, $resultExclude)) {
                 $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
+                unset($audios[$key]);
             } elseif (in_array($current_id, $resultExisting)) {
                 if ($this->checkFileChanged($audio)) {
                     $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => indexed file changed => reindex", OutputInterface::VERBOSITY_VERY_VERBOSE);
-                    array_push($audios_clean, $audio);
                 } else {
                     $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => already indexed", OutputInterface::VERBOSITY_VERY_VERBOSE);
+                    unset($audios[$key]);
                 }
-            } else {
-                array_push($audios_clean, $audio);
             }
         }
-        $this->numOfSongs = $this->numOfSongs + count($audios_clean);
+        $this->numOfSongs = $this->numOfSongs + count($audios);
         $output->writeln("Final stream files to be processed: " . count($audios_clean), OutputInterface::VERBOSITY_VERBOSE);
-        return $audios_clean;
+        return $audios;
     }
 
     /**
