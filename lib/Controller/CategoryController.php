@@ -135,7 +135,7 @@ class CategoryController extends Controller
 			 			ORDER BY LOWER(`FC`.`name`) ASC
 			 			';
         } elseif ($category === 'Album') {
-            $SQL = 'SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`id` AS `art`, `AB`.`cover` AS `cid` 
+            $SQL = 'SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower`
 						FROM `*PREFIX*audioplayer_albums` `AB`
 						LEFT JOIN `*PREFIX*audioplayer_artists` `AA` 
 						ON `AB`.`artist_id` = `AA`.`id`
@@ -157,14 +157,6 @@ class CategoryController extends Controller
             $stmt->execute(array($this->userId));
             $results = $stmt->fetchAll();
             foreach ($results as $row) {
-                if ($category === 'Album') {
-                    $row['art'] = $this->DBController->loadArtistsToAlbum($row['id'], $row['art']);
-                    if ($row['cid'] !== null) {
-                        $row['cid'] = $row['id'];
-                    } else {
-                        $row['cid'] = '';
-                    }
-                }
                 array_splice($row, 2, 1);
                 if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
                 $row['cnt'] = $this->getTrackCount($category, $row['id']);
@@ -194,7 +186,7 @@ class CategoryController extends Controller
         $whereMatching = array('Artist' => '`AT`.`artist_id`', 'Genre' => '`AT`.`genre_id`', 'Album' => '`AB`.`id`', 'Album Artist' => '`AB`.`artist_id`', 'Year' => '`AT`.`year`', 'Folder' => '`AT`.`folder_id`');
 
         $aPlaylists = array();
-        $SQL = 'SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`id` AS `art`, `AB`.`cover` AS `cid`';
+        $SQL = 'SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`id` AS `art`, (CASE  WHEN `AB`.`cover` IS NOT NULL THEN `AB`.`id` ELSE "" END) AS `cid`';
         $SQL .= ' FROM `*PREFIX*audioplayer_tracks` `AT`';
         $SQL .= ' LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`';
         $SQL .= ' LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`';
@@ -212,11 +204,6 @@ class CategoryController extends Controller
             $results = $stmt->fetchAll();
             foreach ($results as $row) {
                 $row['art'] = $this->DBController->loadArtistsToAlbum($row['id'], $row['art']);
-                if ($row['cid'] !== null) {
-                    $row['cid'] = $row['id'];
-                } else {
-                    $row['cid'] = '';
-                }
                 array_splice($row, 2, 1);
                 if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
                 $aPlaylists[] = $row;
@@ -300,14 +287,14 @@ class CategoryController extends Controller
         $SQL = null;
         $favorite = false;
         $aTracks = array();
-        $SQL_select = 'SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`';
+        $SQL_select = 'SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, (CASE  WHEN `AB`.`cover` IS NOT NULL THEN `AB`.`id` ELSE "" END) AS `cid`, LOWER(`AB`.`name`) AS `lower`';
         $SQL_from = ' FROM `*PREFIX*audioplayer_tracks` `AT`
 					LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AT`.`artist_id` = `AA`.`id`
 					LEFT JOIN `*PREFIX*audioplayer_albums` `AB` ON `AT`.`album_id` = `AB`.`id`';
         $SQL_order = ' ORDER BY LOWER(`AB`.`name`) ASC, `AT`.`disc` ASC, `AT`.`number` ASC';
 
         if ($category === 'Artist') {
-            $SQL_select = 'SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AB`.`name` AS `cl2`, `AT`.`year` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AB`.`name`) AS `lower`';
+            $SQL_select = 'SELECT  `AT`.`id`, `AT`.`title`  AS `cl1`, `AB`.`name` AS `cl2`, `AT`.`year` AS `cl3`, `AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, (CASE  WHEN `AB`.`cover` IS NOT NULL THEN `AB`.`id` ELSE "" END) AS `cid`, LOWER(`AB`.`name`) AS `lower`';
             $SQL = $SQL_select . $SQL_from .
                 'WHERE  `AT`.`artist_id` = ? AND `AT`.`user_id` = ?' .
                 $SQL_order;
@@ -324,7 +311,7 @@ class CategoryController extends Controller
                 'WHERE `AT`.`id` > ? AND `AT`.`user_id` = ?' .
                 $SQL_order;
         } elseif ($category === 'Playlist' AND $categoryId === 'X1') { // Favorites
-            $SQL = 'SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`,`AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`' .
+            $SQL = 'SELECT  `AT`.`id` , `AT`.`title`  AS `cl1`,`AA`.`name` AS `cl2`, `AB`.`name` AS `cl3`,`AT`.`length` AS `len`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, (CASE  WHEN `AB`.`cover` IS NOT NULL THEN `AB`.`id` ELSE "" END) AS `cid`, LOWER(`AT`.`title`) AS `lower`' .
                 $SQL_from .
                 'WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ?' .
                 ' ORDER BY LOWER(`AT`.`title`) ASC';
@@ -368,7 +355,7 @@ class CategoryController extends Controller
                 'WHERE `AT`.`folder_id` = ? AND `AT`.`user_id` = ?' .
                 $SQL_order;
         } elseif ($category === 'Album') {
-            $SQL_select = 'SELECT  `AT`.`id`, `AT`.`title` AS `cl1`, `AA`.`name` AS `cl2`, `AT`.`length` AS `len`, `AT`.`disc` AS `dsc`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, `AB`.`id` AS `cid`, `AB`.`cover`, LOWER(`AT`.`title`) AS `lower`,`AT`.`number`  AS `num`';
+            $SQL_select = 'SELECT  `AT`.`id`, `AT`.`title` AS `cl1`, `AA`.`name` AS `cl2`, `AT`.`length` AS `len`, `AT`.`disc` AS `dsc`, `AT`.`file_id` AS `fid`, `AT`.`mimetype` AS `mim`, (CASE  WHEN `AB`.`cover` IS NOT NULL THEN `AB`.`id` ELSE "" END) AS `cid`, LOWER(`AT`.`title`) AS `lower`,`AT`.`number`  AS `num`';
             $SQL = $SQL_select . $SQL_from .
                 'WHERE `AB`.`id` = ? AND `AB`.`user_id` = ?' .
                 ' ORDER BY `AT`.`disc` ASC, `AT`.`number` ASC';
@@ -385,13 +372,10 @@ class CategoryController extends Controller
         $stmt->execute(array($categoryId, $this->userId));
         $results = $stmt->fetchAll();
         foreach ($results as $row) {
-            if ($row['cover'] === null) {
-                $row['cid'] = '';
-            }
             if ($category === 'Album') {
                 $row['cl3'] = $row['dsc'] . '-' . $row['num'];
             }
-            array_splice($row, 8, 3);
+            array_splice($row, 8, 1);
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($row['fid']);
             $file = array_shift($nodes);
             if ($file === null) {
