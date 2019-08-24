@@ -173,6 +173,10 @@ class ScannerController extends Controller
                 if ($this->timeForUpdate()) {
                     $this->updateProgress($counter, $audio->getPath(), $output);
                 }
+                if ($counter % 200 == 0) {
+                    $this->DBController->commit();
+                    $output->writeln("Status committed to database", OutputInterface::VERBOSITY_VERBOSE);
+                }
             }
 
             $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
