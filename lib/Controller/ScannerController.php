@@ -109,6 +109,7 @@ class ScannerController extends Controller
      */
     public function scanForAudios($userId = null, $output = null, $scanstop = null)
     {
+        set_time_limit(0);
         if (isset($scanstop)) {
             $this->DBController->setSessionValue('scanner_running', 'stopped', $this->userId);
             $params = ['status' => 'stopped'];
@@ -155,32 +156,39 @@ class ScannerController extends Controller
         if ($this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated", OutputInterface::VERBOSITY_VERBOSE);
         $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
 
+        $commitThreshold = max(200, intdiv(count($audios), 10));
         $this->DBController->beginTransaction();
         try {
-            foreach ($audios as $audio) {
+            foreach ($audios as &$audio) {
                 if ($this->scanCancelled()) { break; }
 
                 $counter++;
-                $scanResult = $this->scanAudio($audio, $getID3, $output);
-                if ($scanResult === 'error') {
-                    $error_file .= $audio->getPath() . '<br />';
-                    $error_count++;
-                } else if ($scanResult === 'duplicate') {
-                    $duplicate_tracks .= $audio->getPath() . '<br />';
-                    $this->iDublicate++;
+                try {
+                    $scanResult = $this->scanAudio($audio, $getID3, $output);
+                    if ($scanResult === 'error') {
+                        $error_file .= $audio->getPath() . '<br />';
+                        $error_count++;
+                    } else if ($scanResult === 'duplicate') {
+                        $duplicate_tracks .= $audio->getPath() . '<br />';
+                        $this->iDublicate++;
+                    }
+                } catch (\getid3_exception $e) {
+                    $this->logger->error('getID3 error while building library: '. $e);
+                    continue;
                 }
 
                 if ($this->timeForUpdate()) {
                     $this->updateProgress($counter, $audio->getPath(), $output);
                 }
-                if ($counter % 200 == 0) {
+                if ($counter % $commitThreshold == 0) {
                     $this->DBController->commit();
                     $output->writeln("Status committed to database", OutputInterface::VERBOSITY_VERBOSE);
+                    $this->DBController->beginTransaction();
                 }
             }
 
             $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
-            foreach ($streams as $stream) {
+            foreach ($streams as &$stream) {
                 if ($this->scanCancelled()) { break; }
 
                 $counter++;
@@ -196,9 +204,12 @@ class ScannerController extends Controller
             }
             $this->setScannerTimestamp();
             $this->DBController->commit();
+        } catch (\Doctrine\DBAL\DBALException | \OCP\PreconditionNotMetException $e) {
+            $this->logger->error('DB error while building library: '. $e);
+            $this->DBController->rollBack();
         } catch (\Exception $e) {
             $this->logger->error('Error while building library: '. $e);
-            $this->DBController->rollBack();
+            $this->DBController->commit();
         }
 
         // different outputs when web or occ
@@ -473,7 +484,7 @@ class ScannerController extends Controller
         $results = $stmt->fetchAll();
         $resultExisting = array_column($results, 'file_id');
 
-        foreach ($audios as $key => $audio) {
+        foreach ($audios as $key => &$audio) {
             $current_id = $audio->getID();
             if (in_array($current_id, $resultExclude)) {
                 $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
@@ -554,7 +565,7 @@ class ScannerController extends Controller
         $results = $stmt->fetchAll();
         $resultExisting = array_column($results, 'file_id');
 
-        foreach ($audios as $key => $audio) {
+        foreach ($audios as $key => &$audio) {
             $current_id = $audio->getID();
             if (in_array($current_id, $resultExclude)) {
                 $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
