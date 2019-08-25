@@ -182,6 +182,7 @@ class ScannerController extends Controller
                 if ($counter % 200 == 0) {
                     $this->DBController->commit();
                     $output->writeln("Status committed to database", OutputInterface::VERBOSITY_VERBOSE);
+                    $this->DBController->beginTransaction();
                 }
             }
 
