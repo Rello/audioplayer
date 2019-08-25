@@ -158,7 +158,7 @@ class ScannerController extends Controller
 
         $this->DBController->beginTransaction();
         try {
-            foreach ($audios as $audio) {
+            foreach ($audios as &$audio) {
                 if ($this->scanCancelled()) { break; }
 
                 $counter++;
@@ -181,7 +181,7 @@ class ScannerController extends Controller
             }
 
             $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
-            foreach ($streams as $stream) {
+            foreach ($streams as &$stream) {
                 if ($this->scanCancelled()) { break; }
 
                 $counter++;
@@ -474,7 +474,7 @@ class ScannerController extends Controller
         $results = $stmt->fetchAll();
         $resultExisting = array_column($results, 'file_id');
 
-        foreach ($audios as $key => $audio) {
+        foreach ($audios as $key => &$audio) {
             $current_id = $audio->getID();
             if (in_array($current_id, $resultExclude)) {
                 $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
@@ -555,7 +555,7 @@ class ScannerController extends Controller
         $results = $stmt->fetchAll();
         $resultExisting = array_column($results, 'file_id');
 
-        foreach ($audios as $key => $audio) {
+        foreach ($audios as $key => &$audio) {
             $current_id = $audio->getID();
             if (in_array($current_id, $resultExclude)) {
                 $output->writeln("   " . $current_id . " - " . $audio->getPath() . "  => excluded", OutputInterface::VERBOSITY_VERY_VERBOSE);
