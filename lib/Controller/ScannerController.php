@@ -162,13 +162,18 @@ class ScannerController extends Controller
                 if ($this->scanCancelled()) { break; }
 
                 $counter++;
-                $scanResult = $this->scanAudio($audio, $getID3, $output);
-                if ($scanResult === 'error') {
-                    $error_file .= $audio->getPath() . '<br />';
-                    $error_count++;
-                } else if ($scanResult === 'duplicate') {
-                    $duplicate_tracks .= $audio->getPath() . '<br />';
-                    $this->iDublicate++;
+                try {
+                    $scanResult = $this->scanAudio($audio, $getID3, $output);
+                    if ($scanResult === 'error') {
+                        $error_file .= $audio->getPath() . '<br />';
+                        $error_count++;
+                    } else if ($scanResult === 'duplicate') {
+                        $duplicate_tracks .= $audio->getPath() . '<br />';
+                        $this->iDublicate++;
+                    }
+                } catch (\getid3_exception $e) {
+                    $this->logger->error('getID3 error while building library: '. $e);
+                    continue;
                 }
 
                 if ($this->timeForUpdate()) {
@@ -197,9 +202,12 @@ class ScannerController extends Controller
             }
             $this->setScannerTimestamp();
             $this->DBController->commit();
+        } catch (\Doctrine\DBAL\DBALException | \OCP\PreconditionNotMetException $e) {
+            $this->logger->error('DB error while building library: '. $e);
+            $this->DBController->rollBack();
         } catch (\Exception $e) {
             $this->logger->error('Error while building library: '. $e);
-            $this->DBController->rollBack();
+            $this->DBController->commit();
         }
 
         // different outputs when web or occ
