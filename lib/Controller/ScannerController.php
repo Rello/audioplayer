@@ -156,6 +156,7 @@ class ScannerController extends Controller
         if ($this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated", OutputInterface::VERBOSITY_VERBOSE);
         $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
 
+        $commitThreshold = max(200, intdiv(count($audios), 10));
         $this->DBController->beginTransaction();
         try {
             foreach ($audios as &$audio) {
@@ -179,7 +180,7 @@ class ScannerController extends Controller
                 if ($this->timeForUpdate()) {
                     $this->updateProgress($counter, $audio->getPath(), $output);
                 }
-                if ($counter % 200 == 0) {
+                if ($counter % $commitThreshold == 0) {
                     $this->DBController->commit();
                     $output->writeln("Status committed to database", OutputInterface::VERBOSITY_VERBOSE);
                     $this->DBController->beginTransaction();
