@@ -383,9 +383,6 @@ class CategoryController extends Controller
                 $this->DBController->deleteFromDB($row['fid'], $this->userId);
                 continue;
             }
-            $path = $file->getPath();
-            $segments = explode('/', trim($path, '/'), 3);
-            $row['lin'] = rawurlencode($segments[2]);
             if (is_array($favorites) AND in_array($row['fid'], $favorites)) {
                 $row['fav'] = 't';
             }
@@ -431,7 +428,6 @@ class CategoryController extends Controller
                 if ($matches[0]) {
                     $row = array();
                     $row['id'] = $fileId . $i;
-                    $row['fid'] = $fileId . $i;
                     $row['cl1'] = $matches[0][0];
                     $row['cl2'] = '';
                     $row['cl3'] = '';
@@ -439,7 +435,6 @@ class CategoryController extends Controller
                     $row['mim'] = $file_type;
                     $row['cid'] = '';
                     $row['lin'] = $matches[0][0];
-                    $row['fav'] = 'f';
                     if ($title) $row['cl1'] = $title;
                     $tracks[] = $row;
                 }
@@ -457,7 +452,6 @@ class CategoryController extends Controller
                     $x++;
                     $row = array();
                     $row['id'] = $fileId . $x;
-                    $row['fid'] = $fileId . $x;
                     $row['cl1'] = $matches[0][0];
                     $row['cl2'] = '';
                     $row['cl3'] = '';
@@ -465,7 +459,6 @@ class CategoryController extends Controller
                     $row['mim'] = $file_type;
                     $row['cid'] = '';
                     $row['lin'] = $matches[0][0];
-                    $row['fav'] = 'f';
                     if ($title) $row['cl1'] = $title;
                     $title = null;
                     $tracks[] = $row;
@@ -483,14 +476,13 @@ class CategoryController extends Controller
 
                         $row = array();
                         $row['id'] = $track['id'];
-                        $row['fid'] = $track['file_id'];
                         $row['cl1'] = $track['Title'];
                         $row['cl2'] = $track['Artist'];
                         $row['cl3'] = $track['Album'];
                         $row['len'] = $track['Length'];
                         $row['mim'] = $track['MIME type'];
                         $row['cid'] = '';
-                        $row['lin'] = rawurlencode($path);
+                        $row['lin'] = $track['id'];
                         $row['fav'] = $track['fav'];
                         if ($title) $row['cl1'] = $title;
                         $tracks[] = $row;

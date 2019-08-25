@@ -568,7 +568,7 @@ OCA.Audioplayer.UI = {
         if (elem.mim === 'audio/mpegurl' || elem.mim === 'audio/x-scpls' || elem.mim === 'application/xspf+xml') {
             streamUrl.setAttribute('href', elem.lin);
         } else {
-            streamUrl.setAttribute('href', OCA.Audioplayer.UI.getAudiostreamUrl + elem.lin);
+            streamUrl.setAttribute('href', OCA.Audioplayer.UI.getAudiostreamUrl + elem.id);
         }
 
         var spanInterpret = document.createElement('span');
