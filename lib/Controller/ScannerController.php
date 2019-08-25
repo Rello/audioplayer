@@ -109,6 +109,7 @@ class ScannerController extends Controller
      */
     public function scanForAudios($userId = null, $output = null, $scanstop = null)
     {
+        set_time_limit(0);
         if (isset($scanstop)) {
             $this->DBController->setSessionValue('scanner_running', 'stopped', $this->userId);
             $params = ['status' => 'stopped'];
