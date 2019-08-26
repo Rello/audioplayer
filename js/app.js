@@ -35,7 +35,7 @@ OCA.Audioplayer.Core = {
         OCA.Audioplayer.UI.EmptyContainer = document.getElementById('empty-container');
         OCA.Audioplayer.UI.PlaylistContainer = $('#playlist-container');
         OCA.Audioplayer.UI.ActivePlaylist = $('#activePlaylist');
-        OCA.Audioplayer.UI.getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?file=';
+        OCA.Audioplayer.UI.getAudiostreamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?t=';
 
 
         if (decodeURI(location.hash).length > 1) {

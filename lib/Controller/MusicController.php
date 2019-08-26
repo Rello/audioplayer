@@ -146,17 +146,22 @@ class MusicController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      * @param $file
+     * @param $track
      */
-    public function getAudioStream($file)
+    public function getAudioStream($file, $t)
     {
 
-        $fileId = $this->DBController->getFileId($file);
-        $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
-        $file = array_shift($nodes);
-        $path = $file->getPath();
-        $segments = explode('/', trim($path, '/'), 3);
+        if ($t) {
+            $fileId = $this->DBController->getFileId($t);
+            $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
+            $file = array_shift($nodes);
+            $path = $file->getPath();
+            $segments = explode('/', trim($path, '/'), 3);
+            $filename = $segments[2];
+        } else {
+            $filename = rawurldecode($file);
+        }
 
-        $filename = $segments[2];
         $user = $this->userId;
         \OC::$server->getSession()->close();
         $stream = new \OCA\audioplayer\Http\AudioStream($filename, $user);

@@ -78,7 +78,7 @@ function registerFileActions() {
                     mime = mime_array[i];
                     OCA.Files.fileActions.registerAction({
                         name: 'audio',
-                        displayName: 'audio',
+                        displayName: 'Play',
                         mime: mime,
                         permissions: OC.PERMISSION_READ,
                         icon: icon_url,
