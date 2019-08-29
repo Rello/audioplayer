@@ -9,8 +9,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - ID3 Editor as separate add-on
 
 ### Changed
-- Big UI performance enhacement
-- Big scan performance enhacement [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
+- Big UI performance improvements (>70%)
+- Scan performance improvements (>20%) [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
+- Reduction of metadata transfer size (>25%)
 - Remove SONOS Playback into separate add-on [#411](https://github.com/rello/audioplayer/issues/411)
 - Remove Dashboard Widget into separate add-on [#431](https://github.com/rello/audioplayer/issues/431)
 - Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)

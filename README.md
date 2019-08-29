@@ -7,14 +7,14 @@ A music player for FLAC, MP3, MP4, streams, … with playlist support and SONOS 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png" alt="Main" width="350" height="261" title="Main view with navigation, settings, and sidebar.">
 
 ## Features
-- Multiple views (albums with covers and more)
-- Library scan and reset with command-line and browser
-- Specifying media folder (with exclude functionality)
-- Smart & Standard Playlists
+- Cover & List view for all categories
+- tuned for big audio collections
+- Smart lists & standard playlists & local playlists
 - Stream URLs
-- One Click Play in Files app
 - Favorites, Sidebar & Search integration
-- local playlists
+- Library scan and reset from command-line and browser
+- Specifying media folder (with exclude functionality)
+- One Click Play in Files app
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
 - [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 - Widget for Dashboard App via add-on
