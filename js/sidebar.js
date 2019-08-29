@@ -32,9 +32,9 @@ OCA.Audioplayer.Sidebar = {
     showSidebar: function (evt) {
         var targetPlaylistItem = evt.target.closest('li');
         var trackid = targetPlaylistItem.getAttribute('data-trackid');
-        var $appsidebar = $('#app-sidebar');
+        var appsidebar = document.getElementById('app-sidebar');
 
-        if ($appsidebar.data('trackid') === trackid) {
+        if (appsidebar.dataset.trackid === trackid) {
             OCA.Audioplayer.Sidebar.hideSidebar();
         } else {
             var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
@@ -53,14 +53,14 @@ OCA.Audioplayer.Sidebar = {
                 });
             }
 
-            $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
-            $('#sidebarMime').html(trackData.attr('data-mimetype'));
+            document.getElementById('sidebarTitle').innerHTML = decodeURIComponent(trackData.attr('data-title'));
+            document.getElementById('sidebarMime').innerHTML = trackData.attr('data-mimetype');
 
             var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
             starIcon.off();
             starIcon.on('click', OCA.Audioplayer.Core.toggleFavorite);
 
-            if ($appsidebar.data('trackid') === '') {
+            if (appsidebar.dataset.trackid === '') {
                 $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar);
 
                 OCA.Audioplayer.Sidebar.constructTabs();
@@ -68,8 +68,7 @@ OCA.Audioplayer.Sidebar = {
                 OC.Apps.showAppSidebar();
             }
 
-            $appsidebar.data('trackid', trackid);
-            document.getElementById('app-sidebar').dataset.trackid = trackid; //start moving to vanilla js
+            appsidebar.dataset.trackid = trackid;
             $('.tabHeader.selected').trigger('click');
         }
     },

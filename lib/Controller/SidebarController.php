@@ -13,6 +13,7 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\Files\IRootFolder;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
@@ -38,7 +39,8 @@ class SidebarController extends Controller
         IL10N $l10n,
         ITagManager $tagManager,
         IDBConnection $db,
-        DbController $DBController
+        DbController $DBController,
+        IRootFolder $rootFolder
     )
     {
         parent::__construct($appName, $request);
@@ -49,6 +51,7 @@ class SidebarController extends Controller
         $this->tagger = null;
         $this->db = $db;
         $this->DBController = $DBController;
+        $this->rootFolder = $rootFolder;
     }
 
     /**
@@ -67,6 +70,11 @@ class SidebarController extends Controller
         if ($row['Bitrate'] !== '') $row['Bitrate'] = $row['Bitrate'] . ' kbps';
 
         array_splice($row, 15, 3);
+
+        $fileId = $this->DBController->getFileId($trackid);
+        $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
+        $file = array_shift($nodes);
+        $row['Path'] = $file->getPath();
 
         if ($row['Title']) {
             $result = [
