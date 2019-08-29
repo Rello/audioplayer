@@ -7,11 +7,12 @@ All notable changes to the Audio Player project will be documented in this file.
 - Cover view selectable for all categories [#165](https://github.com/rello/audioplayer/issues/165)
 - APIs & events to enable Audio Player add-ons [#408](https://github.com/rello/audioplayer/issues/408)
 - ID3 Editor as separate add-on
+- NC17 compatibility
 
 ### Changed
-- Big UI performance improvements (>70%)
-- Scan performance improvements (>20%) [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
-- Reduction of metadata transfer size (>25%)
+- Significant UI performance improvements (>70%)
+- Reduction of metadata transfer size (>45%) [#433](https://github.com/rello/audioplayer/issues/433)
+- Scanner performance improvements (>20%) [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
 - Remove SONOS Playback into separate add-on [#411](https://github.com/rello/audioplayer/issues/411)
 - Remove Dashboard Widget into separate add-on [#431](https://github.com/rello/audioplayer/issues/431)
 - Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)
