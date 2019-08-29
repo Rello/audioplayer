@@ -31,6 +31,7 @@ class SidebarController extends Controller
     private $tagger;
     private $tagManager;
     private $DBController;
+    private $rootFolder;
 
     public function __construct(
         $appName,

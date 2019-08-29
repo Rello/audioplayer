@@ -143,7 +143,7 @@ class DbController extends Controller
      * @param $output
      * @param $hook
      *
-     * @return bool|JSONResponseAlias
+     * @return bool|JSONResponse
      */
     public function resetMediaLibrary($userId = null, $output = null, $hook = null)
     {

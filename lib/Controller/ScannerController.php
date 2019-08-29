@@ -13,9 +13,18 @@
 
 namespace OCA\audioplayer\Controller;
 
+use Doctrine\DBAL\DBALException;
+use Exception;
+use getID3;
+use getid3_exception;
+use getid3_lib;
+use OC;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\Files\NotFoundException;
+use OCP\Image;
+use OCP\PreconditionNotMetException;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use OCP\IRequest;
@@ -83,7 +92,7 @@ class ScannerController extends Controller
         $this->DBController = $DBController;
         $this->SettingController = $SettingController;
         $this->IDateTimeZone = $IDateTimeZone;
-        $this->eventSource = \OC::$server->createEventSource();
+        $this->eventSource = OC::$server->createEventSource();
         $this->lastUpdated = time();
     }
 
@@ -104,8 +113,8 @@ class ScannerController extends Controller
      * @param $output
      * @param $scanstop
      * @return bool|JSONResponse
-     * @throws \OCP\Files\NotFoundException
-     * @throws \getid3_exception
+     * @throws NotFoundException
+     * @throws getid3_exception
      */
     public function scanForAudios($userId = null, $output = null, $scanstop = null)
     {
@@ -140,7 +149,7 @@ class ScannerController extends Controller
         if (!class_exists('getid3_exception')) {
             require_once __DIR__ . '/../../3rdparty/getid3/getid3.php';
         }
-        $getID3 = new \getID3;
+        $getID3 = new getID3;
         $getID3->setOption(['encoding' => 'UTF-8',
             'option_tag_id3v1' => false,
             'option_tag_id3v2' => true,
@@ -172,7 +181,7 @@ class ScannerController extends Controller
                         $duplicate_tracks .= $audio->getPath() . '<br />';
                         $this->iDublicate++;
                     }
-                } catch (\getid3_exception $e) {
+                } catch (getid3_exception $e) {
                     $this->logger->error('getID3 error while building library: '. $e);
                     continue;
                 }
@@ -204,10 +213,10 @@ class ScannerController extends Controller
             }
             $this->setScannerTimestamp();
             $this->DBController->commit();
-        } catch (\Doctrine\DBAL\DBALException | \OCP\PreconditionNotMetException $e) {
+        } catch (DBALException | PreconditionNotMetException $e) {
             $this->logger->error('DB error while building library: '. $e);
             $this->DBController->rollBack();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('Error while building library: '. $e);
             $this->DBController->commit();
         }
@@ -449,11 +458,10 @@ class ScannerController extends Controller
      *
      * @param OutputInterface $output
      * @return array
-     * @throws \OCP\Files\NotFoundException
+     * @throws NotFoundException
      */
     private function getAudioObjects(OutputInterface $output = null)
     {
-        $audios_clean = array();
         $audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
         $userView = $this->rootFolder->getUserFolder($this->userId);
 
@@ -534,7 +542,7 @@ class ScannerController extends Controller
      *
      * @param OutputInterface $output
      * @return array
-     * @throws \OCP\Files\NotFoundException
+     * @throws NotFoundException
      */
     private function getStreamObjects(OutputInterface $output = null)
     {
@@ -621,7 +629,7 @@ class ScannerController extends Controller
                 }
             }
             if ($this->cyrillic === 'checked') $ThisFileInfo = $this->convertCyrillic($ThisFileInfo);
-            \getid3_lib::CopyTagsToComments($ThisFileInfo);
+            getid3_lib::CopyTagsToComments($ThisFileInfo);
         }
         $this->ID3Tags = $ThisFileInfo;
     }
@@ -753,7 +761,7 @@ class ScannerController extends Controller
      */
     private function processImageString($iAlbumId, $data)
     {
-        $image = new \OCP\Image();
+        $image = new Image();
         if ($image->loadFromdata($data)) {
             if (($image->width() <= 250 && $image->height() <= 250) || $image->centerCrop(250)) {
                 $imgString = $image->__toString();
@@ -808,7 +816,7 @@ class ScannerController extends Controller
     /**
      * @NoAdminRequired
      *
-     * @throws \OCP\Files\NotFoundException
+     * @throws NotFoundException
      */
     public function checkNewTracks()
     {
