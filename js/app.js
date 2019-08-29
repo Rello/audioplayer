@@ -107,7 +107,7 @@ OCA.Audioplayer.Core = {
         var locHash = decodeURI(location.hash).substring(1);
         var locHashTemp = locHash.split('-');
 
-        document.getElementById('searchresults').classList.remove('hidden');
+        document.getElementById('searchresults').classList.add('hidden');
         window.location.href = '#';
         if (locHashTemp[0] !== 'volume' && locHashTemp[0] !== 'repeat' && locHashTemp[0] !== 'shuffle' && locHashTemp[0] !== 'prev' && locHashTemp[0] !== 'play' && locHashTemp[0] !== 'next') {
             OCA.Audioplayer.Core.CategorySelectors = locHashTemp;
@@ -908,20 +908,25 @@ OCA.Audioplayer.Backend = {
     },
 
     getUserValue: function (user_type, callback) {
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getvalue'),
-            data: {'type': user_type},
-            success: function (jsondata) {
-                if (jsondata.status === 'success' && user_type === 'category') {
-                    OCA.Audioplayer.Core.CategorySelectors = jsondata.value.split('-');
+        var xhr = new XMLHttpRequest();
+        var params = 'type=' + user_type;
+        var url = OC.generateUrl('apps/audioplayer/getvalue');
+        xhr.open("GET", url + "?" + params, true);
+        xhr.setRequestHeader('requesttoken', OC.requestToken);
+        xhr.setRequestHeader('OCS-APIREQUEST', 'true');
+        xhr.responseType = 'json';
+        xhr.send(null);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (xhr.response.status === 'success' && user_type === 'category') {
+                    OCA.Audioplayer.Core.CategorySelectors = xhr.response.value.split('-');
                     callback(OCA.Audioplayer.Core.CategorySelectors);
-                } else if (jsondata.status === 'false' && user_type === 'category') {
+                } else if (xhr.response.status === 'false' && user_type === 'category') {
                     OCA.Audioplayer.Core.CategorySelectors = [];
                     callback(OCA.Audioplayer.Core.CategorySelectors);
                 }
             }
-        });
+        };
     },
 
     setUserValue: function (user_type, user_value) {
