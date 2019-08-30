@@ -485,24 +485,10 @@ OCA.Audioplayer.Category = {
                 document.getElementById('loading').style.display = 'none';
                 if (jsondata.status === 'success') {
                     document.getElementById('sm2-bar-ui').style.display = 'block';
-                    var titleCounter = 0;
                     var itemRows = document.createDocumentFragment();
                     for (var itemData of jsondata.data) {
                         var tempItem = OCA.Audioplayer.UI.buildTrackRow(itemData, covers);
                         itemRows.appendChild(tempItem);
-                        titleCounter++;
-                    }
-
-                    //required for Cover View
-                    // add a blank row in case of uneven records=>avoid a Chrome bug to strangely split the records across columns
-                    if (titleCounter % 2 !== 0) {
-                        var li = document.createElement('li');
-                        li.classList.add('noPlaylist');
-                        var spanNr = document.createElement('span');
-                        spanNr.classList.add('number');
-                        spanNr.innerText = '\u00A0';
-                        li.appendChild(spanNr);
-                        itemRows.appendChild(li);
                     }
 
                     document.querySelector('.albumwrapper').appendChild(itemRows);
