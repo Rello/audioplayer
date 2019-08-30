@@ -794,6 +794,19 @@ OCA.Audioplayer.UI = {
         }
     },
 
+    compareTracks: function (a, b, reg_check, column) {
+        a = $(a).data(column).toString();
+        b = $(b).data(column).toString();
+        if (reg_check) {
+            a = parseInt(a.split('-')[0]) * 100 + parseInt(a.split('-')[1]);
+            b = parseInt(b.split('-')[0]) * 100 + parseInt(b.split('-')[1]);
+        } else {
+            a = a.toLowerCase();
+            b = b.toLowerCase();
+        }
+        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+    },
+
     sortPlaylist: function (evt) {
         var column = $(evt.target).attr('class').split('-')[1];
         var order = $(evt.target).data('order');
@@ -813,32 +826,14 @@ OCA.Audioplayer.UI = {
 
         var reg_check = $(elems).first().data(column).toString().match(/^\d{1,2}-\d{1,2}$/);
         elems.sort(function (a, b) {
-            a = $(a).data(column).toString();
-            b = $(b).data(column).toString();
-            if (reg_check) {
-                a = parseInt(a.split('-')[0]) * 100 + parseInt(a.split('-')[1]);
-                b = parseInt(b.split('-')[0]) * 100 + parseInt(b.split('-')[1]);
-            } else {
-                a = a.toLowerCase();
-                b = b.toLowerCase();
-            }
-            return ((a < b) ? -1 * factor : ((a > b) ? factor : 0));
+            return OCA.Audioplayer.UI.compareTracks(a, b, reg_check, column) * factor;
         });
         $('#individual-playlist').append(elems);
 
         if (OCA.Audioplayer.UI.PlaylistContainer.data('playlist') === OCA.Audioplayer.UI.ActivePlaylist.data('playlist')) {
             elems = OCA.Audioplayer.UI.ActivePlaylist.children('li').get();
             elems.sort(function (a, b) {
-                a = $(a).data(column).toString();
-                b = $(b).data(column).toString();
-                if (reg_check) {
-                    a = parseInt(a.split('-')[0]) * 100 + parseInt(a.split('-')[1]);
-                    b = parseInt(b.split('-')[0]) * 100 + parseInt(b.split('-')[1]);
-                } else {
-                    a = a.toLowerCase();
-                    b = b.toLowerCase();
-                }
-                return ((a < b) ? -1 * factor : ((a > b) ? factor : 0));
+                return OCA.Audioplayer.UI.compareTracks(a, b, reg_check, column) * factor;
             });
             OCA.Audioplayer.UI.ActivePlaylist.append(elems);
         }
