@@ -844,11 +844,14 @@ OCA.Audioplayer.UI = {
         }
 
         if (OCA.Audioplayer.Core.Player) {
-            var k = 0, e = document.querySelector('#activePlaylist li.selected');
-            while (e = e.previousSibling) {
-                ++k;
+            var e = document.querySelector('#activePlaylist li.selected');
+            if (e) {
+                var k = 0;
+                while (e = e.previousSibling) {
+                    ++k;
+                }
+                OCA.Audioplayer.Core.Player.playlistController.data.selectedIndex = k;
             }
-            OCA.Audioplayer.Core.Player.playlistController.data.selectedIndex = k;
         }
     },
 
