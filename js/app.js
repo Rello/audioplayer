@@ -794,15 +794,16 @@ OCA.Audioplayer.UI = {
     },
 
     sortPlaylist: function (evt) {
-        var column = $(evt.target).attr('class').split('-')[1];
-        var order = $(evt.target).data('order');
+        var evtTarget = evt.target;
+        var column = evtTarget.getAttribute('class').split('-')[1];
+        var order = evtTarget.getAttribute('data-order');
         var factor = 1;
 
         if (order === 'descending') {
             factor = -1;
-            $(evt.target).data('order', 'ascending');
+            evtTarget.setAttribute('data-order', 'ascending');
         } else {
-            $(evt.target).data('order', 'descending');
+            evtTarget.setAttribute('data-order', 'descending');
         }
 
         var elems = $('#individual-playlist').children('li').get();
@@ -814,13 +815,9 @@ OCA.Audioplayer.UI = {
         elems.sort(function (a, b) {
             return OCA.Audioplayer.UI.compareTracks(a, b, reg_check, column) * factor;
         });
-        $('#individual-playlist').append(elems);
+        $('#individual-playlist').append(elems.slice(0));
 
         if (OCA.Audioplayer.UI.PlaylistContainer.data('playlist') === OCA.Audioplayer.UI.ActivePlaylist.data('playlist')) {
-            elems = OCA.Audioplayer.UI.ActivePlaylist.children('li').get();
-            elems.sort(function (a, b) {
-                return OCA.Audioplayer.UI.compareTracks(a, b, reg_check, column) * factor;
-            });
             OCA.Audioplayer.UI.ActivePlaylist.append(elems);
         }
 
