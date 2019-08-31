@@ -15,12 +15,23 @@
     display: none !important;
 }
 
+.icon-toggle-filelist {
+    background-image: none, url(../img/toggle-filelist.svg);
+}
+
+.icon-toggle-pictures {
+    background-image: none, url(../img/toggle-pictures.svg);
+}
+
 #view-toggle {
     background-color: transparent;
     border: none;
     margin: 0;
     opacity: 0.5;
-    z-index: 100
+    z-index: 100;
+    padding: 15px 40px;
+    background-position: 15px;
+    cursor: pointer;
 }
 
 #AlbumPlay {
