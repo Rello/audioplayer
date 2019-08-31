@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.8.1 - 2019-08-31
+### Fixed
+- missing js file during release
+
 ## 2.8.0 - 2019-08-31
 
 ### Added
