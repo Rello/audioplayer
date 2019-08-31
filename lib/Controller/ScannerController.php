@@ -213,7 +213,7 @@ class ScannerController extends Controller
             }
             $this->setScannerTimestamp();
             $this->DBController->commit();
-        } catch (DBALException | PreconditionNotMetException $e) {
+        } catch (DBALException $e) {
             $this->logger->error('DB error while building library: '. $e);
             $this->DBController->rollBack();
         } catch (Exception $e) {

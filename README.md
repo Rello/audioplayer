@@ -49,3 +49,4 @@ Please report bugs or feature requests using the [GitHub issue tracking system](
 
 ## Maintainers
 - [Marcel Scherello](https://github.com/rello) (author, project leader)
+- [Martin Matous](https://github.com/mmatous)
