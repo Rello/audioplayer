@@ -705,7 +705,6 @@ OCA.Audioplayer.UI = {
                 OCA.Audioplayer.UI.ActivePlaylist.html('');
                 OCA.Audioplayer.UI.ActivePlaylist.append(ClonePlaylist);
                 OCA.Audioplayer.UI.ActivePlaylist.find('span').remove();
-                OCA.Audioplayer.UI.ActivePlaylist.find('.noPlaylist').remove();
                 OCA.Audioplayer.UI.ActivePlaylist.data('playlist', OCA.Audioplayer.UI.PlaylistContainer.data('playlist'));
             }
             OCA.Audioplayer.UI.currentTrackUiChange(coverUrl, activeLi);
@@ -889,25 +888,20 @@ OCA.Audioplayer.Backend = {
     },
 
     getUserValue: function (user_type, callback) {
-        var xhr = new XMLHttpRequest();
-        var params = 'type=' + user_type;
-        var url = OC.generateUrl('apps/audioplayer/getvalue');
-        xhr.open("GET", url + "?" + params, true);
-        xhr.setRequestHeader('requesttoken', OC.requestToken);
-        xhr.setRequestHeader('OCS-APIREQUEST', 'true');
-        xhr.responseType = 'json';
-        xhr.send(null);
-        xhr.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                if (xhr.response.status === 'success' && user_type === 'category') {
-                    OCA.Audioplayer.Core.CategorySelectors = xhr.response.value.split('-');
+        $.ajax({
+            type: 'GET',
+            url: OC.generateUrl('apps/audioplayer/getvalue'),
+            data: {'type': user_type},
+            success: function (jsondata) {
+                if (jsondata.status === 'success' && user_type === 'category') {
+                    OCA.Audioplayer.Core.CategorySelectors = jsondata.value.split('-');
                     callback(OCA.Audioplayer.Core.CategorySelectors);
-                } else if (xhr.response.status === 'false' && user_type === 'category') {
+                } else if (jsondata.status === 'false' && user_type === 'category') {
                     OCA.Audioplayer.Core.CategorySelectors = [];
                     callback(OCA.Audioplayer.Core.CategorySelectors);
                 }
-            }
-        };
+            }.bind()
+        });
     },
 
     setUserValue: function (user_type, user_value) {
