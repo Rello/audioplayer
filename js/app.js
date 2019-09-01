@@ -116,7 +116,7 @@ OCA.Audioplayer.Core = {
     },
 
     processCategoryFromPreset: function () {
-        if (OCA.Audioplayer.Core.CategorySelectors[0] !== 'Albums' || OCA.Audioplayer.Core.CategorySelectors[0] == null) {
+        if (OCA.Audioplayer.Core.CategorySelectors[0] === 'Albums' || OCA.Audioplayer.Core.CategorySelectors[0] == null) {
             OCA.Audioplayer.Core.CategorySelectors[0] = 'Title';
             OCA.Audioplayer.Core.CategorySelectors[1] = '0';
         }
