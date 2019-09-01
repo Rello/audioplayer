@@ -141,7 +141,7 @@ OCA.Audioplayer.Sidebar = {
     },
 
     metadataTabView: function () {
-        var trackid = $('#app-sidebar').data('trackid');
+        var trackid = document.getElementById('app-sidebar').dataset.trackid;
 
         OCA.Audioplayer.Sidebar.resetView();
         $('#tabHeaderMetadata').addClass('selected');
