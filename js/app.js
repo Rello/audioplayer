@@ -116,16 +116,12 @@ OCA.Audioplayer.Core = {
     },
 
     processCategoryFromPreset: function () {
-        if (OCA.Audioplayer.Core.CategorySelectors) { // handle exiting Albums selection from old AP version
-            if (OCA.Audioplayer.Core.CategorySelectors[0] === 'Albums') {
-                OCA.Audioplayer.Core.CategorySelectors[0] = 'Title';
-                OCA.Audioplayer.Core.CategorySelectors[1] = '0';
-            }
-            document.getElementById('category_selector').value = OCA.Audioplayer.Core.CategorySelectors[0];
-            OCA.Audioplayer.Category.load(OCA.Audioplayer.Core.selectCategoryItemFromPreset);
-        } else {
-            OCA.Audioplayer.UI.showInitScreen();
+        if (OCA.Audioplayer.Core.CategorySelectors[0] !== 'Albums' || OCA.Audioplayer.Core.CategorySelectors[0] == null) {
+            OCA.Audioplayer.Core.CategorySelectors[0] = 'Title';
+            OCA.Audioplayer.Core.CategorySelectors[1] = '0';
         }
+        document.getElementById('category_selector').value = OCA.Audioplayer.Core.CategorySelectors[0];
+        OCA.Audioplayer.Category.load(OCA.Audioplayer.Core.selectCategoryItemFromPreset);
     },
 
     selectCategoryItemFromPreset: function () {
