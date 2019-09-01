@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.8.2 - 2019-09-1
+### Fixed
+- PostgreSQL compatibility issue [#437](https://github.com/rello/audioplayer/issues/437)
+- Sidebar not updating
+
 ## 2.8.1 - 2019-08-31
 ### Fixed
 - missing js file during release
