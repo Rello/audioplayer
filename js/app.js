@@ -456,7 +456,10 @@ OCA.Audioplayer.Category = {
         document.getElementById('individual-playlist-info').style.display = 'block';
         document.getElementById('individual-playlist-header').style.display = 'block';
 
-        document.getElementById('playlist-container').innerHTML = '<ul id="individual-playlist" class="albumwrapper"></ul>';
+        var ul = document.createElement('ul');
+        ul.id = 'individual-playlist';
+        ul.classList.add('albumwrapper');
+        document.getElementById('playlist-container').appendChild(ul);
 
         document.querySelector('.header-title').dataset.order = '';
         document.querySelector('.header-artist').dataset.order = '';
