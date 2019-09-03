@@ -134,10 +134,10 @@ OCA.Audioplayer.Sidebar = {
     },
 
     hideSidebar: function () {
-        $('#app-sidebar').data('trackid', '');
+        document.getElementById('app-sidebar').dataset.trackid = '';
         OC.Apps.hideAppSidebar();
-        $('.tabHeaders').empty();
-        $('.tabsContainer').empty();
+        document.querySelector('.tabHeaders').innerHTML = '';
+        document.querySelector('.tabsContainer').innerHTML = '';
     },
 
     metadataTabView: function () {
@@ -195,7 +195,7 @@ OCA.Audioplayer.Sidebar = {
     },
 
     playlistsTabView: function () {
-        var trackid = $('#app-sidebar').data('trackid');
+        var trackid = document.getElementById('app-sidebar').dataset.trackid;
 
         OCA.Audioplayer.Sidebar.resetView();
         $('#tabHeaderPlaylists').addClass('selected');
