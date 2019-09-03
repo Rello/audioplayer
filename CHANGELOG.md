@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.8.4 - 2019-09-3
+### Fixed
+- Play icon in Cover View not starting the correct track [#438](https://github.com/rello/audioplayer/issues/438)
+- Sidebar not hiding correctly
+- Cover issue in playbar
+- Resizing playlist on sidebar close
+
+## 2.8.3 - 2019-09-1
+### Fixed
+- typo in JS
+
 ## 2.8.2 - 2019-09-1
 ### Fixed
 - PostgreSQL compatibility issue [#437](https://github.com/rello/audioplayer/issues/437)
