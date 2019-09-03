@@ -70,6 +70,7 @@ OCA.Audioplayer.Sidebar = {
 
             appsidebar.dataset.trackid = trackid;
             $('.tabHeader.selected').trigger('click');
+            OCA.Audioplayer.UI.resizePlaylist();
         }
     },
 
@@ -138,6 +139,7 @@ OCA.Audioplayer.Sidebar = {
         OC.Apps.hideAppSidebar();
         document.querySelector('.tabHeaders').innerHTML = '';
         document.querySelector('.tabsContainer').innerHTML = '';
+        OCA.Audioplayer.UI.resizePlaylist();
     },
 
     metadataTabView: function () {
