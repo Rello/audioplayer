@@ -699,12 +699,12 @@ OCA.Audioplayer.UI = {
         } else {
             // the visible playlist has to be copied to the player queue
             // this disconnects the free navigation in AP while continuing to play a playlist
-            if (document.getElementById('playlist-container').dataset.playlist !== OCA.Audioplayer.UI.ActivePlaylist.data('playlist')) {
+            if (document.getElementById('playlist-container').dataset.playlist !== document.getElementById('activePlaylist').dataset.playlist) {
                 var ClonePlaylist = $(playlist).clone();
                 OCA.Audioplayer.UI.ActivePlaylist.html('');
                 OCA.Audioplayer.UI.ActivePlaylist.append(ClonePlaylist);
                 OCA.Audioplayer.UI.ActivePlaylist.find('span').remove();
-                OCA.Audioplayer.UI.ActivePlaylist.data('playlist', document.getElementById('playlist-container').dataset.playlist);
+                document.getElementById('activePlaylist').dataset.playlist = document.getElementById('playlist-container').dataset.playlist;
             }
             OCA.Audioplayer.UI.currentTrackUiChange(coverUrl, activeLi);
             if (OCA.Audioplayer.Core.Player.playlistController.data.selectedIndex === null) {
@@ -720,7 +720,7 @@ OCA.Audioplayer.UI = {
     },
 
     indicateCurrentPlayingTrack: function () {
-        if (document.getElementById('playlist-container').dataset.playlist === OCA.Audioplayer.UI.ActivePlaylist.data('playlist')) {
+        if (document.getElementById('playlist-container').dataset.playlist === document.getElementById('activePlaylist').dataset.playlist) {
             var playingTrackId = document.querySelector('#activePlaylist li.selected').dataset.trackid;
             var playingListItem = document.querySelector('.albumwrapper li[data-trackid="' + playingTrackId + '"]');
             playingListItem.classList.add('isActive');
@@ -815,7 +815,7 @@ OCA.Audioplayer.UI = {
         });
         $('#individual-playlist').append(elems.slice(0));
 
-        if (document.getElementById('playlist-container').dataset.playlist === OCA.Audioplayer.UI.ActivePlaylist.data('playlist')) {
+        if (document.getElementById('playlist-container').dataset.playlist === document.getElementById('activePlaylist').dataset.playlist) {
             OCA.Audioplayer.UI.ActivePlaylist.append(elems);
         }
 

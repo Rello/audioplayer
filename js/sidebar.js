@@ -81,8 +81,8 @@ OCA.Audioplayer.Sidebar = {
     constructTabs: function () {
         var tab = {};
 
-        $('.tabHeaders').empty();
-        $('.tabsContainer').empty();
+        document.querySelector('.tabHeaders').innerHTML = '';
+        document.querySelector('.tabsContainer').innerHTML = '';
 
         OCA.Audioplayer.Sidebar.registerSidebarTab({
             id: 'tabHeaderAddons',

@@ -846,8 +846,7 @@
 
                 onplay: function() {
                     utils.css.swap(dom.o, 'paused', 'playing');
-                    var ap = OCA.Audioplayer.UI;
-                    if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
+                    if (document.getElementById('playlist-container').dataset.playlist === document.getElementById('activePlaylist').dataset.playlist) {
                         $('.albumwrapper li').removeClass('isActive');
                         $('.albumwrapper li i.ioc').hide();
                         $('.albumwrapper li i.icon').show();
@@ -860,8 +859,7 @@
 
                 onpause: function() {
                     utils.css.swap(dom.o, 'playing', 'paused');
-                    var ap = OCA.Audioplayer.UI;
-                    if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
+                    if (document.getElementById('playlist-container').dataset.playlist === document.getElementById('activePlaylist').dataset.playlist) {
                         $('.albumwrapper li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
                     }
@@ -869,8 +867,7 @@
 
                 onresume: function() {
                     utils.css.swap(dom.o, 'paused', 'playing');
-                    var ap = OCA.Audioplayer.UI;
-                    if (ap.PlaylistContainer.data('playlist') === ap.ActivePlaylist.data('playlist')) {
+                    if (document.getElementById('playlist-container').dataset.playlist === document.getElementById('activePlaylist').dataset.playlist) {
                         $('.albumwrapper li i.icon').eq(playlistController.data.selectedIndex).hide();
                         $('.albumwrapper li i.ioc').eq(playlistController.data.selectedIndex).removeClass('ioc-volume-off').addClass('ioc-volume-up').show();
                     }
