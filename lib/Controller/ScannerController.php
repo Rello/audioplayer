@@ -376,7 +376,7 @@ class ScannerController extends Controller
      * @param $counter number of tracks
      * @param integer $error_count number of invalid files
      * @param string $duplicate_tracks list of invalid files
-     * @param $error_file error-file
+     * @param $error_file
      * @return string
      */
     private function composeResponseMessage($counter,
