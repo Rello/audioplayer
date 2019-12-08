@@ -293,7 +293,7 @@ OCA.Audioplayer.Cover = {
         divSongContainerCover.classList.add('songcontainer-cover');
         divSongContainerCover.setAttribute('style', addCss);
         divSongContainerCover.innerText = addDescr;
-        var divSongList = document.createElement('div');
+        divSongList = document.createElement('div');
         divSongList.classList.add('songlist');
         divSongList.appendChild(listAlbumWrapper);
 
@@ -613,10 +613,10 @@ OCA.Audioplayer.UI = {
     indicateFavorite: function (fav, id) {
         var fav_action;
         if (fav === 't') {
-            var fav_action = document.createElement('i');
+            fav_action = document.createElement('i');
             fav_action.classList.add('icon', 'icon-starred');
         } else {
-            var fav_action = document.createElement('i');
+            fav_action = document.createElement('i');
             fav_action.classList.add('icon', 'icon-star');
         }
         fav_action.setAttribute('data-trackid', id);

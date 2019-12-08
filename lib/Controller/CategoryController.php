@@ -248,33 +248,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * get the tracks for a selected category or album
-     *
-     * @NoAdminRequired
-     * @param string $category
-     * @param string $categoryId
-     * @return JSONResponse
-     * @throws InvalidPathException
-     * @throws NotFoundException
-     */
-    public function getTracks($category, $categoryId)
-    {
-        if ($categoryId[0] === 'S') $category = 'Stream';
-        if ($categoryId[0] === 'P') $category = 'Playlist';
-        $items = $this->getTracksDetails($category, $categoryId);
-        $headers = $this->getListViewHeaders($category);
-
-        $result = !empty($items) ? [
-            'status' => 'success',
-            'data' => $items,
-            'header' => $headers,
-        ] : [
-            'status' => 'nodata',
-        ];
-        return new JSONResponse($result);
-    }
-
-    /**
      * Get the tracks for a selected category or album
      *
      * @param string $category

@@ -14,27 +14,29 @@
 namespace OCA\audioplayer\Http;
 use \OC\Files\View;
  
-class AudioStream {
-	private $path = "";
-	private $stream;
-	private $iStart = -1;
-	private $iEnd = -1;
-	private $iSize = 0;
-	private $mimeType = 0;
-	private $buffer = 8192;
-	private $mTime = 0;
-    private $userView ;
-	private $isStream = false;
-	
-	public function __construct($filePath,$user=null) {
-		
-		if(is_null($user) || $user === ''){
-			$user = \OC::$server->getUserSession()->getUser()->getUID();
-		}
+class AudioStream
+{
+    private string $path = "";
+    private $stream;
+    private int $iStart = -1;
+    private int $iEnd = -1;
+    private $iSize = 0;
+    private $mimeType = 0;
+    private int $buffer = 8192;
+    private $mTime = 0;
+    private $userView;
+    private bool $isStream = false;
+
+    public function __construct($filePath, $user = null)
+    {
+
+        if (is_null($user) || $user === '') {
+            $user = \OC::$server->getUserSession()->getUser()->getUID();
+        }
         $this->userView = new View('/' . $user . '/files/');
-		
-		$this -> path = $filePath;
-		$fileInfo = $this->userView -> getFileInfo($filePath);
+
+        $this->path = $filePath;
+        $fileInfo = $this->userView->getFileInfo($filePath);
 		$this -> mimeType = $fileInfo['mimetype'];
 		$this -> mTime = $fileInfo['mtime'];
 		$this -> iSize = $fileInfo['size'];

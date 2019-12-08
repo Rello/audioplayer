@@ -165,7 +165,7 @@ class PlaylistController extends Controller
     /**
      * @NoAdminRequired
      * @param $playlistid
-     * @param $songid
+     * @param $trackid
      * @return bool
      */
     public function removeTrackFromPlaylist($playlistid, $trackid)

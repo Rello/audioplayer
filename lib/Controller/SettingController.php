@@ -173,8 +173,7 @@ class SettingController extends Controller {
         } else {
             $stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_stats` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
             $stmt->execute(array($this->userId, $track_id, $playtime, 1));
-            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_stats');
-            return $insertid;
+            return $this->db->lastInsertId('*PREFIX*audioplayer_stats');
         }
     }
 

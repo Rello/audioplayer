@@ -108,8 +108,6 @@ class MusicController extends Controller
                     'data' => 'nodata'];
             }
             return new JSONResponse($result);
-
-            \OC::$server->getSession()->close();
         }
     }
 
@@ -146,7 +144,7 @@ class MusicController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      * @param $file
-     * @param $track
+     * @param $t
      */
     public function getAudioStream($file, $t)
     {

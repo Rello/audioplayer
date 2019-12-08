@@ -372,8 +372,7 @@ class DbController extends Controller
         } else {
             $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_artists` (`user_id`,`name`) VALUES(?,?)');
             $stmt->execute(array($userId, $sArtist));
-            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_artists');
-            return $insertid;
+            return $this->db->lastInsertId('*PREFIX*audioplayer_artists');
         }
     }
 
@@ -410,8 +409,7 @@ class DbController extends Controller
         } else {
             $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_genre` (`user_id`,`name`) VALUES(?,?)');
             $stmt->execute(array($userId, $sGenre));
-            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_genre');
-            return $insertid;
+            return $this->db->lastInsertId('*PREFIX*audioplayer_genre');
         }
     }
 

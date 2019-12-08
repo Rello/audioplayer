@@ -349,7 +349,6 @@ class ScannerController extends Controller
     /**
      * Process stream and insert it into DB
      * @param object $stream stream object to scan
-     * @param object $getID3 ID3 tag helper from getid3 library
      * @param OutputInterface|null $output
      * @return string
      */
@@ -374,10 +373,10 @@ class ScannerController extends Controller
 
     /**
      * Summarize scan results in a message
-     * @param integer $stream number of processed files
+     * @param $counter number of tracks
      * @param integer $error_count number of invalid files
-     * @param string $duplicate_tracks list of duplicates
      * @param string $duplicate_tracks list of invalid files
+     * @param $error_file error-file
      * @return string
      */
     private function composeResponseMessage($counter,
