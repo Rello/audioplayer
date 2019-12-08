@@ -40,21 +40,21 @@ class getid3_bonk extends getid3_handler
 			$this->fseek($thisfile_bonk['dataend'] - 8);
 			$PossibleBonkTag = $this->fread(8);
 			while ($this->BonkIsValidTagName(substr($PossibleBonkTag, 4, 4), true)) {
-				$BonkTagSize = getid3_lib::LittleEndian2Int(substr($PossibleBonkTag, 0, 4));
-				$this->fseek(0 - $BonkTagSize, SEEK_CUR);
-				$BonkTagOffset = $this->ftell();
-				$TagHeaderTest = $this->fread(5);
-				if (($TagHeaderTest{0} != "\x00") || (substr($PossibleBonkTag, 4, 4) != strtolower(substr($PossibleBonkTag, 4, 4)))) {
-					$this->error('Expecting "'.getid3_lib::PrintHexBytes("\x00".strtoupper(substr($PossibleBonkTag, 4, 4))).'" at offset '.$BonkTagOffset.', found "'.getid3_lib::PrintHexBytes($TagHeaderTest).'"');
-					return false;
-				}
-				$BonkTagName = substr($TagHeaderTest, 1, 4);
+                $BonkTagSize = getid3_lib::LittleEndian2Int(substr($PossibleBonkTag, 0, 4));
+                $this->fseek(0 - $BonkTagSize, SEEK_CUR);
+                $BonkTagOffset = $this->ftell();
+                $TagHeaderTest = $this->fread(5);
+                if (($TagHeaderTest[0] != "\x00") || (substr($PossibleBonkTag, 4, 4) != strtolower(substr($PossibleBonkTag, 4, 4)))) {
+                    $this->error('Expecting "' . getid3_lib::PrintHexBytes("\x00" . strtoupper(substr($PossibleBonkTag, 4, 4))) . '" at offset ' . $BonkTagOffset . ', found "' . getid3_lib::PrintHexBytes($TagHeaderTest) . '"');
+                    return false;
+                }
+                $BonkTagName = substr($TagHeaderTest, 1, 4);
 
-				$thisfile_bonk[$BonkTagName]['size']   = $BonkTagSize;
-				$thisfile_bonk[$BonkTagName]['offset'] = $BonkTagOffset;
-				$this->HandleBonkTags($BonkTagName);
-				$NextTagEndOffset = $BonkTagOffset - 8;
-				if ($NextTagEndOffset < $thisfile_bonk['dataoffset']) {
+                $thisfile_bonk[$BonkTagName]['size'] = $BonkTagSize;
+                $thisfile_bonk[$BonkTagName]['offset'] = $BonkTagOffset;
+                $this->HandleBonkTags($BonkTagName);
+                $NextTagEndOffset = $BonkTagOffset - 8;
+                if ($NextTagEndOffset < $thisfile_bonk['dataoffset']) {
 					if (empty($info['audio']['encoder'])) {
 						$info['audio']['encoder'] = 'Extended BONK v0.9+';
 					}

@@ -92,48 +92,48 @@ class getid3_wavpack extends getid3_handler
 					switch (isset($info['audio']['dataformat']) ? $info['audio']['dataformat'] : '') {
 						case 'wavpack':
 						case 'wvc':
-							break;
-						default:
-							unset($info['fileformat']);
-							unset($info['audio']);
-							unset($info['wavpack']);
-							break;
-					}
-					return false;
-				}
+                            break;
+                        default:
+                            unset($info['fileformat']);
+                            unset($info['audio']);
+                            unset($info['wavpack']);
+                            break;
+                    }
+                    return false;
+                }
 
-				$info['wavpack']['blockheader']['minor_version'] = ord($wavpackheader{8});
-				$info['wavpack']['blockheader']['major_version'] = ord($wavpackheader{9});
+                $info['wavpack']['blockheader']['minor_version'] = ord($wavpackheader[8]);
+                $info['wavpack']['blockheader']['major_version'] = ord($wavpackheader[9]);
 
-				if (($info['wavpack']['blockheader']['major_version'] != 4) ||
-					(($info['wavpack']['blockheader']['minor_version'] < 4) &&
-					($info['wavpack']['blockheader']['minor_version'] > 16))) {
-						$this->error('Expecting WavPack version between "4.2" and "4.16", found version "'.$info['wavpack']['blockheader']['major_version'].'.'.$info['wavpack']['blockheader']['minor_version'].'" at offset '.$info['wavpack']['blockheader']['offset']);
-						switch (isset($info['audio']['dataformat']) ? $info['audio']['dataformat'] : '') {
-							case 'wavpack':
-							case 'wvc':
-								break;
-							default:
-								unset($info['fileformat']);
-								unset($info['audio']);
-								unset($info['wavpack']);
-								break;
-						}
-						return false;
-				}
+                if (($info['wavpack']['blockheader']['major_version'] != 4) ||
+                    (($info['wavpack']['blockheader']['minor_version'] < 4) &&
+                        ($info['wavpack']['blockheader']['minor_version'] > 16))) {
+                    $this->error('Expecting WavPack version between "4.2" and "4.16", found version "' . $info['wavpack']['blockheader']['major_version'] . '.' . $info['wavpack']['blockheader']['minor_version'] . '" at offset ' . $info['wavpack']['blockheader']['offset']);
+                    switch (isset($info['audio']['dataformat']) ? $info['audio']['dataformat'] : '') {
+                        case 'wavpack':
+                        case 'wvc':
+                            break;
+                        default:
+                            unset($info['fileformat']);
+                            unset($info['audio']);
+                            unset($info['wavpack']);
+                            break;
+                    }
+                    return false;
+                }
 
-				$info['wavpack']['blockheader']['track_number']  = ord($wavpackheader{10}); // unused
-				$info['wavpack']['blockheader']['index_number']  = ord($wavpackheader{11}); // unused
-				$info['wavpack']['blockheader']['total_samples'] = getid3_lib::LittleEndian2Int(substr($wavpackheader, 12,  4));
-				$info['wavpack']['blockheader']['block_index']   = getid3_lib::LittleEndian2Int(substr($wavpackheader, 16,  4));
-				$info['wavpack']['blockheader']['block_samples'] = getid3_lib::LittleEndian2Int(substr($wavpackheader, 20,  4));
-				$info['wavpack']['blockheader']['flags_raw']     = getid3_lib::LittleEndian2Int(substr($wavpackheader, 24,  4));
-				$info['wavpack']['blockheader']['crc']           = getid3_lib::LittleEndian2Int(substr($wavpackheader, 28,  4));
+                $info['wavpack']['blockheader']['track_number'] = ord($wavpackheader[10]); // unused
+                $info['wavpack']['blockheader']['index_number'] = ord($wavpackheader[11]); // unused
+                $info['wavpack']['blockheader']['total_samples'] = getid3_lib::LittleEndian2Int(substr($wavpackheader, 12, 4));
+                $info['wavpack']['blockheader']['block_index'] = getid3_lib::LittleEndian2Int(substr($wavpackheader, 16, 4));
+                $info['wavpack']['blockheader']['block_samples'] = getid3_lib::LittleEndian2Int(substr($wavpackheader, 20, 4));
+                $info['wavpack']['blockheader']['flags_raw'] = getid3_lib::LittleEndian2Int(substr($wavpackheader, 24, 4));
+                $info['wavpack']['blockheader']['crc'] = getid3_lib::LittleEndian2Int(substr($wavpackheader, 28, 4));
 
-				$info['wavpack']['blockheader']['flags']['bytes_per_sample']     =    1 + ($info['wavpack']['blockheader']['flags_raw'] & 0x00000003);
-				$info['wavpack']['blockheader']['flags']['mono']                 = (bool) ($info['wavpack']['blockheader']['flags_raw'] & 0x00000004);
-				$info['wavpack']['blockheader']['flags']['hybrid']               = (bool) ($info['wavpack']['blockheader']['flags_raw'] & 0x00000008);
-				$info['wavpack']['blockheader']['flags']['joint_stereo']         = (bool) ($info['wavpack']['blockheader']['flags_raw'] & 0x00000010);
+                $info['wavpack']['blockheader']['flags']['bytes_per_sample'] = 1 + ($info['wavpack']['blockheader']['flags_raw'] & 0x00000003);
+                $info['wavpack']['blockheader']['flags']['mono'] = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000004);
+                $info['wavpack']['blockheader']['flags']['hybrid'] = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000008);
+                $info['wavpack']['blockheader']['flags']['joint_stereo'] = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000010);
 				$info['wavpack']['blockheader']['flags']['cross_decorrelation']  = (bool) ($info['wavpack']['blockheader']['flags_raw'] & 0x00000020);
 				$info['wavpack']['blockheader']['flags']['hybrid_noiseshape']    = (bool) ($info['wavpack']['blockheader']['flags_raw'] & 0x00000040);
 				$info['wavpack']['blockheader']['flags']['ieee_32bit_float']     = (bool) ($info['wavpack']['blockheader']['flags_raw'] & 0x00000080);
@@ -148,22 +148,22 @@ class getid3_wavpack extends getid3_handler
 
 			while (!feof($this->getid3->fp) && ($this->ftell() < ($blockheader_offset + $blockheader_size + 8))) {
 
-				$metablock = array('offset'=>$this->ftell());
-				$metablockheader = $this->fread(2);
-				if (feof($this->getid3->fp)) {
-					break;
-				}
-				$metablock['id'] = ord($metablockheader{0});
-				$metablock['function_id'] = ($metablock['id'] & 0x3F);
-				$metablock['function_name'] = $this->WavPackMetablockNameLookup($metablock['function_id']);
+                $metablock = array('offset' => $this->ftell());
+                $metablockheader = $this->fread(2);
+                if (feof($this->getid3->fp)) {
+                    break;
+                }
+                $metablock['id'] = ord($metablockheader[0]);
+                $metablock['function_id'] = ($metablock['id'] & 0x3F);
+                $metablock['function_name'] = $this->WavPackMetablockNameLookup($metablock['function_id']);
 
-				// The 0x20 bit in the id of the meta subblocks (which is defined as
-				// ID_OPTIONAL_DATA) is a permanent part of the id. The idea is that
-				// if a decoder encounters an id that it does not know about, it uses
-				// that "ID_OPTIONAL_DATA" flag to determine what to do. If it is set
-				// then the decoder simply ignores the metadata, but if it is zero
-				// then the decoder should quit because it means that an understanding
-				// of the metadata is required to correctly decode the audio.
+                // The 0x20 bit in the id of the meta subblocks (which is defined as
+                // ID_OPTIONAL_DATA) is a permanent part of the id. The idea is that
+                // if a decoder encounters an id that it does not know about, it uses
+                // that "ID_OPTIONAL_DATA" flag to determine what to do. If it is set
+                // then the decoder simply ignores the metadata, but if it is zero
+                // then the decoder should quit because it means that an understanding
+                // of the metadata is required to correctly decode the audio.
 				$metablock['non_decoder'] = (bool) ($metablock['id'] & 0x20);
 
 				$metablock['padded_data'] = (bool) ($metablock['id'] & 0x40);

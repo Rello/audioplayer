@@ -36,28 +36,28 @@ class getid3_id3v1 extends getid3_handler
 
 			$info['avdataend'] = $info['filesize'] - 128;
 
-			$ParsedID3v1['title']   = $this->cutfield(substr($id3v1tag,   3, 30));
-			$ParsedID3v1['artist']  = $this->cutfield(substr($id3v1tag,  33, 30));
-			$ParsedID3v1['album']   = $this->cutfield(substr($id3v1tag,  63, 30));
-			$ParsedID3v1['year']    = $this->cutfield(substr($id3v1tag,  93,  4));
-			$ParsedID3v1['comment'] =                 substr($id3v1tag,  97, 30);  // can't remove nulls yet, track detection depends on them
-			$ParsedID3v1['genreid'] =             ord(substr($id3v1tag, 127,  1));
+            $ParsedID3v1['title'] = $this->cutfield(substr($id3v1tag, 3, 30));
+            $ParsedID3v1['artist'] = $this->cutfield(substr($id3v1tag, 33, 30));
+            $ParsedID3v1['album'] = $this->cutfield(substr($id3v1tag, 63, 30));
+            $ParsedID3v1['year'] = $this->cutfield(substr($id3v1tag, 93, 4));
+            $ParsedID3v1['comment'] = substr($id3v1tag, 97, 30);  // can't remove nulls yet, track detection depends on them
+            $ParsedID3v1['genreid'] = ord(substr($id3v1tag, 127, 1));
 
-			// If second-last byte of comment field is null and last byte of comment field is non-null
-			// then this is ID3v1.1 and the comment field is 28 bytes long and the 30th byte is the track number
-			if (($id3v1tag{125} === "\x00") && ($id3v1tag{126} !== "\x00")) {
-				$ParsedID3v1['track']   = ord(substr($ParsedID3v1['comment'], 29,  1));
-				$ParsedID3v1['comment'] =     substr($ParsedID3v1['comment'],  0, 28);
-			}
-			$ParsedID3v1['comment'] = $this->cutfield($ParsedID3v1['comment']);
+            // If second-last byte of comment field is null and last byte of comment field is non-null
+            // then this is ID3v1.1 and the comment field is 28 bytes long and the 30th byte is the track number
+            if (($id3v1tag[125] === "\x00") && ($id3v1tag[126] !== "\x00")) {
+                $ParsedID3v1['track_number'] = ord(substr($ParsedID3v1['comment'], 29, 1));
+                $ParsedID3v1['comment'] = substr($ParsedID3v1['comment'], 0, 28);
+            }
+            $ParsedID3v1['comment'] = $this->cutfield($ParsedID3v1['comment']);
 
-			$ParsedID3v1['genre'] = $this->LookupGenreName($ParsedID3v1['genreid']);
-			if (!empty($ParsedID3v1['genre'])) {
-				unset($ParsedID3v1['genreid']);
-			}
-			if (isset($ParsedID3v1['genre']) && (empty($ParsedID3v1['genre']) || ($ParsedID3v1['genre'] == 'Unknown'))) {
-				unset($ParsedID3v1['genre']);
-			}
+            $ParsedID3v1['genre'] = $this->LookupGenreName($ParsedID3v1['genreid']);
+            if (!empty($ParsedID3v1['genre'])) {
+                unset($ParsedID3v1['genreid']);
+            }
+            if (isset($ParsedID3v1['genre']) && (empty($ParsedID3v1['genre']) || ($ParsedID3v1['genre'] == 'Unknown'))) {
+                unset($ParsedID3v1['genre']);
+            }
 
 			foreach ($ParsedID3v1 as $key => $value) {
 				$ParsedID3v1['comments'][$key][0] = $value;
@@ -68,31 +68,31 @@ class getid3_id3v1 extends getid3_handler
 			$ID3v1encoding = 'ISO-8859-1';
 			foreach ($ParsedID3v1['comments'] as $tag_key => $valuearray) {
 				foreach ($valuearray as $key => $value) {
-					if (preg_match('#^[\\x00-\\x40\\xA8\\B8\\x80-\\xFF]+$#', $value)) {
-						foreach (array('Windows-1251', 'KOI8-R') as $id3v1_bad_encoding) {
-							if (function_exists('mb_convert_encoding') && @mb_convert_encoding($value, $id3v1_bad_encoding, $id3v1_bad_encoding) === $value) {
-								$ID3v1encoding = $id3v1_bad_encoding;
-								break 3;
-							} elseif (function_exists('iconv') && @iconv($id3v1_bad_encoding, $id3v1_bad_encoding, $value) === $value) {
-								$ID3v1encoding = $id3v1_bad_encoding;
-								break 3;
-							}
-						}
-					}
+                    if (preg_match('#^[\\x00-\\x40\\xA8\\xB8\\x80-\\xFF]+$#', $value)) {
+                        foreach (array('Windows-1251', 'KOI8-R') as $id3v1_bad_encoding) {
+                            if (function_exists('mb_convert_encoding') && @mb_convert_encoding($value, $id3v1_bad_encoding, $id3v1_bad_encoding) === $value) {
+                                $ID3v1encoding = $id3v1_bad_encoding;
+                                break 3;
+                            } elseif (function_exists('iconv') && @iconv($id3v1_bad_encoding, $id3v1_bad_encoding, $value) === $value) {
+                                $ID3v1encoding = $id3v1_bad_encoding;
+                                break 3;
+                            }
+                        }
+                    }
 				}
 			}
 			// ID3v1 encoding detection hack END
 
 			// ID3v1 data is supposed to be padded with NULL characters, but some taggers pad with spaces
-			$GoodFormatID3v1tag = $this->GenerateID3v1Tag(
-											$ParsedID3v1['title'],
-											$ParsedID3v1['artist'],
-											$ParsedID3v1['album'],
-											$ParsedID3v1['year'],
-											(isset($ParsedID3v1['genre']) ? $this->LookupGenreID($ParsedID3v1['genre']) : false),
-											$ParsedID3v1['comment'],
-											(!empty($ParsedID3v1['track']) ? $ParsedID3v1['track'] : ''));
-			$ParsedID3v1['padding_valid'] = true;
+            $GoodFormatID3v1tag = $this->GenerateID3v1Tag(
+                $ParsedID3v1['title'],
+                $ParsedID3v1['artist'],
+                $ParsedID3v1['album'],
+                $ParsedID3v1['year'],
+                (isset($ParsedID3v1['genre']) ? $this->LookupGenreID($ParsedID3v1['genre']) : false),
+                $ParsedID3v1['comment'],
+                (!empty($ParsedID3v1['track_number']) ? $ParsedID3v1['track_number'] : ''));
+            $ParsedID3v1['padding_valid'] = true;
 			if ($id3v1tag !== $GoodFormatID3v1tag) {
 				$ParsedID3v1['padding_valid'] = false;
 				$this->warning('Some ID3v1 fields do not use NULL characters for padding');

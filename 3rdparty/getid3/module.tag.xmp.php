@@ -104,78 +104,71 @@ class Image_XMP
 		// Check that the first two characters are 0xFF 0xD8  (SOI - Start of image)
 		if ($data != "\xFF\xD8")
 		{
-			// No SOI (FF D8) at start of file - This probably isn't a JPEG file - close file and return;
-			echo '<p>This probably is not a JPEG file</p>'."\n";
-			fclose($filehnd);
-			return false;
-		}
+            // No SOI (FF D8) at start of file - This probably isn't a JPEG file - close file and return;
+            echo '<p>This probably is not a JPEG file</p>' . "\n";
+            fclose($filehnd);
+            return false;
+        }
 
-		// Read the third character
-		$data = fread($filehnd, 2);
+        // Read the third character
+        $data = fread($filehnd, 2);
 
-		// Check that the third character is 0xFF (Start of first segment header)
-		if ($data{0} != "\xFF")
-		{
-			// NO FF found - close file and return - JPEG is probably corrupted
-			fclose($filehnd);
-			return false;
-		}
+        // Check that the third character is 0xFF (Start of first segment header)
+        if ($data[0] != "\xFF") {
+            // NO FF found - close file and return - JPEG is probably corrupted
+            fclose($filehnd);
+            return false;
+        }
 
-		// Flag that we havent yet hit the compressed image data
-		$hit_compressed_image_data = false;
+        // Flag that we havent yet hit the compressed image data
+        $hit_compressed_image_data = false;
 
         $headerdata = array();
-		// Cycle through the file until, one of: 1) an EOI (End of image) marker is hit,
-		//                                       2) we have hit the compressed image data (no more headers are allowed after data)
-		//                                       3) or end of file is hit
+        // Cycle through the file until, one of: 1) an EOI (End of image) marker is hit,
+        //                                       2) we have hit the compressed image data (no more headers are allowed after data)
+        //                                       3) or end of file is hit
 
-		while (($data{1} != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd)))
-		{
-			// Found a segment to look at.
-			// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
-			if ((ord($data{1}) < 0xD0) || (ord($data{1}) > 0xD7))
-			{
-				// Segment isn't a Restart marker
-				// Read the next two bytes (size)
-				$sizestr = fread($filehnd, 2);
+        while (($data[1] != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd))) {
+            // Found a segment to look at.
+            // Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
+            if ((ord($data[1]) < 0xD0) || (ord($data[1]) > 0xD7)) {
+                // Segment isn't a Restart marker
+                // Read the next two bytes (size)
+                $sizestr = fread($filehnd, 2);
 
-				// convert the size bytes to an integer
-				$decodedsize = unpack('nsize', $sizestr);
+                // convert the size bytes to an integer
+                $decodedsize = unpack('nsize', $sizestr);
 
-				// Save the start position of the data
-				$segdatastart = ftell($filehnd);
+                // Save the start position of the data
+                $segdatastart = ftell($filehnd);
 
 				// Read the segment data with length indicated by the previously read size
 				$segdata = fread($filehnd, $decodedsize['size'] - 2);
 
-				// Store the segment information in the output array
-				$headerdata[] = array(
-					'SegType'      => ord($data{1}),
-					'SegName'      => $GLOBALS['JPEG_Segment_Names'][ord($data{1})],
-					'SegDataStart' => $segdatastart,
-					'SegData'      => $segdata,
-				);
-			}
+                // Store the segment information in the output array
+                $headerdata[] = array(
+                    'SegType' => ord($data[1]),
+                    'SegName' => $GLOBALS['JPEG_Segment_Names'][ord($data[1])],
+                    'SegDataStart' => $segdatastart,
+                    'SegData' => $segdata,
+                );
+            }
 
-			// If this is a SOS (Start Of Scan) segment, then there is no more header data - the compressed image data follows
-			if ($data{1} == "\xDA")
-			{
-				// Flag that we have hit the compressed image data - exit loop as no more headers available.
-				$hit_compressed_image_data = true;
-			}
-			else
-			{
-				// Not an SOS - Read the next two bytes - should be the segment marker for the next segment
-				$data = fread($filehnd, 2);
+            // If this is a SOS (Start Of Scan) segment, then there is no more header data - the compressed image data follows
+            if ($data[1] == "\xDA") {
+                // Flag that we have hit the compressed image data - exit loop as no more headers available.
+                $hit_compressed_image_data = true;
+            } else {
+                // Not an SOS - Read the next two bytes - should be the segment marker for the next segment
+                $data = fread($filehnd, 2);
 
-				// Check that the first byte of the two is 0xFF as it should be for a marker
-				if ($data{0} != "\xFF")
-				{
-					// NO FF found - close file and return - JPEG is probably corrupted
-					fclose($filehnd);
-					return false;
-				}
-			}
+                // Check that the first byte of the two is 0xFF as it should be for a marker
+                if ($data[0] != "\xFF") {
+                    // NO FF found - close file and return - JPEG is probably corrupted
+                    fclose($filehnd);
+                    return false;
+                }
+            }
 		}
 
 		// Close File

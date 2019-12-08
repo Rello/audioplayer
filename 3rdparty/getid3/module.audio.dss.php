@@ -21,23 +21,23 @@ class getid3_dss extends getid3_handler
 	 * @return bool
 	 */
 	public function Analyze() {
-		$info = &$this->getid3->info;
+        $info = &$this->getid3->info;
 
-		$this->fseek($info['avdataoffset']);
-		$DSSheader  = $this->fread(1540);
+        $this->fseek($info['avdataoffset']);
+        $DSSheader = $this->fread(1540);
 
-		if (!preg_match('#^[\\x02-\\x06]ds[s2]#', $DSSheader)) {
-			$this->error('Expecting "[02-06] 64 73 [73|32]" at offset '.$info['avdataoffset'].', found "'.getid3_lib::PrintHexBytes(substr($DSSheader, 0, 4)).'"');
-			return false;
-		}
+        if (!preg_match('#^[\\x02-\\x08]ds[s2]#', $DSSheader)) {
+            $this->error('Expecting "[02-08] 64 73 [73|32]" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($DSSheader, 0, 4)) . '"');
+            return false;
+        }
 
-		// some structure information taken from http://cpansearch.perl.org/src/RGIBSON/Audio-DSS-0.02/lib/Audio/DSS.pm
-		$info['encoding']              = 'ISO-8859-1'; // not certain, but assumed
-		$info['dss'] = array();
+        // some structure information taken from http://cpansearch.perl.org/src/RGIBSON/Audio-DSS-0.02/lib/Audio/DSS.pm
+        $info['encoding'] = 'ISO-8859-1'; // not certain, but assumed
+        $info['dss'] = array();
 
-		$info['fileformat']            = 'dss';
-		$info['mime_type']             = 'audio/x-'.substr($DSSheader, 1, 3); // "audio/x-dss" or "audio/x-ds2"
-		$info['audio']['dataformat']   =            substr($DSSheader, 1, 3); //         "dss" or         "ds2"
+        $info['fileformat'] = 'dss';
+        $info['mime_type'] = 'audio/x-' . substr($DSSheader, 1, 3); // "audio/x-dss" or "audio/x-ds2"
+        $info['audio']['dataformat'] = substr($DSSheader, 1, 3); //         "dss" or         "ds2"
 		$info['audio']['bitrate_mode'] = 'cbr';
 
 		$info['dss']['version']            =                            ord(substr($DSSheader,    0,   1));
