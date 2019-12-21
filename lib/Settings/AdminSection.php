@@ -18,9 +18,9 @@ use OCP\Settings\IIconSection;
 class AdminSection implements IIconSection
 {
     /** @var IURLGenerator */
-    private IURLGenerator $urlGenerator;
+    private $urlGenerator;
     /** @var IL10N */
-    private IL10N $l;
+    private $l;
 
     public function __construct(IURLGenerator $urlGenerator, IL10N $l)
     {
