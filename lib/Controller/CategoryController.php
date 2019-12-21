@@ -192,7 +192,7 @@ class CategoryController extends Controller
         $SQL .= ' LEFT JOIN `*PREFIX*audioplayer_artists` `AA` ON `AA`.`id` = `AB`.`artist_id`';
         $SQL .= ' WHERE `AT`.`user_id` = ? ';
         if ($categoryId) $SQL .= 'AND ' . $whereMatching[$category] . '= ?';
-        $SQL .= ' GROUP BY `AB`.`id`, `AA`.`id` ORDER BY LOWER(`AB`.`name`) ASC';
+        $SQL .= ' GROUP BY `AB`.`id`, `AA`.`id`, `AB`.`name` ORDER BY LOWER(`AB`.`name`) ASC';
 
         if (isset($SQL)) {
             $stmt = $this->db->prepare($SQL);
@@ -245,6 +245,33 @@ class CategoryController extends Controller
         }
         $results = $stmt->fetch();
         return $results['count'];
+    }
+
+    /**
+     * get the tracks for a selected category or album
+     *
+     * @NoAdminRequired
+     * @param string $category
+     * @param string $categoryId
+     * @return JSONResponse
+     * @throws InvalidPathException
+     * @throws NotFoundException
+     */
+    public function getTracks($category, $categoryId)
+    {
+        if ($categoryId[0] === 'S') $category = 'Stream';
+        if ($categoryId[0] === 'P') $category = 'Playlist';
+        $items = $this->getTracksDetails($category, $categoryId);
+        $headers = $this->getListViewHeaders($category);
+
+        $result = !empty($items) ? [
+            'status' => 'success',
+            'data' => $items,
+            'header' => $headers,
+        ] : [
+            'status' => 'nodata',
+        ];
+        return new JSONResponse($result);
     }
 
     /**
