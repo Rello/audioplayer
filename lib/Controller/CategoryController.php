@@ -101,6 +101,7 @@ class CategoryController extends Controller
             $aPlaylists[] = array('id' => 'X2', 'name' => $this->l10n->t('Recently Added'));
             $aPlaylists[] = array('id' => 'X3', 'name' => $this->l10n->t('Recently Played'));
             $aPlaylists[] = array('id' => 'X4', 'name' => $this->l10n->t('Most Played'));
+            $aPlaylists[] = array('id' => 'X5', 'name' => $this->l10n->t('50 Random Tracks'));
             $aPlaylists[] = array('id' => '', 'name' => '');
 
             // Stream files are shown directly
@@ -336,6 +337,12 @@ class CategoryController extends Controller
 			 		WHERE `AS`.`id` <> ? AND `AT`.`user_id` = ? 
 			 		ORDER BY `AS`.`playcount` DESC
 			 		Limit 25';
+            $categoryId = 0;
+        } elseif ($category === 'Playlist' AND $categoryId === "X5") { // 50 Random Tracks
+            $SQL = $SQL_select . $SQL_from .
+                "WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? 
+			 		ORDER BY RAND()
+			 		Limit 50";
             $categoryId = 0;
         } elseif ($category === 'Playlist') {
             $SQL = $SQL_select . ' , `AP`.`sortorder`' .
