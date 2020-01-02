@@ -6,6 +6,13 @@ All notable changes to the Audio Player project will be documented in this file.
 - update getID3 to 1.9.18-201911300717
 - PHP 7.4 compatibility [#449](https://github.com/rello/audioplayer/issues/449)
 
+### Added
+- Add new playlist with 50 random tracks [#455](https://github.com/rello/audioplayer/pull/455) @[great-qwerty](https://github.com/great-qwerty)
+- NC18
+
+### Fixed
+- SQL group by exception [#450](https://github.com/rello/audioplayer/issues/450)
+
 ## 2.8.4 - 2019-09-3
 ### Fixed
 - Play icon in Cover View not starting the correct track [#438](https://github.com/rello/audioplayer/issues/438)
