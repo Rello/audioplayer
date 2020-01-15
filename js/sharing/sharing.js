@@ -13,7 +13,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-    if ($('#header').hasClass('share-file')) {
+    //if ($('#header').hasClass('share-file')) {
         var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
         var mimeType = $('#mimetype').val();
         var sharingToken = $('#sharingToken');
@@ -59,5 +59,5 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
-    }
+    //}
 });
