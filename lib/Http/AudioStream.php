@@ -16,16 +16,16 @@ use \OC\Files\View;
  
 class AudioStream
 {
-    private string $path = "";
+    private $path = "";
     private $stream;
-    private int $iStart = -1;
-    private int $iEnd = -1;
+    private $iStart = -1;
+    private $iEnd = -1;
     private $iSize = 0;
     private $mimeType = 0;
-    private int $buffer = 8192;
+    private $buffer = 8192;
     private $mTime = 0;
     private $userView;
-    private bool $isStream = false;
+    private $isStream = false;
 
     public function __construct($filePath, $user = null)
     {
