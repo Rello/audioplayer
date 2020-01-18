@@ -102,7 +102,7 @@ class CategoryController extends Controller
             $aPlaylists[] = array('id' => 'X3', 'name' => $this->l10n->t('Recently Played'));
             $aPlaylists[] = array('id' => 'X4', 'name' => $this->l10n->t('Most Played'));
             //https://github.com/Rello/audioplayer/issues/442
-            //$aPlaylists[] = array('id' => 'X5', 'name' => $this->l10n->t('50 Random Tracks'));
+            $aPlaylists[] = array('id' => 'X5', 'name' => $this->l10n->t('50 Random Tracks'));
             $aPlaylists[] = array('id' => '', 'name' => '');
 
             // Stream files are shown directly
@@ -340,10 +340,13 @@ class CategoryController extends Controller
 			 		Limit 25';
             $categoryId = 0;
         } elseif ($category === 'Playlist' AND $categoryId === "X5") { // 50 Random Tracks
+            if ($this->db->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSqlPlatform) {
+                $order = 'ORDER BY random() Limit 50';
+            } else {
+                $order = 'ORDER BY RAND() Limit 50';
+            }
             $SQL = $SQL_select . $SQL_from .
-                "WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? 
-			 		ORDER BY RAND()
-			 		Limit 50";
+                "WHERE `AT`.`id` <> ? AND `AT`.`user_id` = ? " . $order;
             $categoryId = 0;
         } elseif ($category === 'Playlist') {
             $SQL = $SQL_select . ' , `AP`.`sortorder`' .
