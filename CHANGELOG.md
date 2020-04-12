@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.10.0 - 2020-04-13
+### Added
+- add random-tracks smart playlist [#442](https://github.com/rello/audioplayer/issues/442)
+- NC 19
+
+### Fixed
+- Playlist ends outside of visible part of page [#461](https://github.com/rello/audioplayer/issues/461)
+
 ## 2.9.0 - 2020-01-15
 ### Changed
 - update getID3 to 1.9.18-201911300717
