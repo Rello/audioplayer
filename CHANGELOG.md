@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.10.1 - 2020-06-15
+### Fixed
+- Search result hidden behind playlist [#472](https://github.com/rello/audioplayer/issues/472)
+
 ## 2.10.0 - 2020-04-13
 ### Added
 - add random-tracks smart playlist [#442](https://github.com/rello/audioplayer/issues/442)

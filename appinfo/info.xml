@@ -18,7 +18,7 @@
 - Widget for Dashboard App via add-on
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
-    <version>2.10.0</version>
+    <version>2.10.1</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
