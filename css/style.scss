@@ -924,6 +924,31 @@ li.dropHover {
   opacity: 0.4;
 }
 
+.whatsNewPopover {
+  bottom: 35px !important;
+  left: 15px !important;
+  width: 270px;
+  z-index: 700;
+}
+
+.whatsNewPopover p {
+  width: auto !important;
+}
+
+.whatsNewPopover .caption {
+  font-weight: bold;
+  cursor: auto !important;
+}
+
+.whatsNewPopover .icon-close {
+  position: absolute;
+  right: 0;
+}
+
+.whatsNewPopover::after {
+  content: none;
+}
+
 @media only screen and (max-width: 768px) {
 
   #app-navigation-toggle_alternative {
