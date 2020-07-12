@@ -761,6 +761,16 @@ OCA.Audioplayer.UI = {
             addCss = 'background-image:url(' + coverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
             addDescr = '';
         }
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: activeLi.dataset.title,
+                artist: activeLi.dataset.artist,
+                album: activeLi.dataset.album,
+                artwork: [
+                    {src: coverUrl + coverID, sizes: '192x192', type: 'image/png'},
+                ]
+            });
+        }
         document.querySelector('.sm2-playlist-cover').setAttribute('style', addCss);
         document.querySelector('.sm2-playlist-cover').innerText = addDescr;
         document.title = activeLi.dataset.title + ' (' + activeLi.dataset.artist + ' ) @ ' + OCA.Audioplayer.Core.initialDocumentTitle;
@@ -1281,4 +1291,13 @@ document.addEventListener('DOMContentLoaded', function () {
             OCA.Audioplayer.Core.processSearchResult();
         }
     };
+    
+        // mediaSession currently use for Chrome already to support hardware keys
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.setActionHandler('play', function() {OCA.Audioplayer.Core.Player.actions.play();});
+        navigator.mediaSession.setActionHandler('pause', function() {OCA.Audioplayer.Core.Player.actions.pause();});
+        navigator.mediaSession.setActionHandler('stop', function() {OCA.Audioplayer.Core.Player.actions.stop();});
+        navigator.mediaSession.setActionHandler('previoustrack', function() {OCA.Audioplayer.Core.Player.actions.prev();});
+        navigator.mediaSession.setActionHandler('nexttrack', function() {OCA.Audioplayer.Core.Player.actions.next();});
+    }
 });
