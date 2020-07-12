@@ -43,9 +43,10 @@ English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polis
 - Eventdispatcher 'OCA\audioplayer::loadAdditionalScripts'
 - Sidebar Tabs: OCA.Audioplayer.Sidebar.registerSidebarTab
 
-## Bugs and Feature Requests
-Please report bugs or feature requests using the [GitHub issue tracking system](https://github.com/rello/audioplayer/issues) only! For a changelog please read the [full release history](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md).
-
 ## Maintainers
 - [Marcel Scherello](https://github.com/rello) (author, project leader)
 - [Martin Matous](https://github.com/mmatous)
+
+## Support
+Thank you to PhpStorm from [JetBrains](https://www.jetbrains.com/?from=AudioPlayerforNextcloudandownCloud) <br>
+<img src="https://raw.githubusercontent.com/rello/data/master/screenshots/jetbrains.svg" alt="Main" width="100" title="Analytics">
