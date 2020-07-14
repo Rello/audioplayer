@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.11.0 - 2020-07-xx
+### Added
+- WhatsNew popup [#480](https://github.com/rello/audioplayer/issues/480)
+- Hardware media keys (MediaSession API) [#479](https://github.com/rello/audioplayer/issues/479)
+- Aif Aiff support [#475](https://github.com/rello/audioplayer/issues/475)
+- absolute path and '../' in .m3u playlist files [#457](https://github.com/rello/audioplayer/issues/457)
+
+### Changed
+- migration from database.xml to /Migration
+
 ## 2.10.1 - 2020-06-15
 ### Fixed
 - Search result hidden behind playlist [#472](https://github.com/rello/audioplayer/issues/472)

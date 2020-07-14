@@ -360,7 +360,6 @@ class CategoryController extends Controller
         } elseif ($category === 'Stream') {
             $aTracks = $this->StreamParser(intval(substr($categoryId, 1)));
             return $aTracks;
-
         } elseif ($category === 'Folder') {
             $SQL = $SQL_select . $SQL_from .
                 'WHERE `AT`.`folder_id` = ? AND `AT`.`user_id` = ?' .
@@ -451,8 +450,15 @@ class CategoryController extends Controller
                 }
             }
         } else {
+            // get the path of the playlist file as reference
+            $playlistFilePath = explode('/', $streamfile[0]->getInternalPath());
+            // remove leading "files/"
+            array_shift($playlistFilePath);
+            // remove the filename itself
+            array_pop($playlistFilePath);
+
             foreach (preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line) {
-                if (empty($line)) continue;
+                if (empty($line) || $line === '#EXTM3U') continue;
                 if (substr($line, 0, 8) === '#EXTINF:') {
                     $extinf = explode(',', substr($line, 8));
                     $title = $extinf[1];
@@ -474,16 +480,29 @@ class CategoryController extends Controller
                     $title = null;
                     $tracks[] = $row;
                 } elseif (preg_match('/^[^"<>|:]*$/',$line)) {
-                    $path = explode('/', $streamfile[0]->getInternalPath());
-                    array_shift($path);
-                    array_pop($path);
-                    array_push($path, $line);
-                    $path = implode('/', $path);
+
+                    if ($line[0] === '/') {
+                        // Absolut path
+                        $path = $line;
+                    } elseif (substr($line, 0, 3) === '../') {
+                        // relative one level up => remove the parent folder of the playlist file
+                        array_shift($playlistFilePath);
+                        $path = $playlistFilePath;
+                        array_push($path, substr($line, 3));
+                        $path = implode('/', $path);
+                    } else {
+                        // normal relative path
+                        $path = $playlistFilePath;
+                        array_push($path, $line);
+                        $path = implode('/', $path);
+                    }
                     $x++;
+                    $this->logger->debug('Final path of playlist track: '.$path);
 
                     try {
                         $fileId = $this->rootFolder->getUserFolder($this->userId)->get($path)->getId();
                         $track = $this->DBController->getTrackInfo(null,$fileId);
+                        if (!isset($track['id'])) continue;
 
                         $row = array();
                         $row['id'] = $track['id'];
@@ -499,7 +518,8 @@ class CategoryController extends Controller
                         $tracks[] = $row;
                         $title = null;
                     } catch (NotFoundException $e) {
-                        //File is not known in the filecache and will be ignored;
+                        $this->logger->debug('Path is not a valid file: '.$path);
+                        // File is not known in the filecache and will be ignored;
                     }
                 }
             }
