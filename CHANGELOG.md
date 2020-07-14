@@ -7,6 +7,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - Hardware media keys (MediaSession API) [#479](https://github.com/rello/audioplayer/issues/479)
 - Aif Aiff support [#475](https://github.com/rello/audioplayer/issues/475)
 - absolute path and '../' in .m3u playlist files [#457](https://github.com/rello/audioplayer/issues/457)
+- remember playback position between sessions [#288](https://github.com/rello/audioplayer/issues/288)
 
 ### Changed
 - migration from database.xml to /Migration

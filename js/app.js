@@ -29,6 +29,7 @@ OCA.Audioplayer.Core = {
     AjaxCallStatus: null,
     Player: null,
     canPlayMimeType: null,
+    trackStartPosition: null,
 
     init: function () {
         OCA.Audioplayer.Core.initialDocumentTitle = document.title;
@@ -134,6 +135,10 @@ OCA.Audioplayer.Core = {
                     var item = $('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]');
                     item.find('.icon').hide();
                     item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
+                    if (OCA.Audioplayer.Core.CategorySelectors[3]) {
+                        // if the title was previously played, the last position will be set
+                        OCA.Audioplayer.Core.trackStartPosition = OCA.Audioplayer.Core.CategorySelectors[3];
+                    }
                 }
             });
         }
@@ -714,6 +719,8 @@ OCA.Audioplayer.UI = {
             while (e = e.previousSibling) {
                 ++k;
             }
+            // when a new title is played, the old playtime will be reset
+            if (parseInt(OCA.Audioplayer.Core.CategorySelectors[2]) !== k) OCA.Audioplayer.Core.trackStartPosition = null;
             OCA.Audioplayer.Core.Player.actions.play(k);
             OCA.Audioplayer.Backend.setStatistics();
         }

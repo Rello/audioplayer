@@ -21,7 +21,8 @@
 
     soundManager.setup({
         // trade-off: higher UI responsiveness (play/progress bar), but may use more CPU.
-        html5PollingInterval: 50,
+        html5PollingInterval: 1000,
+        flashPollingInterval: 1000,
         //flashVersion: 9
     });
 
@@ -811,6 +812,7 @@
 
                 url: url,
                 type: 'audio/mp3',
+                from: OCA.Audioplayer.Core.trackStartPosition,
 
                 volume: defaultVolume,
 
@@ -830,6 +832,11 @@
 
                         dom.time.innerHTML = getTime(this.position, true);
 
+                        // save position every 10 seconds
+                        var positionCalc = Math.round(this.position/1000) / 10;
+                        if (Math.round(positionCalc) === positionCalc) {
+                            OCA.Audioplayer.Backend.setUserValue('category', OCA.Audioplayer.Core.CategorySelectors[0] + '-' + OCA.Audioplayer.Core.CategorySelectors[1] + '-' + OCA.Audioplayer.Core.CategorySelectors[2] + '-' + Math.round(this.position));
+                        }
                     }
 
                 },
