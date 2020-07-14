@@ -14,7 +14,7 @@ A music player for FLAC, MP3, MP4, AIF, streams, … with playlist support and S
 - Favorites, Sidebar & Search integration
 - Specifying media folder (with exclude functionality)
 - One Click Play in Files app
-- Support for hardware buttons (MediaService API)
+- Hardware media keys (MediaService API)
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
 - [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
