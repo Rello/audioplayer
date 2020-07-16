@@ -390,6 +390,11 @@
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
   -ms-interpolation-mode: bicubic;
+  opacity: 0.4;
+  pointer: cursor;
+}
+.sm2-inline-button:hover {
+    opacity: 1;
 }
 
 .play-pause,
@@ -458,6 +463,12 @@
   @include icon-color('repeat', 'audioplayer', $color-black, 1);
   background-position: 50% 43%;
   background-size: 54%;
+}
+
+.sm2-inline-button.repeat-single {
+  @include icon-color('repeat-single', 'audioplayer', $color-black, 1);
+    background-position: 50% 43%;
+    background-size: 54%;
 }
 
 .sm2-extra-controls .repeat {

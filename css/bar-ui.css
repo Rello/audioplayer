@@ -461,7 +461,12 @@
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
     -ms-interpolation-mode: bicubic;
+    opacity: 0.4;
 }
+.sm2-inline-button:hover {
+    opacity: 1;
+}
+
 
 .play-pause,
 .play-pause:hover,
@@ -530,6 +535,11 @@
 
 .sm2-inline-button.repeat {
     background-image: none, url('../img/repeat.svg');
+    background-position: 50% 43%;
+    background-size: 54%;
+}
+.sm2-inline-button.repeat-single {
+    background-image: none, url('../img/repeat-single.svg');
     background-position: 50% 43%;
     background-size: 54%;
 }
