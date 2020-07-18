@@ -6,7 +6,7 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
  ?>
 <div id="sm2-bar-ui" class="sm2-bar-ui full-width" style="padding-top: 150px">
