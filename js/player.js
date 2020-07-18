@@ -14,90 +14,50 @@ if (!OCA.Audioplayer) {
     /**
      * @namespace
      */
-    OCA.Audioplayer = {
-    };
+    OCA.Audioplayer = {};
 }
 
 /**
  * @namespace OCA.Audioplayer.Player
  */
 OCA.Audioplayer.Player = {
+    html5Audio: document.getElementById('html5Audio'),
     currentTrackIndex: 0,
     currentPlaylist: 0,
     currentTrackId: 0,
     repeatMode: null,
+    shuffle: false,
     trackStartPosition: 0,
-    html5Audio: document.getElementById('html5Audio'),
 
-    setTrack: function() {
-        var songURL = OCA.Audioplayer.Player.html5Audio.children[OCA.Audioplayer.Player.currentTrackIndex].src;
-        // new track to be played
-        if (songURL !== OCA.Audioplayer.Player.html5Audio.getAttribute('src')) {
-            OCA.Audioplayer.Player.html5Audio.setAttribute("src", songURL);
-            OCA.Audioplayer.Player.currentTrackId = OCA.Audioplayer.Player.html5Audio.children[OCA.Audioplayer.Player.currentTrackIndex].dataset.trackid;
-            OCA.Audioplayer.Player.html5Audio.load();
-            OCA.Audioplayer.Player.html5Audio.currentTime = this.trackStartPosition;
-
-            if (document.getElementById('playlist-container').dataset.playlist === OCA.Audioplayer.Player.currentPlaylist) {
-                if (document.getElementsByClassName('isActive').length ===1) {
-                    var currentActive = document.getElementsByClassName('isActive')[0]
-                    // does not work yet, when a song is preselected bot not isActive
-                    //currentActive.querySelector('i.ioc').style.display = 'none';
-                    //currentActive.querySelector('i.icon').style.display = 'block';
-                    document.getElementsByClassName('isActive')[0].classList.remove('isActive');
-                }
-
-                var iocIcon = document.querySelectorAll('.albumwrapper li i.ioc')
-                for (var i = 0; i < iocIcon.length; ++i) {
-                    iocIcon[i].style.display = 'none';
-                }
-                var iconIcon = document.querySelectorAll('.albumwrapper li i.icon')
-                for (var i = 0; i < iconIcon.length; ++i) {
-                    iconIcon[i].style.display = 'block';
-                }
-
-                iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-off');
-                iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-up');
-                iocIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'block';
-                iconIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'none';
-
-                document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
-            }
-        } else {
-            var iocIcon = document.querySelectorAll('.albumwrapper li i.ioc')
-            iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-off');
-            iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-up');
+    setTrack: function () {
+        var trackToPlay = this.html5Audio.children[this.currentTrackIndex];
+        if (trackToPlay.dataset.canPlayMime === 'false') {
+            this.next();
+            return;
         }
-        OCA.Audioplayer.Player.playBack();
-
-    },
-
-    /**
-     * Controls playback of the audio element.
-     *
-     **/
-    playBack: function() {
-            OCA.Audioplayer.Player.html5Audio.play();
-            document.getElementById('sm2-bar-ui').classList.add('playing');
+        // new track to be played
+        if (trackToPlay.src !== this.html5Audio.getAttribute('src')) {
+            this.currentTrackId = trackToPlay.dataset.trackid;
+            this.html5Audio.setAttribute("src", trackToPlay.src);
+            this.html5Audio.load();
+            this.html5Audio.currentTime = this.trackStartPosition;
+        } else if (!OCA.Audioplayer.Player.isPaused()) {
+            OCA.Audioplayer.Player.stop();
+            return;
+        }
+        this.html5Audio.play();
+        document.getElementById('sm2-bar-ui').classList.add('playing');
+        OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
     },
 
     play: function () {
-        if (OCA.Audioplayer.Player.isPaused()) {
             OCA.Audioplayer.Player.setTrack();
-        } else {
-            OCA.Audioplayer.Player.stop();
-        }
     },
 
     stop: function () {
-        OCA.Audioplayer.Player.html5Audio.pause();
-        if (document.getElementById('playlist-container').dataset.playlist === OCA.Audioplayer.Player.currentPlaylist) {
-            var iocIcon = document.querySelectorAll('.albumwrapper li i.ioc')
-            iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-up');
-            iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-off');
-            iocIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'block';
-        }
+        this.html5Audio.pause();
         document.getElementById('sm2-bar-ui').classList.remove('playing');
+        OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
     },
 
     pause: function () {
@@ -105,12 +65,20 @@ OCA.Audioplayer.Player = {
     },
 
     next: function () {
-        if (OCA.Audioplayer.Player.currentTrackIndex === OCA.Audioplayer.Player.html5Audio.childElementCount - 1) {
-            if (OCA.Audioplayer.Player.loopMode === 'list') {
+        var numberOfTracks = OCA.Audioplayer.Player.html5Audio.childElementCount - 1; // index stats counting at 0
+        if (OCA.Audioplayer.Player.shuffle === true) {
+            // shuffle => get random track index
+            var minimum = 0;
+            var maximum = numberOfTracks;
+            OCA.Audioplayer.Player.currentTrackIndex = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+            OCA.Audioplayer.Player.setTrack();
+        } else if (OCA.Audioplayer.Player.currentTrackIndex === numberOfTracks) {
+            // if end is reached, either stop or restart the list
+            if (OCA.Audioplayer.Player.repeatMode === 'list') {
                 OCA.Audioplayer.Player.currentTrackIndex = 0;
                 OCA.Audioplayer.Player.setTrack();
             } else {
-                this.stop();
+                OCA.Audioplayer.Player.stop();
             }
         } else {
             OCA.Audioplayer.Player.currentTrackIndex++;
@@ -123,26 +91,37 @@ OCA.Audioplayer.Player = {
         OCA.Audioplayer.Player.setTrack();
     },
 
-    repeat: function () {
+    setRepeat: function () {
+        var repeatIcon = document.getElementById('playerRepeat');
         if (OCA.Audioplayer.Player.repeatMode === null) {
             OCA.Audioplayer.Player.html5Audio.loop = true;
             OCA.Audioplayer.Player.repeatMode = 'single';
-            document.getElementById('playerRepeat').classList.remove('repeat');
-            document.getElementById('playerRepeat').classList.add('repeat-single');
-            document.getElementById('playerRepeat').style.opacity = 1;
-        } else if (OCA.Audioplayer.Player.repeatMode === 'single'){
+            repeatIcon.classList.remove('repeat');
+            repeatIcon.classList.add('repeat-single');
+            repeatIcon.style.opacity = 1;
+        } else if (OCA.Audioplayer.Player.repeatMode === 'single') {
             OCA.Audioplayer.Player.html5Audio.loop = false;
             OCA.Audioplayer.Player.repeatMode = 'list';
-            document.getElementById('playerRepeat').classList.add('repeat');
-            document.getElementById('playerRepeat').classList.remove('repeat-single');
+            repeatIcon.classList.add('repeat');
+            repeatIcon.classList.remove('repeat-single');
         } else {
             OCA.Audioplayer.Player.repeatMode = null;
-            document.getElementById('playerRepeat').style.removeProperty('opacity');
+            repeatIcon.style.removeProperty('opacity');
         }
     },
 
-    isPaused: function() {
-      return this.html5Audio.paused;
+    setShuffle: function () {
+        if (OCA.Audioplayer.Player.shuffle === false) {
+            OCA.Audioplayer.Player.shuffle = true;
+            document.getElementById('playerShuffle').style.opacity = 1;
+        } else {
+            OCA.Audioplayer.Player.shuffle = false;
+            document.getElementById('playerShuffle').style.removeProperty('opacity');
+        }
+    },
+
+    isPaused: function () {
+        return this.html5Audio.paused;
     },
 
     addTracksToSourceList: function (playlistItems) {
@@ -151,21 +130,80 @@ OCA.Audioplayer.Player = {
             var audioSource = document.createElement('source');
             audioSource.src = playlistItems[i].firstChild.href;
             audioSource.dataset.trackid = playlistItems[i].dataset.trackid;
+            audioSource.dataset.canPlayMime = playlistItems[i].dataset.canPlayMime;
             OCA.Audioplayer.Player.html5Audio.appendChild(audioSource);
         }
-    }
+    },
+
+    initProgressBar: function () {
+        var player = OCA.Audioplayer.Player.html5Audio;
+        var canvas = document.getElementById('progressBar');
+        document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.calculateCurrentValue(player.currentTime) + '&nbsp;/&nbsp;';
+        document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.calculateTotalValue(player.duration) + '&nbsp;&nbsp;';
+
+        var elapsedTime = Math.round(player.currentTime);
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+            ctx.fillStyle = "rgb(0,130,201)";
+            var progressValue = (elapsedTime / player.duration);
+            var fWidth = progressValue * canvas.clientWidth;
+            if (fWidth > 0) {
+                ctx.fillRect(0, 0, fWidth, canvas.clientHeight);
+            }
+        }
+
+        // save position every 10 seconds
+        var positionCalc = Math.round(player.currentTime) / 10;
+        if (Math.round(positionCalc) === positionCalc) {
+            OCA.Audioplayer.Backend.setUserValue('category',
+                OCA.Audioplayer.Core.CategorySelectors[0]
+                + '-' + OCA.Audioplayer.Core.CategorySelectors[1]
+                + '-' + OCA.Audioplayer.Core.CategorySelectors[2]
+                + '-' + Math.round(player.currentTime)
+            );
+        }
+
+    },
+
+    seek: function (evt) {
+        var progressbar = document.getElementById('progressBar');
+        var player = OCA.Audioplayer.Player.html5Audio;
+        player.currentTime = player.duration * (evt.offsetX / progressbar.clientWidth);
+    },
+
+    calculateTotalValue: function (length) {
+        var minutes = Math.floor(length / 60),
+            seconds_int = length - minutes * 60,
+            seconds_str = seconds_int.toString(),
+            seconds = seconds_str.substr(0, 2),
+            time = minutes + ':' + seconds
+
+        return time;
+    },
+
+    calculateCurrentValue: function (currentTime) {
+        var current_hour = parseInt(currentTime / 3600) % 24,
+            current_minute = parseInt(currentTime / 60) % 60,
+            current_seconds_long = currentTime % 60,
+            current_seconds = current_seconds_long.toFixed(),
+            current_time = (current_minute < 10 ? "0" + current_minute : current_minute) + ":" + (current_seconds < 10 ? "0" + current_seconds : current_seconds);
+
+        return current_time;
+    },
 }
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    OCA.Audioplayer.Player.html5Audio.onended = function() {
-        OCA.Audioplayer.Player.next();
-    };
+    OCA.Audioplayer.Player.html5Audio.addEventListener('ended', OCA.Audioplayer.Player.next,true);
+    OCA.Audioplayer.Player.html5Audio.addEventListener('timeupdate', OCA.Audioplayer.Player.initProgressBar, true);
+
+    document.getElementById('progressBar').addEventListener("click", OCA.Audioplayer.Player.seek, true);
 
     document.getElementById('playerPrev').addEventListener('click', OCA.Audioplayer.Player.prev);
     document.getElementById('playerNext').addEventListener('click', OCA.Audioplayer.Player.next);
     document.getElementById('playerPlay').addEventListener('click', OCA.Audioplayer.Player.play);
-    document.getElementById('playerRepeat').addEventListener('click', OCA.Audioplayer.Player.repeat);
+    document.getElementById('playerRepeat').addEventListener('click', OCA.Audioplayer.Player.setRepeat);
+    document.getElementById('playerShuffle').addEventListener('click', OCA.Audioplayer.Player.setShuffle);
 
-    playerPrev
 });

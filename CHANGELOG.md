@@ -6,11 +6,13 @@ All notable changes to the Audio Player project will be documented in this file.
 - WhatsNew popup [#480](https://github.com/rello/audioplayer/issues/480)
 - Hardware media keys (MediaSession API) [#479](https://github.com/rello/audioplayer/issues/479)
 - Aif Aiff support [#475](https://github.com/rello/audioplayer/issues/475)
-- absolute path and '../' in .m3u playlist files [#457](https://github.com/rello/audioplayer/issues/457)
-- remember playback position between sessions [#288](https://github.com/rello/audioplayer/issues/288)
+- Absolute path and '../' in .m3u playlist files [#457](https://github.com/rello/audioplayer/issues/457)
+- Remember playback position between sessions [#288](https://github.com/rello/audioplayer/issues/288)
+- Repeat single track or playlist [#172](https://github.com/rello/audioplayer/issues/172)
 
 ### Changed
-- migration from database.xml to /Migration
+- Migration from database.xml to /Migration
+- Drop soundmanager2 and bar-ui for HTML5 audio [#481](https://github.com/rello/audioplayer/issues/481)
 
 ## 2.10.1 - 2020-06-15
 ### Fixed
