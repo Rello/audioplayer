@@ -8,5 +8,6 @@
   <title>Layer 1</title>
   <g id="svg_1"/>
   <path stroke="null" id="svg_2" d="m21.25,5.983346l-4.75,0l0,4.433327l3.75,0l0,6.649989l-15.5,0l0,-6.649989l5.25,0l0,3.483328l5,-5.699991l-5,-5.699991l0,3.483328l-6.25,0c-1.38,0 -2.5,1.417399 -2.5,3.166662l0,9.183316c0,1.747997 1.12,3.166662 2.5,3.166662l17.5,0c1.381001,0 2.5,-1.418665 2.5,-3.166662l0,-9.183316c0,-1.749263 -1.118999,-3.166662 -2.5,-3.166662z"/>
+  <text font-weight="bold" transform="matrix(0.588313 0 0 0.293772 7.20111 11.3587)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_3" y="16.627946" x="8.115907" stroke-width="0" fill="#000000">1</text>
  </g>
 </svg>

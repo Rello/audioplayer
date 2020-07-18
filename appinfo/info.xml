@@ -3,22 +3,21 @@
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<summary>play / stream / organize</summary>
-	<description><![CDATA[A music player for FLAC, MP3, MP4, streams, … with playlist support and SONOS integration.
+	<description><![CDATA[A music player for FLAC, MP3, MP4, AIF, streams, … with playlist support and SONOS integration.
 
 - Cover & List view for all categories
 - tuned for big audio collections
 - Smart lists & standard playlists & local playlists
 - Stream URLs
 - Favorites, Sidebar & Search integration
-- Library scan and reset from command-line and browser
 - Specifying media folder (with exclude functionality)
 - One Click Play in Files app
+- Hardware media keys (MediaService API)
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
 - [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
-- Widget for Dashboard App via add-on
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
-    <version>2.10.1</version>
+    <version>2.10.2</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
@@ -41,11 +40,6 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 		<nextcloud min-version="17" max-version="19"/>
 		<owncloud min-version="9" max-version="10"/>
 	</dependencies>
- 	<repair-steps>
-		<post-migration>
-			<step>OCA\audioplayer\Migration\Migration</step>
-		</post-migration>
-	</repair-steps>
 	<settings>
 		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
 		<personal>OCA\audioplayer\Settings\Personal</personal>

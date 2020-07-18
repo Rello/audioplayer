@@ -62,7 +62,7 @@ function playFile(file, data) {
 }
 
 function registerFileActions() {
-    var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
+    var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
     //var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
     //mime_array = mime_array.concat(stream_array);
 

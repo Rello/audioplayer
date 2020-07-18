@@ -15,8 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var user_value;
         if ($('#cyrillic_user').prop('checked')) {
             user_value = 'checked';
-        }
-        else {
+        } else {
             user_value = '';
         }
         $.ajax({
@@ -57,27 +56,19 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     });
 
-    var audioPlayer = {};
-    soundManager.setup({
-        onready: function () {
-            audioPlayer.player = soundManager.createSound({});
-            var can_play = soundManager.html5;
-            var supported_types = '';
-            var nsupported_types = '';
-            for (var mtype in can_play) {
-                var mtype_check = can_play[mtype];
-                if (mtype.substring(5, 6) !== '/' && mtype !== 'usingFlash' && mtype !== 'canPlayType') {
+    var supported_types = '';
+    var nsupported_types = '';
+    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
+    const audio = document.createElement('audio');
 
-                    if (mtype_check === true) {
-                        supported_types = supported_types + mtype + ', ';
-                    } else {
-                        nsupported_types = nsupported_types + mtype + ', ';
-                    }
-                }
-            }
-            $('#browser_yes').html(supported_types);
-            $('#browser_no').html(nsupported_types);
+    mimeTypes.forEach((element) => {
+        if (audio.canPlayType(element)) {
+            supported_types = supported_types + element + ', ';
+        } else {
+            nsupported_types = nsupported_types + element + ', ';
         }
     });
 
+    $('#browser_yes').html(supported_types);
+    $('#browser_no').html(nsupported_types);
 });

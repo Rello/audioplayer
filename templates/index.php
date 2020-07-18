@@ -15,13 +15,11 @@ Util::addStyle('audioplayer', 'bar-ui');
 Util::addStyle('audioplayer', 'style');
 Util::addStyle('files', 'detailsView');
 Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
-Util::addScript('audioplayer', 'soundmanager2');
 Util::addScript('audioplayer', 'app');
 Util::addScript('audioplayer', 'sidebar');
 Util::addScript('audioplayer', 'settings/settings');
 if ($_['audioplayer_sonos'] !== 'checked') {
-    Util::addScript('audioplayer', 'bar-ui');
-    Util::addStyle('audioplayer', '3rdparty/fontello/css/animation');
+    Util::addScript('audioplayer', 'player');
 }
 
 ?>
@@ -43,7 +41,7 @@ if ($_['audioplayer_sonos'] !== 'checked') {
         <i class="ioc-spinner ioc-spin"></i>
     </div>
 
-    <?php if ($_['audioplayer_sonos'] !== 'checked') print_unescaped($this->inc('part.sm2-bar')); ?>
+    <?php if ($_['audioplayer_sonos'] !== 'checked') print_unescaped($this->inc('part.audio')); ?>
     <?php if ($_['audioplayer_sonos'] === 'checked') print_unescaped($this->inc('part.sonos-bar')); ?>
 
     <div id="searchresults" class="hidden" data-appfilter="audioplayer"></div>

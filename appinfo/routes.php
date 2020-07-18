@@ -42,4 +42,8 @@ $application->registerRoutes($this, ['routes' => [
     ['name' => 'category#getTracks', 'url' => '/gettracks', 'verb' => 'GET'],
     ['name' => 'sidebar#getAudioInfo', 'url' => '/getaudioinfo', 'verb' => 'GET'],
     ['name' => 'sidebar#getPlaylists', 'url' => '/getplaylists', 'verb' => 'POST'],
-	]]);
+
+    // whatsnew
+    ['name' => 'whatsNew#get', 'url' => '/whatsnew', 'verb' => 'GET'],
+    ['name' => 'whatsNew#dismiss', 'url' => '/whatsnew', 'verb' => 'POST'],
+]]);

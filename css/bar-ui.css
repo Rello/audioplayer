@@ -2,6 +2,7 @@
     font-size: 16px;
 }
 
+
 .sm2-bar-ui {
     position: relative;
     display: block;
@@ -290,8 +291,8 @@
     min-width: 200px;
     max-width: 20em;
     /* a little more spacing */
-    padding-left: 0.75em;
-    padding-right: 0.75em;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .sm2-bar-ui .sm2-inline-element {
@@ -333,6 +334,7 @@
     line-height: 0.9em;
     min-width: 2em; /* if you have sounds > 10:00 in length, make this bigger. */
     vertical-align: middle;
+    padding-top:5px;
 }
 
 .sm2-bar-ui .sm2-playlist {
@@ -461,7 +463,13 @@
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
     -ms-interpolation-mode: bicubic;
+    opacity: 0.4;
+    cursor: pointer;
 }
+.sm2-inline-button:hover {
+    opacity: 1;
+}
+
 
 .play-pause,
 .play-pause:hover,
@@ -530,6 +538,11 @@
 
 .sm2-inline-button.repeat {
     background-image: none, url('../img/repeat.svg');
+    background-position: 50% 43%;
+    background-size: 54%;
+}
+.sm2-inline-button.repeat-single {
+    background-image: none, url('../img/repeat-single.svg');
     background-position: 50% 43%;
     background-size: 54%;
 }

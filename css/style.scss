@@ -841,7 +841,6 @@ i#scanAudiosFirst {
   line-height: 40px;
   font-weight: bold;
   text-align: center;
-  cursor: pointer;
   text-transform: capitalize;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -922,6 +921,31 @@ li.dropHover {
 #playlistsTabView .icon {
   padding: 0 0 0 16px;
   opacity: 0.4;
+}
+
+.whatsNewPopover {
+  bottom: 35px !important;
+  left: 15px !important;
+  width: 270px;
+  z-index: 700;
+}
+
+.whatsNewPopover p {
+  width: auto !important;
+}
+
+.whatsNewPopover .caption {
+  font-weight: bold;
+  cursor: auto !important;
+}
+
+.whatsNewPopover .icon-close {
+  position: absolute;
+  right: 0;
+}
+
+.whatsNewPopover::after {
+  content: none;
 }
 
 @media only screen and (max-width: 768px) {

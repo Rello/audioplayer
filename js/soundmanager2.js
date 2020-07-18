@@ -191,7 +191,12 @@ function SoundManager(smURL, smID) {
     'flac': {
       'type': ['audio/flac'],
       'required': false
-    }	  
+    },
+
+    'aif': {
+      'type': ['audio/x-aiff'],
+      'required': false
+    }
 
   };
 
