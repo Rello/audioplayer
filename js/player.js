@@ -26,6 +26,7 @@ OCA.Audioplayer.Player = {
     currentPlaylist: 0,
     currentTrackId: 0,
     repeatMode: null,
+    shuffleHistory: [],
     shuffle: false,
     trackStartPosition: 0,
 
@@ -38,6 +39,7 @@ OCA.Audioplayer.Player = {
         // new track to be played
         if (trackToPlay.src !== this.html5Audio.getAttribute('src')) {
             this.currentTrackId = trackToPlay.dataset.trackid;
+            OCA.Audioplayer.Core.CategorySelectors[2] = trackToPlay.dataset.trackid;
             this.html5Audio.setAttribute("src", trackToPlay.src);
             this.html5Audio.load();
             this.html5Audio.currentTime = this.trackStartPosition;
@@ -70,7 +72,22 @@ OCA.Audioplayer.Player = {
             // shuffle => get random track index
             var minimum = 0;
             var maximum = numberOfTracks;
-            OCA.Audioplayer.Player.currentTrackIndex = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+            var randomIndex = 0;
+            var foundPlayedTrack = false;
+
+            if (OCA.Audioplayer.Player.shuffleHistory.length === OCA.Audioplayer.Player.html5Audio.childElementCount) {
+                OCA.Audioplayer.Player.stop();
+                OCA.Audioplayer.Player.shuffleHistory = [];
+                return;
+            }
+
+            do {
+                randomIndex = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+                foundPlayedTrack = OCA.Audioplayer.Player.shuffleHistory.includes(randomIndex);
+            } while (foundPlayedTrack === true);
+
+            OCA.Audioplayer.Player.currentTrackIndex = randomIndex;
+            OCA.Audioplayer.Player.shuffleHistory.push(randomIndex);
             OCA.Audioplayer.Player.setTrack();
         } else if (OCA.Audioplayer.Player.currentTrackIndex === numberOfTracks) {
             // if end is reached, either stop or restart the list

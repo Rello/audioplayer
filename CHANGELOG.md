@@ -8,7 +8,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - Aif Aiff support [#475](https://github.com/rello/audioplayer/issues/475)
 - Absolute path and '../' in .m3u playlist files [#457](https://github.com/rello/audioplayer/issues/457)
 - Remember playback position between sessions [#288](https://github.com/rello/audioplayer/issues/288)
-- Repeat single track or playlist [#172](https://github.com/rello/audioplayer/issues/172)
+- Repeat single track (or playlist) [#172](https://github.com/rello/audioplayer/issues/172)
+- Shuffle: play tracks only once [#361](https://github.com/rello/audioplayer/issues/361)
 
 ### Changed
 - Migration from database.xml to /Migration
