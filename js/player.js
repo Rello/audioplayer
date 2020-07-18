@@ -42,7 +42,6 @@ OCA.Audioplayer.Player = {
             OCA.Audioplayer.Core.CategorySelectors[2] = trackToPlay.dataset.trackid;
             this.html5Audio.setAttribute("src", trackToPlay.src);
             this.html5Audio.load();
-            this.html5Audio.currentTime = this.trackStartPosition;
         } else if (!OCA.Audioplayer.Player.isPaused()) {
             OCA.Audioplayer.Player.stop();
             return;
@@ -214,6 +213,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     OCA.Audioplayer.Player.html5Audio.addEventListener('ended', OCA.Audioplayer.Player.next,true);
     OCA.Audioplayer.Player.html5Audio.addEventListener('timeupdate', OCA.Audioplayer.Player.initProgressBar, true);
+    OCA.Audioplayer.Player.html5Audio.addEventListener('canplay', function() {
+        if (OCA.Audioplayer.Player.html5Audio.currentTime !== parseInt(OCA.Audioplayer.Player.trackStartPosition) && parseInt(OCA.Audioplayer.Player.trackStartPosition) !== 0) {
+            OCA.Audioplayer.Player.html5Audio.pause();
+            OCA.Audioplayer.Player.html5Audio.currentTime = parseInt(OCA.Audioplayer.Player.trackStartPosition);
+            OCA.Audioplayer.Player.html5Audio.play();
+        }
+    });
 
     document.getElementById('progressBar').addEventListener("click", OCA.Audioplayer.Player.seek, true);
 
@@ -222,5 +228,4 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('playerPlay').addEventListener('click', OCA.Audioplayer.Player.play);
     document.getElementById('playerRepeat').addEventListener('click', OCA.Audioplayer.Player.setRepeat);
     document.getElementById('playerShuffle').addEventListener('click', OCA.Audioplayer.Player.setShuffle);
-
 });

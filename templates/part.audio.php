@@ -60,7 +60,6 @@
     height: 5px;
     cursor: pointer;
 ">
-                        canvas not supported
                     </canvas>
                 </div>
             </div>
@@ -68,9 +67,7 @@
 
         <div class="sm2-inline-element sm2-button-element sm2-volume" data-placement="left"
              title="<?php p($l->t('Volume')); ?>">
-            <div class="sm2-button-bd">
-                <span class="sm2-inline-button sm2-volume-control volume-shade"></span>
-                <a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
+            <div id="playerVolume" class="sm2-button-bd sm2-inline-button sm2-volume-control volume-shade">
             </div>
         </div>
 
