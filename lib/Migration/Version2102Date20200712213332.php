@@ -13,7 +13,8 @@ use OCP\IDBConnection;
 /**
  * Auto-generated migration step: Please modify to your needs!
  */
-class Version2102Date20200712213332 extends SimpleMigrationStep {
+class Version2102Date20200712213332 extends SimpleMigrationStep
+{
 
     /** @var IDBConnection */
     private $connection;
@@ -28,7 +29,8 @@ class Version2102Date20200712213332 extends SimpleMigrationStep {
      * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
      * @param array $options
      */
-    public function preSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {
+    public function preSchemaChange(IOutput $output, Closure $schemaClosure, array $options)
+    {
     }
 
     /**
@@ -37,7 +39,8 @@ class Version2102Date20200712213332 extends SimpleMigrationStep {
      * @param array $options
      * @return null|ISchemaWrapper
      */
-    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
+    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options)
+    {
         /** @var ISchemaWrapper $schema */
         $schema = $schemaClosure();
 
@@ -49,14 +52,15 @@ class Version2102Date20200712213332 extends SimpleMigrationStep {
      * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
      * @param array $options
      */
-    public function postSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {
+    public function postSchemaChange(IOutput $output, Closure $schemaClosure, array $options)
+    {
         $query = $this->connection->getQueryBuilder();
         $query->insert('audioplayer_whats_new')
             ->values([
-                'version' => $query->createNamedParameter('2.10.2'),
+                'version' => $query->createNamedParameter('2.11.0'),
                 'data' => $query->createNamedParameter('{"changelogURL":"https:\/\/github.com\/rello\/audioplayer\/blob\/master\/CHANGELOG.md","whatsNew":{
-"en":{"regular":["Hardware media buttons support","This WhatsNew popup"],"admin":["New Features apply to users"]},
-"de":{"regular":["Hardware Medien Tasten Unterstützung","Dieses WhatsNew Fenster"],"admin":["Nur User Features"]}
+"en":{"regular":["Hardware media buttons","Better repeat/shuffle","AIF mime type","Remember playback position"],"admin":["New Features apply to users"]},
+"de":{"regular":["Hardware Medien Tasten","Besserer Repeat/Shuffle","AIF mime type","Titelposition werden gespeichert"],"admin":["Nur User Features"]}
 }}'),
             ])
             ->execute();

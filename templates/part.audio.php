@@ -67,7 +67,7 @@
 
         <div class="sm2-inline-element sm2-button-element sm2-volume" data-placement="left"
              title="<?php p($l->t('Volume')); ?>">
-            <div id="playerVolume" class="sm2-button-bd sm2-inline-button sm2-volume-control volume-shade">
+            <div id="playerVolume" class="sm2-button-bd sm2-inline-button sm2-volume-controls">
             </div>
         </div>
 

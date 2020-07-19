@@ -12,12 +12,12 @@
 - Favorites, Sidebar & Search integration
 - Specifying media folder (with exclude functionality)
 - One Click Play in Files app
-- Hardware media keys (MediaService API)
+- Hardware media keys & Chrome/Android player
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
 - [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
-    <version>2.10.2</version>
+	<version>2.11.0</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>

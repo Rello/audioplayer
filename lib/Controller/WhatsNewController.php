@@ -13,7 +13,7 @@
 
 namespace OCA\audioplayer\Controller;
 
-use OCA\Audioplayer\WhatsNew\WhatsNewCheck;
+use OCA\audioplayer\WhatsNew\WhatsNewCheck;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
