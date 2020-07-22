@@ -848,6 +848,9 @@ i#scanAudiosFirst {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
+    border: 1px solid lightgray;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .draggingSong {
