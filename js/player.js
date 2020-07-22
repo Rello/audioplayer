@@ -188,11 +188,12 @@ OCA.Audioplayer.Player = {
         player.currentTime = player.duration * (evt.offsetX / progressbar.clientWidth);
     },
 
-    formatSecondsToTime: function (seconds) {
-        if (seconds <= 0) return "00:00";
-        var hours = Math.floor(seconds / 3600),
-            minutes = Math.floor(seconds / 60 % 60),
-            seconds = (seconds % 60),
+    formatSecondsToTime: function (value) {
+        if (value <= 0 || isNaN(value)) return "00:00";
+        value = Math.floor(value);
+        var hours = Math.floor(value / 3600),
+            minutes = Math.floor(value / 60 % 60),
+            seconds = (value % 60),
             time = (hours !== 0 ? String(hours).padStart(2, '0')+ ":" : "") + String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
         return time;
     },
