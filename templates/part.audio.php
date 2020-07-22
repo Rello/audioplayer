@@ -52,12 +52,12 @@
                 <div id="startTime" class="sm2-inline-time"></div>
                 <div id="endTime" class="sm2-inline-time"></div>
                 <div id="progressContainer" style="padding-top: 3px;">
-                    <canvas id="progressBar" height="5" style="
+                    <canvas id="progressBar" height="8" style="
                     width: 100%;
     background-color: var(--color-background-dark);
     border-radius: var(--border-radius);
     border: 0 none;
-    height: 5px;
+    height: 8px;
     cursor: pointer;
 ">
                     </canvas>
@@ -67,7 +67,7 @@
 
         <div class="sm2-inline-element sm2-button-element sm2-volume" data-placement="left"
              title="<?php p($l->t('Volume')); ?>">
-            <div id="playerVolume" class="sm2-button-bd sm2-inline-button sm2-volume-controls">
+            <div id="playerVolume" class="sm2-button-bd sm2-inline-button sm2-volume-control">
             </div>
         </div>
 
