@@ -154,8 +154,8 @@ OCA.Audioplayer.Player = {
     initProgressBar: function () {
         var player = OCA.Audioplayer.Player.html5Audio;
         var canvas = document.getElementById('progressBar');
-        document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.calculateCurrentValue(player.currentTime) + '&nbsp;/&nbsp;';
-        document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.calculateTotalValue(player.duration) + '&nbsp;&nbsp;';
+        document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime) + '&nbsp;/&nbsp;';
+        document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.duration) + '&nbsp;&nbsp;';
 
         var elapsedTime = Math.round(player.currentTime);
         if (canvas.getContext) {
@@ -188,24 +188,14 @@ OCA.Audioplayer.Player = {
         player.currentTime = player.duration * (evt.offsetX / progressbar.clientWidth);
     },
 
-    calculateTotalValue: function (length) {
-        var minutes = Math.floor(length / 60),
-            seconds_int = length - minutes * 60,
-            seconds_str = seconds_int.toString(),
-            seconds = seconds_str.substr(0, 2),
-            time = minutes + ':' + seconds
-
+    formatSecondsToTime: function (value) {
+        if (value <= 0 || isNaN(value)) return "0:00";
+        value = Math.floor(value);
+        var hours = Math.floor(value / 3600),
+            minutes = Math.floor(value / 60 % 60),
+            seconds = (value % 60),
+            time = (hours !== 0 ? String(hours) + ":" : "") + (hours !== 0 ? String(minutes).padStart(2, '0') : String(minutes)) + ":" + String(seconds).padStart(2, '0');
         return time;
-    },
-
-    calculateCurrentValue: function (currentTime) {
-        var current_hour = parseInt(currentTime / 3600) % 24,
-            current_minute = parseInt(currentTime / 60) % 60,
-            current_seconds_long = currentTime % 60,
-            current_seconds = current_seconds_long.toFixed(),
-            current_time = (current_minute < 10 ? "0" + current_minute : current_minute) + ":" + (current_seconds < 10 ? "0" + current_seconds : current_seconds);
-
-        return current_time;
     },
 }
 
