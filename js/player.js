@@ -189,12 +189,12 @@ OCA.Audioplayer.Player = {
     },
 
     formatSecondsToTime: function (value) {
-        if (value <= 0 || isNaN(value)) return "00:00";
+        if (value <= 0 || isNaN(value)) return "0:00";
         value = Math.floor(value);
         var hours = Math.floor(value / 3600),
             minutes = Math.floor(value / 60 % 60),
             seconds = (value % 60),
-            time = (hours !== 0 ? String(hours).padStart(2, '0')+ ":" : "") + String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+            time = (hours !== 0 ? String(hours) + ":" : "") + (hours !== 0 ? String(minutes).padStart(2, '0') : String(minutes)) + ":" + String(seconds).padStart(2, '0');
         return time;
     },
 }
