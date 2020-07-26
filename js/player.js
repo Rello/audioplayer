@@ -21,15 +21,19 @@ if (!OCA.Audioplayer) {
  * @namespace OCA.Audioplayer.Player
  */
 OCA.Audioplayer.Player = {
-    html5Audio: document.getElementById('html5Audio'),
-    currentTrackIndex: 0,
-    currentPlaylist: 0,
-    currentTrackId: 0,
-    repeatMode: null,
-    shuffleHistory: [],
-    shuffle: false,
-    trackStartPosition: 0,
+    html5Audio: document.getElementById('html5Audio'), // the <audio> element
+    currentTrackIndex: 0,   // the index of the <source> list to be played
+    currentPlaylist: 0,     // ID of the current playlist. Needed to recognize UI list changes
+    currentTrackId: 0,      // current playing track id. Needed to recognize the current playing track in the playlist
+    repeatMode: null,       // repeat mode null/single/list
+    shuffleHistory: [],     // array to store the track ids which were already played. Avoid multi playback in shuffle
+    shuffle: false,         // shuffle mode false/true
+    trackStartPosition: 0,  // start position of a track when the player is reopened and the playback should continue
 
+    /**
+     * set the track to the selected track index and check if it can be played at all
+     * play/pause when the same track is selected or get a new one
+     */
     setTrack: function () {
         var trackToPlay = this.html5Audio.children[this.currentTrackIndex];
         if (trackToPlay.dataset.canPlayMime === 'false') {
@@ -51,21 +55,35 @@ OCA.Audioplayer.Player = {
         OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
     },
 
+    /**
+     * set track and play it
+     */
     play: function () {
-            OCA.Audioplayer.Player.setTrack();
+        OCA.Audioplayer.Player.setTrack();
     },
 
+    /**
+     * stop the playback and update the UI with the paused track
+     */
     stop: function () {
         this.html5Audio.pause();
         document.getElementById('sm2-bar-ui').classList.remove('playing');
         OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
     },
 
+    /**
+     * pause => stop the playback
+     */
     pause: function () {
         this.stop();
     },
 
+    /**
+     * select the next track and play it
+     * it is dependent on shuffle mode, repeat mode and possible end of playlist
+     */
     next: function () {
+        OCA.Audioplayer.Player.trackStartPosition = 0;
         var numberOfTracks = OCA.Audioplayer.Player.html5Audio.childElementCount - 1; // index stats counting at 0
         if (OCA.Audioplayer.Player.shuffle === true) {
             // shuffle => get random track index
@@ -102,11 +120,18 @@ OCA.Audioplayer.Player = {
         }
     },
 
+    /**
+     * select the previous track and play it
+     */
     prev: function () {
+        OCA.Audioplayer.Player.trackStartPosition = 0;
         OCA.Audioplayer.Player.currentTrackIndex--;
         OCA.Audioplayer.Player.setTrack();
     },
 
+    /**
+     * toggle the repeat mode off->single->list->off
+     */
     setRepeat: function () {
         var repeatIcon = document.getElementById('playerRepeat');
         if (OCA.Audioplayer.Player.repeatMode === null) {
@@ -114,7 +139,7 @@ OCA.Audioplayer.Player = {
             OCA.Audioplayer.Player.repeatMode = 'single';
             repeatIcon.classList.remove('repeat');
             repeatIcon.classList.add('repeat-single');
-            repeatIcon.style.opacity = 1;
+            repeatIcon.style.opacity = '1';
         } else if (OCA.Audioplayer.Player.repeatMode === 'single') {
             OCA.Audioplayer.Player.html5Audio.loop = false;
             OCA.Audioplayer.Player.repeatMode = 'list';
@@ -126,20 +151,30 @@ OCA.Audioplayer.Player = {
         }
     },
 
+    /**
+     * toggle the shuffle mode true->false->true
+     */
     setShuffle: function () {
         if (OCA.Audioplayer.Player.shuffle === false) {
             OCA.Audioplayer.Player.shuffle = true;
-            document.getElementById('playerShuffle').style.opacity = 1;
+            document.getElementById('playerShuffle').style.opacity = '1';
         } else {
             OCA.Audioplayer.Player.shuffle = false;
             document.getElementById('playerShuffle').style.removeProperty('opacity');
         }
     },
 
+    /**
+     * check, if the audio element is currently paused
+     */
     isPaused: function () {
         return this.html5Audio.paused;
     },
 
+    /**
+     * take the playlist from the frontend and add then as source-elements to the audio tag
+     * @param playlistItems
+     */
     addTracksToSourceList: function (playlistItems) {
         OCA.Audioplayer.Player.html5Audio.innerHTML = '';
         for (var i = 0; i < playlistItems.length; ++i) {
@@ -147,10 +182,17 @@ OCA.Audioplayer.Player = {
             audioSource.src = playlistItems[i].firstChild.href;
             audioSource.dataset.trackid = playlistItems[i].dataset.trackid;
             audioSource.dataset.canPlayMime = playlistItems[i].dataset.canPlayMime;
+            audioSource.dataset.title = playlistItems[i].dataset.title;
+            audioSource.dataset.artist = playlistItems[i].dataset.artist;
+            audioSource.dataset.album = playlistItems[i].dataset.album;
+            audioSource.dataset.cover = playlistItems[i].dataset.cover;
             OCA.Audioplayer.Player.html5Audio.appendChild(audioSource);
         }
     },
 
+    /**
+     * Set the progress bar to the current playtime
+     */
     initProgressBar: function () {
         var player = OCA.Audioplayer.Player.html5Audio;
         var canvas = document.getElementById('progressBar');
@@ -170,8 +212,9 @@ OCA.Audioplayer.Player = {
         }
 
         // save position every 10 seconds
+        // depending on the refresh of the audio element, this an be triggerd 3-4 times every 10 seconds
         var positionCalc = Math.round(player.currentTime) / 10;
-        if (Math.round(positionCalc) === positionCalc) {
+        if (Math.round(positionCalc) === positionCalc && positionCalc !== 0) {
             OCA.Audioplayer.Backend.setUserValue('category',
                 OCA.Audioplayer.Core.CategorySelectors[0]
                 + '-' + OCA.Audioplayer.Core.CategorySelectors[1]
@@ -182,29 +225,44 @@ OCA.Audioplayer.Player = {
 
     },
 
+    /**
+     * set the tracktime when the progressbar is moved
+     * @param evt
+     */
     seek: function (evt) {
         var progressbar = document.getElementById('progressBar');
         var player = OCA.Audioplayer.Player.html5Audio;
         player.currentTime = player.duration * (evt.offsetX / progressbar.clientWidth);
     },
 
+    /**
+     * calculate a time in the format of 00:00 for the progress
+     * @param value
+     * @return string
+     */
     formatSecondsToTime: function (value) {
         if (value <= 0 || isNaN(value)) return "0:00";
         value = Math.floor(value);
         var hours = Math.floor(value / 3600),
             minutes = Math.floor(value / 60 % 60),
-            seconds = (value % 60),
-            time = (hours !== 0 ? String(hours) + ":" : "") + (hours !== 0 ? String(minutes).padStart(2, '0') : String(minutes)) + ":" + String(seconds).padStart(2, '0');
-        return time;
+            seconds = (value % 60);
+        return (hours !== 0 ? String(hours) + ":" : "") + (hours !== 0 ? String(minutes).padStart(2, '0') : String(minutes)) + ":" + String(seconds).padStart(2, '0');
+    },
+
+    /**
+     * get the currently playing track and provide its data (dataset) to e.g. playbar or sidebar
+     * @return Element
+     */
+    getCurrentPlayingTrackInfo: function () {
+        return this.html5Audio.children[this.currentTrackIndex];
     },
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-
-    OCA.Audioplayer.Player.html5Audio.addEventListener('ended', OCA.Audioplayer.Player.next,true);
+    OCA.Audioplayer.Player.html5Audio.addEventListener('ended', OCA.Audioplayer.Player.next, true);
     OCA.Audioplayer.Player.html5Audio.addEventListener('timeupdate', OCA.Audioplayer.Player.initProgressBar, true);
-    OCA.Audioplayer.Player.html5Audio.addEventListener('canplay', function() {
-        if (OCA.Audioplayer.Player.html5Audio.currentTime !== parseInt(OCA.Audioplayer.Player.trackStartPosition) && parseInt(OCA.Audioplayer.Player.trackStartPosition) !== 0) {
+    OCA.Audioplayer.Player.html5Audio.addEventListener('canplay', function () {
+        if (parseInt(OCA.Audioplayer.Player.trackStartPosition) !== 0 && OCA.Audioplayer.Player.html5Audio.currentTime !== parseInt(OCA.Audioplayer.Player.trackStartPosition)) {
             OCA.Audioplayer.Player.html5Audio.pause();
             OCA.Audioplayer.Player.html5Audio.currentTime = parseInt(OCA.Audioplayer.Player.trackStartPosition);
             OCA.Audioplayer.Player.html5Audio.play();
@@ -212,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('progressBar').addEventListener("click", OCA.Audioplayer.Player.seek, true);
-
     document.getElementById('playerPrev').addEventListener('click', OCA.Audioplayer.Player.prev);
     document.getElementById('playerNext').addEventListener('click', OCA.Audioplayer.Player.next);
     document.getElementById('playerPlay').addEventListener('click', OCA.Audioplayer.Player.play);
