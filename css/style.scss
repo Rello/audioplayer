@@ -829,6 +829,11 @@ i#scanAudiosFirst {
   font-weight: bold;
 }
 
+.volume-slider {
+    margin: 0;
+    top: 3px !important;
+}
+
 .sm2-playlist-bd li.selected a {
   background: #000;
 }

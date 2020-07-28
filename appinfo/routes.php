@@ -31,13 +31,15 @@ $application->registerRoutes($this, ['routes' => [
     ['name' => 'db#resetMediaLibrary', 'url' => '/resetmedialibrary', 'verb' => 'GET'],
 	['name' => 'music#getPublicAudioInfo', 'url' => '/getpublicaudioinfo', 'verb' => 'GET'],
     ['name' => 'cover#getCover', 'url' => '/getcover/{album}', 'verb' => 'GET'],
-	['name' => 'setting#setValue', 'url' => '/setvalue', 'verb' => 'GET'],
+
+    ['name' => 'setting#setValue', 'url' => '/setvalue', 'verb' => 'GET'],
 	['name' => 'setting#getValue', 'url' => '/getvalue', 'verb' => 'GET'],
 	['name' => 'setting#userPath', 'url' => '/userpath', 'verb' => 'POST'],
     ['name' => 'setting#setFavorite', 'url' => '/setfavorite', 'verb' => 'GET'],
     ['name' => 'setting#setStatistics', 'url' => '/setstatistics', 'verb' => 'GET'],
     ['name' => 'setting#admin', 'url' => '/admin', 'verb' => 'POST'],
-	['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
+
+    ['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
     ['name' => 'category#getCategoryItemCovers', 'url' => '/getcategoryitemcovers', 'verb' => 'GET'],
     ['name' => 'category#getTracks', 'url' => '/gettracks', 'verb' => 'GET'],
     ['name' => 'sidebar#getAudioInfo', 'url' => '/getaudioinfo', 'verb' => 'GET'],

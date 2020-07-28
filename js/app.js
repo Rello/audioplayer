@@ -10,7 +10,7 @@
  * @copyright 2015 Sebastian Doell
  */
 
-/* global OCA, OCP, OC, t, OC.generateUrl. _ */
+/* global OCA, OCP, OC, t, generateUrl, _, MediaMetadata, Sonos, playSonos, requestToken */
 'use strict';
 
 if (!OCA.Audioplayer) {
@@ -58,7 +58,7 @@ OCA.Audioplayer.Core = {
     initKeyListener: function () {
         document.body.addEventListener('keydown', function (e) {
             if (e.target) {
-                var nodeName = e.target.nodeName.toUpperCase();
+                var nodeName = e.target['nodeName'].toUpperCase();
                 //don't activate shortcuts when the user is in an input, textarea or select element
                 if (nodeName === 'INPUT' || nodeName === 'TEXTAREA' || nodeName === 'SELECT') {
                     return;
@@ -69,36 +69,36 @@ OCA.Audioplayer.Core = {
                 var currentVolume;
                 var newVolume;
                 switch (e.key) {
-                    case ' ':
-                        if (document.getElementById('sm2-bar-ui').classList.contains('playing')) {
-                            OCA.Audioplayer.Player.pause();
-                        } else {
-                            OCA.Audioplayer.Player.play();
-                        }
-                        e.preventDefault();
-                        break;
-                    case 'ArrowRight':
-                        OCA.Audioplayer.Player.next();
-                        break;
-                    case 'ArrowLeft':
-                        OCA.Audioplayer.Player.prev();
-                        break;
-                    case 'ArrowUp':
-                        currentVolume = OCA.Audioplayer.Player.getVolume();
-                        if (currentVolume < 100) {
-                            newVolume = Math.min(currentVolume + 10, 100);
-                            OCA.Audioplayer.Player.setVolume(newVolume);
-                        }
-                        e.preventDefault();
-                        break;
-                    case 'ArrowDown':
-                        currentVolume = OCA.Audioplayer.Player.getVolume();
-                        if (currentVolume > 0) {
-                            newVolume = Math.max(currentVolume - 10, 0);
-                            OCA.Audioplayer.Player.setVolume(newVolume);
-                        }
-                        e.preventDefault();
-                        break;
+                case ' ':
+                    if (document.getElementById('sm2-bar-ui').classList.contains('playing')) {
+                        OCA.Audioplayer.Player.pause();
+                    } else {
+                        OCA.Audioplayer.Player.play();
+                    }
+                    e.preventDefault();
+                    break;
+                case 'ArrowRight':
+                    OCA.Audioplayer.Player.next();
+                    break;
+                case 'ArrowLeft':
+                    OCA.Audioplayer.Player.prev();
+                    break;
+                case 'ArrowUp':
+                    currentVolume = OCA.Audioplayer.Player.getVolume();
+                    if (currentVolume < 1) {
+                        newVolume = Math.min(currentVolume + 0.1, 1);
+                        OCA.Audioplayer.Player.setVolume(newVolume);
+                    }
+                    e.preventDefault();
+                    break;
+                case 'ArrowDown':
+                    currentVolume = OCA.Audioplayer.Player.getVolume();
+                    if (currentVolume > 0) {
+                        newVolume = Math.max(currentVolume - 0.1, 0);
+                        OCA.Audioplayer.Player.setVolume(newVolume);
+                    }
+                    e.preventDefault();
+                    break;
                 }
             }
         });
@@ -266,7 +266,9 @@ OCA.Audioplayer.Cover = {
         var AlbumName = activeAlbum.dataset.name;
         var iArrowLeft = 72;
 
-        if (document.querySelector('.songcontainer')) document.querySelector('.songcontainer').remove();
+        if (document.querySelector('.songcontainer')) {
+            document.querySelector('.songcontainer').remove();
+        }
         var divSongContainer = document.createElement('div');
         divSongContainer.classList.add('songcontainer');
         var divArrow = document.createElement('i');
@@ -280,7 +282,7 @@ OCA.Audioplayer.Cover = {
         var h2SongHeader = document.createElement('h2');
         h2SongHeader.innerText = AlbumName;
 
-        var myCover = window.getComputedStyle(document.querySelector('.album.is-active .albumcover'), null).getPropertyValue("background-image");
+        var myCover = window.getComputedStyle(document.querySelector('.album.is-active .albumcover'), null).getPropertyValue('background-image');
         var addCss, addDescr, divSongList;
 
         if (myCover === 'none') {
@@ -449,9 +451,15 @@ OCA.Audioplayer.Category = {
         document.getElementById('playlist-container').style.display = 'block';
         document.getElementById('empty-container').style.display = 'none';
         document.getElementById('loading').style.display = 'block';
-        if (document.querySelector('.coverrow')) document.querySelector('.coverrow').remove();
-        if (document.querySelector('.songcontainer')) document.querySelector('.songcontainer').remove();
-        if (document.getElementById('individual-playlist')) document.getElementById('individual-playlist').remove();
+        if (document.querySelector('.coverrow')) {
+            document.querySelector('.coverrow').remove();
+        }
+        if (document.querySelector('.songcontainer')) {
+            document.querySelector('.songcontainer').remove();
+        }
+        if (document.getElementById('individual-playlist')) {
+            document.getElementById('individual-playlist').remove();
+        }
         document.getElementById('individual-playlist-info').style.display = 'block';
         document.getElementById('individual-playlist-header').style.display = 'block';
 
@@ -493,7 +501,7 @@ OCA.Audioplayer.Category = {
                     OCA.Audioplayer.UI.trackClickHandler(callback);
 
                     if (albumDirectPlay === true) {
-                        document.querySelector('.albumwrapper').getElementsByClassName('title')[0].click()
+                        document.querySelector('.albumwrapper').getElementsByClassName('title')[0].click();
                         return;
                     }
                     OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
@@ -510,7 +518,7 @@ OCA.Audioplayer.Category = {
                 }
             }
         });
-        var category_title = document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').firstChild.title : false;
+        var category_title = document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').firstChild['title'] : false;
         if (category !== 'Title') {
             document.getElementById('individual-playlist-info').innerHTML = t('audioplayer', 'Selected ' + category) + ': ' + category_title;
         } else {
@@ -703,7 +711,9 @@ OCA.Audioplayer.UI = {
                 ++k;
             }
             // when a new title is played, the old playtime will be reset
-            if (parseInt(OCA.Audioplayer.Core.CategorySelectors[2]) !== parseInt(activeLi.dataset.trackid)) OCA.Audioplayer.Player.trackStartPosition = 0;
+            if (parseInt(OCA.Audioplayer.Core.CategorySelectors[2]) !== parseInt(activeLi.dataset.trackid)) {
+                OCA.Audioplayer.Player.trackStartPosition = 0;
+            }
             OCA.Audioplayer.Player.currentTrackIndex = k;
             OCA.Audioplayer.Player.play();
             OCA.Audioplayer.Backend.setStatistics();
@@ -714,7 +724,7 @@ OCA.Audioplayer.UI = {
         if (document.getElementById('playlist-container').dataset.playlist === OCA.Audioplayer.Player.currentPlaylist) {
 
             if (document.getElementsByClassName('isActive').length === 1) {
-                var currentActive = document.getElementsByClassName('isActive')[0];
+                // var currentActive = document.getElementsByClassName('isActive')[0];
                 // does not work yet, when a song is preselected bot not isActive
                 //currentActive.querySelector('i.ioc').style.display = 'none';
                 //currentActive.querySelector('i.icon').style.display = 'block';
@@ -722,11 +732,11 @@ OCA.Audioplayer.UI = {
             }
 
             // reset all playing icons
-            var iocIcon = document.querySelectorAll('.albumwrapper li i.ioc')
+            var iocIcon = document.querySelectorAll('.albumwrapper li i.ioc');
             for (var i = 0; i < iocIcon.length; ++i) {
                 iocIcon[i].style.display = 'none';
             }
-            var iconIcon = document.querySelectorAll('.albumwrapper li i.icon')
+            var iconIcon = document.querySelectorAll('.albumwrapper li i.icon');
             for (var j = 0; j < iconIcon.length; ++j) {
                 iconIcon[j].style.display = 'block';
             }
@@ -753,7 +763,7 @@ OCA.Audioplayer.UI = {
             var addCss;
             var addDescr;
             var coverID = currentTrack.dataset.cover;
-            if (coverID === "null") {
+            if (coverID === 'null') {
                 addCss = 'background-color: #D3D3D3;color: #333333;';
                 addDescr = currentTrack.dataset.title[0];
                 if ('mediaSession' in navigator) {
@@ -897,79 +907,79 @@ OCA.Audioplayer.UI = {
 
     whatsNewSuccess: function (data, statusText, xhr) {
         if (xhr.status !== 200) {
-            return
+            return;
         }
 
-        let item, menuItem, text, icon
+        let item, menuItem, text, icon;
 
-        const div = document.createElement('div')
-        div.classList.add('popovermenu', 'open', 'whatsNewPopover', 'menu-left')
+        const div = document.createElement('div');
+        div.classList.add('popovermenu', 'open', 'whatsNewPopover', 'menu-left');
 
-        const list = document.createElement('ul')
+        const list = document.createElement('ul');
 
         // header
-        item = document.createElement('li')
-        menuItem = document.createElement('span')
-        menuItem.className = 'menuitem'
+        item = document.createElement('li');
+        menuItem = document.createElement('span');
+        menuItem.className = 'menuitem';
 
-        text = document.createElement('span')
-        text.innerText = t('core', 'New in') + ' ' + data['product']
-        text.className = 'caption'
-        menuItem.appendChild(text)
+        text = document.createElement('span');
+        text.innerText = t('core', 'New in') + ' ' + data['product'];
+        text.className = 'caption';
+        menuItem.appendChild(text);
 
-        icon = document.createElement('span')
-        icon.className = 'icon-close'
+        icon = document.createElement('span');
+        icon.className = 'icon-close';
         icon.onclick = function () {
-            OCA.Audioplayer.Backend.whatsnewDismiss(data['version'])
-        }
-        menuItem.appendChild(icon)
+            OCA.Audioplayer.Backend.whatsnewDismiss(data['version']);
+        };
+        menuItem.appendChild(icon);
 
-        item.appendChild(menuItem)
-        list.appendChild(item)
+        item.appendChild(menuItem);
+        list.appendChild(item);
 
         // Highlights
         for (let i in data['whatsNew']['regular']) {
-            const whatsNewTextItem = data['whatsNew']['regular'][i]
-            item = document.createElement('li')
+            const whatsNewTextItem = data['whatsNew']['regular'][i];
+            item = document.createElement('li');
 
-            menuItem = document.createElement('span')
-            menuItem.className = 'menuitem'
+            menuItem = document.createElement('span');
+            menuItem.className = 'menuitem';
 
-            icon = document.createElement('span')
-            icon.className = 'icon-checkmark'
-            menuItem.appendChild(icon)
+            icon = document.createElement('span');
+            icon.className = 'icon-checkmark';
+            menuItem.appendChild(icon);
 
-            text = document.createElement('p')
-            text.innerHTML = _.escape(whatsNewTextItem)
-            menuItem.appendChild(text)
+            text = document.createElement('p');
+            text.innerHTML = _.escape(whatsNewTextItem);
+            menuItem.appendChild(text);
 
-            item.appendChild(menuItem)
-            list.appendChild(item)
+            item.appendChild(menuItem);
+            list.appendChild(item);
         }
 
         // Changelog URL
         if (!_.isUndefined(data['changelogURL'])) {
-            item = document.createElement('li')
+            item = document.createElement('li');
 
-            menuItem = document.createElement('a')
-            menuItem.href = data['changelogURL']
-            menuItem.rel = 'noreferrer noopener'
-            menuItem.target = '_blank'
+            menuItem = document.createElement('a');
+            menuItem.href = data['changelogURL'];
+            menuItem.rel = 'noreferrer noopener';
+            menuItem.target = '_blank';
 
-            icon = document.createElement('span')
-            icon.className = 'icon-link'
-            menuItem.appendChild(icon)
+            icon = document.createElement('span');
+            icon.className = 'icon-link';
+            menuItem.appendChild(icon);
 
-            text = document.createElement('span')
-            text.innerText = t('core', 'View changelog')
-            menuItem.appendChild(text)
+            text = document.createElement('span');
+            text.innerText = t('core', 'View changelog');
+            menuItem.appendChild(text);
 
-            item.appendChild(menuItem)
-            list.appendChild(item)
+            item.appendChild(menuItem);
+            list.appendChild(item);
         }
 
-        div.appendChild(list)
-        document.body.appendChild(div)
+        div.appendChild(list);
+        document.body.appendChild(div);
     }
 
 };
@@ -982,7 +992,7 @@ OCA.Audioplayer.Backend = {
         var params = 'trackid=' + trackid + '&isFavorite=' + isFavorite;
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', OC.generateUrl('apps/audioplayer/setfavorite' + "?" + params, true));
+        xhr.open('GET', OC.generateUrl('apps/audioplayer/setfavorite' + '?' + params, true));
         xhr.setRequestHeader('requesttoken', OC.requestToken);
         xhr.setRequestHeader('OCS-APIREQUEST', 'true');
         xhr.send();
@@ -990,9 +1000,8 @@ OCA.Audioplayer.Backend = {
 
     getUserValue: function (user_type, callback) {
         var params = 'type=' + user_type;
-
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', OC.generateUrl('apps/audioplayer/getvalue' + "?" + params, true));
+        xhr.open('GET', OC.generateUrl('apps/audioplayer/getvalue' + '?' + params, true));
         xhr.setRequestHeader('requesttoken', OC.requestToken);
         xhr.setRequestHeader('OCS-APIREQUEST', 'true');
 
@@ -1007,7 +1016,7 @@ OCA.Audioplayer.Backend = {
                     callback(OCA.Audioplayer.Core.CategorySelectors);
                 }
             }
-        }
+        };
         xhr.send();
     },
 
@@ -1049,36 +1058,38 @@ OCA.Audioplayer.Backend = {
         xhr.open('POST', OC.generateUrl('apps/audioplayer/checknewtracks'));
         xhr.setRequestHeader('requesttoken', OC.requestToken);
         xhr.setRequestHeader('OCS-APIREQUEST', 'true');
-
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.response === 'true') {
                     OC.Notification.showTemporary(t('audioplayer', 'New or updated audio files available'));
                 }
             }
-        }
+        };
         xhr.send();
     },
 
     whatsnew: function (options) {
-        options = options || {}
+        options = options || {};
         $.ajax({
             type: 'GET',
             url: OC.generateUrl('apps/audioplayer/whatsnew'),
             data: {'format': 'json'},
             success: options.success || function (data, statusText, xhr) {
-                OCA.Audioplayer.UI.whatsNewSuccess(data, statusText, xhr)
+                OCA.Audioplayer.UI.whatsNewSuccess(data, statusText, xhr);
             },
         });
     },
 
     whatsnewDismiss: function dismiss(version) {
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/whatsnew'),
-            data: {version: encodeURIComponent(version)}
-        })
-        $('.whatsNewPopover').remove()
+        var data = {version: encodeURIComponent(version)};
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', OC.generateUrl('apps/audioplayer/whatsnew'));
+        xhr.setRequestHeader('requesttoken', OC.requestToken);
+        xhr.setRequestHeader('OCS-APIREQUEST', 'true');
+        xhr.send(JSON.stringify(data));
+
+        var elem = document.querySelector('.whatsNewPopover');
+        elem.parentNode.removeChild(elem);
     }
 };
 
@@ -1183,7 +1194,7 @@ OCA.Audioplayer.Playlists = {
                     if (jsondata.status === 'success') {
                         eventTarget.removeClass('sortActive');
                         $('#individual-playlist').sortable('destroy');
-                        notification.text(jsondata.msg);
+                        notification.text(jsondata['msg']);
                         notification.slideDown();
                         window.setTimeout(function () {
                             $('#notification').slideUp();

@@ -49,9 +49,9 @@
         <div class="sm2-inline-element sm2-inline-status">
             <div id="nowPlayingText" class="sm2-playlist"></div>
             <div style="display: table-row;">
-                <div id="startTime" class="sm2-inline-time"></div>
-                <div id="endTime" class="sm2-inline-time"></div>
-                <div id="progressContainer" style="padding-top: 3px;">
+                <div id="startTime" class="sm2-inline-time">0:00 /</div>
+                <div id="endTime" class="sm2-inline-time">0:00</div>
+                <div id="progressContainer" style="padding-top: 3px; padding-right: 15px;">
                     <canvas id="progressBar" height="8" style="
                     width: 100%;
     background-color: var(--color-background-dark);
@@ -67,11 +67,11 @@
 
         <div class="sm2-inline-element sm2-button-element sm2-volume" data-placement="left"
              title="<?php p($l->t('Volume')); ?>">
-            <div id="playerVolume" class="sm2-button-bd sm2-inline-button sm2-volume-control">
-            </div>
+            <input id="playerVolume" type="range" class="sm2-button-bd sm2-inline-button volume-slider" min="0" max="1"
+                   step="0.1" value="1">
         </div>
 
-        <div class="sm2-inline-element sm2-button-element sm2-repeat" data-placement="left"
+        <div class="sm2-inline-element sm2-button-element sm2-repeat" style="left: 7px;" data-placement="left"
              title="<?php p($l->t('Repeat title / list')); ?>">
             <div id="playerRepeat" class="sm2-button-bd sm2-inline-button repeat">
             </div>

@@ -44,7 +44,7 @@ OCA.Audioplayer.Player = {
         if (trackToPlay.src !== this.html5Audio.getAttribute('src')) {
             this.currentTrackId = trackToPlay.dataset.trackid;
             OCA.Audioplayer.Core.CategorySelectors[2] = trackToPlay.dataset.trackid;
-            this.html5Audio.setAttribute("src", trackToPlay.src);
+            this.html5Audio.setAttribute('src', trackToPlay.src);
             this.html5Audio.load();
         } else if (!OCA.Audioplayer.Player.isPaused()) {
             OCA.Audioplayer.Player.stop();
@@ -165,6 +165,20 @@ OCA.Audioplayer.Player = {
     },
 
     /**
+     * set the playback volume
+     */
+    setVolume: function () {
+        OCA.Audioplayer.Player.html5Audio.volume = document.getElementById('playerVolume').value;
+    },
+
+    /**
+     * get the playback volume
+     */
+    getVolume: function () {
+        return OCA.Audioplayer.Player.html5Audio.volume;
+    },
+
+    /**
      * check, if the audio element is currently paused
      */
     isPaused: function () {
@@ -201,9 +215,9 @@ OCA.Audioplayer.Player = {
 
         var elapsedTime = Math.round(player.currentTime);
         if (canvas.getContext) {
-            var ctx = canvas.getContext("2d");
+            var ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-            ctx.fillStyle = "rgb(0,130,201)";
+            ctx.fillStyle = 'rgb(0,130,201)';
             var progressValue = (elapsedTime / player.duration);
             var fWidth = progressValue * canvas.clientWidth;
             if (fWidth > 0) {
@@ -241,12 +255,14 @@ OCA.Audioplayer.Player = {
      * @return string
      */
     formatSecondsToTime: function (value) {
-        if (value <= 0 || isNaN(value)) return "0:00";
+        if (value <= 0 || isNaN(value)) {
+            return '0:00';
+        }
         value = Math.floor(value);
         var hours = Math.floor(value / 3600),
             minutes = Math.floor(value / 60 % 60),
             seconds = (value % 60);
-        return (hours !== 0 ? String(hours) + ":" : "") + (hours !== 0 ? String(minutes).padStart(2, '0') : String(minutes)) + ":" + String(seconds).padStart(2, '0');
+        return (hours !== 0 ? String(hours) + ':' : '') + (hours !== 0 ? String(minutes).padStart(2, '0') : String(minutes)) + ':' + String(seconds).padStart(2, '0');
     },
 
     /**
@@ -256,7 +272,7 @@ OCA.Audioplayer.Player = {
     getCurrentPlayingTrackInfo: function () {
         return this.html5Audio.children[this.currentTrackIndex];
     },
-}
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     OCA.Audioplayer.Player.html5Audio.addEventListener('ended', OCA.Audioplayer.Player.next, true);
@@ -269,10 +285,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('progressBar').addEventListener("click", OCA.Audioplayer.Player.seek, true);
+    document.getElementById('progressBar').addEventListener('click', OCA.Audioplayer.Player.seek, true);
     document.getElementById('playerPrev').addEventListener('click', OCA.Audioplayer.Player.prev);
     document.getElementById('playerNext').addEventListener('click', OCA.Audioplayer.Player.next);
     document.getElementById('playerPlay').addEventListener('click', OCA.Audioplayer.Player.play);
     document.getElementById('playerRepeat').addEventListener('click', OCA.Audioplayer.Player.setRepeat);
     document.getElementById('playerShuffle').addEventListener('click', OCA.Audioplayer.Player.setShuffle);
+    document.getElementById('playerVolume').addEventListener('input', OCA.Audioplayer.Player.setVolume);
 });

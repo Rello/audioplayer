@@ -332,9 +332,9 @@
     width: 1%;
     font-size: 75%;
     line-height: 0.9em;
-    min-width: 2em; /* if you have sounds > 10:00 in length, make this bigger. */
+    min-width: 30px;
     vertical-align: middle;
-    padding-top:5px;
+    padding-top: 5px;
 }
 
 .sm2-bar-ui .sm2-playlist {
