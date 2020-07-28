@@ -11,8 +11,6 @@ build:
 filter:
     excluded_paths:
         - '3rdparty/*'
-        - 'js/soundmanager2*'
-        - 'js/bar*'
 
 imports:
     - javascript

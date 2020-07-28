@@ -23,7 +23,6 @@ $app->registerUserHooks();
 \OC::$server->getEventDispatcher()->addListener(
     'OCA\Files::loadAdditionalScripts',
     function () {
-        Util::addScript('audioplayer', 'soundmanager2');
         Util::addScript('audioplayer', 'viewer/viewer');
         Util::addScript('audioplayer', 'viewer/search');
         Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
@@ -33,7 +32,6 @@ $app->registerUserHooks();
 \OC::$server->getEventDispatcher()->addListener(
     'OCA\Files_Sharing::loadAdditionalScripts',
     function () {
-        Util::addScript('audioplayer', 'soundmanager2');
         Util::addScript('audioplayer', 'viewer/viewer');
         Util::addScript('audioplayer', 'sharing/sharing');
         Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
