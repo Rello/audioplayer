@@ -74,8 +74,10 @@ class SidebarController extends Controller
 
         $fileId = $this->DBController->getFileId($trackid);
         $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
-        $file = array_shift($nodes);
-        $row['Path'] = $file->getPath();
+        $node = $nodes[0];
+        $path = $this->rootFolder->getUserFolder($this->userId)->getRelativePath($node->getPath());
+        $path = \join('/', \array_map('rawurlencode', \explode('/', $path)));
+        $row['Path'] = $path;
 
         if ($row['Title']) {
             $result = [

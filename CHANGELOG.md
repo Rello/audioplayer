@@ -10,6 +10,9 @@ All notable changes to the Audio Player project will be documented in this file.
 - Fix player ui timer and change progressbar height [#483](https://github.com/rello/audioplayer/pull/483) @[r4sas](https://github.com/r4sas)
 - Rounded border for album picture in bar [#482](https://github.com/rello/audioplayer/pull/482) @[r4sas](https://github.com/r4sas)
 
+### Added
+- Download track via path in sidebar [#453](https://github.com/rello/audioplayer/issues/453)
+
 ## 2.11.0 - 2020-07-19
 ### Added
 - WhatsNew popup [#480](https://github.com/rello/audioplayer/issues/480)

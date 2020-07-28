@@ -162,6 +162,7 @@ OCA.Audioplayer.Sidebar = {
                     var m;
                     var tablekey;
                     var tablevalue;
+                    var tablevalueDownload;
 
                     var audioinfo = jsondata.data;
                     for (m in audioinfo) {
@@ -169,6 +170,11 @@ OCA.Audioplayer.Sidebar = {
                         tablekey = $('<div>').addClass('key').text(t('audioplayer', m));
                         tablevalue = $('<div>').addClass('value')
                             .text(audioinfo[m]);
+                        if (m === 'Path') {
+                            tablevalue.text('');
+                            tablevalueDownload = $('<a>').attr('href', OC.linkToRemote('webdav' + audioinfo[m])).text(audioinfo[m]);
+                            tablevalue.append(tablevalueDownload);
+                        }
                         tablerow.append(tablekey).append(tablevalue);
 
                         if (m === 'fav' && audioinfo[m] === 't') {
@@ -269,4 +275,4 @@ OCA.Audioplayer.Sidebar = {
         var bName = b.tabindex;
         return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
     },
-}
+};
