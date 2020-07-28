@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.11.1 - 2020-07-29
+### Fixed
+- Track name/artist is not correctly recognized in EXTINF [#485](https://github.com/rello/audioplayer/issues/485)
+- Volume controll working again
+- theming issues [#486](https://github.com/rello/audioplayer/issues/486)
+- Array offset error when deleting files [#484](https://github.com/rello/audioplayer/issues/484)
+- Fix player ui timer and change progressbar height [#483](https://github.com/rello/audioplayer/pull/483) @[r4sas](https://github.com/r4sas)
+- Rounded border for album picture in bar [#482](https://github.com/rello/audioplayer/pull/482) @[r4sas](https://github.com/r4sas)
+
 ## 2.11.0 - 2020-07-19
 ### Added
 - WhatsNew popup [#480](https://github.com/rello/audioplayer/issues/480)

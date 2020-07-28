@@ -210,8 +210,13 @@ OCA.Audioplayer.Player = {
     initProgressBar: function () {
         var player = OCA.Audioplayer.Player.html5Audio;
         var canvas = document.getElementById('progressBar');
-        document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime) + '&nbsp;/&nbsp;';
-        document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.duration) + '&nbsp;&nbsp;';
+        if (player.currentTime !== 0) {
+            document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime) + '&nbsp;/&nbsp;';
+            document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.duration) + '&nbsp;&nbsp;';
+        } else {
+            document.getElementById('startTime').innerHTML = t('audioplayer', 'loading');
+            document.getElementById('endTime').innerHTML = '';
+        }
 
         var elapsedTime = Math.round(player.currentTime);
         if (canvas.getContext) {

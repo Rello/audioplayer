@@ -10,7 +10,12 @@ module.exports = {
         'OC': 'readonly',
         'OCA': 'readonly',
         'OCdialogs': 'readonly', // from /js/core/merged-template-prepend.js
-        't': 'readonly'
+        't': 'readonly',
+        'MediaMetadata': 'readonly',
+        'generateUrl': 'readonly',
+        'Sonos': 'readonly',
+        'requestToken': 'readonly',
+        'playSonos': 'readonly'
     },
     'parserOptions': {
         'ecmaFeatures': 'impliedStrict',
