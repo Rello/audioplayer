@@ -458,10 +458,16 @@ class CategoryController extends Controller
             array_pop($playlistFilePath);
 
             foreach (preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line) {
+                $title = null;
+                $artist = null;
                 if (empty($line) || $line === '#EXTM3U') continue;
                 if (substr($line, 0, 8) === '#EXTINF:') {
                     $extinf = explode(',', substr($line, 8));
+                    $extNoDuration = $extinf[1];
+                    $extinf = explode(' - ', $extNoDuration);
                     $title = $extinf[1];
+                    $artist = $extinf[0];
+                    $line = $extinf[2];
                 }
                 preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
 
@@ -477,7 +483,7 @@ class CategoryController extends Controller
                     $row['cid'] = '';
                     $row['lin'] = $matches[0][0];
                     if ($title) $row['cl1'] = $title;
-                    $title = null;
+                    if ($artist) $row['cl2'] = $artist;
                     $tracks[] = $row;
                 } elseif (preg_match('/^[^"<>|:]*$/',$line)) {
 
@@ -515,8 +521,8 @@ class CategoryController extends Controller
                         $row['lin'] = $track['id'];
                         $row['fav'] = $track['fav'];
                         if ($title) $row['cl1'] = $title;
+                        if ($artist) $row['cl2'] = $artist;
                         $tracks[] = $row;
-                        $title = null;
                     } catch (NotFoundException $e) {
                         $this->logger->debug('Path is not a valid file: '.$path);
                         // File is not known in the filecache and will be ignored;
