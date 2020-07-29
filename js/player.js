@@ -214,8 +214,8 @@ OCA.Audioplayer.Player = {
             document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime) + '&nbsp;/&nbsp;';
             document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.duration) + '&nbsp;&nbsp;';
         } else {
-            document.getElementById('startTime').innerHTML = t('audioplayer', 'loading');
-            document.getElementById('endTime').innerHTML = '';
+            // document.getElementById('startTime').innerHTML = t('audioplayer', 'loading');
+            // document.getElementById('endTime').innerHTML = '';
         }
 
         var elapsedTime = Math.round(player.currentTime);
