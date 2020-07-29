@@ -846,7 +846,7 @@ input[type=range].volume-slider::-webkit-slider-thumb {
   height: 14px;
   width: 14px;
   border-radius: 7px;
-  background: #ffffff;
+  background: var(--color-main-background);
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -3px;
