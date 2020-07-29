@@ -789,7 +789,7 @@ OCA.Audioplayer.UI = {
             }
             document.querySelector('.sm2-playlist-cover').setAttribute('style', addCss);
             document.querySelector('.sm2-playlist-cover').innerText = addDescr;
-            document.title = currentTrack.dataset.title + ' (' + currentTrack.dataset.artist + ' ) @ ' + OCA.Audioplayer.Core.initialDocumentTitle;
+            document.title = currentTrack.dataset.title + ' (' + currentTrack.dataset.artist + ') @ ' + OCA.Audioplayer.Core.initialDocumentTitle;
         }
     },
 
