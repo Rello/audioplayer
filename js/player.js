@@ -45,6 +45,7 @@ OCA.Audioplayer.Player = {
         if (trackToPlay.src !== this.html5Audio.getAttribute('src')) {
             this.currentTrackId = trackToPlay.dataset.trackid;
             OCA.Audioplayer.Core.CategorySelectors[2] = trackToPlay.dataset.trackid;
+            this.lastSavedSecond = 0;
             this.html5Audio.setAttribute('src', trackToPlay.src);
             this.html5Audio.load();
         } else if (!OCA.Audioplayer.Player.isPaused()) {
@@ -85,6 +86,7 @@ OCA.Audioplayer.Player = {
      */
     next: function () {
         OCA.Audioplayer.Player.trackStartPosition = 0;
+        OCA.Audioplayer.Player.lastSavedSecond = 0;
         var numberOfTracks = OCA.Audioplayer.Player.html5Audio.childElementCount - 1; // index stats counting at 0
         if (OCA.Audioplayer.Player.shuffle === true) {
             // shuffle => get random track index
@@ -126,6 +128,7 @@ OCA.Audioplayer.Player = {
      */
     prev: function () {
         OCA.Audioplayer.Player.trackStartPosition = 0;
+        OCA.Audioplayer.Player.lastSavedSecond = 0;
         OCA.Audioplayer.Player.currentTrackIndex--;
         OCA.Audioplayer.Player.setTrack();
     },
@@ -232,7 +235,6 @@ OCA.Audioplayer.Player = {
         }
 
         // save position every 10 seconds
-        // depending on the refresh of the audio element, this an be triggerd 3-4 times every 10 seconds
         var positionCalc = Math.round(player.currentTime) / 10;
         if (Math.round(positionCalc) === positionCalc && positionCalc !== 0 && this.lastSavedSecond !== positionCalc) {
             this.lastSavedSecond = Math.round(positionCalc);
