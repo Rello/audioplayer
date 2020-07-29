@@ -287,6 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
             OCA.Audioplayer.Player.html5Audio.pause();
             OCA.Audioplayer.Player.html5Audio.currentTime = parseInt(OCA.Audioplayer.Player.trackStartPosition);
             OCA.Audioplayer.Player.html5Audio.play();
+            OCA.Audioplayer.Player.trackStartPosition = 0; // reset the time to avoid that is being set again and again when seeking
         }
     });
 
