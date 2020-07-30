@@ -865,7 +865,7 @@ input[type=range].volume-slider::-moz-range-thumb {
   cursor: pointer;
 }
 
-input[type=range]::-ms-track {
+input[type=range].volume-slider::-ms-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
@@ -874,12 +874,12 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 
-input[type=range]::-ms-fill-lower, input[type=range]::-ms-fill-upper {
+input[type=range].volume-slider::-ms-fill-lower, input[type=range].volume-slider::-ms-fill-upper {
   background: #ededed;
   border-radius: 3px;
 }
 
-input[type=range]::-ms-thumb {
+input[type=range].volume-slider::-ms-thumb {
   border: 1px solid #ededed;
   height: 14px;
   width: 14px;
