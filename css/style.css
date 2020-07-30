@@ -834,6 +834,7 @@ i#scanAudiosFirst {
 
 input[type=range].volume-slider {
     -webkit-appearance: none;
+    background: var(--color-main-background);
 }
 
 input[type=range].volume-slider:focus {
