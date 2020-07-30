@@ -45,6 +45,7 @@ English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polis
 
 ## Maintainers
 - [Marcel Scherello](https://github.com/rello) (author, project leader)
+- [r4sas](https://github.com/r4sas)
 - [Martin Matous](https://github.com/mmatous)
 
 ## Support
