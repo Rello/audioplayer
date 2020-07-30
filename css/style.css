@@ -883,7 +883,7 @@ input[type=range].volume-slider::-ms-fill-lower, input[type=range].volume-slider
 }
 
 input[type=range].volume-slider::-ms-thumb {
-    border: 1px solid #ededed;
+    border: 1px solid #dbdbdb;
     height: 14px;
     width: 14px;
     border-radius: 7px;
