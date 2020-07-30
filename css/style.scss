@@ -837,7 +837,15 @@ input[type=range].volume-slider:focus {
   outline: none;
 }
 
-input[type=range].volume-slider::-webkit-slider-runnable-track, input[type=range].volume-slider::-moz-range-track {
+input[type=range].volume-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: var(--color-background-dark);
+  border-radius: var(--border-radius);
+}
+
+input[type=range].volume-slider::-moz-range-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
@@ -874,7 +882,12 @@ input[type=range].volume-slider::-ms-track {
   color: transparent;
 }
 
-input[type=range].volume-slider::-ms-fill-lower, input[type=range].volume-slider::-ms-fill-upper {
+input[type=range].volume-slider::-ms-fill-lower {
+  background: #ededed;
+  border-radius: 3px;
+}
+
+input[type=range].volume-slider::-ms-fill-upper {
   background: #ededed;
   border-radius: 3px;
 }
@@ -884,7 +897,7 @@ input[type=range].volume-slider::-ms-thumb {
   height: 14px;
   width: 14px;
   border-radius: 7px;
-  background: #ffffff;
+  background: #fff;
   cursor: pointer;
 }
 
