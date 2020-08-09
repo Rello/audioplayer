@@ -36,6 +36,7 @@ OCA.Audioplayer.Sidebar = {
             var targetPlaylistItem = evt.target.closest('li');
             var trackid = targetPlaylistItem.getAttribute('data-trackid');
         }
+
         var appsidebar = document.getElementById('app-sidebar');
 
         if (appsidebar.dataset.trackid === trackid) {

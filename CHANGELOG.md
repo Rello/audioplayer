@@ -1,6 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.11.3 - 2020-0x-xx
 ### Fixed
 - Playlist ends outside of visible part of page #461
 

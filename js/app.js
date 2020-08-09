@@ -792,7 +792,7 @@ OCA.Audioplayer.UI = {
             document.title = currentTrack.dataset.title + ' (' + currentTrack.dataset.artist + ') @ ' + OCA.Audioplayer.Core.initialDocumentTitle;
         }
 
-        // update sidebar information if it shown
+        // update sidebar information
         if (document.getElementById('app-sidebar').dataset.trackid !== '') {
             OCA.Audioplayer.Sidebar.showSidebar(undefined, OCA.Audioplayer.Player.currentTrackId);
         }
