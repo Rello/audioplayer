@@ -142,6 +142,7 @@ i#scanAudiosFirst {
 }
 
 #category_selector {
+    background: var(--color-main-background);
     width: 100%;
     margin: 0;
 }
