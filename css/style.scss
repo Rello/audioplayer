@@ -327,15 +327,16 @@ i#scanAudiosFirst {
 }
 
 #playlist-container {
-  margin: 0;
-  width: 98%;
-  position: relative;
-  top: 60px;
-  float: left;
-  display: inline;
-  height: auto;
-  padding-left: 10px;
-  padding-bottom: 30px;
+    margin: 0;
+    width: 98%;
+    position: relative;
+    float: left;
+    display: inline;
+    height: auto;
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-bottom: 30px;
+    background-color: var(--color-main-background);
 }
 
 #individual-playlist {

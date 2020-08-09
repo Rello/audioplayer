@@ -791,6 +791,12 @@ OCA.Audioplayer.UI = {
             document.querySelector('.sm2-playlist-cover').innerText = addDescr;
             document.title = currentTrack.dataset.title + ' (' + currentTrack.dataset.artist + ') @ ' + OCA.Audioplayer.Core.initialDocumentTitle;
         }
+
+        // update sidebar information if it shown
+        if (document.getElementById('app-sidebar').dataset.trackid !== '') {
+            OCA.Audioplayer.Sidebar.showSidebar(undefined, OCA.Audioplayer.Player.currentTrackId);
+        }
+
     },
 
     showInitScreen: function (mode) {

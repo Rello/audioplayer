@@ -29,9 +29,13 @@ if (!OCA.Audioplayer.Sidebar) {
 OCA.Audioplayer.Sidebar = {
     sidebar_tabs: {},
 
-    showSidebar: function (evt) {
-        var targetPlaylistItem = evt.target.closest('li');
-        var trackid = targetPlaylistItem.getAttribute('data-trackid');
+    showSidebar: function (evt, trkid) {
+        if (typeof trkid !== 'undefined') {
+            var trackid = trkid;
+        } else {
+            var targetPlaylistItem = evt.target.closest('li');
+            var trackid = targetPlaylistItem.getAttribute('data-trackid');
+        }
         var appsidebar = document.getElementById('app-sidebar');
 
         if (appsidebar.dataset.trackid === trackid) {

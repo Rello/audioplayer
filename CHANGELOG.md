@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+### Fixed
+- Playlist ends outside of visible part of page #461
+
 ## 2.11.2 - 2020-07-30
 ### Fixed
 - Fix dark theme volume background color [#491](https://github.com/rello/audioplayer/pull/491) @[r4sas](https://github.com/r4sas)
