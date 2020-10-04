@@ -1,7 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 2.11.3 - 2020-0x-xx
+## 2.12.0 - 2020-10-01
+### Added
+- NC 20
+
 ### Fixed
 - Playlist ends outside of visible part of page #461
 
@@ -11,7 +14,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## 2.11.1 - 2020-07-30
 ### Fixed
-- Track name/artist is not correctly recognized in EXTINF [#485](https://github.com/rello/audioplayer/issues/485)
+~~- Track name/artis~~t is not correctly recognized in EXTINF [#485](https://github.com/rello/audioplayer/issues/485)
 - Volume controll working again
 - theming issues [#486](https://github.com/rello/audioplayer/issues/486)
 - Array offset error when deleting files [#484](https://github.com/rello/audioplayer/issues/484)
