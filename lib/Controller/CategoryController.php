@@ -509,7 +509,7 @@ class CategoryController extends Controller
                     $x++;
                     
                     $musicLibPath = $this->configManager->getUserValue($this->userId, 'audioplayer', 'path');
-                    if ($musicLibPath)
+                    if ($musicLibPath && strpos($path, ltrim($musicLibPath, '/')) === false)
                         $path = $musicLibPath.$path;
                         
                     $this->logger->debug('Final path of playlist track: '.$path);
