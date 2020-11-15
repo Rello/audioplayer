@@ -21,6 +21,7 @@ use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
 use \OCP\Files\NotFoundException;
+use OCP\IConfig;
 
 /**
  * Controller class for main page.
@@ -36,6 +37,7 @@ class CategoryController extends Controller
     private $rootFolder;
     private $logger;
     private $DBController;
+    private $configManager;
 
     public function __construct(
         $appName,
@@ -46,7 +48,8 @@ class CategoryController extends Controller
         ITagManager $tagManager,
         IRootFolder $rootFolder,
         ILogger $logger,
-        DbController $DBController
+        DbController $DBController,
+        IConfig $configManager
     )
     {
         parent::__construct($appName, $request);
@@ -58,6 +61,7 @@ class CategoryController extends Controller
         $this->rootFolder = $rootFolder;
         $this->logger = $logger;
         $this->DBController = $DBController;
+        $this->configManager = $configManager;
     }
 
     /**
@@ -505,6 +509,11 @@ class CategoryController extends Controller
                     $x++;
                     $this->logger->debug('Final path of playlist track: '.$path);
 
+                    $musicLibPath = $this->configManager->getUserValue($this->userId, 'audioplayer', 'path');
+                    if($musicLibPath)
+                        $path = $musicLibPath.$path;
+
+                    $this->logger->debug('newPath'.$path);
                     try {
                         $fileId = $this->rootFolder->getUserFolder($this->userId)->get($path)->getId();
                         $track = $this->DBController->getTrackInfo(null,$fileId);
