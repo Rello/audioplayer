@@ -21,7 +21,6 @@ use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
 use \OCP\Files\NotFoundException;
-use OCP\IConfig;
 
 /**
  * Controller class for main page.
@@ -37,7 +36,6 @@ class CategoryController extends Controller
     private $rootFolder;
     private $logger;
     private $DBController;
-    private $configManager;
 
     public function __construct(
         $appName,
@@ -48,8 +46,7 @@ class CategoryController extends Controller
         ITagManager $tagManager,
         IRootFolder $rootFolder,
         ILogger $logger,
-        DbController $DBController,
-        IConfig $configManager
+        DbController $DBController
     )
     {
         parent::__construct($appName, $request);
@@ -61,7 +58,6 @@ class CategoryController extends Controller
         $this->rootFolder = $rootFolder;
         $this->logger = $logger;
         $this->DBController = $DBController;
-        $this->configManager = $configManager;
     }
 
     /**
@@ -455,7 +451,9 @@ class CategoryController extends Controller
             }
         } else {
             // get the path of the playlist file as reference
-            $playlistFilePath = explode('/', $streamfile[0]->getInternalPath());
+            $playlistFilePath = explode('/', ltrim($streamfile[0]->getPath(), '/'));
+            // remove leading username
+            array_shift($playlistFilePath);
             // remove leading "files/"
             array_shift($playlistFilePath);
             // remove the filename itself
@@ -507,11 +505,6 @@ class CategoryController extends Controller
                         $path = implode('/', $path);
                     }
                     $x++;
-                    
-                    $musicLibPath = $this->configManager->getUserValue($this->userId, 'audioplayer', 'path');
-                    if ($musicLibPath && strpos($path, ltrim($musicLibPath, '/')) === false)
-                        $path = $musicLibPath.$path;
-                        
                     $this->logger->debug('Final path of playlist track: '.$path);
 
                     try {
