@@ -1067,7 +1067,7 @@ OCA.Audioplayer.Backend = {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.response === 'true') {
-                    OC.Notification.showTemporary(t('audioplayer', 'New or updated audio files available'));
+                    OCP.Toast.info(t('audioplayer', 'New or updated audio files available'));
                 }
             }
         };
@@ -1123,10 +1123,7 @@ OCA.Audioplayer.Playlists = {
                 OCA.Audioplayer.Category.load();
             }
             if (jsondata.status === 'error') {
-                $('#notification').text(t('audioplayer', 'No playlist selected!')).slideDown();
-                window.setTimeout(function () {
-                    $('#notification').slideUp();
-                }, 3000);
+                OCP.Toast.error(t('audioplayer', 'No playlist selected!'));
             }
         });
     },
@@ -1187,35 +1184,27 @@ OCA.Audioplayer.Playlists = {
 
     sortPlaylist: function (evt) {
         var eventTarget = $(evt.target);
-        var notification = $('#notification');
         if ($('#myCategory li').hasClass('active')) {
             var plId = eventTarget.attr('data-sortid');
             if (eventTarget.hasClass('sortActive')) {
 
+                $('#individual-playlist').sortable();
                 var idsInOrder = $('#individual-playlist').sortable('toArray', {attribute: 'data-trackid'});
-                $.post(OC.generateUrl('apps/audioplayer/sortplaylist'), {
-                    playlistid: plId,
-                    songids: idsInOrder.join(';')
-                }, function (jsondata) {
-                    if (jsondata.status === 'success') {
-                        eventTarget.removeClass('sortActive');
-                        $('#individual-playlist').sortable('destroy');
-                        notification.text(jsondata['msg']);
-                        notification.slideDown();
-                        window.setTimeout(function () {
-                            $('#notification').slideUp();
-                        }, 3000);
-                    }
-                });
-
+                if (idsInOrder.length !== 0) {
+                    $.post(OC.generateUrl('apps/audioplayer/sortplaylist'), {
+                        playlistid: plId,
+                        songids: idsInOrder.join(';')
+                    }, function (jsondata) {
+                        if (jsondata.status === 'success') {
+                            OCP.Toast.info(jsondata['msg']);
+                        }
+                    });
+                }
+                eventTarget.removeClass('sortActive');
+                $('#individual-playlist').sortable('destroy');
             } else {
 
-                notification.text(t('audioplayer', 'Sort modus active'));
-                notification.slideDown();
-                window.setTimeout(function () {
-                    $('#notification').slideUp();
-                }, 3000);
-
+                OCP.Toast.info(t('audioplayer', 'Sort modus active'));
                 $('#individual-playlist').sortable({
                     items: 'li',
                     axis: 'y',
@@ -1252,10 +1241,7 @@ OCA.Audioplayer.Playlists = {
                     }, function (jsondata) {
                         if (jsondata.status === 'success') {
                             OCA.Audioplayer.Category.load();
-                            $('#notification').text(t('audioplayer', 'Playlist successfully deleted!')).slideDown();
-                            window.setTimeout(function () {
-                                $('#notification').slideUp();
-                            }, 3000);
+                            OCP.Toast.success(t('audioplayer', 'Playlist successfully deleted!'));
                         }
                     });
                 }
@@ -1367,17 +1353,6 @@ document.addEventListener('DOMContentLoaded', function () {
     OCA.Audioplayer.Backend.checkNewTracks();
     OCA.Audioplayer.Playlists.initPlaylistActions();
     OCA.Audioplayer.Backend.whatsnew();
-
-    var notify = document.getElementById('audioplayer_notification').value;
-    if (notify !== '') {
-        OC.Notification.showHtml(
-            notify,
-            {
-                type: 'error',
-                isHTML: true
-            }
-        );
-    }
 
     OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist, 250);
     document.getElementById('app-content').addEventListener('appresized', OCA.Audioplayer.UI.resizePlaylist);

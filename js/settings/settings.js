@@ -63,7 +63,7 @@ OCA.Audioplayer.Settings = {
             url: OC.generateUrl('apps/audioplayer/resetmedialibrary'),
             success: function (jsondata) {
                 if (jsondata.status === 'success') {
-                    OC.Notification.showTemporary(t('audioplayer', 'Resetting finished!'));
+                    OCP.Toast.success(t('audioplayer', 'Resetting finished!'));
                 }
             }
         });
