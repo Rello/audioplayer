@@ -16,7 +16,7 @@ namespace OCA\audioplayer\AppInfo;
 
 use OCP\Util;
 
-$app = \OC::$server->query(\OCA\audioplayer\AppInfo\Application19::class);
+$app = \OC::$server->query(\OCA\audioplayer\AppInfo\Application::class);
 $app->register();
 
 \OC::$server->getEventDispatcher()->addListener(
