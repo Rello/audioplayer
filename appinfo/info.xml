@@ -17,7 +17,7 @@
 - [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
-	<version>2.12.0</version>
+	<version>3.0.0</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
@@ -44,8 +44,4 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
 	</settings>
-	<settings-sections>
-		<personal>OCA\audioplayer\Settings\PersonalSectionOC</personal>
-		<admin>OCA\audioplayer\Settings\AdminSectionOC</admin>
-	</settings-sections>
 </info>
