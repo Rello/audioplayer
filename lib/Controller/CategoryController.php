@@ -457,6 +457,7 @@ class CategoryController extends Controller
             // remove the filename itself
             array_pop($playlistFilePath);
 
+            // read each line of the playlist
             foreach (preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line) {
                 $title = null;
                 $artist = null;
@@ -469,9 +470,10 @@ class CategoryController extends Controller
                     $artist = $extinf[0];
                     $line = $extinf[2];
                 }
-                preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
 
+                preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $matches);
                 if ($matches[0]) {
+                    // playlist item is a web stream url
                     $x++;
                     $row = array();
                     $row['id'] = $fileId . $x;
@@ -486,19 +488,22 @@ class CategoryController extends Controller
                     if ($artist) $row['cl2'] = $artist;
                     $tracks[] = $row;
                 } elseif (preg_match('/^[^"<>|:]*$/',$line)) {
-
+                    // playlist item is an internal file
                     if ($line[0] === '/') {
                         // Absolut path
                         $path = $line;
                     } elseif (substr($line, 0, 3) === '../') {
                         // relative one level up => remove the parent folder of the playlist file
-                        array_shift($playlistFilePath);
+                        $line = substr($line, 3);
                         $path = $playlistFilePath;
-                        array_push($path, substr($line, 3));
+                        array_pop($path);
+
+                        array_push($path, $line);
                         $path = implode('/', $path);
                     } else {
                         // normal relative path
                         $path = $playlistFilePath;
+
                         array_push($path, $line);
                         $path = implode('/', $path);
                     }
