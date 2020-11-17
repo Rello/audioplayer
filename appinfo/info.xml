@@ -37,15 +37,11 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png</screenshot>
 	<dependencies>
 		<php min-version="7.0" max-version="7.4"/>
-		<nextcloud min-version="19" max-version="19"/>
+		<nextcloud min-version="18" max-version="19"/>
 	</dependencies>
 	<settings>
 		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
 	</settings>
-	<settings-sections>
-		<personal>OCA\audioplayer\Settings\PersonalSectionOC</personal>
-		<admin>OCA\audioplayer\Settings\AdminSectionOC</admin>
-	</settings-sections>
 </info>

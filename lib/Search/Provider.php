@@ -1,28 +1,26 @@
 <?php
 /**
- * Analytics
+ * Audio Player
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2020 Marcel Scherello
+ * @author Sebastian Doell <sebastian@libasys.de>
+ * @copyright 2016-2020 Marcel Scherello
+ * @copyright 2015 Sebastian Doell
  */
-
-declare(strict_types=1);
 
 namespace OCA\audioplayer\Search;
 
 use OCA\audioplayer\Controller\DbController;
 use OCP\IL10N;
 use OCP\IURLGenerator;
-use OCP\IUser;
-use OCP\Search\IProvider;
-use OCP\Search\ISearchQuery;
-use OCP\Search\SearchResult;
-use OCP\Search\SearchResultEntry;
 
-class Provider implements IProvider
+/**
+ * Provide search results from the 'audioplayer' app
+ */
+class Provider extends \OCP\Search\Provider
 {
 
     /** @var IL10N */
@@ -42,39 +40,25 @@ class Provider implements IProvider
         $this->DBController = $DBController;
     }
 
-    public function getId(): string
+    /**
+     *
+     * @param string $query
+     * @return array
+     */
+    function search($query)
     {
-        return 'audioplayer';
-    }
+        $searchresults = array();
+        $results = $this->DBController->search($query);
 
-    public function search(IUser $user, ISearchQuery $query): SearchResult
-    {
-        $datasets = $this->DBController->search($query->getTerm());
-        $result = [];
+        foreach ($results as $result) {
+            $returnData = array();
+            $returnData['id'] = $result['id'];
+            $returnData['description'] = $this->l10n->t('Audio Player') . ' - ' . $result['name'];
+            $returnData['link'] = '../audioplayer/#' . $result['id'];
+            $returnData['icon'] = '../audioplayer/img/app.svg';
 
-        foreach ($datasets as $dataset) {
-            $result[] = new SearchResultEntry(
-                '',
-                $this->l10n->t('Audio Player') . ' - ' . $dataset['name'],
-                '',
-                $this->urlGenerator->linkToRoute('audioplayer.page.index') . '#' . $dataset['id'],
-                $this->urlGenerator->imagePath('audioplayer', 'app-dark.svg')
-            );
+            $searchresults[] = new \OCA\audioplayer\Search\Result($returnData);
         }
-
-        return SearchResult::complete(
-            $this->l10n->t('Audioplayer'),
-            $result
-        );
-    }
-
-    public function getName(): string
-    {
-        return $this->l10n->t('Audioplayer');
-    }
-
-    public function getOrder(string $route, array $routeParameters): int
-    {
-        return 10;
+        return $searchresults;
     }
 }

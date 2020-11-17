@@ -37,4 +37,4 @@ $app->register();
     }
 );
 
-\OC::$server->getSearch()->registerProvider('OCA\audioplayer\Search\Provider19', array('app' => 'audioplayer', 'apps' => array('files')));
+\OC::$server->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app' => 'audioplayer', 'apps' => array('files')));
