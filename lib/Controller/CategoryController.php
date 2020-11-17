@@ -451,7 +451,9 @@ class CategoryController extends Controller
             }
         } else {
             // get the path of the playlist file as reference
-            $playlistFilePath = explode('/', $streamfile[0]->getInternalPath());
+            $playlistFilePath = explode('/', ltrim($streamfile[0]->getPath(), '/'));
+            // remove leading username
+            array_shift($playlistFilePath);
             // remove leading "files/"
             array_shift($playlistFilePath);
             // remove the filename itself
