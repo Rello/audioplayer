@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'value': user_value
             },
             success: function () {
-                OC.Notification.showTemporary(t('audioplayer', 'saved'));
+                OCP.Toast.success(t('audioplayer', 'saved'));
             }
         });
     });
@@ -43,9 +43,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     $path.val(path);
                     $.post(OC.generateUrl('apps/audioplayer/userpath'), {value: path}, function (data) {
                         if (!data.success) {
-                            OC.Notification.showTemporary(t('audioplayer', 'Invalid path!'));
+                            OCP.Toast.error(t('audioplayer', 'Invalid path!'));
                         } else {
-                            OC.Notification.showTemporary(t('audioplayer', 'saved'));
+                            OOCP.Toast.success(t('audioplayer', 'saved'));
                         }
                     });
                 }

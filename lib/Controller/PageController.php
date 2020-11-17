@@ -70,28 +70,7 @@ class PageController extends Controller
             'audioplayer_view' => $this->configManager->getUserValue($this->userId, $this->appName, 'view') ?: 'pictures',
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '100',
             'audioplayer_sonos' => $audioplayer_sonos,
-            'audioplayer_notification' => $this->getNotification(),
         ]);
         return $response;
-    }
-
-    /**
-     * @return null|string
-     * @throws \OCP\PreConditionNotMetException
-     */
-    private function getNotification()
-    {
-        $scanner_timestamp = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_timestamp', '0');
-        if ($scanner_timestamp === '0') {
-            $this->configManager->setUserValue($this->userId, $this->appName, 'scanner_timestamp', time());
-        }
-        #$app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');
-        $scanner_version = $this->configManager->getUserValue($this->userId, $this->appName, 'scanner_version', '0.0.0');
-        //\OCP\Util::writeLog('audioplayer', 'scanner version: '.$scanner_version, \OCP\Util::DEBUG);
-        if (version_compare($scanner_version, '2.3.0', '<') AND $scanner_version !== '0.0.0') {
-            return '<a href="https://github.com/rello/audioplayer/blob/master/CHANGELOG.md">' . $this->l10n->t('Please reset and rescan library to make use of new features.') . ' ' . $this->l10n->t('More information…') . '</a>';
-        } else {
-            return null;
-        }
     }
 }
