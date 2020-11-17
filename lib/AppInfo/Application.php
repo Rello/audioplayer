@@ -12,36 +12,15 @@
  */
 
 namespace OCA\audioplayer\AppInfo;
-
-use OCP\AppFramework\App;
-use OCP\IContainer;
 use OCP\Util;
 
-class Application extends App {
-
-    public function __construct(array $urlParams = [])
+$version = Util::getVersion()[0];
+if ($version >= 20) {
+    class Application extends Application20
     {
-
-		parent::__construct('audioplayer', $urlParams);
-        $container = $this->getContainer();
-
-        $container->registerService(
-            'L10N', function (IContainer $c) {
-            return $c->query('ServerContainer')
-                ->getL10N($c->query('AppName'));
-        }
-        );
     }
-
-	public function registerFileHooks() {
-		Util::connectHook(
-			'OC_Filesystem', 'delete', '\OCA\audioplayer\Hooks\FileHooks', 'deleteTrack'
-		);
-	}
-
-	public function registerUserHooks() {
-		Util::connectHook(
-			'OC_User', 'post_deleteUser', '\OCA\audioplayer\Hooks\UserHooks', 'deleteUser'
-		);
-	}
+} else {
+    class Application extends Application19
+    {
+    }
 }

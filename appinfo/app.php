@@ -16,9 +16,8 @@ namespace OCA\audioplayer\AppInfo;
 
 use OCP\Util;
 
-$app = new Application();
-$app->registerFileHooks();
-$app->registerUserHooks();
+$app = \OC::$server->query(\OCA\audioplayer\AppInfo\Application19::class);
+$app->register();
 
 \OC::$server->getEventDispatcher()->addListener(
     'OCA\Files::loadAdditionalScripts',
@@ -38,15 +37,4 @@ $app->registerUserHooks();
     }
 );
 
-$navigationEntry = function () {
-    return [
-        'id' => 'audioplayer',
-        'order' => 6,
-        'name' => \OC::$server->getL10N('audioplayer')->t('Audio Player'),
-        'href' => \OC::$server->getURLGenerator()->linkToRoute('audioplayer.page.index'),
-        'icon' => \OC::$server->getURLGenerator()->imagePath('audioplayer', 'app.svg'),
-    ];
-};
-\OC::$server->getNavigationManager()->add($navigationEntry);
-
-\OC::$server->getSearch()->registerProvider('OCA\audioplayer\Search\Provider', array('app' => 'audioplayer', 'apps' => array('files')));
+\OC::$server->getSearch()->registerProvider('OCA\audioplayer\Search\Provider19', array('app' => 'audioplayer', 'apps' => array('files')));
