@@ -494,9 +494,11 @@ class CategoryController extends Controller
                         $path = $line;
                     } elseif (substr($line, 0, 3) === '../') {
                         // relative one level up => remove the parent folder of the playlist file
-                        $line = substr($line, 3);
                         $path = $playlistFilePath;
-                        array_pop($path);
+                        do {
+                            $line = substr($line, 3);
+                            array_pop($path);
+                        } while (substr($line, 0, 3) === '../');
 
                         array_push($path, $line);
                         $path = implode('/', $path);
