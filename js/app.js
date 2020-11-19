@@ -125,14 +125,16 @@ OCA.Audioplayer.Core = {
 
     selectCategoryItemFromPreset: function () {
         if (OCA.Audioplayer.Core.CategorySelectors[1]) {
-            document.querySelector('#myCategory li[data-id="' + OCA.Audioplayer.Core.CategorySelectors[1] + '"]').classList.add('active');
-            var appNavigation = $('#app-navigation');
-            appNavigation.scrollTop(appNavigation.scrollTop() + $('#myCategory li.active').first().position().top - 25);
+            let activeItem = document.querySelector('#myCategory li[data-id="' + OCA.Audioplayer.Core.CategorySelectors[1] + '"]');
+            activeItem.classList.add('active');
+            activeItem.scrollIntoView({behavior: 'smooth', block: 'center',});
+
             OCA.Audioplayer.Category.handleCategoryClicked(null, function () {                        // select the last played title
                 if (OCA.Audioplayer.Core.CategorySelectors[2]) {
                     var item = $('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]');
                     item.find('.icon').hide();
                     item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
+                    document.querySelector('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]').scrollIntoView({behavior: 'smooth', block: 'center',});
                     if (OCA.Audioplayer.Core.CategorySelectors[3]) {
                         // if the title was previously played, the last position will be set
                         OCA.Audioplayer.Player.trackStartPosition = OCA.Audioplayer.Core.CategorySelectors[3];
@@ -753,6 +755,10 @@ OCA.Audioplayer.UI = {
 
             document.getElementById('nowPlayingText').innerHTML = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
+
+            document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].scrollIntoView(
+                {behavior: 'smooth',
+                block: 'center',});
         }
 
         //in every case, update the playbar and medaservices
