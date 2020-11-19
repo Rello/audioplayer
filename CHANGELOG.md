@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.13.0 - 2020-11-19
+### Changed
+- NC20 and NC19 version separated
+
+### Fixed
+- internal path for playlist items [#510](https://github.com/rello/audioplayer/pull/510)
+- Jump display to current song [#499](https://github.com/rello/audioplayer/pull/499)
+- css issue in sidebar
+- playlist sorting with empty list
+- use up to date notifications style
+
 ## 2.12.0 - 2020-10-01
 ### Added
 - NC 20
