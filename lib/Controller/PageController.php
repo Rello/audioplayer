@@ -59,7 +59,7 @@ class PageController extends Controller
             $audioplayer_sonos = false;
         }
 
-        \OC::$server->getEventDispatcher()->dispatch('OCA\audioplayer::loadAdditionalScripts');
+        //\OC::$server->getEventDispatcher()->dispatch('OCA\audioplayer::loadAdditionalScripts');
 
         $response = new TemplateResponse('audioplayer', 'index');
         $csp = new ContentSecurityPolicy();

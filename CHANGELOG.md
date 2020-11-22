@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 2.13.1 - 2020-11-22
+### Fixed
+- Audio player app corrupts the standard Nextcloud search function [#511](https://github.com/rello/audioplayer/pull/511)
+
 ## 2.13.0 - 2020-11-19
 ### Changed
 - NC20 and NC19 version separated

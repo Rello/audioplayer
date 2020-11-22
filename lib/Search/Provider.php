@@ -13,32 +13,11 @@
 
 namespace OCA\audioplayer\Search;
 
-use OCA\audioplayer\Controller\DbController;
-use OCP\IL10N;
-use OCP\IURLGenerator;
 
 /**
  * Provide search results from the 'audioplayer' app
  */
-class Provider extends \OCP\Search\Provider
-{
-
-    /** @var IL10N */
-    private $l10n;
-
-    /** @var IURLGenerator */
-    private $urlGenerator;
-
-    private $DBController;
-
-    public function __construct(IL10N $l10n,
-                                IURLGenerator $urlGenerator,
-                                DBController $DBController)
-    {
-        $this->l10n = $l10n;
-        $this->urlGenerator = $urlGenerator;
-        $this->DBController = $DBController;
-    }
+class Provider extends \OCP\Search\Provider {
 
     /**
      *
@@ -47,13 +26,14 @@ class Provider extends \OCP\Search\Provider
      */
     function search($query)
     {
+        \OC::$server->getLogger()->error('test', ['app' => 'audioplayer']);
         $searchresults = array();
-        $results = $this->DBController->search($query);
+        $results = \OC::$server->query(\OCA\audioplayer\Controller\DbController::class)->search($query);
 
         foreach ($results as $result) {
             $returnData = array();
             $returnData['id'] = $result['id'];
-            $returnData['description'] = $this->l10n->t('Audio Player') . ' - ' . $result['name'];
+            $returnData['description'] = \OC::$server->getL10N('audioplayer')->t('Audio Player') . ' - ' . $result['name'];
             $returnData['link'] = '../audioplayer/#' . $result['id'];
             $returnData['icon'] = '../audioplayer/img/app.svg';
 
