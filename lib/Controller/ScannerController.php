@@ -718,6 +718,10 @@ class ScannerController extends Controller
                 $this->folderPicture = $audio->getParent()->get('cover.jpg');
             } elseif ($audio->getParent()->nodeExists('Cover.jpg')) {
                 $this->folderPicture = $audio->getParent()->get('Cover.jpg');
+            if ($audio->getParent()->nodeExists('cover.jpeg')) {
+                $this->folderPicture = $audio->getParent()->get('cover.jpeg');
+            } elseif ($audio->getParent()->nodeExists('Cover.jpeg')) {
+                $this->folderPicture = $audio->getParent()->get('Cover.jpeg');
             } elseif ($audio->getParent()->nodeExists('cover.png')) {
                 $this->folderPicture = $audio->getParent()->get('cover.png');
             } elseif ($audio->getParent()->nodeExists('Cover.png')) {
@@ -726,6 +730,10 @@ class ScannerController extends Controller
                 $this->folderPicture = $audio->getParent()->get('folder.jpg');
             } elseif ($audio->getParent()->nodeExists('Folder.jpg')) {
                 $this->folderPicture = $audio->getParent()->get('Folder.jpg');
+            } elseif ($audio->getParent()->nodeExists('folder.jpeg')) {
+                $this->folderPicture = $audio->getParent()->get('folder.jpeg');
+            } elseif ($audio->getParent()->nodeExists('Folder.jpeg')) {
+                $this->folderPicture = $audio->getParent()->get('Folder.jpeg');
             } elseif ($audio->getParent()->nodeExists('folder.png')) {
                 $this->folderPicture = $audio->getParent()->get('folder.png');
             } elseif ($audio->getParent()->nodeExists('Folder.png')) {
@@ -734,6 +742,10 @@ class ScannerController extends Controller
                 $this->folderPicture = $audio->getParent()->get('front.jpg');
             } elseif ($audio->getParent()->nodeExists('Front.jpg')) {
                 $this->folderPicture = $audio->getParent()->get('Front.jpg');
+            } elseif ($audio->getParent()->nodeExists('front.jpeg')) {
+                $this->folderPicture = $audio->getParent()->get('front.jpeg');
+            } elseif ($audio->getParent()->nodeExists('Front.jpeg')) {
+                $this->folderPicture = $audio->getParent()->get('Front.jpeg');
             } elseif ($audio->getParent()->nodeExists('front.png')) {
                 $this->folderPicture = $audio->getParent()->get('front.png');
             } elseif ($audio->getParent()->nodeExists('Front.png')) {
