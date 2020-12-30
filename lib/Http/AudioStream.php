@@ -7,34 +7,36 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
  
 namespace OCA\audioplayer\Http;
 use \OC\Files\View;
  
-class AudioStream {
-	private $path = "";
-	private $stream;
-	private $iStart = -1;
-	private $iEnd = -1;
-	private $iSize = 0;
-	private $mimeType = 0;
-	private $buffer = 8192;
-	private $mTime = 0;
-    private $userView ;
-	private $isStream = false;
-	
-	public function __construct($filePath,$user=null) {
-		
-		if(is_null($user) || $user === ''){
-			$user = \OC::$server->getUserSession()->getUser()->getUID();
-		}
+class AudioStream
+{
+    private $path = "";
+    private $stream;
+    private $iStart = -1;
+    private $iEnd = -1;
+    private $iSize = 0;
+    private $mimeType = 0;
+    private $buffer = 8192;
+    private $mTime = 0;
+    private $userView;
+    private $isStream = false;
+
+    public function __construct($filePath, $user = null)
+    {
+
+        if (is_null($user) || $user === '') {
+            $user = \OC::$server->getUserSession()->getUser()->getUID();
+        }
         $this->userView = new View('/' . $user . '/files/');
-		
-		$this -> path = $filePath;
-		$fileInfo = $this->userView -> getFileInfo($filePath);
+
+        $this->path = $filePath;
+        $fileInfo = $this->userView->getFileInfo($filePath);
 		$this -> mimeType = $fileInfo['mimetype'];
 		$this -> mTime = $fileInfo['mtime'];
 		$this -> iSize = $fileInfo['size'];
@@ -55,18 +57,14 @@ class AudioStream {
 	 * Set proper header to serve the video content
 	 */
 	private function setHeader() {
-		if (@ob_get_clean() === false) {
-		};
-		header("Content-Type: ".$this -> mimeType);
+        header("Content-Type: " . $this->mimeType . "; charset=utf-8");
 		header("Cache-Control: max-age=2592000, public");
 		header("Expires: " . gmdate('D, d M Y H:i:s', time() + 2592000) . ' GMT');
 		header("Last-Modified: " . gmdate('D, d M Y H:i:s', $this -> mTime) . ' GMT');
 
 		$this -> iStart = 0;
 		$this -> iEnd = $this -> iSize - 1;
-		
-		header("Accept-Ranges: bytes");
-		
+
 		if (isset($_SERVER['HTTP_RANGE'])) {
 			$c_end = $this -> iEnd;
 			$this->isStream = true;
@@ -74,7 +72,7 @@ class AudioStream {
 			list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 			
 			if (strpos($range, ',') !== false) {
-				header('HTTP/1.1 416 Requested Range Not Satisfiable');
+				http_response_code(416);
 				header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 				exit ;
 			}
@@ -87,16 +85,19 @@ class AudioStream {
 			}
 			$c_end = ($c_end > $this -> iEnd) ? $this -> iEnd : $c_end;
 			if ($c_start > $c_end || $c_start > $this -> iSize - 1 || $c_end >= $this -> iSize) {
-				header('HTTP/1.1 416 Requested Range Not Satisfiable');
+				http_response_code(416);
 				header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 				exit ;
 			}
 			$this -> iStart = $c_start;
 			$this -> iEnd = $c_end;
+            $length = $c_end - $c_start + 1;
 			if($this -> iStart > 0){
 				fseek($this -> stream, $this -> iStart);
 			}
-			header('HTTP/1.1 206 Partial Content');
+            header("Accept-Ranges: bytes");
+            header("Content-Length: $length");
+			http_response_code(206);
 			header("Content-Range: bytes ".$this->iStart."-".$this->iEnd."/".$this->iSize);
 			//\OCP\Util::writeLog('audioplayer','SEQ:'.$this->iStart."-".$this->iEnd."/".$this->iSize.'length:'.$length,\OCP\Util::DEBUG);
 		} else {

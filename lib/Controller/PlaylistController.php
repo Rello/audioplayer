@@ -7,7 +7,7 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
 
@@ -63,9 +63,7 @@ class PlaylistController extends Controller
                     'data' => 'exist',
                 ];
             }
-            $response = new JSONResponse();
-            $response->setData($result);
-            return $response;
+            return new JSONResponse($result);
         } else {
             return null;
         }
@@ -111,8 +109,7 @@ class PlaylistController extends Controller
             ];
         }
 
-        $response = new JSONResponse($params);
-        return $response;
+        return new JSONResponse($params);
     }
 
     private function updatePlaylistToDB($id, $sName)
@@ -124,7 +121,10 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @param $songid
+     * @param $sorting
+     * @return bool
      */
     public function addTrackToPlaylist($playlistid, $songid, $sorting)
     {
@@ -142,7 +142,9 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @param $songids
+     * @return JSONResponse
      */
     public function sortPlaylist($playlistid, $songids)
     {
@@ -157,23 +159,22 @@ class PlaylistController extends Controller
             'status' => 'success',
             'msg' => (string)$this->l10n->t('Sorting Playlist success! Playlist reloaded!')
         ];
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
-
+        return new JSONResponse($result);
     }
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @param $trackid
+     * @return bool
      */
-    public function removeTrackFromPlaylist($playlistid, $songid)
+    public function removeTrackFromPlaylist($playlistid, $trackid)
     {
         try {
             $sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
                 . 'WHERE `playlist_id` = ? AND `track_id` = ?';
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($playlistid, $songid));
+            $stmt->execute(array($playlistid, $trackid));
         } catch (\Exception $e) {
             return false;
         }
@@ -182,7 +183,8 @@ class PlaylistController extends Controller
 
     /**
      * @NoAdminRequired
-     *
+     * @param $playlistid
+     * @return bool|JSONResponse
      */
     public function removePlaylist($playlistid)
     {
@@ -205,8 +207,6 @@ class PlaylistController extends Controller
             'data' => ['playlist' => $playlistid]
         ];
 
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 }

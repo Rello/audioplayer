@@ -1,69 +1,75 @@
 <?php
 /**
- * Audio Player
+ * Audioplayer
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @author Sebastian Doell <sebastian@libasys.de>
- * @copyright 2016-2019 Marcel Scherello
- * @copyright 2015 Sebastian Doell
+ * @copyright 2020 Marcel Scherello
  */
 
 namespace OCA\audioplayer\AppInfo;
 
+use OCA\audioplayer\Listener\LoadAdditionalScripts;
+use OCA\audioplayer\Search\Provider;
+use OCA\Files\Event\LoadAdditionalScriptsEvent;
+use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
 use OCP\AppFramework\App;
-use OCP\AppFramework\IAppContainer;
-use OCP\IContainer;
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Util;
 
-class Application extends App {
+class Application extends App implements IBootstrap
+{
+    public const APP_ID = 'audioplayer';
 
-	public function __construct(array $urlParams = array()) {
+    public function __construct(array $urlParams = [])
+    {
+        parent::__construct(self::APP_ID, $urlParams);
+    }
 
-		parent::__construct('audioplayer', $urlParams);
-		$container = $this->getContainer();
+    public function register(IRegistrationContext $context): void
+    {
+        $context->registerEventListener(LoadAdditionalScriptsEvent::class, LoadAdditionalScripts::class);
+        $context->registerEventListener(BeforeTemplateRenderedEvent::class, LoadAdditionalScripts::class);
+        $context->registerSearchProvider(Provider::class);
+        $this->registerNavigationEntry();
+        $this->registerFileHooks();
+        $this->registerUserHooks();
+    }
 
-		$container->registerService(
-			'URLGenerator', function(IContainer $c) {
-				$server = $c->query('ServerContainer');
-				return $server->getURLGenerator();
-			}
-		);
+    protected function registerNavigationEntry(): void
+    {
+        $navigationEntry = function () {
+            return [
+                'id' => 'audioplayer',
+                'order' => 6,
+                'name' => \OC::$server->getL10N('audioplayer')->t('Audio Player'),
+                'href' => \OC::$server->getURLGenerator()->linkToRoute('audioplayer.page.index'),
+                'icon' => \OC::$server->getURLGenerator()->imagePath('audioplayer', 'app.svg'),
+            ];
+        };
+        \OC::$server->getNavigationManager()->add($navigationEntry);
+    }
 
-		$container->registerService(
-			'UserId', function() {
-				$user = \OC::$server->getUserSession()->getUser();
-				if ($user) {
-					return $user->getUID();
-				}
-			}
-		);
+    protected function registerFileHooks()
+    {
+        Util::connectHook(
+            'OC_Filesystem', 'delete', '\OCA\audioplayer\Hooks\FileHooks', 'deleteTrack'
+        );
+    }
 
-		$container->registerService(
-			'L10N', function(IContainer $c) {
-				return $c->query('ServerContainer')
-					 ->getL10N($c->query('AppName'));
-			}
-		);
+    protected function registerUserHooks()
+    {
+        Util::connectHook(
+            'OC_User', 'post_deleteUser', '\OCA\audioplayer\Hooks\UserHooks', 'deleteUser'
+        );
+    }
 
-		$container->registerService(
-			'Config', function(IAppContainer $c) {
-				return $c->getServer()->getConfig();
-			}
-		);
-	}
+    public function boot(IBootContext $context): void
+    {
+    }
 
-	public function registerFileHooks() {
-		Util::connectHook(
-			'OC_Filesystem', 'delete', '\OCA\audioplayer\Hooks\FileHooks', 'deleteTrack'
-		);
-	}
-
-	public function registerUserHooks() {
-		Util::connectHook(
-			'OC_User', 'post_deleteUser', '\OCA\audioplayer\Hooks\UserHooks', 'deleteUser'
-		);
-	}
 }

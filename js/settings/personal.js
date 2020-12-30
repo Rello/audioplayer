@@ -5,16 +5,17 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
 
-$(document).ready(function () {
+'use strict';
+
+document.addEventListener('DOMContentLoaded', function () {
     $('#cyrillic_user').on('click', function () {
         var user_value;
         if ($('#cyrillic_user').prop('checked')) {
             user_value = 'checked';
-        }
-        else {
+        } else {
             user_value = '';
         }
         $.ajax({
@@ -25,58 +26,7 @@ $(document).ready(function () {
                 'value': user_value
             },
             success: function () {
-                OC.Notification.showTemporary(t('audioplayer', 'saved'));
-            }
-        });
-    });
-
-    $('#sonos').on('click', function () {
-        var user_value;
-        if ($('#sonos').prop('checked')) {
-            user_value = 'checked';
-        }
-        else {
-            user_value = '';
-        }
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/setvalue'),
-            data: {
-                'type': 'sonos',
-                'value': user_value
-            },
-            success: function () {
-                OC.Notification.showTemporary(t('audioplayer', 'saved'));
-            }
-        });
-    });
-
-    $('#sonos_controller_submit').on('click', function () {
-        var user_value = $('#sonos_controller').val();
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/setvalue'),
-            data: {
-                'type': 'sonos_controller',
-                'value': user_value
-            },
-            success: function () {
-                OC.Notification.showTemporary(t('audioplayer', 'saved'));
-            }
-        });
-    });
-
-    $('#sonos_smb_path_submit').on('click', function () {
-        var user_value = $('#sonos_smb_path').val();
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/setvalue'),
-            data: {
-                'type': 'sonos_smb_path',
-                'value': user_value
-            },
-            success: function () {
-                OC.Notification.showTemporary(t('audioplayer', 'saved'));
+                OCP.Toast.success(t('audioplayer', 'saved'));
             }
         });
     });
@@ -93,9 +43,9 @@ $(document).ready(function () {
                     $path.val(path);
                     $.post(OC.generateUrl('apps/audioplayer/userpath'), {value: path}, function (data) {
                         if (!data.success) {
-                            OC.Notification.showTemporary(t('audioplayer', 'Invalid path!'));
+                            OCP.Toast.error(t('audioplayer', 'Invalid path!'));
                         } else {
-                            OC.Notification.showTemporary(t('audioplayer', 'saved'));
+                            OOCP.Toast.success(t('audioplayer', 'saved'));
                         }
                     });
                 }
@@ -106,44 +56,19 @@ $(document).ready(function () {
         );
     });
 
-    var audioPlayer = {};
-    soundManager.setup({
-        url: OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
-        onready: function () {
-            audioPlayer.player = soundManager.createSound({});
-            var can_play = soundManager.html5;
-            var supported_types = '';
-            var nsupported_types = '';
-            for (var mtype in can_play) {
-                var mtype_check = can_play[mtype];
-                if (mtype.substring(5, 6) !== '/' && mtype !== 'usingFlash' && mtype !== 'canPlayType') {
+    var supported_types = '';
+    var nsupported_types = '';
+    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
+    const audio = document.createElement('audio');
 
-                    if (mtype_check === true) {
-                        supported_types = supported_types + mtype + ', ';
-                    } else {
-                        nsupported_types = nsupported_types + mtype + ', ';
-                    }
-                }
-            }
-            $('#browser_yes').html(supported_types);
-            $('#browser_no').html(nsupported_types);
+    mimeTypes.forEach((element) => {
+        if (audio.canPlayType(element)) {
+            supported_types = supported_types + element + ', ';
+        } else {
+            nsupported_types = nsupported_types + element + ', ';
         }
     });
 
-    $.ajax({
-        type: 'POST',
-        url: OC.generateUrl('apps/audioplayer/sonosdevices'),
-        data: {},
-        success: function (jsondata) {
-            $(jsondata).each(function (i, el) {
-                $('#sonos_controller').append($('<option>', {
-                    value: el[0],
-                    text: el[2][0]
-                }));
-            });
-            $('#sonos_controller').val($('#sonos_current').val());
-        }
-    });
-
-
+    $('#browser_yes').html(supported_types);
+    $('#browser_no').html(nsupported_types);
 });

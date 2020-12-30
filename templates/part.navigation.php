@@ -6,15 +6,12 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
  ?>
-		<ul id="albenoverview">
-			<li id="alben">
-				<span style="vertical-align: top; font-size: 15px;">
-				<?php p($l->t('Albums')); ?></span>  
-			</li>
-		</ul>
+<div id="view-toggle" class="icon-toggle-<?php p($_['audioplayer_view']); ?>">
+    <?php $_['audioplayer_view'] === 'pictures' ? p($l->t('Album Covers')) : p($l->t('List View')); ?>
+</div>
 		<div id="category_area">
 			<select id="category_selector">
 				<option value=""selected><?php p($l->t('Selection')); ?></option>
@@ -32,7 +29,7 @@
 		<ul id="myCategory">
 		</ul>
         <!--my playlist clone -->
-		<li class="app-navigation-entry-edit plclone" id="pl-clone" data-pl="">
+<li class="plclone" id="pl-clone" data-pl="">
 			<div id="playlist_controls">	
 				<input type="text" name="playlist" id="playlist" value=""  />
 				<button class="icon-checkmark"></button>
@@ -40,7 +37,7 @@
 			</div>
 		</li>	
 		<!--my playlist clone -->
-		<div class="app-navigation-entry-edit ap_hidden" id="newPlaylist">
+<div class="ap_hidden" id="newPlaylist">
 			<div id="newPlaylist_controls">
 				<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist')); ?>" /> 
 				<button class="icon-checkmark" id="newPlaylistBtn_ok"></button>

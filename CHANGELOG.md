@@ -1,10 +1,156 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.0.0 - 2020-11-19
+### Changed
+- NC20 only version
+- NC20 search
+
+### Fixed
+- internal path for playlist items [#510](https://github.com/rello/audioplayer/pull/510)
+- Jump display to current song [#499](https://github.com/rello/audioplayer/pull/499)
+- css issue in sidebar
+- playlist sorting with empty list
+- use up to date notifications style
+
+## 2.12.0 - 2020-10-01
+### Added
+- NC 20
+
+### Fixed
+- Playlist ends outside of visible part of page #461
+
+## 2.11.2 - 2020-07-30
+### Fixed
+- Fix dark theme volume background color [#491](https://github.com/rello/audioplayer/pull/491) @[r4sas](https://github.com/r4sas)
+
+## 2.11.1 - 2020-07-30
+### Fixed
+~~- Track name/artis~~t is not correctly recognized in EXTINF [#485](https://github.com/rello/audioplayer/issues/485)
+- Volume controll working again
+- theming issues [#486](https://github.com/rello/audioplayer/issues/486)
+- Array offset error when deleting files [#484](https://github.com/rello/audioplayer/issues/484)
+- Fix player ui timer and change progressbar height [#483](https://github.com/rello/audioplayer/pull/483) @[r4sas](https://github.com/r4sas)
+- Rounded border for album picture in bar [#482](https://github.com/rello/audioplayer/pull/482) @[r4sas](https://github.com/r4sas)
+- Update volume css, autosave js [#481](https://github.com/rello/audioplayer/issues/481) @[r4sas](https://github.com/r4sas)
+- add volume slider CSS for FF and Edge [#489](https://github.com/rello/audioplayer/pull/489) @[r4sas](https://github.com/r4sas)
+
+### Added
+- Download track via path in sidebar [#453](https://github.com/rello/audioplayer/issues/453)
+
+## 2.11.0 - 2020-07-19
+### Added
+- WhatsNew popup [#480](https://github.com/rello/audioplayer/issues/480)
+- Hardware media keys & Chrome/Android player [#479](https://github.com/rello/audioplayer/issues/479)
+- Aif Aiff support [#475](https://github.com/rello/audioplayer/issues/475)
+- Absolute path and '../' in .m3u playlist files [#457](https://github.com/rello/audioplayer/issues/457)
+- Remember playback position between sessions [#288](https://github.com/rello/audioplayer/issues/288)
+- Repeat single track (or playlist) [#172](https://github.com/rello/audioplayer/issues/172)
+- Shuffle: play tracks only once [#361](https://github.com/rello/audioplayer/issues/361)
+
+### Changed
+- Migration from database.xml to /Migration
+- Drop soundmanager2 and bar-ui for HTML5 audio [#481](https://github.com/rello/audioplayer/issues/481)
+
+## 2.10.1 - 2020-06-15
+### Fixed
+- Search result hidden behind playlist [#472](https://github.com/rello/audioplayer/issues/472)
+
+## 2.10.0 - 2020-04-13
+### Added
+- add random-tracks smart playlist [#442](https://github.com/rello/audioplayer/issues/442)
+- NC 19
+
+### Fixed
+- Playlist ends outside of visible part of page [#461](https://github.com/rello/audioplayer/issues/461)
+
+## 2.9.0 - 2020-01-15
+### Changed
+- update getID3 to 1.9.18-201911300717
+- PHP 7.4 compatibility [#449](https://github.com/rello/audioplayer/issues/449)
+
+### Added
+- NC18
+
+### Fixed
+- SQL group by exception [#450](https://github.com/rello/audioplayer/issues/450)
+
+## 2.8.4 - 2019-09-3
+### Fixed
+- Play icon in Cover View not starting the correct track [#438](https://github.com/rello/audioplayer/issues/438)
+- Sidebar not hiding correctly
+- Cover issue in playbar
+- Resizing playlist on sidebar close
+
+## 2.8.3 - 2019-09-1
+### Fixed
+- typo in JS
+
+## 2.8.2 - 2019-09-1
+### Fixed
+- PostgreSQL compatibility issue [#437](https://github.com/rello/audioplayer/issues/437)
+- Sidebar not updating
+
+## 2.8.1 - 2019-08-31
+### Fixed
+- missing js file during release
+
+## 2.8.0 - 2019-08-31
+
+### Added
+- Cover view selectable for all categories [#165](https://github.com/rello/audioplayer/issues/165)
+- APIs & events to enable Audio Player add-ons [#408](https://github.com/rello/audioplayer/issues/408)
+- NC17 compatibility
+
+### Changed
+- Significant UI performance improvements (>70%)
+- Reduction of metadata transfer size (>45%) [#433](https://github.com/rello/audioplayer/issues/433)
+- Scanner performance improvements (>20%) [#419](https://github.com/rello/audioplayer/pull/419) @[mmatous](https://github.com/mmatous)
+- Add-on: SONOS playback as separate app [#411](https://github.com/rello/audioplayer/issues/411)
+- Add-on: ID3 editor as separate app [#436](https://github.com/rello/audioplayer/issues/436)
+- Add-on: Dashboard widget as separate app [#431](https://github.com/rello/audioplayer/issues/431)
+- Codestyle consistency [#403](https://github.com/rello/audioplayer/pull/403) [#405](https://github.com/rello/audioplayer/issues/405) @[mmatous](https://github.com/mmatous)
+- JS introduction of namespaces
+- Use non-minified Soundmanager [#417](https://github.com/rello/audioplayer/pull/417) @[mmatous](https://github.com/mmatous)  
+
+### Fixed
+- Fix hotkey clashing [#416](https://github.com/rello/audioplayer/pull/416) @[mmatous](https://github.com/mmatous) 
+- Remove hardcoded protocol [#421](https://github.com/rello/audioplayer/pull/421) @[mmatous](https://github.com/mmatous) 
+
+## 2.7.2 - 2019-06-23
+### Fixed
+- SONOS playback issue
+
+## 2.7.1 - 2019-06-17
+### Fixed
+- performance: caching for album cover arts
+- performance: reduce json data amount by optimizing content
+- better mobile css compatibility
+- Fix favourite star in sidebar [#400](https://github.com/rello/audioplayer/pull/400) @[mmatous](https://github.com/mmatous)
+
+### Changed
+- Show song info in title [#393](https://github.com/rello/audioplayer/pull/393) @[mmatous](https://github.com/mmatous)
+
+## 2.7.0 - 2019-04-21
+### Added
+- NC 16 support
+- es translation [#390](https://github.com/rello/audioplayer/pull/390) @[MaxGitHubAccount](https://github.com/MaxGitHubAccount)
+
+### Changed
+- appstore redesign
+- Additional AlbumArts files [#387](https://github.com/Rello/audioplayer/pull/387) @[tidoni](https://github.com/tidoni)
+
+### Fixed
+- JS error in favoriteUpdate() [#389](https://github.com/rello/audioplayer/issues/389)
+- iconv error for cyrillic symbols [#386](https://github.com/rello/audioplayer/issues/386)
+- incorrect occ -vv output for streams
+- Albums below the selected one are relocated [#377](https://github.com/rello/audioplayer/issues/377)
+- scanner stuck due to corrupt artwork file [#362](https://github.com/rello/audioplayer/issues/362)
+
 ## 2.6.1 - 2019-03-10
 ### Fixed
 - Artist search not working correctly [#380](https://github.com/rello/audioplayer/issues/380)
-- Adding track to playlist [#381](https://github.com/rello/audioplayer/issues/381)  @[r4sas](https://github.com/r4sas)
+- Adding track to playlist [#381](https://github.com/rello/audioplayer/issues/381) @[r4sas](https://github.com/r4sas)
 
 ### Added
 - Audio Player icon in search results [#380](https://github.com/rello/audioplayer/issues/380)

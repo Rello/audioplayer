@@ -2,12 +2,7 @@
 This is the issue tracker of Audio Player. Thanks for reporting issues!
 
 Please fill in the template as complete as possible. The more information we have, the better we can help.
-
-Please use this template because the automatically pre-filled template of the Issue Template app contains many unnecessary information for us and does not meet our requirements.
 -->
-### Expected behavior
-
-
 ### Actual behavior
 
 
@@ -15,9 +10,6 @@ Please use this template because the automatically pre-filled template of the Is
 1. 
 2. 
 3. 
-
-### Possible solution (optional)
-
 
 ### Additional information (optional)
 
@@ -42,9 +34,6 @@ Please use this template because the automatically pre-filled template of the Is
 
 
 ### Client configuration
-**Operating system:**
-
-
 **Browser:**
 
 

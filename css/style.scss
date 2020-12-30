@@ -7,23 +7,35 @@
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
  * @author Artem Anufrij <artem.anufrij@live.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
 
 .ap_hidden {
   display: none !important;
+
 }
 
-#albumPlay {
+#view-toggle {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  opacity: 0.5;
+  z-index: 100;
+  padding: 15px 40px;
+  background-position: 15px;
+  cursor: pointer;
+}
+
+#AlbumPlay {
   position: absolute;
   display: block;
-  height: 25px;
-  width: 25px;
-  top: 120px;
+  height: 30px;
+  width: 30px;
+  top: 115px;
   left: 5px;
   @include icon-color('albumplay', 'audioplayer', '#FFFFFF', 1);
-  background-size: 25px;
+  background-size: 30px;
   opacity: 0.5;
   cursor: pointer;
 }
@@ -77,7 +89,7 @@
 }
 
 i#scanAudiosFirst {
-  font-size: 30px;
+  font-size: 20px;
   cursor: pointer;
 }
 
@@ -95,7 +107,9 @@ i#scanAudiosFirst {
   line-height: 44px;
   padding-left: 40px;
   background-size: 18px 18px;
-  background: url('../img/albums.svg') no-repeat 11px center;
+  @include icon-color('albums', 'audioplayer', '#CCCCCC', 1);
+  background-repeat: no-repeat;
+  background-position: 11px;
   margin: 6px 0;
   opacity: 0.57;
 }
@@ -123,6 +137,7 @@ i#scanAudiosFirst {
 }
 
 #category_selector {
+  background: var(--color-main-background);
   width: 100%;
   margin: 0;
 }
@@ -188,6 +203,7 @@ i#scanAudiosFirst {
   float: left;
   padding: 0 6px 0 12px;
   opacity: 0.57;
+  cursor: pointer;
 }
 
 #myCategory .ui-droppable {
@@ -212,10 +228,11 @@ i#scanAudiosFirst {
   float: left;
   position: relative;
   width: 185px;
+  min-height: 10px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  cursor: pointer;
+  cursor:inherit;
 }
 
 #myCategory li span.pl-name-play {
@@ -225,7 +242,7 @@ i#scanAudiosFirst {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  cursor: pointer;
+  cursor:inherit;
 }
 
 #albenoverview li:hover,
@@ -239,6 +256,7 @@ i#scanAudiosFirst {
   position: absolute;
   width: 24px;
   text-align: center;
+  cursor:inherit;
 }
 
 .ui-state-highlight {
@@ -311,14 +329,16 @@ i#scanAudiosFirst {
 }
 
 #playlist-container {
-  margin: 0;
-  width: 98%;
-  position: relative;
-  top: 60px;
-  float: left;
-  display: inline;
-  height: auto;
-  padding-left: 10px;
+    margin: 0;
+    width: 98%;
+    position: relative;
+    float: left;
+    display: inline;
+    height: auto;
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-bottom: 30px;
+    background-color: var(--color-main-background);
 }
 
 #individual-playlist {
@@ -424,7 +444,14 @@ i#scanAudiosFirst {
   display: inline-block;
   vertical-align: middle;
   background-size: 16px 16px;
+}
+
+#individual-playlist .icon-star {
   opacity: 0;
+}
+
+.icon-starred {
+  opacity: 0.3;
 }
 
 #individual-playlist .icon:hover,
@@ -519,20 +546,11 @@ i#scanAudiosFirst {
 }
 
 .no-songs-found {
-  font-size: 30px;
-  font-weight: bold;
-  width: 100%;
-  display: block;
-  text-align: center;
-}
-
-.no-songs-found-pl {
   font-size: 20px;
-  font-weight: bold;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+  margin-top: 20px;
   line-height: 28px;
   display: block;
   text-align: center;
@@ -697,7 +715,7 @@ i#scanAudiosFirst {
 
 .songcontainer-inner {
   position: relative;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .songcontainer a.close {
@@ -780,25 +798,18 @@ i#scanAudiosFirst {
   position: relative;
   width: 30px;
   float: left;
-
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .songcontainer span.title {
   position: relative;
-  width: 61%;
+  width: 65%;
   float: left;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.songcontainer span.time {
-  position: relative;
-  float: left;
-  /*right:5px;
-  width:60px;*/
-  text-align: right;
-
+  margin-left: 5px;
 }
 
 .songcontainer .albumwrapper li span.edit-song {
@@ -821,6 +832,85 @@ i#scanAudiosFirst {
   font-weight: bold;
 }
 
+input[type=range].volume-slider {
+  -webkit-appearance: none;
+  background: var(--color-main-background);
+}
+
+input[type=range].volume-slider:focus {
+  outline: none;
+}
+
+input[type=range].volume-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: var(--color-background-dark);
+  border-radius: var(--border-radius);
+}
+
+input[type=range].volume-slider::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: var(--color-background-dark);
+  border-radius: var(--border-radius);
+}
+
+input[type=range].volume-slider::-webkit-slider-thumb {
+  border: 1px solid var(--color-border-dark);
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  background: var(--color-main-background);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -3px;
+}
+
+input[type=range].volume-slider::-moz-range-thumb {
+  border: 1px solid var(--color-border-dark);
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  background: var(--color-main-background);
+  cursor: pointer;
+}
+
+input[type=range].volume-slider::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range].volume-slider::-ms-fill-lower {
+  background: #ededed;
+  border-radius: 3px;
+}
+
+input[type=range].volume-slider::-ms-fill-upper {
+  background: #ededed;
+  border-radius: 3px;
+}
+
+input[type=range].volume-slider::-ms-thumb {
+  border: 1px solid #dbdbdb;
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.volume-slider {
+  margin: 0;
+  top: 3px !important;
+  opacity: unset;
+}
+
 .sm2-playlist-bd li.selected a {
   background: #000;
 }
@@ -828,16 +918,18 @@ i#scanAudiosFirst {
 .sm2-playlist-cover {
   display: block;
   float: left;
-  width: 100%;
+  width: 40px;
   height: 40px;
   line-height: 40px;
   font-weight: bold;
   text-align: center;
-  cursor: pointer;
   text-transform: capitalize;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+  border: 1px solid lightgray;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .draggingSong {
@@ -889,12 +981,12 @@ li.dropHover {
   background-size: 250px
 }
 
-#audioplayerTabView .table,
+#metadataTabView .table,
 #playlistsTabView .table {
   margin-left: 2em;
 }
 
-#audioplayerTabView .key,
+#metadataTabView .key,
 #playlistsTabView .key {
   padding-right: 1em;
   vertical-align: top;
@@ -902,7 +994,7 @@ li.dropHover {
   white-space: nowrap;
 }
 
-#audioplayerTabView .value,
+#metadataTabView .value,
 #playlistsTabView .value {
   width: 75%;
   text-overflow: ellipsis;
@@ -914,6 +1006,31 @@ li.dropHover {
 #playlistsTabView .icon {
   padding: 0 0 0 16px;
   opacity: 0.4;
+}
+
+.whatsNewPopover {
+  bottom: 35px !important;
+  left: 15px !important;
+  width: 270px;
+  z-index: 700;
+}
+
+.whatsNewPopover p {
+  width: auto !important;
+}
+
+.whatsNewPopover .caption {
+  font-weight: bold;
+  cursor: auto !important;
+}
+
+.whatsNewPopover .icon-close {
+  position: absolute;
+  right: 0;
+}
+
+.whatsNewPopover::after {
+  content: none;
 }
 
 @media only screen and (max-width: 768px) {
@@ -932,41 +1049,30 @@ li.dropHover {
 
   }
 
-  #individual-playlist-header span span.header-artist,
-  #individual-playlist-header span span.header-album,
-  #individual-playlist-header span span.header-opt,
+  #individual-playlist-header span.header-artist,
+  #individual-playlist-header span.header-album,
+  #individual-playlist-header span.header-time,
+  #individual-playlist-header span.header-opt,
   #individual-playlist li span.number,
   #individual-playlist li span.interpret,
   #individual-playlist li span.album-indi,
-  #individual-playlist li span.ioc-trash {
+  #individual-playlist li span.edit-song,
+  #individual-playlist li span.time {
     display: none;
   }
 
-  #individual-playlist-header span span.header-num {
-    width: 17px;
-    visibility: hidden
+  #individual-playlist-header span.actionsSong,
+  #individual-playlist li span.number {
+    width: 20px;
   }
 
+  #individual-playlist-header span.header-opt,
   #individual-playlist li span.title {
     width: 80%;
   }
 
   #individual-playlist li {
     font-weight: 200;
-    font-size: 16px;
-    height: 24px;
-    line-height: 24px;
-  }
-
-  #individual-playlist li .actionsSong {
-    height: 20px;
-    line-height: 20px;
-  }
-
-  #individual-playlist li .actionsSong i.ioc {
-    font-size: 20px;
-    height: 20px;
-    line-height: 20px;
   }
 }
 
@@ -1022,12 +1128,11 @@ li.dropHover {
     display: none;
   }
 
-  .songcontainer {
-
-  }
-
-  .songcontainer h3, .songcontainer h2 {
-    padding-left: 30px;
+  .songcontainer h3,
+  .songcontainer h2,
+  .songcontainer .songlist {
+    padding-left: 20px;
+    width: 100%;
   }
 
   .songcontainer .songlist.albumwrapper {
@@ -1085,34 +1190,4 @@ li.dropHover {
     background-color: rgba(255, 255, 255, 0.2);
   }
 
-  #individual-playlist-header span span.header-artist,
-  #individual-playlist-header span span.header-album,
-  #individual-playlist-header span span.header-opt,
-  #individual-playlist li span.number,
-  #individual-playlist li span.interpret,
-  #individual-playlist li span.album-indi,
-  #individual-playlist li span.ioc.ioc-delete,
-  #individual-playlist li span.edit-song {
-    display: none;
-  }
-
-  #individual-playlist-header span span.header-num {
-    width: 17px;
-    visibility: hidden
-  }
-
-  #individual-playlist li span.title {
-    width: 70%;
-  }
-
-  #individual-playlist li span.time,
-  #individual-playlist-header span.header-time {
-    right: 10px;
-    text-align: right;
-    width: unset;
-  }
-
-  #individual-playlist li {
-    font-weight: 200;
-  }
 }

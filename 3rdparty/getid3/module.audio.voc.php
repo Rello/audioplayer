@@ -59,19 +59,19 @@ class getid3_voc extends getid3_handler
 
 		do {
 
-			$BlockOffset    = $this->ftell();
-			$BlockData      = $this->fread(4);
-			$BlockType      = ord($BlockData{0});
-			$BlockSize      = getid3_lib::LittleEndian2Int(substr($BlockData, 1, 3));
-			$ThisBlock      = array();
+            $BlockOffset = $this->ftell();
+            $BlockData = $this->fread(4);
+            $BlockType = ord($BlockData[0]);
+            $BlockSize = getid3_lib::LittleEndian2Int(substr($BlockData, 1, 3));
+            $ThisBlock = array();
 
-			getid3_lib::safe_inc($thisfile_voc['blocktypes'][$BlockType], 1);
-			switch ($BlockType) {
-				case 0:  // Terminator
-					// do nothing, we'll break out of the loop down below
-					break;
+            getid3_lib::safe_inc($thisfile_voc['blocktypes'][$BlockType], 1);
+            switch ($BlockType) {
+                case 0:  // Terminator
+                    // do nothing, we'll break out of the loop down below
+                    break;
 
-				case 1:  // Sound data
+                case 1:  // Sound data
 					$BlockData .= $this->fread(2);
 					if ($info['avdataoffset'] <= $OriginalAVdataOffset) {
 						$info['avdataoffset'] = $this->ftell();

@@ -31,33 +31,33 @@ class getid3_tta extends getid3_handler
 		$this->fseek($info['avdataoffset']);
 		$ttaheader = $this->fread(26);
 
-		$info['tta']['magic'] = substr($ttaheader, 0, 3);
-		$magic = 'TTA';
-		if ($info['tta']['magic'] != $magic) {
-			$this->error('Expecting "'.getid3_lib::PrintHexBytes($magic).'" at offset '.$info['avdataoffset'].', found "'.getid3_lib::PrintHexBytes($info['tta']['magic']).'"');
-			unset($info['fileformat']);
-			unset($info['audio']);
-			unset($info['tta']);
-			return false;
-		}
+        $info['tta']['magic'] = substr($ttaheader, 0, 3);
+        $magic = 'TTA';
+        if ($info['tta']['magic'] != $magic) {
+            $this->error('Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['tta']['magic']) . '"');
+            unset($info['fileformat']);
+            unset($info['audio']);
+            unset($info['tta']);
+            return false;
+        }
 
-		switch ($ttaheader{3}) {
-			case "\x01": // TTA v1.x
-			case "\x02": // TTA v1.x
-			case "\x03": // TTA v1.x
-				// "It was the demo-version of the TTA encoder. There is no released format with such header. TTA encoder v1 is not supported about a year."
-				$info['tta']['major_version'] = 1;
-				$info['avdataoffset'] += 16;
+        switch ($ttaheader[3]) {
+            case "\x01": // TTA v1.x
+            case "\x02": // TTA v1.x
+            case "\x03": // TTA v1.x
+                // "It was the demo-version of the TTA encoder. There is no released format with such header. TTA encoder v1 is not supported about a year."
+                $info['tta']['major_version'] = 1;
+                $info['avdataoffset'] += 16;
 
-				$info['tta']['compression_level']   = ord($ttaheader{3});
-				$info['tta']['channels']            = getid3_lib::LittleEndian2Int(substr($ttaheader,  4,  2));
-				$info['tta']['bits_per_sample']     = getid3_lib::LittleEndian2Int(substr($ttaheader,  6,  2));
-				$info['tta']['sample_rate']         = getid3_lib::LittleEndian2Int(substr($ttaheader,  8,  4));
-				$info['tta']['samples_per_channel'] = getid3_lib::LittleEndian2Int(substr($ttaheader, 12,  4));
+                $info['tta']['compression_level'] = ord($ttaheader[3]);
+                $info['tta']['channels'] = getid3_lib::LittleEndian2Int(substr($ttaheader, 4, 2));
+                $info['tta']['bits_per_sample'] = getid3_lib::LittleEndian2Int(substr($ttaheader, 6, 2));
+                $info['tta']['sample_rate'] = getid3_lib::LittleEndian2Int(substr($ttaheader, 8, 4));
+                $info['tta']['samples_per_channel'] = getid3_lib::LittleEndian2Int(substr($ttaheader, 12, 4));
 
-				$info['audio']['encoder_options']   = '-e'.$info['tta']['compression_level'];
-				$info['playtime_seconds']           = $info['tta']['samples_per_channel'] / $info['tta']['sample_rate'];
-				break;
+                $info['audio']['encoder_options'] = '-e' . $info['tta']['compression_level'];
+                $info['playtime_seconds'] = $info['tta']['samples_per_channel'] / $info['tta']['sample_rate'];
+                break;
 
 			case '2': // TTA v2.x
 				// "I have hurried to release the TTA 2.0 encoder. Format documentation is removed from our site. This format still in development. Please wait the TTA2 format, encoder v4."
@@ -91,10 +91,10 @@ class getid3_tta extends getid3_handler
 				$info['playtime_seconds']           = $info['tta']['data_length'] / $info['tta']['sample_rate'];
 				break;
 
-			default:
-				$this->error('This version of getID3() ['.$this->getid3->version().'] only knows how to handle TTA v1 and v2 - it may not work correctly with this file which appears to be TTA v'.$ttaheader{3});
-				return false;
-				break;
+            default:
+                $this->error('This version of getID3() [' . $this->getid3->version() . '] only knows how to handle TTA v1 and v2 - it may not work correctly with this file which appears to be TTA v' . $ttaheader[3]);
+                return false;
+                break;
 		}
 
 		$info['audio']['encoder']         = 'TTA v'.$info['tta']['major_version'];

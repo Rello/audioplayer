@@ -5,327 +5,279 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
 
-Audios.prototype.showSidebar = function (evt) {
+'use strict';
 
-    var trackid = $(evt.target).closest('li').attr('data-trackid');
-    var fileid = $(evt.target).closest('li').attr('data-fileid');
-    var $appsidebar = $("#app-sidebar");
+if (!OCA.Audioplayer) {
+    /**
+     * @namespace
+     */
+    OCA.Audioplayer = {};
+}
+if (!OCA.Audioplayer.Sidebar) {
+    /**
+     * @namespace
+     */
+    OCA.Audioplayer.Sidebar = {};
+}
 
-    if ($appsidebar.data('trackid') === trackid) {
-        $this.hideSidebar();
-    } else {
-        var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-        var trackData = $("li[data-trackid='" + trackid + "']");
-        var cover = trackData.attr('data-cover');
+/**
+ * @namespace OCA.Audioplayer.Sidebar
+ */
+OCA.Audioplayer.Sidebar = {
+    sidebar_tabs: {},
 
-        if (cover !== '') {
-            //$('.thumbnailContainer').addClass('large');
-            $('#sidebarThumbnail').attr({
-                'style': 'background-image:url(' + getcoverUrl + cover + ')'
-            });
-            if ($this.PlaylistContainer.width() < 850) {
-                $('#sidebarThumbnail').addClass('larger');
-            } else {
-                $('#sidebarThumbnail').addClass('full');
-            }
+    showSidebar: function (evt, trkid) {
+        if (typeof trkid !== 'undefined') {
+            var trackid = trkid;
         } else {
-            //$('.thumbnailContainer').removeClass('large');
-            $('#sidebarThumbnail').attr({
-                'style': 'display: none;'
-            }).removeClass('larger').removeClass('full');
+            var targetPlaylistItem = evt.target.closest('li');
+            var trackid = targetPlaylistItem.getAttribute('data-trackid');
         }
 
-        $('#sidebarTitle').html(decodeURIComponent(trackData.attr('data-path')));
-        $('#sidebarMime').html(trackData.attr('data-mimetype'));
+        var appsidebar = document.getElementById('app-sidebar');
 
-        $('#sidebarFavorite').attr({'data-fileid': fileid})
-            .on('click', $this.favoriteUpdate.bind($this));
+        if (appsidebar.dataset.trackid === trackid) {
+            OCA.Audioplayer.Sidebar.hideSidebar();
+        } else {
+            var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+            var trackData = $('li[data-trackid=\'' + trackid + '\']');
+            var cover = trackData.attr('data-cover');
+            var sidebarThumbnail = $('#sidebarThumbnail');
+            $('.thumbnailContainer').addClass('portrait large');
 
-        if ($appsidebar.data('trackid') === '') {
-            $(".tabHeaders").empty();
-            $(".tabsContainer").empty();
-            $('#sidebarClose').click($this.hideSidebar.bind($this));
-            $this.registerAudioplayerTab();
-            $this.registerID3EditorTab();
-            $this.registerPlaylistsTab();
-            if ($('#audioplayer_sonos').val() === 'checked') {
-                $this.registerSONOSTab();
+            if (cover !== '') {
+                sidebarThumbnail.attr({
+                    'style': 'background-image:url(' + getcoverUrl + cover + ')'
+                });
+            } else {
+                sidebarThumbnail.attr({
+                    'style': 'display: none;'
+                });
             }
-            // noinspection JSUnresolvedFunction
-            OC.Apps.showAppSidebar();
+
+            document.getElementById('sidebarTitle').innerHTML = decodeURIComponent(trackData.attr('data-title'));
+            document.getElementById('sidebarMime').innerHTML = trackData.attr('data-mimetype');
+
+            var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
+            starIcon.off();
+            starIcon.on('click', OCA.Audioplayer.Core.toggleFavorite);
+
+            if (appsidebar.dataset.trackid === '') {
+                $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar);
+
+                OCA.Audioplayer.Sidebar.constructTabs();
+                $('#tabHeaderMetadata').addClass('selected');
+                OC.Apps.showAppSidebar();
+            }
+
+            appsidebar.dataset.trackid = trackid;
+            $('.tabHeader.selected').trigger('click');
+            OCA.Audioplayer.UI.resizePlaylist();
         }
+    },
 
-        $appsidebar.data('trackid', trackid);
-        $appsidebar.data('fileid', fileid);
-        $('.tabHeader.selected').click();
-    }
-};
+    registerSidebarTab: function (tab) {
+        var id = tab.id;
+        this.sidebar_tabs[id] = tab;
+    },
 
-Audios.prototype.registerPlaylistsTab = function () {
-    var li = $('<li/>').addClass('tabHeader')
-        .attr({
-            'id': 'tabHeaderPlaylists',
-            'data-tabid': '3',
-            'data-tabindex': '3'
+    constructTabs: function () {
+        var tab = {};
+
+        document.querySelector('.tabHeaders').innerHTML = '';
+        document.querySelector('.tabsContainer').innerHTML = '';
+
+        OCA.Audioplayer.Sidebar.registerSidebarTab({
+            id: 'tabHeaderAddons',
+            class: 'addonsTabView',
+            tabindex: '9',
+            name: t('audioplayer', 'Add-ons'),
+            action: OCA.Audioplayer.Sidebar.addonsTabView,
         });
-    var atag = $('<a/>').text(t('audioplayer', 'Playlists'));
-    li.append(atag);
-    $('.tabHeaders').append(li);
 
-    var div = $('<div/>').addClass('tab playlistsTabView')
-        .attr({
-            'id': 'playlistsTabView'
+        OCA.Audioplayer.Sidebar.registerSidebarTab({
+            id: 'tabHeaderMetadata',
+            class: 'metadataTabView',
+            tabindex: '1',
+            name: t('audioplayer', 'Metadata'),
+            action: OCA.Audioplayer.Sidebar.metadataTabView,
         });
-    $('.tabsContainer').append(div);
 
-    $('#tabHeaderPlaylists').click($this.playlistsTabView.bind($this));
-};
-
-Audios.prototype.registerAudioplayerTab = function () {
-    var li = $('<li/>').addClass('tabHeader selected')
-        .attr({
-            'id': 'tabHeaderAudiplayer',
-            'data-tabid': '1',
-            'data-tabindex': '1'
+        OCA.Audioplayer.Sidebar.registerSidebarTab({
+            id: 'tabHeaderPlaylists',
+            class: 'playlistsTabView',
+            tabindex: '2',
+            name: t('audioplayer', 'Playlists'),
+            action: OCA.Audioplayer.Sidebar.playlistsTabView,
         });
-    var atag = $('<a/>').text(t('audioplayer', 'Metadata'));
-    li.append(atag);
-    $('.tabHeaders').append(li);
 
-    var div = $('<div/>').addClass('tab audioplayerTabView')
-        .attr({
-            'id': 'audioplayerTabView'
+        var items = _.map(OCA.Audioplayer.Sidebar.sidebar_tabs, function (item) {
+            return item;
         });
-    $('.tabsContainer').append(div);
+        items.sort(OCA.Audioplayer.Sidebar.sortByName);
 
-    $('#tabHeaderAudiplayer').click($this.audioplayerTabView.bind($this));
-};
+        for (tab in items) {
+            var li = $('<li/>').addClass('tabHeader')
+                .attr({
+                    'id': items[tab].id,
+                    'tabindex': items[tab].tabindex
+                });
+            var atag = $('<a/>').text(items[tab].name);
+            atag.prop('title', items[tab].name);
+            li.append(atag);
+            $('.tabHeaders').append(li);
 
-Audios.prototype.registerID3EditorTab = function () {
-    var li = $('<li/>').addClass('tabHeader')
-        .attr({
-            'id': 'tabHeaderID3Editor',
-            'data-tabid': '2',
-            'data-tabindex': '2'
-        });
-    var atag = $('<a/>').text(t('audioplayer', 'ID3 Editor'));
-    li.append(atag);
-    $('.tabHeaders').append(li);
+            var div = $('<div/>').addClass('tab ' + items[tab].class)
+                .attr({
+                    'id': items[tab].class
+                });
+            $('.tabsContainer').append(div);
+            $('#' + items[tab].id).on('click', items[tab].action);
+        }
+    },
 
-    var div = $('<div/>').addClass('tab ID3EditorTabView')
-        .attr({
-            'id': 'ID3EditorTabView'
-        });
-    $('.tabsContainer').append(div);
+    hideSidebar: function () {
+        document.getElementById('app-sidebar').dataset.trackid = '';
+        OC.Apps.hideAppSidebar();
+        document.querySelector('.tabHeaders').innerHTML = '';
+        document.querySelector('.tabsContainer').innerHTML = '';
+        OCA.Audioplayer.UI.resizePlaylist();
+    },
 
-    if ($('#audioplayer_editor').val() === 'true') {
-        $('#tabHeaderID3Editor').click($this.APEditorTabView.bind($this));
-    } else {
-        $('#tabHeaderID3Editor').click($this.ID3EditorTabView.bind($this));
-    }
-};
+    metadataTabView: function () {
+        var trackid = document.getElementById('app-sidebar').dataset.trackid;
 
-Audios.prototype.registerSONOSTab = function () {
-    var li = $('<li/>').addClass('tabHeader')
-        .attr({
-            'id': 'tabHeaderSONOS',
-            'data-tabid': '4',
-            'data-tabindex': '4'
-        });
-    var atag = $('<a/>').text(t('audioplayer', 'SONOS'));
-    li.append(atag);
-    $('.tabHeaders').append(li);
+        OCA.Audioplayer.Sidebar.resetView();
+        $('#tabHeaderMetadata').addClass('selected');
+        $('#metadataTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
 
-    var div = $('<div/>').addClass('tab SONOSTabView')
-        .attr({
-            'id': 'SONOSTabView'
-        });
-    $('.tabsContainer').append(div);
+        $.ajax({
+            type: 'GET',
+            url: OC.generateUrl('apps/audioplayer/getaudioinfo'),
+            data: {trackid: trackid},
+            success: function (jsondata) {
+                var table;
+                if (jsondata.status === 'success') {
 
-    $('#tabHeaderSONOS').click($this.SONOSTabView.bind($this));
-};
+                    table = $('<div>').css('display', 'table').addClass('table');
+                    var tablerow;
+                    var m;
+                    var tablekey;
+                    var tablevalue;
+                    var tablevalueDownload;
 
-Audios.prototype.hideSidebar = function () {
-    // noinspection JSUnresolvedFunction
-    $("#app-sidebar").data('trackid', '');
-    OC.Apps.hideAppSidebar();
-    $(".tabHeaders").empty();
-    $(".tabsContainer").empty();
-};
+                    var audioinfo = jsondata.data;
+                    for (m in audioinfo) {
+                        tablerow = $('<div>').css('display', 'table-row');
+                        tablekey = $('<div>').addClass('key').text(t('audioplayer', m));
+                        tablevalue = $('<div>').addClass('value')
+                            .text(audioinfo[m]);
+                        if (m === 'Path') {
+                            tablevalue.text('');
+                            tablevalueDownload = $('<a>').attr('href', OC.linkToRemote('webdav' + audioinfo[m])).text(audioinfo[m]);
+                            tablevalue.append(tablevalueDownload);
+                        }
+                        tablerow.append(tablekey).append(tablevalue);
 
-Audios.prototype.audioplayerTabView = function () {
-    var trackid = $("#app-sidebar").data('trackid');
+                        if (m === 'fav' && audioinfo[m] === 't') {
+                            $('#sidebarFavorite').removeClass('icon-star')
+                                .addClass('icon-starred')
+                                .prop('title', t('files', 'Favorited'));
+                            audioinfo[m] = '';
+                        } else if (m === 'fav') {
+                            $('#sidebarFavorite').removeClass('icon-starred')
+                                .addClass('icon-star')
+                                .prop('title', t('files', 'Favorite'));
+                            audioinfo[m] = '';
+                        }
 
-    $this.resetView();
-    $('#tabHeaderAudiplayer').addClass('selected');
-    $('#audioplayerTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
-
-    $.ajax({
-        type: 'GET',
-        url: OC.generateUrl('apps/audioplayer/getaudioinfo'),
-        data: {trackid: trackid},
-        success: function (jsondata) {
-            var table;
-            if (jsondata.status === 'success') {
-
-                table = $('<div>').css('display', 'table').addClass('table');
-                var tablerow;
-                var m;
-                var tablekey;
-                var tablevalue;
-
-                var audioinfo = jsondata.data;
-                for (m in audioinfo) {
-                    tablerow = $('<div>').css('display', 'table-row');
-                    tablekey = $('<div>').addClass('key').text(t('audioplayer', m));
-                    tablevalue = $('<div>').addClass('value')
-                        .text(audioinfo[m]);
-                    tablerow.append(tablekey).append(tablevalue);
-
-                    if (m === 'fav' && audioinfo[m] === 't') {
-                        $('#sidebarFavorite').removeClass('icon-star')
-                            .addClass('icon-starred')
-                            .prop('title', t('files', 'Favorited'));
-                        audioinfo[m] = '';
-                    } else if (m === 'fav') {
-                        $('#sidebarFavorite').removeClass('icon-starred')
-                            .addClass('icon-star')
-                            .prop('title', t('files', 'Favorite'));
-                        audioinfo[m] = '';
+                        if (audioinfo[m] !== '' && audioinfo[m] !== null) {
+                            table.append(tablerow);
+                        }
                     }
+                } else {
+                    table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No data') + '</p></div>';
+                }
 
-                    if (audioinfo[m] !== '' && audioinfo[m] !== null) {
+                $('#metadataTabView').html(table);
+            }
+        });
+    },
+
+    playlistsTabView: function () {
+        var trackid = document.getElementById('app-sidebar').dataset.trackid;
+
+        OCA.Audioplayer.Sidebar.resetView();
+        $('#tabHeaderPlaylists').addClass('selected');
+        $('#playlistsTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
+
+        $.ajax({
+            type: 'POST',
+            url: OC.generateUrl('apps/audioplayer/getplaylists'),
+            data: {trackid: trackid},
+            success: function (jsondata) {
+                var table;
+                if (jsondata.status === 'success') {
+
+                    table = $('<div>').css('display', 'table').addClass('table');
+                    var tablerow;
+                    var m;
+                    var tablekey;
+                    var tablevalue;
+
+                    var audioinfo = jsondata.data;
+                    for (m in audioinfo) {
+                        var spanDelete = $('<a/>').attr({
+                            'class': 'icon icon-delete toolTip',
+                            'data-listid': audioinfo[m].playlist_id,
+                            'data-trackid': trackid,
+                            'title': t('audioplayer', 'Remove')
+                        }).on('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist);
+
+                        tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
+                        tablekey = $('<div>').addClass('key').append(spanDelete);
+
+                        tablevalue = $('<div>').addClass('value')
+                            .text(audioinfo[m].name);
+                        tablerow.append(tablekey).append(tablevalue);
                         table.append(tablerow);
                     }
+                } else {
+                    table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No playlist entry') + '</p></div>';
                 }
-            } else {
-                table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No data') + '</p></div>';
+
+                $('#playlistsTabView').html(table);
             }
+        });
 
-            $('#audioplayerTabView').html(table);
-        }
-    });
-};
+    },
 
-Audios.prototype.playlistsTabView = function () {
-    var trackid = $("#app-sidebar").data('trackid');
+    addonsTabView: function () {
+        OCA.Audioplayer.Sidebar.resetView();
+        $('#tabHeaderAddons').addClass('selected');
+        var html = '<div style="margin-left: 2em; background-position: initial;" class="icon-info">';
+        html += '<p style="margin-left: 2em;">' + t('audioplayer', 'Available Audio Player Add-Ons:') + '</p>';
+        html += '<p style="margin-left: 2em;"><br></p>';
+        html += '<a href="https://github.com/rello/audioplayer_editor"  target="_blank" >';
+        html += '<p style="margin-left: 2em;">- ' + t('audioplayer', 'ID3 editor') + '</p>';
+        html += '</a>';
+        html += '<a href="https://github.com/rello/audioplayer_sonos"  target="_blank" >';
+        html += '<p style="margin-left: 2em;">- ' + t('audioplayer', 'SONOS playback') + '</p>';
+        html += '</a></div>';
+        $('#addonsTabView').removeClass('hidden').html(html);
+    },
 
-    $this.resetView();
-    $('#tabHeaderPlaylists').addClass('selected');
-    $('#playlistsTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
+    resetView: function () {
+        $('.tabHeader.selected').removeClass('selected');
+        $('.tab').addClass('hidden');
+    },
 
-    $.ajax({
-        type: 'POST',
-        url: OC.generateUrl('apps/audioplayer/getplaylists'),
-        data: {trackid: trackid},
-        success: function (jsondata) {
-            var table;
-            if (jsondata.status === 'success') {
-
-                table = $('<div>').css('display', 'table').addClass('table');
-                var tablerow;
-                var m;
-                var tablekey;
-                var tablevalue;
-
-                var audioinfo = jsondata.data;
-                for (m in audioinfo) {
-                    var spanDelete = $('<a/>').attr({
-                        'class': 'icon icon-delete toolTip',
-                        'data-listid': audioinfo[m].playlist_id,
-                        'data-trackid': trackid,
-                        'title': t('audioplayer', 'Remove')
-                    }).click($this.removeSongFromPlaylist.bind($this));
-
-                    tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
-                    tablekey = $('<div>').addClass('key').append(spanDelete);
-
-                    tablevalue = $('<div>').addClass('value')
-                        .text(audioinfo[m].name);
-                    tablerow.append(tablekey).append(tablevalue);
-                    table.append(tablerow);
-                }
-            } else {
-                table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No playlist entry') + '</p></div>';
-            }
-
-            $('#playlistsTabView').html(table);
-        }
-    });
-
-};
-
-Audios.prototype.ID3EditorTabView = function () {
-    $this.resetView();
-    $('#tabHeaderID3Editor').addClass('selected');
-    var html = '<div style="margin-left: 2em; background-position: initial;" class="icon-info">';
-    html += '<a href="https://github.com/rello/audioplayer_editor"  target="_blank" >';
-    html += '<p style="margin-left: 2em;">' + t('audioplayer', 'No ID3 editor installed') + '</p>';
-    html += '</a></div>';
-    $('#ID3EditorTabView').removeClass('hidden').html(html);
-};
-
-Audios.prototype.SONOSTabView = function () {
-    var fileId = $("#app-sidebar").data('fileid');
-    $this.resetView();
-    $('#tabHeaderSONOS').addClass('selected');
-
-    var html = '<div style="margin-left: 2em; background-position: initial;" class="icon-info">';
-    html += '<p style="margin-left: 2em;">' + t('audioplayer', 'Details for error analysis') + '</p>';
-    html += '<br>';
-    html += '</div>';
-    $('#SONOSTabView').removeClass('hidden').html(html);
-
-    $.ajax({
-        type: 'POST',
-        url: OC.generateUrl('apps/audioplayer/sonosdebug'),
-        data: {'fileId': fileId},
-        success: function (jsondata) {
-            html = $('#SONOSTabView').html();
-            html += '<p style="margin-left: 2em;">' + t('audioplayer', 'SMB link from user settings:') + '</p>';
-            html += '<p style="margin-left: 2em;">' + jsondata.smb + '</p>';
-            html += '<br>';
-            html += '<p style="margin-left: 2em;">' + t('audioplayer', 'Combined link for your SONOS controller:') + '</p>';
-            html += '<p style="margin-left: 2em;">' + jsondata.sonos + '</p>';
-            $('#SONOSTabView').html(html);
-        }
-    });
-
-
-};
-
-Audios.prototype.resetView = function () {
-    $('#tabHeaderAudiplayer').removeClass('selected');
-    $('#tabHeaderPlaylists').removeClass('selected');
-    $('#tabHeaderID3Editor').removeClass('selected');
-    $('#tabHeaderSONOS').removeClass('selected');
-    $('#audioplayerTabView').addClass('hidden');
-    $('#playlistsTabView').addClass('hidden');
-    $('#ID3EditorTabView').addClass('hidden');
-    $('#SONOSTabView').addClass('hidden');
-};
-
-Audios.prototype.removeSongFromPlaylist = function (evt) {
-
-    var trackid = $(evt.target).attr('data-trackid');
-    var playlist = $(evt.target).attr('data-listid');
-
-    $.ajax({
-        type: 'POST',
-        url: OC.generateUrl('apps/audioplayer/removetrackfromplaylist'),
-        data: {
-            'playlistid': playlist,
-            'songid': trackid
-        },
-        success: function (jsondata) {
-            if (jsondata === true) {
-                var currentCount = $('#myCategory li[data-id="' + playlist + '"]').find('.counter');
-                currentCount.text(currentCount.text() - 1);
-                $('#playlistsTabView div[data-id="' + playlist + '"]').remove();
-            }
-        }
-    });
+    sortByName: function (a, b) {
+        var aName = a.tabindex;
+        var bName = b.tabindex;
+        return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+    },
 };

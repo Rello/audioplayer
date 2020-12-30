@@ -66,12 +66,7 @@
     "Formats supported by the browser": "Vom Browser unterstützte Formate",
     "Formats not supported by the browser": "Vom Browser nicht unterstützte Formate",
     "Please reset and rescan library to make use of new features.": "Bitte Bibliothek zurücksetzen und erneut scannen, um neue Funktionen nutzen zu können.",
-    "Do you like this app?": "Gefällt Dir die App?",
-    "Name of the SONOS player or group": "Name des SONOS Lautsprechers oder der Gruppe",
-    "All titles will be played on your SONOS speaker": "Alle Titel werden auf Deinem SONOS Lautsprecher abgespielt",
-    "Server path to the SMB directory where all audio files are located": "Server Pfad des SMB Ordners, in dem sich alle Titel befinden",
-    "The SONOS plugin needs to be enabled by the administrator": "Das SONOS plugin muss vom Administrator aktiviert werden",
-    "Enable for all users": "Für alle Benutzer aktivieren"
+    "Do you like this app?": "Gefällt Dir die App?"
   },
   "pluralForm": ""
 }

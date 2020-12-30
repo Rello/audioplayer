@@ -6,31 +6,32 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
  ?>
-	<div class="sm2-bar-ui full-width">
+<div id="sm2-bar-ui" class="sm2-bar-ui full-width" style="padding-top: 150px">
 		<div class="bd sm2-main-controls">
-			<div class="sm2-inline-texture"></div>
 			<div class="sm2-inline-gradient"></div>
-  
 			<div class="sm2-inline-element sm2-button-element">
-				<div class="sm2-button-bd" id="toggle_alternative"></div>
+                <div class="sm2-button-bd" id="toggle_alternative">
+                    <div id="app-navigation-toggle_alternative" class="icon-menu"
+                         style="float: left; box-sizing: border-box;"></div>
+                </div>
 			</div>
 
-			<div class="sm2-inline-element sm2-button-element toolTipx" data-placement="right" title="<?php p($l->t('Previous track')); ?>">
+			<div class="sm2-inline-element sm2-button-element" data-placement="right" title="<?php p($l->t('Previous track')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#prev" class="sm2-inline-button previous">previous</a>
 				</div>
 			</div>
   
-			<div class="sm2-inline-element sm2-button-element toolTipx" data-placement="right" title="<?php p($l->t('Play/Pause')); ?>">
+			<div class="sm2-inline-element sm2-button-element" data-placement="right" title="<?php p($l->t('Play/Pause')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#play" class="sm2-inline-button play-pause">play</a>
 				</div>
 			</div>
   
-			<div class="sm2-inline-element sm2-button-element toolTipx" data-placement="right" title="<?php p($l->t('Next track')); ?>">
+			<div class="sm2-inline-element sm2-button-element" data-placement="right" title="<?php p($l->t('Next track')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#next" class="sm2-inline-button next" data-placement="right" title="<?php p($l->t('Next track')); ?>">next</a>
 				</div>
@@ -65,20 +66,20 @@
 				</div>
 			 </div>
 
-			<div class="sm2-inline-element sm2-button-element sm2-volume toolTipx" data-placement="left" title="<?php p($l->t('Volume')); ?>">
+			<div class="sm2-inline-element sm2-button-element sm2-volume" data-placement="left" title="<?php p($l->t('Volume')); ?>">
 				<div class="sm2-button-bd">
 					<span class="sm2-inline-button sm2-volume-control volume-shade"></span>
 					<a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
 				</div>
 			</div>
  
-			<div class="sm2-inline-element sm2-button-element sm2-repeat toolTipx" data-placement="left" title="<?php p($l->t('Repeat playlist')); ?>">
+			<div class="sm2-inline-element sm2-button-element sm2-repeat" data-placement="left" title="<?php p($l->t('Repeat playlist')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#repeat" class="sm2-inline-button repeat">repeat</a>
 				</div>
 			</div>
 			
-			<div class="sm2-inline-element sm2-button-element sm2-shuffle toolTipx" data-placement="left" title="<?php p($l->t('Shuffle playlist')); ?>">
+			<div class="sm2-inline-element sm2-button-element sm2-shuffle" data-placement="left" title="<?php p($l->t('Shuffle playlist')); ?>">
 				<div class="sm2-button-bd">
 					<a href="#shuffle" class="sm2-inline-button shuffle">shuffle</a>
 				</div>

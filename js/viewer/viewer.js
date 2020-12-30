@@ -6,9 +6,10 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
+'use strict';
 
 var audioPlayer = {
     mime: null,
@@ -39,57 +40,38 @@ function playFile(file, data) {
     data.$file.find('.thumbnail').html('<i class="ioc ioc-volume-up"  style="color:#fff;margin-left:5px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;font-size: 24px;"></i>');
 
     if (audioPlayer.player === null) {
-        soundManager.setup({
-            url: OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
-            onready: function () {
-                audioPlayer.player = soundManager.createSound({
-                    id: data.$file.attr('data-id'),
-                    url: audioPlayer.location
-                });
-                audioPlayer.player.play();
-            }
-        });
+        audioPlayer.player = document.createElement('audio');
+        audioPlayer.player.setAttribute('src', audioPlayer.location);
+        audioPlayer.player.load();
+        audioPlayer.player.play();
     } else {
-        audioPlayer.player.stop();
+        audioPlayer.player.pause();
         $('#filestable').find('.thumbnail i.ioc-volume-up').hide();
-        //$('#filestable').find('.thumbnail i.ioc-play').show();
         audioPlayer.player = null;
     }
 }
 
 function registerFileActions() {
-    var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac'];
-    //var stream_array = ['audio/mpegurl', 'audio/x-scpls', 'application/xspf+xml'];
-    //mime_array = mime_array.concat(stream_array);
+    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
+    var icon_url = OC.imagePath('core', 'actions/sound');
+    const audio = document.createElement('audio');
 
-    soundManager.setup({
-        url: OC.filePath('audioplayer', 'js', 'soundmanager2.swf'),
-        onready: function () {
-            audioPlayer.player = soundManager.createSound({});
-
-            var can_play = soundManager.html5;
-            var mime;
-            var icon_url = OC.imagePath('core', 'actions/sound');
-            for (var i = 0; i < mime_array.length; i++) {
-                if (can_play[mime_array[i]] === true) {
-                    mime = mime_array[i];
-                    OCA.Files.fileActions.registerAction({
-                        name: 'audio',
-                        displayName: 'audio',
-                        mime: mime,
-                        permissions: OC.PERMISSION_READ,
-                        icon: icon_url,
-                        actionHandler: playFile
-                    });
-                    OCA.Files.fileActions.setDefault(mime, 'audio');
-                }
-            }
-            audioPlayer.player = null;
+    mimeTypes.forEach((element) => {
+        if (audio.canPlayType(element)) {
+            OCA.Files.fileActions.registerAction({
+                name: 'audio',
+                displayName: 'Play',
+                mime: element,
+                permissions: OC.PERMISSION_READ,
+                icon: icon_url,
+                actionHandler: playFile
+            });
+            OCA.Files.fileActions.setDefault(element, 'audio');
         }
     });
 }
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     if (typeof OCA !== 'undefined' && typeof OCA.Files !== 'undefined' && typeof OCA.Files.fileActions !== 'undefined' && $('#header').hasClass('share-file') === false) {
         registerFileActions();
     }

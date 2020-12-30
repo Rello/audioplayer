@@ -7,7 +7,7 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
 
@@ -107,11 +107,7 @@ class MusicController extends Controller
                     'status' => 'error',
                     'data' => 'nodata'];
             }
-            $response = new JSONResponse();
-            $response->setData($result);
-            return $response;
-
-            \OC::$server->getSession()->close();
+            return new JSONResponse($result);
         }
     }
 
@@ -148,10 +144,22 @@ class MusicController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      * @param $file
+     * @param $t
      */
-    public function getAudioStream($file)
+    public function getAudioStream($file, $t)
     {
-        $filename = rawurldecode($file);
+
+        if ($t) {
+            $fileId = $this->DBController->getFileId($t);
+            $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
+            $file = array_shift($nodes);
+            $path = $file->getPath();
+            $segments = explode('/', trim($path, '/'), 3);
+            $filename = $segments[2];
+        } else {
+            $filename = rawurldecode($file);
+        }
+
         $user = $this->userId;
         \OC::$server->getSession()->close();
         $stream = new \OCA\audioplayer\Http\AudioStream($filename, $user);

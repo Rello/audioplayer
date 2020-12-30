@@ -6,13 +6,12 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
 
 namespace OCA\audioplayer\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
 use OCP\IConfig;
 
@@ -20,18 +19,15 @@ class Personal implements ISettings
 {
 
     private $userId;
-    private $urlGenerator;
     private $configManager;
 
     public function __construct(
         $userId,
-        IConfig $configManager,
-        IURLGenerator $urlGenerator
+        IConfig $configManager
     )
     {
         $this->userId = $userId;
         $this->configManager = $configManager;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -44,10 +40,6 @@ class Personal implements ISettings
         $parameters = [
             'audioplayer_cyrillic' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'cyrillic'),
             'audioplayer_path' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'path'),
-            'audioplayer_sonos' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos'),
-            'audioplayer_sonos_admin' => $this->configManager->getAppValue('audioplayer', 'sonos'),
-            'audioplayer_sonos_controller' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_controller'),
-            'audioplayer_sonos_smb_path' => $this->configManager->getUserValue($this->userId, 'audioplayer', 'sonos_smb_path'),
         ];
         return new TemplateResponse('audioplayer', 'settings/personal', $parameters, '');
     }

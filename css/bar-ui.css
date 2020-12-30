@@ -2,6 +2,7 @@
     font-size: 16px;
 }
 
+
 .sm2-bar-ui {
     position: relative;
     display: block;
@@ -17,7 +18,6 @@
     /* http://files.christophzillgens.com/webkit-font-smoothing.html */
     /* font-smoothing: subpixel-antialiased; */
     /* general font niceness? */
-    font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     min-width: 20em;
     max-width: 30em;
@@ -291,8 +291,8 @@
     min-width: 200px;
     max-width: 20em;
     /* a little more spacing */
-    padding-left: 0.75em;
-    padding-right: 0.75em;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .sm2-bar-ui .sm2-inline-element {
@@ -332,8 +332,9 @@
     width: 1%;
     font-size: 75%;
     line-height: 0.9em;
-    min-width: 2em; /* if you have sounds > 10:00 in length, make this bigger. */
+    min-width: 30px;
     vertical-align: middle;
+    padding-top: 5px;
 }
 
 .sm2-bar-ui .sm2-playlist {
@@ -462,7 +463,13 @@
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
     -ms-interpolation-mode: bicubic;
+    opacity: 0.4;
+    cursor: pointer;
 }
+.sm2-inline-button:hover {
+    opacity: 1;
+}
+
 
 .play-pause,
 .play-pause:hover,
@@ -534,6 +541,11 @@
     background-position: 50% 43%;
     background-size: 54%;
 }
+.sm2-inline-button.repeat-single {
+    background-image: none, url('../img/repeat-single.svg');
+    background-position: 50% 43%;
+    background-size: 54%;
+}
 
 .sm2-extra-controls .repeat {
     background-position: 50% 45%;
@@ -545,10 +557,8 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: none, url(../img/spinner.svg);
     background-size: 72%;
-    background-position: 50%;
-    background-repeat: no-repeat;
+    background: none url(../img/spinner.svg) no-repeat 50%;
     display: none;
 }
 

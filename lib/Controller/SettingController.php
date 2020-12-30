@@ -6,7 +6,7 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
 
 namespace OCA\audioplayer\Controller;
@@ -33,6 +33,7 @@ class SettingController extends Controller {
     private $tagManager;
     private $db;
     private $session;
+    private $DBController;
 
     public function __construct(
         $appName,
@@ -42,7 +43,8 @@ class SettingController extends Controller {
         IDBConnection $db,
         ITagManager $tagManager,
         IRootFolder $rootFolder,
-        ISession $session
+        ISession $session,
+        DbController $DBController
     )
     {
 		parent::__construct($appName, $request);
@@ -54,6 +56,7 @@ class SettingController extends Controller {
         $this->tagger = null;
         $this->rootFolder = $rootFolder;
         $this->session = $session;
+        $this->DBController = $DBController;
 	}
 
     /**
@@ -102,10 +105,7 @@ class SettingController extends Controller {
 					'value' =>'nodata'
 				];
 		}
-		
-		$response = new JSONResponse();
-		$response -> setData($result);
-		return $response;
+        return new JSONResponse($result);
 	}
 
     /**
@@ -134,12 +134,14 @@ class SettingController extends Controller {
 
     /**
      * @NoAdminRequired
-     * @param $fileId
+     * @param $trackid
      * @param $isFavorite
      * @return bool
      */
-    public function setFavorite($fileId, $isFavorite) {
+    public function setFavorite($trackid, $isFavorite)
+    {
         $this->tagger = $this->tagManager->load('files');
+        $fileId = $this->DBController->getFileId($trackid);
 
         if ($isFavorite === "true") {
             $return = $this->tagger->removeFromFavorites($fileId);
@@ -153,6 +155,7 @@ class SettingController extends Controller {
      * @NoAdminRequired
      * @param $track_id
      * @return int|string
+     * @throws \Exception
      */
     public function setStatistics($track_id) {
         $date = new \DateTime();
@@ -170,8 +173,7 @@ class SettingController extends Controller {
         } else {
             $stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_stats` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
             $stmt->execute(array($this->userId, $track_id, $playtime, 1));
-            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_stats');
-            return $insertid;
+            return $this->db->lastInsertId('*PREFIX*audioplayer_stats');
         }
     }
 

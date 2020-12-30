@@ -6,7 +6,7 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
 ?>
 
@@ -21,7 +21,7 @@
             <div class="fileName"><h3 id="sidebarTitle"></h3>
             </div>
             <div class="file-details ellipsis">
-                <a href="#" class="action action-favorite favorite permanent">
+                <a class="action action-favorite favorite permanent">
                     <span id="sidebarFavorite" class="icon icon-star" title=""></span>
                 </a>
                 <span id="sidebarMime"></span>

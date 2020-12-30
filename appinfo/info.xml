@@ -2,25 +2,28 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>audioplayer</id>
 	<name>Audio Player</name>
-	<summary>Audio Player for Nextcloud and ownCloud</summary>
-	<description><![CDATA[A music player for FLAC, MP3, MP4, streams, … with playlist support and SONOS integration.
+	<summary>play / stream / organize</summary>
+	<description><![CDATA[A music player for FLAC, MP3, MP4, AIF, streams, … with playlist support and SONOS integration.
 
-- Multiple views (albums with covers and more)
-- Library scan and reset with command-line and browser
-- Specifying media folder (with exclude functionality)
-- Smart & Standard Playlists
+- Cover & List view for all categories
+- tuned for big audio collections
+- Smart lists & standard playlists & local playlists
 - Stream URLs
-- One Click Play in Files app
 - Favorites, Sidebar & Search integration
-- Widget for Dashboard App (beta)
-- [SONOS player](https://github.com/rello/audioplayer/wiki/SONOS) integration
-- local playlists
+- Specifying media folder (with exclude functionality)
+- One Click Play in Files app
+- Hardware media keys & Chrome/Android player
+- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
+- [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
-See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and limitations.]]></description>
-    <version>2.6.1</version>
+See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
+	<version>3.0.0</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
+	<types>
+		<filesystem/>
+	</types>
 	<documentation>
 		<user>https://github.com/rello/audioplayer/wiki#user-documentation</user>
 		<admin>https://github.com/rello/audioplayer/wiki#admin-documentation</admin>
@@ -30,31 +33,15 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<discussion>https://help.nextcloud.com/c/apps/audioplayer</discussion>
 	<bugs>https://github.com/rello/audioplayer/issues</bugs>
 	<repository type="git">https://github.com/rello/audioplayer.git</repository>
-	<screenshot small-thumbnail="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main_small.png">https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_main.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_logo.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png</screenshot>
 	<dependencies>
-        <php min-version="7.0" max-version="7.3"/>
-		<nextcloud min-version="14" max-version="15"/>
-		<owncloud min-version="9" max-version="10"/>
+		<php min-version="7.0" max-version="7.4"/>
+		<nextcloud min-version="20" max-version="21"/>
 	</dependencies>
-	<types>
-   		<filesystem/>
- 	</types>
- 	<repair-steps>
-		<post-migration>
-			<step>OCA\audioplayer\Migration\Migration</step>
-		</post-migration>
-	</repair-steps>
-	<dashboard>
-		<widget>OCA\audioplayer\Widgets\AudioplayerWidget</widget>
-	</dashboard>
 	<settings>
+		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
-		<admin>OCA\audioplayer\Settings\Admin</admin>
-		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
 	</settings>
-	<settings-sections>
-		<personal>OCA\audioplayer\Settings\PersonalSectionOC</personal>
-		<admin>OCA\audioplayer\Settings\AdminSectionOC</admin>
-	</settings-sections>
 </info>

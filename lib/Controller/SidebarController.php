@@ -6,13 +6,14 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2019 Marcel Scherello
+ * @copyright 2016-2020 Marcel Scherello
  */
 
 namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\Files\IRootFolder;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDbConnection;
@@ -30,6 +31,7 @@ class SidebarController extends Controller
     private $tagger;
     private $tagManager;
     private $DBController;
+    private $rootFolder;
 
     public function __construct(
         $appName,
@@ -38,7 +40,8 @@ class SidebarController extends Controller
         IL10N $l10n,
         ITagManager $tagManager,
         IDBConnection $db,
-        DbController $DBController
+        DbController $DBController,
+        IRootFolder $rootFolder
     )
     {
         parent::__construct($appName, $request);
@@ -49,6 +52,7 @@ class SidebarController extends Controller
         $this->tagger = null;
         $this->db = $db;
         $this->DBController = $DBController;
+        $this->rootFolder = $rootFolder;
     }
 
     /**
@@ -68,6 +72,13 @@ class SidebarController extends Controller
 
         array_splice($row, 15, 3);
 
+        $fileId = $this->DBController->getFileId($trackid);
+        $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
+        $node = $nodes[0];
+        $path = $this->rootFolder->getUserFolder($this->userId)->getRelativePath($node->getPath());
+        $path = \join('/', \array_map('rawurlencode', \explode('/', $path)));
+        $row['Path'] = $path;
+
         if ($row['Title']) {
             $result = [
                 'status' => 'success',
@@ -77,9 +88,7 @@ class SidebarController extends Controller
                 'status' => 'error',
                 'data' => 'nodata'];
         }
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 
     /**
@@ -99,9 +108,7 @@ class SidebarController extends Controller
                 'status' => 'error',
                 'data' => 'nodata'];
         }
-        $response = new JSONResponse();
-        $response->setData($result);
-        return $response;
+        return new JSONResponse($result);
     }
 
 }
