@@ -173,6 +173,7 @@ OCA.Audioplayer.Player = {
      */
     setVolume: function () {
         OCA.Audioplayer.Player.html5Audio.volume = document.getElementById('playerVolume').value;
+        OCA.Audioplayer.Backend.setUserValue('volume', document.getElementById('playerVolume').value   );
     },
 
     /**
@@ -302,4 +303,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('playerRepeat').addEventListener('click', OCA.Audioplayer.Player.setRepeat);
     document.getElementById('playerShuffle').addEventListener('click', OCA.Audioplayer.Player.setShuffle);
     document.getElementById('playerVolume').addEventListener('input', OCA.Audioplayer.Player.setVolume);
+    document.getElementById('playerVolume').value = document.getElementById('audioplayer_volume').value;
+    OCA.Audioplayer.Player.setVolume();
 });

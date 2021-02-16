@@ -338,18 +338,10 @@ OCA.Audioplayer.Cover = {
             var iScroll = 20;
             var iSlideDown = 200;
             var iTop = 210;
-            var appContent;
             var containerTop;
             var appContentScroll;
-            if ($('#content-wrapper').length === 1) { //check old structure of NC13 and oC
-                appContent = $('#app-content');
-                var scrollTopValue = appContent.scrollTop();
-                containerTop = scrollTopValue + activeAlbum.offsetTop + iTop;
-                appContentScroll = scrollTopValue + activeAlbum.offsetTop + iScroll;
-            } else { //structure was changed with NC14
-                containerTop = activeAlbum.offsetTop + iTop;
-                appContentScroll = activeAlbum.offsetTop + iScroll;
-            }
+            containerTop = activeAlbum.offsetTop + iTop;
+            appContentScroll = activeAlbum.offsetTop + iScroll;
 
             $(divSongContainer).css({'top': containerTop}).slideDown(iSlideDown);
             window.scrollTo(0, appContentScroll);
