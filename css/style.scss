@@ -426,7 +426,7 @@ i#scanAudiosFirst {
   right: 0;
 }
 
-#individual-playlist li .actionsSong {
+.albumwrapper li .actionsSong {
   position: relative;
   float: left;
   display: block;
@@ -434,19 +434,19 @@ i#scanAudiosFirst {
   width: 22px;
 }
 
-#individual-playlist .ioc {
+.albumwrapper li .ioc {
   font-size: 16px;
   line-height: 22px;
   display: none;
 }
 
-#individual-playlist .icon {
+.albumwrapper li .icon {
   display: inline-block;
   vertical-align: middle;
   background-size: 16px 16px;
 }
 
-#individual-playlist .icon-star {
+.albumwrapper li .icon-star {
   opacity: 0;
 }
 
@@ -454,8 +454,8 @@ i#scanAudiosFirst {
   opacity: 0.3;
 }
 
-#individual-playlist .icon:hover,
-#individual-playlist .icon:focus,
+.albumwrapper .icon:hover,
+.albumwrapper .icon:focus,
 #individual-playlist .edit-song:hover,
 #individual-playlist .edit-song:focus {
   opacity: 1 !important;
@@ -542,7 +542,7 @@ i#scanAudiosFirst {
 
 #app-content {
   padding-left: 0;
-
+  overflow: hidden;
 }
 
 .no-songs-found {
@@ -777,21 +777,6 @@ i#scanAudiosFirst {
   line-height: 20px;
   width: 100%;
   float: left;
-}
-
-.songcontainer span.actionsSong {
-  float: left;
-  position: relative;
-  display: block;
-  width: 20px;
-  height: 18px;
-}
-
-.songcontainer i.ioc {
-  margin-top: 0;
-  display: none;
-  line-height: 20px;
-  font-size: 14px;
 }
 
 .songcontainer span.number {
