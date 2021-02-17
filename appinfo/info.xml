@@ -3,7 +3,7 @@
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<summary>play / stream / organize</summary>
-	<description><![CDATA[A music player for FLAC, MP3, MP4, AIF, streams, … with playlist support and SONOS integration.
+	<description><![CDATA[A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.
 
 - Cover & List view for all categories
 - tuned for big audio collections
@@ -36,7 +36,6 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_logo.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png</screenshot>
 	<dependencies>
-		<php min-version="7.0" max-version="7.4"/>
 		<nextcloud min-version="20" max-version="21"/>
 	</dependencies>
 	<settings>

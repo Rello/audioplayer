@@ -44,7 +44,7 @@ OCA.Audioplayer.Core = {
         }
 
         // evaluate if browser can play the mimetypes
-        var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
+        var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
         var mimeTypeAudio = document.createElement('audio');
         mimeTypes.forEach((element) => {
             if (mimeTypeAudio.canPlayType(element)) {

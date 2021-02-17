@@ -14,7 +14,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     //if ($('#header').hasClass('share-file')) {
-    var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
+    var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
     var mimeType = $('#mimetype').val();
     var sharingToken = $('#sharingToken');
 

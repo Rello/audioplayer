@@ -52,7 +52,7 @@ function playFile(file, data) {
 }
 
 function registerFileActions() {
-    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
+    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
     var icon_url = OC.imagePath('core', 'actions/sound');
     const audio = document.createElement('audio');
 

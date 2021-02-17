@@ -19,7 +19,7 @@ A music player for FLAC, MP3, MP4, AIF, streams, … with playlist support and S
 - [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
 ### Supported Formats
-FLAC, MP3, MP4, Ogg Vorbis, Opus, AIF, and Waveform Audio as well as M3U and PLS playlist files. Playing the formats supported by Audio Player depends on the browser. [More information…](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
+FLAC, MP3, MP4, Ogg Vorbis, Opus, AIF, AAC and Waveform Audio as well as M3U and PLS playlist files. Playing the formats supported by Audio Player depends on the browser. [More information…](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
 
 ### Supported Browsers
 Latest versions of Google Chrome, Mozilla Firefox, and Apple Safari. Mobile browsers and Microsoft Edge may be restricted in functionality and handling. Microsoft Internet Explorer is not supported.

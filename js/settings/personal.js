@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var supported_types = '';
     var nsupported_types = '';
-    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff'];
+    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
     const audio = document.createElement('audio');
 
     mimeTypes.forEach((element) => {
