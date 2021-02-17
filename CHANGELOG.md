@@ -6,6 +6,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - aac support [#527](https://github.com/rello/audioplayer/pull/527)
 - Remember playback volume [#517](https://github.com/rello/audioplayer/pull/517)
 - NC21 [#515](https://github.com/rello/audioplayer/pull/515)
+- Added .jpeg File Extension for cover art [#514](https://github.com/rello/audioplayer/pull/514) @[tidoni](https://github.com/tidoni)
 
 ### Changed
 - Volume slider size [#516](https://github.com/rello/audioplayer/pull/516)
