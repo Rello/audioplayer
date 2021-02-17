@@ -17,7 +17,7 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\Share\IManager;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
@@ -41,7 +41,7 @@ class MusicController extends Controller
         IRequest $request,
         $userId,
         IL10N $l10n,
-        IDbConnection $db,
+        IDBConnection $db,
         IManager $shareManager,
         ILogger $logger,
         DbController $DBController,

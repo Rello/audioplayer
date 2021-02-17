@@ -17,7 +17,7 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 
 /**
  * Controller class for main page.
@@ -34,7 +34,7 @@ class PlaylistController extends Controller
         IRequest $request,
         $userId,
         IL10N $l10n,
-        IDbConnection $db
+        IDBConnection $db
     )
     {
         parent::__construct($appName, $request);

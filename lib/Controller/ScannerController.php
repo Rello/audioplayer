@@ -31,7 +31,7 @@ use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
 use OCP\ILogger;
 use OCP\IDateTimeZone;
@@ -70,7 +70,7 @@ class ScannerController extends Controller
         IRequest $request,
         $userId,
         IL10N $l10n,
-        IDbConnection $db,
+        IDBConnection $db,
         IConfig $configManager,
         IFactory $languageFactory,
         IRootFolder $rootFolder,

@@ -16,7 +16,7 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\IRootFolder;
 use OCP\IRequest;
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\ITagManager;
 
 /**

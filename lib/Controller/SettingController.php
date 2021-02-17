@@ -17,7 +17,7 @@ use OCP\IRequest;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\ITagManager;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\ISession;
 
 

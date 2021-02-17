@@ -17,7 +17,7 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\Share\IManager;
 use OCP\ILogger;
 use OCP\ITagManager;
@@ -40,7 +40,7 @@ class DbController extends Controller
         IRequest $request,
         $userId,
         IL10N $l10n,
-        IDbConnection $db,
+        IDBConnection $db,
         ITagManager $tagManager,
         IManager $shareManager,
         ILogger $logger

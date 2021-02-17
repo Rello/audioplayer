@@ -17,7 +17,7 @@ use OCP\AppFramework\Controller;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\ILogger;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use \OCA\audioplayer\Http\ImageResponse;
 
 
@@ -35,7 +35,7 @@ class CoverController extends Controller
         IRequest $request,
         $userId,
         IL10N $l10n,
-        IDbConnection $db,
+        IDBConnection $db,
         ILogger $logger,
         DbController $DBController
     )
