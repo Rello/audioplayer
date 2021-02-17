@@ -39,8 +39,8 @@ OCA.Audioplayer.Settings = {
 
     resetLibrary: function () {
         if ($('.sm2-bar-ui').hasClass('playing')) {
-            OCA.Audioplayer.Player.actions.play(0);
-            OCA.Audioplayer.Player.actions.stop();
+            OCA.Audioplayer.Player.currentTrackIndex = 0;
+            OCA.Audioplayer.Player.stop();
         }
 
         OCA.Audioplayer.UI.showInitScreen();

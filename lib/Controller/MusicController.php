@@ -93,12 +93,12 @@ class MusicController extends Controller
             $stmt->execute(array($fileowner, $fileid));
             $row = $stmt->fetch();
 
-            $artist = $this->DBController->loadArtistsToAlbum($row['album_id'], $row['albumArtist_id']);
-            $row['albumartist'] = $artist;
+            if (isset($row['title'])) {
+                $artist = $this->DBController->loadArtistsToAlbum($row['album_id'], $row['albumArtist_id']);
+                $row['albumartist'] = $artist;
 
-            if ($row['year'] === '0') $row['year'] = $this->l10n->t('Unknown');
+                if ($row['year'] === '0') $row['year'] = $this->l10n->t('Unknown');
 
-            if ($row['title']) {
                 $result = [
                     'status' => 'success',
                     'data' => $row];
