@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.1.0 - 2021-02-17
+### Added
+- aac support [#527](https://github.com/rello/audioplayer/pull/527)
+- Remember playback volume [#517](https://github.com/rello/audioplayer/pull/517)
+- NC21 [#515](https://github.com/rello/audioplayer/pull/515)
+
+### Changed
+- Volume slider size [#516](https://github.com/rello/audioplayer/pull/516)
+
+### Fixed
+- favorite star not showing [#518](https://github.com/rello/audioplayer/pull/518)
+
 ## 3.0.0 - 2020-11-19
 ### Changed
 - NC20 only version
