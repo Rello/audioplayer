@@ -719,7 +719,7 @@ class ScannerController extends Controller
                 $this->folderPicture = $audio->getParent()->get('cover.jpg');
             } elseif ($audio->getParent()->nodeExists('Cover.jpg')) {
                 $this->folderPicture = $audio->getParent()->get('Cover.jpg');
-            if ($audio->getParent()->nodeExists('cover.jpeg')) {
+            } elseif ($audio->getParent()->nodeExists('cover.jpeg')) {
                 $this->folderPicture = $audio->getParent()->get('cover.jpeg');
             } elseif ($audio->getParent()->nodeExists('Cover.jpeg')) {
                 $this->folderPicture = $audio->getParent()->get('Cover.jpeg');
