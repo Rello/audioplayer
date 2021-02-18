@@ -55,7 +55,7 @@ class Reset extends Command {
 
 		if (count($users) === 0) {
 			$output->writeln("<error>Please specify a valid user id to reset, \"--all\" to scan for all users<error>");
-			return;
+            return Command::FAILURE;
 		}
 		
 		foreach ($users as $userId) {
@@ -70,5 +70,6 @@ class Reset extends Command {
                 $this->DBController->resetMediaLibrary($userId, $output);
 			}
 		}
+        return Command::SUCCESS;
 	}
 }
