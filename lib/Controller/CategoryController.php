@@ -19,7 +19,7 @@ use OCP\IL10N;
 use OCP\IDBConnection;
 use OCP\ITagManager;
 use OCP\Files\IRootFolder;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use \OCP\Files\NotFoundException;
 
 /**
@@ -45,7 +45,7 @@ class CategoryController extends Controller
         IDBConnection $db,
         ITagManager $tagManager,
         IRootFolder $rootFolder,
-        ILogger $logger,
+        LoggerInterface $logger,
         DbController $DBController
     )
     {

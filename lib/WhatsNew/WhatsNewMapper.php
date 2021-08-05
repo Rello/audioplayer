@@ -18,7 +18,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 class WhatsNewMapper extends QBMapper
 {
@@ -26,7 +26,7 @@ class WhatsNewMapper extends QBMapper
     private $logger;
 
     public function __construct(
-        ILogger $logger,
+        LoggerInterface $logger,
         IDBConnection $db
     )
     {

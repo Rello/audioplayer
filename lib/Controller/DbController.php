@@ -19,7 +19,7 @@ use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDBConnection;
 use OCP\Share\IManager;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\ITagManager;
 
 /**
@@ -43,7 +43,7 @@ class DbController extends Controller
         IDBConnection $db,
         ITagManager $tagManager,
         IManager $shareManager,
-        ILogger $logger
+        LoggerInterface $logger
     )
     {
         parent::__construct($appName, $request);

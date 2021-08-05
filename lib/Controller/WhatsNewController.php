@@ -19,7 +19,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IRequest;
 use OCP\IUserSession;
 use OCP\L10N\IFactory;
@@ -45,7 +45,7 @@ class WhatsNewController extends Controller
         IConfig $config,
         WhatsNewCheck $whatsNewService,
         IFactory $langFactory,
-        ILogger $logger
+        LoggerInterface $logger
     )
     {
         parent::__construct($AppName, $request);

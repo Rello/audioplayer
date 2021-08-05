@@ -12,13 +12,13 @@
 namespace OCA\audioplayer\Hooks;
 use OCA\audioplayer\Controller;
 use \OCP\Files\FileInfo;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 class FileHooks {
 
     private $logger;
 
-    public function __construct(ILogger $logger) {
+    public function __construct(LoggerInterface $logger) {
         $this->logger = $logger;
     }
 

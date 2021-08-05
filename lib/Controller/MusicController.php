@@ -20,7 +20,7 @@ use OCP\IL10N;
 use OCP\IDBConnection;
 use OCP\Share\IManager;
 use OCP\Files\IRootFolder;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Controller class for main page.
@@ -43,7 +43,7 @@ class MusicController extends Controller
         IL10N $l10n,
         IDBConnection $db,
         IManager $shareManager,
-        ILogger $logger,
+        LoggerInterface $logger,
         DbController $DBController,
         IRootFolder $rootFolder
     )

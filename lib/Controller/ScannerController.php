@@ -33,7 +33,7 @@ use OCP\IL10N;
 use OCP\L10N\IFactory;
 use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IDateTimeZone;
 use OCP\IEventSource;
 
@@ -74,7 +74,7 @@ class ScannerController extends Controller
         IConfig $configManager,
         IFactory $languageFactory,
         IRootFolder $rootFolder,
-        ILogger $logger,
+        LoggerInterface $logger,
         DbController $DBController,
         SettingController $SettingController,
         IDateTimeZone $IDateTimeZone

@@ -17,7 +17,7 @@ namespace OCA\audioplayer\WhatsNew;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\IResponse;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 class WhatsNewCheck
 {
@@ -31,7 +31,7 @@ class WhatsNewCheck
     /** @var ILogger */
     private $logger;
 
-    public function __construct(IClientService $clientService, WhatsNewMapper $mapper, ILogger $logger)
+    public function __construct(IClientService $clientService, WhatsNewMapper $mapper, LoggerInterface $logger)
     {
         $this->clientService = $clientService;
         $this->mapper = $mapper;

@@ -16,7 +16,7 @@ namespace OCA\audioplayer\Controller;
 use OCP\AppFramework\Controller;
 use OCP\IL10N;
 use OCP\IRequest;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IDBConnection;
 use \OCA\audioplayer\Http\ImageResponse;
 
@@ -36,7 +36,7 @@ class CoverController extends Controller
         $userId,
         IL10N $l10n,
         IDBConnection $db,
-        ILogger $logger,
+        LoggerInterface $logger,
         DbController $DBController
     )
     {
