@@ -36,11 +36,20 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_logo.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png</screenshot>
 	<dependencies>
-		<nextcloud min-version="20" max-version="21"/>
+		<nextcloud min-version="21" max-version="23"/>
 	</dependencies>
 	<settings>
 		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
 	</settings>
+	<navigations>
+		<navigation>
+			<id>audioplayer</id>
+			<name>Audio Player</name>
+			<route>audioplayer.page.index</route>
+			<icon>app.svg</icon>
+			<order>6</order>
+		</navigation>
+	</navigations>
 </info>

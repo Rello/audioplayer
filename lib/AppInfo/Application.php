@@ -32,26 +32,10 @@ class Application extends App implements IBootstrap
 
     public function register(IRegistrationContext $context): void
     {
-        $context->registerEventListener(LoadAdditionalScriptsEvent::class, LoadAdditionalScripts::class);
         $context->registerEventListener(BeforeTemplateRenderedEvent::class, LoadAdditionalScripts::class);
         $context->registerSearchProvider(Provider::class);
-        $this->registerNavigationEntry();
         $this->registerFileHooks();
         $this->registerUserHooks();
-    }
-
-    protected function registerNavigationEntry(): void
-    {
-        $navigationEntry = function () {
-            return [
-                'id' => 'audioplayer',
-                'order' => 6,
-                'name' => \OC::$server->getL10N('audioplayer')->t('Audio Player'),
-                'href' => \OC::$server->getURLGenerator()->linkToRoute('audioplayer.page.index'),
-                'icon' => \OC::$server->getURLGenerator()->imagePath('audioplayer', 'app.svg'),
-            ];
-        };
-        \OC::$server->getNavigationManager()->add($navigationEntry);
     }
 
     protected function registerFileHooks()
