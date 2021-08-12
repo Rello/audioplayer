@@ -28,7 +28,7 @@ class WhatsNewCheck
     protected $clientService;
     /** @var WhatsNewMapper */
     private $mapper;
-    /** @var ILogger */
+    /** @var LoggerInterface */
     private $logger;
 
     public function __construct(IClientService $clientService, WhatsNewMapper $mapper, LoggerInterface $logger)

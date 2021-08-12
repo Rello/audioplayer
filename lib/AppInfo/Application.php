@@ -11,9 +11,9 @@
 
 namespace OCA\audioplayer\AppInfo;
 
+use OCA\audioplayer\Dashboard\Widget;
 use OCA\audioplayer\Listener\LoadAdditionalScripts;
 use OCA\audioplayer\Search\Provider;
-use OCA\Files\Event\LoadAdditionalScriptsEvent;
 use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -32,6 +32,7 @@ class Application extends App implements IBootstrap
 
     public function register(IRegistrationContext $context): void
     {
+        $context->registerDashboardWidget(Widget::class);
         $context->registerEventListener(BeforeTemplateRenderedEvent::class, LoadAdditionalScripts::class);
         $context->registerSearchProvider(Provider::class);
         $this->registerFileHooks();
