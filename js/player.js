@@ -147,7 +147,12 @@ OCA.Audioplayer.Player = {
     shuffleTitles: function () {
         let playlist = document.getElementById('individual-playlist');
 
-        let children = [].slice.call(playlist.childNodes);
+        let classes = document.getElementById('view-toggle').classList;
+        if (classes.contains('icon-toggle-pictures')) {
+            return;
+        }
+
+            let children = [].slice.call(playlist.childNodes);
         [].sort.call(children, function () {
             return 0.5 - Math.random();
         });
@@ -157,6 +162,7 @@ OCA.Audioplayer.Player = {
 
         let playlistItems = document.querySelectorAll('.albumwrapper li');
         OCA.Audioplayer.Player.addTracksToSourceList(playlistItems);
+        return;
 
     },
 

@@ -886,8 +886,9 @@ OCA.Audioplayer.UI = {
     },
 
     toggleFavorite: function (target, trackId) {
+        let queryElem;
         if (target.tagName === 'SPAN') {
-            let queryElem = 'i';
+            queryElem = 'i';
         } else {
             queryElem = 'span';
         }
