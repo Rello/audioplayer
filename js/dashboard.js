@@ -353,6 +353,7 @@ OCA.Audioplayer.Dashboard = {
                         let streamUrl;
                         if (itemData['mim'] === 'audio/mpegurl' || itemData['mim'] === 'audio/x-scpls' || itemData['mim'] === 'application/xspf+xml') {
                             streamUrl = itemData['lin'];
+                            jsondata.data = [];
                             break;
                         } else {
                             streamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?t=' + itemData['id'];
@@ -375,12 +376,14 @@ OCA.Audioplayer.Dashboard = {
                         audioSource.dataset.canPlayMime = canPlayMime;
                         player.appendChild(audioSource);
                     }
-                    OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
                     document.getElementById('audioplayerTitle').innerHTML = jsondata.data.length + ' ' + t('analytics', 'Titles');
-                    document.getElementById('audioplayerCover').removeAttribute('style');
-                    document.getElementById('audioplayerCover').innerText = '';
-                    OCA.Audioplayer.Player.currentTrackIndex = 0;
+                } else {
+                    document.getElementById('audioplayerTitle').innerHTML = t('analytics', 'No data');
                 }
+                OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
+                document.getElementById('audioplayerCover').removeAttribute('style');
+                document.getElementById('audioplayerCover').innerText = '';
+                OCA.Audioplayer.Player.currentTrackIndex = 0;
             }
         });
     },

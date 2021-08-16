@@ -24,6 +24,7 @@ OC.L10N.register(
         'Track' : 'Skladba',
         'File' : 'Soubor',
         'Title' : 'Titul',
+        'Titles': 'Tituly',
         'Subtitle' : 'Podtitul',
         'Artist' : 'Interpret',
         'Album Artist' : 'Interpret alba',
