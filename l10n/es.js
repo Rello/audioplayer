@@ -24,6 +24,7 @@ OC.L10N.register(
         'Track' : 'Pista',
         'File' : 'Archivo',
         'Title' : 'Título',
+        'Titles': 'Títulos',
         'Subtitle' : 'Subtítulo',
         'Artist' : 'Artista',
         'Album Artist' : 'Artista del álbum',

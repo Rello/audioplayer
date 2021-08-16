@@ -52,9 +52,18 @@ OCA.Audioplayer.Player = {
             OCA.Audioplayer.Player.stop();
             return;
         }
-        this.html5Audio.play();
-        document.getElementById('sm2-bar-ui').classList.add('playing');
-        OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
+        let playPromise = this.html5Audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                //document.getElementById('playerPlay').classList.replace('icon-loading', 'play-pause');
+                document.getElementById('sm2-bar-ui').classList.add('playing');
+                OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
+            })
+                .catch(error => {
+                    // Auto-play was prevented
+                    // Show paused UI.
+                });
+        }
     },
 
     /**

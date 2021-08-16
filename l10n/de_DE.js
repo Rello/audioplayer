@@ -24,6 +24,7 @@ OC.L10N.register(
         'Track' : 'Stück',
         'File' : 'Datei',
         'Title' : 'Titel',
+        'Titles': 'Titel',
         'Subtitle' : 'Untertitel',
         'Artist' : 'Interpret',
         'Album Artist' : 'Albuminterpret',

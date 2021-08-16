@@ -9,12 +9,12 @@
  */
 
  .icon-audioplayer {
-    @include icon-color('app-dark', 'audioplayer', $color-black, 1);
+        @include icon-color('app-dark', 'audioplayer', $color-black, 1);
  }
 
  body.dark .icon-analytics,
  body.theme--dark .icon-analytics {
-    @include icon-color('app', 'audioplayer', $color-black, 1);
+        @include icon-color('app', 'audioplayer', $color-black, 1);
  }
 
 .panel--content .playerButton {
@@ -31,18 +31,25 @@
 
 .panel--content .categoryBar,
 .panel--content .coverBar,
-.panel--content .itemBar{
+.panel--content .itemBar,
+.panel--content .titleBar {
         margin: auto;
         width: 180px;
         margin-top: 10px;
 }
 
+.panel--content .titleBar {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+}
+
 .panel--content .coverBar .cover {
-    width: 180px;
-    height: 180px;
-    text-align: center;
-    font-size: 60px;
-    line-height: 150px;
+        width: 180px;
+        height: 180px;
+        text-align: center;
+        font-size: 60px;
+        line-height: 150px;
 }
 
 .panel--content .button {
@@ -57,35 +64,35 @@
 }
 
 .panel--content .button.previous {
-  @include icon-color('previous', 'audioplayer', $color-black, 1);
+        @include icon-color('previous', 'audioplayer', $color-black, 1);
 }
 
 .panel--content .button.next {
-  @include icon-color('next', 'audioplayer', $color-black, 1);
+        @include icon-color('next', 'audioplayer', $color-black, 1);
 }
 
 .panel--content .button.play-pause {
-  @include icon-color('play', 'audioplayer', $color-black, 1);
+        @include icon-color('play', 'audioplayer', $color-black, 1);
 }
 
 .panel--content .button.play-pause.playing {
-  @include icon-color('pause', 'audioplayer', $color-black, 1);
+        @include icon-color('pause', 'audioplayer', $color-black, 1);
 }
 
 .panel--content .button.previous,
 .panel--content .button.play-pause,
 .panel--content .button.previous,
 .panel--content .button.next {
-  background-size: 80%;
-  background-position: center center;
-  opacity: 0.5;
+        background-size: 80%;
+        background-position: center center;
+        opacity: 0.5;
 }
 
 .panel--content .button.previous:hover,
 .panel--content .button.play-pause:hover,
 .panel--content .button.previous:hover,
 .panel--content .button.next:hover {
-      opacity: 1;
+        opacity: 1;
 }
 
 

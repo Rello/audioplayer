@@ -24,6 +24,7 @@ OC.L10N.register(
         'Track' : 'Ścieżka',
         'File' : 'Plik',
         'Title' : 'Tytuł',
+        'Titles': 'Tytuły',
         'Subtitle' : 'Napisy',
         'Artist' : 'Artysta',
         'Album Artist' : 'Album artysty',

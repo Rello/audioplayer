@@ -24,6 +24,7 @@ OC.L10N.register(
         'Track' : '曲目',
         'File' : '档案名',
         'Title' : '曲名',
+        'Titles': '曲名',
         'Subtitle' : '副标题',
         'Artist' : '艺人',
         'Album Artist' : '专辑艺人',

@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.2.0 - 2021-08-xx
+### Added
+- NC22
+- Dashboard Widget #548
+
+### Changed
+- Update Czech localization [#546](https://github.com/rello/audioplayer/pull/546) @[p-bo](https://github.com/p-bo)
+- better player integration
+
 ## 3.1.0 - 2021-02-17
 ### Added
 - aac support [#527](https://github.com/rello/audioplayer/pull/527)

@@ -24,6 +24,7 @@ OC.L10N.register(
         'Track' : 'Трек',
         'File' : 'Файл',
         'Title' : 'Название',
+        'Titles': 'Названия',
         'Subtitle' : 'Подзаголовок',
         'Artist' : 'Исполнитель',
         'Album Artist' : 'Исполнитель Альбома',

@@ -24,6 +24,7 @@ OC.L10N.register(
         'Track' : 'Parça',
         'File' : 'Dosya',
         'Title' : 'Başlık',
+        'Titles': 'Başlıklar',
         'Subtitle' : 'Altbaşlık',
         'Artist' : 'Sanatçı',
         'Album Artist' : 'Albüm Sanatçısı',
