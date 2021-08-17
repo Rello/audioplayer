@@ -381,9 +381,18 @@ class CategoryController extends Controller
         $stmt = $this->db->prepare($SQL);
         $stmt->execute(array($categoryId, $this->userId));
         $results = $stmt->fetchAll();
+
+        if ($category === 'Album') {
+            $discNum = array_sum(array_column($results, 'dsc')) / count($results);
+        }
+
         foreach ($results as $row) {
             if ($category === 'Album') {
-                $row['cl3'] = $row['dsc'] . '-' . $row['num'];
+                if ($row['dsc'] !== $discNum) {
+                    $row['cl3'] = $row['dsc'] . '-' . $row['num'];
+                } else {
+                    $row['cl3'] = $row['num'];
+                }
             }
             array_splice($row, 8, 1);
             //$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($row['fid']);

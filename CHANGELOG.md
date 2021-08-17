@@ -15,6 +15,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - Loop playback states not remembered #541
 - TypeError: Return value command #540
 - occ scan errors when scan folder is not available anymore #539
+- Track numbers limited to 2 digits #537
 
 ## 3.1.0 - 2021-02-17
 ### Added
