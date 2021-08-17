@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (!data.success) {
                             OCP.Toast.error(t('audioplayer', 'Invalid path!'));
                         } else {
-                            OOCP.Toast.success(t('audioplayer', 'saved'));
+                            OCP.Toast.success(t('audioplayer', 'saved'));
                         }
                     });
                 }

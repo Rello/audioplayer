@@ -22,6 +22,7 @@ use OC;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Image;
 use OCP\PreconditionNotMetException;
@@ -458,6 +459,7 @@ class ScannerController extends Controller
      * @param OutputInterface $output
      * @return array
      * @throws NotFoundException
+     * @throws \OCP\Files\InvalidPathException
      */
     private function getAudioObjects(OutputInterface $output = null)
     {
@@ -465,7 +467,15 @@ class ScannerController extends Controller
         $userView = $this->rootFolder->getUserFolder($this->userId);
 
         if ($audioPath !== null && $audioPath !== '/' && $audioPath !== '') {
-            $userView = $userView->get($audioPath);
+            try {
+                $userView = $userView->get($audioPath);
+            } catch (InvalidPathException $e) {
+                $output->writeln("!Error: Selected scan folder is not existing");
+                return;
+            } catch (NotFoundException $e) {
+                $output->writeln("!Error: Selected scan folder is not existing");
+                return;
+            }
         }
 
         $audios_mp3 = $userView->searchByMime('audio/mpeg');
@@ -552,7 +562,15 @@ class ScannerController extends Controller
         $userView = $this->rootFolder->getUserFolder($this->userId);
 
         if ($audioPath !== null && $audioPath !== '/' && $audioPath !== '') {
-            $userView = $userView->get($audioPath);
+            try {
+                $userView = $userView->get($audioPath);
+            } catch (InvalidPathException $e) {
+                $output->writeln("!Error: Selected scan folder is not existing");
+                return;
+            } catch (NotFoundException $e) {
+                $output->writeln("!Error: Selected scan folder is not existing");
+                return;
+            }
         }
 
         $audios_mpegurl = $userView->searchByMime('audio/mpegurl');
