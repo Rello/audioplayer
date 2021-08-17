@@ -26,6 +26,7 @@ if ($_['audioplayer_sonos'] !== 'checked') {
 <input type="hidden" name="id" value="">
 <input type="hidden" id="audioplayer_volume" value="<?php p($_['audioplayer_volume']); ?>">
 <input type="hidden" id="audioplayer_sonos" value="<?php p($_['audioplayer_sonos']); ?>">
+<input type="hidden" id="audioplayer_repeat" value="<?php p($_['audioplayer_repeat']); ?>">
 
 <div id="app-navigation" <?php if ($_['audioplayer_navigationShown'] === 'false') echo 'class="hidden"'; ?>>
 

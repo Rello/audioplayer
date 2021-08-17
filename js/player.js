@@ -122,22 +122,33 @@ OCA.Audioplayer.Player = {
     /**
      * toggle the repeat mode off->single->list->off
      */
-    setRepeat: function () {
+    setRepeat: function (overwrite) {
         let repeatIcon = document.getElementById('playerRepeat');
+
+        if (overwrite === 'single') {
+            OCA.Audioplayer.Player.repeatMode = null;
+        } else if (overwrite === 'list') {
+            OCA.Audioplayer.Player.repeatMode = 'single';
+        }
+
         if (OCA.Audioplayer.Player.repeatMode === null) {
             OCA.Audioplayer.Player.html5Audio.loop = true;
             OCA.Audioplayer.Player.repeatMode = 'single';
             repeatIcon.classList.remove('repeat');
             repeatIcon.classList.add('repeat-single');
             repeatIcon.style.opacity = '1';
+            OCA.Audioplayer.Backend.setUserValue('repeat', 'single');
         } else if (OCA.Audioplayer.Player.repeatMode === 'single') {
             OCA.Audioplayer.Player.html5Audio.loop = false;
             OCA.Audioplayer.Player.repeatMode = 'list';
             repeatIcon.classList.add('repeat');
             repeatIcon.classList.remove('repeat-single');
+            repeatIcon.style.opacity = '1';
+            OCA.Audioplayer.Backend.setUserValue('repeat', 'list');
         } else {
             OCA.Audioplayer.Player.repeatMode = null;
             repeatIcon.style.removeProperty('opacity');
+            OCA.Audioplayer.Backend.setUserValue('repeat', 'none');
         }
     },
 
@@ -162,8 +173,6 @@ OCA.Audioplayer.Player = {
 
         let playlistItems = document.querySelectorAll('.albumwrapper li');
         OCA.Audioplayer.Player.addTracksToSourceList(playlistItems);
-        return;
-
     },
 
     /**
@@ -302,5 +311,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('playerShuffle').addEventListener('click', OCA.Audioplayer.Player.shuffleTitles);
     document.getElementById('playerVolume').addEventListener('input', OCA.Audioplayer.Player.setVolume);
     document.getElementById('playerVolume').value = document.getElementById('audioplayer_volume').value;
+
+    let repeat = document.getElementById('audioplayer_repeat').value;
+    if (repeat !== 'none') {
+        OCA.Audioplayer.Player.setRepeat(repeat);
+    }
     OCA.Audioplayer.Player.setVolume();
 });

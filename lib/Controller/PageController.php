@@ -69,6 +69,7 @@ class PageController extends Controller
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'audioplayer_view' => $this->configManager->getUserValue($this->userId, $this->appName, 'view') ?: 'pictures',
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '1',
+            'audioplayer_repeat' => $this->configManager->getUserValue($this->userId, $this->appName, 'repeat') ?: 'none',
             'audioplayer_sonos' => $audioplayer_sonos,
         ]);
         return $response;

@@ -10,6 +10,10 @@ All notable changes to the Audio Player project will be documented in this file.
 - Update Czech localization [#546](https://github.com/rello/audioplayer/pull/546) @[p-bo](https://github.com/p-bo)
 - better player integration
 
+### Fixed
+- Previous track button when shuffle is enabled #542
+- Loop playback states not remembered #541
+
 ## 3.1.0 - 2021-02-17
 ### Added
 - aac support [#527](https://github.com/rello/audioplayer/pull/527)
