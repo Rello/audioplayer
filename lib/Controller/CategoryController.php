@@ -395,13 +395,14 @@ class CategoryController extends Controller
                 }
             }
             array_splice($row, 8, 1);
-            //$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($row['fid']);
-            //$file = array_shift($nodes);
-            //if ($file === null) {
-            //    $this->logger->debug('removed/unshared file found => remove '.$row['fid'], array('app' => 'audioplayer'));
-            //    $this->DBController->deleteFromDB($row['fid'], $this->userId);
-            //    continue;
-            //}
+            $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($row['fid']);
+            $file = array_shift($nodes);
+
+            if ($file === null) {
+                $this->logger->debug('removed/unshared file found => remove '.$row['fid'], array('app' => 'audioplayer'));
+                $this->DBController->deleteFromDB($row['fid'], $this->userId);
+                continue;
+            }
             if (is_array($favorites) AND in_array($row['fid'], $favorites)) {
                 $row['fav'] = 't';
             }
