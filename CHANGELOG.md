@@ -13,6 +13,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - Previous track button when shuffle is enabled #542
 - Loop playback states not remembered #541
+- TypeError: Return value command #540
 
 ## 3.1.0 - 2021-02-17
 ### Added
