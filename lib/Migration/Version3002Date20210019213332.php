@@ -57,7 +57,7 @@ class Version3002Date20210019213332 extends SimpleMigrationStep
         $query = $this->connection->getQueryBuilder();
         $query->insert('audioplayer_whats_new')
             ->values([
-                'version' => $query->createNamedParameter('2.11.0'),
+                'version' => $query->createNamedParameter('3.2.0'),
                 'data' => $query->createNamedParameter('{"changelogURL":"https:\/\/github.com\/rello\/audioplayer\/blob\/master\/CHANGELOG.md","whatsNew":{
 "en":{"regular":["Collaborative tags support","Dashboard widget"],"admin":["New Features apply to users"]},
 "de":{"regular":["Collaborative tags support","Dashboard widget"],"admin":["Nur User Features"]}

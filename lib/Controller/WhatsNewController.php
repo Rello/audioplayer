@@ -77,8 +77,6 @@ class WhatsNewController extends Controller
             $iterator = $this->langFactory->getLanguageIterator();
             $whatsNew = $this->whatsNewService->getChangesForVersion($currentVersion);
 
-            $this->logger->debug(json_encode($whatsNew));
-
             $resultData = [
                 'changelogURL' => $whatsNew['changelogURL'],
                 'product' => 'Audioplayer',
@@ -101,10 +99,12 @@ class WhatsNewController extends Controller
     /**
      * @NoAdminRequired
      *
-     * @throws \OCP\PreConditionNotMetException
+     * @param string $version
+     * @return DataResponse
      * @throws DoesNotExistException
+     * @throws \OCP\PreConditionNotMetException
      */
-    public function dismiss(string $version): DataResponse
+    public function dismiss($version)
     {
         $user = $this->userSession->getUser();
         if ($user === null) {

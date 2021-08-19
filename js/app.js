@@ -1085,13 +1085,18 @@ OCA.Audioplayer.Backend = {
         });
     },
 
-    whatsnewDismiss: function dismiss(version) {
-        let data = {version: encodeURIComponent(version)};
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', OC.generateUrl('apps/audioplayer/whatsnew'));
-        xhr.setRequestHeader('requesttoken', OC.requestToken);
-        xhr.setRequestHeader('OCS-APIREQUEST', 'true');
-        xhr.send(JSON.stringify(data));
+    whatsnewDismiss: function (version) {
+        //let data = {version: encodeURIComponent(version)};
+        //let xhr = new XMLHttpRequest();
+        //xhr.open('POST', OC.generateUrl('apps/audioplayer/whatsnew'));
+        //xhr.setRequestHeader('requesttoken', OC.requestToken);
+        //xhr.setRequestHeader('OCS-APIREQUEST', 'true');
+        //xhr.send(JSON.stringify(data));
+        $.ajax({
+            type: 'POST',
+            url: OC.generateUrl('apps/audioplayer/whatsnew'),
+            data: {version: encodeURIComponent(version)}
+        })
 
         let elem = document.querySelector('.whatsNewPopover');
         elem.parentNode.removeChild(elem);
