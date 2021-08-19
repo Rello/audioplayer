@@ -6,15 +6,16 @@ All notable changes to the Audio Player project will be documented in this file.
 - NC22
 - Dashboard Widget [#548](https://github.com/rello/audioplayer/issues/548)
 - Collaborative tags support [#549](https://github.com/rello/audioplayer/issues/549)
+- Loop playback states not remembered #541
 
 ### Changed
 - Update Czech localization [#546](https://github.com/rello/audioplayer/pull/546) @[p-bo](https://github.com/p-bo)
 - better player UI
 - remove speaker icon to prioritize favorite star #519
+- Remove files app player in favor of NC standard #547
 
 ### Fixed
 - Previous track button when shuffle is enabled #542
-- Loop playback states not remembered #541
 - TypeError: Return value command #540
 - occ scan errors when scan folder is not available anymore #539
 - Track numbers limited to 2 digits #537
