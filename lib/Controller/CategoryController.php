@@ -353,7 +353,9 @@ class CategoryController extends Controller
 			 		Limit 25';
             $categoryId = 0;
         } elseif ($category === 'Playlist' AND $categoryId === "X5") { // 50 Random Tracks
-            if ($this->db->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSqlPlatform) {
+            if ($this->db->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSqlPlatform ||
+                $this->db->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSQL94Platform ||
+                $this->db->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\PostgreSQL100Platform) {
                 $order = 'ORDER BY random() Limit 50';
             } else {
                 $order = 'ORDER BY RAND() Limit 50';
