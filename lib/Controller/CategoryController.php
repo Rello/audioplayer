@@ -21,6 +21,7 @@ use OCP\ITagManager;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use \OCP\Files\NotFoundException;
+use OCA\audioplayer\Categories\Tag;
 
 /**
  * Controller class for main page.
@@ -36,6 +37,7 @@ class CategoryController extends Controller
     private $rootFolder;
     private $logger;
     private $DBController;
+    private $categoriesTag;
 
     public function __construct(
         $appName,
@@ -46,7 +48,8 @@ class CategoryController extends Controller
         ITagManager $tagManager,
         IRootFolder $rootFolder,
         LoggerInterface $logger,
-        DbController $DBController
+        DbController $DBController,
+        Tag $categoriesTag
     )
     {
         parent::__construct($appName, $request);
@@ -58,6 +61,7 @@ class CategoryController extends Controller
         $this->rootFolder = $rootFolder;
         $this->logger = $logger;
         $this->DBController = $DBController;
+        $this->categoriesTag = $categoriesTag;
     }
 
     /**
@@ -152,6 +156,8 @@ class CategoryController extends Controller
 			 			WHERE `AB`.`user_id` = ?
 			 			ORDER BY LOWER(`AA`.`name`) ASC
 			 			';
+        } elseif ($category === 'Tags') {
+            $aPlaylists = $this->categoriesTag->getCategoryItems();
         }
 
         if (isset($SQL)) {
@@ -185,7 +191,7 @@ class CategoryController extends Controller
      */
     public function getCategoryItemCovers($category, $categoryId)
     {
-        $whereMatching = array('Artist' => '`AT`.`artist_id`', 'Genre' => '`AT`.`genre_id`', 'Album' => '`AB`.`id`', 'Album Artist' => '`AB`.`artist_id`', 'Year' => '`AT`.`year`', 'Folder' => '`AT`.`folder_id`');
+        $whereMatching = array('Artist' => '`AT`.`artist_id`', 'Genre' => '`AT`.`genre_id`', 'Album' => '`AB`.`id`', 'Album Artist' => '`AB`.`artist_id`', 'Year' => '`AT`.`year`', 'Folder' => '`AT`.`folder_id`', 'Tags' => '`AT`.`file_id`');
 
         $aPlaylists = array();
         $SQL = 'SELECT  `AB`.`id` , `AB`.`name`, LOWER(`AB`.`name`) AS `lower` , `AA`.`id` AS `art`, (CASE  WHEN `AB`.`cover` IS NOT NULL THEN `AB`.`id` ELSE NULL END) AS `cid`';
@@ -196,6 +202,11 @@ class CategoryController extends Controller
         if ($categoryId) $SQL .= 'AND ' . $whereMatching[$category] . '= ?';
         $SQL .= ' GROUP BY `AB`.`id`, `AA`.`id`, `AB`.`name` ORDER BY LOWER(`AB`.`name`) ASC';
 
+        if ($category === 'Tags') {
+            $results = $this->categoriesTag->getCategoryItemCovers($categoryId);
+            $SQL = null;
+        }
+
         if (isset($SQL)) {
             $stmt = $this->db->prepare($SQL);
             if ($categoryId) {
@@ -204,13 +215,15 @@ class CategoryController extends Controller
                 $stmt->execute(array($this->userId));
             }
             $results = $stmt->fetchAll();
-            foreach ($results as $row) {
-                $row['art'] = $this->DBController->loadArtistsToAlbum($row['id'], $row['art']);
-                array_splice($row, 2, 1);
-                if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
-                $aPlaylists[] = $row;
-            }
         }
+
+        foreach ($results as $row) {
+            $row['art'] = $this->DBController->loadArtistsToAlbum($row['id'], $row['art']);
+            array_splice($row, 2, 1);
+            if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
+            $aPlaylists[] = $row;
+        }
+
         $result = empty($aPlaylists) ? [
             'status' => 'nodata'
         ] : [
@@ -249,7 +262,7 @@ class CategoryController extends Controller
         return $results['count'];
     }
 
-    /**
+        /**
      * get the tracks for a selected category or album
      *
      * @NoAdminRequired
@@ -373,14 +386,20 @@ class CategoryController extends Controller
             $SQL = $SQL_select . $SQL_from .
                 'WHERE  `AB`.`artist_id` = ? AND `AT`.`user_id` = ?' .
                 $SQL_order;
+        } elseif ($category === 'Tags') {
+            $results = $this->categoriesTag->getTracksDetails($categoryId);
+            $SQL = null;
+        }
+
+        if (isset($SQL)) {
+            $stmt = $this->db->prepare($SQL);
+            $stmt->execute(array($categoryId, $this->userId));
+            $results = $stmt->fetchAll();
         }
 
         $this->tagger = $this->tagManager->load('files');
         $favorites = $this->tagger->getFavorites();
 
-        $stmt = $this->db->prepare($SQL);
-        $stmt->execute(array($categoryId, $this->userId));
-        $results = $stmt->fetchAll();
 
         if ($category === 'Album') {
             $discNum = array_sum(array_column($results, 'dsc')) / count($results);
