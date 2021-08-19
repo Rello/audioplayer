@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.2.0 - 2021-08-xx
+## 3.2.0 - 2021-08-19
 ### Added
 - NC22
 - Dashboard Widget [#548](https://github.com/rello/audioplayer/issues/548)
