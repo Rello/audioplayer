@@ -6,7 +6,7 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
- * @copyright 2016-2020 Marcel Scherello
+ * @copyright 2016-2021 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
 'use strict';

@@ -12,8 +12,8 @@
         @include icon-color('app-dark', 'audioplayer', $color-black, 1);
  }
 
- body.dark .icon-analytics,
- body.theme--dark .icon-analytics {
+ body.dark .icon-audioplayer,
+ body.theme--dark .icon-audioplayer {
         @include icon-color('app', 'audioplayer', $color-black, 1);
  }
 

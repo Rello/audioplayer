@@ -6,7 +6,7 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2020 Marcel Scherello
+ * @copyright 2016-2021 Marcel Scherello
  */
 
 namespace OCA\audioplayer\Controller;
@@ -19,7 +19,6 @@ use OCP\Files\IRootFolder;
 use OCP\ITagManager;
 use OCP\IDBConnection;
 use OCP\ISession;
-
 
 /**
  * Controller class for main page.

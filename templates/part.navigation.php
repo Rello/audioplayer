@@ -6,7 +6,7 @@
  * later. See the LICENSE.md file.
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
- * @copyright 2016-2020 Marcel Scherello
+ * @copyright 2016-2021 Marcel Scherello
  */
  ?>
 <div id="view-toggle" class="icon-toggle-<?php p($_['audioplayer_view']); ?>">

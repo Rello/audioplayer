@@ -244,27 +244,27 @@ OCA.Audioplayer.Dashboard = {
 
     buildPlayer: function () {
         return '<div id="" class="playerBar">'
-            + '<div class="playerButton" title="' + t('analytics', 'Previous track') + '">'
+            + '<div class="playerButton" title="' + t('audioplayer', 'Previous track') + '">'
             + '<div id="playerPrev" class="button previous"></div></div>'
-            + '<div class="playerButton" title="' + t('analytics', 'Play/Pause') + '">'
+            + '<div class="playerButton" title="' + t('audioplayer', 'Play/Pause') + '">'
             + '<div id="playerPlay" class="button play-pause"></div></div>'
-            + '<div class="playerButton" title="' + t('analytics', 'Next track') + '">'
+            + '<div class="playerButton" title="' + t('audioplayer', 'Next track') + '">'
             + '<div id="playerNext" class="button next"></div></div><audio id="html5Audio" hidden=""></audio></div>';
     },
 
     buildCategoryDropdown: function () {
         return '<div class="categoryBar">\n' +
             '<select id="audiplayerCategory" style="width: 180px;">\n' +
-            '<option value="" selected>' + t('analytics', 'Selection') + '</option>\n' +
-            '<option value="Playlist">' + t('analytics', 'Playlists') + '</option>\n' +
-            '<option value="Album">' + t('analytics', 'Albums') + '</option>\n' +
-            '<option value="Album Artist">' + t('analytics', 'Album Artists') + '</option>\n' +
-            '<option value="Artist">' + t('analytics', 'Artists') + '</option>\n' +
-            '<option value="Folder">' + t('analytics', 'Folders') + '</option>\n' +
-            '<option value="Genre">' + t('analytics', 'Genres') + '</option>\n' +
-            '<option value="Title">' + t('analytics', 'Titles') + '</option>\n' +
-            '<option value="Tags">' + t('analytics', 'Tags') + '</option>' +
-            '<option value="Year">' + t('analytics', 'Years') + '</option>\n' +
+            '<option value="" selected>' + t('audioplayer', 'Selection') + '</option>\n' +
+            '<option value="Playlist">' + t('audioplayer', 'Playlists') + '</option>\n' +
+            '<option value="Album">' + t('audioplayer', 'Albums') + '</option>\n' +
+            '<option value="Album Artist">' + t('audioplayer', 'Album Artists') + '</option>\n' +
+            '<option value="Artist">' + t('audioplayer', 'Artists') + '</option>\n' +
+            '<option value="Folder">' + t('audioplayer', 'Folders') + '</option>\n' +
+            '<option value="Genre">' + t('audioplayer', 'Genres') + '</option>\n' +
+            '<option value="Title">' + t('audioplayer', 'Titles') + '</option>\n' +
+            '<option value="Tags">' + t('audioplayer', 'Tags') + '</option>' +
+            '<option value="Year">' + t('audioplayer', 'Years') + '</option>\n' +
             '</select>\n' +
             '</div>\n'
     },
@@ -313,7 +313,7 @@ OCA.Audioplayer.Dashboard = {
             success: function (jsondata) {
                 if (jsondata.status === 'success') {
                     let select = document.getElementById('audioplayerItem')
-                    select.innerHTML = '<option value="" selected>' + t('analytics', 'Selection') + '</option>';
+                    select.innerHTML = '<option value="" selected>' + t('audioplayer', 'Selection') + '</option>';
 
                     for (var categoryData of jsondata.data) {
                         var optionElement = document.createElement('option');
@@ -377,9 +377,9 @@ OCA.Audioplayer.Dashboard = {
                         audioSource.dataset.canPlayMime = canPlayMime;
                         player.appendChild(audioSource);
                     }
-                    document.getElementById('audioplayerTitle').innerHTML = jsondata.data.length + ' ' + t('analytics', 'Titles');
+                    document.getElementById('audioplayerTitle').innerHTML = jsondata.data.length + ' ' + t('audioplayer', 'Titles');
                 } else {
-                    document.getElementById('audioplayerTitle').innerHTML = t('analytics', 'No data');
+                    document.getElementById('audioplayerTitle').innerHTML = t('audioplayer', 'No data');
                 }
                 OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
                 document.getElementById('audioplayerCover').removeAttribute('style');

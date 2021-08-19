@@ -6,7 +6,7 @@
  *
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @author Sebastian Doell <sebastian@libasys.de>
- * @copyright 2016-2020 Marcel Scherello
+ * @copyright 2016-2021 Marcel Scherello
  * @copyright 2015 Sebastian Doell
  */
 
@@ -337,7 +337,7 @@ OCA.Audioplayer.Cover = {
         if (albumDirectPlay !== true) {
             let iScroll = 20;
             let iSlideDown = 200;
-            let iTop = 210;
+            let iTop = 260;
             let containerTop;
             let appContentScroll;
             containerTop = activeAlbum.offsetTop + iTop;
