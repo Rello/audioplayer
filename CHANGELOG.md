@@ -4,11 +4,13 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 3.2.0 - 2021-08-xx
 ### Added
 - NC22
-- Dashboard Widget #548
+- Dashboard Widget [#548](https://github.com/rello/audioplayer/issues/548)
+- Collaborative tags support [#549](https://github.com/rello/audioplayer/issues/549)
 
 ### Changed
 - Update Czech localization [#546](https://github.com/rello/audioplayer/pull/546) @[p-bo](https://github.com/p-bo)
-- better player integration
+- better player UI
+- remove speaker icon to prioritize favorite star #519
 
 ### Fixed
 - Previous track button when shuffle is enabled #542
@@ -17,13 +19,14 @@ All notable changes to the Audio Player project will be documented in this file.
 - occ scan errors when scan folder is not available anymore #539
 - Track numbers limited to 2 digits #537
 - Deleted songs dont get removed #533
+- Incorrect placement of tracklist in album cover view #520
 
 ## 3.1.0 - 2021-02-17
 ### Added
-- aac support [#527](https://github.com/rello/audioplayer/pull/527)
-- Remember playback volume [#517](https://github.com/rello/audioplayer/pull/517)
-- NC21 [#515](https://github.com/rello/audioplayer/pull/515)
-- Added .jpeg File Extension for cover art [#514](https://github.com/rello/audioplayer/pull/514) @[tidoni](https://github.com/tidoni)
+- aac support [#527](https://github.com/rello/audioplayer/issues/527)
+- Remember playback volume [#517](https://github.com/rello/audioplayer/issues/517)
+- NC21 [#515](https://github.com/rello/audioplayer/issues/515)
+- Added .jpeg File Extension for cover art [#514](https://github.com/rello/audioplayer/issues/514) @[tidoni](https://github.com/tidoni)
 
 ### Changed
 - Volume slider size [#516](https://github.com/rello/audioplayer/pull/516)

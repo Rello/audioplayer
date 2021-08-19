@@ -132,8 +132,8 @@ OCA.Audioplayer.Core = {
             OCA.Audioplayer.Category.handleCategoryClicked(null, function () {                        // select the last played title
                 if (OCA.Audioplayer.Core.CategorySelectors[2]) {
                     let item = $('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]');
-                    item.find('.icon').hide();
-                    item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
+                    //item.find('.icon').hide();
+                    //item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
                     document.querySelector('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]').scrollIntoView({behavior: 'smooth', block: 'center',});
                     if (OCA.Audioplayer.Core.CategorySelectors[3]) {
                         // if the title was previously played, the last position will be set
@@ -728,22 +728,22 @@ OCA.Audioplayer.UI = {
             // reset all playing icons
             let iocIcon = document.querySelectorAll('.albumwrapper li i.ioc');
             for (let i = 0; i < iocIcon.length; ++i) {
-                iocIcon[i].style.display = 'none';
+                //iocIcon[i].style.display = 'none';
             }
             let iconIcon = document.querySelectorAll('.albumwrapper li i.icon');
             for (let j = 0; j < iconIcon.length; ++j) {
-                iconIcon[j].style.display = 'block';
+                //iconIcon[j].style.display = 'block';
             }
 
             if (!OCA.Audioplayer.Player.isPaused()) {
-                iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-off');
-                iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-up');
+                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-off');
+                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-up');
             } else {
-                iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-off');
-                iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-up');
+                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-off');
+                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-up');
             }
-            iocIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'block';
-            iconIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'none';
+            //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'block';
+            //iconIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'none';
 
             document.getElementById('nowPlayingText').innerHTML = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
