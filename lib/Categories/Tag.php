@@ -42,15 +42,15 @@ class Tag
     public function getCategoryItems()
     {
         $allTags = $this->tagManager->getAllTags();
+        $aPlaylists = array();
 
         foreach ($allTags as $tag) {
             $tagName = $tag->getName();
             $tagId = $tag->getId();
             $trackCount = $this->getTrackCount($tagId);
             if ($trackCount && $trackCount !== 0) {
-                $row = array('id' => $tagId, 'name' => $tagName, 'cnt' => $trackCount);
+                $aPlaylists[] = array('id' => $tagId, 'name' => $tagName, 'cnt' => $trackCount);
             }
-            $aPlaylists[] = $row;
         }
         return $aPlaylists;
     }
@@ -76,7 +76,6 @@ class Tag
         $result = $statement->fetch();
         $statement->closeCursor();
 
-        $this->logger->error(json_encode($result['count']));
         return $result['count'];
     }
 
@@ -92,7 +91,6 @@ class Tag
         $allFiles = $this->tagManager->getObjectIdsForTags($tagId);
 
         $sql = $this->db->getQueryBuilder();
-
         $function = $sql->createFunction('
 			CASE 
 				WHEN ' . $sql->getColumnName('AB.cover') . ' IS NOT NULL THEN '. $sql->getColumnName('AB.id') . '
@@ -138,7 +136,6 @@ class Tag
         $allFiles = $this->tagManager->getObjectIdsForTags($tagId);
 
         $sql = $this->db->getQueryBuilder();
-
         $function = $sql->createFunction('
 			CASE 
 				WHEN ' . $sql->getColumnName('AB.cover') . ' IS NOT NULL THEN '. $sql->getColumnName('AB.id') . '

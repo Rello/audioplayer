@@ -631,24 +631,31 @@ class ScannerController extends Controller
             $ThisFileInfo['bitrate'] = 0;
             $ThisFileInfo['playtime_string'] = 0;
         } else {
-            $handle = $audio->fopen('rb');
-            if (@fseek($handle, -24, SEEK_END) === 0) {
-                $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
-            } else {
-                if (!$this->noFseek) {
-                    $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.", OutputInterface::VERBOSITY_VERBOSE);
-                    $this->logger->debug('Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', array('app' => 'audioplayer'));
-                    $this->noFseek = true;
-                }
-                $fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());
-                $ThisFileInfo = $getID3->analyze($fileName);
 
-                if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
-                    unlink($fileName);
+            $availability =  $audio->getStorage()->getAvailability();
+            if (!$availability['available']) {
+                $output->writeln("Some external storage is not available", OutputInterface::VERBOSITY_VERBOSE);
+                $this->logger->debug('Some external storage is not available', array('app' => 'audioplayer'));
+            } else {
+                $handle = $audio->fopen('rb');
+                if (@fseek($handle, -24, SEEK_END) === 0) {
+                    $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
+                } else {
+                    if (!$this->noFseek) {
+                        $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.", OutputInterface::VERBOSITY_VERBOSE);
+                        $this->logger->debug('Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', array('app' => 'audioplayer'));
+                        $this->noFseek = true;
+                    }
+                    $fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());
+                    $ThisFileInfo = $getID3->analyze($fileName);
+
+                    if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
+                        unlink($fileName);
+                    }
                 }
+                if ($this->cyrillic === 'checked') $ThisFileInfo = $this->convertCyrillic($ThisFileInfo);
+                getid3_lib::CopyTagsToComments($ThisFileInfo);
             }
-            if ($this->cyrillic === 'checked') $ThisFileInfo = $this->convertCyrillic($ThisFileInfo);
-            getid3_lib::CopyTagsToComments($ThisFileInfo);
         }
         $this->ID3Tags = $ThisFileInfo;
     }

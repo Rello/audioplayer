@@ -41,6 +41,7 @@ OCA.Audioplayer.Player = {
         }
         // new track to be played
         if (trackToPlay.src !== this.html5Audio.getAttribute('src')) {
+            document.getElementById('playerPlay').classList.replace('play-pause', 'icon-loading')
             this.currentTrackId = trackToPlay.dataset.trackid;
             OCA.Audioplayer.Core.CategorySelectors[2] = trackToPlay.dataset.trackid;
             this.lastSavedSecond = 0;
@@ -53,13 +54,13 @@ OCA.Audioplayer.Player = {
         let playPromise = this.html5Audio.play();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
-                //document.getElementById('playerPlay').classList.replace('icon-loading', 'play-pause');
+                document.getElementById('playerPlay').classList.replace('icon-loading', 'play-pause');
                 document.getElementById('sm2-bar-ui').classList.add('playing');
                 OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
             })
                 .catch(error => {
-                    // Auto-play was prevented
-                    // Show paused UI.
+                    document.getElementById('playerPlay').classList.replace('icon-loading','icon-loading');
+                    document.getElementById('playerPlay').classList.replace('play-pause','play');
                 });
         }
     },

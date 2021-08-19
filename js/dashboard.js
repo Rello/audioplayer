@@ -257,13 +257,14 @@ OCA.Audioplayer.Dashboard = {
             '<select id="audiplayerCategory" style="width: 180px;">\n' +
             '<option value="" selected>' + t('analytics', 'Selection') + '</option>\n' +
             '<option value="Playlist">' + t('analytics', 'Playlists') + '</option>\n' +
-            '<option value="Artist">' + t('analytics', 'Artists') + '</option>\n' +
-            '<option value="Album Artist">' + t('analytics', 'Album Artists') + '</option>\n' +
             '<option value="Album">' + t('analytics', 'Albums') + '</option>\n' +
-            '<option value="Title">' + t('analytics', 'Titles') + '</option>\n' +
-            '<option value="Genre">' + t('analytics', 'Genres') + '</option>\n' +
-            '<option value="Year">' + t('analytics', 'Years') + '</option>\n' +
+            '<option value="Album Artist">' + t('analytics', 'Album Artists') + '</option>\n' +
+            '<option value="Artist">' + t('analytics', 'Artists') + '</option>\n' +
             '<option value="Folder">' + t('analytics', 'Folders') + '</option>\n' +
+            '<option value="Genre">' + t('analytics', 'Genres') + '</option>\n' +
+            '<option value="Title">' + t('analytics', 'Titles') + '</option>\n' +
+            '<option value="Tags">' + t('analytics', 'Tags') + '</option>' +
+            '<option value="Year">' + t('analytics', 'Years') + '</option>\n' +
             '</select>\n' +
             '</div>\n'
     },
