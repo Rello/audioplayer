@@ -17,34 +17,34 @@
         @include icon-color('app', 'audioplayer', $color-black, 1);
  }
 
-.panel--content .playerButton {
+.panel--content .APplayerButton {
         width: 40px;
         height: 40px;
         position: relative;
         display: inline-block;
 }
 
-.panel--content .playerBar {
+.panel--content .APplayerBar {
         width: 130px;
         margin: auto;
 }
 
-.panel--content .categoryBar,
-.panel--content .coverBar,
-.panel--content .itemBar,
-.panel--content .titleBar {
+.panel--content .APcategoryBar,
+.panel--content .APcoverBar,
+.panel--content .APitemBar,
+.panel--content .APtitleBar {
         margin: auto;
         width: 180px;
         margin-top: 10px;
 }
 
-.panel--content .titleBar {
+.panel--content .APtitleBar {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
 }
 
-.panel--content .coverBar .cover {
+.panel--content .APcoverBar .APcover {
         width: 180px;
         height: 180px;
         text-align: center;
@@ -52,7 +52,7 @@
         line-height: 150px;
 }
 
-.panel--content .button {
+.panel--content .APbutton {
         background-size: 80%;
         background-position: center center;
         position: absolute;
@@ -63,35 +63,35 @@
         opacity: 0.4;
 }
 
-.panel--content .button.previous {
+.panel--content .APbutton.APprevious {
         @include icon-color('previous', 'audioplayer', $color-black, 1);
 }
 
-.panel--content .button.next {
+.panel--content .APbutton.APnext {
         @include icon-color('next', 'audioplayer', $color-black, 1);
 }
 
-.panel--content .button.play-pause {
+.panel--content .APbutton.APplay-pause {
         @include icon-color('play', 'audioplayer', $color-black, 1);
 }
 
-.panel--content .button.play-pause.playing {
+.panel--content .APbutton.APplay-pause.playing {
         @include icon-color('pause', 'audioplayer', $color-black, 1);
 }
 
-.panel--content .button.previous,
-.panel--content .button.play-pause,
-.panel--content .button.previous,
-.panel--content .button.next {
+.panel--content .APbutton.APprevious,
+.panel--content .APbutton.APplay-pause,
+.panel--content .APbutton.APprevious,
+.panel--content .APbutton.APnext {
         background-size: 80%;
         background-position: center center;
         opacity: 0.5;
 }
 
-.panel--content .button.previous:hover,
-.panel--content .button.play-pause:hover,
-.panel--content .button.previous:hover,
-.panel--content .button.next:hover {
+.panel--content .APbutton.APprevious:hover,
+.panel--content .APbutton.APplay-pause:hover,
+.panel--content .APbutton.APprevious:hover,
+.panel--content .APbutton.APnext:hover {
         opacity: 1;
 }
 

@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.2.1 - 2021-08-20
+### Fixed
+- dashboard style impact #550
+
 ## 3.2.0 - 2021-08-19
 ### Added
 - NC22

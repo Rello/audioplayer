@@ -112,7 +112,7 @@ OCA.Audioplayer.Player = {
         }
         // new track to be played
         if (trackToPlay.src !== this.html5Audio.getAttribute('src')) {
-            document.getElementById('playerPlay').classList.replace('play-pause', 'icon-loading')
+            document.getElementById('playerPlay').classList.replace('APplay-pause', 'icon-loading')
             this.lastSavedSecond = 0;
             this.html5Audio.setAttribute('src', trackToPlay.src);
             this.html5Audio.load();
@@ -124,14 +124,14 @@ OCA.Audioplayer.Player = {
         let playPromise = this.html5Audio.play();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
-                document.getElementById('playerPlay').classList.replace('icon-loading', 'play-pause');
+                document.getElementById('playerPlay').classList.replace('icon-loading', 'APplay-pause');
                 document.getElementById('playerPlay').classList.add('playing');
                 OCA.Audioplayer.Player.indicateCurrentPlayingTrack();
             })
                 .catch(error => {
                     OCA.Audioplayer.Player.stop();
                     document.getElementById('playerPlay').classList.replace('icon-loading','icon-loading');
-                    document.getElementById('playerPlay').classList.replace('play-pause','play');
+                    document.getElementById('playerPlay').classList.replace('APplay-pause','play');
                 });
         }
 
@@ -243,17 +243,17 @@ OCA.Audioplayer.Dashboard = {
     },
 
     buildPlayer: function () {
-        return '<div id="" class="playerBar">'
-            + '<div class="playerButton" title="' + t('audioplayer', 'Previous track') + '">'
-            + '<div id="playerPrev" class="button previous"></div></div>'
-            + '<div class="playerButton" title="' + t('audioplayer', 'Play/Pause') + '">'
-            + '<div id="playerPlay" class="button play-pause"></div></div>'
-            + '<div class="playerButton" title="' + t('audioplayer', 'Next track') + '">'
-            + '<div id="playerNext" class="button next"></div></div><audio id="html5Audio" hidden=""></audio></div>';
+        return '<div id="" class="APplayerBar">'
+            + '<div class="APplayerButton" title="' + t('audioplayer', 'Previous track') + '">'
+            + '<div id="playerPrev" class="APbutton button APprevious"></div></div>'
+            + '<div class="APplayerButton" title="' + t('audioplayer', 'Play/Pause') + '">'
+            + '<div id="playerPlay" class="APbutton button APplay-pause"></div></div>'
+            + '<div class="APplayerButton" title="' + t('audioplayer', 'Next track') + '">'
+            + '<div id="playerNext" class="APbutton button APnext"></div></div><audio id="html5Audio" hidden=""></audio></div>';
     },
 
     buildCategoryDropdown: function () {
-        return '<div class="categoryBar">\n' +
+        return '<div class="APcategoryBar">\n' +
             '<select id="audiplayerCategory" style="width: 180px;">\n' +
             '<option value="" selected>' + t('audioplayer', 'Selection') + '</option>\n' +
             '<option value="Playlist">' + t('audioplayer', 'Playlists') + '</option>\n' +
@@ -270,21 +270,21 @@ OCA.Audioplayer.Dashboard = {
     },
 
     buildItemDropdown: function () {
-        return '<div  class="itemBar">\n' +
+        return '<div  class="APitemBar">\n' +
             '<select id="audioplayerItem" style="width: 180px;">\n' +
             '</select>\n' +
             '</div>\n'
     },
 
     buildItemCover: function () {
-        return '<div class="coverBar">\n' +
+        return '<div class="APcoverBar">\n' +
             '<div id="audioplayerLoading" style="text-align:center; padding-top:100px" class="icon-loading" hidden></div>' +
             '<div id="audioplayerCover" class="cover"></div>' +
             '</div>\n'
     },
 
     buildCurrentTitle: function () {
-        return '<div class="titleBar">\n' +
+        return '<div class="APtitleBar">\n' +
             '<div id="audioplayerTitle" style="width: 180px;">\n' +
             '</div>\n' +
             '</div>\n'
