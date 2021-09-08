@@ -709,7 +709,7 @@ class ScannerController extends Controller
         //	\OCP\Util::writeLog('audioplayer', 'album: '.$this->ID3Tags['comments']['album'][0], \OCP\Util::DEBUG);
         for ($i = 0; $i < $c; $i++) {
             if (isset($this->ID3Tags['comments'][$ID3Value[$i]][0]) and rawurlencode($this->ID3Tags['comments'][$ID3Value[$i]][0]) !== '%FF%FE') {
-                return $this->ID3Tags['comments'][$ID3Value[$i]][0];
+                return preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $this->ID3Tags['comments'][$ID3Value[$i]][0]);
             } elseif ($i === $c - 1 AND $defaultValue !== null) {
                 return $defaultValue;
             } elseif ($i === $c - 1) {
