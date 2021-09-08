@@ -638,7 +638,7 @@ class ScannerController extends Controller
                 $this->logger->debug('Some external storage is not available', array('app' => 'audioplayer'));
             } else {
                 $handle = $audio->fopen('rb');
-                if (@fseek($handle, -24, SEEK_END) === 0) {
+                if (is_resource($handle) && @fseek($handle, -24, SEEK_END) === 0) {
                     $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
                 } else {
                     if (!$this->noFseek) {
