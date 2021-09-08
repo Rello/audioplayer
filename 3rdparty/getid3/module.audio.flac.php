@@ -14,7 +14,9 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
-
+if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that access modules directly on public webservers
+	exit;
+}
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio.ogg.php', __FILE__, true);
 
 /**
@@ -50,27 +52,27 @@ class getid3_flac extends getid3_handler
 	public function parseMETAdata() {
 		$info = &$this->getid3->info;
 		do {
-            $BlockOffset = $this->ftell();
-            $BlockHeader = $this->fread(4);
-            $LBFBT = getid3_lib::BigEndian2Int(substr($BlockHeader, 0, 1));  // LBFBT = LastBlockFlag + BlockType
-            $LastBlockFlag = (bool)($LBFBT & 0x80);
-            $BlockType = ($LBFBT & 0x7F);
-            $BlockLength = getid3_lib::BigEndian2Int(substr($BlockHeader, 1, 3));
-            $BlockTypeText = self::metaBlockTypeLookup($BlockType);
+			$BlockOffset   = $this->ftell();
+			$BlockHeader   = $this->fread(4);
+			$LBFBT         = getid3_lib::BigEndian2Int(substr($BlockHeader, 0, 1));  // LBFBT = LastBlockFlag + BlockType
+			$LastBlockFlag = (bool) ($LBFBT & 0x80);
+			$BlockType     =        ($LBFBT & 0x7F);
+			$BlockLength   = getid3_lib::BigEndian2Int(substr($BlockHeader, 1, 3));
+			$BlockTypeText = self::metaBlockTypeLookup($BlockType);
 
-            if (($BlockOffset + 4 + $BlockLength) > $info['avdataend']) {
-                $this->warning('METADATA_BLOCK_HEADER.BLOCK_TYPE (' . $BlockTypeText . ') at offset ' . $BlockOffset . ' extends beyond end of file');
-                break;
-            }
-            if ($BlockLength < 1) {
-                if ($BlockTypeText != 'reserved') {
-                    // probably supposed to be zero-length
-                    $this->warning('METADATA_BLOCK_HEADER.BLOCK_LENGTH (' . $BlockTypeText . ') at offset ' . $BlockOffset . ' is zero bytes');
-                    continue;
-                }
-                $this->error('METADATA_BLOCK_HEADER.BLOCK_LENGTH (' . $BlockLength . ') at offset ' . $BlockOffset . ' is invalid');
-                break;
-            }
+			if (($BlockOffset + 4 + $BlockLength) > $info['avdataend']) {
+				$this->warning('METADATA_BLOCK_HEADER.BLOCK_TYPE ('.$BlockTypeText.') at offset '.$BlockOffset.' extends beyond end of file');
+				break;
+			}
+			if ($BlockLength < 1) {
+				if ($BlockTypeText != 'reserved') {
+					// probably supposed to be zero-length
+					$this->warning('METADATA_BLOCK_HEADER.BLOCK_LENGTH ('.$BlockTypeText.') at offset '.$BlockOffset.' is zero bytes');
+					continue;
+				}
+				$this->error('METADATA_BLOCK_HEADER.BLOCK_LENGTH ('.$BlockLength.') at offset '.$BlockOffset.' is invalid');
+				break;
+			}
 
 			$info['flac'][$BlockTypeText]['raw'] = array();
 			$BlockTypeText_raw = &$info['flac'][$BlockTypeText]['raw'];
@@ -178,8 +180,8 @@ class getid3_flac extends getid3_handler
 		if (isset($info['flac']['STREAMINFO']['audio_signature'])) {
 
 			if ($info['flac']['STREAMINFO']['audio_signature'] === str_repeat("\x00", 16)) {
-                $this->warning('FLAC STREAMINFO.audio_signature is null (known issue with libOggFLAC)');
-            }
+				$this->warning('FLAC STREAMINFO.audio_signature is null (known issue with libOggFLAC)');
+			}
 			else {
 				$info['md5_data_source'] = '';
 				$md5 = $info['flac']['STREAMINFO']['audio_signature'];
@@ -400,6 +402,7 @@ class getid3_flac extends getid3_handler
 	public function parsePICTURE() {
 		$info = &$this->getid3->info;
 
+		$picture = array();
 		$picture['typeid']         = getid3_lib::BigEndian2Int($this->fread(4));
 		$picture['picturetype']    = self::pictureTypeLookup($picture['typeid']);
 		$picture['image_mime']     = $this->fread(getid3_lib::BigEndian2Int($this->fread(4)));

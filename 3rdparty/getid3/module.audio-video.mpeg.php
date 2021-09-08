@@ -14,6 +14,9 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that access modules directly on public webservers
+	exit;
+}
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio.mp3.php', __FILE__, true);
 
 class getid3_mpeg extends getid3_handler
@@ -90,19 +93,19 @@ class getid3_mpeg extends getid3_handler
 					break;
 
 				case 0xB3: // sequence_header_code
-                    // Note: purposely doing the less-pretty (and probably a bit slower) method of using string of bits rather than bitwise operations.
-                    // Mostly because PHP 32-bit doesn't handle unsigned integers well for bitwise operation.
-                    // Also the MPEG stream is designed as a bitstream and often doesn't align nicely with byte boundaries.
-                    $info['video']['codec'] = 'MPEG-1'; // will be updated if extension_start_code found
+					// Note: purposely doing the less-pretty (and probably a bit slower) method of using string of bits rather than bitwise operations.
+					// Mostly because PHP 32-bit doesn't handle unsigned integers well for bitwise operation.
+					// Also the MPEG stream is designed as a bitstream and often doesn't align nicely with byte boundaries.
+					$info['video']['codec'] = 'MPEG-1'; // will be updated if extension_start_code found
 
-                    $bitstream = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 4, 8));
-                    $bitstreamoffset = 0;
+					$bitstream = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 4, 8));
+					$bitstreamoffset = 0;
 
-                    $info['mpeg']['video']['raw']['horizontal_size_value'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for horizontal frame size. Note: horizontal_size_extension, if present, will add 2 most-significant bits to this value
-                    $info['mpeg']['video']['raw']['vertical_size_value'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for vertical frame size.   Note: vertical_size_extension,   if present, will add 2 most-significant bits to this value
-                    $info['mpeg']['video']['raw']['aspect_ratio_information'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for aspect_ratio_information
-                    $info['mpeg']['video']['raw']['frame_rate_code'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for Frame Rate id code
-                    $info['mpeg']['video']['raw']['bitrate'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 18); // 18 bits for bit_rate_value (18 set bits = VBR, otherwise bitrate = this value * 400)
+					$info['mpeg']['video']['raw']['horizontal_size_value']       = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for horizontal frame size. Note: horizontal_size_extension, if present, will add 2 most-significant bits to this value
+					$info['mpeg']['video']['raw']['vertical_size_value']         = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for vertical frame size.   Note: vertical_size_extension,   if present, will add 2 most-significant bits to this value
+					$info['mpeg']['video']['raw']['aspect_ratio_information']    = self::readBitsFromStream($bitstream, $bitstreamoffset,  4); //  4 bits for aspect_ratio_information
+					$info['mpeg']['video']['raw']['frame_rate_code']             = self::readBitsFromStream($bitstream, $bitstreamoffset,  4); //  4 bits for Frame Rate id code
+					$info['mpeg']['video']['raw']['bitrate']                     = self::readBitsFromStream($bitstream, $bitstreamoffset, 18); // 18 bits for bit_rate_value (18 set bits = VBR, otherwise bitrate = this value * 400)
 					$marker_bit                                                  = self::readBitsFromStream($bitstream, $bitstreamoffset,  1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
 					$info['mpeg']['video']['raw']['vbv_buffer_size']             = self::readBitsFromStream($bitstream, $bitstreamoffset, 10); // 10 bits vbv_buffer_size_value
 					$info['mpeg']['video']['raw']['constrained_param_flag']      = self::readBitsFromStream($bitstream, $bitstreamoffset,  1); //  1 bit flag: constrained_param_flag
@@ -391,7 +394,7 @@ $PackedElementaryStream['additional_header_bytes'] = $additional_header_bytes;
 					$info['mpeg']['packed_elementary_streams'][$PackedElementaryStream['stream_type']][$PackedElementaryStream['stream_id']][] = $PackedElementaryStream;
 */
 					$getid3_temp = new getID3();
-					$getid3_temp->openfile($this->getid3->filename);
+					$getid3_temp->openfile($this->getid3->filename, $this->getid3->info['filesize'], $this->getid3->fp);
 					$getid3_temp->info = $info;
 					$getid3_mp3 = new getid3_mp3($getid3_temp);
 					for ($i = 0; $i <= 7; $i++) {
@@ -519,7 +522,7 @@ echo 'average_File_bitrate = '.number_format(array_sum($vbr_bitrates) / count($v
 	 * @param int    $bits_to_read
 	 * @param bool $return_singlebit_as_boolean
 	 *
-	 * @return bool|float|int
+	 * @return bool|int
 	 */
 	private function readBitsFromStream(&$bitstream, &$bitstreamoffset, $bits_to_read, $return_singlebit_as_boolean=true) {
 		$return = bindec(substr($bitstream, $bitstreamoffset, $bits_to_read));
@@ -543,6 +546,7 @@ echo 'average_File_bitrate = '.number_format(array_sum($vbr_bitrates) / count($v
 		$VideoBitrate = max(min($VideoBitrate / 1000, 10000), 10); // limit to range of 10kbps -  10Mbps (beyond that curves flatten anyways, no big loss)
 
 
+		$OverheadMultiplierByBitrate      = array();
 		//OMBB[audiobitrate]              = array(video-10kbps,       video-100kbps,      video-1000kbps,     video-10000kbps)
 		$OverheadMultiplierByBitrate[32]  = array(0, 0.9676287944368530, 0.9802276264360310, 0.9844916183244460, 0.9852821845179940);
 		$OverheadMultiplierByBitrate[48]  = array(0, 0.9779100089209830, 0.9787770035359320, 0.9846738664076130, 0.9852683013799960);
@@ -618,12 +622,12 @@ echo 'average_File_bitrate = '.number_format(array_sum($vbr_bitrates) / count($v
 		return $ratio;
 	}
 
-    /**
-     * @param int $rawaspectratio
-     * @param int $mpeg_version
-     *
-     * @return string
-     */
+	/**
+	 * @param int $rawaspectratio
+	 * @param int $mpeg_version
+	 *
+	 * @return string
+	 */
 	public static function videoAspectRatioTextLookup($rawaspectratio, $mpeg_version=1) {
 		$lookup = array(
 			1 => array('forbidden', 'square pixels', '0.6735', '16:9, 625 line, PAL', '0.7615', '0.8055', '16:9, 525 line, NTSC', '0.8935', '4:3, 625 line, PAL, CCIR601', '0.9815', '1.0255', '1.0695', '4:3, 525 line, NTSC, CCIR601', '1.1575', '1.2015', 'reserved'),

@@ -14,31 +14,33 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that access modules directly on public webservers
+	exit;
+}
 
 class getid3_ac3 extends getid3_handler
 {
-    /**
-     * @var array
-     */
-    private $AC3header = array();
+	/**
+	 * @var array
+	 */
+	private $AC3header = array();
 
-    /**
-     * @var int
-     */
-    private $BSIoffset = 0;
+	/**
+	 * @var int
+	 */
+	private $BSIoffset = 0;
 
-    const syncword = 0x0B77;
+	const syncword = 0x0B77;
 
-    /**
-     * @return bool
-     */
-    public function Analyze()
-    {
-        $info = &$this->getid3->info;
+	/**
+	 * @return bool
+	 */
+	public function Analyze() {
+		$info = &$this->getid3->info;
 
-        ///AH
-        $info['ac3']['raw']['bsi'] = array();
-        $thisfile_ac3 = &$info['ac3'];
+		///AH
+		$info['ac3']['raw']['bsi'] = array();
+		$thisfile_ac3              = &$info['ac3'];
 		$thisfile_ac3_raw          = &$thisfile_ac3['raw'];
 		$thisfile_ac3_raw_bsi      = &$thisfile_ac3_raw['bsi'];
 
@@ -422,11 +424,11 @@ class getid3_ac3 extends getid3_handler
 
 		} else {
 
-            $this->error('Bit stream identification is version ' . $thisfile_ac3_raw_bsi['bsid'] . ', but getID3() only understands up to version 16. Please submit a support ticket with a sample file.');
-            unset($info['ac3']);
-            return false;
+			$this->error('Bit stream identification is version '.$thisfile_ac3_raw_bsi['bsid'].', but getID3() only understands up to version 16. Please submit a support ticket with a sample file.');
+			unset($info['ac3']);
+			return false;
 
-        }
+		}
 
 		if (isset($thisfile_ac3_raw_bsi['fscod2'])) {
 			$thisfile_ac3['sample_rate'] = self::sampleRateCodeLookup2($thisfile_ac3_raw_bsi['fscod2']);
@@ -486,7 +488,7 @@ class getid3_ac3 extends getid3_handler
 	/**
 	 * @param int $length
 	 *
-	 * @return float|int
+	 * @return int
 	 */
 	private function readHeaderBSI($length) {
 		$data = substr($this->AC3header['bsi'], $this->BSIoffset, $length);
@@ -678,27 +680,27 @@ class getid3_ac3 extends getid3_handler
 		//  2    +18.06 dB
 		//  1    +12.04 dB
 		//  0     +6.02 dB
-        // -1         0 dB
-        // -2     -6.02 dB
-        // -3    -12.04 dB
-        // -4    -18.06 dB
-        // -5    -24.08 dB
-        // -6    -30.10 dB
-        // -7    -36.12 dB
-        // -8    -42.14 dB
+		// -1         0 dB
+		// -2     -6.02 dB
+		// -3    -12.04 dB
+		// -4    -18.06 dB
+		// -5    -24.08 dB
+		// -6    -30.10 dB
+		// -7    -36.12 dB
+		// -8    -42.14 dB
 
-        $fourbit = str_pad(decbin(($compre & 0xF0) >> 4), 4, '0', STR_PAD_LEFT);
-        if ($fourbit[0] == '1') {
-            $log_gain = -8 + bindec(substr($fourbit, 1));
-        } else {
-            $log_gain = bindec(substr($fourbit, 1));
-        }
-        $log_gain = ($log_gain + 1) * getid3_lib::RGADamplitude2dB(2);
+		$fourbit = str_pad(decbin(($compre & 0xF0) >> 4), 4, '0', STR_PAD_LEFT);
+		if ($fourbit[0] == '1') {
+			$log_gain = -8 + bindec(substr($fourbit, 1));
+		} else {
+			$log_gain = bindec(substr($fourbit, 1));
+		}
+		$log_gain = ($log_gain + 1) * getid3_lib::RGADamplitude2dB(2);
 
-        // The value of Y is a linear representation of a gain change of up to -6 dB. Y is considered to
-        // be an unsigned fractional integer, with a leading value of 1, or: 0.1 Y4 Y5 Y6 Y7 (base 2). Y can
-        // represent values between 0.111112 (or 31/32) and 0.100002 (or 1/2). Thus, Y can represent gain
-        // changes from -0.28 dB to -6.02 dB.
+		// The value of Y is a linear representation of a gain change of up to -6 dB. Y is considered to
+		// be an unsigned fractional integer, with a leading value of 1, or: 0.1 Y4 Y5 Y6 Y7 (base 2). Y can
+		// represent values between 0.111112 (or 31/32) and 0.100002 (or 1/2). Thus, Y can represent gain
+		// changes from -0.28 dB to -6.02 dB.
 
 		$lin_gain = (16 + ($compre & 0x0F)) / 32;
 
@@ -749,24 +751,24 @@ class getid3_ac3 extends getid3_handler
 				8  => array( 512,  556,  768),  // 128 kbps
 				9  => array( 640,  696,  960),  // 160 kbps
 				10 => array( 768,  834, 1152),  // 192 kbps
-                11 => array(896, 974, 1344),  // 224 kbps
-                12 => array(1024, 1114, 1536),  // 256 kbps
-                13 => array(1280, 1392, 1920),  // 320 kbps
-                14 => array(1536, 1670, 2304),  // 384 kbps
-                15 => array(1792, 1950, 2688),  // 448 kbps
-                16 => array(2048, 2228, 3072),  // 512 kbps
-                17 => array(2304, 2506, 3456),  // 576 kbps
-                18 => array(2560, 2786, 3840)   // 640 kbps
-            );
-        }
-        $paddingBytes = 0;
-        if (($fscod == 1) && $padding) {
-            // frame lengths are padded by 1 word (16 bits) at 44100
-            // (fscode==1) means 44100Hz (see sampleRateCodeLookup)
-            $paddingBytes = 2;
-        }
-        return (isset($frameSizeLookup[$framesizeid][$fscod]) ? $frameSizeLookup[$framesizeid][$fscod] + $paddingBytes : false);
-    }
+				11 => array( 896,  974, 1344),  // 224 kbps
+				12 => array(1024, 1114, 1536),  // 256 kbps
+				13 => array(1280, 1392, 1920),  // 320 kbps
+				14 => array(1536, 1670, 2304),  // 384 kbps
+				15 => array(1792, 1950, 2688),  // 448 kbps
+				16 => array(2048, 2228, 3072),  // 512 kbps
+				17 => array(2304, 2506, 3456),  // 576 kbps
+				18 => array(2560, 2786, 3840)   // 640 kbps
+			);
+		}
+		$paddingBytes = 0;
+		if (($fscod == 1) && $padding) {
+			// frame lengths are padded by 1 word (16 bits) at 44100
+			// (fscode==1) means 44100Hz (see sampleRateCodeLookup)
+			$paddingBytes = 2;
+		}
+		return (isset($frameSizeLookup[$framesizeid][$fscod]) ? $frameSizeLookup[$framesizeid][$fscod] + $paddingBytes : false);
+	}
 
 	/**
 	 * @param int $frmsizecod

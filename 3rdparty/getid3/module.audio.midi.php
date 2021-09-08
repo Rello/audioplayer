@@ -14,12 +14,18 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that access modules directly on public webservers
+	exit;
+}
+
 define('GETID3_MIDI_MAGIC_MTHD', 'MThd'); // MIDI file header magic
 define('GETID3_MIDI_MAGIC_MTRK', 'MTrk'); // MIDI track header magic
 
 class getid3_midi extends getid3_handler
 {
 	/**
+	 * if false only parse most basic information, much faster for some files but may be inaccurate
+	 *
 	 * @var bool
 	 */
 	public $scanwholefile = true;
@@ -57,6 +63,7 @@ class getid3_midi extends getid3_handler
 		$thisfile_midi_raw['ticksperqnote'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
 		$offset += 2;
 
+		$trackdataarray = array();
 		for ($i = 0; $i < $thisfile_midi_raw['tracks']; $i++) {
 			while ((strlen($MIDIdata) - $offset) < 8) {
 				if ($buffer = $this->fread($this->getid3->fread_buffer_size())) {
@@ -81,7 +88,7 @@ class getid3_midi extends getid3_handler
 			}
 		}
 
-		if (!isset($trackdataarray) || !is_array($trackdataarray)) {
+		if (!is_array($trackdataarray) || count($trackdataarray) === 0) {
 			$this->error('Cannot find MIDI track information');
 			unset($thisfile_midi);
 			unset($info['fileformat']);
@@ -243,33 +250,33 @@ class getid3_midi extends getid3_handler
 								break;
 
 							case 0x58: // Time signature
-                                $timesig_numerator = getid3_lib::BigEndian2Int($METAeventData[0]);
-                                $timesig_denominator = pow(2, getid3_lib::BigEndian2Int($METAeventData[1])); // $02 -> x/4, $03 -> x/8, etc
-                                $timesig_32inqnote = getid3_lib::BigEndian2Int($METAeventData[2]);         // number of 32nd notes to the quarter note
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_32inqnote']   = $timesig_32inqnote;
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_numerator']   = $timesig_numerator;
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_denominator'] = $timesig_denominator;
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_text']        = $timesig_numerator.'/'.$timesig_denominator;
-                                $thisfile_midi['timesignature'][] = $timesig_numerator . '/' . $timesig_denominator;
-                                break;
+								$timesig_numerator   = getid3_lib::BigEndian2Int($METAeventData[0]);
+								$timesig_denominator = pow(2, getid3_lib::BigEndian2Int($METAeventData[1])); // $02 -> x/4, $03 -> x/8, etc
+								$timesig_32inqnote   = getid3_lib::BigEndian2Int($METAeventData[2]);         // number of 32nd notes to the quarter note
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_32inqnote']   = $timesig_32inqnote;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_numerator']   = $timesig_numerator;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_denominator'] = $timesig_denominator;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_text']        = $timesig_numerator.'/'.$timesig_denominator;
+								$thisfile_midi['timesignature'][] = $timesig_numerator.'/'.$timesig_denominator;
+								break;
 
-                            case 0x59: // Keysignature
-                                $keysig_sharpsflats = getid3_lib::BigEndian2Int($METAeventData[0]);
-                                if ($keysig_sharpsflats & 0x80) {
-                                    // (-7 -> 7 flats, 0 ->key of C, 7 -> 7 sharps)
-                                    $keysig_sharpsflats -= 256;
-                                }
+							case 0x59: // Keysignature
+								$keysig_sharpsflats = getid3_lib::BigEndian2Int($METAeventData[0]);
+								if ($keysig_sharpsflats & 0x80) {
+									// (-7 -> 7 flats, 0 ->key of C, 7 -> 7 sharps)
+									$keysig_sharpsflats -= 256;
+								}
 
-                                $keysig_majorminor = getid3_lib::BigEndian2Int($METAeventData[1]); // 0 -> major, 1 -> minor
-                                $keysigs = array(-7 => 'Cb', -6 => 'Gb', -5 => 'Db', -4 => 'Ab', -3 => 'Eb', -2 => 'Bb', -1 => 'F', 0 => 'C', 1 => 'G', 2 => 'D', 3 => 'A', 4 => 'E', 5 => 'B', 6 => 'F#', 7 => 'C#');
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_sharps'] = (($keysig_sharpsflats > 0) ? abs($keysig_sharpsflats) : 0);
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_flats']  = (($keysig_sharpsflats < 0) ? abs($keysig_sharpsflats) : 0);
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor']  = (bool) $keysig_majorminor;
-                                //$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_text']   = $keysigs[$keysig_sharpsflats].' '.($thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor'] ? 'minor' : 'major');
+								$keysig_majorminor  = getid3_lib::BigEndian2Int($METAeventData[1]); // 0 -> major, 1 -> minor
+								$keysigs = array(-7=>'Cb', -6=>'Gb', -5=>'Db', -4=>'Ab', -3=>'Eb', -2=>'Bb', -1=>'F', 0=>'C', 1=>'G', 2=>'D', 3=>'A', 4=>'E', 5=>'B', 6=>'F#', 7=>'C#');
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_sharps'] = (($keysig_sharpsflats > 0) ? abs($keysig_sharpsflats) : 0);
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_flats']  = (($keysig_sharpsflats < 0) ? abs($keysig_sharpsflats) : 0);
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor']  = (bool) $keysig_majorminor;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_text']   = $keysigs[$keysig_sharpsflats].' '.($thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor'] ? 'minor' : 'major');
 
-                                // $keysigs[$keysig_sharpsflats] gets an int key (correct) - $keysigs["$keysig_sharpsflats"] gets a string key (incorrect)
-                                $thisfile_midi['keysignature'][] = $keysigs[$keysig_sharpsflats] . ' ' . ((bool)$keysig_majorminor ? 'minor' : 'major');
-                                break;
+								// $keysigs[$keysig_sharpsflats] gets an int key (correct) - $keysigs["$keysig_sharpsflats"] gets a string key (incorrect)
+								$thisfile_midi['keysignature'][] = $keysigs[$keysig_sharpsflats].' '.((bool) $keysig_majorminor ? 'minor' : 'major');
+								break;
 
 							case 0x7F: // Sequencer specific information
 								$custom_data = substr($METAeventData, 0, $METAeventLength);
