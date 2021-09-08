@@ -1,7 +1,9 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+
 ### Changed
+- Event dispatcher for Add-ons
 - getID3 1.9.20-202109010614
 
 ## 3.2.1 - 2021-08-20

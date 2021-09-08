@@ -13,12 +13,14 @@
 
 namespace OCA\audioplayer\Controller;
 
+use OCA\audioplayer\Event\LoadAdditionalScriptsEvent;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
+use OCP\EventDispatcher\IEventDispatcher;
 
 /**
  * Controller class for main page.
@@ -29,12 +31,16 @@ class PageController extends Controller
     private $userId;
     private $l10n;
     private $configManager;
+    /** @var IEventDispatcher */
+    protected $eventDispatcher;
+
 
     public function __construct(
         $appName,
         IRequest $request,
         $userId,
         IConfig $configManager,
+        IEventDispatcher $eventDispatcher,
         IL10N $l10n
     )
     {
@@ -43,6 +49,7 @@ class PageController extends Controller
         $this->userId = $userId;
         $this->configManager = $configManager;
         $this->l10n = $l10n;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -59,7 +66,8 @@ class PageController extends Controller
             $audioplayer_sonos = false;
         }
 
-        \OC::$server->getEventDispatcher()->dispatch('OCA\audioplayer::loadAdditionalScripts');
+        $event = new LoadAdditionalScriptsEvent();
+        $this->eventDispatcher->dispatchTyped($event);
 
         $response = new TemplateResponse('audioplayer', 'index');
         $csp = new ContentSecurityPolicy();
