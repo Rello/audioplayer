@@ -15,7 +15,6 @@ A music player for FLAC, MP3, MP4, AIF, streams, … with playlist support and S
 - Specifying media folder (with exclude functionality)
 - Hardware media keys & Chrome/Android/macOS integration
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
-- [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
 ### Supported Formats
 FLAC, MP3, MP4, Ogg Vorbis, Opus, AIF, AAC and Waveform Audio as well as M3U and PLS playlist files. Playing the formats supported by Audio Player depends on the browser. [More information…](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)

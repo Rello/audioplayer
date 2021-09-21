@@ -13,7 +13,6 @@
 - Specifying media folder (with exclude functionality)
 - Hardware media keys & Chrome/Android/macOS integration
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
-- [ID3 editor](https://github.com/rello/audioplayer_editor) via add-on
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
 	<version>3.2.2</version>
