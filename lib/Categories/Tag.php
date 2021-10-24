@@ -67,7 +67,7 @@ class Tag
         $allFiles = $this->tagManager->getObjectIdsForTags($tagId);
 
         $sql = $this->db->getQueryBuilder();
-        $sql->select($sql->func()->count('id'))
+        $sql->selectAlias($sql->func()->count('id'), 'count')
             ->from('audioplayer_tracks')
             ->where($sql->expr()->in('file_id', $sql->createNamedParameter($allFiles, IQueryBuilder::PARAM_INT_ARRAY)))
             ->andWhere($sql->expr()->eq('user_id', $sql->createNamedParameter($this->userId)));
