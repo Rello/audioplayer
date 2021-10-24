@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+### Fixed
+- Fix Tags view #554
+
+
 ## 3.2.2 - 2021-09-21
 ### Changed
 - Event dispatcher for Add-ons
