@@ -514,7 +514,7 @@ OCA.Audioplayer.Category = {
         });
         let category_title = document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').firstChild['title'] : false;
         if (category !== 'Title') {
-            document.getElementById('individual-playlist-info').innerHTML = t('audioplayer', 'Selected ' + category) + ': ' + category_title;
+            document.getElementById('individual-playlist-info').innerHTML = t('audioplayer', 'Selected' + .' '. + category) + ': ' + category_title;
         } else {
             document.getElementById('individual-playlist-info').innerHTML = t('audioplayer', 'Selected') + ': ' + category_title;
         }
