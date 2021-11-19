@@ -72,7 +72,7 @@
         </div>
 
         <div class="sm2-inline-element sm2-button-element sm2-repeat" style="left: 7px;" data-placement="left"
-             title="<?php p($l->t('Repeat title / list')); ?>">
+             title="<?php p($l->t('Repeat title/list')); ?>">
             <div id="playerRepeat" class="sm2-button-bd sm2-inline-button repeat">
             </div>
         </div>
