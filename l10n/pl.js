@@ -1,0 +1,25 @@
+OC.L10N.register(
+    "audioplayer",
+    {
+    "Selected" : "Wybrany",
+    "Options" : "Opcje",
+    "Album Covers" : "Okładki albumów",
+    "List View" : "Widok listy",
+    "Welcome to" : "Witamy w",
+    "Audio Player" : "Odtwarzacz muzyki",
+    "Add new tracks to playlist by drag and drop" : "Dodaj nowe utwory do listy odtwarzania, przeciągając i upuszczając",
+    "Scan for new audio files" : "Skanuj w poszukiwaniu nowych plików audio",
+    "Add new tracks to library" : "Dodaj nowe utwory do biblioteki",
+    "Help" : "Pomoc",
+    "New in" : "Nowy w",
+    "View changelog" : "Przeglądaj listę zmian",
+    "New or updated audio files available" : "Dostępne nowe lub zaktualizowane pliki audio",
+    "No playlist selected!" : "Nie wybrano listy odtwarzania!",
+    "Sort modus active" : "Tryb sortowania aktywny",
+    "Are you sure?" : "Jesteś pewny?",
+    "Delete playlist" : "Usuń listę odtwarzania",
+    "Playlist successfully deleted!" : "Lista odtwarzania usunięta pomyślnie!",
+    "Play/Pause" : "Odtwarzaj/Pauza",
+    "play / stream / organize" : "odtwarzaj / streamuj / organizuj"
+},
+"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
