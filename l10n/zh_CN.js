@@ -86,6 +86,7 @@ OC.L10N.register(
     "Audioplayer" : "音频播放器",
     "play / stream / organize" : "播放/流播放/组织",
     "Volume" : "音量",
+    "Repeat title/list" : "重复标题 / 列表",
     "Shuffle playlist" : "随机播放列表中的曲目",
     "Scan for audio files" : "扫描音频文件",
     "Start scanning…" : "启动扫描…",
