@@ -21,7 +21,7 @@ script('audioplayer', 'settings/personal');
             <em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.')); ?></em>
         </p>
         <p>
-            <em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them.')); ?></em>
+            <em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders.')); ?></em>
         </p>
         <br>
     </div>
