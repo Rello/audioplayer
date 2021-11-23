@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected" : "Hautatua",
     "Options" : "Aukerak",
     "Album Covers" : "Album azalak",
     "List View" : "Zerrenda ikuspegia",
@@ -10,6 +11,8 @@ OC.L10N.register(
     "Scan for new audio files" : "Bilatu audio fitxategi gehiago",
     "Add new tracks to library" : "Gehitu fitxategi berriak liburutegira",
     "Help" : "Laguntza",
+    "New in" : "Berria hemen:",
+    "View changelog" : "Ikusi aldaketen egunkaria",
     "New or updated audio files available" : "Audio fitxategi berriak edo eguneratuak daude eskuragarri",
     "No playlist selected!" : "Ez da erreprodukzio-zerrendarik hautatu!",
     "Sort modus active" : "Ordenatzeko modua aktibatuta",
@@ -74,6 +77,7 @@ OC.L10N.register(
     "Sorting Playlist success! Playlist reloaded!" : "Erreprodukzio-zerrenda ondo ordenatu eta birkargatu da!",
     "Scanning finished!" : "Bilaketa amaituta!",
     "Audios found: " : "Aurkitu diren audioak:",
+    "Written to library: " : "Liburutegira idatzita:",
     "Albums found: " : "Aurkitu diren albumak:",
     "Errors: " : "Erroreak:",
     "If rescan does not solve this problem the files are broken" : "Berriro bilatu eta arazoa konpontzen ez bada, fitxategiak hondatuta daude",
