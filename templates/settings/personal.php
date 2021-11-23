@@ -21,7 +21,7 @@ script('audioplayer', 'settings/personal');
             <em><?php p($l->t('This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned.')); ?></em>
         </p>
         <p>
-            <em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders, to exclude them.')); ?></em>
+            <em><?php p($l->t('To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders.')); ?></em>
         </p>
         <br>
     </div>
@@ -32,7 +32,7 @@ script('audioplayer', 'settings/personal');
             <em><?php p($l->t('Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!')); ?></em>
         </p>
         <p><em><a href="https://github.com/Rello/audioplayer/wiki/Cyrillic-symbol-handling"
-                  target="_blank"><?php p($l->t('More information…')); ?></a></em></p>
+                  target="_blank"><?php p($l->t('More information …')); ?></a></em></p>
         <br>
     </div>
     <div>
@@ -42,6 +42,6 @@ script('audioplayer', 'settings/personal');
         <label for="browser_support"><?php p($l->t('Formats not supported by the browser')); ?>:</label>
         &nbsp;<em id="browser_no"></em>
         <p><em><a href="https://github.com/Rello/audioplayer/wiki/Audio-Files-and-MIME-Types#browser-support"
-                  target="_blank"><?php p($l->t('More information…')); ?></a></em></p>
+                  target="_blank"><?php p($l->t('More information …')); ?></a></em></p>
     </div>
 </div>
