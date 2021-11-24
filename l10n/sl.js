@@ -30,7 +30,6 @@ OC.L10N.register(
     "Tags" : "Oznake",
     "Years" : "Leta",
     "No data" : "Ni podatkov",
-    "saved" : "shranjeno",
     "Select a single folder with audio files" : "Izbor mape z zvočnimi datotekami",
     "Invalid path!" : "Določena je neveljavna pot!",
     "All library entries will be deleted!" : "Vsi vnosi v zbirko bodo izbrisani!",
@@ -66,14 +65,12 @@ OC.L10N.register(
     "Unknown" : "Neznano",
     "URL" : "Naslov URL",
     "Various Artists" : "Različni izvajalci",
-    "Errors: " : "Napake:",
     "Cancel" : "Prekliči",
     "Close" : "Zapri",
     "Create new playlist" : "Ustvari nov seznam predvajanja",
     "Settings" : "Nastavitve",
     "Advanced Settings" : "Napredne nastavitve",
     "Do you like this app?" : "Ali vam je program všeč?",
-    "More information…" : "Več podrobnosti ...",
     "Cyrillic support" : "Podpora za cirilico"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

@@ -14,7 +14,6 @@ OC.L10N.register(
     "Tags" : "Etiquetas",
     "Years" : "Annadas",
     "No data" : "Cap de donadas",
-    "saved" : "enregistrat",
     "Title" : "Títol",
     "Subtitle" : "Sostítol",
     "Artist" : "Artista",
