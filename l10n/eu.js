@@ -76,6 +76,7 @@ OC.L10N.register(
     "Various Artists" : "Artista ugari",
     "Sorting Playlist success! Playlist reloaded!" : "Erreprodukzio-zerrenda ondo ordenatu eta birkargatu da!",
     "Scanning finished!" : "Bilaketa amaituta!",
+    "Audios found:" : "Aurkitu diren audioak:",
     "Written to library:" : "Liburutegira idatzita:",
     "Albums found:" : "Aurkitu diren albumak:",
     "Errors:" : "Erroreak:",
