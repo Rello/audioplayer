@@ -13,6 +13,7 @@
     "View changelog" : "Zobraziť súhrn zmien",
     "New or updated audio files available" : "K dispozícii sú nové alebo aktualizované audio súbory",
     "No playlist selected!" : "Nebol vybraný žiadny zoznam skladieb!",
+    "Sort modus active" : "Režim triedenia je aktívny",
     "Are you sure?" : "Ste si istý?",
     "Delete playlist" : "Zmazať zoznam skladieb",
     "Playlist successfully deleted!" : "Zoznam skladieb bol úspešne zmazaný!",
@@ -82,7 +83,9 @@
     "Duplicates found:" : "Nájdené duplikáty:",
     "Audioplayer" : "Prehrávač hudby",
     "play / stream / organize" : "prehrať / streamovať / organizovať",
+    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "Hudobný prehrávač pre FLAC, MP3, MP4, AIF, AAC, streamy, … s podporou zoznamov skladieb a integráciou SONOS.\n\n- Zobrazenie obálky alebo zoznamu podľa rôznych kategórií\n- Vyladené pre veľké zvukové zbierky\n- Inteligentné zoznamy a zoznamy skladieb\n- Streamovanie z URL\n- Integrácia obľúbených položiek, vyhľadávania a kolaboratívnych značiek\n- Určenie priečinka médií (s funkciou vylúčenia)\n- Hardvérové ​​mediálne kľúče a integrácia Chrome/Android/macOS\n- [SONOS player](https://github.com/rello/audioplayer_sonos) prostredníctvom doplnku\n\nVšetky podporované typy MIME a ďalšie informácie nájdete v súbore [README](https://github.com/rello/audioplayer/blob/master/README.md).",
     "Volume" : "Hlasitosť",
+    "Repeat title/list" : "Opakovať skladbu/zoznam",
     "Shuffle playlist" : "Zamiešať zoznam skladieb",
     "Scan for audio files" : "Skenovať hudobné súbory",
     "Start scanning …" : "Spúšťam skenovanie ...",
@@ -98,6 +101,12 @@
     "Do you like this app?" : "Páči sa vám táto aplikácia?",
     "More information …" : "Viac informácií ...",
     "Scanner Settings" : "Nastavenia skenovania",
-    "Search for audio files in" : "Hľadať audio súbory v"
+    "Search for audio files in" : "Hľadať audio súbory v",
+    "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Toto nastavenie určuje, v ktorom priečinku sa budú vyhľadávať zvukové súbory. Bez výberu sa skontroluje celý dátový priečinok.",
+    "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders." : "Ak chcete vylúčiť priečinok, musíte v ňom vytvoriť súbor .noaudio. Toto je potrebné aj v podpriečinkoch.",
+    "Cyrillic support" : "Podpora azbuky",
+    "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Toto nastavenie aktivujte, ak nie sú správne rozpoznané znaky azbuky. Vďaka tomu je indexovanie pomalšie!",
+    "Formats supported by the browser" : "Formáty podporované prehliadačom",
+    "Formats not supported by the browser" : "Formáty nepodporované prehliadačom"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }
