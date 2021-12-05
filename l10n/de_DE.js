@@ -12,7 +12,7 @@ OC.L10N.register(
     "Add new tracks to library" : "Neue Tracks zur Bibliothek hinzufügen",
     "Help" : "Hilfe",
     "New in" : "Neu in",
-    "View changelog" : "Liste der Veränderungen ansehen",
+    "View changelog" : "Liste der Änderungen ansehen",
     "New or updated audio files available" : "Neue oder aktualisierte Audio-Dateien vorhanden",
     "No playlist selected!" : "Keine Playlist ausgewählt!",
     "Sort modus active" : "Sortiermodus aktiv",
