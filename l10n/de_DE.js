@@ -77,7 +77,7 @@ OC.L10N.register(
     "Various Artists" : "Verschiedene Künstler",
     "Sorting Playlist success! Playlist reloaded!" : "Sortieren der Playlist erfolgreich. Playlist wurde neu geladen!",
     "Scanning finished!" : "Einlesen beendet!",
-    "Audios found:" : "Audios gefunden:",
+    "Audios found:" : "Audiodateien gefunden:",
     "Written to library:" : "In Bibliothek geschrieben:",
     "Albums found:" : "Alben gefunden:",
     "Errors:" : "Fehler:",

@@ -105,6 +105,6 @@ OC.L10N.register(
     "Cyrillic support" : "キリル文字サポート",
     "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "キリル文字が正しく認識されない場合は、この設定を有効にしてください。有効にすると、インデックス作成が遅くなります。",
     "Formats supported by the browser" : "ブラウザが対応しているフォーマット",
-    "Formats not supported by the browser" : "ブラウザが対応していないフォーマットです"
+    "Formats not supported by the browser" : "ブラウザが対応していないフォーマット"
 },
 "nplurals=1; plural=0;");
