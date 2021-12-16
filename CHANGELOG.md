@@ -3,7 +3,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Fixed
 - Fix Tags view #554
-
+- remove recognize code #560
 
 ## 3.2.2 - 2021-09-21
 ### Changed

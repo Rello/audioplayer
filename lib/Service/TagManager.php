@@ -9,8 +9,6 @@ use OCP\SystemTag\TagNotFoundException;
 
 class TagManager
 {
-    public const RECOGNIZED_TAG = 'Tagged by recognize';
-
     /**
      * @var \OCP\SystemTag\ISystemTagManager
      */
