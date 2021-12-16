@@ -385,16 +385,16 @@ class ScannerController extends Controller
                                             $duplicate_tracks,
                                             $error_file) {
         $message = (string)$this->l10n->t('Scanning finished!') . '<br />';
-        $message .= (string)$this->l10n->t('Audios found: ') . $counter . '<br />';
-        $message .= (string)$this->l10n->t('Written to library: ') . ($counter - $this->iDublicate - $error_count) . '<br />';
-        $message .= (string)$this->l10n->t('Albums found: ') . $this->iAlbumCount . '<br />';
+        $message .= (string)$this->l10n->t('Audios found:') . ' ' . $counter . '<br />';
+        $message .= (string)$this->l10n->t('Written to library:') . ' ' . ($counter - $this->iDublicate - $error_count) . '<br />';
+        $message .= (string)$this->l10n->t('Albums found:') . ' ' . $this->iAlbumCount . '<br />';
         if ($error_count > 0) {
-            $message .= '<br /><b>' . (string)$this->l10n->t('Errors: ') . $error_count . '<br />';
+            $message .= '<br /><b>' . (string)$this->l10n->t('Errors:') . ' ' . $error_count . '<br />';
             $message .= (string)$this->l10n->t('If rescan does not solve this problem the files are broken') . '</b>';
             $message .= '<br />' . $error_file . '<br />';
         }
         if ($this->iDublicate > 0) {
-            $message .= '<br /><b>' . (string)$this->l10n->t('Duplicates found: ') . ($this->iDublicate) . '</b>';
+            $message .= '<br /><b>' . (string)$this->l10n->t('Duplicates found:') . ' ' . ($this->iDublicate) . '</b>';
             $message .= '<br />' . $duplicate_tracks . '<br />';
         }
         return $message;

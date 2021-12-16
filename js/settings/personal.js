@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'value': user_value
             },
             success: function () {
-                OCP.Toast.success(t('audioplayer', 'saved'));
+                OCP.Toast.success(t('audioplayer', 'Saved'));
             }
         });
     });
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (!data.success) {
                             OCP.Toast.error(t('audioplayer', 'Invalid path!'));
                         } else {
-                            OCP.Toast.success(t('audioplayer', 'saved'));
+                            OCP.Toast.success(t('audioplayer', 'Saved'));
                         }
                     });
                 }
