@@ -1,9 +1,14 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.2.3 - 2021-12-26
 ### Fixed
 - Fix Tags view #554
-- remove recognize code #560
+- remove 'recognize' code #560
+- Player did not find any mp3 file #535
+
+### Added
+- Use the Recognize app to classify genres by machine learning
 
 ## 3.2.2 - 2021-09-21
 ### Changed
