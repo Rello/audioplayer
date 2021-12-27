@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.2.4 - 2021-12-27
+### Fixed
+- Fixed typo #563 @[yaroslav4167](https://github.com/yaroslav4167)
+
 ## 3.2.3 - 2021-12-26
 ### Fixed
 - Fix Tags view #554
