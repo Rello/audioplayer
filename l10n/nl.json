@@ -83,7 +83,6 @@
     "Duplicates found:" : "Duplicaten gevonden:",
     "Audioplayer" : "Audiospeler",
     "play / stream / organize" : "afspelen / streamen / organiseren",
-    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "Een muziekspeler voor FLAC, MP3, MP4, AIF, AAC, streams, … met afspeellijst ondersteuning en SONOS integratie.\n\n- Albumhoes of Lijstweergave met verschillende categoriën\n- Geoptimaliseerd voor grote audiocollecties\n- Slimme lijsten & afspeellijsten\n- Stream URLs\n- Favorieten, Zoeken & Collaboratieve Tag integratie\n- Specificeer media map (met uitsluitingsfunctionaliteit)\n- Hardware media knoppen & Chrome/Android/MacOS integratie\n- [SONOS speler](https://github.com/rello/audioplayer_sonos) via add-on\n\nBekijk [README](https://github.com/rello/audioplayer/blob/master/README.md) bestand voor alle ondersteunde MIME typen en overige informatie.",
     "Volume" : "Volume",
     "Repeat title/list" : "Herhaal titel/lijst",
     "Shuffle playlist" : "Shuffle afspeelijst",

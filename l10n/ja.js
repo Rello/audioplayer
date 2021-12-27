@@ -82,7 +82,6 @@ OC.L10N.register(
     "Duplicates found:" : "見つかった重複:",
     "Audioplayer" : "オーディオプレーヤー",
     "play / stream / organize" : "再生/ストリーム/organize",
-    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "flac, mp3, mp4, aif, aac, ストリーム...プレイリストに対応し、SONOSとも連携できる音楽プレーヤー。\n\n- 様々なカテゴリーによるカバーまたはリストビュー\n- スマートリスト&プレイリスト\n- ストリームURL\n- お気に入り, 検索, Collaborative Tagの統合\n- メディアフォルダの指定(除外機能あり)\n- ハードウェア メディアキー、Chrome/Android/macOSとの連携\n- [アドオン:SONOS player](https://github.com/rello/audioplayer_sonos)\n\n対応しているすべてのMIMEタイプと追加情報については、README(https://github.com/rello/audioplayer/blob/master/README.md)をご覧ください。",
     "Volume" : "音量",
     "Repeat title/list" : "タイトル/リストをリピート",
     "Shuffle playlist" : "プレイリストをシャッフル",

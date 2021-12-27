@@ -85,7 +85,6 @@ OC.L10N.register(
     "Duplicates found:" : "找到的重复项：",
     "Audioplayer" : "音频播放器",
     "play / stream / organize" : "播放/流播放/组织",
-    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "适用于 FLAC、MP3、MP4、AIF、AAC、流等的音乐播放器，具有音乐播放表支持和 SONOS 整合。\n\n - 各种类别的封面或列表视图\n- 针对大型音频收藏进行了调整\n- 智能列表和音乐播放表\n- 流网址\n- 收藏夹、搜索和协作标签集成\n- 指定媒体资料夹（具有排除功能）\n- 硬件媒体键和 Chrome/Android/macOS 集成\n- [SONOS 播放器](https://github.com/rello/audioplayer_sonos) 通过插件\n\n有关所有支持的 MIME 类型和其他信息，请参阅 [README](https://github.com/rello/audioplayer/blob/master/README.md) 档案。",
     "Volume" : "音量",
     "Repeat title/list" : "重复标题 / 列表",
     "Shuffle playlist" : "随机播放列表中的曲目",
