@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected " : "Vybráno",
     "Selected" : "Vybráno",
     "Options" : "Předvolby",
     "Album Covers" : "Přebaly alb",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "Duplicates found:" : "Nalezeno duplicit:",
     "Audioplayer" : "Přehrávač zvuku",
     "play / stream / organize" : "přehrávat / proudově vysílat / uspořádávat",
+    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n- Use the Recognize app to classify genres by machine learning\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "Přehrávač hudby pro formáty FLAC, MP3, MP4, AIF, AAC, proudová vysílání, … s podporou seznamů k přehrávání a napojením na SONOS.\n\n- Zobrazení seznamu či přebalů podle různých kategorií\n- Vyladěno pro velké sbírky nahrávek\n- Inteligentní seznamy (k přehrávání)\n- URL adresy proudového vysílání\n- Oblíbené položky, vyhledávání a integrace štítků pro spolupráci\n- Určení složky s médii (s funkcí pro vynechání)\n- Napojení na hardwarové klávesy pro ovládání médií a propojení s Chrome/Androidem/macOS\n- [SONOS přehrávač](https://github.com/rello/audioplayer_sonos) pomocí doplňku\n- Použijte aplikaci pro Rozpoznání k zařazení podle žánru pomocí strojového učení\n\nPodporované MIME typy a další informace viz [ČTIMNE](https://github.com/rello/audioplayer/blob/master/README.md).",
     "Volume" : "Hlasitost",
     "Repeat title/list" : "Opakovat titul/seznam",
     "Shuffle playlist" : "Zamíchat seznam stop",

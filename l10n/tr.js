@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected " : "Seçilmiş ",
     "Selected" : "Seçilmiş",
     "Options" : "Seçenekler",
     "Album Covers" : "Albüm kapakları",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "Duplicates found:" : "Çift dosyalar bulundu:",
     "Audioplayer" : "Ses oynatıcı",
     "play / stream / organize" : "oynat / akış / düzenle",
+    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n- Use the Recognize app to classify genres by machine learning\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "FLAC, MP3, MP4, AIF, AAC, akışlar, … için oynatma listesi desteği ve SONOS bütünleştirmesi ile bir müzik çalma uygulaması.\n\n- Çeşitli kategorilere göre kapak ya da liste görünümü\n- Büyük ses koleksiyonları için ayarlandı\n- Akıllı listeler ve oynatma listeleri\n- Akış adresleri\n- Beğenilenler, arama ve iş birlikli etiket bütünleştirmesi\n- Ortam klasörünü belirtme (katmama özelliği)\n- Donanım ortam anahtarları ve Chrome/Android/macOS bütünleştirmesi\n- Eklenti ile [SONOS oynatıcı](https://github.com/rello/audioplayer_sonos)\n- Türlerin makine öğrenmesi ile sınıflandırılması için Recognize uygulaması\n\nDesteklenen tüm MIME türleri ve ek bilgiler için [README](https://github.com/rello/audioplayer/blob/master/README.md) dosyasına bakabilirsiniz.",
     "Volume" : "Ses düzeyi",
     "Repeat title/list" : "Başlığı/listeyi yinele",
     "Shuffle playlist" : "Oynatma listesini karıştır",
