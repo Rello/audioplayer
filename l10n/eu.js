@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected " : "Hautatua",
     "Selected" : "Hautatua",
     "Options" : "Aukerak",
     "Album Covers" : "Album azalak",
