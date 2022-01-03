@@ -1,7 +1,6 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected " : "Vybráno",
     "Selected" : "Vybráno",
     "Options" : "Předvolby",
     "Album Covers" : "Přebaly alb",

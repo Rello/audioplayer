@@ -1,7 +1,6 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected " : "Ausgewählt",
     "Selected" : "Ausgewählt",
     "Options" : "Optionen",
     "Album Covers" : "Album-Cover",

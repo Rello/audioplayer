@@ -1,7 +1,6 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected " : "Seçilmiş ",
     "Selected" : "Seçilmiş",
     "Options" : "Seçenekler",
     "Album Covers" : "Albüm kapakları",

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected " : "已選擇",
     "Selected" : "已選擇",
     "Options" : "選項",
     "Album Covers" : "專輯封面",

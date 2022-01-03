@@ -1,7 +1,6 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected " : "Valittu",
     "Selected" : "Valittu",
     "Options" : "Valinnat",
     "Album Covers" : "Albumikannet",
