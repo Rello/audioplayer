@@ -16,7 +16,7 @@ OC.L10N.register(
     "New or updated audio files available" : "Hay archivos de audio nuevos o actualizados",
     "No playlist selected!" : "¡Ninguna lista de reproducción seleccionada!",
     "Sort modus active" : "Modo ordenar activo",
-    "Are you sure?" : "Estás seguro?",
+    "Are you sure?" : "¿Estás seguro?",
     "Delete playlist" : "Eliminar lista de reproducción",
     "Playlist successfully deleted!" : "¡Lista de reproducción borrada con éxito!",
     "Sort playlist" : "Ordenar lista de reproducción",
