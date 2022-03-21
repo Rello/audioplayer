@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.3.0 - 2022-03-xx
+### Changed
+- getID3 1.9.21-202202220815
+
+### Fixed
+- Scan freeze and PHP fread() error #571
+
 ## 3.2.4 - 2021-12-27
 ### Fixed
 - Fixed typo #563 @[yaroslav4167](https://github.com/yaroslav4167)

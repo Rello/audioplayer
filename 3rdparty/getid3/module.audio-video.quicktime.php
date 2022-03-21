@@ -29,7 +29,7 @@ class getid3_quicktime extends getid3_handler
 	 *
 	 * @var bool
 	 */
-	public $ReturnAtomData        = true;
+	public $ReturnAtomData        = false;
 
 	/** audio-video.quicktime
 	 * return all parsed data from all atoms if true, otherwise just returned parsed metadata
@@ -108,7 +108,7 @@ class getid3_quicktime extends getid3_handler
 			unset($info['avdataend_tmp']);
 		}
 
-		if (!empty($info['quicktime']['comments']['chapters']) && is_array($info['quicktime']['comments']['chapters']) && (count($info['quicktime']['comments']['chapters']) > 0)) {
+		if (isset($info['quicktime']['comments']['chapters']) && is_array($info['quicktime']['comments']['chapters']) && (count($info['quicktime']['comments']['chapters']) > 0)) {
 			$durations = $this->quicktime_time_to_sample_table($info);
 			for ($i = 0; $i < count($info['quicktime']['comments']['chapters']); $i++) {
 				$bookmark = array();
@@ -1699,7 +1699,8 @@ $this->warning('incomplete/incorrect handling of "stsd" with Parrot metadata in 
 					$atom_structure['language'] =                           substr($atom_data, 4 + 0, 2);
 					$atom_structure['unknown']  = getid3_lib::BigEndian2Int(substr($atom_data, 4 + 2, 2));
 					$atom_structure['data']     =                           substr($atom_data, 4 + 4);
-					$atom_structure['key_name'] = @$info['quicktime']['temp_meta_key_names'][$metaDATAkey++];
+					$atom_structure['key_name'] = (isset($info['quicktime']['temp_meta_key_names'][$metaDATAkey]) ? $info['quicktime']['temp_meta_key_names'][$metaDATAkey] : '');
+					$metaDATAkey++;
 
 					if ($atom_structure['key_name'] && $atom_structure['data']) {
 						@$info['quicktime']['comments'][str_replace('com.apple.quicktime.', '', $atom_structure['key_name'])][] = $atom_structure['data'];
