@@ -56,12 +56,16 @@ OC.L10N.register(
     "Written to library:" : "Įrašyta į biblioteką:",
     "Albums found:" : "Rasta albumų:",
     "Errors:" : "Klaidų:",
+    "Cancel" : "Atsisakyti",
     "Close" : "Užverti",
     "Create new playlist" : "Sukurti naują grojaraštį",
+    "Repeat playlist" : "Kartoti grojaraštį",
     "Settings" : "Nustatymai",
     "SONOS Playback" : "SONOS atkūrimas",
     "Advanced Settings" : "Išplėstiniai nustatymai",
     "Do you like this app?" : "Ar jums patinka ši programėlė?",
-    "More information …" : "Daugiau informacijos…"
+    "More information …" : "Daugiau informacijos…",
+    "Formats supported by the browser" : "Naršyklės palaikomi formatai",
+    "Formats not supported by the browser" : "Naršyklės nepalaikomi formatai"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
