@@ -29,6 +29,7 @@ OCA.Audioplayer.Core = {
     CategorySelectors: [],
     AjaxCallStatus: null,
     canPlayMimeType: [],
+    drag: null,
 
     init: function () {
         OCA.Audioplayer.Core.initialDocumentTitle = document.title;
@@ -69,36 +70,36 @@ OCA.Audioplayer.Core = {
                 let currentVolume;
                 let newVolume;
                 switch (e.key) {
-                case ' ':
-                    if (document.getElementById('sm2-bar-ui').classList.contains('playing')) {
-                        OCA.Audioplayer.Player.pause();
-                    } else {
-                        OCA.Audioplayer.Player.play();
-                    }
-                    e.preventDefault();
-                    break;
-                case 'ArrowRight':
-                    OCA.Audioplayer.Player.next();
-                    break;
-                case 'ArrowLeft':
-                    OCA.Audioplayer.Player.prev();
-                    break;
-                case 'ArrowUp':
-                    currentVolume = OCA.Audioplayer.Player.getVolume();
-                    if (currentVolume < 1) {
-                        newVolume = Math.min(currentVolume + 0.1, 1);
-                        OCA.Audioplayer.Player.setVolume(newVolume);
-                    }
-                    e.preventDefault();
-                    break;
-                case 'ArrowDown':
-                    currentVolume = OCA.Audioplayer.Player.getVolume();
-                    if (currentVolume > 0) {
-                        newVolume = Math.max(currentVolume - 0.1, 0);
-                        OCA.Audioplayer.Player.setVolume(newVolume);
-                    }
-                    e.preventDefault();
-                    break;
+                    case ' ':
+                        if (document.getElementById('sm2-bar-ui').classList.contains('playing')) {
+                            OCA.Audioplayer.Player.pause();
+                        } else {
+                            OCA.Audioplayer.Player.play();
+                        }
+                        e.preventDefault();
+                        break;
+                    case 'ArrowRight':
+                        OCA.Audioplayer.Player.next();
+                        break;
+                    case 'ArrowLeft':
+                        OCA.Audioplayer.Player.prev();
+                        break;
+                    case 'ArrowUp':
+                        currentVolume = OCA.Audioplayer.Player.getVolume();
+                        if (currentVolume < 1) {
+                            newVolume = Math.min(currentVolume + 0.1, 1);
+                            OCA.Audioplayer.Player.setVolume(newVolume);
+                        }
+                        e.preventDefault();
+                        break;
+                    case 'ArrowDown':
+                        currentVolume = OCA.Audioplayer.Player.getVolume();
+                        if (currentVolume > 0) {
+                            newVolume = Math.max(currentVolume - 0.1, 0);
+                            OCA.Audioplayer.Player.setVolume(newVolume);
+                        }
+                        e.preventDefault();
+                        break;
                 }
             }
         });
@@ -134,7 +135,10 @@ OCA.Audioplayer.Core = {
                     let item = $('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]');
                     //item.find('.icon').hide();
                     //item.find('.ioc').removeClass('ioc-volume-up').addClass('ioc-volume-off').show();
-                    document.querySelector('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]').scrollIntoView({behavior: 'smooth', block: 'center',});
+                    document.querySelector('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                    });
                     if (OCA.Audioplayer.Core.CategorySelectors[3]) {
                         // if the title was previously played, the last position will be set
                         OCA.Audioplayer.Player.trackStartPosition = OCA.Audioplayer.Core.CategorySelectors[3];
@@ -324,15 +328,6 @@ OCA.Audioplayer.Cover = {
 
         OCA.Audioplayer.Category.getTracks(null, 'Album', AlbumId, true, albumDirectPlay);
 
-        // ToDo: why needed????
-        //let searchresult = decodeURI(location.hash).substring(1);
-        //if (searchresult) {
-        //    let locHashTemp = searchresult.split('-');
-        //    let evt = {};
-        //    evt.albumId = locHashTemp[1];
-        //    window.location.href = '#';
-        //}
-
         // don´t show the playlist when the quick-play button is pressed
         if (albumDirectPlay !== true) {
             let iScroll = 20;
@@ -413,8 +408,8 @@ OCA.Audioplayer.Category = {
     },
 
     handleCategoryClicked: function (evt, callback) {
-        // do not react when playlist edit input window is active
-        if (evt && evt.target.nodeName === 'INPUT') {
+        // do not react when playlist edit input window is active or when pressing sort button
+        if (evt && (evt.target.nodeName === 'INPUT' || evt.target.nodeName === 'I')) {
             return;
         }
 
@@ -531,7 +526,10 @@ OCA.Audioplayer.UI = {
         let canPlayMimeType = OCA.Audioplayer.Core.canPlayMimeType;
 
         let li = document.createElement('li');
-        li.classList.add('dragable');
+        li.draggable = 'true';
+        li.addEventListener("dragstart", OCA.Audioplayer.Playlists.dragstart_handler);
+        li.addEventListener("dragend", OCA.Audioplayer.Playlists.dragend_handler);
+
         li.dataset.trackid = elem.id;
         li.dataset.title = elem['cl1'];
         li.dataset.artist = elem['cl2'];
@@ -657,19 +655,12 @@ OCA.Audioplayer.UI = {
 
         let playlist = albumWrapper.getElementsByTagName('li');
 
-        if (!(category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
+        if ((category[0] === 'Playlist' && category[1].toString()[0] !== 'X' && category[1] !== '')) {
             for (let track of playlist) {
-                $(track).draggable({
-                    appendTo: 'body',
-                    helper: OCA.Audioplayer.Playlists.dragElement,
-                    cursor: 'move',
-                    delay: 500,
-                    start: function (event, ui) {
-                        ui.helper.addClass('draggingSong');
-                    }
-                });
+                track.addEventListener("dragover", OCA.Audioplayer.Playlists.dragover_row_handler);
             }
         }
+
         albumWrapper.addEventListener('click', function (event) {
             OCA.Audioplayer.UI.onTitleClick(getcoverUrl, playlist, event.target);
         });
@@ -749,8 +740,10 @@ OCA.Audioplayer.UI = {
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
 
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].scrollIntoView(
-                {behavior: 'smooth',
-                block: 'center',});
+                {
+                    behavior: 'smooth',
+                    block: 'center',
+                });
         }
 
         //in every case, update the playbar and medaservices
@@ -1192,8 +1185,12 @@ OCA.Audioplayer.Playlists = {
             let plId = eventTarget.attr('data-sortid');
             if (eventTarget.hasClass('sortActive')) {
 
-                $('#individual-playlist').sortable();
-                let idsInOrder = $('#individual-playlist').sortable('toArray', {attribute: 'data-trackid'});
+                let idsInOrder = [];
+                let tracks = document.getElementById("individual-playlist").querySelectorAll('li');
+                tracks.forEach((item, index) => {
+                    idsInOrder.push(item.dataset.trackid);
+                });
+
                 if (idsInOrder.length !== 0) {
                     $.post(OC.generateUrl('apps/audioplayer/sortplaylist'), {
                         playlistid: plId,
@@ -1201,23 +1198,13 @@ OCA.Audioplayer.Playlists = {
                     }, function (jsondata) {
                         if (jsondata.status === 'success') {
                             OCP.Toast.info(jsondata['msg']);
+                            document.getElementById('myCategory').getElementsByClassName('active')[0].click();
                         }
                     });
                 }
                 eventTarget.removeClass('sortActive');
-                $('#individual-playlist').sortable('destroy');
             } else {
-
                 OCP.Toast.info(t('audioplayer', 'Sort modus active'));
-                $('#individual-playlist').sortable({
-                    items: 'li',
-                    axis: 'y',
-                    placeholder: 'ui-state-highlight',
-                    helper: 'clone',
-                    stop: function () {
-                    }
-                });
-
                 eventTarget.addClass('sortActive');
                 if (document.getElementById('sm2-bar-ui').classList.contains('playing')) {
                     OCA.Audioplayer.Player.pause();
@@ -1255,9 +1242,7 @@ OCA.Audioplayer.Playlists = {
         return false;
     },
 
-
     buildCategoryRow: function (el, li) {
-
         let spanName = document.createElement('span');
         spanName.setAttribute('class', 'pl-name-play');
         spanName.setAttribute('title', el.name);
@@ -1282,16 +1267,10 @@ OCA.Audioplayer.Playlists = {
         iDelete.dataset.deleteid = el.id;
         iDelete.addEventListener('click', OCA.Audioplayer.Playlists.deletePlaylist);
 
-        $(li).droppable({
-            activeClass: 'activeHover',
-            hoverClass: 'dropHover',
-            accept: 'li.dragable',
-            over: function () {
-            },
-            drop: function (event, ui) {
-                OCA.Audioplayer.Playlists.addSongToPlaylist($(this).attr('data-id'), ui.draggable.attr('data-trackid'));
-            }
-        });
+        li.addEventListener("drop", OCA.Audioplayer.Playlists.drop_handler);
+        li.addEventListener("dragover", OCA.Audioplayer.Playlists.dragover_handler);
+        li.addEventListener("dragleave", OCA.Audioplayer.Playlists.dragleave_handler);
+
         li.appendChild(spanName);
         li.appendChild(iEdit);
         li.appendChild(iSort);
@@ -1314,8 +1293,45 @@ OCA.Audioplayer.Playlists = {
         });
     },
 
-    dragElement: function () {
-        return $(this).clone().text($(this).find('.title').attr('data-title'));
+    dragstart_handler: function (ev) {
+        ev.dataTransfer.setData("id", ev.target.dataset.trackid);
+        ev.effectAllowed = "copyMove";
+        OCA.Audioplayer.Core.drag = ev.target;
+    },
+
+    dragend_handler: function (ev) {
+        ev.dataTransfer.clearData();
+    },
+
+    drop_handler: function (ev) {
+        ev.preventDefault();
+        OCA.Audioplayer.Playlists.addSongToPlaylist(this.dataset.id, ev.dataTransfer.getData("id"));
+        ev.currentTarget.style.background = "";
+    },
+
+    dragover_handler: function (ev) {
+        ev.currentTarget.style.background = "#FCEFA1";
+        ev.preventDefault();
+    },
+
+    dragleave_handler: function (ev) {
+        ev.currentTarget.style.background = "";
+        ev.preventDefault();
+    },
+
+    dragover_row_handler: function (ev) {
+        if (OCA.Audioplayer.Playlists.isBefore(OCA.Audioplayer.Core.drag, ev.target.parentNode))
+            ev.target.parentNode.parentNode.insertBefore(OCA.Audioplayer.Core.drag, ev.target.parentNode);
+        else
+            ev.target.parentNode.parentNode.insertBefore(OCA.Audioplayer.Core.drag, ev.target.parentNode.nextSibling);
+    },
+
+    isBefore: function (el1, el2) {
+        if (el2.parentNode === el1.parentNode)
+            for (var cur = el1.previousSibling; cur && cur.nodeType !== 9; cur = cur.previousSibling)
+                if (cur === el2)
+                    return true;
+        return false;
     },
 
     initPlaylistActions: function () {

@@ -4,9 +4,11 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 3.3.0 - 2022-03-xx
 ### Changed
 - getID3 1.9.21-202202220815
+- migrated drag and drop from jquery to vanilla js
 
 ### Fixed
 - Scan freeze and PHP fread() error #571
+- drag and drop hover not accurate #570
 
 ## 3.2.4 - 2021-12-27
 ### Fixed

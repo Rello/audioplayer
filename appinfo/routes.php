@@ -13,9 +13,8 @@
 
 namespace OCA\audioplayer\AppInfo;
 
-$application = new Application();
-
-$application->registerRoutes($this, ['routes' => [
+return [
+    'routes' => [
 	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
     ['name' => 'playlist#addTrackToPlaylist', 'url' => '/addtracktoplaylist', 'verb' => 'POST'],
     ['name' => 'playlist#addPlaylist', 'url' => '/addplaylist', 'verb' => 'POST'],
@@ -48,4 +47,5 @@ $application->registerRoutes($this, ['routes' => [
     // whatsnew
     ['name' => 'whatsNew#get', 'url' => '/whatsnew', 'verb' => 'GET'],
     ['name' => 'whatsNew#dismiss', 'url' => '/whatsnew', 'verb' => 'POST'],
-]]);
+    ]
+];

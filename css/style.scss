@@ -355,11 +355,6 @@ i#scanAudiosFirst {
   display: none;
 }
 
-#individual-playlist li.dragable:hover {
-  transition: background-color 0.3s ease;
-  background: var(--color-background-dark);
-}
-
 #individual-playlist li:hover .edit-song,
 #individual-playlist li:hover .icon,
 #individual-playlist li:focus .icon {
@@ -932,10 +927,6 @@ li.activeHover {
   border: 1px solid #ccc;
   margin: 1px;
 
-}
-
-li.dropHover {
-  background: #FCEFA1;
 }
 
 #audios_import_process,
