@@ -487,7 +487,7 @@ OCA.Audioplayer.Category = {
 
                     document.getElementById('playlist-container').dataset.playlist = category + '-' + categoryItem;
                     document.querySelector('.albumwrapper').appendChild(itemRows);
-                    OCA.Audioplayer.UI.trackClickHandler(callback);
+                    OCA.Audioplayer.UI.addTitleClickEvents(callback);
 
                     if (albumDirectPlay === true) {
                         document.querySelector('.albumwrapper').getElementsByClassName('title')[0].click();
@@ -605,50 +605,7 @@ OCA.Audioplayer.UI = {
         return li;
     },
 
-    handleOptionsClicked: function (event) {
-        OCA.Audioplayer.Sidebar.showSidebar(event);
-        event.stopPropagation();
-    },
-
-    indicateFavorite: function (fav, id) {
-        let fav_action;
-        if (fav === 't') {
-            fav_action = document.createElement('i');
-            fav_action.classList.add('icon', 'icon-starred');
-        } else {
-            fav_action = document.createElement('i');
-            fav_action.classList.add('icon', 'icon-star');
-        }
-        fav_action.setAttribute('data-trackid', id);
-        fav_action.addEventListener('click', OCA.Audioplayer.UI.handleStarClicked);
-        return fav_action;
-    },
-
-    handleStarClicked: function (event) {
-        OCA.Audioplayer.Core.toggleFavorite(event);
-        event.stopPropagation();
-    },
-
-    handleViewToggleClicked: function () {
-        let div = document.getElementById('view-toggle');
-        let classes = div.classList;
-        if (classes.contains('icon-toggle-filelist')) {
-            classes.remove('icon-toggle-filelist');
-            classes.add('icon-toggle-pictures');
-            div.innerText = t('audioplayer', 'Album Covers');
-            OCA.Audioplayer.Backend.setUserValue('view', 'pictures');
-        } else {
-            classes.remove('icon-toggle-pictures');
-            classes.add('icon-toggle-filelist');
-            div.innerText = t('audioplayer', 'List View');
-            OCA.Audioplayer.Backend.setUserValue('view', 'filelist');
-        }
-        if (document.querySelector('#myCategory .active')) {
-            OCA.Audioplayer.Category.handleCategoryClicked();
-        }
-    },
-
-    trackClickHandler: function (callback) {
+    addTitleClickEvents: function (callback) {
         let albumWrapper = document.querySelector('.albumwrapper');
         let getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
         let category = document.getElementById('playlist-container').dataset.playlist.split('-');
@@ -662,7 +619,7 @@ OCA.Audioplayer.UI = {
         }
 
         albumWrapper.addEventListener('click', function (event) {
-            OCA.Audioplayer.UI.onTitleClick(getcoverUrl, playlist, event.target);
+            OCA.Audioplayer.UI.handleTitleClicked(getcoverUrl, playlist, event.target);
         });
         // the callback is used for the the init function to get feedback when all title rows are ready
         if (typeof callback === 'function') {
@@ -670,75 +627,23 @@ OCA.Audioplayer.UI = {
         }
     },
 
-    onTitleClick: function (coverUrl, playlist, element) {
-        let canPlayMimeType = OCA.Audioplayer.Core.canPlayMimeType;
-        let activeLi = element.parentNode;
-        // if enabled, play sonos and skip the rest of the processing
-        if (document.getElementById('audioplayer_sonos').value === 'checked') {
-            OCA.Audioplayer.Sonos.playSonos(element);
-            OCA.Audioplayer.Backend.setStatistics();
-            return;
-        }
-        if (!canPlayMimeType.includes(activeLi.dataset.mimetype)) {
-            console.warn(`can't play ${activeLi.dataset.mimetype}`);
-            return false;
-        }
-        if (activeLi.classList.contains('isActive')) {
-            OCA.Audioplayer.Player.play();
-        } else {
-            if (document.getElementById('playlist-container').dataset.playlist !== OCA.Audioplayer.Player.currentPlaylist) {
-                let playlistItems = document.querySelectorAll('.albumwrapper li');
-                OCA.Audioplayer.Player.addTracksToSourceList(playlistItems);
-                OCA.Audioplayer.Player.currentPlaylist = document.getElementById('playlist-container').dataset.playlist;
-            }
-            let k = 0, e = activeLi;
-            while (e = e.previousSibling) {
-                ++k;
-            }
-            // when a new title is played, the old playtime will be reset
-            if (parseInt(OCA.Audioplayer.Core.CategorySelectors[2]) !== parseInt(activeLi.dataset.trackid)) {
-                OCA.Audioplayer.Player.trackStartPosition = 0;
-            }
-            OCA.Audioplayer.Player.currentTrackIndex = k;
-            OCA.Audioplayer.Player.play();
-            OCA.Audioplayer.Backend.setStatistics();
-        }
-    },
-
     indicateCurrentPlayingTrack: function () {
         if (document.getElementById('playlist-container').dataset.playlist === OCA.Audioplayer.Player.currentPlaylist) {
 
             if (document.getElementsByClassName('isActive').length === 1) {
-                // let currentActive = document.getElementsByClassName('isActive')[0];
-                // does not work yet, when a song is preselected bot not isActive
-                //currentActive.querySelector('i.ioc').style.display = 'none';
-                //currentActive.querySelector('i.icon').style.display = 'block';
                 document.getElementsByClassName('isActive')[0].classList.remove('isActive');
             }
 
             // reset all playing icons
             let iocIcon = document.querySelectorAll('.albumwrapper li i.ioc');
             for (let i = 0; i < iocIcon.length; ++i) {
-                //iocIcon[i].style.display = 'none';
             }
             let iconIcon = document.querySelectorAll('.albumwrapper li i.icon');
             for (let j = 0; j < iconIcon.length; ++j) {
-                //iconIcon[j].style.display = 'block';
             }
-
-            if (!OCA.Audioplayer.Player.isPaused()) {
-                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-off');
-                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-up');
-            } else {
-                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.add('ioc-volume-off');
-                //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].classList.remove('ioc-volume-up');
-            }
-            //iocIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'block';
-            //iconIcon[OCA.Audioplayer.Player.currentTrackIndex].style.display = 'none';
 
             document.getElementById('nowPlayingText').innerHTML = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
-
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].scrollIntoView(
                 {
                     behavior: 'smooth',
@@ -787,7 +692,70 @@ OCA.Audioplayer.UI = {
         if (document.getElementById('app-sidebar').dataset.trackid !== '') {
             OCA.Audioplayer.Sidebar.showSidebar(undefined, OCA.Audioplayer.Player.currentTrackId);
         }
+    },
 
+    handleOptionsClicked: function (event) {
+        OCA.Audioplayer.Sidebar.showSidebar(event);
+        event.stopPropagation();
+    },
+
+    handleStarClicked: function (event) {
+        OCA.Audioplayer.Core.toggleFavorite(event);
+        event.stopPropagation();
+    },
+
+    handleViewToggleClicked: function () {
+        let div = document.getElementById('view-toggle');
+        let classes = div.classList;
+        if (classes.contains('icon-toggle-filelist')) {
+            classes.remove('icon-toggle-filelist');
+            classes.add('icon-toggle-pictures');
+            div.innerText = t('audioplayer', 'Album Covers');
+            OCA.Audioplayer.Backend.setUserValue('view', 'pictures');
+        } else {
+            classes.remove('icon-toggle-pictures');
+            classes.add('icon-toggle-filelist');
+            div.innerText = t('audioplayer', 'List View');
+            OCA.Audioplayer.Backend.setUserValue('view', 'filelist');
+        }
+        if (document.querySelector('#myCategory .active')) {
+            OCA.Audioplayer.Category.handleCategoryClicked();
+        }
+    },
+
+    handleTitleClicked: function (coverUrl, playlist, element) {
+        let canPlayMimeType = OCA.Audioplayer.Core.canPlayMimeType;
+        let activeLi = element.parentNode;
+        // if enabled, play sonos and skip the rest of the processing
+        if (document.getElementById('audioplayer_sonos').value === 'checked') {
+            OCA.Audioplayer.Sonos.playSonos(element);
+            OCA.Audioplayer.Backend.setStatistics();
+            return;
+        }
+        if (!canPlayMimeType.includes(activeLi.dataset.mimetype)) {
+            console.warn(`can't play ${activeLi.dataset.mimetype}`);
+            return false;
+        }
+        if (activeLi.classList.contains('isActive')) {
+            OCA.Audioplayer.Player.play();
+        } else {
+            if (document.getElementById('playlist-container').dataset.playlist !== OCA.Audioplayer.Player.currentPlaylist) {
+                let playlistItems = document.querySelectorAll('.albumwrapper li');
+                OCA.Audioplayer.Player.addTracksToSourceList(playlistItems);
+                OCA.Audioplayer.Player.currentPlaylist = document.getElementById('playlist-container').dataset.playlist;
+            }
+            let k = 0, e = activeLi;
+            while (e = e.previousSibling) {
+                ++k;
+            }
+            // when a new title is played, the old playtime will be reset
+            if (parseInt(OCA.Audioplayer.Core.CategorySelectors[2]) !== parseInt(activeLi.dataset.trackid)) {
+                OCA.Audioplayer.Player.trackStartPosition = 0;
+            }
+            OCA.Audioplayer.Player.currentTrackIndex = k;
+            OCA.Audioplayer.Player.play();
+            OCA.Audioplayer.Backend.setStatistics();
+        }
     },
 
     showInitScreen: function (mode) {
@@ -876,6 +844,20 @@ OCA.Audioplayer.UI = {
                 document.querySelector('.songlist').classList.add('two-column');
             }
         }
+    },
+
+    indicateFavorite: function (fav, id) {
+        let fav_action;
+        if (fav === 't') {
+            fav_action = document.createElement('i');
+            fav_action.classList.add('icon', 'icon-starred');
+        } else {
+            fav_action = document.createElement('i');
+            fav_action.classList.add('icon', 'icon-star');
+        }
+        fav_action.setAttribute('data-trackid', id);
+        fav_action.addEventListener('click', OCA.Audioplayer.UI.handleStarClicked);
+        return fav_action;
     },
 
     toggleFavorite: function (target, trackId) {

@@ -59,8 +59,7 @@ OCA.Audioplayer.Player = {
                 OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
             })
                 .catch(error => {
-                    document.getElementById('playerPlay').classList.replace('icon-loading','icon-loading');
-                    document.getElementById('playerPlay').classList.replace('play-pause','play');
+                    document.getElementById('playerPlay').classList.replace('icon-loading','play-pause');
                 });
         }
     },
@@ -77,6 +76,8 @@ OCA.Audioplayer.Player = {
      */
     stop: function () {
         this.html5Audio.pause();
+        document.getElementById('playerPlay').classList.replace('icon-loading','play-pause');
+        document.getElementById('playerPlay').classList.replace('play','play-pause');
         document.getElementById('sm2-bar-ui').classList.remove('playing');
         OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
     },

@@ -9,6 +9,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - Scan freeze and PHP fread() error #571
 - drag and drop hover not accurate #570
+- Song keeps loading until click on loading symbol[BUG] #566
 
 ## 3.2.4 - 2021-12-27
 ### Fixed
