@@ -5,6 +5,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - getID3 1.9.21-202202220815
 - migrated drag and drop from jquery to vanilla js
+- Support Breeze Dark theme #553
 
 ### Fixed
 - Scan freeze and PHP fread() error #571

@@ -137,7 +137,6 @@ i#scanAudiosFirst {
 }
 
 #category_selector {
-  background: var(--color-main-background);
   width: 100%;
   margin: 0;
 }
@@ -557,7 +556,7 @@ i#scanAudiosFirst {
   float: left;
   display: block;
   height: auto;
-
+  padding-bottom: 250px;
 }
 
 .margin-bottom {
@@ -610,7 +609,7 @@ i#scanAudiosFirst {
   position: relative;
   width: 100%;
   float: left;
-  color: var(--color-text-lighter);;
+  color: var(--color-text-lighter);
   font-size: 12px;
   font-style: italic;
   text-overflow: ellipsis;
@@ -815,6 +814,13 @@ i#scanAudiosFirst {
 input[type=range].volume-slider {
   -webkit-appearance: none;
   background: var(--color-main-background);
+}
+
+.volume-slider::-webkit-slider-progress,
+.volume-slider::-moz-range-progress {
+    background-color: var(--color-background-hover);
+    padding: 2px;
+    border-radius: 5px;
 }
 
 input[type=range].volume-slider:focus {
