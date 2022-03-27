@@ -816,9 +816,8 @@ input[type=range].volume-slider {
   background: var(--color-main-background);
 }
 
-.volume-slider::-webkit-slider-progress,
 .volume-slider::-moz-range-progress {
-    background-color: var(--color-background-hover);
+    background-color: #0082c9;
     padding: 2px;
     border-radius: 5px;
 }
@@ -831,7 +830,7 @@ input[type=range].volume-slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
-  background: var(--color-background-dark);
+  background: var(--color-background-darker);
   border-radius: var(--border-radius);
 }
 
