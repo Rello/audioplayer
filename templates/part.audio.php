@@ -54,7 +54,7 @@
                 <div id="progressContainer" style="padding-top: 3px; padding-right: 15px;">
                     <canvas id="progressBar" height="8" style="
                     width: 100%;
-    background-color: var(--color-background-dark);
+    background-color: var(--color-background-darker);
     border-radius: var(--border-radius);
     border: 0 none;
     height: 8px;
