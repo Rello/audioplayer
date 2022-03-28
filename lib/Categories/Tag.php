@@ -66,17 +66,20 @@ class Tag
     {
         $allFiles = $this->tagManager->getObjectIdsForTags($tagId);
 
-        $sql = $this->db->getQueryBuilder();
-        $sql->selectAlias($sql->func()->count('id'), 'count')
-            ->from('audioplayer_tracks')
-            ->where($sql->expr()->in('file_id', $sql->createNamedParameter($allFiles, IQueryBuilder::PARAM_INT_ARRAY)))
-            ->andWhere($sql->expr()->eq('user_id', $sql->createNamedParameter($this->userId)));
-
-        $statement = $sql->execute();
-        $result = $statement->fetch();
-        $statement->closeCursor();
-
-        return $result['count'];
+        $result = 0;
+        $fileChunks = array_chunk($allFiles, 999, true);
+        foreach ($fileChunks as $fileChunk) {
+            $sql = $this->db->getQueryBuilder();
+            $sql->selectAlias($sql->func()->count('id'), 'count')
+                ->from('audioplayer_tracks')
+                ->where($sql->expr()->in('file_id', $sql->createNamedParameter($fileChunk, IQueryBuilder::PARAM_INT_ARRAY)))
+                ->andWhere($sql->expr()->eq('user_id', $sql->createNamedParameter($this->userId)));
+            $statement = $sql->execute();
+            $statementResult = $statement->fetch();
+            $result = $result + $statementResult['count'];
+            $statement->closeCursor();
+        }
+        return $result;
     }
 
     /**
