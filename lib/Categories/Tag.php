@@ -67,7 +67,7 @@ class Tag
         $allFiles = $this->tagManager->getObjectIdsForTags($tagId);
 
         $result = 0;
-        $fileChunks = array_chunk($allFiles, 999, true);
+        $fileChunks = array_chunk($allFiles, 999);
         foreach ($fileChunks as $fileChunk) {
             $sql = $this->db->getQueryBuilder();
             $sql->selectAlias($sql->func()->count('id'), 'count')

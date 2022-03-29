@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.3.0 - 2022-03-xx
+## 3.3.0 - 2022-03-29
 ### Changed
 - getID3 1.9.21-202202220815
 - migrated drag and drop from jquery to vanilla js
@@ -10,7 +10,8 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - Scan freeze and PHP fread() error #571
 - drag and drop hover not accurate #570
-- Song keeps loading until click on loading symbol[BUG] #566
+- Song keeps loading until click on loading symbol #566
+- More than 1000 expressions in a list are not allowed on Oracle. #568
 
 ## 3.2.4 - 2021-12-27
 ### Fixed

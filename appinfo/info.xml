@@ -16,7 +16,7 @@
 - Use the Recognize app to classify genres by machine learning
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
-	<version>3.2.4</version>
+	<version>3.3.0</version>
 	<licence>agpl</licence>
 	<author>Marcel Scherello</author>
 	<namespace>audioplayer</namespace>
