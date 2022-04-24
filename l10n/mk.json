@@ -1,0 +1,28 @@
+{ "translations": {
+    "Selected" : "Selected",
+    "Options" : "Опции",
+    "Help" : "Помош",
+    "New in" : "Ново во",
+    "View changelog" : "Видете ги проммените",
+    "Tags" : "Ознаки",
+    "Saved" : "Зачувано",
+    "Title" : "Наслов",
+    "Artist" : "Изведувач",
+    "Album" : "Албум",
+    "Genre" : "Жанр",
+    "Year" : "Година",
+    "Length" : "Должина",
+    "Copyright" : "Авторско право",
+    "Metadata" : "Метаподатоци",
+    "Favorited" : "Омилени",
+    "Favorite" : "Омилен",
+    "Remove" : "Отстрани ",
+    "Favorites" : "Омилени",
+    "Unknown" : "Непознат",
+    "URL" : "Адреса",
+    "Cancel" : "Откажи",
+    "Close" : "Затвори",
+    "Settings" : "Параметри",
+    "Advanced Settings" : "Напредни параметри"
+},"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
+}

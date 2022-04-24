@@ -1,0 +1,17 @@
+{ "translations": {
+    "Selected" : "Selected",
+    "Help" : "Adjuta",
+    "Tags" : "Etiquettas",
+    "Saved" : "Salveguardate",
+    "Title" : "Titulo",
+    "Copyright" : "Copyright",
+    "Favorited" : "Favorite",
+    "Favorite" : "Favorite",
+    "Favorites" : "Favoritos",
+    "Unknown" : "Incognite",
+    "URL" : "URL",
+    "Cancel" : "Cancellar",
+    "Close" : "Clauder",
+    "Settings" : "Configurationes"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

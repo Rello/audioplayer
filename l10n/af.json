@@ -1,0 +1,17 @@
+{ "translations": {
+    "Help" : "Hulp",
+    "Folders" : "Vouers",
+    "Tags" : "Etikette",
+    "Saved" : "Bewaar",
+    "Title" : "Titel",
+    "Favorited" : "As gunsteling ",
+    "Favorite" : "Gunsteling",
+    "Remove" : "Verwyder",
+    "Favorites" : "Gunstelinge",
+    "Unknown" : "Onbekend",
+    "URL" : "Bronadres",
+    "Cancel" : "Kanselleer",
+    "Close" : "Sluit",
+    "Settings" : "Instellings"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

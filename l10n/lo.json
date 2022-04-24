@@ -1,0 +1,16 @@
+{ "translations": {
+    "Selected" : "ເລືອກ",
+    "Help" : "ການຊ່ວຍເຫຼືອ",
+    "New in" : "ໃຫມ່",
+    "View changelog" : "ເບິ່ງການປ່ຽນແປງ",
+    "Tags" : "ປ້າຍກຳກັບ",
+    "Favorite" : "ລາຍການທີ່ມັກ",
+    "Remove" : "ຍ້າຍອອກ",
+    "Favorites" : "ລາຍການທີ່ມັກ",
+    "Unknown" : "ບໍ່ຮູ້",
+    "URL" : "URL",
+    "Cancel" : "ຍົກເລີກ",
+    "Close" : "ປິດ",
+    "Settings" : "ການຕັ້ງຄ່າ"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

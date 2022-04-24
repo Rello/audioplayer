@@ -1,0 +1,13 @@
+{ "translations": {
+    "Selected" : "Selected",
+    "Help" : "Օգնություն",
+    "Saved" : "Պահված",
+    "Title" : "Վերնագիր",
+    "Favorites" : "Սիրվածներ",
+    "Unknown" : "Անհայտ",
+    "URL" : "URL",
+    "Cancel" : "ընդհատել",
+    "Close" : "Փակել",
+    "Settings" : "կարգավորումներ"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

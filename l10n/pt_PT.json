@@ -1,0 +1,26 @@
+{ "translations": {
+    "Selected" : "Seleccionado",
+    "Options" : "Opções",
+    "Help" : "Ajuda",
+    "New in" : "Novo em",
+    "View changelog" : "Ver registo de alterações",
+    "Folders" : "Pastas",
+    "Tags" : "Etiquetas",
+    "Saved" : "Guardado",
+    "Title" : "Título",
+    "Subtitle" : "Subtítulo ",
+    "Length" : "Comprimento",
+    "Copyright" : "Direitos de Autor",
+    "Metadata" : "Metadados",
+    "Favorited" : "Nos Favoritos",
+    "Favorite" : "Favorito",
+    "Remove" : "Remover",
+    "Favorites" : "Favoritos",
+    "Unknown" : "Desconhecido",
+    "URL" : "URL",
+    "Cancel" : "Cancelar",
+    "Close" : "Fechar",
+    "Settings" : "Configurações",
+    "Advanced Settings" : "Configurações avançadas "
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
