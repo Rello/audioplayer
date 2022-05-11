@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "Допомога",
     "New in" : "Нові можливості",
     "View changelog" : "Переглянути журнал змін",
+    "Are you sure?" : "Ви впевнені?",
     "Folders" : "Теки",
     "Tags" : "Позначки",
     "Saved" : "Збережено",
