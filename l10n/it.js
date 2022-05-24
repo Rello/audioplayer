@@ -111,4 +111,4 @@ OC.L10N.register(
     "Formats supported by the browser" : "Formati supportati dal browser",
     "Formats not supported by the browser" : "Formati non supportati dal browser"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

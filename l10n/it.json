@@ -108,5 +108,5 @@
     "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Attiva questa impostazione se i caratteri cirillici non vengono riconosciuti correttamente. Questo rende l'indicizzazione più lenta!",
     "Formats supported by the browser" : "Formati supportati dal browser",
     "Formats not supported by the browser" : "Formati non supportati dal browser"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
+},"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
