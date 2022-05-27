@@ -18,6 +18,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Cancel" : "ยกเลิก",
     "Close" : "ปิด",
-    "Settings" : "การตั้งค่า"
+    "Settings" : "การตั้งค่า",
+    "Advanced Settings" : "การตั้งค่าขั้นสูง"
 },
 "nplurals=1; plural=0;");
