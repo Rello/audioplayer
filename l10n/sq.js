@@ -8,6 +8,7 @@ OC.L10N.register(
     "Tags" : "Etiketat",
     "Saved" : "Ruajtur",
     "Title" : "Titulli",
+    "Subtitle" : "Nëntitull",
     "Copyright" : "Të drejta kopjimi",
     "Favorited" : "U kalua e parapëlqyer",
     "Favorite" : "I/E Preferuar",
@@ -17,6 +18,7 @@ OC.L10N.register(
     "URL" : "Url",
     "Cancel" : "Anullo",
     "Close" : "Mbylleni",
-    "Settings" : "Rregullimet"
+    "Settings" : "Rregullimet",
+    "Advanced Settings" : "Cilësime të Avancuara"
 },
 "nplurals=2; plural=(n != 1);");
