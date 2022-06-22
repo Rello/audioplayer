@@ -6,6 +6,7 @@ OC.L10N.register(
     "Tags" : "Tagiau",
     "Saved" : "Wedi'u cadw",
     "Title" : "Teitl",
+    "Year" : "Blwyddyn",
     "Favorite" : "Ffefryn",
     "Remove" : "Gwaredu",
     "Favorites" : "Ffefrynnau",
