@@ -19,6 +19,7 @@ OC.L10N.register(
     "play / stream / organize" : "play / stream / organise",
     "Cancel" : "Cancel",
     "Close" : "Close",
-    "Settings" : "Settings"
+    "Settings" : "Settings",
+    "Advanced Settings" : "Advanced Settings"
 },
 "nplurals=2; plural=(n != 1);");
