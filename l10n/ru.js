@@ -37,7 +37,7 @@ OC.L10N.register(
     "No data" : "Нет данных",
     "Saved" : "Сохранённые",
     "Select a single folder with audio files" : "Выберите папку с аудиофайлами",
-    "Invalid path!" : "Неверный путь!",
+    "Invalid path!" : "Недопустимый путь.",
     "All library entries will be deleted!" : "Все записи в библиотеке будут удалены!",
     "Reset library" : "Очистить библиотеку",
     "Resetting finished!" : "Очистка выполнена!",
