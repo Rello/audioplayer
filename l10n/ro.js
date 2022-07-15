@@ -2,6 +2,10 @@ OC.L10N.register(
     "audioplayer",
     {
     "Selected" : "Selected",
+    "Options" : "Opțiuni",
+    "Album Covers" : "Coperte albume",
+    "Welcome to" : "Bine ați venit la",
+    "Audio Player" : "Player audio",
     "Help" : "Ajutor",
     "New in" : "Nou în",
     "View changelog" : "Vezi changelog",
