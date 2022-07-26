@@ -7,6 +7,7 @@ OC.L10N.register(
     "Saved" : "Lagra",
     "Title" : "Tittel",
     "Year" : "År",
+    "Favorited" : "Lagt til som favoritt",
     "Favorite" : "Favoritt",
     "Remove" : "Fjern",
     "Favorites" : "Favorittar",
