@@ -8,9 +8,11 @@ OC.L10N.register(
     "View changelog" : "檢視版本更新紀錄",
     "Are you sure?" : "你確定嗎？",
     "Play/Pause" : "撥放／暫停",
+    "Selection" : "選取",
     "Folders" : "資料夾",
     "Tags" : "標籤",
     "Years" : "年",
+    "No data" : "無資料",
     "Saved" : "已儲存",
     "Title" : "標題",
     "Subtitle" : "副標題",
@@ -31,6 +33,8 @@ OC.L10N.register(
     "Cancel" : "取消",
     "Close" : "關閉",
     "Settings" : "設定",
-    "Advanced Settings" : "進階設定"
+    "Advanced Settings" : "進階設定",
+    "Do you like this app?" : "您喜歡此應用程式嗎？",
+    "More information …" : "更多資訊……"
 },
 "nplurals=1; plural=0;");
