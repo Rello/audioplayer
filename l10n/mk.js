@@ -13,6 +13,7 @@ OC.L10N.register(
     "Album" : "Албум",
     "Genre" : "Жанр",
     "Year" : "Година",
+    "Track" : "Патека",
     "Length" : "Должина",
     "Copyright" : "Авторско право",
     "Metadata" : "Метаподатоци",
