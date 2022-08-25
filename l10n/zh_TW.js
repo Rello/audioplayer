@@ -9,6 +9,7 @@ OC.L10N.register(
     "Are you sure?" : "你確定嗎？",
     "Play/Pause" : "撥放／暫停",
     "Selection" : "選取",
+    "Albums" : "相簿",
     "Folders" : "資料夾",
     "Tags" : "標籤",
     "Years" : "年",
