@@ -6,6 +6,8 @@ OC.L10N.register(
     "Help" : "Помош",
     "New in" : "Ново во",
     "View changelog" : "Видете ги проммените",
+    "Albums" : "Албуми",
+    "Folders" : "Папки",
     "Tags" : "Ознаки",
     "Saved" : "Зачувано",
     "Title" : "Наслов",
