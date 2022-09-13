@@ -1,10 +1,14 @@
 { "translations": {
-    "Help" : "Yordam",
-    "Tags" : "Teglar",
-    "Saved" : "Saqlangan",
-    "Remove" : "O'chiring",
-    "Unknown" : "Noma'lum",
-    "Cancel" : "Bekor qilish",
-    "Settings" : "Sozlamalar"
+    "Help" : "Help",
+    "Tags" : "Tags",
+    "Saved" : "Saved",
+    "Favorited" : "Favorited",
+    "Favorite" : "Favorite",
+    "Remove" : "Remove",
+    "Favorites" : "Favorites",
+    "Unknown" : "Unknown",
+    "Cancel" : "Cancel",
+    "Close" : "Close",
+    "Settings" : "Settings"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
