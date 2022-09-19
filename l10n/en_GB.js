@@ -17,6 +17,7 @@ OC.L10N.register(
     "Unknown" : "Unknown",
     "URL" : "Url",
     "play / stream / organize" : "play / stream / organise",
+    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n- Use the Recognize app to classify genres by machine learning\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favourites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n- Use the Recognize app to classify genres by machine learning\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.",
     "Cancel" : "Cancel",
     "Close" : "Close",
     "Settings" : "Settings",
