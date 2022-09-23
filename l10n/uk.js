@@ -8,6 +8,7 @@ OC.L10N.register(
     "View changelog" : "Переглянути журнал змін",
     "Are you sure?" : "Ви впевнені?",
     "Selection" : "Вибір",
+    "Albums" : "Альбоми",
     "Folders" : "Теки",
     "Tags" : "Позначки",
     "No data" : "Немає даних",
