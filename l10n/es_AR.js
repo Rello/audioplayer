@@ -5,6 +5,7 @@ OC.L10N.register(
     "Options" : "Opciones",
     "Help" : "Ayuda",
     "New in" : "Nuevo en",
+    "View changelog" : "Ver registro de cambios",
     "Folders" : "Carpetas",
     "Tags" : "Etiquetas",
     "Saved" : "Guardado",
