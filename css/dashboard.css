@@ -1,0 +1,102 @@
+/**
+ * Audio Player
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the LICENSE.md file.
+ *
+ * @author Marcel Scherello <audioplayer@scherello.de>
+ * @copyright 2021 Marcel Scherello
+ */
+
+.icon-audioplayer {
+    background-image: url(../img/app-dark.svg);
+    filter: var(--background-invert-if-dark);
+}
+
+body.dark .icon-audioplayer,
+body.theme--dark .icon-audioplayer {
+    background-image: url(../img/app.svg);
+    filter: var(--background-invert-if-dark);
+}
+
+.panel--content .APplayerButton {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    display: inline-block;
+}
+
+.panel--content .APplayerBar {
+    width: 130px;
+    margin: auto;
+}
+
+.panel--content .APcategoryBar,
+.panel--content .APcoverBar,
+.panel--content .APitemBar,
+.panel--content .APtitleBar {
+    margin: auto;
+    width: 180px;
+    margin-top: 10px;
+}
+
+.panel--content .APtitleBar {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.panel--content .APcoverBar .APcover {
+    width: 180px;
+    height: 180px;
+    text-align: center;
+    font-size: 60px;
+    line-height: 150px;
+}
+
+.panel--content .APbutton {
+    background-size: 80%;
+    background-position: center center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.panel--content .APbutton.APprevious {
+    background-image: url(../img/previous.svg);
+    filter: var(--background-invert-if-dark);
+}
+
+.panel--content .APbutton.APnext {
+    background-image: url(../img/next.svg);
+    filter: var(--background-invert-if-dark);
+}
+
+.panel--content .APbutton.APplay-pause {
+    background-image: url(../img/play.svg);
+    filter: var(--background-invert-if-dark);
+}
+
+.panel--content .APbutton.APplay-pause.playing {
+    background-image: url(../img/pause.svg);
+    filter: var(--background-invert-if-dark);
+}
+
+.panel--content .APbutton.APprevious,
+.panel--content .APbutton.APplay-pause,
+.panel--content .APbutton.APprevious,
+.panel--content .APbutton.APnext {
+    background-size: 80%;
+    background-position: center center;
+    opacity: 0.5;
+}
+
+.panel--content .APbutton.APprevious:hover,
+.panel--content .APbutton.APplay-pause:hover,
+.panel--content .APbutton.APprevious:hover,
+.panel--content .APbutton.APnext:hover {
+    opacity: 1;
+}
