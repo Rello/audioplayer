@@ -807,8 +807,17 @@ i#scanAudiosFirst {
   opacity: 1;
 }
 
+.albumwrapper li:hover * {
+  cursor: pointer;
+}
+
+.albumwrapper li:hover:not(.isActive) {
+  background: var(--color-border);
+}
+
 .isActive {
   font-weight: bold;
+  background: var(--color-border-dark);
 }
 
 input[type=range].volume-slider {
