@@ -32,7 +32,7 @@ OC.L10N.register(
     "Folders" : "Katalogi",
     "Genres" : "Gatunki",
     "Titles" : "Tytuły",
-    "Tags" : "Tagi",
+    "Tags" : "Etykiety",
     "Years" : "Lata",
     "No data" : "Brak danych",
     "Saved" : "Zapisano",

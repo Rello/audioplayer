@@ -85,6 +85,7 @@ OC.L10N.register(
     "Duplicates found:" : "Doublons trouvés :",
     "Audioplayer" : "Lecteur audio",
     "play / stream / organize" : "Lire / diffuser / organiser",
+    "A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.\n\n- Cover or List view by various categories\n- Tuned for big audio collections\n- Smart lists & playlists\n- Stream URLs\n- Favorites, Search & Collaborative Tag integration\n- Specifying media folder (with exclude functionality)\n- Hardware media keys & Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n- Use the Recognize app to classify genres by machine learning\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "Un lecteur de musique compatible FLAC, MP3, MP4, AIFF, AAC, flux, … avec prise en charge des listes de lecture et intégration aux systèmes SONOS.\n\n- Affichage par couverture ou par liste de catégories diverses\n- Adapté aux grandes collections audio\n- Listes de lecture et listes intelligentes\n- URLs de flux\n- Favoris, recherche et compatibilité avec les étiquettes collaboratives\n- Choix du dossier média (avec fonction exclure)\n- Compatible avec les clés multimédias matérielles et Chrome/Android/macOS\n- [Lecteur SONOS] (https://github.com/rello/audioplayer_sonos) via un module complémentaire\n\nVoir le fichier [README](https://github.com/rello/audioplayer/blob/master/README.md) pour tous les types MIME pris en charge et des informations supplémentaires.",
     "Volume" : "Volume",
     "Repeat title/list" : "Répéter le titre/la liste",
     "Shuffle playlist" : "Mélanger la liste de lecture",
@@ -110,4 +111,4 @@ OC.L10N.register(
     "Formats supported by the browser" : "Formats pris en charge par le navigateur",
     "Formats not supported by the browser" : "Formats non pris en charge par le navigateur"
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

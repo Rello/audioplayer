@@ -1,0 +1,12 @@
+{ "translations": {
+    "Help" : "Kömek",
+    "Tags" : "Bellikler",
+    "Favorite" : "Halaýan",
+    "Remove" : "Aýyrmak",
+    "Favorites" : "Halanýanlar",
+    "Unknown" : "Näbelli",
+    "Cancel" : "ýatyrmak",
+    "Close" : "Ýap",
+    "Settings" : "Sazlamalar"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

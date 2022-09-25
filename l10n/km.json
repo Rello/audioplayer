@@ -1,0 +1,26 @@
+{ "translations": {
+    "Selected" : "Selected",
+    "Options" : "ជម្រើស",
+    "Welcome to" : "សូមស្វាគមន៍មកកាន់",
+    "Help" : "ជំនួយ",
+    "Are you sure?" : "តើអ្នកប្រាកដឬទេ?",
+    "Tags" : "ស្លាក",
+    "Years" : "ឆ្នាំ",
+    "No data" : "មិនមានទិន្នន័យ",
+    "Saved" : "បាន​រក្សាទុក",
+    "Title" : "ចំណងជើង",
+    "Year" : "ឆ្នាំ",
+    "Length" : "រយៈពេល",
+    "Copyright" : "រក្សាសិទ្ធិ",
+    "Remove" : "ដកចេញ",
+    "Favorites" : "Favorites",
+    "URL" : "URL",
+    "Cancel" : "បោះបង់",
+    "Close" : "បិទ",
+    "Volume up" : "បន្ថែមសម្លេង",
+    "Volume down" : "បន្ថយសម្លេង",
+    "Settings" : "ការកំណត់",
+    "Do you like this app?" : "តើអ្នកចូលចិត្តកម្មវិធីនេះឬទេ?",
+    "More information …" : "ព័ត៌មានបន្ថែម …"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

@@ -9,6 +9,23 @@
     "Scan for new audio files" : "إبحث عن ملفات صوتية جديدة",
     "Add new tracks to library" : "اضف سجلات صوتية جديدة للمكتبة",
     "Help" : "مساعدة",
-    "New in" : "جديد الى"
+    "New in" : "جديد الى",
+    "View changelog" : "اعرض سجل التغييرات",
+    "Folders" : "المجلدات",
+    "Tags" : "الوسوم",
+    "Saved" : "تم الحفظ",
+    "Title" : "العنوان",
+    "Subtitle" : "عنوان فرعي",
+    "Copyright" : "حقوق التأليف",
+    "Favorited" : "المفضلة",
+    "Favorite" : "المفضلة",
+    "Remove" : "حذف",
+    "Favorites" : "المفضلات",
+    "Unknown" : "غير معروف",
+    "URL" : "رابط",
+    "Cancel" : "إلغاء",
+    "Close" : "إغلاق",
+    "Settings" : "الإعدادات",
+    "Advanced Settings" : "الإعدادات المتقدمة"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

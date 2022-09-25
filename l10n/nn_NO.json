@@ -1,0 +1,19 @@
+{ "translations": {
+    "Selected" : "Selected",
+    "Help" : "Hjelp",
+    "Tags" : "Emneord",
+    "Saved" : "Lagra",
+    "Title" : "Tittel",
+    "Year" : "År",
+    "Favorited" : "Lagt til som favoritt",
+    "Favorite" : "Favoritt",
+    "Remove" : "Fjern",
+    "Favorites" : "Favorittar",
+    "Unknown" : "Ukjend",
+    "URL" : "URL",
+    "Cancel" : "Avbryt",
+    "Close" : "Lukk",
+    "Settings" : "Innstillingar",
+    "More information …" : "Meir informasjon…"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
