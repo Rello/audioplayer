@@ -802,15 +802,23 @@ i#scanAudiosFirst {
     text-align: right;
     opacity: 0;
     display: inline-block;
-
 }
 
 .songcontainer .albumwrapper li:hover span.edit-song {
     opacity: 1;
 }
 
+.albumwrapper li:hover * {
+    cursor: pointer;
+}
+
+.albumwrapper li:hover:not(.isActive) {
+    background: var(--color-background-hover);
+}
+
 .isActive {
     font-weight: bold;
+    background: var(--color-primary-light);
 }
 
 input[type=range].volume-slider {

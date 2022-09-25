@@ -808,16 +808,16 @@ i#scanAudiosFirst {
 }
 
 .albumwrapper li:hover * {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .albumwrapper li:hover:not(.isActive) {
-  background: var(--color-border);
+    background: var(--color-background-hover);
 }
 
 .isActive {
   font-weight: bold;
-  background: var(--color-border-dark);
+  background: var(--color-primary-light);
 }
 
 input[type=range].volume-slider {
