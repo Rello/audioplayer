@@ -68,7 +68,7 @@
         <div class="sm2-inline-element sm2-button-element sm2-volume" data-placement="left"
              title="<?php p($l->t('Volume')); ?>">
             <input id="playerVolume" type="range" class="sm2-button-bd sm2-inline-button volume-slider" min="0" max="1"
-                   step="0.1" value="1">
+                   step="0.02" value="1">
         </div>
 
         <div class="sm2-inline-element sm2-button-element sm2-repeat" style="left: 7px;" data-placement="left"
