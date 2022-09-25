@@ -131,7 +131,7 @@ OCA.Audioplayer.Player = {
                 .catch(error => {
                     OCA.Audioplayer.Player.stop();
                     document.getElementById('playerPlay').classList.replace('icon-loading','icon-loading');
-                    document.getElementById('playerPlay').classList.replace('APplay-pause','play');
+                    //document.getElementById('playerPlay').classList.replace('APplay-pause','play');
                 });
         }
 
@@ -157,7 +157,7 @@ OCA.Audioplayer.Player = {
                     });
                 }
             } else {
-                addCss = 'background-image:url(' + coverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+                addCss = 'background-image:url(' + coverUrl + coverID + ');height: 180px;';
                 addDescr = '';
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
