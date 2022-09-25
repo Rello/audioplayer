@@ -1,10 +1,14 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.3.01 - 2022-09-27
+## 3.3.1 - 2022-09-27
 ### Fixed
 - Dashboard cover not showing
 - NC25 support
+
+### Changed
+- allow more loudness gradations #574 @[sleif](https://github.com/sleif)
+- Added highlighting Hover/Current playing track @[yaroslav4167](https://github.com/yaroslav4167)
 
 ## 3.3.0 - 2022-03-29
 ### Changed
