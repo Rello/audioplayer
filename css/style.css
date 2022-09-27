@@ -537,8 +537,10 @@ i#scanAudiosFirst {
 }
 
 #app-content {
+    /* remove for NC25
     padding-left: 0;
     overflow: hidden;
+     */
 }
 
 .no-songs-found {
@@ -750,21 +752,17 @@ i#scanAudiosFirst {
 
 .songcontainer .songlist {
     position: relative;
-    float: left;
+    /*float: left;*/
     padding-left: 20px;
     display: block;
 }
 
 .two-column {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
     column-count: 2;
     width: 65%;
 }
 
 .one-column {
-    -webkit-column-count: 1;
-    -moz-column-count: 1;
     column-count: 1;
     width: 55%;
 }
@@ -794,9 +792,8 @@ i#scanAudiosFirst {
 }
 
 .songcontainer .albumwrapper li span.edit-song {
-    float: left;
+    float: right;
     position: relative;
-    right: 0;
     width: 30px;
     height: 20px;
     text-align: right;

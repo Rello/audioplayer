@@ -548,6 +548,7 @@ OCA.Audioplayer.UI = {
         spanAction.appendChild(iAction);
 
         let streamUrl = document.createElement('a');
+        streamUrl.hidden = true;
         streamUrl.setAttribute('type', elem['mim']);
         if (elem['mim'] === 'audio/mpegurl' || elem['mim'] === 'audio/x-scpls' || elem['mim'] === 'application/xspf+xml') {
             streamUrl.setAttribute('href', elem['lin']);

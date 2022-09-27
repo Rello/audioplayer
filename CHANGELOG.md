@@ -5,6 +5,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Fixed
 - Dashboard cover not showing
 - NC25 support
+- broken column layout in cover view #577
 
 ### Changed
 - allow more loudness gradations #574 @[sleif](https://github.com/sleif)
