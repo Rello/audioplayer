@@ -10,6 +10,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - allow more loudness gradations #574 @[sleif](https://github.com/sleif)
 - Added highlighting Hover/Current playing track @[yaroslav4167](https://github.com/yaroslav4167)
+- getID3 1.9.21-202207161647
 
 ## 3.3.0 - 2022-03-29
 ### Changed
