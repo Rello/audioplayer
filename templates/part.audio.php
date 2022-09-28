@@ -10,7 +10,7 @@
  */
 ?>
 <div id="sm2-bar-ui" class="sm2-bar-ui full-width">
-    <audio id="html5Audio" hidden>
+    <audio id="html5Audio" preload="auto" hidden>
     </audio>
 
     <div class="bd sm2-main-controls">

@@ -53,14 +53,14 @@ OCA.Audioplayer.Player = {
         }
         let playPromise = this.html5Audio.play();
         if (playPromise !== undefined) {
-            playPromise.then(_ => {
+            playPromise.then(function() {
                 document.getElementById('playerPlay').classList.replace('icon-loading', 'play-pause');
                 document.getElementById('sm2-bar-ui').classList.add('playing');
                 OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
-            })
-                .catch(error => {
-                    document.getElementById('playerPlay').classList.replace('icon-loading','play-pause');
-                });
+            }).catch(function(error) {
+                document.getElementById('playerPlay').classList.replace('icon-loading','play-pause');
+                OCP.Toast.error(t('audioplayer', 'Playback error'));
+            });
         }
     },
 
