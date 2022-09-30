@@ -261,9 +261,6 @@ OCA.Audioplayer.Sidebar = {
         var html = '<div style="margin-left: 2em; background-position: initial;" class="icon-info">';
         html += '<p style="margin-left: 2em;">' + t('audioplayer', 'Available Audio Player Add-Ons:') + '</p>';
         html += '<p style="margin-left: 2em;"><br></p>';
-        html += '<a href="https://github.com/rello/audioplayer_editor"  target="_blank" >';
-        html += '<p style="margin-left: 2em;">- ' + t('audioplayer', 'ID3 editor') + '</p>';
-        html += '</a>';
         html += '<a href="https://github.com/rello/audioplayer_sonos"  target="_blank" >';
         html += '<p style="margin-left: 2em;">- ' + t('audioplayer', 'SONOS playback') + '</p>';
         html += '</a></div>';
