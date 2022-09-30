@@ -1,9 +1,9 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.3.1 - 2022-09-27
+## 3.3.1 - 2022-09-30
 ### Fixed
-- Dashboard cover not showing
+- Dashboard: cover not showing
 - NC25 support
 - broken column layout in cover view #577
 
