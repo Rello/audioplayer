@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Schlagworte",
     "Years" : "Jahre",
     "No data" : "Keine Daten",
+    "Playback error" : "Wiedergabefehler",
     "Saved" : "Gespeichert",
     "Select a single folder with audio files" : "Einen einzelnen Ordner mit Audiodateien auswählen",
     "Invalid path!" : "Ungültiger Pfad!",

@@ -30,6 +30,7 @@ OC.L10N.register(
     "Tags" : "Žymės",
     "Years" : "Metai",
     "No data" : "Nėra duomenų",
+    "Playback error" : "Atkūrimo klaida",
     "Saved" : "Įrašyta",
     "Invalid path!" : "Neteisingas kelias!",
     "All library entries will be deleted!" : "Visi bibliotekos įrašai bus ištrinti!",

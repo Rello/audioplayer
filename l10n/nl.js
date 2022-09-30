@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Tags",
     "Years" : "Jaren",
     "No data" : "Geen data",
+    "Playback error" : "Afspeelfout",
     "Saved" : "Opgeslagen",
     "Select a single folder with audio files" : "Selecteer een map met audiiobestanden",
     "Invalid path!" : "Ongeldig pad!",

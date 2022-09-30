@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Štítky",
     "Years" : "Let",
     "No data" : "Žádná data",
+    "Playback error" : "Chyba při přehrávání",
     "Saved" : "Uloženo",
     "Select a single folder with audio files" : "Vyberte jednu složku, obsahující zvukové soubory",
     "Invalid path!" : "Neplatný popis umístění!",

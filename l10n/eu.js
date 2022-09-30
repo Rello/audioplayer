@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Etiketak",
     "Years" : "Urteak",
     "No data" : "Daturik ez",
+    "Playback error" : "Erreprodukzio errorea",
     "Saved" : "Gordeta",
     "Select a single folder with audio files" : "Hautatu audioak dauzkan karpeta bakarra",
     "Invalid path!" : "Bide-izen baliogabea!",

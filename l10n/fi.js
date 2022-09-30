@@ -34,6 +34,7 @@ OC.L10N.register(
     "Tags" : "Tunnisteet",
     "Years" : "Vuodet",
     "No data" : "Ei tietoa",
+    "Playback error" : "Toistovirhe",
     "Saved" : "Tallennettu",
     "Select a single folder with audio files" : "Valitse yksittäinen äänitiedostoja sisältävä kansio",
     "Invalid path!" : "Virheellinen polku!",
