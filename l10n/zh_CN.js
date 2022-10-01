@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "删除",
     "No playlist entry" : "无播放列表项",
     "Available Audio Player Add-Ons:" : "可用的音频播放器附加组件：",
-    "ID3 editor" : "ID3 编辑器",
     "SONOS playback" : "SONOS 播放",
     "All Titles" : "所有标题",
     "Favorites" : "收藏",

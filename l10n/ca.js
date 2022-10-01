@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "Elimina",
     "No playlist entry" : "Cap entrada a la llista de reproducció",
     "Available Audio Player Add-Ons:" : "Complements de l'Audio Player disponibles:",
-    "ID3 editor" : "Editor ID3",
     "SONOS playback" : "Reproducció SONOS",
     "All Titles" : "Tots els títols",
     "Favorites" : "Preferits",

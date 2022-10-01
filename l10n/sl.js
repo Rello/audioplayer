@@ -61,7 +61,6 @@ OC.L10N.register(
     "Remove" : "Odstrani",
     "No playlist entry" : "Ni vpisov v seznamu predvajanja",
     "Available Audio Player Add-Ons:" : "Razpoložljive razširitve predvajalnika:",
-    "ID3 editor" : "Urejevalnik ID3",
     "SONOS playback" : "Predvajanje SONOS",
     "All Titles" : "Vsi naslovi",
     "Favorites" : "Priljubljeno",

@@ -65,7 +65,6 @@ OC.L10N.register(
     "Remove" : "移除",
     "No playlist entry" : "無播放清單項目",
     "Available Audio Player Add-Ons:" : "可用的音訊播放器附加元件：",
-    "ID3 editor" : "ID3 編輯器",
     "SONOS playback" : "SONOS 播放",
     "All Titles" : "所有標題",
     "Favorites" : "最愛",

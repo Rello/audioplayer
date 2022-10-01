@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "Eltávolítás",
     "No playlist entry" : "Nincs lejátszásilista-bejegyzés",
     "Available Audio Player Add-Ons:" : "Elérhető zenelejátszó-kiegészítők:",
-    "ID3 editor" : "ID3 szerkesztő",
     "SONOS playback" : "SONOS lejátszás",
     "All Titles" : "Összes cím",
     "Favorites" : "Kedvencek",

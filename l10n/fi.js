@@ -62,7 +62,6 @@ OC.L10N.register(
     "Favorite" : "Suosikki",
     "Remove" : "Poista",
     "Available Audio Player Add-Ons:" : "Saatavilla olevat äänisoittimen lisäosat:",
-    "ID3 editor" : "ID3-muokkain",
     "SONOS playback" : "SONOS-toisto",
     "All Titles" : "Kaikki nimekkeet",
     "Favorites" : "Suosikit",

@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "Fjern",
     "No playlist entry" : "Ingen post i spilleliste",
     "Available Audio Player Add-Ons:" : "Tilgængelige tilføjelser til afspiller:",
-    "ID3 editor" : "ID3-redigeringsværktøj",
     "SONOS playback" : "SONOS-afspilning",
     "All Titles" : "Alle titler",
     "Favorites" : "Favoritter",

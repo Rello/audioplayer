@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "Удалить",
     "No playlist entry" : "Нет записей в плейлисте",
     "Available Audio Player Add-Ons:" : "Доступные дополнения для Аудиоплеера:",
-    "ID3 editor" : "ID3 Редактор",
     "SONOS playback" : "Воспроизведение SONOS",
     "All Titles" : "Все названия",
     "Favorites" : "Избранное",

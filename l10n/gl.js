@@ -6,10 +6,12 @@ OC.L10N.register(
     "Help" : "Axuda",
     "New in" : "Novo en",
     "View changelog" : "Ver o rexistro de cambios",
+    "Are you sure?" : "Confirma isto?",
     "Play/Pause" : "Reproducir/pór en pausa",
     "Folders" : "Cartafoles",
     "Tags" : "Etiquetas",
     "Years" : "Anos",
+    "No data" : "Sen datos",
     "Saved" : "Gardado",
     "Title" : "Título",
     "Subtitle" : "Subtítulo",
@@ -29,6 +31,7 @@ OC.L10N.register(
     "Cancel" : "Cancelar",
     "Close" : "Pechar",
     "Settings" : "Axustes",
-    "Advanced Settings" : "Axustes avanzados"
+    "Advanced Settings" : "Axustes avanzados",
+    "More information …" : "Máis información..."
 },
 "nplurals=2; plural=(n != 1);");

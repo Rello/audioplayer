@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "Αφαίρεση",
     "No playlist entry" : "Δεν υπάρχει καταχώρηση λίστας αναπαραγωγής",
     "Available Audio Player Add-Ons:" : "Διαθέσιμα πρόσθετα αναπαραγωγέα ήχου:",
-    "ID3 editor" : "Επεξεργαστής ID3",
     "SONOS playback" : "Αναπαραγωγή σε SONOS",
     "All Titles" : "Όλοι οι τίτλοι",
     "Favorites" : "Αγαπημένα",

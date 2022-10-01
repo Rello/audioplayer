@@ -15,6 +15,7 @@ OC.L10N.register(
     "Saved" : "Збережено",
     "Title" : "Назва",
     "Year" : "рік",
+    "Track" : "Шлях",
     "Copyright" : "Права на копіюівння",
     "Metadata" : "Метадані",
     "Favorited" : "Улюблений",

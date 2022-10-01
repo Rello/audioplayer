@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "Odobrať",
     "No playlist entry" : "Žiadna položka v zozname skladieb",
     "Available Audio Player Add-Ons:" : "Dostupné doplnky audio prehrávača:",
-    "ID3 editor" : "ID3 editor",
     "SONOS playback" : "SONOS prehrávanie",
     "All Titles" : "Všetky názvy",
     "Favorites" : "Obľúbené",

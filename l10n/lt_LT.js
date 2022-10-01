@@ -53,7 +53,6 @@ OC.L10N.register(
     "Favorited" : "Pažymėtas mėgstamu",
     "Favorite" : "Mėgstamas",
     "Remove" : "Šalinti",
-    "ID3 editor" : "ID3 redaktorius",
     "SONOS playback" : "SONOS atkūrimas",
     "Favorites" : "Mėgstami",
     "Recently Added" : "Paskiausiai pridėti",

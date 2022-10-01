@@ -65,7 +65,6 @@ OC.L10N.register(
     "Remove" : "Kendu",
     "No playlist entry" : "Ez dago erreprodukzio-zerrendako sarrerarik",
     "Available Audio Player Add-Ons:" : "Audio erreproduzigailurako Add-on eskuragarriak:",
-    "ID3 editor" : "ID3 editor",
     "SONOS playback" : "SONOS playback",
     "All Titles" : "Izenburu guztiak",
     "Favorites" : "Gogokoak",

@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "Boga",
     "No playlist entry" : "Peruna intrada in sa lista de riprodutzione ",
     "Available Audio Player Add-Ons:" : "Estensiones de su riprodutore àudio disponìbiles:",
-    "ID3 editor" : "Editor ID3",
     "SONOS playback" : "Riprodutzione de SONOS",
     "All Titles" : "Totu is tìtulos",
     "Favorites" : "Preferidos",

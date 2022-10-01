@@ -64,7 +64,6 @@ OC.L10N.register(
     "Remove" : "削除",
     "No playlist entry" : "プレイリストが登録されていません",
     "Available Audio Player Add-Ons:" : "利用可能なオーディオプレーヤー アドオン:",
-    "ID3 editor" : "ID3エディター",
     "SONOS playback" : "SONOS再生",
     "All Titles" : "すべてのタイトル",
     "Favorites" : "お気に入り",
