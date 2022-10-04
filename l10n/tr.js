@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Etiketler",
     "Years" : "Yıllar",
     "No data" : "Herhangi bir veri yok",
+    "Playback error" : "Oynatma sorunu",
     "Saved" : "Kaydedildi",
     "Select a single folder with audio files" : "Ses dosyaları bulunan tek bir klasör seçin",
     "Invalid path!" : "Yol geçersiz!",
