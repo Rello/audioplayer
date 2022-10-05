@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Štítky",
     "Years" : "Roky",
     "No data" : "Žiadne dáta",
+    "Playback error" : "Chyba pri prehrávaní",
     "Saved" : "Uložené",
     "Select a single folder with audio files" : "Vyberte jeden priečinok s audio súbormi",
     "Invalid path!" : "Neplatná cesta!",
