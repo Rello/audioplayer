@@ -9,7 +9,7 @@ OC.L10N.register(
     "Are you sure?" : "Ви впевнені?",
     "Selection" : "Вибір",
     "Albums" : "Альбоми",
-    "Folders" : "Теки",
+    "Folders" : "Каталог",
     "Tags" : "Позначки",
     "No data" : "Немає даних",
     "Saved" : "Збережено",
