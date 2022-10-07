@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Ετικέτες",
     "Years" : "Έτη",
     "No data" : "Κανένα δεδομένο",
+    "Playback error" : "Σφάλμα αναπαραγωγής",
     "Saved" : "Αποθηκεύτηκε",
     "Select a single folder with audio files" : "Επιλέξτε έναν φάκελο με αρχεία ήχου",
     "Invalid path!" : "Μη έγκυρη διαδρομή!",
