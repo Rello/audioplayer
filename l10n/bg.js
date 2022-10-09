@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Етикети",
     "Years" : "Години",
     "No data" : "Без данни",
+    "Playback error" : "Грешка при възпроизвеждането",
     "Saved" : "Записано",
     "Select a single folder with audio files" : "Изберете една папка с аудио файлове",
     "Invalid path!" : "Невалиден път!",
