@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Etiquetas",
     "Years" : "Años",
     "No data" : "Sin datos",
+    "Playback error" : "Error en reproducción",
     "Saved" : "Guardado",
     "Select a single folder with audio files" : "Selecciona una carpeta con archivos de audio",
     "Invalid path!" : "¡Ruta inválida!",
