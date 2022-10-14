@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Etykiety",
     "Years" : "Lata",
     "No data" : "Brak danych",
+    "Playback error" : "Błąd odtwarzania",
     "Saved" : "Zapisano",
     "Select a single folder with audio files" : "Wybierz pojedynczy katalog z plikami audio",
     "Invalid path!" : "Niewłaściwa ścieżka!",
