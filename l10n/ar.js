@@ -13,6 +13,7 @@ OC.L10N.register(
     "Help" : "مساعدة",
     "New in" : "جديد الى",
     "View changelog" : "اعرض سجل التغييرات",
+    "Are you sure?" : "هل أنت متأكد؟",
     "Folders" : "المجلدات",
     "Tags" : "الوسوم",
     "Saved" : "تم الحفظ",
