@@ -58,7 +58,7 @@ OC.L10N.register(
     "ISRC" : "ISRC",
     "Copyright" : "Direito autoral",
     "Add-ons" : "Add-ons",
-    "Metadata" : "Metadata",
+    "Metadata" : "Metadado",
     "Reading data" : "Lendo dados",
     "Favorited" : "Marcou como Favorito",
     "Favorite" : "Favorito",
