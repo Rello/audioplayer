@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Mærker",
     "Years" : "År",
     "No data" : "Ingen data",
+    "Playback error" : "Afspilningsfejl",
     "Saved" : "Gemt",
     "Select a single folder with audio files" : "Vælg en enkelt mappe med lydfiler",
     "Invalid path!" : "Ugyldig sti!",
