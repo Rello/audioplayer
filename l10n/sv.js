@@ -10,6 +10,7 @@ OC.L10N.register(
     "Delete playlist" : "Radera spellista",
     "Play/Pause" : "Spela/paus",
     "Selection" : "Markerade",
+    "Albums" : "Album",
     "Folders" : "Mappar",
     "Tags" : "Taggar",
     "Years" : "År",
