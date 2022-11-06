@@ -4,6 +4,7 @@ OC.L10N.register(
     "Selected" : "Selected",
     "Help" : "Help",
     "View changelog" : "View changelog",
+    "Are you sure?" : "Are you sure?",
     "Folders" : "Folders",
     "Tags" : "Tags",
     "Years" : "Years",
