@@ -4,6 +4,7 @@ OC.L10N.register(
     "Selected" : "Selected",
     "Help" : "Palīdzība",
     "View changelog" : "Skatīt izmaiņu sarakstu",
+    "Albums" : "Albumi",
     "Folders" : "Mapes",
     "Tags" : "Birkas",
     "Years" : "Gadi",
