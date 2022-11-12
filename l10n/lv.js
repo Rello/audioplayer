@@ -20,6 +20,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Cancel" : "Atcelt",
     "Close" : "Aizvērt",
-    "Settings" : "Iestatījumi"
+    "Settings" : "Iestatījumi",
+    "Advanced Settings" : "Paplašināti iestatījumi"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
