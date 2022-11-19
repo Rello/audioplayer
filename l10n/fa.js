@@ -24,6 +24,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Cancel" : "لغو",
     "Close" : "بسته",
-    "Settings" : "تنظیمات"
+    "Settings" : "تنظیمات",
+    "Advanced Settings" : "تنظمیات پیش‌رفته"
 },
 "nplurals=2; plural=(n > 1);");
