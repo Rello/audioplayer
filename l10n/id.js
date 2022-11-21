@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "Bantuan",
     "New in" : "Terbaru",
     "View changelog" : "Lihat log pembaruan",
+    "Are you sure?" : "Apakah anda yakin?",
     "Folders" : "Folder-folder",
     "Tags" : "Tag",
     "Years" : "Tahun",
