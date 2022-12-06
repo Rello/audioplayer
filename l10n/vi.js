@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Selected",
     "Help" : "Trợ giúp",
+    "View changelog" : "Xem nhật ký thay đổi",
     "Are you sure?" : "Bạn chắc chắn?",
     "Folders" : "Thư mục",
     "Tags" : "Nhãn",
