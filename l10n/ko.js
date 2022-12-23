@@ -2,6 +2,7 @@ OC.L10N.register(
     "audioplayer",
     {
     "Selected" : "선택",
+    "Options" : "옵션들",
     "Help" : "도움말",
     "New in" : "새로운 것",
     "View changelog" : "변경 기록 확인",
