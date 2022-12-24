@@ -17,6 +17,7 @@ OC.L10N.register(
     "Album" : "앨범",
     "Genre" : "장르",
     "Year" : "년",
+    "Track" : "추적",
     "Length" : "길이",
     "Copyright" : "저작권",
     "Metadata" : "메타데이터",
