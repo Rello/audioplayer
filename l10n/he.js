@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "עזרה",
     "New in" : "חדש ב־",
     "View changelog" : "הצגת יומן שינויים",
+    "Are you sure?" : "האם הינך בטוח?",
     "Play/Pause" : "נגינה/השהיה",
     "Folders" : "תיקייה",
     "Tags" : "תגיות",
