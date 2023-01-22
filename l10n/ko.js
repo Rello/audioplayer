@@ -11,6 +11,7 @@ OC.L10N.register(
     "Folders" : "폴더",
     "Tags" : "태그",
     "Years" : "년",
+    "No data" : "데이터가 없음",
     "Saved" : "저장됨",
     "Title" : "제목",
     "Artist" : "음악가",

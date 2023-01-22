@@ -1,6 +1,8 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected" : "Yettwafren",
+    "Options" : "Iɣewwaṛen",
     "Help" : "Tallalt",
     "Tags" : "Tibzimin",
     "Title" : "Azwel",
