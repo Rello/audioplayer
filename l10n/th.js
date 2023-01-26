@@ -6,7 +6,7 @@ OC.L10N.register(
     "New in" : "ใหม่ใน",
     "View changelog" : "ดูบันทึกการเปลี่ยนแปลง",
     "Albums" : "อัลบั้ม",
-    "Folders" : "แฟ้มเอกสาร",
+    "Folders" : "โฟลเดอร์",
     "Tags" : "แท็ก",
     "Saved" : "บันทึกแล้ว",
     "Title" : "ชื่อเรื่อง",
