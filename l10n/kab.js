@@ -12,6 +12,7 @@ OC.L10N.register(
     "Unknown" : "Arussin",
     "Cancel" : "Sefsex",
     "Close" : "Mdel",
-    "Settings" : "Iɣewwaṛen"
+    "Settings" : "Iɣewwaṛen",
+    "Advanced Settings" : "Iɣewwaren leqqayen"
 },
 "nplurals=2; plural=(n != 1);");
