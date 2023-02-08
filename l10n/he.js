@@ -8,6 +8,7 @@ OC.L10N.register(
     "View changelog" : "הצגת יומן שינויים",
     "Are you sure?" : "האם הינך בטוח?",
     "Play/Pause" : "נגינה/השהיה",
+    "Albums" : "אלבומים",
     "Folders" : "תיקייה",
     "Tags" : "תגיות",
     "Years" : "שנים",
