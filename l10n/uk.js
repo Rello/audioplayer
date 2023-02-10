@@ -17,7 +17,7 @@ OC.L10N.register(
     "No playlist selected!" : "Не вибрано жодного плейлиста!",
     "Sort modus active" : "Режим сортування активний ",
     "Are you sure?" : "Ви впевнені?",
-    "Delete playlist" : "Видалити плейлист ",
+    "Delete playlist" : "Вилучити список програвання",
     "Playlist successfully deleted!" : "Плейлист успішно видалено! ",
     "Sort playlist" : "Сортування плейлиста ",
     "Rename playlist" : "Перейменувати плейлист ",
