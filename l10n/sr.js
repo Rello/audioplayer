@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "Помоћ",
     "New in" : "Ново у",
     "View changelog" : "Погледајте дневник измена",
+    "Are you sure?" : "Да ли сте сигурни?",
     "Folders" : "Фасцикле",
     "Tags" : "Ознаке",
     "Years" : "Година",
