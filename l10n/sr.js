@@ -7,9 +7,11 @@ OC.L10N.register(
     "New in" : "Ново у",
     "View changelog" : "Погледајте дневник измена",
     "Are you sure?" : "Да ли сте сигурни?",
+    "Selection" : "Избор",
     "Folders" : "Фасцикле",
     "Tags" : "Ознаке",
     "Years" : "Година",
+    "No data" : "Нема података",
     "Saved" : "Сачувано",
     "Title" : "Звање",
     "Artist" : "Уметник",
@@ -28,6 +30,8 @@ OC.L10N.register(
     "Cancel" : "Поништи",
     "Close" : "Затвори",
     "Settings" : "Поставке",
-    "Advanced Settings" : "Напредне поставке"
+    "Advanced Settings" : "Напредне поставке",
+    "Do you like this app?" : "Да ли вам се допада ова апликација?",
+    "More information …" : "Више информација ..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
