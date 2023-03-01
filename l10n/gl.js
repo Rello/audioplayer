@@ -8,6 +8,7 @@ OC.L10N.register(
     "View changelog" : "Ver o rexistro de cambios",
     "Are you sure?" : "Confirma isto?",
     "Play/Pause" : "Reproducir/pór en pausa",
+    "Albums" : "Álbums",
     "Folders" : "Cartafoles",
     "Tags" : "Etiquetas",
     "Years" : "Anos",
