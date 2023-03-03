@@ -8,6 +8,7 @@ OC.L10N.register(
     "View changelog" : "Погледајте дневник измена",
     "Are you sure?" : "Да ли сте сигурни?",
     "Selection" : "Избор",
+    "Albums" : "Албуми",
     "Folders" : "Фасцикле",
     "Tags" : "Ознаке",
     "Years" : "Година",
