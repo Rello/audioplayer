@@ -36,6 +36,7 @@ OC.L10N.register(
     "Settings" : "Inställningar",
     "Advanced Settings" : "Avancerade inställningar",
     "Do you like this app?" : "Gillar du den här appen?",
-    "More information …" : "Mer information …"
+    "More information …" : "Mer information …",
+    "Search for audio files in" : "Sök efter ljudfiler i"
 },
 "nplurals=2; plural=(n != 1);");
