@@ -8,7 +8,7 @@ OC.L10N.register(
     "View changelog" : "Lihat log pembaruan",
     "Are you sure?" : "Apakah Anda yakin?",
     "Albums" : "Album",
-    "Folders" : "Folder-folder",
+    "Folders" : "Folder",
     "Tags" : "Tag",
     "Years" : "Tahun",
     "Saved" : "Disimpan",
