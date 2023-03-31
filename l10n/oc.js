@@ -31,6 +31,7 @@ OC.L10N.register(
     "MIME type" : "Tipe MIME",
     "Copyright" : "Drech d'autor",
     "Metadata" : "Metadonadas",
+    "Favorited" : "Favorit",
     "Favorite" : "Favorit",
     "Remove" : "Suprimir",
     "Favorites" : "Favorits",
