@@ -13,6 +13,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Cancel" : "ຍົກເລີກ",
     "Close" : "ປິດ",
-    "Settings" : "ການຕັ້ງຄ່າ"
+    "Settings" : "ການຕັ້ງຄ່າ",
+    "Advanced Settings" : "ຕັ້ງ​ຄ່າ​ຂັ້ນ​ສູງ"
 },
 "nplurals=1; plural=0;");
