@@ -1,8 +1,6 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected" : "Selected",
-    "Help" : "Help",
     "Folders" : "Carpetes",
     "Tags" : "Etiquetes",
     "Years" : "Años",
@@ -12,11 +10,8 @@ OC.L10N.register(
     "Favorited" : "Favoritos",
     "Favorite" : "Marcar como favoritu",
     "Remove" : "Desaniciar",
-    "Favorites" : "Favorites",
     "Unknown" : "Desconozse",
-    "URL" : "Url",
     "Cancel" : "Encaboxar",
-    "Close" : "Zarrar",
-    "Settings" : "Settings"
+    "Close" : "Zarrar"
 },
 "nplurals=2; plural=(n != 1);");

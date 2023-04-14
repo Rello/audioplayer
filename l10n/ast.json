@@ -1,6 +1,4 @@
 { "translations": {
-    "Selected" : "Selected",
-    "Help" : "Help",
     "Folders" : "Carpetes",
     "Tags" : "Etiquetes",
     "Years" : "Años",
@@ -10,11 +8,8 @@
     "Favorited" : "Favoritos",
     "Favorite" : "Marcar como favoritu",
     "Remove" : "Desaniciar",
-    "Favorites" : "Favorites",
     "Unknown" : "Desconozse",
-    "URL" : "Url",
     "Cancel" : "Encaboxar",
-    "Close" : "Zarrar",
-    "Settings" : "Settings"
+    "Close" : "Zarrar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
