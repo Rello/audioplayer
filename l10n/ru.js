@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Метки",
     "Years" : "Года",
     "No data" : "Нет данных",
+    "Playback error" : "Ошибка воспроизведения",
     "Saved" : "Сохранённые",
     "Select a single folder with audio files" : "Выберите папку с аудиофайлами",
     "Invalid path!" : "Недопустимый путь.",

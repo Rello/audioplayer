@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "标签",
     "Years" : "年份",
     "No data" : "无数据",
+    "Playback error" : "播放错误",
     "Saved" : "已保存",
     "Select a single folder with audio files" : "选择有音频文件的单一文件夹",
     "Invalid path!" : "无效的路径！",
