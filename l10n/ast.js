@@ -26,6 +26,7 @@ OC.L10N.register(
     "Errors:" : "Errores:",
     "Volume" : "Volume",
     "Settings" : "Configuración",
+    "Advanced Settings" : "Configuración avanzada",
     "More information …" : "Más información…"
 },
 "nplurals=2; plural=(n != 1);");
