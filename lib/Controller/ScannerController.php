@@ -93,8 +93,14 @@ class ScannerController extends Controller
         $this->DBController = $DBController;
         $this->SettingController = $SettingController;
         $this->IDateTimeZone = $IDateTimeZone;
-        $this->eventSource = OC::$server->createEventSource();
         $this->lastUpdated = time();
+
+        // @TODO: Remove method_exists when min-version="28"
+		if (method_exists(\OC::$server, 'createEventSource')) {
+			$this->eventSource = \OC::$server->createEventSource();
+		} else {
+			$this->eventSource = \OCP\Server::get(IEventSourceFactory::class)->create();
+		}
     }
 
     /**
