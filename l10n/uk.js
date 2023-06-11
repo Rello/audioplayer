@@ -51,7 +51,7 @@ OC.L10N.register(
     "Cancel" : "Скасувати",
     "Close" : "закрити",
     "Settings" : "Налаштування",
-    "Advanced Settings" : "Додаткові налаштування",
+    "Advanced Settings" : "Розширені",
     "Do you like this app?" : "Чи вам до вподоби цей застосунок?",
     "More information …" : "Більше інформації …"
 },
