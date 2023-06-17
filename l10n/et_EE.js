@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Valitud",
     "Help" : "Abiinfo",
+    "Albums" : "Albumid",
     "Folders" : "Kaustad",
     "Tags" : "Sildid",
     "Saved" : "Salvestatud",

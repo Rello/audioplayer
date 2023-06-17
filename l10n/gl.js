@@ -33,6 +33,6 @@ OC.L10N.register(
     "Close" : "Pechar",
     "Settings" : "Axustes",
     "Advanced Settings" : "Axustes avanzados",
-    "More information …" : "Máis información..."
+    "More information …" : "Máis información…"
 },
 "nplurals=2; plural=(n != 1);");
