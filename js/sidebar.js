@@ -70,7 +70,7 @@ OCA.Audioplayer.Sidebar = {
 
                 OCA.Audioplayer.Sidebar.constructTabs();
                 $('#tabHeaderMetadata').addClass('selected');
-                OC.Apps.showAppSidebar();
+                appsidebar.classList.remove('disappear');
             }
 
             appsidebar.dataset.trackid = trackid;
@@ -141,7 +141,7 @@ OCA.Audioplayer.Sidebar = {
 
     hideSidebar: function () {
         document.getElementById('app-sidebar').dataset.trackid = '';
-        OC.Apps.hideAppSidebar();
+        document.getElementById('app-sidebar').classList.add('disappear');
         document.querySelector('.tabHeaders').innerHTML = '';
         document.querySelector('.tabsContainer').innerHTML = '';
         OCA.Audioplayer.UI.resizePlaylist();

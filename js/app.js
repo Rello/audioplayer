@@ -961,7 +961,11 @@ OCA.Audioplayer.UI = {
 
         div.appendChild(list);
         document.body.appendChild(div);
-    }
+    },
+
+    handleSettingsButton: function () {
+        document.getElementById('app-settings').classList.toggle('open');
+    },
 
 };
 
@@ -1360,6 +1364,7 @@ document.addEventListener('DOMContentLoaded', function () {
     OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist, 250);
     document.getElementById('app-content').addEventListener('appresized', OCA.Audioplayer.UI.resizePlaylist);
     document.getElementById('view-toggle').addEventListener('click', OCA.Audioplayer.UI.handleViewToggleClicked);
+    document.getElementById('appSettingsButton').addEventListener('click', OCA.Audioplayer.UI.handleSettingsButton);
 
     document.getElementById('app-navigation-toggle_alternative').addEventListener('click', function () {
         document.getElementById('newPlaylist').classList.add('ap_hidden');
