@@ -15,6 +15,7 @@
     "URL" : "URL",
     "Cancel" : "Loobu",
     "Close" : "Sulge",
-    "Settings" : "Seaded"
+    "Settings" : "Seaded",
+    "Advanced Settings" : "Täpsemad seaded"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
