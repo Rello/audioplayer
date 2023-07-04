@@ -16,6 +16,7 @@ OC.L10N.register(
     "Are you sure?" : "هل أنت متأكد؟",
     "Folders" : "المجلدات",
     "Tags" : "الوسوم",
+    "Years" : "سنوات",
     "Saved" : "تم الحفظ",
     "Title" : "العنوان",
     "Subtitle" : "عنوان فرعي",
