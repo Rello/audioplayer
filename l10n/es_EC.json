@@ -1,10 +1,18 @@
 { "translations": {
     "Selected" : "Seleccionado",
+    "Options" : "Opciones",
     "Help" : "Ayuda",
+    "New in" : "Nuevo en",
+    "View changelog" : "Ver registro de cambios",
+    "Are you sure?" : "¿Estás seguro?",
+    "Selection" : "Selección",
     "Folders" : "Carpetas",
     "Tags" : "Etiquetas",
+    "No data" : "No hay datos",
     "Saved" : "Guardado",
     "Title" : "Título",
+    "Subtitle" : "Subtítulo",
+    "Year" : "Año",
     "Copyright" : "Derechos de autor",
     "Favorited" : "Marcado como favorito",
     "Favorite" : "Hacer favorito",
@@ -14,6 +22,9 @@
     "URL" : "URL",
     "Cancel" : "Cancelar",
     "Close" : "Cerrar",
-    "Settings" : "Ajustes"
+    "Settings" : "Ajustes",
+    "Advanced Settings" : "Configuración avanzada",
+    "Do you like this app?" : "¿Te gusta esta aplicación?",
+    "More information …" : "Más información ..."
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
