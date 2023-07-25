@@ -9,6 +9,7 @@ OC.L10N.register(
     "Years" : "سال‌ها",
     "Saved" : "دخیره شد",
     "Title" : "عنوان",
+    "Subtitle" : "عنوان فرعی",
     "Artist" : "هنرمند",
     "Album" : "آلبوم",
     "Genre" : "ژانر. دسته",
