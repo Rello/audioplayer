@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "Ayuda",
     "New in" : "Nuevo en",
     "View changelog" : "Ver registro de cambios",
+    "Are you sure?" : "Está seguro?",
     "Folders" : "Carpetas",
     "Tags" : "Etiquetas",
     "Saved" : "Guardado",
