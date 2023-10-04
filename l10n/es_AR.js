@@ -7,10 +7,13 @@ OC.L10N.register(
     "New in" : "Nuevo en",
     "View changelog" : "Ver registro de cambios",
     "Are you sure?" : "Está seguro?",
+    "Selection" : "Selección",
     "Folders" : "Carpetas",
     "Tags" : "Etiquetas",
+    "No data" : "Sin datos",
     "Saved" : "Guardado",
     "Title" : "Título",
+    "Year" : "Año",
     "Copyright" : "Derechos de autor",
     "Favorited" : "Marcado como favorito",
     "Favorite" : "Favorito",
@@ -20,6 +23,9 @@ OC.L10N.register(
     "URL" : "URL",
     "Cancel" : "Cancelar",
     "Close" : "Cerrar",
-    "Settings" : "Ajustes"
+    "Settings" : "Ajustes",
+    "Advanced Settings" : "Configuración avanzada",
+    "Do you like this app?" : "¿Te gusta esta aplicación?",
+    "More information …" : "Más información ..."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
