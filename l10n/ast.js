@@ -25,6 +25,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Errors:" : "Errores:",
     "Volume" : "Volume",
+    "Cancel" : "Encaboxar",
     "Settings" : "Configuración",
     "Advanced Settings" : "Configuración avanzada",
     "More information …" : "Más información…"
