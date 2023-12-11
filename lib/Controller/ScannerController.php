@@ -37,6 +37,7 @@ use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use OCP\IDateTimeZone;
 use OCP\IEventSource;
+use OCP\IEventSourceFactory;
 
 /**
  * Controller class for main page.

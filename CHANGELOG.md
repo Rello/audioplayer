@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.5.0 - 2023-12-11
+### Fixed
+- IEventSourceFactory NC28 compatibility
+
 ## 3.4.0 - 2023-06-17
 ### Added
 - NC27
