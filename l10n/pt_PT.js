@@ -12,6 +12,7 @@ OC.L10N.register(
     "Saved" : "Guardado",
     "Title" : "Título",
     "Subtitle" : "Subtítulo ",
+    "Year" : "Year",
     "Length" : "Comprimento",
     "Copyright" : "Direitos de Autor",
     "Metadata" : "Metadados",

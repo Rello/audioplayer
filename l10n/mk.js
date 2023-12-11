@@ -20,7 +20,7 @@ OC.L10N.register(
     "Copyright" : "Авторско право",
     "Metadata" : "Метаподатоци",
     "Favorited" : "Омилени",
-    "Favorite" : "Омилен",
+    "Favorite" : "Омилени",
     "Remove" : "Отстрани ",
     "Favorites" : "Омилени",
     "Unknown" : "Непознат",

@@ -8,7 +8,9 @@ OC.L10N.register(
     "Tags" : "Sildid",
     "Saved" : "Salvestatud",
     "Title" : "Pealkiri",
+    "Year" : "Aasta",
     "Copyright" : "Autoriõigused",
+    "Metadata" : "Metaandmed",
     "Favorited" : "Lemmikud",
     "Favorite" : "Lemmik",
     "Remove" : "Eemalda",
@@ -17,6 +19,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Cancel" : "Loobu",
     "Close" : "Sulge",
-    "Settings" : "Seaded"
+    "Settings" : "Seaded",
+    "Advanced Settings" : "Täpsemad seaded"
 },
 "nplurals=2; plural=(n != 1);");

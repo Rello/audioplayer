@@ -6,7 +6,9 @@
     "Tags" : "Sildid",
     "Saved" : "Salvestatud",
     "Title" : "Pealkiri",
+    "Year" : "Aasta",
     "Copyright" : "Autoriõigused",
+    "Metadata" : "Metaandmed",
     "Favorited" : "Lemmikud",
     "Favorite" : "Lemmik",
     "Remove" : "Eemalda",
@@ -15,6 +17,7 @@
     "URL" : "URL",
     "Cancel" : "Loobu",
     "Close" : "Sulge",
-    "Settings" : "Seaded"
+    "Settings" : "Seaded",
+    "Advanced Settings" : "Täpsemad seaded"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

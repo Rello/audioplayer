@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "Hjálp",
     "New in" : "Nýtt í",
     "View changelog" : "Skoða breytingaannál",
+    "Albums" : "Albúm",
     "Folders" : "Möppur",
     "Tags" : "Merki",
     "Years" : "Ár",
