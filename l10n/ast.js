@@ -22,6 +22,7 @@ OC.L10N.register(
     "MIME type" : "Tipu MIME",
     "Add-ons" : "Complementos",
     "Metadata" : "Metadatos",
+    "Favorites" : "Favoritos",
     "URL" : "URL",
     "Errors:" : "Errores:",
     "Volume" : "Volume",
