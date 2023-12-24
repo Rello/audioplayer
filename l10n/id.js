@@ -13,6 +13,7 @@ OC.L10N.register(
     "Years" : "Tahun",
     "Saved" : "Disimpan",
     "Title" : "Judul",
+    "Year" : "Tahun",
     "Copyright" : "Hak cipta",
     "Favorited" : "Difavoritkan",
     "Favorite" : "Favorit",
