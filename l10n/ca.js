@@ -35,6 +35,7 @@ OC.L10N.register(
     "Tags" : "Etiquetes",
     "Years" : "Anys",
     "No data" : "Sense dades",
+    "Playback error" : "Error de reproducció",
     "Saved" : "Desat",
     "Select a single folder with audio files" : "Selecciona una única carpeta amb fitxers d'àudio",
     "Invalid path!" : "El camí no és vàlid!",

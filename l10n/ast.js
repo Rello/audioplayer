@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Options" : "Opciones",
     "Help" : "Ayuda",
+    "View changelog" : "Ver el rexistru de cambeos",
     "Previous track" : "Pista anterior",
     "Next track" : "Pista siguiente",
     "Selection" : "Seleición",
