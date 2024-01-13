@@ -21,6 +21,7 @@ OC.L10N.register(
     "Year" : "년",
     "Track" : "추적",
     "Length" : "길이",
+    "MIME type" : "MIME 형식",
     "Copyright" : "저작권",
     "Metadata" : "메타데이터",
     "Favorited" : "즐겨찾기에 추가됨",
