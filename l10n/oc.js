@@ -8,6 +8,7 @@ OC.L10N.register(
     "New in" : "Nòu dins",
     "View changelog" : "Veire jornal de modificacions",
     "Are you sure?" : "O volètz vertadièrament ?",
+    "Rename playlist" : "Renomenar la lista de lectura",
     "Selection" : "Seleccion",
     "Albums" : "Albums",
     "Artists" : "Artistas",
