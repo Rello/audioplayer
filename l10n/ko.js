@@ -8,6 +8,7 @@ OC.L10N.register(
     "View changelog" : "변경 기록 확인",
     "Are you sure?" : "확실합니까?",
     "Play/Pause" : "재생/일시 정지",
+    "Selection" : "선택",
     "Albums" : "앨범",
     "Folders" : "폴더",
     "Tags" : "태그",
