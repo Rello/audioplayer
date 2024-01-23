@@ -105,7 +105,7 @@ OC.L10N.register(
     "Scanner Settings" : "Ajustes de escaneado",
     "Search for audio files in" : "Buscar archivos de audio en",
     "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Este ajuste especifica en qué carpeta se buscan los archivos de audio. Al no indicar ninguna, se escanean todas las carpetas de datos.",
-    "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders." : "Para excluir una carpeta, tienes que crear un archivo llamado .noaudio dentro de ella. También es necesario crear este archivo en sus subcarpetas.",
+    "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders." : "Para excluir una carpeta, debe crear un archivo llamado .noaudio dentro de ella. También es necesario crear este archivo en las subcarpetas.",
     "Cyrillic support" : "Soporte para cirílico",
     "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Activa este ajuste si los caracteres cirílicos no se reconocen correctamente. ¡Esto hace que el indexado sea más lento!",
     "Formats supported by the browser" : "Formatos soportados por el navegador",
