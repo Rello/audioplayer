@@ -15,6 +15,7 @@ OC.L10N.register(
     "Titles" : "Títulos",
     "Tags" : "Etiquetes",
     "Years" : "Años",
+    "Saved" : "Guardóse",
     "Album" : "Álbum",
     "Genre" : "Xéneru",
     "Year" : "Añu",
