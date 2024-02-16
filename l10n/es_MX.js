@@ -6,6 +6,8 @@ OC.L10N.register(
     "Album Covers" : "Portadas de álbumes",
     "Audio Player" : "Reproductor de audio",
     "Help" : "Ayuda",
+    "New in" : "Nuevo en",
+    "View changelog" : "Ver el registro de cambios",
     "Are you sure?" : "¿Estás seguro?",
     "Selection" : "Selección",
     "Playlists" : "Listas de reproducción",
