@@ -23,6 +23,7 @@ OC.L10N.register(
     "Title" : "Título",
     "Album Artist" : "Artista del álbum",
     "Album" : "Álbum",
+    "Year" : "Año",
     "Copyright" : "Derechos de autor",
     "Favorited" : "Marcado como favorito",
     "Favorite" : "Marcar como favorito",
