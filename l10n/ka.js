@@ -5,6 +5,7 @@ OC.L10N.register(
     "Help" : "Help",
     "New in" : "New in",
     "View changelog" : "View changelog",
+    "Are you sure?" : "დარწმუნებული ხართ?",
     "Tags" : "Tags",
     "Saved" : "Saved",
     "Year" : "Year",
