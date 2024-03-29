@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Vald",
     "Options" : "Alternativ",
+    "Welcome to" : "Välkommen till",
     "Help" : "Hjälp",
     "New in" : "Ny i",
     "View changelog" : "Visa ändringslogg",

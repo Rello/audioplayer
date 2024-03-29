@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Sélectionné",
     "Options" : "Options",
-    "Album Covers" : "Pochettes d'albums",
+    "Album Covers" : "Pochettes d’albums",
     "List View" : "Affichage en liste",
     "Welcome to" : "Bienvenue dans",
     "Audio Player" : "Lecteur audio",
@@ -101,7 +101,7 @@ OC.L10N.register(
     "SONOS Playback" : "Lecture SONOS ",
     "Advanced Settings" : "Paramètres avancés",
     "Do you like this app?" : "Aimez-vous cette app ?",
-    "More information …" : "Plus d'informations…",
+    "More information …" : "Plus d’informations…",
     "Scanner Settings" : "Paramètres de scan",
     "Search for audio files in" : "Rechercher des fichiers audio dans",
     "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Ce paramètre spécifie quel dossier est analysé à la recherche de fichiers audio. Sans sélection, l'ensemble du dossier de données est analysé.",
