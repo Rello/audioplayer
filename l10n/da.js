@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Markeret",
     "Options" : "Valgmuligheder",
-    "Album Covers" : "Albumomslag",
+    "Album Covers" : "Album Covers",
     "List View" : "Listevisning",
     "Welcome to" : "Velkommen til",
     "Audio Player" : "Lydafspiller",
@@ -32,7 +32,7 @@ OC.L10N.register(
     "Folders" : "Mapper",
     "Genres" : "Genrer",
     "Titles" : "Titler",
-    "Tags" : "Mærker",
+    "Tags" : "Tags",
     "Years" : "År",
     "No data" : "Ingen data",
     "Playback error" : "Afspilningsfejl",
