@@ -4,6 +4,7 @@ OC.L10N.register(
     "Options" : "Opciones",
     "Audio Player" : "Reproductor d'audiu",
     "Help" : "Ayuda",
+    "New in" : "Novedá en",
     "View changelog" : "Ver el rexistru de cambeos",
     "No playlist selected!" : "¡Nun se seleicionó nenguna llista de reproducción!",
     "Delete playlist" : "Desaniciar la llista de reproducción",
