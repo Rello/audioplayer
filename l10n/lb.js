@@ -14,6 +14,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Cancel" : "Ofbriechen",
     "Close" : "Zoumaachen",
-    "Settings" : "Astellungen"
+    "Settings" : "Astellungen",
+    "Advanced Settings" : "Fortgeschratt astellungen"
 },
 "nplurals=2; plural=(n != 1);");
