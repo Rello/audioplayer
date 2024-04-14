@@ -29,6 +29,7 @@ OC.L10N.register(
     "Saved" : "Guardóse",
     "Invalid path!" : "¡El camín ye inválidu!",
     "Title" : "Tñitulu",
+    "Subtitle" : "Sotítulu",
     "Artist" : "Artista",
     "Album Artist" : "Artista del álbum",
     "Album" : "Álbum",
