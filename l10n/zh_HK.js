@@ -6,7 +6,7 @@ OC.L10N.register(
     "Album Covers" : "專輯封面",
     "List View" : "清單檢視",
     "Welcome to" : "歡迎來到",
-    "Audio Player" : "語音播放器",
+    "Audio Player" : "音頻播放器",
     "Add new tracks to playlist by drag and drop" : "通過拖放將新樂曲添加到音樂播放表",
     "Scan for new audio files" : "掃描新的音頻文件",
     "Add new tracks to library" : "將新樂曲添加到音樂庫",
