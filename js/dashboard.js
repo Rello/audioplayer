@@ -157,7 +157,7 @@ OCA.Audioplayer.Player = {
                     });
                 }
             } else {
-                addCss = 'background-image:url(' + coverUrl + coverID + ');height: 180px;';
+                addCss = 'background-image:url(' + coverUrl + coverID + ');height: 180px;background-size: contain;';
                 addDescr = '';
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
