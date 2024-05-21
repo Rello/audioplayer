@@ -1,6 +1,9 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Help" : "Cabhrú",
+    "New in" : "Nua isteach",
+    "View changelog" : "Féach ar loga na n-athruithe",
     "Are you sure?" : "An bhfuil tú cinnte?",
     "Saved" : "Shábháil",
     "Title" : "Teideal",
