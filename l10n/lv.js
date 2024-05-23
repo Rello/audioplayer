@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Selected",
     "Help" : "Palīdzība",
+    "New in" : "Jauns",
     "View changelog" : "Skatīt izmaiņu sarakstu",
     "Albums" : "Albumi",
     "Folders" : "Mapes",
@@ -22,6 +23,7 @@ OC.L10N.register(
     "Cancel" : "Atcelt",
     "Close" : "Aizvērt",
     "Settings" : "Iestatījumi",
-    "Advanced Settings" : "Paplašināti iestatījumi"
+    "Advanced Settings" : "Paplašināti iestatījumi",
+    "Search for audio files in" : "Meklēt skaņu datnes"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
