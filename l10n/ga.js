@@ -5,9 +5,11 @@ OC.L10N.register(
     "New in" : "Nua isteach",
     "View changelog" : "Féach ar loga na n-athruithe",
     "Are you sure?" : "An bhfuil tú cinnte?",
+    "Tags" : "Clibeanna",
     "Saved" : "Shábháil",
     "Title" : "Teideal",
     "Remove" : "Bain",
+    "URL" : "URL",
     "Cancel" : "Cealaigh",
     "Close" : "Dún",
     "Settings" : "Socruithe"
