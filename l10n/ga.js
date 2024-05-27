@@ -9,6 +9,7 @@ OC.L10N.register(
     "Saved" : "Shábháil",
     "Title" : "Teideal",
     "Remove" : "Bain",
+    "Favorites" : "Ceanáin",
     "URL" : "URL",
     "Cancel" : "Cealaigh",
     "Close" : "Dún",
