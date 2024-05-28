@@ -8,11 +8,14 @@ OC.L10N.register(
     "Tags" : "Clibeanna",
     "Saved" : "Shábháil",
     "Title" : "Teideal",
+    "Favorite" : "is fearr leat",
     "Remove" : "Bain",
     "Favorites" : "Ceanáin",
+    "Unknown" : "Anaithnid",
     "URL" : "URL",
     "Cancel" : "Cealaigh",
     "Close" : "Dún",
-    "Settings" : "Socruithe"
+    "Settings" : "Socruithe",
+    "Advanced Settings" : "Ardsocruithe"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
