@@ -8,6 +8,7 @@ OC.L10N.register(
     "Tags" : "Clibeanna",
     "Saved" : "Shábháil",
     "Title" : "Teideal",
+    "Year" : "Bliain",
     "Favorite" : "is fearr leat",
     "Remove" : "Bain",
     "Favorites" : "Ceanáin",
