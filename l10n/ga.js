@@ -5,6 +5,8 @@ OC.L10N.register(
     "New in" : "Nua isteach",
     "View changelog" : "Féach ar loga na n-athruithe",
     "Are you sure?" : "An bhfuil tú cinnte?",
+    "Albums" : "Albaim",
+    "Folders" : "Fillteáin",
     "Tags" : "Clibeanna",
     "Saved" : "Shábháil",
     "Title" : "Teideal",
