@@ -1,6 +1,8 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected" : "Roghnaithe",
+    "Options" : "Roghanna",
     "Help" : "Cabhrú",
     "New in" : "Nua isteach",
     "View changelog" : "Féach ar loga na n-athruithe",
