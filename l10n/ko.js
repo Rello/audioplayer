@@ -16,6 +16,7 @@ OC.L10N.register(
     "No data" : "데이터가 없음",
     "Saved" : "저장됨",
     "Title" : "제목",
+    "Subtitle" : "부제",
     "Artist" : "음악가",
     "Album" : "앨범",
     "Genre" : "장르",
