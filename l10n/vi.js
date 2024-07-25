@@ -6,6 +6,7 @@ OC.L10N.register(
     "New in" : "Mới trong",
     "View changelog" : "Xem nhật ký thay đổi",
     "Are you sure?" : "Bạn chắc chắn?",
+    "Selection" : "Lựa chọn",
     "Folders" : "Thư mục",
     "Tags" : "Nhãn",
     "Years" : "Năm",
