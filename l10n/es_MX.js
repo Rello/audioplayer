@@ -19,6 +19,7 @@ OC.L10N.register(
     "Titles" : "Títulos",
     "Tags" : "Etiquetas",
     "Years" : "Años",
+    "No data" : "Sin datos",
     "Saved" : "Guardado",
     "Title" : "Título",
     "Album Artist" : "Artista del álbum",
@@ -43,6 +44,8 @@ OC.L10N.register(
     "Close" : "Cerrar",
     "Settings" : "Ajustes",
     "Advanced Settings" : "Configuraciones Avanzadas",
+    "Do you like this app?" : "¿Le gusta esta aplicación?",
+    "More information …" : "Más información ...",
     "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Este ajuste especifica en qué carpeta se buscan los archivos de audio. Al no indicar ninguna, se buscan en todas las carpetas de datos."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
