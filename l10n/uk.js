@@ -48,6 +48,7 @@ OC.L10N.register(
     "Favorites" : "Із зірочкою",
     "Unknown" : "Невідомо",
     "URL" : "URL-адреса",
+    "If rescan does not solve this problem the files are broken" : "Якщо повторне сканування не вирішить цю проблему, то це означає, що файли пошкоджено",
     "Cancel" : "Скасувати",
     "Close" : "закрити",
     "Settings" : "Налаштування",
