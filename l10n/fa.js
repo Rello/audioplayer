@@ -10,7 +10,7 @@ OC.L10N.register(
     "Add new tracks to playlist by drag and drop" : "آهنگ های جدید را با کشیدن و رها کردن به لیست پخش اضافه کنید",
     "Scan for new audio files" : "فایل های صوتی جدید را اسکن کنید",
     "Add new tracks to library" : "اضافه کردن آهنگ های جدید به پلی لیست",
-    "Help" : "راه‌نما",
+    "Help" : "راهنما",
     "New in" : "جدید در",
     "View changelog" : "مشاهده تغییرات",
     "New or updated audio files available" : "فایل های صوتی جدید یا به روز شده موجود است",
