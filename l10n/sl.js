@@ -98,6 +98,7 @@ OC.L10N.register(
     "Scanner Settings" : "Nastavitve iskalnika",
     "Search for audio files in" : "Poišči zvočne datoteke v",
     "Cyrillic support" : "Podpora za cirilico",
+    "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Možnost razrešuje nastavitve, kadar znaki cirilice niso prikazani pravilno. Indeksiranje je posledično počasnejše.",
     "Formats supported by the browser" : "Zapisi, podprti v brskalniku",
     "Formats not supported by the browser" : "Zapisi, ki niso podprti v brskalniku"
 },
