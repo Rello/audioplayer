@@ -39,7 +39,7 @@ OC.L10N.register(
     "Select a single folder with audio files" : "Seletziona una cartella sola cun archìvios àudio",
     "Invalid path!" : "Percursu non bàlidu!",
     "All library entries will be deleted!" : "Totu is intradas de sa libreria s'ant a cantzellare!",
-    "Reset library" : "Torra a impostare sa libreria",
+    "Reset library" : "Ripristina sa libreria",
     "Resetting finished!" : "Re-cunfiguratzione agabbada.",
     "Title" : "Tìtulu",
     "Subtitle" : "Sutatìtulos",
