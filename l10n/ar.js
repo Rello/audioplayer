@@ -93,7 +93,7 @@ OC.L10N.register(
     "Start scanning …" : "بدءُ الفحص ...",
     "Cancel" : "إلغاء",
     "Close" : "إغلاق",
-    "Create new playlist" : "أنشِيء قائمة تشغيل جديدة",
+    "Create new playlist" : "إنشاء قائمة تشغيل جديدة",
     "Repeat playlist" : "كرّر قائمة التشغيل",
     "Volume up" : "إرفَع الصوت",
     "Volume down" : "أَخفِض الصوت",
