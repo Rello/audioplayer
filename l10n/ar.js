@@ -49,7 +49,7 @@ OC.L10N.register(
     "Composer" : "المُلحّن",
     "Album" : "الألبوم",
     "Genre" : "الأسلوب",
-    "Year" : "السَّنة",
+    "Year" : "السنة",
     "Disc" : "الديسك",
     "Track" : "التراك track",
     "Length" : "الطول",
