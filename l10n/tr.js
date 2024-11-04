@@ -15,7 +15,7 @@ OC.L10N.register(
     "View changelog" : "Değişiklik günlüğünü görüntüle",
     "New or updated audio files available" : "Yeni ya da güncellenmiş ses dosyaları var",
     "No playlist selected!" : "Herhangi bir oynatma listesi seçilmemiş!",
-    "Sort modus active" : "Sıralama kipi etkin",
+    "Sort modus active" : "Sıralama kipi kullanılıyor",
     "Are you sure?" : "Emin misiniz?",
     "Delete playlist" : "Oynatma listesini sil",
     "Playlist successfully deleted!" : "Oynatma listesi silindi!",
@@ -107,7 +107,7 @@ OC.L10N.register(
     "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Bu ayar, ses dosyaları için taranacak klasörü belirtir. Seçim yapılmazsa tüm veri klasörü taranır.",
     "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders." : "Bir klasörün katılmamasını istiyorsanız o klasörün içinde bir .noaudio dosyası oluşturun. Alt klasörler için de bunun yapılması gerekir.",
     "Cyrillic support" : "Kiril desteği",
-    "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Kiril alfabesindeki karakterler doğru tanınmıyorsa bu seçeneği etkinleştirin. Bu seçenek etkinleştirildiğinde, dizine ekleme işlemi yavaşlar!",
+    "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Kiril alfabesindeki karakterler doğru tanınmıyorsa bu seçeneği kullanıma alın. Bu seçenek kullanıma alındığında, dizine ekleme işlemi yavaşlar!",
     "Formats supported by the browser" : "Tarayıcı tarafından desteklenen biçimler",
     "Formats not supported by the browser" : "Tarayıcı tarafından desteklenmeyen biçimler"
 },
