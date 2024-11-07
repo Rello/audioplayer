@@ -1,13 +1,7 @@
 {
 	"require": {
-		"php": ">=7.4.0",
+		"php": ">=8.0.0",
 		"ext-curl": "*",
 		"ext-json": "*"
-	},
-	"require-dev": {
-		"christophwurst/nextcloud": "^v22.0.0-RC1",
-		"symfony/symfony": "^4.4.19",
-		"guzzlehttp/guzzle": "^6.3.0",
-		"friendsofphp/php-cs-fixer": "^2.16"
 	}
 }
