@@ -5,6 +5,7 @@ OC.L10N.register(
     "Help" : "Palīdzība",
     "New in" : "Jauns",
     "View changelog" : "Skatīt izmaiņu sarakstu",
+    "Are you sure?" : "Vai tiešām?",
     "Albums" : "Albumi",
     "Folders" : "Mapes",
     "Tags" : "Birkas",
