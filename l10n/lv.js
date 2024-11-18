@@ -12,6 +12,7 @@ OC.L10N.register(
     "Years" : "Gadi",
     "Saved" : "Saglabāts",
     "Title" : "Amats",
+    "Subtitle" : "Apakšvirsraksts",
     "Year" : "Gads",
     "Copyright" : "Autortiesības",
     "Metadata" : "Metadati",
