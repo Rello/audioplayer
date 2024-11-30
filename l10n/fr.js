@@ -4,7 +4,7 @@ OC.L10N.register(
     "Selected" : "Sélectionné",
     "Options" : "Options",
     "Album Covers" : "Pochettes d’albums",
-    "List View" : "Affichage en liste",
+    "List View" : "Vue en liste",
     "Welcome to" : "Bienvenue dans",
     "Audio Player" : "Lecteur audio",
     "Add new tracks to playlist by drag and drop" : "Ajouter de nouvelles pistes à la liste de lecture par glisser-déposer",
