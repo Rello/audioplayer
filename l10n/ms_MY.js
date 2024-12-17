@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Selected" : "Selected",
     "Help" : "Bantuan",
+    "Are you sure?" : "Anda pasti?",
+    "Saved" : "Disimpan",
     "Title" : "Judul",
     "Remove" : "Buang",
     "Favorites" : "Favorites",
