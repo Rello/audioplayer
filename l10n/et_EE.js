@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Valitud",
     "Help" : "Abiinfo",
+    "Are you sure?" : "Kas oled kindel?",
     "Albums" : "Albumid",
     "Folders" : "Kaustad",
     "Tags" : "Sildid",

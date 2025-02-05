@@ -1,6 +1,7 @@
 { "translations": {
     "Selected" : "Valitud",
     "Help" : "Abiinfo",
+    "Are you sure?" : "Kas oled kindel?",
     "Albums" : "Albumid",
     "Folders" : "Kaustad",
     "Tags" : "Sildid",
