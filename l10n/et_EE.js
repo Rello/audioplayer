@@ -2,6 +2,7 @@ OC.L10N.register(
     "audioplayer",
     {
     "Selected" : "Valitud",
+    "Options" : "Sätted",
     "Help" : "Abiinfo",
     "Are you sure?" : "Kas oled kindel?",
     "Albums" : "Albumid",
