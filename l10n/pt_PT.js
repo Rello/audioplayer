@@ -1,7 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected" : "Seleccionado",
+    "Selected" : "Selecionado",
     "Options" : "Opções",
     "Help" : "Ajuda",
     "New in" : "Novo em",
