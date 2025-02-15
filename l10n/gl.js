@@ -46,7 +46,7 @@ OC.L10N.register(
     "Subtitle" : "Subtítulo",
     "Artist" : "Artista",
     "Album Artist" : "Artista do álbum",
-    "Composer" : "Compositor",
+    "Composer" : "Xanela de redacción",
     "Album" : "Álbum",
     "Genre" : "Xénero",
     "Year" : "Ano",
