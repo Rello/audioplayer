@@ -4,6 +4,7 @@ OC.L10N.register(
     "Help" : "Help",
     "Tags" : "Tags",
     "Saved" : "Saved",
+    "Year" : "Yil",
     "Favorited" : "Favorited",
     "Favorite" : "Favorite",
     "Remove" : "Remove",
