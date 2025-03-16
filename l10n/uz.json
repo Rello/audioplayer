@@ -1,8 +1,11 @@
 { "translations": {
+    "Options" : "Variantlar",
     "Help" : "Help",
     "New in" : "Yangi kiritish",
     "View changelog" : "O'zgarishlar jurnalini ko'rish",
+    "Are you sure?" : "Ishonchingiz komilmi?",
     "Tags" : "Tags",
+    "No data" : "Maʼlumot yoʻq",
     "Saved" : "Saved",
     "Year" : "Yil",
     "Favorited" : "Favorited",
@@ -12,6 +15,8 @@
     "Unknown" : "Unknown",
     "Cancel" : "Cancel",
     "Close" : "Close",
-    "Settings" : "Settings"
+    "Settings" : "Settings",
+    "Do you like this app?" : "Bu ilova sizga yoqdimi?",
+    "More information …" : "Batafsil ma'lumot…"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
