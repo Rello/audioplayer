@@ -4,9 +4,11 @@
     "New in" : "Yangi kiritish",
     "View changelog" : "O'zgarishlar jurnalini ko'rish",
     "Are you sure?" : "Ishonchingiz komilmi?",
+    "Selection" : "Tanlash",
     "Tags" : "Tags",
     "No data" : "Maʼlumot yoʻq",
     "Saved" : "Saved",
+    "Title" : "Sarlavha",
     "Year" : "Yil",
     "Favorited" : "Favorited",
     "Favorite" : "Favorite",
@@ -16,6 +18,7 @@
     "Cancel" : "Cancel",
     "Close" : "Close",
     "Settings" : "Settings",
+    "Advanced Settings" : "Kengaytirilgan sozlamalar",
     "Do you like this app?" : "Bu ilova sizga yoqdimi?",
     "More information …" : "Batafsil ma'lumot…"
 },"pluralForm" :"nplurals=1; plural=0;"
