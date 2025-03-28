@@ -4,6 +4,7 @@ OC.L10N.register(
     "Selected" : "Valitud",
     "Options" : "Sätted",
     "Help" : "Abiinfo",
+    "New in" : "Mida in uut",
     "View changelog" : "Vaata muudatuste logi",
     "Are you sure?" : "Kas oled kindel?",
     "Selection" : "Valik",
