@@ -9,6 +9,7 @@ OC.L10N.register(
     "Years" : "Bloaz",
     "Saved" : "Enrollet",
     "Title" : "Titl",
+    "Copyright" : "Copyright",
     "Favorited" : "Lakaet evel pennroll",
     "Favorite" : "Pennrollañ",
     "Remove" : "Lemel",
