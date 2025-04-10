@@ -16,7 +16,7 @@ OC.L10N.register(
     "Favorites" : "Pennrolloù",
     "Unknown" : "Dianv",
     "URL" : "URL",
-    "Cancel" : "Arrest",
+    "Cancel" : "Nullañ",
     "Close" : "Seriñ",
     "Settings" : "Arventennoù",
     "Advanced Settings" : "Arventennoù araokaet"
