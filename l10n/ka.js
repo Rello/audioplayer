@@ -19,6 +19,8 @@ OC.L10N.register(
     "Cancel" : "Cancel",
     "Close" : "Close",
     "Settings" : "Settings",
-    "Advanced Settings" : "Advanced Settings"
+    "Advanced Settings" : "Advanced Settings",
+    "Do you like this app?" : "მოგწონთ ეს აპლიკაცია?",
+    "More information …" : "მეტი ინფორმაცია ..."
 },
 "nplurals=2; plural=(n!=1);");
