@@ -27,7 +27,7 @@ OC.L10N.register(
     "Folders" : "Aplankai",
     "Genres" : "Žanrai",
     "Titles" : "Pavadinimai",
-    "Tags" : "Žymės",
+    "Tags" : "Žymos",
     "Years" : "Metai",
     "No data" : "Nėra duomenų",
     "Playback error" : "Atkūrimo klaida",
