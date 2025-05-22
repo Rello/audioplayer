@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Seleccionado",
     "Help" : "Ayuda",
+    "Are you sure?" : "Are you sure?",
     "Folders" : "Carpetas",
     "Tags" : "Etiquetas",
     "Saved" : "Guardado",
