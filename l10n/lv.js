@@ -1,7 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected" : "Selected",
+    "Selected" : "Atlasītās",
     "Help" : "Palīdzība",
     "New in" : "Jauns",
     "View changelog" : "Skatīt izmaiņu sarakstu",
