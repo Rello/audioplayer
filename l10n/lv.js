@@ -6,6 +6,7 @@ OC.L10N.register(
     "New in" : "Jauns",
     "View changelog" : "Skatīt izmaiņu sarakstu",
     "Are you sure?" : "Vai tiešām?",
+    "Rename playlist" : "Pārdēvēt atskaņošanas sarakstu",
     "Albums" : "Albumi",
     "Folders" : "Mapes",
     "Tags" : "Birkas",
