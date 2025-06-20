@@ -2,6 +2,8 @@ OC.L10N.register(
     "audioplayer",
     {
     "Options" : "Chaguzi",
+    "Help" : "Msaada",
+    "New in" : "Mpya katika",
     "Selection" : "Machaguo",
     "Folders" : "Visanduku",
     "Tags" : "Maoni",
