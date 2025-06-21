@@ -4,6 +4,8 @@ OC.L10N.register(
     "Options" : "Chaguzi",
     "Help" : "Msaada",
     "New in" : "Mpya katika",
+    "View changelog" : "View changelog",
+    "Are you sure?" : "Una uhakika?",
     "Selection" : "Machaguo",
     "Folders" : "Visanduku",
     "Tags" : "Maoni",
