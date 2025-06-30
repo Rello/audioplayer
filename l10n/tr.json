@@ -105,7 +105,7 @@
     "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Bu ayar, ses dosyaları için taranacak klasörü belirtir. Seçim yapılmazsa tüm veri klasörü taranır.",
     "To exclude a folder, you have to create a .noaudio file inside that folder. This is also necessary in subfolders." : "Bir klasörün katılmamasını istiyorsanız o klasörün içinde bir .noaudio dosyası oluşturun. Alt klasörler için de bunun yapılması gerekir.",
     "Cyrillic support" : "Kiril desteği",
-    "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Kiril alfabesindeki karakterler doğru tanınmıyorsa bu seçeneği etkinleştirin. Bu seçenek etkinse, dizine ekleme işlemi yavaşlar!",
+    "Activate this setting if cyrillic characters are not recognized correctly. This makes the indexing slower!" : "Kiril alfabesindeki karakterler doğru tanınmıyorsa bu seçeneği açın. Bu seçenek açıldığında, dizine ekleme işlemi yavaşlar!",
     "Formats supported by the browser" : "Tarayıcı tarafından desteklenen biçimler",
     "Formats not supported by the browser" : "Tarayıcı tarafından desteklenmeyen biçimler"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
