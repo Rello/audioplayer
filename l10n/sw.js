@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected" : "Iliyochaguliwa",
     "Options" : "Chaguzi",
     "Help" : "Msaada",
     "New in" : "Mpya katika",
@@ -13,6 +14,7 @@ OC.L10N.register(
     "Title" : "Kichwa cha habari",
     "Year" : "Mwaka",
     "Favorite" : "Kipendwa",
+    "Remove" : "Ondoa",
     "Favorites" : "Vipendwa",
     "Unknown" : "Haijulikani",
     "URL" : "Url",

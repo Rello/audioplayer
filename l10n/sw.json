@@ -1,4 +1,5 @@
 { "translations": {
+    "Selected" : "Iliyochaguliwa",
     "Options" : "Chaguzi",
     "Help" : "Msaada",
     "New in" : "Mpya katika",
@@ -11,6 +12,7 @@
     "Title" : "Kichwa cha habari",
     "Year" : "Mwaka",
     "Favorite" : "Kipendwa",
+    "Remove" : "Ondoa",
     "Favorites" : "Vipendwa",
     "Unknown" : "Haijulikani",
     "URL" : "Url",
