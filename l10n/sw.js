@@ -11,6 +11,7 @@ OC.L10N.register(
     "Albums" : "Albamu",
     "Folders" : "Visanduku",
     "Tags" : "Maoni",
+    "Saved" : "Imehifadhiwa",
     "Title" : "Kichwa cha habari",
     "Year" : "Mwaka",
     "Favorite" : "Kipendwa",
