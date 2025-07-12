@@ -59,7 +59,7 @@ class MusicService
         return new AudioStream($filenameAudio, $fileOwner);
     }
 
-    public function createAudioStream(string $file, ?string $t): AudioStream
+    public function createAudioStream(?string $file, ?string $t): AudioStream
     {
         if ($t) {
             $fileId = $this->mapper->getFileId($this->userId, (int)$t);

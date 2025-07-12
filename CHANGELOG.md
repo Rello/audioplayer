@@ -1,12 +1,19 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.4.1 - 2023-12-11
-### Fixed
-- IEventSourceFactory NC28 compatibility
+## 3.5.0 - in progress
+### Added
+
 ### Changed
 - refactored MusicController into service and mapper
 - migrated MusicMapper to use QueryBuilder
+
+### Fixed
+
+
+## 3.4.1 - 2023-12-11
+### Fixed
+- IEventSourceFactory NC28 compatibility
 
 ## 3.4.0 - 2023-06-17
 ### Added
