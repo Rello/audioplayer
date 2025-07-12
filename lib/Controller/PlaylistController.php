@@ -18,6 +18,8 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDBConnection;
+use OCA\audioplayer\Service\PlaylistService;
+use OCA\audioplayer\DB\PlaylistMapper;
 
 /**
  * Controller class for main page.
@@ -27,7 +29,7 @@ class PlaylistController extends Controller
 
     private $userId;
     private $l10n;
-    private $db;
+    private $service;
 
     public function __construct(
         $appName,
@@ -40,7 +42,8 @@ class PlaylistController extends Controller
         parent::__construct($appName, $request);
         $this->userId = $userId;
         $this->l10n = $l10n;
-        $this->db = $db;
+        $mapper = new PlaylistMapper($db);
+        $this->service = new PlaylistService($userId, $mapper);
     }
 
     /**
@@ -51,7 +54,7 @@ class PlaylistController extends Controller
     public function addPlaylist($playlist)
     {
         if ($playlist !== '') {
-            $aResult = $this->writePlaylistToDB($playlist);
+            $aResult = $this->service->addPlaylist($playlist);
             if ($aResult['msg'] === 'new') {
                 $result = [
                     'status' => 'success',
@@ -69,25 +72,6 @@ class PlaylistController extends Controller
         }
     }
 
-    /**
-     * @param $sName
-     * @return array
-     */
-    private function writePlaylistToDB($sName)
-    {
-        $stmt = $this->db->prepare('SELECT `id` FROM `*PREFIX*audioplayer_playlists` WHERE `user_id` = ? AND `name` = ?');
-        $stmt->execute(array($this->userId, $sName));
-        $row = $stmt->fetch();
-        if ($row) {
-            $result = ['msg' => 'exist', 'id' => $row['id']];
-        } else {
-            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_playlists` (`user_id`,`name`) VALUES(?,?)');
-            $stmt->execute(array($this->userId, $sName));
-            $insertid = $this->db->lastInsertId('*PREFIX*audioplayer_playlists');
-            $result = ['msg' => 'new', 'id' => $insertid];
-        }
-        return $result;
-    }
 
     /**
      * @NoAdminRequired
@@ -99,7 +83,7 @@ class PlaylistController extends Controller
     public function updatePlaylist($plId, $newname)
     {
 
-        if ($this->updatePlaylistToDB($plId, $newname)) {
+        if ($this->service->updatePlaylist($plId, $newname)) {
             $params = [
                 'status' => 'success',
             ];
@@ -112,12 +96,6 @@ class PlaylistController extends Controller
         return new JSONResponse($params);
     }
 
-    private function updatePlaylistToDB($id, $sName)
-    {
-        $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_playlists` SET `name` = ? WHERE `user_id`= ? AND `id`= ?');
-        $stmt->execute(array($sName, $this->userId, $id));
-        return true;
-    }
 
     /**
      * @NoAdminRequired
@@ -128,16 +106,7 @@ class PlaylistController extends Controller
      */
     public function addTrackToPlaylist($playlistid, $songid, $sorting)
     {
-        $stmt = $this->db->prepare('SELECT COUNT(*) AS tracks FROM `*PREFIX*audioplayer_playlist_tracks` WHERE `playlist_id` = ? AND `track_id` = ?');
-        $stmt->execute(array($playlistid, $songid));
-        $row = $stmt->fetch();
-        if ($row['tracks']) {
-            return false;
-        } else {
-            $stmt = $this->db->prepare('INSERT INTO `*PREFIX*audioplayer_playlist_tracks` (`playlist_id`,`track_id`,`sortorder`) VALUES(?,?,?)');
-            $stmt->execute(array($playlistid, $songid, (int)$sorting));
-            return true;
-        }
+        return $this->service->addTrackToPlaylist((int)$playlistid, (int)$songid, (int)$sorting);
     }
 
     /**
@@ -149,12 +118,7 @@ class PlaylistController extends Controller
     public function sortPlaylist($playlistid, $songids)
     {
         $iTrackIds = explode(';', $songids);
-        $counter = 1;
-        foreach ($iTrackIds as $trackId) {
-            $stmt = $this->db->prepare('UPDATE `*PREFIX*audioplayer_playlist_tracks` SET `sortorder` = ? WHERE `playlist_id` = ? AND `track_id` = ?');
-            $stmt->execute(array($counter, $playlistid, $trackId));
-            $counter++;
-        }
+        $this->service->sortPlaylist((int)$playlistid, $iTrackIds);
         $result = [
             'status' => 'success',
             'msg' => (string)$this->l10n->t('Sorting Playlist success! Playlist reloaded!')
@@ -170,15 +134,7 @@ class PlaylistController extends Controller
      */
     public function removeTrackFromPlaylist($playlistid, $trackid)
     {
-        try {
-            $sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
-                . 'WHERE `playlist_id` = ? AND `track_id` = ?';
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($playlistid, $trackid));
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
+        return $this->service->removeTrackFromPlaylist((int)$playlistid, (int)$trackid);
     }
 
     /**
@@ -188,17 +144,7 @@ class PlaylistController extends Controller
      */
     public function removePlaylist($playlistid)
     {
-        try {
-            $sql = 'DELETE FROM `*PREFIX*audioplayer_playlists` '
-                . 'WHERE `id` = ? AND `user_id` = ?';
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($playlistid, $this->userId));
-
-            $sql = 'DELETE FROM `*PREFIX*audioplayer_playlist_tracks` '
-                . 'WHERE `playlist_id` = ?';
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($playlistid));
-        } catch (\Exception $e) {
+        if (!$this->service->removePlaylist((int)$playlistid)) {
             return false;
         }
 
