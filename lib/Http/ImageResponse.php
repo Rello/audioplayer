@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Audio Player
  *
@@ -14,6 +15,7 @@ namespace OCA\audioplayer\Http;
 
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Http;
+use OC_Image;
 
 /**
  * A renderer for cover arts
@@ -21,19 +23,25 @@ use OCP\AppFramework\Http;
 class ImageResponse extends Response
 {
 
-    private $preview;
+    /** @var OC_Image|string */
+    private OC_Image|string $preview;
 
     /**
      * @param array $image image meta data
      * @param int $statusCode the Http status code, defaults to 200
      */
-    public function __construct(array $image, $statusCode = Http::STATUS_OK)
+    public function __construct(array $image, int $statusCode = Http::STATUS_OK)
     {
-        $this->preview = $image['content'];
+        $this->preview = $image['content'] ?? '';
+        $mimetype = $image['mimetype'] ?? 'application/octet-stream';
+
         $this->setStatus($statusCode);
-        $this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');
+        $this->addHeader('Content-Type', $mimetype);
+        if (!($this->preview instanceof OC_Image)) {
+            $this->addHeader('Content-Length', (string)strlen($this->preview));
+        }
         $this->cacheFor(365 * 24 * 60 * 60);
-        $etag = md5($image['content']);
+        $etag = sha1(is_string($this->preview) ? $this->preview : $this->preview->data());
         $this->setETag($etag);
     }
 
@@ -44,10 +52,13 @@ class ImageResponse extends Response
      */
     public function render()
     {
-        if ($this->preview instanceof \OC_Image) {
-            return $this->preview->data();
-        } else {
-            return $this->preview;
+        if ($this->preview === '' || $this->preview === null) {
+            return '';
         }
+        if ($this->preview instanceof OC_Image) {
+            return $this->preview->data();
+        }
+
+        return $this->preview;
     }
 }

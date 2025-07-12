@@ -1,13 +1,21 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.4.3 - 2025-07-13
+## 3.5.0 - in progress
+### Added
+
 ### Changed
+- refactored MusicController into service and mapper
+- migrated MusicMapper to use QueryBuilder
+- mprove cover image response performance and stability
 - refactor cover retrieval logic
 
-## 3.4.2 - 2025-07-12
+
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
+### Changed
+- Refactor SettingController to use service and mapper
+
 
 ## 3.4.1 - 2023-12-11
 ### Fixed
