@@ -8,6 +8,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - refactored MusicController into service and mapper
 - migrated MusicMapper to use QueryBuilder
 - mprove cover image response performance and stability
+- refactor cover retrieval logic
+
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
