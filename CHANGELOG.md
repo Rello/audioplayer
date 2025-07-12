@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.4.3 - 2025-07-13
+### Changed
+- refactor cover retrieval logic
+
 ## 3.4.2 - 2025-07-12
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
