@@ -413,7 +413,7 @@ class ScannerController extends Controller
      * @param string $currentFile
      * @param OutputInterface|null $output
      */
-    private function updateProgress($filesProcessed, $currentFile, OutputInterface $output = null)
+    private function updateProgress($filesProcessed, $currentFile, ?OutputInterface $output = null)
     {
         if (!$this->occJob) {
             $response = [
@@ -468,7 +468,7 @@ class ScannerController extends Controller
      * @throws NotFoundException
      * @throws \OCP\Files\InvalidPathException
      */
-    private function getAudioObjects(OutputInterface $output = null)
+    private function getAudioObjects(?OutputInterface $output = null)
     {
         $audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
         $userView = $this->rootFolder->getUserFolder($this->userId);
@@ -562,7 +562,7 @@ class ScannerController extends Controller
      * @return array
      * @throws NotFoundException
      */
-    private function getStreamObjects(OutputInterface $output = null)
+    private function getStreamObjects(?OutputInterface $output = null)
     {
         $audios_clean = array();
         $audioPath = $this->configManager->getUserValue($this->userId, $this->appName, 'path');
@@ -627,7 +627,7 @@ class ScannerController extends Controller
      * @param $getID3 object
      * @param OutputInterface $output
      */
-    private function analyze($audio, $getID3, OutputInterface $output = null)
+    private function analyze($audio, $getID3, ?OutputInterface $output = null)
     {
         $this->ID3Tags = array();
         $ThisFileInfo = array();
@@ -735,7 +735,7 @@ class ScannerController extends Controller
      * @param OutputInterface|null $output
      * @return boolean|null
      */
-    private function getAlbumArt($audio, $iAlbumId, $parentId, OutputInterface $output = null)
+    private function getAlbumArt($audio, $iAlbumId, $parentId, ?OutputInterface $output = null)
     {
         if ($parentId === $this->parentIdPrevious) {
             if ($this->folderPicture) {
