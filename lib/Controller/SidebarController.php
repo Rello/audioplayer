@@ -13,11 +13,8 @@ namespace OCA\audioplayer\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Files\IRootFolder;
 use OCP\IRequest;
-use OCP\IL10N;
-use OCP\IDBConnection;
-use OCP\ITagManager;
+use OCA\audioplayer\Service\SidebarService;
 
 /**
  * Controller class for Sidebar.
@@ -26,33 +23,19 @@ class SidebarController extends Controller
 {
 
     private $userId;
-    private $db;
-    private $l10n;
-    private $tagger;
-    private $tagManager;
-    private $DBController;
-    private $rootFolder;
+    private $service;
 
     public function __construct(
         $appName,
         IRequest $request,
         $userId,
-        IL10N $l10n,
-        ITagManager $tagManager,
-        IDBConnection $db,
-        DbController $DBController,
-        IRootFolder $rootFolder
+        SidebarService $service
     )
     {
         parent::__construct($appName, $request);
         $this->appName = $appName;
-        $this->l10n = $l10n;
         $this->userId = $userId;
-        $this->tagManager = $tagManager;
-        $this->tagger = null;
-        $this->db = $db;
-        $this->DBController = $DBController;
-        $this->rootFolder = $rootFolder;
+        $this->service = $service;
     }
 
     /**
@@ -63,30 +46,18 @@ class SidebarController extends Controller
     public function getAudioInfo($trackid)
     {
 
-        $row = $this->DBController->getTrackInfo($trackid);
-        $artist = $this->DBController->loadArtistsToAlbum($row['album_id'], $row['Album Artist']);
-        $row['Album Artist'] = $artist;
+        $row = $this->service->getAudioInfo((int)$trackid);
 
-        if ($row['Year'] === '0') $row['Year'] = $this->l10n->t('Unknown');
-        if ($row['Bitrate'] !== '') $row['Bitrate'] = $row['Bitrate'] . ' kbps';
-
-        array_splice($row, 15, 3);
-
-        $fileId = $this->DBController->getFileId($trackid);
-        $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
-        $node = $nodes[0];
-        $path = $this->rootFolder->getUserFolder($this->userId)->getRelativePath($node->getPath());
-        $path = \join('/', \array_map('rawurlencode', \explode('/', $path)));
-        $row['Path'] = $path;
-
-        if ($row['Title']) {
+        if (!empty($row) && $row['Title']) {
             $result = [
                 'status' => 'success',
-                'data' => $row];
+                'data' => $row,
+            ];
         } else {
             $result = [
                 'status' => 'error',
-                'data' => 'nodata'];
+                'data' => 'nodata',
+            ];
         }
         return new JSONResponse($result);
     }
@@ -98,7 +69,7 @@ class SidebarController extends Controller
      */
     public function getPlaylists($trackid)
     {
-        $playlists = $this->DBController->getPlaylistsForTrack($this->userId, $trackid);
+        $playlists = $this->service->getPlaylists((int)$trackid);
         if (!empty($playlists)) {
             $result = [
                 'status' => 'success',
