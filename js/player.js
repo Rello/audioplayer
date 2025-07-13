@@ -295,12 +295,22 @@ OCA.Audioplayer.Player = {
             const samples = canvas.width;
             const blockSize = Math.floor(rawData.length / samples);
             const filteredData = [];
+            let maxVal = 0;
             for (let i = 0; i < samples; i++) {
                 let sum = 0;
                 for (let j = 0; j < blockSize; j++) {
                     sum += Math.abs(rawData[(i * blockSize) + j]);
                 }
-                filteredData.push(sum / blockSize);
+                let value = sum / blockSize;
+                filteredData.push(value);
+                if (value > maxVal) {
+                    maxVal = value;
+                }
+            }
+            if (maxVal > 0) {
+                for (let i = 0; i < filteredData.length; i++) {
+                    filteredData[i] = filteredData[i] / maxVal;
+                }
             }
             this.waveformData = filteredData;
         } catch (e) {
