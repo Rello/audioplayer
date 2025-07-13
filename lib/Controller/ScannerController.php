@@ -293,7 +293,8 @@ class ScannerController extends Controller
         $year = $this->getID3Value(array('year', 'creation_date', 'date'), 0);
         $subtitle = $this->getID3Value(array('subtitle', 'version'), '');
         $disc = $this->getID3Value(array('part_of_a_set', 'discnumber', 'partofset', 'disc_number'), 1);
-        $isrc = $this->getID3Value(array('isrc'), '');
+        $isrc = $this->getID3Value(array('isrc', 'tsrc'), '');
+        $comment = $this->getID3Value(array('comment', 'description'), '');
         $copyright = $this->getID3Value(array('copyright_message', 'copyright'), '');
 
         $iGenreId = $this->dbMapper->writeGenreToDB($this->userId, $genre);
@@ -341,6 +342,7 @@ class ScannerController extends Controller
             'disc' => $this->normalizeInteger($disc),
             'subtitle' => $this->truncateStrings($subtitle, '256'),
             'composer' => $this->truncateStrings($composer, '256'),
+            'comment' => $this->truncateStrings($comment, '256'),
             'folder_id' => $parentId,
             'isrc' => $this->truncateStrings($isrc, '12'),
             'copyright' => $this->truncateStrings($copyright, '256'),

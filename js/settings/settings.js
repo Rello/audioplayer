@@ -72,20 +72,32 @@ OCA.Audioplayer.Settings = {
         if (header) {
             header.style.display = 'none';
         }
-        document.querySelectorAll('.coverrow').forEach(function (el) { el.remove(); });
-        document.querySelectorAll('.songcontainer').forEach(function (el) { el.remove(); });
+        document.querySelectorAll('.coverrow').forEach(function (el) {
+            el.remove();
+        });
+        document.querySelectorAll('.songcontainer').forEach(function (el) {
+            el.remove();
+        });
         var active = document.getElementById('activePlaylist');
         if (active) {
             active.innerHTML = '';
         }
-        document.querySelectorAll('.sm2-playlist-target').forEach(function (el) { el.innerHTML = ''; });
+        document.querySelectorAll('.sm2-playlist-target').forEach(function (el) {
+            el.innerHTML = '';
+        });
         document.querySelectorAll('.sm2-playlist-cover').forEach(function (el) {
             el.style.backgroundColor = '#ffffff';
             el.innerHTML = '';
         });
 
-        fetch(OC.generateUrl('apps/audioplayer/resetmedialibrary'), { method: 'GET' })
-            .then(function (response) { return response.json(); })
+        let requestUrl = OC.generateUrl('apps/audioplayer/resetmedialibrary');
+        fetch(requestUrl, {
+            method: 'GET',
+            headers: OCA.Audioplayer.headers()
+        })
+            .then(function (response) {
+                return response.json();
+            })
             .then(function (jsondata) {
                 if (jsondata.status === 'success') {
                     OCP.Toast.success(t('audioplayer', 'Resetting finished!'));
@@ -97,8 +109,15 @@ OCA.Audioplayer.Settings = {
         var container = document.createElement('div');
         container.id = 'audios_import';
         document.body.appendChild(container);
-        fetch(OC.generateUrl('apps/audioplayer/getimporttpl'))
-            .then(function (response) { return response.text(); })
+
+        let requestUrl = OC.generateUrl('apps/audioplayer/getimporttpl');
+        fetch(requestUrl, {
+            method: 'GET',
+            headers: OCA.Audioplayer.headers()
+        })
+            .then(function (response) {
+                return response.text();
+            })
             .then(function (html) {
                 container.innerHTML = html;
                 OCA.Audioplayer.Settings.openScanDialog();
@@ -107,7 +126,9 @@ OCA.Audioplayer.Settings = {
 
     openScanDialog: function () {
         var dialog = document.getElementById('audios_import_dialog');
-        if (!dialog) { return; }
+        if (!dialog) {
+            return;
+        }
         dialog.style.display = 'block';
 
         var closeBtn = document.getElementById('audios_import_done_close');
@@ -118,7 +139,9 @@ OCA.Audioplayer.Settings = {
                 OCA.Audioplayer.Settings.stopScan();
                 dialog.remove();
                 var container = document.getElementById('audios_import');
-                if (container) { container.remove(); }
+                if (container) {
+                    container.remove();
+                }
             });
         }
 
@@ -145,8 +168,12 @@ OCA.Audioplayer.Settings = {
     processScan: function () {
         var form = document.getElementById('audios_import_form');
         var process = document.getElementById('audios_import_process');
-        if (form) { form.style.display = 'none'; }
-        if (process) { process.style.display = 'block'; }
+        if (form) {
+            form.style.display = 'none';
+        }
+        if (process) {
+            process.style.display = 'block';
+        }
         OCA.Audioplayer.Settings.startScan();
     },
 
@@ -161,7 +188,7 @@ OCA.Audioplayer.Settings = {
     stopScan: function () {
         OCA.Audioplayer.Settings.percentage = 0;
         var url = OC.generateUrl('apps/audioplayer/scanforaudiofiles') + '?scanstop=true';
-        fetch(url, { method: 'GET' });
+        fetch(url, {method: 'GET'});
     },
 
     updateScanProgress: function (message) {
@@ -185,10 +212,16 @@ OCA.Audioplayer.Settings = {
         var data = JSON.parse(message);
         var process = document.getElementById('audios_import_process');
         var done = document.getElementById('audios_import_done');
-        if (process) { process.style.display = 'none'; }
-        if (done) { done.style.display = 'block'; }
+        if (process) {
+            process.style.display = 'none';
+        }
+        if (done) {
+            done.style.display = 'block';
+        }
         var message = document.getElementById('audios_import_done_message');
-        if (message) { message.innerHTML = data.message; }
+        if (message) {
+            message.innerHTML = data.message;
+        }
         OCA.Audioplayer.Core.init();
     },
 

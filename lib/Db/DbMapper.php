@@ -273,7 +273,7 @@ class DbMapper
         return true;
     }
 
-    public function writeCoverToAlbum(int $userId, int $albumId, string $image): bool
+    public function writeCoverToAlbum($userId, int $albumId, string $image): bool
     {
         $qb = $this->db->getQueryBuilder();
         $qb->update('audioplayer_albums')
@@ -284,7 +284,7 @@ class DbMapper
             ->execute();
         return true;
     }
-    public function writeAlbumToDB(int $userId, string $album, string $year, int $artistId, int $parentId): array
+    public function writeAlbumToDB($userId, $album, $year, $artistId, $parentId): array
     {
         $album = $this->truncate($album, '256');
         $year = $this->normalizeInteger($year);
@@ -363,7 +363,7 @@ class DbMapper
         return $value;
     }
 
-    public function writeArtistToDB(int $userId, string $artist): int
+    public function writeArtistToDB($userId, string $artist): int
     {
         $artist = $this->truncate($artist, '256');
 
@@ -401,7 +401,7 @@ class DbMapper
         $this->db->rollBack();
     }
 
-    public function writeGenreToDB(int $userId, string $genre): int
+    public function writeGenreToDB($userId, string $genre): int
     {
         $genre = $this->truncate($genre, '256');
 
@@ -424,7 +424,7 @@ class DbMapper
         return (int)$this->db->lastInsertId('*PREFIX*audioplayer_genre');
     }
 
-    public function writeTrackToDB(int $userId, array $track): array
+    public function writeTrackToDB($userId, array $track): array
     {
         $duplicate = 0;
         $insertId = 0;
@@ -443,7 +443,8 @@ class DbMapper
             ->andWhere($qb->expr()->eq('year', $qb->createNamedParameter($track['year'])))
             ->andWhere($qb->expr()->eq('disc', $qb->createNamedParameter($track['disc'])))
             ->andWhere($qb->expr()->eq('composer', $qb->createNamedParameter($track['composer'])))
-            ->andWhere($qb->expr()->eq('subtitle', $qb->createNamedParameter($track['subtitle'])));
+            ->andWhere($qb->expr()->eq('subtitle', $qb->createNamedParameter($track['subtitle'])))
+            ->andWhere($qb->expr()->eq('comment', $qb->createNamedParameter($track['comment'])));
         $result = $qb->execute();
         $row = $result->fetch();
         $result->closeCursor();
@@ -467,6 +468,7 @@ class DbMapper
                 ->setValue('disc', $qb->createNamedParameter($track['disc']))
                 ->setValue('composer', $qb->createNamedParameter($track['composer']))
                 ->setValue('subtitle', $qb->createNamedParameter($track['subtitle']))
+                ->setValue('comment', $qb->createNamedParameter($track['comment']))
                 ->setValue('isrc', $qb->createNamedParameter($track['isrc']))
                 ->setValue('copyright', $qb->createNamedParameter($track['copyright']))
                 ->execute();
@@ -495,6 +497,7 @@ class DbMapper
             ->addSelect('AT.number AS Track')
             ->addSelect('AT.length AS Length')
             ->addSelect('AT.mimetype AS `MIME type`')
+            ->addSelect('AT.comment AS Comment')
             ->addSelect('AT.isrc AS ISRC')
             ->addSelect('AT.copyright AS Copyright')
             ->addSelect('AT.file_id')
@@ -539,7 +542,7 @@ class DbMapper
         return (int)($row['file_id'] ?? 0);
     }
 
-    public function updateTrack(int $userId, int $trackId, string $key, string $value): bool
+    public function updateTrack($userId, int $trackId, string $key, string $value): bool
     {
         $qb = $this->db->getQueryBuilder();
         $qb->update('audioplayer_tracks')
@@ -550,7 +553,7 @@ class DbMapper
         return true;
     }
 
-    public function writeStreamToDB(int $userId, array $stream): array
+    public function writeStreamToDB($userId, array $stream): array
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select('id')
