@@ -26,7 +26,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - [BUG] A song with title "0" cause scanner stopped to scan more music #601
 - fixed controls freezing when previous is clicked on the first track
 - reset album count between occ user scans
-- cover view no longer hides albums behind the song list
+- cover view pushes full rows down when the song list is open
 
 ### Changed
 - Refactor SidebarController into service and mapper

@@ -385,14 +385,11 @@ OCA.Audioplayer.Cover = {
 
     shiftAlbumsAfter: function (activeAlbum, container) {
         const shift = container.offsetHeight;
-        let move = false;
+        const activeTop = activeAlbum.offsetTop;
         document.querySelectorAll('.coverrow .album').forEach(function (album) {
-            if (move) {
+            if (album.offsetTop > activeTop) {
                 album.style.transform = 'translate(0,' + shift + 'px)';
                 album.classList.add('shift-down');
-            }
-            if (album === activeAlbum) {
-                move = true;
             }
         });
     },
