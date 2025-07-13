@@ -53,7 +53,7 @@ class PlaylistMapper extends QBMapper
     public function trackExists(int $playlistId, int $trackId): bool
     {
         $qb = $this->db->getQueryBuilder();
-        $qb->selectAlias($qb->func()->count('id'), 'tracks')
+        $qb->selectAlias($qb->func()->count('track_id'), 'tracks')
             ->from(self::TRACK_TABLE)
             ->where($qb->expr()->eq('playlist_id', $qb->createNamedParameter($playlistId)))
             ->andWhere($qb->expr()->eq('track_id', $qb->createNamedParameter($trackId)));

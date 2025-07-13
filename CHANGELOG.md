@@ -4,6 +4,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ## 3.4.2 - 2025-07-12
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
+- Corrected playlist track existence query
 ### Changed
 - Moved playlist database logic to service layer
 
