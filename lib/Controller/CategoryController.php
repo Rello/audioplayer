@@ -18,6 +18,7 @@ use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDBConnection;
 use OCP\ITagManager;
+use OCA\audioplayer\DB\DbMapper;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use \OCP\Files\NotFoundException;
@@ -37,7 +38,7 @@ class CategoryController extends Controller
     private $tagManager;
     private $rootFolder;
     private $logger;
-    private $DBController;
+    private $dbMapper;
     private $categoriesTag;
     private CategoryService $categoryService;
 
@@ -50,9 +51,10 @@ class CategoryController extends Controller
         ITagManager $tagManager,
         IRootFolder $rootFolder,
         LoggerInterface $logger,
-        DbController $DBController,
+        \OCA\audioplayer\DB\DbMapper $dbMapper,
         Tag $categoriesTag,
         CategoryService $categoryService
+
     )
     {
         parent::__construct($appName, $request);
@@ -63,7 +65,7 @@ class CategoryController extends Controller
         $this->tagger = null;
         $this->rootFolder = $rootFolder;
         $this->logger = $logger;
-        $this->DBController = $DBController;
+        $this->dbMapper = $dbMapper;
         $this->categoriesTag = $categoriesTag;
         $this->categoryService = $categoryService;
     }
@@ -98,7 +100,9 @@ class CategoryController extends Controller
         if (empty($items)) {
             return new JSONResponse(['status' => 'nodata']);
         }
+
         return new JSONResponse(['status' => 'success', 'data' => $items]);
+
     }
 
     /**
@@ -253,7 +257,6 @@ class CategoryController extends Controller
         $this->tagger = $this->tagManager->load('files');
         $favorites = $this->tagger->getFavorites();
 
-
         if ($category === 'Album') {
             $discNum = array_sum(array_column($results, 'dsc')) / count($results);
         }
@@ -272,7 +275,7 @@ class CategoryController extends Controller
 
             if ($file === null) {
                 $this->logger->debug('removed/unshared file found => remove '.$row['fid'], array('app' => 'audioplayer'));
-                $this->DBController->deleteFromDB($row['fid'], $this->userId);
+                $this->dbMapper->deleteFromDB($row['fid'], $this->userId);
                 continue;
             }
             if (is_array($favorites) AND in_array($row['fid'], $favorites)) {
@@ -398,7 +401,7 @@ class CategoryController extends Controller
 
                     try {
                         $fileId = $this->rootFolder->getUserFolder($this->userId)->get($path)->getId();
-                        $track = $this->DBController->getTrackInfo(null,$fileId);
+                        $track = $this->dbMapper->getTrackInfo(null,$fileId);
                         if (!isset($track['id'])) continue;
 
                         $row = array();

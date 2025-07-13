@@ -17,6 +17,6 @@ class UserHooks {
 		$userId = $params['uid'];
 		$app = new \OCA\audioplayer\AppInfo\Application();
         	$container = $app->getContainer();
-        $container->query(\OCA\audioplayer\Controller\DbController::class)->resetMediaLibrary($userId, null, true);
+        $container->query(\OCA\audioplayer\DB\DbMapper::class)->resetMediaLibrary($userId, null, true);
 	}    
 }
