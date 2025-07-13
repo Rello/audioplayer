@@ -1,5 +1,5 @@
 <?php
-namespace OCA\audioplayer\DB;
+namespace OCA\audioplayer\Db;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\DB\QueryBuilder\IQueryBuilder;
