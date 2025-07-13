@@ -306,11 +306,13 @@ OCA.Audioplayer.Dashboard = {
         var category = document.getElementById('audiplayerCategory').value;
         OCA.Audioplayer.Dashboard.showElement('audioplayerLoading');
 
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
-            data: {category: category},
-            success: function (jsondata) {
+        fetch(
+            OC.generateUrl('apps/audioplayer/getcategoryitems') +
+            '?category=' + encodeURIComponent(category),
+            {method: 'GET', headers: OCA.Audioplayer.headers()}
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
                 if (jsondata.status === 'success') {
                     let select = document.getElementById('audioplayerItem')
                     select.innerHTML = '<option value="" selected>' + t('audioplayer', 'Selection') + '</option>';
@@ -323,7 +325,6 @@ OCA.Audioplayer.Dashboard = {
                     }
                     OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
                 }
-            }
         });
         return true;
     },
@@ -340,11 +341,20 @@ OCA.Audioplayer.Dashboard = {
         let player = document.getElementById('html5Audio');
         let canPlayMimeType = OCA.Audioplayer.Dashboard.canPlayMimeType;
 
-        OCA.Audioplayer.Dashboard.AjaxCallStatus = $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/gettracks'),
-            data: {category: category, categoryId: categoryItem},
-            success: function (jsondata) {
+        OCA.Audioplayer.Dashboard.AjaxCallStatus = new AbortController();
+
+        fetch(
+            OC.generateUrl('apps/audioplayer/gettracks') +
+            '?category=' + encodeURIComponent(category) +
+            '&categoryId=' + encodeURIComponent(categoryItem),
+            {
+                method: 'GET',
+                headers: OCA.Audioplayer.headers(),
+                signal: OCA.Audioplayer.Dashboard.AjaxCallStatus.signal
+            }
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
                 //document.getElementById('loading').style.display = 'none';
                 if (jsondata.status === 'success') {
 

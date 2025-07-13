@@ -154,11 +154,12 @@ OCA.Audioplayer.Sidebar = {
         $('#tabHeaderMetadata').addClass('selected');
         $('#metadataTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
 
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getaudioinfo'),
-            data: {trackid: trackid},
-            success: function (jsondata) {
+        fetch(
+            OC.generateUrl('apps/audioplayer/getaudioinfo') + '?trackid=' + encodeURIComponent(trackid),
+            {method: 'GET', headers: OCA.Audioplayer.headers()}
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
                 var table;
                 if (jsondata.status === 'success') {
 
@@ -214,11 +215,16 @@ OCA.Audioplayer.Sidebar = {
         $('#tabHeaderPlaylists').addClass('selected');
         $('#playlistsTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
 
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/getplaylists'),
-            data: {trackid: trackid},
-            success: function (jsondata) {
+        fetch(
+            OC.generateUrl('apps/audioplayer/getplaylists'),
+            {
+                method: 'POST',
+                headers: OCA.Audioplayer.headers(),
+                body: JSON.stringify({trackid: trackid})
+            }
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
                 var table;
                 if (jsondata.status === 'success') {
 
