@@ -14,49 +14,28 @@ namespace OCA\audioplayer\Controller;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
-use OCP\IConfig;
-use OCP\Files\IRootFolder;
-use OCP\ITagManager;
-use OCP\IDBConnection;
-use OCP\ISession;
+use OCA\audioplayer\Service\SettingService;
 
 /**
  * Controller class for main page.
  */
 class SettingController extends Controller {
-	
-	private $userId;
-    private $config;
-	private $rootFolder;
-    private $tagger;
-    private $tagManager;
-    private $db;
-    private $session;
-    private $DBController;
+
+    private $userId;
+    private $settingService;
 
     public function __construct(
         $appName,
         IRequest $request,
         $userId,
-        IConfig $config,
-        IDBConnection $db,
-        ITagManager $tagManager,
-        IRootFolder $rootFolder,
-        ISession $session,
-        DbController $DBController
+        SettingService $settingService
     )
     {
-		parent::__construct($appName, $request);
-		$this->appName = $appName;
-		$this->userId = $userId;
-        $this->config = $config;
-        $this->db = $db;
-        $this->tagManager = $tagManager;
-        $this->tagger = null;
-        $this->rootFolder = $rootFolder;
-        $this->session = $session;
-        $this->DBController = $DBController;
-	}
+        parent::__construct($appName, $request);
+        $this->appName = $appName;
+        $this->userId = $userId;
+        $this->settingService = $settingService;
+    }
 
     /**
      * @param $type
@@ -65,9 +44,8 @@ class SettingController extends Controller {
      */
     public function admin($type, $value)
     {
-        //\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
-        $this->config->setAppValue($this->appName, $type, $value);
-        return new JSONResponse(array('success' => 'true'));
+        $this->settingService->admin($type, $value);
+        return new JSONResponse(['success' => 'true']);
     }
 
     /**
@@ -77,19 +55,18 @@ class SettingController extends Controller {
      * @return JSONResponse
      * @throws \OCP\PreConditionNotMetException
      */
-	public function setValue($type, $value) {
-		//\OCP\Util::writeLog('audioplayer', 'settings save: '.$type.$value, \OCP\Util::DEBUG);
-        $this->config->setUserValue($this->userId, $this->appName, $type, $value);
-		return new JSONResponse(array('success' => 'true'));
-	}
+    public function setValue($type, $value) {
+        $this->settingService->setValue($this->userId, $type, $value);
+        return new JSONResponse(['success' => 'true']);
+    }
 
     /**
      * @NoAdminRequired
      * @param $type
      * @return JSONResponse
      */
-	public function getValue($type) {
-        $value = $this->config->getUserValue($this->userId, $this->appName, $type);
+    public function getValue($type) {
+        $value = $this->settingService->getValue($this->userId, $type);
 
 		//\OCP\Util::writeLog('audioplayer', 'settings load: '.$type.$value, \OCP\Util::DEBUG);
 
@@ -105,7 +82,7 @@ class SettingController extends Controller {
 				];
 		}
         return new JSONResponse($result);
-	}
+    }
 
     /**
      * @NoAdminRequired
@@ -113,23 +90,10 @@ class SettingController extends Controller {
      * @return JSONResponse
      * @throws \OCP\PreConditionNotMetException
      */
-	public function userPath($value) {
-		$path = $value;
-			try {
-				$this->rootFolder->getUserFolder($this -> userId)->get($path);
-			} catch (\OCP\Files\NotFoundException $e) {
-				return new JSONResponse(array('success' => false));
-			}
-			
-			if ($path[0] !== '/') {
-				$path = '/'.$path;
-			}
-			if ($path[strlen($path) - 1] !== '/') {
-				$path .= '/';
-			}
-        $this->config->setUserValue($this->userId, $this->appName, 'path', $path);
-		return new JSONResponse(array('success' => true));
-	}
+    public function userPath($value) {
+        $success = $this->settingService->userPath($this->userId, $value);
+        return new JSONResponse(['success' => $success]);
+    }
 
     /**
      * @NoAdminRequired
@@ -139,15 +103,7 @@ class SettingController extends Controller {
      */
     public function setFavorite($trackid, $isFavorite)
     {
-        $this->tagger = $this->tagManager->load('files');
-        $fileId = $this->DBController->getFileId($trackid);
-
-        if ($isFavorite === "true") {
-            $return = $this->tagger->removeFromFavorites($fileId);
-        } else {
-            $return = $this->tagger->addToFavorites($fileId);
-        }
-        return $return;
+        return $this->settingService->setFavorite($this->userId, $trackid, $isFavorite);
     }
 
     /**
@@ -157,23 +113,7 @@ class SettingController extends Controller {
      * @throws \Exception
      */
     public function setStatistics($track_id) {
-        $date = new \DateTime();
-        $playtime = $date->getTimestamp();
-
-        $SQL='SELECT `id`, `playcount` FROM `*PREFIX*audioplayer_stats` WHERE `user_id`= ? AND `track_id`= ?';
-        $stmt = $this->db->prepare($SQL);
-        $stmt->execute(array($this->userId, $track_id));
-        $row = $stmt->fetch();
-        if (isset($row['id'])) {
-            $playcount = $row['playcount'] + 1;
-            $stmt = $this->db->prepare( 'UPDATE `*PREFIX*audioplayer_stats` SET `playcount`= ?, `playtime`= ? WHERE `id` = ?');
-            $stmt->execute(array($playcount, $playtime, $row['id']));
-            return 'update';
-        } else {
-            $stmt = $this->db->prepare( 'INSERT INTO `*PREFIX*audioplayer_stats` (`user_id`,`track_id`,`playtime`,`playcount`) VALUES(?,?,?,?)' );
-            $stmt->execute(array($this->userId, $track_id, $playtime, 1));
-            return $this->db->lastInsertId('*PREFIX*audioplayer_stats');
-        }
+        return $this->settingService->setStatistics($this->userId, $track_id);
     }
 
 }
