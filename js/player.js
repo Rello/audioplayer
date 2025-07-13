@@ -22,6 +22,7 @@ if (!OCA.Audioplayer) {
  */
 OCA.Audioplayer.Player = {
     html5Audio: document.getElementById('html5Audio'), // the <audio> element
+    preloadAudio: document.getElementById('audioPreload'), // hidden audio element for preloading
     currentTrackIndex: 0,   // the index of the <source> list to be played
     currentPlaylist: 0,     // ID of the current playlist. Needed to recognize UI list changes
     currentTrackId: 0,      // current playing track id. Needed to recognize the current playing track in the playlist
@@ -53,14 +54,18 @@ OCA.Audioplayer.Player = {
         }
         let playPromise = this.html5Audio.play();
         if (playPromise !== undefined) {
+            let _this = this;
             playPromise.then(function() {
                 document.getElementById('playerPlay').classList.replace('icon-loading', 'play-pause');
                 document.getElementById('sm2-bar-ui').classList.add('playing');
                 OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
+                _this.preloadNext();
             }).catch(function(error) {
                 document.getElementById('playerPlay').classList.replace('icon-loading','play-pause');
                 OCP.Toast.error(t('audioplayer', 'Playback error'));
             });
+        } else {
+            this.preloadNext();
         }
     },
 
@@ -119,6 +124,22 @@ OCA.Audioplayer.Player = {
         OCA.Audioplayer.Player.lastSavedSecond = 0;
         OCA.Audioplayer.Player.currentTrackIndex--;
         OCA.Audioplayer.Player.setTrack();
+    },
+
+    /**
+     * preload the next track for gapless playback
+     */
+    preloadNext: function () {
+        const nextIndex = OCA.Audioplayer.Player.currentTrackIndex + 1;
+        if (nextIndex < OCA.Audioplayer.Player.html5Audio.childElementCount) {
+            const nextTrack = OCA.Audioplayer.Player.html5Audio.children[nextIndex];
+            if (nextTrack.dataset.canPlayMime !== 'false') {
+                OCA.Audioplayer.Player.preloadAudio.setAttribute('src', nextTrack.src);
+                OCA.Audioplayer.Player.preloadAudio.load();
+            }
+        } else {
+            OCA.Audioplayer.Player.preloadAudio.removeAttribute('src');
+        }
     },
 
     /**
