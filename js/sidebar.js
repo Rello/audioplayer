@@ -163,61 +163,60 @@ OCA.Audioplayer.Sidebar = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                var table;
-                if (jsondata.status === 'success') {
-                    table = document.createElement('div');
-                    table.style.display = 'table';
-                    table.classList.add('table');
+            var table;
+            if (jsondata.status === 'success') {
+                table = document.createElement('div');
+                table.style.display = 'table';
+                table.classList.add('table');
 
-                    var audioinfo = jsondata.data;
-                    for (var m in audioinfo) {
-                        var tablerow = document.createElement('div');
-                        tablerow.style.display = 'table-row';
-                        var tablekey = document.createElement('div');
-                        tablekey.classList.add('key');
-                        tablekey.textContent = t('audioplayer', m);
-                        var tablevalue = document.createElement('div');
-                        tablevalue.classList.add('value');
-                        tablevalue.textContent = audioinfo[m];
-                        if (m === 'Path') {
-                            tablevalue.textContent = '';
-                            var tablevalueDownload = document.createElement('a');
-                            tablevalueDownload.setAttribute('href', OC.linkToRemote('webdav' + audioinfo[m]));
-                            tablevalueDownload.textContent = audioinfo[m];
-                            tablevalue.appendChild(tablevalueDownload);
-                        }
-                        tablerow.appendChild(tablekey);
-                        tablerow.appendChild(tablevalue);
-
-                        if (m === 'fav' && audioinfo[m] === 't') {
-                            var fav = document.getElementById('sidebarFavorite');
-                            fav.classList.remove('icon-star');
-                            fav.classList.add('icon-starred');
-                            fav.title = t('files', 'Favorited');
-                            audioinfo[m] = '';
-                        } else if (m === 'fav') {
-                            var fav2 = document.getElementById('sidebarFavorite');
-                            fav2.classList.remove('icon-starred');
-                            fav2.classList.add('icon-star');
-                            fav2.title = t('files', 'Favorite');
-                            audioinfo[m] = '';
-                        }
-
-                        if (audioinfo[m] !== '' && audioinfo[m] !== null) {
-                            table.appendChild(tablerow);
-                        }
+                var audioinfo = jsondata.data;
+                for (var m in audioinfo) {
+                    var tablerow = document.createElement('div');
+                    tablerow.style.display = 'table-row';
+                    var tablekey = document.createElement('div');
+                    tablekey.classList.add('key');
+                    tablekey.textContent = t('audioplayer', m);
+                    var tablevalue = document.createElement('div');
+                    tablevalue.classList.add('value');
+                    tablevalue.textContent = audioinfo[m];
+                    if (m === 'Path') {
+                        tablevalue.textContent = '';
+                        var tablevalueDownload = document.createElement('a');
+                        tablevalueDownload.setAttribute('href', OC.linkToRemote('webdav' + audioinfo[m]));
+                        tablevalueDownload.textContent = audioinfo[m];
+                        tablevalue.appendChild(tablevalueDownload);
                     }
-                } else {
-                    table = document.createElement('div');
-                    table.setAttribute('style', 'margin-left: 2em;');
-                    table.classList.add('get-metadata');
-                    table.innerHTML = '<p>' + t('audioplayer', 'No data') + '</p>';
-                }
+                    tablerow.appendChild(tablekey);
+                    tablerow.appendChild(tablevalue);
 
-                var metadataTabView = document.getElementById('metadataTabView');
-                metadataTabView.innerHTML = '';
-                metadataTabView.appendChild(table);
+                    if (m === 'fav' && audioinfo[m] === 't') {
+                        var fav = document.getElementById('sidebarFavorite');
+                        fav.classList.remove('icon-star');
+                        fav.classList.add('icon-starred');
+                        fav.title = t('files', 'Favorited');
+                        audioinfo[m] = '';
+                    } else if (m === 'fav') {
+                        var fav2 = document.getElementById('sidebarFavorite');
+                        fav2.classList.remove('icon-starred');
+                        fav2.classList.add('icon-star');
+                        fav2.title = t('files', 'Favorite');
+                        audioinfo[m] = '';
+                    }
+
+                    if (audioinfo[m] !== '' && audioinfo[m] !== null) {
+                        table.appendChild(tablerow);
+                    }
+                }
+            } else {
+                table = document.createElement('div');
+                table.setAttribute('style', 'margin-left: 2em;');
+                table.classList.add('get-metadata');
+                table.innerHTML = '<p>' + t('audioplayer', 'No data') + '</p>';
             }
+
+            var metadataTabView = document.getElementById('metadataTabView');
+            metadataTabView.innerHTML = '';
+            metadataTabView.appendChild(table);
         });
     },
 
@@ -240,47 +239,46 @@ OCA.Audioplayer.Sidebar = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                var table;
-                if (jsondata.status === 'success') {
-                    table = document.createElement('div');
-                    table.style.display = 'table';
-                    table.classList.add('table');
-                    var audioinfo = jsondata.data;
-                    for (var m in audioinfo) {
-                        var spanDelete = document.createElement('a');
-                        spanDelete.setAttribute('class', 'icon icon-delete toolTip');
-                        spanDelete.dataset.listid = audioinfo[m].playlist_id;
-                        spanDelete.dataset.trackid = trackid;
-                        spanDelete.title = t('audioplayer', 'Remove');
-                        spanDelete.addEventListener('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist);
+            var table;
+            if (jsondata.status === 'success') {
+                table = document.createElement('div');
+                table.style.display = 'table';
+                table.classList.add('table');
+                var audioinfo = jsondata.data;
+                for (var m in audioinfo) {
+                    var spanDelete = document.createElement('a');
+                    spanDelete.setAttribute('class', 'icon icon-delete toolTip');
+                    spanDelete.dataset.listid = audioinfo[m].playlist_id;
+                    spanDelete.dataset.trackid = trackid;
+                    spanDelete.title = t('audioplayer', 'Remove');
+                    spanDelete.addEventListener('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist);
 
-                        var tablerow = document.createElement('div');
-                        tablerow.style.display = 'table-row';
-                        tablerow.dataset.id = audioinfo[m].playlist_id;
-                        var tablekey = document.createElement('div');
-                        tablekey.classList.add('key');
-                        tablekey.appendChild(spanDelete);
+                    var tablerow = document.createElement('div');
+                    tablerow.style.display = 'table-row';
+                    tablerow.dataset.id = audioinfo[m].playlist_id;
+                    var tablekey = document.createElement('div');
+                    tablekey.classList.add('key');
+                    tablekey.appendChild(spanDelete);
 
-                        var tablevalue = document.createElement('div');
-                        tablevalue.classList.add('value');
-                        tablevalue.textContent = audioinfo[m].name;
-                        tablerow.appendChild(tablekey);
-                        tablerow.appendChild(tablevalue);
-                        table.appendChild(tablerow);
-                    }
-                } else {
-                    table = document.createElement('div');
-                    table.setAttribute('style', 'margin-left: 2em;');
-                    table.classList.add('get-metadata');
-                    table.innerHTML = '<p>' + t('audioplayer', 'No playlist entry') + '</p>';
+                    var tablevalue = document.createElement('div');
+                    tablevalue.classList.add('value');
+                    tablevalue.textContent = audioinfo[m].name;
+                    tablerow.appendChild(tablekey);
+                    tablerow.appendChild(tablevalue);
+                    table.appendChild(tablerow);
                 }
-
-                var playlistsTabView = document.getElementById('playlistsTabView');
-                playlistsTabView.innerHTML = '';
-                playlistsTabView.appendChild(table);
+            } else {
+                table = document.createElement('div');
+                table.setAttribute('style', 'margin-left: 2em;');
+                table.classList.add('get-metadata');
+                table.innerHTML = '<p>' + t('audioplayer', 'No playlist entry') + '</p>';
             }
-        });
 
+            var playlistsTabView = document.getElementById('playlistsTabView');
+            playlistsTabView.innerHTML = '';
+            playlistsTabView.appendChild(table);
+
+        });
     },
 
     addonsTabView: function () {
@@ -295,7 +293,8 @@ OCA.Audioplayer.Sidebar = {
         var addonsTabView = document.getElementById('addonsTabView');
         addonsTabView.classList.remove('hidden');
         addonsTabView.innerHTML = html;
-    },
+    }
+    ,
 
     resetView: function () {
         document.querySelectorAll('.tabHeader.selected').forEach(function (el) {
@@ -304,11 +303,14 @@ OCA.Audioplayer.Sidebar = {
         document.querySelectorAll('.tab').forEach(function (el) {
             el.classList.add('hidden');
         });
-    },
+    }
+    ,
 
     sortByName: function (a, b) {
         var aName = a.tabindex;
         var bName = b.tabindex;
         return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
-    },
-};
+    }
+    ,
+}
+;
