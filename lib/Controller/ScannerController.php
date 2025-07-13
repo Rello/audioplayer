@@ -144,6 +144,12 @@ class ScannerController extends Controller
             $output = new NullOutput();
         }
 
+        $this->iAlbumCount = 0;
+        $this->iDublicate = 0;
+        $this->numOfSongs = 0;
+        $this->parentIdPrevious = 0;
+        $this->folderPicture = false;
+
         $output->writeln("Start processing of <info>audio files</info>");
 
         $counter = 0;
