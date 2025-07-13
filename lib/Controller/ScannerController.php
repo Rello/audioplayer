@@ -15,6 +15,7 @@ namespace OCA\audioplayer\Controller;
 
 use Doctrine\DBAL\DBALException;
 use Exception;
+use TypeError;
 use getID3;
 use getid3_exception;
 use getid3_lib;
@@ -656,24 +657,32 @@ class ScannerController extends Controller
                 $output->writeln("Some external storage is not available", OutputInterface::VERBOSITY_VERBOSE);
                 $this->logger->debug('Some external storage is not available', array('app' => 'audioplayer'));
             } else {
-                $handle = $audio->fopen('rb');
-                if (is_resource($handle) && @fseek($handle, -24, SEEK_END) === 0) {
-                    $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
-                } else {
-                    if (!$this->noFseek) {
-                        $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.", OutputInterface::VERBOSITY_VERBOSE);
-                        $this->logger->debug('Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', array('app' => 'audioplayer'));
-                        $this->noFseek = true;
-                    }
-                    $fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());
-                    $ThisFileInfo = $getID3->analyze($fileName);
+                try {
+                    $handle = $audio->fopen('rb');
+                    if (is_resource($handle) && @fseek($handle, -24, SEEK_END) === 0) {
+                        $ThisFileInfo = $getID3->analyze($audio->getPath(), $audio->getSize(), '', $handle);
+                    } else {
+                        if (!$this->noFseek) {
+                            $output->writeln("Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.", OutputInterface::VERBOSITY_VERBOSE);
+                            $this->logger->debug('Attention: Only slow indexing due to server config. See Audio Player wiki on GitHub for details.', array('app' => 'audioplayer'));
+                            $this->noFseek = true;
+                        }
+                        $fileName = $audio->getStorage()->getLocalFile($audio->getInternalPath());
+                        $ThisFileInfo = $getID3->analyze($fileName);
 
-                    if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
-                        unlink($fileName);
+                        if (!$audio->getStorage()->isLocal($audio->getInternalPath())) {
+                            unlink($fileName);
+                        }
                     }
+                    if ($this->cyrillic === 'checked') $ThisFileInfo = $this->convertCyrillic($ThisFileInfo);
+                    getid3_lib::CopyTagsToComments($ThisFileInfo);
+                } catch (\TypeError $e) {
+                    $this->logger->error('getID3 type error while building library: ' . $e->getMessage(), ['app' => 'audioplayer']);
+                    if ($output) {
+                        $output->writeln("       Error with getID3 (TypeError)", OutputInterface::VERBOSITY_VERBOSE);
+                    }
+                    $ThisFileInfo = [];
                 }
-                if ($this->cyrillic === 'checked') $ThisFileInfo = $this->convertCyrillic($ThisFileInfo);
-                getid3_lib::CopyTagsToComments($ThisFileInfo);
             }
         }
         $this->ID3Tags = $ThisFileInfo;
