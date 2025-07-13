@@ -814,7 +814,7 @@ i#scanAudiosFirst {
 }
 
 .isActive {
-    font-weight: bold;
+    /*font-weight: bold;*/
     background: var(--color-primary-light);
 }
 
