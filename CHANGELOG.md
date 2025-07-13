@@ -5,6 +5,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Added
 - gapless playback through preloading next track
 - store and display track comments
+- playback speed toggle button
 
 ### Changed
 - refactored MusicController into service and mapper
@@ -17,6 +18,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - migrated remaining ajax calls to fetch with shared headers
 - Refactored CategoryController into service and mapper
 - refactored sidebar and app scripts to remove jQuery usage
+- enlarged and centered playback speed display
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
