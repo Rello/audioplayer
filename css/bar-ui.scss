@@ -478,6 +478,13 @@
     background-size: 54%;
 }
 
+// playback speed toggle button displaying text like "1x"
+.sm2-inline-button.speed {
+  line-height: 2.8em;
+  font-weight: bold;
+  font-size: 80%;
+}
+
 .sm2-extra-controls .repeat {
   background-position: 50% 45%;
 }

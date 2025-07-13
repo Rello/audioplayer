@@ -29,6 +29,8 @@ OCA.Audioplayer.Player = {
     repeatMode: null,       // repeat mode null/single/list
     trackStartPosition: 0,  // start position of a track when the player is reopened and the playback should continue
     lastSavedSecond: 0,     // last autosaved second
+    playbackSpeeds: [1, 2, 3, 0.5],
+    currentSpeedIndex: 0,
 
     /**
      * set the track to the selected track index and check if it can be played at all
@@ -214,6 +216,24 @@ OCA.Audioplayer.Player = {
     },
 
     /**
+     * set playback speed and update display
+     */
+    setSpeed: function (speed) {
+        OCA.Audioplayer.Player.html5Audio.playbackRate = speed;
+        document.getElementById('playerSpeed').textContent = speed + 'x';
+    },
+
+    /**
+     * toggle between predefined playback speeds
+     */
+    toggleSpeed: function () {
+        OCA.Audioplayer.Player.currentSpeedIndex = (OCA.Audioplayer.Player.currentSpeedIndex + 1) % OCA.Audioplayer.Player.playbackSpeeds.length;
+        let speed = OCA.Audioplayer.Player.playbackSpeeds[OCA.Audioplayer.Player.currentSpeedIndex];
+        OCA.Audioplayer.Player.setSpeed(speed);
+        OCA.Audioplayer.Backend.setUserValue('speed', speed.toString());
+    },
+
+    /**
      * check, if the audio element is currently paused
      */
     isPaused: function () {
@@ -334,6 +354,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('playerShuffle').addEventListener('click', OCA.Audioplayer.Player.shuffleTitles);
     document.getElementById('playerVolume').addEventListener('input', OCA.Audioplayer.Player.setVolume);
     document.getElementById('playerVolume').value = document.getElementById('audioplayer_volume').value;
+
+    document.getElementById('playerSpeed').addEventListener('click', OCA.Audioplayer.Player.toggleSpeed);
+    let speedValue = parseFloat(document.getElementById('audioplayer_speed').value);
+    let index = OCA.Audioplayer.Player.playbackSpeeds.indexOf(speedValue);
+    if (index !== -1) {
+        OCA.Audioplayer.Player.currentSpeedIndex = index;
+    }
+    OCA.Audioplayer.Player.setSpeed(OCA.Audioplayer.Player.playbackSpeeds[OCA.Audioplayer.Player.currentSpeedIndex]);
 
     let repeat = document.getElementById('audioplayer_repeat').value;
     if (repeat !== 'none') {
