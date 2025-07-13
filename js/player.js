@@ -327,18 +327,18 @@ OCA.Audioplayer.Player = {
             let ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
             let progressValue = (elapsedTime / player.duration);
-            if (this.waveformData) {
-                const samples = this.waveformData.length;
+            if (OCA.Audioplayer.Player.waveformData) {
+                const samples = OCA.Audioplayer.Player.waveformData.length;
                 const progressSamples = Math.floor(progressValue * samples);
                 ctx.fillStyle = 'rgb(180,180,180)';
                 for (let i = 0; i < samples; i++) {
-                    const val = this.waveformData[i];
+                    const val = OCA.Audioplayer.Player.waveformData[i];
                     const height = val * canvas.clientHeight;
                     ctx.fillRect(i, (canvas.clientHeight - height) / 2, 1, height);
                 }
                 ctx.fillStyle = 'rgb(0,130,201)';
                 for (let i = 0; i < progressSamples; i++) {
-                    const val = this.waveformData[i];
+                    const val = OCA.Audioplayer.Player.waveformData[i];
                     const height = val * canvas.clientHeight;
                     ctx.fillRect(i, (canvas.clientHeight - height) / 2, 1, height);
                 }
@@ -353,8 +353,8 @@ OCA.Audioplayer.Player = {
 
         // save position every 10 seconds
         let positionCalc = Math.round(player.currentTime) / 10;
-        if (Math.round(positionCalc) === positionCalc && positionCalc !== 0 && this.lastSavedSecond !== positionCalc) {
-            this.lastSavedSecond = Math.round(positionCalc);
+        if (Math.round(positionCalc) === positionCalc && positionCalc !== 0 && OCA.Audioplayer.Player.lastSavedSecond !== positionCalc) {
+            OCA.Audioplayer.Player.lastSavedSecond = Math.round(positionCalc);
             OCA.Audioplayer.Backend.setUserValue('category',
                 OCA.Audioplayer.Core.CategorySelectors[0]
                 + '-' + OCA.Audioplayer.Core.CategorySelectors[1]
