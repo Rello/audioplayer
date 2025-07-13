@@ -43,38 +43,40 @@ OCA.Audioplayer.Sidebar = {
             OCA.Audioplayer.Sidebar.hideSidebar();
         } else {
             var getcoverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-            var trackData = $('li[data-trackid=\'' + trackid + '\']');
-            var cover = trackData.attr('data-cover');
-            var sidebarThumbnail = $('#sidebarThumbnail');
-            $('.thumbnailContainer').addClass('portrait large');
+            var trackData = document.querySelector('li[data-trackid="' + trackid + '"]');
+            var cover = trackData ? trackData.getAttribute('data-cover') : '';
+            var sidebarThumbnail = document.getElementById('sidebarThumbnail');
+            document.querySelectorAll('.thumbnailContainer').forEach(function (el) {
+                el.classList.add('portrait', 'large');
+            });
 
             if (cover !== '') {
-                sidebarThumbnail.attr({
-                    'style': 'background-image:url(' + getcoverUrl + cover + ')'
-                });
+                sidebarThumbnail.setAttribute('style', 'background-image:url(' + getcoverUrl + cover + ')');
             } else {
-                sidebarThumbnail.attr({
-                    'style': 'display: none;'
-                });
+                sidebarThumbnail.setAttribute('style', 'display: none;');
             }
 
-            document.getElementById('sidebarTitle').innerHTML = decodeURIComponent(trackData.attr('data-title'));
-            document.getElementById('sidebarMime').innerHTML = trackData.attr('data-mimetype');
+            document.getElementById('sidebarTitle').innerHTML = decodeURIComponent(trackData.getAttribute('data-title'));
+            document.getElementById('sidebarMime').innerHTML = trackData.getAttribute('data-mimetype');
 
-            var starIcon = $('#sidebarFavorite').attr({'data-trackid': trackid});
-            starIcon.off();
-            starIcon.on('click', OCA.Audioplayer.Core.toggleFavorite);
+            var starIcon = document.getElementById('sidebarFavorite');
+            starIcon.dataset.trackid = trackid;
+            starIcon.removeEventListener('click', OCA.Audioplayer.Core.toggleFavorite);
+            starIcon.addEventListener('click', OCA.Audioplayer.Core.toggleFavorite);
 
             if (appsidebar.dataset.trackid === '') {
-                $('#sidebarClose').on('click', OCA.Audioplayer.Sidebar.hideSidebar);
+                document.getElementById('sidebarClose').addEventListener('click', OCA.Audioplayer.Sidebar.hideSidebar);
 
                 OCA.Audioplayer.Sidebar.constructTabs();
-                $('#tabHeaderMetadata').addClass('selected');
+                document.getElementById('tabHeaderMetadata').classList.add('selected');
                 appsidebar.classList.remove('disappear');
             }
 
             appsidebar.dataset.trackid = trackid;
-            $('.tabHeader.selected').trigger('click');
+            var selectedHeader = document.querySelector('.tabHeader.selected');
+            if (selectedHeader) {
+                selectedHeader.click();
+            }
             OCA.Audioplayer.UI.resizePlaylist();
         }
     },
@@ -120,22 +122,21 @@ OCA.Audioplayer.Sidebar = {
         items.sort(OCA.Audioplayer.Sidebar.sortByName);
 
         for (tab in items) {
-            var li = $('<li/>').addClass('tabHeader')
-                .attr({
-                    'id': items[tab].id,
-                    'tabindex': items[tab].tabindex
-                });
-            var atag = $('<a/>').text(items[tab].name);
-            atag.prop('title', items[tab].name);
-            li.append(atag);
-            $('.tabHeaders').append(li);
+            var li = document.createElement('li');
+            li.classList.add('tabHeader');
+            li.setAttribute('id', items[tab].id);
+            li.setAttribute('tabindex', items[tab].tabindex);
+            var atag = document.createElement('a');
+            atag.textContent = items[tab].name;
+            atag.title = items[tab].name;
+            li.appendChild(atag);
+            document.querySelector('.tabHeaders').appendChild(li);
 
-            var div = $('<div/>').addClass('tab ' + items[tab].class)
-                .attr({
-                    'id': items[tab].class
-                });
-            $('.tabsContainer').append(div);
-            $('#' + items[tab].id).on('click', items[tab].action);
+            var div = document.createElement('div');
+            div.className = 'tab ' + items[tab].class;
+            div.setAttribute('id', items[tab].class);
+            document.querySelector('.tabsContainer').appendChild(div);
+            document.getElementById(items[tab].id).addEventListener('click', items[tab].action);
         }
     },
 
@@ -151,8 +152,10 @@ OCA.Audioplayer.Sidebar = {
         var trackid = document.getElementById('app-sidebar').dataset.trackid;
 
         OCA.Audioplayer.Sidebar.resetView();
-        $('#tabHeaderMetadata').addClass('selected');
-        $('#metadataTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
+        document.getElementById('tabHeaderMetadata').classList.add('selected');
+        var metadataTabView = document.getElementById('metadataTabView');
+        metadataTabView.classList.remove('hidden');
+        metadataTabView.innerHTML = '<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>';
 
         fetch(
             OC.generateUrl('apps/audioplayer/getaudioinfo') + '?trackid=' + encodeURIComponent(trackid),
@@ -160,51 +163,60 @@ OCA.Audioplayer.Sidebar = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                var table;
-                if (jsondata.status === 'success') {
+            var table;
+            if (jsondata.status === 'success') {
+                table = document.createElement('div');
+                table.style.display = 'table';
+                table.classList.add('table');
 
-                    table = $('<div>').css('display', 'table').addClass('table');
-                    var tablerow;
-                    var m;
-                    var tablekey;
-                    var tablevalue;
-                    var tablevalueDownload;
-
-                    var audioinfo = jsondata.data;
-                    for (m in audioinfo) {
-                        tablerow = $('<div>').css('display', 'table-row');
-                        tablekey = $('<div>').addClass('key').text(t('audioplayer', m));
-                        tablevalue = $('<div>').addClass('value')
-                            .text(audioinfo[m]);
-                        if (m === 'Path') {
-                            tablevalue.text('');
-                            tablevalueDownload = $('<a>').attr('href', OC.linkToRemote('webdav' + audioinfo[m])).text(audioinfo[m]);
-                            tablevalue.append(tablevalueDownload);
-                        }
-                        tablerow.append(tablekey).append(tablevalue);
-
-                        if (m === 'fav' && audioinfo[m] === 't') {
-                            $('#sidebarFavorite').removeClass('icon-star')
-                                .addClass('icon-starred')
-                                .prop('title', t('files', 'Favorited'));
-                            audioinfo[m] = '';
-                        } else if (m === 'fav') {
-                            $('#sidebarFavorite').removeClass('icon-starred')
-                                .addClass('icon-star')
-                                .prop('title', t('files', 'Favorite'));
-                            audioinfo[m] = '';
-                        }
-
-                        if (audioinfo[m] !== '' && audioinfo[m] !== null) {
-                            table.append(tablerow);
-                        }
+                var audioinfo = jsondata.data;
+                for (var m in audioinfo) {
+                    var tablerow = document.createElement('div');
+                    tablerow.style.display = 'table-row';
+                    var tablekey = document.createElement('div');
+                    tablekey.classList.add('key');
+                    tablekey.textContent = t('audioplayer', m);
+                    var tablevalue = document.createElement('div');
+                    tablevalue.classList.add('value');
+                    tablevalue.textContent = audioinfo[m];
+                    if (m === 'Path') {
+                        tablevalue.textContent = '';
+                        var tablevalueDownload = document.createElement('a');
+                        tablevalueDownload.setAttribute('href', OC.linkToRemote('webdav' + audioinfo[m]));
+                        tablevalueDownload.textContent = audioinfo[m];
+                        tablevalue.appendChild(tablevalueDownload);
                     }
-                } else {
-                    table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No data') + '</p></div>';
-                }
+                    tablerow.appendChild(tablekey);
+                    tablerow.appendChild(tablevalue);
 
-                $('#metadataTabView').html(table);
+                    if (m === 'fav' && audioinfo[m] === 't') {
+                        var fav = document.getElementById('sidebarFavorite');
+                        fav.classList.remove('icon-star');
+                        fav.classList.add('icon-starred');
+                        fav.title = t('files', 'Favorited');
+                        audioinfo[m] = '';
+                    } else if (m === 'fav') {
+                        var fav2 = document.getElementById('sidebarFavorite');
+                        fav2.classList.remove('icon-starred');
+                        fav2.classList.add('icon-star');
+                        fav2.title = t('files', 'Favorite');
+                        audioinfo[m] = '';
+                    }
+
+                    if (audioinfo[m] !== '' && audioinfo[m] !== null) {
+                        table.appendChild(tablerow);
+                    }
+                }
+            } else {
+                table = document.createElement('div');
+                table.setAttribute('style', 'margin-left: 2em;');
+                table.classList.add('get-metadata');
+                table.innerHTML = '<p>' + t('audioplayer', 'No data') + '</p>';
             }
+
+            var metadataTabView = document.getElementById('metadataTabView');
+            metadataTabView.innerHTML = '';
+            metadataTabView.appendChild(table);
         });
     },
 
@@ -212,8 +224,10 @@ OCA.Audioplayer.Sidebar = {
         var trackid = document.getElementById('app-sidebar').dataset.trackid;
 
         OCA.Audioplayer.Sidebar.resetView();
-        $('#tabHeaderPlaylists').addClass('selected');
-        $('#playlistsTabView').removeClass('hidden').html('<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>');
+        document.getElementById('tabHeaderPlaylists').classList.add('selected');
+        var playlistsTabView = document.getElementById('playlistsTabView');
+        playlistsTabView.classList.remove('hidden');
+        playlistsTabView.innerHTML = '<div style="text-align:center; word-wrap:break-word;" class="get-metadata"><p><img src="' + OC.imagePath('core', 'loading.gif') + '"><br><br></p><p>' + t('audioplayer', 'Reading data') + '</p></div>';
 
         fetch(
             OC.generateUrl('apps/audioplayer/getplaylists'),
@@ -225,62 +239,78 @@ OCA.Audioplayer.Sidebar = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                var table;
-                if (jsondata.status === 'success') {
+            var table;
+            if (jsondata.status === 'success') {
+                table = document.createElement('div');
+                table.style.display = 'table';
+                table.classList.add('table');
+                var audioinfo = jsondata.data;
+                for (var m in audioinfo) {
+                    var spanDelete = document.createElement('a');
+                    spanDelete.setAttribute('class', 'icon icon-delete toolTip');
+                    spanDelete.dataset.listid = audioinfo[m].playlist_id;
+                    spanDelete.dataset.trackid = trackid;
+                    spanDelete.title = t('audioplayer', 'Remove');
+                    spanDelete.addEventListener('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist);
 
-                    table = $('<div>').css('display', 'table').addClass('table');
-                    var tablerow;
-                    var m;
-                    var tablekey;
-                    var tablevalue;
+                    var tablerow = document.createElement('div');
+                    tablerow.style.display = 'table-row';
+                    tablerow.dataset.id = audioinfo[m].playlist_id;
+                    var tablekey = document.createElement('div');
+                    tablekey.classList.add('key');
+                    tablekey.appendChild(spanDelete);
 
-                    var audioinfo = jsondata.data;
-                    for (m in audioinfo) {
-                        var spanDelete = $('<a/>').attr({
-                            'class': 'icon icon-delete toolTip',
-                            'data-listid': audioinfo[m].playlist_id,
-                            'data-trackid': trackid,
-                            'title': t('audioplayer', 'Remove')
-                        }).on('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist);
-
-                        tablerow = $('<div>').css('display', 'table-row').attr({'data-id': audioinfo[m].playlist_id});
-                        tablekey = $('<div>').addClass('key').append(spanDelete);
-
-                        tablevalue = $('<div>').addClass('value')
-                            .text(audioinfo[m].name);
-                        tablerow.append(tablekey).append(tablevalue);
-                        table.append(tablerow);
-                    }
-                } else {
-                    table = '<div style="margin-left: 2em;" class="get-metadata"><p>' + t('audioplayer', 'No playlist entry') + '</p></div>';
+                    var tablevalue = document.createElement('div');
+                    tablevalue.classList.add('value');
+                    tablevalue.textContent = audioinfo[m].name;
+                    tablerow.appendChild(tablekey);
+                    tablerow.appendChild(tablevalue);
+                    table.appendChild(tablerow);
                 }
-
-                $('#playlistsTabView').html(table);
+            } else {
+                table = document.createElement('div');
+                table.setAttribute('style', 'margin-left: 2em;');
+                table.classList.add('get-metadata');
+                table.innerHTML = '<p>' + t('audioplayer', 'No playlist entry') + '</p>';
             }
-        });
 
+            var playlistsTabView = document.getElementById('playlistsTabView');
+            playlistsTabView.innerHTML = '';
+            playlistsTabView.appendChild(table);
+
+        });
     },
 
     addonsTabView: function () {
         OCA.Audioplayer.Sidebar.resetView();
-        $('#tabHeaderAddons').addClass('selected');
+        document.getElementById('tabHeaderAddons').classList.add('selected');
         var html = '<div style="margin-left: 2em; background-position: initial;" class="icon-info">';
         html += '<p style="margin-left: 2em;">' + t('audioplayer', 'Available Audio Player Add-Ons:') + '</p>';
         html += '<p style="margin-left: 2em;"><br></p>';
         html += '<a href="https://github.com/rello/audioplayer_sonos"  target="_blank" >';
         html += '<p style="margin-left: 2em;">- ' + t('audioplayer', 'SONOS playback') + '</p>';
         html += '</a></div>';
-        $('#addonsTabView').removeClass('hidden').html(html);
-    },
+        var addonsTabView = document.getElementById('addonsTabView');
+        addonsTabView.classList.remove('hidden');
+        addonsTabView.innerHTML = html;
+    }
+    ,
 
     resetView: function () {
-        $('.tabHeader.selected').removeClass('selected');
-        $('.tab').addClass('hidden');
-    },
+        document.querySelectorAll('.tabHeader.selected').forEach(function (el) {
+            el.classList.remove('selected');
+        });
+        document.querySelectorAll('.tab').forEach(function (el) {
+            el.classList.add('hidden');
+        });
+    }
+    ,
 
     sortByName: function (a, b) {
         var aName = a.tabindex;
         var bName = b.tabindex;
         return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
-    },
-};
+    }
+    ,
+}
+;

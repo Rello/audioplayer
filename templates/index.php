@@ -13,7 +13,7 @@ use OCP\Util;
 
 Util::addStyle('audioplayer', 'bar-ui');
 Util::addStyle('audioplayer', 'style');
-Util::addStyle('files', 'detailsView');
+//Util::addStyle('files', 'detailsView');
 Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
 Util::addScript('audioplayer', 'app');
 Util::addScript('audioplayer', 'sidebar');
