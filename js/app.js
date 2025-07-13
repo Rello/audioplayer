@@ -76,6 +76,12 @@ OCA.Audioplayer.Core = {
                 }
             }
 
+            // Do not process shortcuts when a modal dialog is open
+            const modal = document.querySelector('[role="dialog"][aria-modal="true"]');
+            if (modal && window.getComputedStyle(modal).display !== 'none') {
+                return;
+            }
+
             if (OCA.Audioplayer.Player) {
                 let currentVolume;
                 let newVolume;
