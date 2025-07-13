@@ -194,7 +194,10 @@ OCA.Audioplayer.Cover = {
         document.getElementById('individual-playlist-info').style.display = 'none';
         document.getElementById('individual-playlist-header').style.display = 'none';
         document.querySelector('.coverrow') ? document.querySelector('.coverrow').remove() : false;
-        document.querySelector('.songcontainer') ? document.querySelector('.songcontainer').remove() : false;
+        if (document.querySelector('.songcontainer')) {
+            document.querySelector('.songcontainer').remove();
+            OCA.Audioplayer.Cover.resetAlbumShift();
+        }
 
         fetch(
             OC.generateUrl('apps/audioplayer/getcategoryitemcovers') +
@@ -261,6 +264,7 @@ OCA.Audioplayer.Cover = {
         evt.preventDefault();
 
         let eventTarget = evt.target;
+        OCA.Audioplayer.Cover.resetAlbumShift();
         let AlbumId = eventTarget.parentNode.dataset.album;
         let activeAlbum = document.querySelector('.album[data-album="' + AlbumId + '"]');
 
@@ -269,6 +273,7 @@ OCA.Audioplayer.Cover = {
             if (sc) {
                 sc.remove();
             }
+            OCA.Audioplayer.Cover.resetAlbumShift();
             activeAlbum.getElementsByClassName('artist')[0].style.visibility = 'visible';
             activeAlbum.classList.remove('is-active');
             return true;
@@ -295,6 +300,7 @@ OCA.Audioplayer.Cover = {
 
         if (document.querySelector('.songcontainer')) {
             document.querySelector('.songcontainer').remove();
+            OCA.Audioplayer.Cover.resetAlbumShift();
         }
         let divSongContainer = document.createElement('div');
         divSongContainer.classList.add('songcontainer');
@@ -347,10 +353,11 @@ OCA.Audioplayer.Cover = {
         divSongContainer.appendChild(divSongContainerInner);
         document.getElementById('playlist-container').appendChild(divSongContainer);
 
-        OCA.Audioplayer.Category.getTracks(null, 'Album', AlbumId, true, albumDirectPlay);
-
         // don´t show the playlist when the quick-play button is pressed
         if (albumDirectPlay !== true) {
+            OCA.Audioplayer.Category.getTracks(function () {
+                OCA.Audioplayer.Cover.shiftAlbumsAfter(activeAlbum, divSongContainer);
+            }, 'Album', AlbumId, true, albumDirectPlay);
             let iScroll = 20;
             let iSlideDown = 200;
             let iTop = 260;
@@ -362,9 +369,32 @@ OCA.Audioplayer.Cover = {
             divSongContainer.style.top = containerTop + 'px';
             divSongContainer.style.display = 'block';
             window.scrollTo(0, appContentScroll);
+        } else {
+            OCA.Audioplayer.Category.getTracks(null, 'Album', AlbumId, true, albumDirectPlay);
         }
 
         return true;
+    },
+
+    resetAlbumShift: function () {
+        document.querySelectorAll('.coverrow .album.shift-down').forEach(function (album) {
+            album.style.transform = 'translate(0, 0)';
+            album.classList.remove('shift-down');
+        });
+    },
+
+    shiftAlbumsAfter: function (activeAlbum, container) {
+        const shift = container.offsetHeight;
+        let move = false;
+        document.querySelectorAll('.coverrow .album').forEach(function (album) {
+            if (move) {
+                album.style.transform = 'translate(0,' + shift + 'px)';
+                album.classList.add('shift-down');
+            }
+            if (album === activeAlbum) {
+                move = true;
+            }
+        });
     },
 };
 

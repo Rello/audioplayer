@@ -571,6 +571,7 @@ i#scanAudiosFirst {
   float: left;
   margin-bottom: 20px;
   transform: translate(0, 0);
+  transition: transform .2s ease-in-out;
 }
 
 .album.is-active {
