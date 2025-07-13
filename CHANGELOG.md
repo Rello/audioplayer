@@ -6,6 +6,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - gapless playback through preloading next track
 - store and display track comments
 - playback speed toggle button
+- waveform progress bar
 
 ### Changed
 - refactored MusicController into service and mapper
