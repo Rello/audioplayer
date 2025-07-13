@@ -96,8 +96,17 @@ OCA.Audioplayer.Player = {
     prev: function () {
         OCA.Audioplayer.Player.trackStartPosition = 0;
         OCA.Audioplayer.Player.lastSavedSecond = 0;
-        OCA.Audioplayer.Player.currentTrackIndex--;
-        OCA.Audioplayer.Player.setTrack();
+        if (OCA.Audioplayer.Player.currentTrackIndex === 0) {
+            if (OCA.Audioplayer.Player.repeatMode === 'list') {
+                OCA.Audioplayer.Player.currentTrackIndex = OCA.Audioplayer.Player.html5Audio.childElementCount - 1;
+                OCA.Audioplayer.Player.setTrack();
+            } else {
+                OCA.Audioplayer.Player.stop();
+            }
+        } else {
+            OCA.Audioplayer.Player.currentTrackIndex--;
+            OCA.Audioplayer.Player.setTrack();
+        }
     },
 
     /**

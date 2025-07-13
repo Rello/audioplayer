@@ -144,6 +144,12 @@ class ScannerController extends Controller
             $output = new NullOutput();
         }
 
+        $this->iAlbumCount = 0;
+        $this->iDublicate = 0;
+        $this->numOfSongs = 0;
+        $this->parentIdPrevious = 0;
+        $this->folderPicture = false;
+
         $output->writeln("Start processing of <info>audio files</info>");
 
         $counter = 0;
@@ -288,6 +294,9 @@ class ScannerController extends Controller
         $genre = $this->getID3Value(array('genre'));
         $artist = $this->getID3Value(array('artist'));
         $name = $this->getID3Value(array('title'), $audio->getName());
+		if ($name === null || $name === '') {
+			$name = $audio->getName();
+		}
         $trackNr = $this->getID3Value(array('track_number'), '');
         $composer = $this->getID3Value(array('composer'), '');
         $year = $this->getID3Value(array('year', 'creation_date', 'date'), 0);
