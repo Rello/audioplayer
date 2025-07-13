@@ -773,6 +773,11 @@ i#scanAudiosFirst {
     float: left;
 }
 
+.songlist.two-column .albumwrapper li {
+    float: none;
+    break-inside: avoid;
+}
+
 .songcontainer span.number {
     position: relative;
     width: 30px;
