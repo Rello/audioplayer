@@ -12,25 +12,25 @@ class SidebarMapper
         $this->db = $db;
     }
 
-    public function findTrackInfo(int $userId, ?int $trackId = null, ?int $fileId = null): array
+    public function findTrackInfo($userId, ?int $trackId = null, ?int $fileId = null): array
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select([
-                'AT.title',
-                'AT.subtitle',
+                'AT.title AS Title',
+                'AT.subtitle AS Subtitle',
                 'AA.name AS Artist',
-                'AB.artist_id AS album_artist',
-                'AT.composer',
+                'AB.artist_id',
+                'AT.composer AS Composer',
                 'AB.name AS Album',
                 'AG.name AS Genre',
-                'AT.year',
-                'AT.disc',
-                'AT.number',
-                'AT.length',
-                $qb->createFunction('ROUND((AT.bitrate / 1000 ),0)') . ' AS Bitrate',
-                'AT.mimetype',
-                'AT.isrc',
-                'AT.copyright',
+                'AT.year AS Year',
+                'AT.disc AS Disc',
+                'AT.number AS Track',
+                'AT.length AS Length',
+				'AT.bitrate AS Bitrate',
+                'AT.mimetype AS MIME type',
+                'AT.isrc AS ISRC',
+                'AT.copyright AS Copyright',
                 'AT.file_id',
                 'AB.id AS album_id',
                 'AT.id'
@@ -55,7 +55,7 @@ class SidebarMapper
         return $row ?: [];
     }
 
-    public function getFileId(int $userId, int $trackId): ?int
+    public function getFileId($userId, int $trackId): ?int
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select('file_id')
@@ -68,7 +68,7 @@ class SidebarMapper
         return $row['file_id'] ?? null;
     }
 
-    public function findPlaylistsForTrack(int $userId, int $trackId): array
+    public function findPlaylistsForTrack($userId, int $trackId): array
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select('AP.playlist_id', 'AN.name')

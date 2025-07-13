@@ -5,24 +5,28 @@ use OCA\audioplayer\Db\SidebarMapper;
 use OCP\Files\IRootFolder;
 use OCP\IL10N;
 use OCP\ITagManager;
+use Psr\Log\LoggerInterface;
 
 class SidebarService
 {
     private $userId;
+	private $logger;
     private $l10n;
     private $tagManager;
     private $mapper;
     private $rootFolder;
 
     public function __construct(
-        string $userId,
+		$userId,
         IL10N $l10n,
+		LoggerInterface $logger,
         ITagManager $tagManager,
         SidebarMapper $mapper,
         IRootFolder $rootFolder
     ) {
         $this->userId = $userId;
         $this->l10n = $l10n;
+		$this->logger = $logger;
         $this->tagManager = $tagManager;
         $this->mapper = $mapper;
         $this->rootFolder = $rootFolder;
@@ -30,12 +34,14 @@ class SidebarService
 
     public function getAudioInfo(int $trackId): array
     {
+		$this->logger->info('user id: ' . $this->userId);
         $row = $this->mapper->findTrackInfo($this->userId, $trackId, null);
         if (empty($row)) {
             return [];
         }
+		$this->logger->info('row: ' . json_encode($row));
 
-        $row['Album Artist'] = $this->getAlbumArtistName($row['album_id'], (int)$row['album_artist']);
+        $row['Album Artist'] = $this->getAlbumArtistName($row['album_id'], (int)$row['artist_id']);
 
         if ($row['year'] === '0') {
             $row['year'] = $this->l10n->t('Unknown');
@@ -44,9 +50,9 @@ class SidebarService
             $row['Bitrate'] = $row['Bitrate'] . ' kbps';
         }
 
-        array_splice($row, 15, 3);
+        //array_splice($row, 15, 3);
 
-        $fileId = $this->mapper->getFileId($this->userId, $trackId);
+        $fileId = $row['file_id'];
         if ($fileId !== null) {
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
             if (!empty($nodes)) {
@@ -55,7 +61,7 @@ class SidebarService
                 $row['Path'] = join('/', array_map('rawurlencode', explode('/', $path)));
             }
         }
-
+		$this->logger->info('row2: ' . json_encode($row));
         $favorites = $this->tagManager->load('files')->getFavorites();
         $row['fav'] = in_array($row['file_id'], $favorites) ? 't' : 'f';
 
