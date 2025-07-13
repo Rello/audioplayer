@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace OCA\audioplayer\Search;
 
-use OCA\audioplayer\Controller\DbController;
+use OCA\audioplayer\DB\DbMapper;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -31,15 +31,15 @@ class Provider implements IProvider
     /** @var IURLGenerator */
     private $urlGenerator;
 
-    private $DBController;
+    private $dbMapper;
 
     public function __construct(IL10N $l10n,
                                 IURLGenerator $urlGenerator,
-                                DBController $DBController)
+                                DbMapper $dbMapper)
     {
         $this->l10n = $l10n;
         $this->urlGenerator = $urlGenerator;
-        $this->DBController = $DBController;
+        $this->dbMapper = $dbMapper;
     }
 
     public function getId(): string
@@ -49,7 +49,7 @@ class Provider implements IProvider
 
     public function search(IUser $user, ISearchQuery $query): SearchResult
     {
-        $datasets = $this->DBController->search($query->getTerm());
+        $datasets = $this->dbMapper->search($query->getTerm());
         $result = [];
 
         foreach ($datasets as $dataset) {

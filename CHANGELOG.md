@@ -17,6 +17,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - PHP 8.4 compatibility for nullable parameters
 ### Changed
 - Refactor SidebarController into service and mapper
+- Converted DbController into DbMapper using Query Builder
 
 ## 3.4.1 - 2023-12-11
 ### Fixed

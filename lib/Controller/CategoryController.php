@@ -18,6 +18,7 @@ use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDBConnection;
 use OCP\ITagManager;
+use OCA\audioplayer\DB\DbMapper;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use \OCP\Files\NotFoundException;
@@ -36,7 +37,7 @@ class CategoryController extends Controller
     private $tagManager;
     private $rootFolder;
     private $logger;
-    private $DBController;
+    private $dbMapper;
     private $categoriesTag;
 
     public function __construct(
@@ -48,7 +49,7 @@ class CategoryController extends Controller
         ITagManager $tagManager,
         IRootFolder $rootFolder,
         LoggerInterface $logger,
-        DbController $DBController,
+        \OCA\audioplayer\DB\DbMapper $dbMapper,
         Tag $categoriesTag
     )
     {
@@ -60,7 +61,7 @@ class CategoryController extends Controller
         $this->tagger = null;
         $this->rootFolder = $rootFolder;
         $this->logger = $logger;
-        $this->DBController = $DBController;
+        $this->dbMapper = $dbMapper;
         $this->categoriesTag = $categoriesTag;
     }
 
@@ -218,7 +219,7 @@ class CategoryController extends Controller
         }
 
         foreach ($results as $row) {
-            $row['art'] = $this->DBController->loadArtistsToAlbum($row['id'], $row['art']);
+            $row['art'] = $this->dbMapper->loadArtistsToAlbum($row['id'], $row['art']);
             array_splice($row, 2, 1);
             if ($row['name'] === '0' OR $row['name'] === '') $row['name'] = $this->l10n->t('Unknown');
             $aPlaylists[] = $row;
@@ -421,7 +422,7 @@ class CategoryController extends Controller
 
             if ($file === null) {
                 $this->logger->debug('removed/unshared file found => remove '.$row['fid'], array('app' => 'audioplayer'));
-                $this->DBController->deleteFromDB($row['fid'], $this->userId);
+                $this->dbMapper->deleteFromDB($row['fid'], $this->userId);
                 continue;
             }
             if (is_array($favorites) AND in_array($row['fid'], $favorites)) {
@@ -547,7 +548,7 @@ class CategoryController extends Controller
 
                     try {
                         $fileId = $this->rootFolder->getUserFolder($this->userId)->get($path)->getId();
-                        $track = $this->DBController->getTrackInfo(null,$fileId);
+                        $track = $this->dbMapper->getTrackInfo(null,$fileId);
                         if (!isset($track['id'])) continue;
 
                         $row = array();

@@ -2,7 +2,7 @@
 namespace OCA\audioplayer\Service;
 
 use OCA\audioplayer\Db\CoverMapper;
-use OCA\audioplayer\Controller\DbController;
+use OCA\audioplayer\DB\DbMapper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -14,7 +14,7 @@ iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6CAIAAAAHjs1qAAAAK3RFWHRDcmVhdGlvbiBUaW1lAERpIDE1
 COVER;
 
     private $mapper;
-    private $dbController;
+    private $dbMapper;
     private $l10n;
     private $logger;
     private $userId;
@@ -23,13 +23,13 @@ COVER;
         string $userId,
         IL10N $l10n,
         CoverMapper $mapper,
-        DbController $dbController,
+        DbMapper $dbMapper,
         LoggerInterface $logger
     ) {
         $this->userId = $userId;
         $this->l10n = $l10n;
         $this->mapper = $mapper;
-        $this->dbController = $dbController;
+        $this->dbMapper = $dbMapper;
         $this->logger = $logger;
     }
 
@@ -40,7 +40,7 @@ COVER;
             return self::UNKNOWN_COVER;
         }
 
-        $artist = $this->dbController->loadArtistsToAlbum($album, (int)$data['artist_id']);
+        $artist = $this->dbMapper->loadArtistsToAlbum($album, (int)$data['artist_id']);
         $cover = $data['cover'];
         if ($data['name'] === $this->l10n->t('Unknown') && $artist === $this->l10n->t('Various Artists')) {
             $cover = self::UNKNOWN_COVER;
