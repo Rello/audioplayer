@@ -18,6 +18,16 @@ if (!OCA.Audioplayer) {
      * @namespace
      */
     OCA.Audioplayer = {};
+    /**
+     * Build common request headers for backend calls
+     */
+    OCA.Audioplayer.headers = function () {
+        let headers = new Headers();
+        headers.append('requesttoken', OC.requestToken);
+        headers.append('OCS-APIREQUEST', 'true');
+        headers.append('Content-Type', 'application/json');
+        return headers;
+    };
 }
 
 /**
@@ -179,16 +189,18 @@ OCA.Audioplayer.Cover = {
         document.querySelector('.coverrow') ? document.querySelector('.coverrow').remove() : false;
         document.querySelector('.songcontainer') ? document.querySelector('.songcontainer').remove() : false;
 
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getcategoryitemcovers'),
-            data: {category: category, categoryId: categoryId},
-            success: function (jsondata) {
-                document.getElementById('loading').style.display = 'none';
-                if (jsondata.status === 'success') {
-                    document.getElementById('sm2-bar-ui').style.display = 'block';
-                    OCA.Audioplayer.Cover.buildCoverRow(jsondata.data);
-                }
+        fetch(
+            OC.generateUrl('apps/audioplayer/getcategoryitemcovers') +
+            '?category=' + encodeURIComponent(category) +
+            '&categoryId=' + encodeURIComponent(categoryId),
+            {method: 'GET', headers: OCA.Audioplayer.headers()}
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
+            document.getElementById('loading').style.display = 'none';
+            if (jsondata.status === 'success') {
+                document.getElementById('sm2-bar-ui').style.display = 'block';
+                OCA.Audioplayer.Cover.buildCoverRow(jsondata.data);
             }
         });
     },
@@ -356,11 +368,13 @@ OCA.Audioplayer.Category = {
         document.getElementById('addPlaylist').classList.add('hidden');
         document.getElementById('myCategory').innerHTML = '';
 
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/getcategoryitems'),
-            data: {category: category},
-            success: function (jsondata) {
+        fetch(
+            OC.generateUrl('apps/audioplayer/getcategoryitems') +
+            '?category=' + encodeURIComponent(category),
+            {method: 'GET', headers: OCA.Audioplayer.headers()}
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
                 if (jsondata.status === 'success') {
                     let categoryRows = document.createDocumentFragment();
 
@@ -391,7 +405,6 @@ OCA.Audioplayer.Category = {
                 } else {
                     OCA.Audioplayer.UI.showInitScreen();
                 }
-            }
         });
         if (category === 'Playlist') {
             document.getElementById('addPlaylist').classList.remove('hidden');
@@ -471,11 +484,20 @@ OCA.Audioplayer.Category = {
             OCA.Audioplayer.Core.AjaxCallStatus.abort();
         }
 
-        OCA.Audioplayer.Core.AjaxCallStatus = $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/gettracks'),
-            data: {category: category, categoryId: categoryItem},
-            success: function (jsondata) {
+        OCA.Audioplayer.Core.AjaxCallStatus = new AbortController();
+
+        fetch(
+            OC.generateUrl('apps/audioplayer/gettracks') +
+            '?category=' + encodeURIComponent(category) +
+            '&categoryId=' + encodeURIComponent(categoryItem),
+            {
+                method: 'GET',
+                headers: OCA.Audioplayer.headers(),
+                signal: OCA.Audioplayer.Core.AjaxCallStatus.signal
+            }
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
                 document.getElementById('loading').style.display = 'none';
                 if (jsondata.status === 'success') {
                     document.getElementById('sm2-bar-ui').style.display = 'block';
@@ -505,7 +527,6 @@ OCA.Audioplayer.Category = {
                 } else {
                     OCA.Audioplayer.UI.showInitScreen('playlist');
                 }
-            }
         });
         let category_title = document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').firstChild['title'] : false;
         if (category !== 'Title') {
@@ -1010,29 +1031,23 @@ OCA.Audioplayer.Backend = {
             if (user_type === 'category') {
                 OCA.Audioplayer.Core.CategorySelectors = user_value.split('-');
             }
-            $.ajax({
-                type: 'GET',
-                url: OC.generateUrl('apps/audioplayer/setvalue'),
-                data: {
-                    'type': user_type,
-                    'value': user_value
-                },
-                success: function () {
-                }
-            });
+            fetch(
+                OC.generateUrl('apps/audioplayer/setvalue') +
+                '?type=' + encodeURIComponent(user_type) +
+                '&value=' + encodeURIComponent(user_value),
+                {method: 'GET', headers: OCA.Audioplayer.headers()}
+            );
         }
     },
 
     setStatistics: function () {
         let track_id = OCA.Audioplayer.Player.currentTrackId;
         if (track_id) {
-            $.ajax({
-                type: 'GET',
-                url: OC.generateUrl('apps/audioplayer/setstatistics'),
-                data: {'track_id': track_id},
-                success: function () {
-                }
-            });
+            fetch(
+                OC.generateUrl('apps/audioplayer/setstatistics') +
+                '?track_id=' + encodeURIComponent(track_id),
+                {method: 'GET', headers: OCA.Audioplayer.headers()}
+            );
             OCA.Audioplayer.Backend.setUserValue('category', OCA.Audioplayer.Core.CategorySelectors[0] + '-' + OCA.Audioplayer.Core.CategorySelectors[1] + '-' + track_id);
         }
 
@@ -1055,13 +1070,13 @@ OCA.Audioplayer.Backend = {
 
     whatsnew: function (options) {
         options = options || {};
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/whatsnew'),
-            data: {'format': 'json'},
-            success: options.success || function (data, statusText, xhr) {
-                OCA.Audioplayer.UI.whatsNewSuccess(data, statusText, xhr);
-            },
+        fetch(
+            OC.generateUrl('apps/audioplayer/whatsnew') + '?format=json',
+            {method: 'GET', headers: OCA.Audioplayer.headers()}
+        ).then(function (response) {
+            return response.json();
+        }).then(options.success || function (data, statusText, xhr) {
+            OCA.Audioplayer.UI.whatsNewSuccess(data, statusText, xhr);
         });
     },
 
@@ -1072,11 +1087,14 @@ OCA.Audioplayer.Backend = {
         //xhr.setRequestHeader('requesttoken', OC.requestToken);
         //xhr.setRequestHeader('OCS-APIREQUEST', 'true');
         //xhr.send(JSON.stringify(data));
-        $.ajax({
-            type: 'POST',
-            url: OC.generateUrl('apps/audioplayer/whatsnew'),
-            data: {version: encodeURIComponent(version)}
-        })
+        fetch(
+            OC.generateUrl('apps/audioplayer/whatsnew'),
+            {
+                method: 'POST',
+                headers: OCA.Audioplayer.headers(),
+                body: JSON.stringify({version: encodeURIComponent(version)})
+            }
+        )
 
         let elem = document.querySelector('.whatsNewPopover');
         elem.parentNode.removeChild(elem);
@@ -1089,20 +1107,32 @@ OCA.Audioplayer.Backend = {
 OCA.Audioplayer.Playlists = {
     addSongToPlaylist: function (plId, songId) {
         let sort = parseInt($('#myPlayList li[data-id="' + plId + '"]').find('.counter').text());
-        return $.post(OC.generateUrl('apps/audioplayer/addtracktoplaylist'), {
-            playlistid: plId,
-            songid: songId,
-            sorting: (sort + 1)
-        }).then(function () {
+        return fetch(
+            OC.generateUrl('apps/audioplayer/addtracktoplaylist'),
+            {
+                method: 'POST',
+                headers: OCA.Audioplayer.headers(),
+                body: JSON.stringify({
+                    playlistid: plId,
+                    songid: songId,
+                    sorting: (sort + 1)
+                })
+            }
+        ).then(function () {
             OCA.Audioplayer.Core.CategorySelectors[0] = 'Playlist';
             OCA.Audioplayer.Category.load();
         });
     },
 
     newPlaylist: function (playlistName) {
-        $.post(OC.generateUrl('apps/audioplayer/addplaylist'), {
-            playlist: playlistName
-        }, function (jsondata) {
+        fetch(
+            OC.generateUrl('apps/audioplayer/addplaylist'),
+            {
+                method: 'POST',
+                headers: OCA.Audioplayer.headers(),
+                body: JSON.stringify({playlist: playlistName})
+            }
+        ).then(function (response) { return response.json(); }).then(function (jsondata) {
             if (jsondata.status === 'success') {
                 OCA.Audioplayer.Category.load();
             }
@@ -1152,10 +1182,14 @@ OCA.Audioplayer.Playlists = {
         let saveForm = $('.plclone[data-id="' + playlistId + '"]');
         let playlistName = saveForm.find('input[name="playlist"]').val();
 
-        $.post(OC.generateUrl('apps/audioplayer/updateplaylist'), {
-            plId: playlistId,
-            newname: playlistName
-        }, function (jsondata) {
+        fetch(
+            OC.generateUrl('apps/audioplayer/updateplaylist'),
+            {
+                method: 'POST',
+                headers: OCA.Audioplayer.headers(),
+                body: JSON.stringify({plId: playlistId, newname: playlistName})
+            }
+        ).then(function (response) { return response.json(); }).then(function (jsondata) {
             if (jsondata.status === 'success') {
                 OCA.Audioplayer.Category.load();
                 playlistClone.remove();
@@ -1179,10 +1213,14 @@ OCA.Audioplayer.Playlists = {
                 });
 
                 if (idsInOrder.length !== 0) {
-                    $.post(OC.generateUrl('apps/audioplayer/sortplaylist'), {
-                        playlistid: plId,
-                        songids: idsInOrder.join(';')
-                    }, function (jsondata) {
+                    fetch(
+                        OC.generateUrl('apps/audioplayer/sortplaylist'),
+                        {
+                            method: 'POST',
+                            headers: OCA.Audioplayer.headers(),
+                            body: JSON.stringify({playlistid: plId, songids: idsInOrder.join(';')})
+                        }
+                    ).then(function (response) { return response.json(); }).then(function (jsondata) {
                         if (jsondata.status === 'success') {
                             OCP.Toast.info(jsondata['msg']);
                             document.getElementById('myCategory').getElementsByClassName('active')[0].click();
@@ -1214,9 +1252,14 @@ OCA.Audioplayer.Playlists = {
             t('audioplayer', 'Delete playlist'),
             function (e) {
                 if (e) {
-                    $.post(OC.generateUrl('apps/audioplayer/removeplaylist'), {
-                        playlistid: plId
-                    }, function (jsondata) {
+                    fetch(
+                        OC.generateUrl('apps/audioplayer/removeplaylist'),
+                        {
+                            method: 'POST',
+                            headers: OCA.Audioplayer.headers(),
+                            body: JSON.stringify({playlistid: plId})
+                        }
+                    ).then(function (response) { return response.json(); }).then(function (jsondata) {
                         if (jsondata.status === 'success') {
                             OCA.Audioplayer.Category.load();
                             OCP.Toast.success(t('audioplayer', 'Playlist successfully deleted!'));
@@ -1268,10 +1311,14 @@ OCA.Audioplayer.Playlists = {
         let trackid = $(evt.target).attr('data-trackid');
         let playlistId = $(evt.target).attr('data-listid');
 
-        $.post(OC.generateUrl('apps/audioplayer/removetrackfromplaylist'), {
-            'playlistid': playlistId,
-            'trackid': trackid
-        }, function (jsondata) {
+        fetch(
+            OC.generateUrl('apps/audioplayer/removetrackfromplaylist'),
+            {
+                method: 'POST',
+                headers: OCA.Audioplayer.headers(),
+                body: JSON.stringify({playlistid: playlistId, trackid: trackid})
+            }
+        ).then(function (response) { return response.json(); }).then(function (jsondata) {
             if (jsondata) {
                 let currentCount = $('#myCategory li[data-id="' + playlistId + '"]').find('.counter');
                 currentCount.text(currentCount.text() - 1);
