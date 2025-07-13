@@ -35,6 +35,7 @@ class MusicMapper
             ->addSelect('AT.number')
             ->addSelect('AT.composer')
             ->addSelect('AT.subtitle')
+            ->addSelect('AT.comment')
             ->addSelect('AT.mimetype')
             ->selectAlias('AB.id', 'album_id')
             ->selectAlias('AB.artist_id', 'albumArtist_id')

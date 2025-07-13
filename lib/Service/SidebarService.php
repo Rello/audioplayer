@@ -50,8 +50,11 @@ class SidebarService
             $row['Bitrate'] = $row['Bitrate'] . ' kbps';
         }
 
-        //array_splice($row, 15, 3);
-
+		foreach (['file_id', 'id', 'album_id', 'artist_id'] as $column) {
+			if (isset($row[$column])) {
+				unset($row[$column]);
+			}
+		}
         $fileId = $row['file_id'];
         if ($fileId !== null) {
             $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
@@ -65,6 +68,7 @@ class SidebarService
         $favorites = $this->tagManager->load('files')->getFavorites();
         $row['fav'] = in_array($row['file_id'], $favorites) ? 't' : 'f';
 
+		ksort($row);
         return $row;
     }
 

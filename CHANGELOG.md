@@ -3,8 +3,8 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## 3.5.0 - in progress
 ### Added
-
 - gapless playback through preloading next track
+- store and display track comments
 
 ### Changed
 - refactored MusicController into service and mapper
