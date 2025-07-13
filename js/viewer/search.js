@@ -18,11 +18,14 @@
         attach: function(search) {
             search.setRenderer('audioplayer', this.renderResult);
         },
-        renderResult: function($row, item) {
-            $row.find('td.icon')
-                .css('background-image', 'url(' + OC.imagePath('audioplayer', 'app-dark') + ')')
-                .css('opacity', '.4');
-            return $row;
+        renderResult: function(row, item) {
+            var element = row instanceof HTMLElement ? row : row[0];
+            var icon = element.querySelector('td.icon');
+            if (icon) {
+                icon.style.backgroundImage = 'url(' + OC.imagePath('audioplayer', 'app-dark') + ')';
+                icon.style.opacity = '.4';
+            }
+            return element;
         }
     };
     OCA.Search.Audiplayer = Audiplayer;

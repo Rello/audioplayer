@@ -23,7 +23,8 @@ function playFile(file, data) {
     file = encodeURIComponent(file);
     audioPlayer.file = file;
     audioPlayer.dir = data.dir;
-    var token = ($('#sharingToken').val() !== undefined) ? $('#sharingToken').val() : '';
+    var sharingToken = document.getElementById('sharingToken');
+    var token = (sharingToken && sharingToken.value !== undefined) ? sharingToken.value : '';
     var dirLoad = data.dir.substr(1);
     if (dirLoad !== '') {
         dirLoad = dirLoad + '/';
@@ -36,8 +37,12 @@ function playFile(file, data) {
     } else {
         audioPlayer.location = OC.generateUrl('apps/audioplayer/getaudiostream?file={file}', {'file': dirLoad + file}, {escape: true});
     }
-    audioPlayer.mime = data.$file.attr('data-mime');
-    data.$file.find('.thumbnail').html('<i class="ioc ioc-volume-up"  style="color:#fff;margin-left:5px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;font-size: 24px;"></i>');
+    var fileRow = data.$file && data.$file[0] ? data.$file[0] : data.file;
+    audioPlayer.mime = fileRow.getAttribute('data-mime');
+    var thumb = fileRow.querySelector('.thumbnail');
+    if (thumb) {
+        thumb.innerHTML = '<i class="ioc ioc-volume-up"  style="color:#fff;margin-left:5px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;font-size: 24px;"></i>';
+    }
 
     if (audioPlayer.player === null) {
         audioPlayer.player = document.createElement('audio');
@@ -46,7 +51,9 @@ function playFile(file, data) {
         audioPlayer.player.play();
     } else {
         audioPlayer.player.pause();
-        $('#filestable').find('.thumbnail i.ioc-volume-up').hide();
+        document.querySelectorAll('#filestable .thumbnail i.ioc-volume-up').forEach(function (el) {
+            el.style.display = 'none';
+        });
         audioPlayer.player = null;
     }
 }
@@ -72,7 +79,8 @@ function registerFileActions() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    if (typeof OCA !== 'undefined' && typeof OCA.Files !== 'undefined' && typeof OCA.Files.fileActions !== 'undefined' && $('#header').hasClass('share-file') === false) {
+    var header = document.getElementById('header');
+    if (typeof OCA !== 'undefined' && typeof OCA.Files !== 'undefined' && typeof OCA.Files.fileActions !== 'undefined' && header && !header.classList.contains('share-file')) {
         registerFileActions();
     }
     return true;
