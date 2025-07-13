@@ -6,7 +6,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\Share\IManager;
-use OCP\SystemTag\ITagManager;
+use OCP\ITagManager;
 use Psr\Log\LoggerInterface;
 
 class DbMapper

@@ -257,7 +257,6 @@ class CategoryController extends Controller
         $this->tagger = $this->tagManager->load('files');
         $favorites = $this->tagger->getFavorites();
 
-
         if ($category === 'Album') {
             $discNum = array_sum(array_column($results, 'dsc')) / count($results);
         }
