@@ -288,6 +288,9 @@ class ScannerController extends Controller
         $genre = $this->getID3Value(array('genre'));
         $artist = $this->getID3Value(array('artist'));
         $name = $this->getID3Value(array('title'), $audio->getName());
+		if ($name === null || $name === '') {
+			$name = $audio->getName();
+		}
         $trackNr = $this->getID3Value(array('track_number'), '');
         $composer = $this->getID3Value(array('composer'), '');
         $year = $this->getID3Value(array('year', 'creation_date', 'date'), 0);
