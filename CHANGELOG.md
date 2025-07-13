@@ -27,6 +27,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - fixed controls freezing when previous is clicked on the first track
 - reset album count between occ user scans
 - cover view pushes full rows down when the song list is open
+- [BUG] Albums with an odd number of tracks have weird behavior #594
 
 ### Changed
 - Refactor SidebarController into service and mapper
