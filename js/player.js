@@ -50,6 +50,8 @@ OCA.Audioplayer.Player = {
             this.lastSavedSecond = 0;
             this.html5Audio.setAttribute('src', trackToPlay.src);
             this.html5Audio.load();
+            this.html5Audio.playbackRate =
+                this.playbackSpeeds[this.currentSpeedIndex];
         } else if (!OCA.Audioplayer.Player.isPaused()) {
             OCA.Audioplayer.Player.stop();
             return;

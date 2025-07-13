@@ -18,10 +18,12 @@ All notable changes to the Audio Player project will be documented in this file.
 - migrated remaining ajax calls to fetch with shared headers
 - Refactored CategoryController into service and mapper
 - refactored sidebar and app scripts to remove jQuery usage
+- enlarged and centered playback speed display
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
 - avoid player pause/resume when space is pressed inside modal dialogs
+- retain chosen playback speed between tracks
 ### Changed
 - Refactor SidebarController into service and mapper
 - Converted DbController into DbMapper using Query Builder
