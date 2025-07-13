@@ -22,7 +22,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - PHP 8.4 compatibility for nullable parameters
 - avoid player pause/resume when space is pressed inside modal dialogs
 - [BUG] A song with title "0" cause scanner stopped to scan more music #601
-- reset album count between user scans
+- fixed controls freezing when previous is clicked on the first track
+- reset album count between occ user scans
 
 ### Changed
 - Refactor SidebarController into service and mapper
