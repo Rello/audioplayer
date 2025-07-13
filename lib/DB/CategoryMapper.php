@@ -129,7 +129,7 @@ class CategoryMapper
     public function getAlbumArtists(string $userId): array
     {
         $qb = $this->db->getQueryBuilder();
-        $qb->selectDistinct('AB.artist_id')
+        $qb->selectDistinct('AB.artist_id AS id')
             ->addSelect('AA.name')
             ->selectAlias($qb->func()->lower('AA.name'), 'lower')
             ->from('audioplayer_albums', 'AB')
