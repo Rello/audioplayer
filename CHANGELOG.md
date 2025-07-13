@@ -12,6 +12,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - refactor cover retrieval logic
 - Moved playlist database logic to service layer
 - Refactor SettingController to use service and mapper
+- Refactored CategoryController into service and mapper
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
