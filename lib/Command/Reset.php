@@ -15,16 +15,16 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use OCA\audioplayer\Controller\DbController;
+use OCA\audioplayer\DB\DbMapper;
 
 class Reset extends Command {
 	private $userManager;
-    private $DBController;
+    private $dbMapper;
 
-    public function __construct(\OCP\IUserManager $userManager, DbController $DBController)
+    public function __construct(\OCP\IUserManager $userManager, DbMapper $dbMapper)
     {
 		$this->userManager = $userManager;
-        $this->DBController = $DBController;
+        $this->dbMapper = $dbMapper;
 		parent::__construct();
 	}
 	
@@ -67,7 +67,7 @@ class Reset extends Command {
 			} else {
 				$userId = $user->getUID();
 				$output->writeln("<info>Reset library for $userId</info>");
-                $this->DBController->resetMediaLibrary($userId, $output);
+                $this->dbMapper->resetMediaLibrary($userId, $output);
 			}
 		}
         return 0;

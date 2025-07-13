@@ -38,6 +38,7 @@ use Psr\Log\LoggerInterface;
 use OCP\IDateTimeZone;
 use OCP\IEventSource;
 use OCP\IEventSourceFactory;
+use OCA\audioplayer\DB\DbMapper;
 
 /**
  * Controller class for main page.
@@ -61,7 +62,7 @@ class ScannerController extends Controller
     private $logger;
     private $parentIdPrevious = 0;
     private $folderPicture = false;
-    private $DBController;
+    private $dbMapper;
     private $IDateTimeZone;
     private $SettingController;
     private $eventSource;
@@ -77,7 +78,7 @@ class ScannerController extends Controller
         IFactory $languageFactory,
         IRootFolder $rootFolder,
         LoggerInterface $logger,
-        DbController $DBController,
+        \OCA\audioplayer\DB\DbMapper $dbMapper,
         SettingController $SettingController,
         IDateTimeZone $IDateTimeZone
     )
@@ -91,7 +92,7 @@ class ScannerController extends Controller
         $this->languageFactory = $languageFactory;
         $this->rootFolder = $rootFolder;
         $this->logger = $logger;
-        $this->DBController = $DBController;
+        $this->dbMapper = $dbMapper;
         $this->SettingController = $SettingController;
         $this->IDateTimeZone = $IDateTimeZone;
         $this->lastUpdated = time();
@@ -128,7 +129,7 @@ class ScannerController extends Controller
     {
         set_time_limit(0);
         if (isset($scanstop)) {
-            $this->DBController->setSessionValue('scanner_running', 'stopped', $this->userId);
+            $this->dbMapper->setSessionValue('scanner_running', 'stopped', $this->userId);
             $params = ['status' => 'stopped'];
             return new JSONResponse($params);
         }
@@ -150,7 +151,7 @@ class ScannerController extends Controller
         $duplicate_tracks = '';
         $error_file = '';
         $this->cyrillic = $this->configManager->getUserValue($this->userId, $this->appName, 'cyrillic');
-        $this->DBController->setSessionValue('scanner_running', 'active', $this->userId);
+        $this->dbMapper->setSessionValue('scanner_running', 'active', $this->userId);
 
         $this->setScannerVersion();
 
@@ -174,7 +175,7 @@ class ScannerController extends Controller
         $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
 
         $commitThreshold = max(200, intdiv(count($audios), 10));
-        $this->DBController->beginTransaction();
+        $this->dbMapper->beginTransaction();
         try {
             foreach ($audios as &$audio) {
                 if ($this->scanCancelled()) { break; }
@@ -198,9 +199,9 @@ class ScannerController extends Controller
                     $this->updateProgress($counter, $audio->getPath(), $output);
                 }
                 if ($counter % $commitThreshold == 0) {
-                    $this->DBController->commit();
+                    $this->dbMapper->commit();
                     $output->writeln("Status committed to database", OutputInterface::VERBOSITY_VERBOSE);
-                    $this->DBController->beginTransaction();
+                    $this->dbMapper->beginTransaction();
                 }
             }
 
@@ -220,19 +221,19 @@ class ScannerController extends Controller
                 }
             }
             $this->setScannerTimestamp();
-            $this->DBController->commit();
+            $this->dbMapper->commit();
         } catch (DBALException $e) {
             $this->logger->error('DB error while building library: '. $e);
-            $this->DBController->rollBack();
+            $this->dbMapper->rollBack();
         } catch (Exception $e) {
             $this->logger->error('Error while building library: '. $e);
-            $this->DBController->commit();
+            $this->dbMapper->commit();
         }
 
         // different outputs when web or occ
         if (!$this->occJob) {
             $message = $this->composeResponseMessage($counter, $error_count, $duplicate_tracks, $error_file);
-            $this->DBController->setSessionValue('scanner_running', '', $this->userId);
+            $this->dbMapper->setSessionValue('scanner_running', '', $this->userId);
             $response = [
                 'message' => $message
             ];
@@ -257,7 +258,7 @@ class ScannerController extends Controller
     private function scanCancelled() {
         //check if scan is still supposed to run, or if dialog was closed in web already
         if (!$this->occJob) {
-            $scan_running = $this->DBController->getSessionValue('scanner_running');
+            $scan_running = $this->dbMapper->getSessionValue('scanner_running');
             return ($scan_running !== 'active');
         }
     }
@@ -271,7 +272,7 @@ class ScannerController extends Controller
      */
     private function scanAudio($audio, $getID3, $output) {
         if ($this->checkFileChanged($audio)) {
-            $this->DBController->deleteFromDB($audio->getId(), $this->userId);
+            $this->dbMapper->deleteFromDB($audio->getId(), $this->userId);
         }
 
         $this->analyze($audio, $getID3, $output);
@@ -295,22 +296,22 @@ class ScannerController extends Controller
         $isrc = $this->getID3Value(array('isrc'), '');
         $copyright = $this->getID3Value(array('copyright_message', 'copyright'), '');
 
-        $iGenreId = $this->DBController->writeGenreToDB($this->userId, $genre);
-        $iArtistId = $this->DBController->writeArtistToDB($this->userId, $artist);
+        $iGenreId = $this->dbMapper->writeGenreToDB($this->userId, $genre);
+        $iArtistId = $this->dbMapper->writeArtistToDB($this->userId, $artist);
 
         # write albumartist if available
         # if no albumartist, NO artist is stored on album level
-        # in DBController loadArtistsToAlbum() takes over deriving the artists from the album tracks
+        # in DbMapper loadArtistsToAlbum() takes over deriving the artists from the album tracks
         # MP3, FLAC & MP4 have different tags for albumartist
         $iAlbumArtistId = NULL;
         $album_artist = $this->getID3Value(array('band', 'album_artist', 'albumartist', 'album artist'), '0');
 
         if ($album_artist !== '0') {
-            $iAlbumArtistId = $this->DBController->writeArtistToDB($this->userId, $album_artist);
+            $iAlbumArtistId = $this->dbMapper->writeArtistToDB($this->userId, $album_artist);
         }
 
         $parentId = $audio->getParent()->getId();
-        $return = $this->DBController->writeAlbumToDB($this->userId, $album, (int)$year, $iAlbumArtistId, $parentId);
+        $return = $this->dbMapper->writeAlbumToDB($this->userId, $album, (int)$year, $iAlbumArtistId, $parentId);
         $iAlbumId = $return['id'];
         $this->iAlbumCount = $this->iAlbumCount + $return['albumcount'];
 
@@ -345,7 +346,7 @@ class ScannerController extends Controller
             'copyright' => $this->truncateStrings($copyright, '256'),
         ];
 
-        $return = $this->DBController->writeTrackToDB($this->userId, $aTrack);
+        $return = $this->dbMapper->writeTrackToDB($this->userId, $aTrack);
         if ($return['dublicate'] === 1) {
             $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
             $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
@@ -370,7 +371,7 @@ class ScannerController extends Controller
             'bitrate' => 0,
             'mimetype' => $stream->getMimetype(),
         ];
-        $return = $this->DBController->writeStreamToDB($this->userId, $aStream);
+        $return = $this->dbMapper->writeStreamToDB($this->userId, $aStream);
         if ($return['dublicate'] === 1) {
             $this->logger->debug('Duplicate file: ' . $stream->getPath(), array('app' => 'audioplayer'));
             $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
@@ -810,7 +811,7 @@ class ScannerController extends Controller
         if ($image->loadFromdata($data)) {
             if (($image->width() <= 250 && $image->height() <= 250) || $image->centerCrop(250)) {
                 $imgString = $image->__toString();
-                $this->DBController->writeCoverToAlbum($this->userId, $iAlbumId, $imgString);
+                $this->dbMapper->writeCoverToAlbum($this->userId, $iAlbumId, $imgString);
             }
         }
         return true;

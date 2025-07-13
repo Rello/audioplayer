@@ -4,7 +4,7 @@ namespace OCA\audioplayer\Service;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\ITagManager;
-use OCA\audioplayer\Controller\DbController;
+use OCA\audioplayer\DB\DbMapper;
 use OCA\audioplayer\Db\StatsMapper;
 
 class SettingService
@@ -13,7 +13,7 @@ class SettingService
     private $config;
     private $rootFolder;
     private $tagManager;
-    private $dbController;
+    private $dbMapper;
     private $statsMapper;
 
     public function __construct(
@@ -21,14 +21,14 @@ class SettingService
         IConfig $config,
         ITagManager $tagManager,
         IRootFolder $rootFolder,
-        DbController $dbController,
+        DbMapper $dbMapper,
         StatsMapper $statsMapper
     ) {
         $this->appName = $appName;
         $this->config = $config;
         $this->tagManager = $tagManager;
         $this->rootFolder = $rootFolder;
-        $this->dbController = $dbController;
+        $this->dbMapper = $dbMapper;
         $this->statsMapper = $statsMapper;
     }
 
@@ -68,7 +68,7 @@ class SettingService
     public function setFavorite(string $userId, int $trackId, string $isFavorite)
     {
         $tagger = $this->tagManager->load('files');
-        $fileId = $this->dbController->getFileId($trackId);
+        $fileId = $this->dbMapper->getFileId($this->userId, $trackId);
 
         if ($isFavorite === 'true') {
             return $tagger->removeFromFavorites($fileId);

@@ -22,6 +22,6 @@ $application->add(new \OCA\audioplayer\Command\Scan(
 
 $application->add(new \OCA\audioplayer\Command\Reset(
 	$userManager,
-    $c->query(\OCA\audioplayer\Controller\DbController::class)
+    $c->query(\OCA\audioplayer\DB\DbMapper::class)
 ));
 
