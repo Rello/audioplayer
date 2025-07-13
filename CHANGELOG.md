@@ -14,6 +14,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - Refactor SettingController to use service and mapper
 - migrated remaining ajax calls to fetch with shared headers
 - Refactored CategoryController into service and mapper
+- refactored sidebar and app scripts to remove jQuery usage
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
