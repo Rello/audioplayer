@@ -8,10 +8,11 @@ All notable changes to the Audio Player project will be documented in this file.
 - refactored MusicController into service and mapper
 - migrated MusicMapper to use QueryBuilder
 - mprove cover image response performance and stability
+- replaced jQuery usage with vanilla JS in settings, sharing and viewer scripts
 - refactor cover retrieval logic
 - Moved playlist database logic to service layer
 - Refactor SettingController to use service and mapper
-- 
+
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
 ### Changed

@@ -38,76 +38,115 @@ OCA.Audioplayer.Settings = {
     },
 
     resetLibrary: function () {
-        if ($('.sm2-bar-ui').hasClass('playing')) {
+        var bar = document.querySelector('.sm2-bar-ui');
+        if (bar && bar.classList.contains('playing')) {
             OCA.Audioplayer.Player.currentTrackIndex = 0;
             OCA.Audioplayer.Player.stop();
         }
 
         OCA.Audioplayer.UI.showInitScreen();
 
-        $('#category_selector').val('');
+        var category = document.getElementById('category_selector');
+        if (category) {
+            category.value = '';
+        }
         OCA.Audioplayer.Backend.setUserValue('category', OCA.Audioplayer.Core.CategorySelectors[0] + '-');
-        $('#myCategory').html('');
-        $('#alben').addClass('active');
-        $('#individual-playlist').remove();
-        $('#individual-playlist-info').hide();
-        $('#individual-playlist-header').hide();
-        $('.coverrow').remove();
-        $('.songcontainer').remove();
-        $('#activePlaylist').html('');
-        $('.sm2-playlist-target').html('');
-        $('.sm2-playlist-cover').css('background-color', '#ffffff').html('');
 
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/resetmedialibrary'),
-            success: function (jsondata) {
+        var myCategory = document.getElementById('myCategory');
+        if (myCategory) {
+            myCategory.innerHTML = '';
+        }
+        var alben = document.getElementById('alben');
+        if (alben) {
+            alben.classList.add('active');
+        }
+        var indPlaylist = document.getElementById('individual-playlist');
+        if (indPlaylist) {
+            indPlaylist.remove();
+        }
+        var info = document.getElementById('individual-playlist-info');
+        if (info) {
+            info.style.display = 'none';
+        }
+        var header = document.getElementById('individual-playlist-header');
+        if (header) {
+            header.style.display = 'none';
+        }
+        document.querySelectorAll('.coverrow').forEach(function (el) { el.remove(); });
+        document.querySelectorAll('.songcontainer').forEach(function (el) { el.remove(); });
+        var active = document.getElementById('activePlaylist');
+        if (active) {
+            active.innerHTML = '';
+        }
+        document.querySelectorAll('.sm2-playlist-target').forEach(function (el) { el.innerHTML = ''; });
+        document.querySelectorAll('.sm2-playlist-cover').forEach(function (el) {
+            el.style.backgroundColor = '#ffffff';
+            el.innerHTML = '';
+        });
+
+        fetch(OC.generateUrl('apps/audioplayer/resetmedialibrary'), { method: 'GET' })
+            .then(function (response) { return response.json(); })
+            .then(function (jsondata) {
                 if (jsondata.status === 'success') {
                     OCP.Toast.success(t('audioplayer', 'Resetting finished!'));
                 }
-            }
-        });
+            });
     },
 
     prepareScanDialog: function () {
-        $('body').append('<div id="audios_import"></div>');
-        $('#audios_import').load(OC.generateUrl('apps/audioplayer/getimporttpl'), function () {
-            OCA.Audioplayer.Settings.openScanDialog();
-        });
+        var container = document.createElement('div');
+        container.id = 'audios_import';
+        document.body.appendChild(container);
+        fetch(OC.generateUrl('apps/audioplayer/getimporttpl'))
+            .then(function (response) { return response.text(); })
+            .then(function (html) {
+                container.innerHTML = html;
+                OCA.Audioplayer.Settings.openScanDialog();
+            });
     },
 
     openScanDialog: function () {
+        var dialog = document.getElementById('audios_import_dialog');
+        if (!dialog) { return; }
+        dialog.style.display = 'block';
 
-        $('#audios_import_dialog').ocdialog({
-            width: 500,
-            modal: true,
-            resizable: false,
-            close: function () {
+        var closeBtn = document.getElementById('audios_import_done_close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+                OCA.Audioplayer.Settings.percentage = 0;
+                dialog.style.display = 'none';
                 OCA.Audioplayer.Settings.stopScan();
-                $('#audios_import_dialog').ocdialog('destroy');
-                $('#audios_import').remove();
-            }
-        });
+                dialog.remove();
+                var container = document.getElementById('audios_import');
+                if (container) { container.remove(); }
+            });
+        }
 
-        $('#audios_import_done_close').click(function () {
-            OCA.Audioplayer.Settings.percentage = 0;
-            $('#audios_import_dialog').ocdialog('close');
-        });
+        var cancelBtn = document.getElementById('audios_import_progress_cancel');
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', function () {
+                OCA.Audioplayer.Settings.stopScan();
+            });
+        }
 
-        $('#audios_import_progress_cancel').click(function () {
-            OCA.Audioplayer.Settings.stopScan();
-        });
+        var submitBtn = document.getElementById('audios_import_submit');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function () {
+                OCA.Audioplayer.Settings.processScan();
+            });
+        }
 
-        $('#audios_import_submit').click(function () {
-            OCA.Audioplayer.Settings.processScan();
-        });
-
-        $('#audios_import_progressbar').progressbar({value: 0});
+        var progressBar = document.getElementById('audios_import_progressbar');
+        if (progressBar) {
+            progressBar.value = 0;
+        }
     },
 
     processScan: function () {
-        $('#audios_import_form').css('display', 'none');
-        $('#audios_import_process').css('display', 'block');
+        var form = document.getElementById('audios_import_form');
+        var process = document.getElementById('audios_import_process');
+        if (form) { form.style.display = 'none'; }
+        if (process) { process.style.display = 'block'; }
         OCA.Audioplayer.Settings.startScan();
     },
 
@@ -121,37 +160,48 @@ OCA.Audioplayer.Settings = {
 
     stopScan: function () {
         OCA.Audioplayer.Settings.percentage = 0;
-        $.ajax({
-            type: 'GET',
-            url: OC.generateUrl('apps/audioplayer/scanforaudiofiles'),
-            data: {
-                'scanstop': true
-            },
-            success: function () {
-            }
-        });
+        var url = OC.generateUrl('apps/audioplayer/scanforaudiofiles') + '?scanstop=true';
+        fetch(url, { method: 'GET' });
     },
 
     updateScanProgress: function (message) {
         var data = JSON.parse(message);
         OCA.Audioplayer.Settings.percentage = data.filesProcessed / data.filesTotal * 100;
-        $('#audios_import_progressbar').progressbar('option', 'value', OCA.Audioplayer.Settings.percentage);
-        $('#audios_import_process_progress').text(`${data.filesProcessed}/${data.filesTotal}`);
-        $('#audios_import_process_message').text(data.currentFile);
+        var progressBar = document.getElementById('audios_import_progressbar');
+        if (progressBar) {
+            progressBar.value = OCA.Audioplayer.Settings.percentage;
+        }
+        var progress = document.getElementById('audios_import_process_progress');
+        if (progress) {
+            progress.textContent = `${data.filesProcessed}/${data.filesTotal}`;
+        }
+        var messageBox = document.getElementById('audios_import_process_message');
+        if (messageBox) {
+            messageBox.textContent = data.currentFile;
+        }
     },
 
     scanDone: function (message) {
         var data = JSON.parse(message);
-        $('#audios_import_process').css('display', 'none');
-        $('#audios_import_done').css('display', 'block');
-        $('#audios_import_done_message').html(data.message);
+        var process = document.getElementById('audios_import_process');
+        var done = document.getElementById('audios_import_done');
+        if (process) { process.style.display = 'none'; }
+        if (done) { done.style.display = 'block'; }
+        var message = document.getElementById('audios_import_done_message');
+        if (message) { message.innerHTML = data.message; }
         OCA.Audioplayer.Core.init();
     },
 
     scanError: function (message) {
         var data = JSON.parse(message);
-        $('#audios_import_progressbar').progressbar('option', 'value', 100);
-        $('#audios_import_done_message').text(data.message);
+        var progressBar = document.getElementById('audios_import_progressbar');
+        if (progressBar) {
+            progressBar.value = 100;
+        }
+        var msg = document.getElementById('audios_import_done_message');
+        if (msg) {
+            msg.textContent = data.message;
+        }
     },
 };
 
@@ -165,19 +215,26 @@ document.addEventListener('DOMContentLoaded', function () {
         settings_link = OC.generateUrl('settings/user/audioplayer');
     }
 
-    $('#sonos').on('click', function () {
-        document.location = settings_link;
-    });
+    var sonos = document.getElementById('sonos');
+    if (sonos) {
+        sonos.addEventListener('click', function () {
+            document.location = settings_link;
+        });
+    }
 
-    $('#audioplayerSettings').on('click', function () {
-        document.location = settings_link;
-    });
+    var settingsBtn = document.getElementById('audioplayerSettings');
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', function () {
+            document.location = settings_link;
+        });
+    }
 
-    $(document).on('click', '#scanAudios, #scanAudiosFirst', function () {
-        OCA.Audioplayer.Settings.prepareScanDialog();
-    });
-
-    $(document).on('click', '#resetAudios', function () {
-        OCA.Audioplayer.Settings.openResetDialog();
+    document.addEventListener('click', function (e) {
+        if (e.target && (e.target.id === 'scanAudios' || e.target.id === 'scanAudiosFirst')) {
+            OCA.Audioplayer.Settings.prepareScanDialog();
+        }
+        if (e.target && e.target.id === 'resetAudios') {
+            OCA.Audioplayer.Settings.openResetDialog();
+        }
     });
 });
