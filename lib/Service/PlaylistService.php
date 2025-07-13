@@ -1,7 +1,7 @@
 <?php
 namespace OCA\audioplayer\Service;
 
-use OCA\audioplayer\DB\PlaylistMapper;
+use OCA\audioplayer\Db\PlaylistMapper;
 
 class PlaylistService
 {

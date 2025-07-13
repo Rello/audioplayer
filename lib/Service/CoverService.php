@@ -2,7 +2,7 @@
 namespace OCA\audioplayer\Service;
 
 use OCA\audioplayer\Db\CoverMapper;
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 

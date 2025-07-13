@@ -38,7 +38,7 @@ use Psr\Log\LoggerInterface;
 use OCP\IDateTimeZone;
 use OCP\IEventSource;
 use OCP\IEventSourceFactory;
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 
 /**
  * Controller class for main page.
@@ -78,7 +78,7 @@ class ScannerController extends Controller
         IFactory $languageFactory,
         IRootFolder $rootFolder,
         LoggerInterface $logger,
-        \OCA\audioplayer\DB\DbMapper $dbMapper,
+        \OCA\audioplayer\Db\DbMapper $dbMapper,
         SettingController $SettingController,
         IDateTimeZone $IDateTimeZone
     )

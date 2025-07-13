@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 
 class Reset extends Command {
 	private $userManager;

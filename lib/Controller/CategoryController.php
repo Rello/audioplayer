@@ -18,7 +18,7 @@ use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDBConnection;
 use OCP\ITagManager;
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use \OCP\Files\NotFoundException;
@@ -51,7 +51,7 @@ class CategoryController extends Controller
         ITagManager $tagManager,
         IRootFolder $rootFolder,
         LoggerInterface $logger,
-        \OCA\audioplayer\DB\DbMapper $dbMapper,
+        \OCA\audioplayer\Db\DbMapper $dbMapper,
         Tag $categoriesTag,
         CategoryService $categoryService
 

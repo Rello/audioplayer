@@ -4,7 +4,7 @@ namespace OCA\audioplayer\Service;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\ITagManager;
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 use OCA\audioplayer\Db\StatsMapper;
 
 class SettingService

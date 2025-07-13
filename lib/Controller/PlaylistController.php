@@ -19,7 +19,7 @@ use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDBConnection;
 use OCA\audioplayer\Service\PlaylistService;
-use OCA\audioplayer\DB\PlaylistMapper;
+use OCA\audioplayer\Db\PlaylistMapper;
 
 /**
  * Controller class for main page.

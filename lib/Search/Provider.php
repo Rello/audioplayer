@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace OCA\audioplayer\Search;
 
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;

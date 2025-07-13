@@ -3,7 +3,7 @@
 namespace OCA\audioplayer\Service;
 
 use OCA\audioplayer\Categories\Tag;
-use OCA\audioplayer\DB\CategoryMapper;
+use OCA\audioplayer\Db\CategoryMapper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 

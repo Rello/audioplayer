@@ -1,7 +1,7 @@
 <?php
 namespace OCA\audioplayer\Controller;
 
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;

@@ -1,7 +1,7 @@
 <?php
 namespace OCA\audioplayer\Service;
 
-use OCA\audioplayer\DB\MusicMapper;
+use OCA\audioplayer\Db\MusicMapper;
 use OCA\audioplayer\Http\AudioStream;
 use OCP\Files\IRootFolder;
 use OCP\IL10N;
