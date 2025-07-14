@@ -21,6 +21,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - refactored sidebar and app scripts to remove jQuery usage
 - enlarged and centered playback speed display
 - increased player bar size for better visibility
+- redesigned play bar layout with waveform and bigger controls
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters

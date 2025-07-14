@@ -701,7 +701,8 @@ OCA.Audioplayer.UI = {
             for (let j = 0; j < iconIcon.length; ++j) {
             }
 
-            document.getElementById('nowPlayingText').innerHTML = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
+            document.getElementById('nowPlayingTitle').textContent = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
+            document.getElementById('nowPlayingArtist').textContent = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.artist;
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].scrollIntoView(
                 {

@@ -773,3 +773,45 @@
 .sm2-bar-ui .sm2-inline-texture {
   background: transparent;
 }
+
+/* Redesigned player layout */
+#sm2-bar-ui.redesign .bd.sm2-main-controls {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding: 10px;
+}
+
+#sm2-bar-ui.redesign .menu-icon {
+  margin-right: 10px;
+}
+
+#sm2-bar-ui.redesign .ap-left,
+#sm2-bar-ui.redesign .ap-middle,
+#sm2-bar-ui.redesign .ap-right {
+  display: flex;
+  align-items: center;
+}
+
+#sm2-bar-ui.redesign .ap-left { flex: 0 0 30%; }
+#sm2-bar-ui.redesign .ap-middle { flex: 0 0 50%; flex-direction: column; justify-content: center; text-align: center; }
+#sm2-bar-ui.redesign .ap-right { flex: 0 0 20%; justify-content: flex-end; gap: 10px; }
+
+#sm2-bar-ui.redesign .sm2-playlist-cover {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+}
+
+#sm2-bar-ui.redesign .ap-track-info { margin-left: 10px; overflow: hidden; }
+#sm2-bar-ui.redesign .ap-track-info div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+#sm2-bar-ui.redesign .ap-controls { display: flex; justify-content: center; gap: 10px; width: 100%; }
+#sm2-bar-ui.redesign .ap-progress { display: flex; align-items: center; width: 100%; gap: 5px; }
+#sm2-bar-ui.redesign .ap-controls .sm2-inline-button,
+#sm2-bar-ui.redesign .ap-right .sm2-inline-button {
+  position: static;
+  width: 32px;
+  height: 32px;
+}
