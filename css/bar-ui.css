@@ -49,6 +49,7 @@
   padding-top: 00px;
   width: 100%;
   position: fixed;
+  border-bottom: 1px solid var(--color-border-dark);
 }
 
 .sm2-bar-ui.fixed {
@@ -459,7 +460,7 @@
 
 .sm2-inline-button.previous,
 .sm2-inline-button.next {
-  background-size: 80%;
+  background-size: 100%;
   background-position: center center;
 }
 
@@ -471,7 +472,7 @@
 .sm2-inline-button.shuffle {
   background-image: url(../img/shuffle.svg);
   filter: var(--background-invert-if-dark);
-  background-size: 45%;
+  background-size: 50%;
   background-position: 50% 50%;
 }
 
@@ -479,7 +480,7 @@
   background-image: url(../img/repeat.svg);
   filter: var(--background-invert-if-dark);
   background-position: 50% 43%;
-  background-size: 54%;
+  background-size: 60%;
 }
 
 .sm2-inline-button.repeat-single {
@@ -767,7 +768,7 @@
 
 .sm2-bar-ui .sm2-main-controls,
 .sm2-bar-ui .sm2-playlist-drawer {
-  background-color: #ccc;
+  background-color: var(--color-main-background);
 }
 
 .sm2-bar-ui .sm2-inline-texture {
@@ -802,7 +803,7 @@
 #sm2-bar-ui.redesign .ap-right { flex: 0 0 20%; justify-content: flex-end; gap: 10px; }
 
 #sm2-bar-ui.redesign .sm2-playlist-cover {
-  width: 60px;
+  width: 70px;
   height: 60px;
   background-size: cover;
   background-position: center;
@@ -829,10 +830,10 @@
 #sm2-bar-ui.redesign .ap-controls .sm2-inline-button,
 #sm2-bar-ui.redesign .ap-right .sm2-inline-button {
   position: static;
-  width: 32px;
-  height: 32px;
+  width: 35px;
+  height: 35px;
 }
-#sm2-bar-ui.redesign .ap-right input[type=range] { flex: 0 0 80%; }
+#sm2-bar-ui.redesign .ap-right input[type=range] { flex: 0 0 60%; }
 #sm2-bar-ui.redesign .ap-right #playerSpeed {
   flex: 0 0 20%;
   text-align: center;

@@ -239,7 +239,7 @@ i#scanAudiosFirst {
 #myCategory li span.pl-name-play {
     float: left;
     position: relative;
-    width: 135px;
+    width: 170px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -318,6 +318,10 @@ i#scanAudiosFirst {
     color: #A9302A;
 }
 
+#myCategory li.active {
+    font-weight: bold;
+}
+
 #empty-container {
     margin: 0;
     width: 100%;
@@ -336,7 +340,7 @@ i#scanAudiosFirst {
     float: left;
     display: inline;
     height: auto;
-    padding-top: 50px;
+    padding-top: 105px;
     padding-left: 10px;
     padding-bottom: 30px;
     background-color: var(--color-main-background);
@@ -348,8 +352,8 @@ i#scanAudiosFirst {
 }
 
 #individual-playlist > li, #individual-playlist-header span {
-    height: 24px;
-    line-height: 24px;
+    height: 28px;
+    line-height: 26px;
 }
 
 #individual-playlist li .ioc-delete {
@@ -367,7 +371,7 @@ i#scanAudiosFirst {
 }
 
 #individual-playlist-header .header-indi {
-    border-bottom: 1px solid #E7E7E7;
+    border-bottom: 1px solid var(--color-border);
     width: 100%;
     display: block;
     float: left;

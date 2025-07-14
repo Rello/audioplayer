@@ -14,10 +14,8 @@
     <audio id="audioPreload" preload="auto" hidden></audio>
 
     <div class="bd sm2-main-controls">
-        <div class="sm2-inline-texture"></div>
-        <div class="sm2-inline-gradient"></div>
 
-        <div id="toggle_alternative" class="menu-icon">
+        <div id="toggle_alternative" class="menu-icon" hidden>
             <div id="app-navigation-toggle_alternative" class="icon-menu"></div>
         </div>
 
