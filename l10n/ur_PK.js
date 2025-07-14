@@ -4,8 +4,8 @@ OC.L10N.register(
     "Selected" : "Selected",
     "Help" : "مدد",
     "Title" : "عنوان",
-    "Favorites" : "Favorites",
     "URL" : "یو ار ایل",
+    "Favorites" : "Favorites",
     "Cancel" : "منسوخ کریں",
     "Close" : "بند ",
     "Settings" : "سیٹینگز"

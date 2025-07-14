@@ -11,9 +11,9 @@ OC.L10N.register(
     "Favorited" : "Marcado como favorito",
     "Favorite" : "Favorito",
     "Remove" : "Eliminar",
-    "Favorites" : "Favoritos",
-    "Unknown" : "Desconocido",
     "URL" : "URL",
+    "Unknown" : "Desconocido",
+    "Favorites" : "Favoritos",
     "Cancel" : "Cancelar",
     "Close" : "Cerrar",
     "Settings" : "Configuraciones "

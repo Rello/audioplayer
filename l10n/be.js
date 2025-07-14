@@ -4,9 +4,9 @@ OC.L10N.register(
     "Selected" : "Selected",
     "Help" : "Help",
     "Title" : "Title",
-    "Favorites" : "Favorites",
-    "Unknown" : "невядомы",
     "URL" : "Url",
+    "Unknown" : "невядомы",
+    "Favorites" : "Favorites",
     "Cancel" : "Cancel",
     "Settings" : "Налады"
 },
