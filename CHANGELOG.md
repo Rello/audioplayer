@@ -3,26 +3,19 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## 3.5.0 - in progress
 ### Added
-- gapless playback through preloading next track
-- store and display track comments
-- playback speed toggle button
+- gapless playback
+- ID3 tags: comments
+- playback speed toggle
 - waveform progress bar
 
 ### Changed
-- refactored MusicController into service and mapper
-- migrated MusicMapper to use QueryBuilder
-- mprove cover image response performance and stability
-- replaced jQuery usage with vanilla JS in settings, sharing and viewer scripts
+- redesigned play bar
+- refactored backend into controller/service/mapper
+- migrated backend to use QueryBuilder
+- improve cover image response performance and stability
+- replaced jQuery usage with vanilla JS
 - refactor cover retrieval logic
-- Moved playlist database logic to service layer
-- Refactor SettingController to use service and mapper
 - migrated remaining ajax calls to fetch with shared headers
-- Refactored CategoryController into service and mapper
-- refactored sidebar and app scripts to remove jQuery usage
-- enlarged and centered playback speed display
-- increased player bar size for better visibility
-- redesigned play bar layout with waveform and bigger controls
-- adjusted progress bar and volume/speed layout
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
@@ -33,10 +26,6 @@ All notable changes to the Audio Player project will be documented in this file.
 - cover view pushes full rows down when the song list is open
 - [BUG] Albums with an odd number of tracks have weird behavior #594
 - catch getID3 TypeError during library scan
-
-### Changed
-- Refactor SidebarController into service and mapper
-- Converted DbController into DbMapper using Query Builder
 
 ## 3.4.1 - 2023-12-11
 ### Fixed
