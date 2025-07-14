@@ -9,83 +9,44 @@
  * @copyright 2016-2021 Marcel Scherello
  */
 ?>
-<div id="sm2-bar-ui" class="sm2-bar-ui full-width">
+<div id="sm2-bar-ui" class="sm2-bar-ui full-width redesign">
     <audio id="html5Audio" preload="auto" hidden></audio>
     <audio id="audioPreload" preload="auto" hidden></audio>
 
     <div class="bd sm2-main-controls">
-        <div class="sm2-inline-texture"></div>
-        <div class="sm2-inline-gradient"></div>
 
-        <div class="sm2-inline-element sm2-button-element">
-            <div class="sm2-button-bd" id="toggle_alternative">
-                <div id="app-navigation-toggle_alternative" class="icon-menu"
-                     style="float: left; box-sizing: border-box;"></div>
-            </div>
+        <div id="toggle_alternative" class="menu-icon" hidden>
+            <div id="app-navigation-toggle_alternative" class="icon-menu"></div>
         </div>
 
-        <div class="sm2-inline-element sm2-button-element" data-placement="right"
-             title="<?php p($l->t('Previous track')); ?>">
-            <div id="playerPrev" class="sm2-button-bd sm2-inline-button previous">
-            </div>
-        </div>
-
-        <div class="sm2-inline-element sm2-button-element" data-placement="right"
-             title="<?php p($l->t('Play/Pause')); ?>">
-            <div id="playerPlay" class="sm2-button-bd sm2-inline-button play-pause">
-            </div>
-        </div>
-
-        <div class="sm2-inline-element sm2-button-element" data-placement="right"
-             title="<?php p($l->t('Next track')); ?>">
-            <div id="playerNext" class="sm2-button-bd sm2-inline-button next">
-            </div>
-        </div>
-
-        <div class="sm2-inline-element sm2-button-element">
+        <div class="ap-left">
             <div class="sm2-playlist-cover"></div>
+            <div class="ap-track-info">
+                <div id="nowPlayingTitle"></div>
+                <div id="nowPlayingArtist"></div>
+            </div>
         </div>
 
-        <div class="sm2-inline-element sm2-inline-status">
-            <div id="nowPlayingText" class="sm2-playlist"></div>
-            <div style="display: table-row;">
-                <div id="startTime" class="sm2-inline-time">0:00 /</div>
-                <div id="endTime" class="sm2-inline-time">0:00</div>
-                <div id="progressContainer" style="padding-top: 3px; padding-right: 15px;">
-                    <canvas id="progressBar" height="8" style="
-                    width: 100%;
-    background-color: var(--color-background-darker);
-    border-radius: var(--border-radius);
-    border: 0 none;
-    height: 8px;
-    cursor: pointer;
-">
-                    </canvas>
+        <div class="ap-middle">
+            <div class="ap-controls">
+                <div id="playerRepeat" class="sm2-button-bd sm2-inline-button repeat" title="<?php p($l->t('Repeat title/list')); ?>"></div>
+                <div id="playerPrev" class="sm2-button-bd sm2-inline-button previous" title="<?php p($l->t('Previous track')); ?>"></div>
+                <div id="playerPlay" class="sm2-button-bd sm2-inline-button play-pause" title="<?php p($l->t('Play/Pause')); ?>"></div>
+                <div id="playerNext" class="sm2-button-bd sm2-inline-button next" title="<?php p($l->t('Next track')); ?>"></div>
+                <div id="playerShuffle" class="sm2-button-bd sm2-inline-button shuffle" title="<?php p($l->t('Shuffle playlist')); ?>"></div>
+            </div>
+            <div class="ap-progress">
+                <div id="startTime" class="sm2-inline-time">0:00</div>
+                <div id="progressContainer">
+                    <canvas id="progressBar" height="20" style="width: 100%; border-radius: var(--border-radius); border: 0 none; height: 20px; cursor: pointer;"></canvas>
                 </div>
+                <div id="endTime" class="sm2-inline-time">0:00</div>
             </div>
         </div>
 
-        <div class="sm2-inline-element sm2-button-element sm2-volume" data-placement="left"
-             title="<?php p($l->t('Volume')); ?>">
-            <input id="playerVolume" type="range" class="sm2-button-bd sm2-inline-button volume-slider" min="0" max="1"
-                   step="0.02" value="1">
-        </div>
-
-        <div class="sm2-inline-element sm2-button-element" data-placement="left"
-             title="<?php p($l->t('Playback speed')); ?>">
-            <div id="playerSpeed" class="sm2-button-bd sm2-inline-button speed">1x</div>
-        </div>
-
-        <div class="sm2-inline-element sm2-button-element sm2-repeat" style="left: 7px;" data-placement="left"
-             title="<?php p($l->t('Repeat title/list')); ?>">
-            <div id="playerRepeat" class="sm2-button-bd sm2-inline-button repeat">
-            </div>
-        </div>
-
-        <div class="sm2-inline-element sm2-button-element sm2-shuffle" data-placement="left"
-             title="<?php p($l->t('Shuffle playlist')); ?>">
-            <div id="playerShuffle" class="sm2-button-bd sm2-inline-button shuffle">
-            </div>
+        <div class="ap-right">
+            <input id="playerVolume" type="range" class="sm2-button-bd sm2-inline-button volume-slider" min="0" max="1" step="0.02" value="1" title="<?php p($l->t('Volume')); ?>">
+            <div id="playerSpeed" class="sm2-button-bd sm2-inline-button speed" title="<?php p($l->t('Playback speed')); ?>">1x</div>
         </div>
     </div>
 

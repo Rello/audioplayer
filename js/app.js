@@ -701,7 +701,8 @@ OCA.Audioplayer.UI = {
             for (let j = 0; j < iconIcon.length; ++j) {
             }
 
-            document.getElementById('nowPlayingText').innerHTML = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
+            document.getElementById('nowPlayingTitle').textContent = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
+            document.getElementById('nowPlayingArtist').textContent = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.artist;
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].scrollIntoView(
                 {
@@ -729,7 +730,7 @@ OCA.Audioplayer.UI = {
                     });
                 }
             } else {
-                addCss = 'background-image:url(' + coverUrl + coverID + ');-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;';
+                addCss = 'background-image:url(' + coverUrl + coverID + ');';
                 addDescr = '';
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
@@ -1021,11 +1022,6 @@ OCA.Audioplayer.UI = {
         div.appendChild(list);
         document.body.appendChild(div);
     },
-
-    handleSettingsButton: function () {
-        document.getElementById('app-settings').classList.toggle('open');
-    },
-
 };
 
 /**
@@ -1466,7 +1462,6 @@ document.addEventListener('DOMContentLoaded', function () {
     OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist, 250);
     document.getElementById('app-content').addEventListener('appresized', OCA.Audioplayer.UI.resizePlaylist);
     document.getElementById('view-toggle').addEventListener('click', OCA.Audioplayer.UI.handleViewToggleClicked);
-    document.getElementById('appSettingsButton').addEventListener('click', OCA.Audioplayer.UI.handleSettingsButton);
 
     document.getElementById('app-navigation-toggle_alternative').addEventListener('click', function () {
         document.getElementById('newPlaylist').classList.add('ap_hidden');

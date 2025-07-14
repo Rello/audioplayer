@@ -31,6 +31,8 @@ OCA.Audioplayer.Player = {
     lastSavedSecond: 0,     // last autosaved second
     playbackSpeeds: [1, 2, 3, 0.5],
     currentSpeedIndex: 0,
+    waveformData: null,     // cached waveform data for the current track
+    _audioCtx: null,        // AudioContext instance used for waveform decoding
 
     /**
      * set the track to the selected track index and check if it can be played at all
@@ -50,6 +52,7 @@ OCA.Audioplayer.Player = {
             this.lastSavedSecond = 0;
             this.html5Audio.setAttribute('src', trackToPlay.src);
             this.html5Audio.load();
+            this.drawWaveform(trackToPlay.src);
             this.html5Audio.playbackRate =
                 this.playbackSpeeds[this.currentSpeedIndex];
         } else if (!OCA.Audioplayer.Player.isPaused()) {
@@ -271,14 +274,61 @@ OCA.Audioplayer.Player = {
     },
 
     /**
+     * decode the audio source and draw its waveform to the progress canvas
+     * @param src
+     */
+    drawWaveform: async function (src) {
+        const canvas = document.getElementById('progressBar');
+        if (!canvas.getContext) {
+            return;
+        }
+        if (!this._audioCtx) {
+            this._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        try {
+            const response = await fetch(src);
+            const arrayBuffer = await response.arrayBuffer();
+            const audioBuffer = await this._audioCtx.decodeAudioData(arrayBuffer);
+            const rawData = audioBuffer.getChannelData(0);
+            const samples = canvas.width;
+            const blockSize = Math.floor(rawData.length / samples);
+            const filteredData = [];
+            let maxVal = 0;
+            for (let i = 0; i < samples; i++) {
+                let sum = 0;
+                for (let j = 0; j < blockSize; j++) {
+                    sum += Math.abs(rawData[(i * blockSize) + j]);
+                }
+                let value = sum / blockSize;
+                filteredData.push(value);
+                if (value > maxVal) {
+                    maxVal = value;
+                }
+            }
+            if (maxVal > 0) {
+                for (let i = 0; i < filteredData.length; i++) {
+                    filteredData[i] = filteredData[i] / maxVal;
+                }
+            }
+            this.waveformData = filteredData;
+        } catch (e) {
+            this.waveformData = null;
+        }
+    },
+
+    /**
      * Set the progress bar to the current playtime
      */
     initProgressBar: function () {
         let player = OCA.Audioplayer.Player.html5Audio;
         let canvas = document.getElementById('progressBar');
         if (player.currentTime !== 0) {
-            document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime) + '&nbsp;/&nbsp;';
-            document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.duration) + '&nbsp;&nbsp;';
+            document.getElementById('startTime').textContent =
+                OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime);
+            document.getElementById('endTime').textContent =
+                OCA.Audioplayer.Player.formatSecondsToTime(player.duration);
         } else {
             // document.getElementById('startTime').innerHTML = t('audioplayer', 'loading');
             // document.getElementById('endTime').innerHTML = '';
@@ -288,18 +338,35 @@ OCA.Audioplayer.Player = {
         if (canvas.getContext) {
             let ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-            ctx.fillStyle = 'rgb(0,130,201)';
             let progressValue = (elapsedTime / player.duration);
-            let fWidth = progressValue * canvas.clientWidth;
-            if (fWidth > 0) {
-                ctx.fillRect(0, 0, fWidth, canvas.clientHeight);
+            if (OCA.Audioplayer.Player.waveformData) {
+                const samples = OCA.Audioplayer.Player.waveformData.length;
+                const progressSamples = Math.floor(progressValue * samples);
+                ctx.fillStyle = 'rgb(180,180,180)';
+                for (let i = 0; i < samples; i++) {
+                    const val = OCA.Audioplayer.Player.waveformData[i];
+                    const height = val * canvas.clientHeight;
+                    ctx.fillRect(i, (canvas.clientHeight - height) / 2, 1, height);
+                }
+                ctx.fillStyle = 'rgb(0,130,201)';
+                for (let i = 0; i < progressSamples; i++) {
+                    const val = OCA.Audioplayer.Player.waveformData[i];
+                    const height = val * canvas.clientHeight;
+                    ctx.fillRect(i, (canvas.clientHeight - height) / 2, 1, height);
+                }
+            } else {
+                ctx.fillStyle = 'rgb(0,130,201)';
+                let fWidth = progressValue * canvas.clientWidth;
+                if (fWidth > 0) {
+                    ctx.fillRect(0, 0, fWidth, canvas.clientHeight);
+                }
             }
         }
 
         // save position every 10 seconds
         let positionCalc = Math.round(player.currentTime) / 10;
-        if (Math.round(positionCalc) === positionCalc && positionCalc !== 0 && this.lastSavedSecond !== positionCalc) {
-            this.lastSavedSecond = Math.round(positionCalc);
+        if (Math.round(positionCalc) === positionCalc && positionCalc !== 0 && OCA.Audioplayer.Player.lastSavedSecond !== positionCalc) {
+            OCA.Audioplayer.Player.lastSavedSecond = Math.round(positionCalc);
             OCA.Audioplayer.Backend.setUserValue('category',
                 OCA.Audioplayer.Core.CategorySelectors[0]
                 + '-' + OCA.Audioplayer.Core.CategorySelectors[1]

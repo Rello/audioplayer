@@ -11,8 +11,6 @@
 ?>
 <div id="sm2-bar-ui" class="sm2-bar-ui full-width">
     <div class="bd sm2-main-controls">
-        <div class="sm2-inline-texture"></div>
-        <div class="sm2-inline-gradient"></div>
 
         <div class="sm2-inline-element sm2-button-element">
             <div class="sm2-button-bd" id="toggle_alternative">
