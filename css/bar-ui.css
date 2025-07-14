@@ -793,7 +793,11 @@
   align-items: center;
 }
 
-#sm2-bar-ui.redesign .ap-left { flex: 0 0 30%; }
+#sm2-bar-ui.redesign .ap-left {
+  flex: 0 0 30%;
+  overflow: hidden;
+  min-width: 0;
+}
 #sm2-bar-ui.redesign .ap-middle { flex: 0 0 50%; flex-direction: column; justify-content: center; text-align: center; }
 #sm2-bar-ui.redesign .ap-right { flex: 0 0 20%; justify-content: flex-end; gap: 10px; }
 
@@ -804,8 +808,16 @@
   background-position: center;
 }
 
-#sm2-bar-ui.redesign .ap-track-info { margin-left: 10px; overflow: hidden; }
-#sm2-bar-ui.redesign .ap-track-info div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#sm2-bar-ui.redesign .ap-track-info {
+  margin-left: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+#sm2-bar-ui.redesign .ap-track-info div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 #sm2-bar-ui.redesign .ap-controls { display: flex; justify-content: center; gap: 10px; width: 100%; }
 #sm2-bar-ui.redesign .ap-progress { display: flex; align-items: center; width: 100%; gap: 5px; }
@@ -821,4 +833,14 @@
   height: 32px;
 }
 #sm2-bar-ui.redesign .ap-right input[type=range] { flex: 0 0 80%; }
-#sm2-bar-ui.redesign .ap-right #playerSpeed { flex: 0 0 20%; text-align: center; }
+#sm2-bar-ui.redesign .ap-right #playerSpeed {
+  flex: 0 0 20%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 32px;
+}
+#sm2-bar-ui.redesign .sm2-inline-button.speed {
+  line-height: 32px;
+}
