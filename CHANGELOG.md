@@ -20,6 +20,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - Refactored CategoryController into service and mapper
 - refactored sidebar and app scripts to remove jQuery usage
 - enlarged and centered playback speed display
+- increased player bar size for better visibility
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters

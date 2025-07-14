@@ -52,12 +52,12 @@
                 <div id="startTime" class="sm2-inline-time">0:00 /</div>
                 <div id="endTime" class="sm2-inline-time">0:00</div>
                 <div id="progressContainer" style="padding-top: 3px; padding-right: 15px;">
-                    <canvas id="progressBar" height="8" style="
+                    <canvas id="progressBar" height="20" style="
                     width: 100%;
     background-color: var(--color-background-darker);
     border-radius: var(--border-radius);
     border: 0 none;
-    height: 8px;
+    height: 20px;
     cursor: pointer;
 ">
                     </canvas>
