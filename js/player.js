@@ -325,8 +325,10 @@ OCA.Audioplayer.Player = {
         let player = OCA.Audioplayer.Player.html5Audio;
         let canvas = document.getElementById('progressBar');
         if (player.currentTime !== 0) {
-            document.getElementById('startTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime) + '&nbsp;/&nbsp;';
-            document.getElementById('endTime').innerHTML = OCA.Audioplayer.Player.formatSecondsToTime(player.duration) + '&nbsp;&nbsp;';
+            document.getElementById('startTime').textContent =
+                OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime);
+            document.getElementById('endTime').textContent =
+                OCA.Audioplayer.Player.formatSecondsToTime(player.duration);
         } else {
             // document.getElementById('startTime').innerHTML = t('audioplayer', 'loading');
             // document.getElementById('endTime').innerHTML = '';

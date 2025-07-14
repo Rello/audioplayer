@@ -22,6 +22,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - enlarged and centered playback speed display
 - increased player bar size for better visibility
 - redesigned play bar layout with waveform and bigger controls
+- adjusted progress bar and volume/speed layout
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters
@@ -33,6 +34,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - [BUG] Albums with an odd number of tracks have weird behavior #594
 - waveform progress bar not drawn due to wrong event context
 - scaled waveform amplitude for better visibility
+- fixed extra slash in progress start time
 
 ### Changed
 - Refactor SidebarController into service and mapper

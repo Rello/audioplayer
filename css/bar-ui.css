@@ -809,9 +809,16 @@
 
 #sm2-bar-ui.redesign .ap-controls { display: flex; justify-content: center; gap: 10px; width: 100%; }
 #sm2-bar-ui.redesign .ap-progress { display: flex; align-items: center; width: 100%; gap: 5px; }
+#sm2-bar-ui.redesign #progressContainer { flex-grow: 1; width: 100%; }
+#sm2-bar-ui.redesign .ap-progress .sm2-inline-time {
+  padding-top: 0;
+  line-height: 20px;
+}
 #sm2-bar-ui.redesign .ap-controls .sm2-inline-button,
 #sm2-bar-ui.redesign .ap-right .sm2-inline-button {
   position: static;
   width: 32px;
   height: 32px;
 }
+#sm2-bar-ui.redesign .ap-right input[type=range] { flex: 0 0 80%; }
+#sm2-bar-ui.redesign .ap-right #playerSpeed { flex: 0 0 20%; text-align: center; }
