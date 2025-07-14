@@ -9,9 +9,9 @@ OC.L10N.register(
     "Copyright" : "Copyright",
     "Favorited" : "Favorite",
     "Favorite" : "Favorite",
-    "Favorites" : "Favoritos",
-    "Unknown" : "Incognite",
     "URL" : "URL",
+    "Unknown" : "Incognite",
+    "Favorites" : "Favoritos",
     "Cancel" : "Cancellar",
     "Close" : "Clauder",
     "Settings" : "Configurationes"

@@ -11,9 +11,9 @@ OC.L10N.register(
     "Favorited" : "Онцолсон",
     "Favorite" : "Дуртай",
     "Remove" : "Устгах",
-    "Favorites" : "Онцолсон",
-    "Unknown" : "Үл танигдах зүйл",
     "URL" : "URL",
+    "Unknown" : "Үл танигдах зүйл",
+    "Favorites" : "Онцолсон",
     "Cancel" : "болиулах",
     "Close" : "Хаах",
     "Settings" : "Тохиргоо"
