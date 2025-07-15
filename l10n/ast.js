@@ -59,6 +59,7 @@ OC.L10N.register(
     "Most Played" : "Lo más reproducío",
     "50 Random Tracks" : "50 pistes aleatories",
     "Volume" : "Volume",
+    "Playback speed" : "Velocidá de la reproducción",
     "Cancel" : "Encaboxar",
     "Close" : "Zarrar",
     "Settings" : "Configuración",
