@@ -308,7 +308,31 @@ class ScannerController extends Controller
         $copyright = $this->getID3Value(array('copyright_message', 'copyright'), '');
 
         $iGenreId = $this->dbMapper->writeGenreToDB($this->userId, $genre);
-        $iArtistId = $this->dbMapper->writeArtistToDB($this->userId, $artist);
+        
+        # Handle comma-separated and ampersand-separated artists by splitting them into individual artists
+        $artists = [];
+        if (strpos($artist, ',') !== false || strpos($artist, ' & ') !== false) {
+            # Split by comma and ampersand, then trim whitespace
+            $artistString = str_replace(' & ', ',', $artist);  # Convert & to comma for uniform processing
+            $artistList = array_map('trim', explode(',', $artistString));
+            foreach ($artistList as $individualArtist) {
+                if (!empty($individualArtist)) {
+                    $artists[] = $individualArtist;
+                }
+            }
+        } else {
+            # Single artist
+            $artists[] = $artist;
+        }
+        
+        # Create artist entries for all individual artists
+        $artistIds = [];
+        foreach ($artists as $individualArtist) {
+            $artistIds[] = $this->dbMapper->writeArtistToDB($this->userId, $individualArtist);
+        }
+        
+        # Use the first artist as the primary artist for backward compatibility
+        $iArtistId = $artistIds[0];
 
         # write albumartist if available
         # if no albumartist, NO artist is stored on album level
@@ -338,31 +362,37 @@ class ScannerController extends Controller
 
         $this->getAlbumArt($audio, $iAlbumId, $parentId, $output);
 
-        $aTrack = [
-            'title' => $this->truncateStrings($name, '256'),
-            'number' => $this->normalizeInteger($trackNr),
-            'artist_id' => (int)$iArtistId,
-            'album_id' => (int)$iAlbumId,
-            'length' => $playTimeString,
-            'file_id' => (int)$audio->getId(),
-            'bitrate' => (int)$bitrate,
-            'mimetype' => $audio->getMimetype(),
-            'genre' => (int)$iGenreId,
-            'year' => $this->truncateStrings($this->normalizeInteger($year), 4, ''),
-            'disc' => $this->normalizeInteger($disc),
-            'subtitle' => $this->truncateStrings($subtitle, '256'),
-            'composer' => $this->truncateStrings($composer, '256'),
-            'comment' => $this->truncateStrings($comment, '256'),
-            'folder_id' => $parentId,
-            'isrc' => $this->truncateStrings($isrc, '12'),
-            'copyright' => $this->truncateStrings($copyright, '256'),
-        ];
+        # Create track records for each artist when multiple artists are present
+        $trackInserted = false;
+        foreach ($artistIds as $currentArtistId) {
+            $aTrack = [
+                'title' => $this->truncateStrings($name, '256'),
+                'number' => $this->normalizeInteger($trackNr),
+                'artist_id' => (int)$currentArtistId,
+                'album_id' => (int)$iAlbumId,
+                'length' => $playTimeString,
+                'file_id' => (int)$audio->getId(),
+                'bitrate' => (int)$bitrate,
+                'mimetype' => $audio->getMimetype(),
+                'genre' => (int)$iGenreId,
+                'year' => $this->truncateStrings($this->normalizeInteger($year), 4, ''),
+                'disc' => $this->normalizeInteger($disc),
+                'subtitle' => $this->truncateStrings($subtitle, '256'),
+                'composer' => $this->truncateStrings($composer, '256'),
+                'comment' => $this->truncateStrings($comment, '256'),
+                'folder_id' => $parentId,
+                'isrc' => $this->truncateStrings($isrc, '12'),
+                'copyright' => $this->truncateStrings($copyright, '256'),
+            ];
 
-        $return = $this->dbMapper->writeTrackToDB($this->userId, $aTrack);
-        if ($return['dublicate'] === 1) {
-            $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
-            $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
-            return 'duplicate';
+            $return = $this->dbMapper->writeTrackToDB($this->userId, $aTrack);
+            if ($return['dublicate'] === 1 && !$trackInserted) {
+                # Only report duplicate for the first artist to avoid multiple duplicate messages
+                $this->logger->debug('Duplicate file: ' . $audio->getPath(), array('app' => 'audioplayer'));
+                $output->writeln("       This title is a duplicate and already existing", OutputInterface::VERBOSITY_VERBOSE);
+                return 'duplicate';
+            }
+            $trackInserted = true;
         }
         return 'success';
     }
