@@ -27,6 +27,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - cover view pushes full rows down when the song list is open
 - [BUG] Albums with an odd number of tracks have weird behavior #594
 - catch getID3 TypeError during library scan
+- [BUG] Artists on a track should be comma separated #608
 
 ## 3.4.1 - 2023-12-11
 ### Fixed
