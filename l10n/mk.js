@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "Помош",
     "New in" : "Ново во",
     "View changelog" : "Видете ги проммените",
+    "Selection" : "Селектирање",
     "Albums" : "Албуми",
     "Folders" : "Папки",
     "Tags" : "Ознаки",
