@@ -17,6 +17,7 @@ Util::addStyle('audioplayer', 'style');
 Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
 Util::addScript('audioplayer', 'app');
 Util::addScript('audioplayer', 'sidebar');
+Util::addScript('audioplayer', 'userGuidance');
 Util::addScript('audioplayer', 'settings/settings');
 if ($_['audioplayer_sonos'] !== 'checked') {
     Util::addScript('audioplayer', 'player');

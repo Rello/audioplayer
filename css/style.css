@@ -1026,6 +1026,108 @@ li.activeHover {
     content: none;
 }
 
+
+#analyticsDialogContent {
+    padding: 10px;
+}
+
+.analyticsDialogHeader {
+    color: var(--color-text-light);
+    display: flex;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    line-height: 23px;
+}
+
+.analyticsDialogHeaderIcon {
+    background-image: url(../img/app-dark.svg);
+    filter: var(--background-invert-if-dark);
+    background-size: 23px 23px;
+    background-position: 0;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 23px;
+}
+
+.analyticsDialogClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 25px;
+    background: var(--icon-close-dark) no-repeat center;
+    opacity: .5;
+    transition: opacity .2s;
+    border-radius: var(--border-radius-pill);
+}
+
+.analyticsDialogClose:hover {
+    opacity: 1;
+}
+
+.analyticsDialog {
+    background: var(--color-main-background);
+    color: var(--color-main-text);
+    padding: 24px;
+    z-index: 10000;
+    font-size: 100%;
+    box-sizing: border-box;
+    min-width: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: calc(100% - 20px);
+    max-width: calc(100% - 20px);
+    overflow: auto;
+    position: fixed;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    animation: analyticsDialogEnter .25s ease-out;
+}
+
+.analyticsDialogDim {
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    animation: analyticsDialogDimEnter .2s ease-out;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.analyticsDialogButtonrow {
+    justify-content: flex-end;
+    position: relative;
+    display: flex;
+    gap: 8px;
+    padding-top: 10px;
+}
+
+.analyticsDialogButtonrow .button:not(.analyticsPrimary):hover {
+    background-color: var(--color-background-hover);
+}
+
+@keyframes analyticsDialogEnter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(.95);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes analyticsDialogDimEnter {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @media only screen and (max-width: 768px) {
 
     #app-navigation-toggle_alternative {

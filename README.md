@@ -2,20 +2,22 @@
 
 [![Version](https://img.shields.io/github/release/rello/audioplayer.svg)](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md)&#160;[![License: AGPLv3](https://img.shields.io/badge/license-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)&#160;&#160;&#160;[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/Rello) [![Bitcoin](https://img.shields.io/badge/donate-Bitcoin-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)&#160;[![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)
 
-A music player for FLAC, MP3, MP4, AIF, streams, … with playlist support and SONOS integration.
+A music player supporting FLAC, MP3, MP4, AIF, and streaming formats, featuring playlist capabilities and SONOS integration.
 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png" alt="Main" width="350" height="261" title="Main view with navigation, settings, and sidebar.">
 
 ## Features
-- Cover or List view by various categories
-- tuned for big audio collections
-- Smart lists & playlists
+- Gapless play
+- Waveform visualization
+- Cover or list view by categories
+- Optimized for large audio collections
+- Smart lists and playlists
 - Stream URLs
-- Favorites, Search & Collaborative Tag integration
-- Specifying media folder (with exclude functionality)
-- Hardware media keys & Chrome/Android/macOS integration
+- Favorites, search, and collaborative tag integration
+- Specify media folder with exclude option
+- Hardware media keys and Chrome/Android/macOS integration
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
-- Use the Recognize app to classify genres by machine learning
+- Genre classification using the Recognize app with machine learning
 
 ### Supported Formats
 FLAC, MP3, MP4, Ogg Vorbis, Opus, AIF, AAC and Waveform Audio as well as M3U and PLS playlist files. Playing the formats supported by Audio Player depends on the browser. [More information…](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)

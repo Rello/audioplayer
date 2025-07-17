@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.5.0 - in progress
+## 3.5.0 - 2025-07-17
 ### Added
 - gapless playback
 - ID3 tags: comments
@@ -16,6 +16,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - replaced jQuery usage with vanilla JS
 - refactor cover retrieval logic
 - migrated remaining ajax calls to fetch with shared headers
+- new modal dialogs
 
 ### Fixed
 - PHP 8.4 compatibility for nullable parameters

@@ -25,15 +25,13 @@ OCA.Audioplayer.Settings = {
     percentage: 0,
 
     openResetDialog: function () {
-        OC.dialogs.confirm(
-            t('audioplayer', 'Are you sure?') + ' ' + t('audioplayer', 'All library entries will be deleted!'),
+        OCA.Audioplayer.Notification.confirm(
             t('audioplayer', 'Reset library'),
-            function (e) {
-                if (e === true) {
-                    OCA.Audioplayer.Settings.resetLibrary();
-                }
-            },
-            true
+            t('analytics', 'Are you sure?') + ' ' + t('audioplayer', 'All library entries will be deleted!'),
+            function () {
+                OCA.Audioplayer.Settings.resetLibrary();
+                OCA.Audioplayer.Notification.dialogClose();
+            }
         );
     },
 
@@ -125,44 +123,47 @@ OCA.Audioplayer.Settings = {
     },
 
     openScanDialog: function () {
-        var dialog = document.getElementById('audios_import_dialog');
-        if (!dialog) {
-            return;
-        }
-        dialog.style.display = 'block';
+        OCA.Audioplayer.Notification.htmlDialogInitiate(
+            t('analytics', 'Scan for audio files'),
+            null
+        );
 
-        var closeBtn = document.getElementById('audios_import_done_close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function () {
-                OCA.Audioplayer.Settings.percentage = 0;
-                dialog.style.display = 'none';
-                OCA.Audioplayer.Settings.stopScan();
-                dialog.remove();
-                var container = document.getElementById('audios_import');
-                if (container) {
-                    container.remove();
-                }
-            });
+        // remove the normal dialog buttons as this dialog is special
+        var analyticsElem = document.querySelector('.analyticsDialogButtonrow');
+        if (analyticsElem) {
+            analyticsElem.remove();
         }
 
-        var cancelBtn = document.getElementById('audios_import_progress_cancel');
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', function () {
-                OCA.Audioplayer.Settings.stopScan();
-            });
-        }
+        const container = document.importNode(document.getElementById('templateScanDialog').content, true);
 
-        var submitBtn = document.getElementById('audios_import_submit');
-        if (submitBtn) {
-            submitBtn.addEventListener('click', function () {
-                OCA.Audioplayer.Settings.processScan();
-            });
-        }
+        var closeBtn = container.getElementById('audios_import_done_close');
+        closeBtn.addEventListener('click', function () {
+            OCA.Audioplayer.Settings.percentage = 0;
+            OCA.Audioplayer.Settings.stopScan();
+            OCA.Audioplayer.Notification.dialogClose();
+        });
 
-        var progressBar = document.getElementById('audios_import_progressbar');
+
+        var cancelBtn = container.getElementById('audios_import_progress_cancel');
+        cancelBtn.addEventListener('click', function () {
+            OCA.Audioplayer.Settings.stopScan();
+        });
+
+        var submitBtn = container.getElementById('audios_import_submit');
+        submitBtn.addEventListener('click', function () {
+            OCA.Audioplayer.Settings.processScan();
+        });
+
+        var progressBar = container.getElementById('audios_import_progressbar');
         if (progressBar) {
             progressBar.value = 0;
         }
+
+        OCA.Audioplayer.Notification.htmlDialogUpdate(
+            container,
+            ''
+        );
+
     },
 
     processScan: function () {

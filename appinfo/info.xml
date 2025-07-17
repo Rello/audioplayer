@@ -3,17 +3,19 @@
 	<id>audioplayer</id>
 	<name>Audio Player</name>
 	<summary>play / stream / organize</summary>
-	<description><![CDATA[A music player for FLAC, MP3, MP4, AIF, AAC, streams, … with playlist support and SONOS integration.
+	<description><![CDATA[A music player supporting FLAC, MP3, MP4, AIF, and streaming formats, featuring playlist capabilities and SONOS integration.
 
-- Cover or List view by various categories
-- Tuned for big audio collections
-- Smart lists & playlists
+- Gapless play
+- Waveform visualization
+- Cover or list view by categories
+- Optimized for large audio collections
+- Smart lists and playlists
 - Stream URLs
-- Favorites, Search & Collaborative Tag integration
-- Specifying media folder (with exclude functionality)
-- Hardware media keys & Chrome/Android/macOS integration
+- Favorites, search, and collaborative tag integration
+- Specify media folder with exclude option
+- Hardware media keys and Chrome/Android/macOS integration
 - [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
-- Use the Recognize app to classify genres by machine learning
+- Genre classification using the Recognize app with machine learning
 
 See [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information.]]></description>
 	<version>3.5.0</version>

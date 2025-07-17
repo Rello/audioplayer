@@ -36,11 +36,11 @@
                 <div id="playerShuffle" class="sm2-button-bd sm2-inline-button shuffle" title="<?php p($l->t('Shuffle playlist')); ?>"></div>
             </div>
             <div class="ap-progress">
-                <div id="startTime" class="sm2-inline-time">0:00</div>
+                <div id="startTime" class="sm2-inline-time" style="visibility: hidden;">0:00</div>
                 <div id="progressContainer">
                     <canvas id="progressBar" height="20" style="width: 100%; border-radius: var(--border-radius); border: 0 none; height: 20px; cursor: pointer;"></canvas>
                 </div>
-                <div id="endTime" class="sm2-inline-time">0:00</div>
+                <div id="endTime" class="sm2-inline-time" style="visibility: hidden;">0:00</div>
             </div>
         </div>
 
