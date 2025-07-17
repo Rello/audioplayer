@@ -311,18 +311,28 @@ class ScannerController extends Controller
         
         # Handle comma-separated and ampersand-separated artists by splitting them into individual artists
         $artists = [];
-        if (strpos($artist, ',') !== false || strpos($artist, ' & ') !== false) {
+        if (!empty(trim($artist)) && (strpos($artist, ',') !== false || strpos($artist, ' & ') !== false || strpos($artist, '&') !== false)) {
             # Split by comma and ampersand, then trim whitespace
-            $artistString = str_replace(' & ', ',', $artist);  # Convert & to comma for uniform processing
+            # Handle various ampersand formats: " & ", "&", " &", "& "
+            $artistString = preg_replace('/\s*&\s*/', ',', $artist);  # Convert any & (with or without spaces) to comma
             $artistList = array_map('trim', explode(',', $artistString));
             foreach ($artistList as $individualArtist) {
+                # Filter out empty strings
                 if (!empty($individualArtist)) {
                     $artists[] = $individualArtist;
                 }
             }
         } else {
-            # Single artist
-            $artists[] = $artist;
+            # Single artist (or handle empty case)
+            $cleanArtist = trim($artist);
+            if (!empty($cleanArtist)) {
+                $artists[] = $cleanArtist;
+            }
+        }
+        
+        # Fallback: if no valid artists found, use "Unknown" to prevent errors
+        if (empty($artists)) {
+            $artists[] = 'Unknown';
         }
         
         # Create artist entries for all individual artists
