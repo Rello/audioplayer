@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 
 class DbMapper
 {
-    private string $userId;
+    private $userId;
     private IL10N $l10n;
     private IDBConnection $db;
     private ITagManager $tagManager;
@@ -19,7 +19,7 @@ class DbMapper
     private bool $occ_job = false;
 
     public function __construct(
-        string $userId,
+		$userId,
         IL10N $l10n,
         IDBConnection $db,
         ITagManager $tagManager,
