@@ -9,10 +9,10 @@ OC.L10N.register(
     "Favorited" : "As gunsteling ",
     "Favorite" : "Gunsteling",
     "Remove" : "Verwyder",
+    "Cancel" : "Kanselleer",
     "URL" : "Bronadres",
     "Unknown" : "Onbekend",
     "Favorites" : "Gunstelinge",
-    "Cancel" : "Kanselleer",
     "Close" : "Sluit",
     "Settings" : "Instellings"
 },

@@ -9,9 +9,10 @@ OC.L10N.register(
     "Copyright" : "ප්‍රකාශන හිමිකම",
     "Favorite" : "ප්‍රියතම",
     "Remove" : "ඉවත් කරන්න",
+    "OK" : "OK",
+    "Cancel" : "අවලංගු කරන්න",
     "Unknown" : "නොදන්නා",
     "Favorites" : "ප්‍රියතම",
-    "Cancel" : "අවලංගු කරන්න",
     "Close" : "වසන්න",
     "Settings" : "සැකසුම්"
 },

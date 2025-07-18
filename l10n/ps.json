@@ -3,8 +3,9 @@
     "Tags" : "نښکې",
     "Favorited" : "په نښه شو",
     "Favorite" : "په نښه شوی",
-    "Favorites" : "په نښه شوي",
+    "OK" : "OK",
     "Cancel" : "پرېښول",
+    "Favorites" : "په نښه شوي",
     "Close" : "بندول",
     "Settings" : "سمونې"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

@@ -8,9 +8,10 @@ OC.L10N.register(
     "Title" : "Azwel",
     "Favorite" : "Menyif",
     "Remove" : "Kkes",
+    "OK" : "OK",
+    "Cancel" : "Sefsex",
     "Unknown" : "Arussin",
     "Favorites" : "Imenyafen",
-    "Cancel" : "Sefsex",
     "Close" : "Mdel",
     "Settings" : "Iɣewwaṛen",
     "Advanced Settings" : "Iɣewwaren leqqayen"

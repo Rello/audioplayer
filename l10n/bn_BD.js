@@ -8,10 +8,10 @@ OC.L10N.register(
     "Title" : "শিরোনাম",
     "Favorite" : "প্রিয়জন",
     "Remove" : "অপসারণ",
+    "Cancel" : "বাতির",
     "URL" : "URL",
     "Unknown" : "অজানা",
     "Favorites" : "প্রিয়জন",
-    "Cancel" : "বাতির",
     "Close" : "বন্ধ",
     "Settings" : "সেটিংস"
 },

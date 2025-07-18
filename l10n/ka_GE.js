@@ -11,10 +11,11 @@ OC.L10N.register(
     "Favorited" : "დამატებულია რჩეულებში",
     "Favorite" : "რჩეული",
     "Remove" : "წაშლა",
+    "OK" : "OK",
+    "Cancel" : "უარყოფა",
     "URL" : "მისამართი",
     "Unknown" : "ამოუცნობი",
     "Favorites" : "რჩეულები",
-    "Cancel" : "უარყოფა",
     "Close" : "დახურვა",
     "Settings" : "პარამეტრები"
 },

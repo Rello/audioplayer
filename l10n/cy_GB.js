@@ -9,10 +9,11 @@ OC.L10N.register(
     "Year" : "Blwyddyn",
     "Favorite" : "Ffefryn",
     "Remove" : "Gwaredu",
+    "OK" : "OK",
+    "Cancel" : "Diddymu",
     "URL" : "URL",
     "Unknown" : "Anhysbys",
     "Favorites" : "Ffefrynnau",
-    "Cancel" : "Diddymu",
     "Close" : "Cau",
     "Settings" : "Gosodiadau"
 },

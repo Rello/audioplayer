@@ -5,8 +5,8 @@ OC.L10N.register(
     "Tags" : "Etiquetas",
     "Favorited" : "Favoritos",
     "Favorite" : "Favorito",
-    "Favorites" : "Favoritos",
     "Cancel" : "Cancelar",
+    "Favorites" : "Favoritos",
     "Close" : "Zarrar",
     "Settings" : "Configuración"
 },

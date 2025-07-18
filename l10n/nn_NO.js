@@ -10,10 +10,11 @@ OC.L10N.register(
     "Favorited" : "Lagt til som favoritt",
     "Favorite" : "Favoritt",
     "Remove" : "Fjern",
+    "OK" : "OK",
+    "Cancel" : "Avbryt",
     "URL" : "URL",
     "Unknown" : "Ukjend",
     "Favorites" : "Favorittar",
-    "Cancel" : "Avbryt",
     "Close" : "Lukk",
     "Settings" : "Innstillingar",
     "More information …" : "Meir informasjon…"

@@ -9,10 +9,11 @@
     "Favorited" : "დამატებულია რჩეულებში",
     "Favorite" : "რჩეული",
     "Remove" : "წაშლა",
+    "OK" : "OK",
+    "Cancel" : "უარყოფა",
     "URL" : "მისამართი",
     "Unknown" : "ამოუცნობი",
     "Favorites" : "რჩეულები",
-    "Cancel" : "უარყოფა",
     "Close" : "დახურვა",
     "Settings" : "პარამეტრები"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"

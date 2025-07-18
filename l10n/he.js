@@ -22,10 +22,11 @@ OC.L10N.register(
     "Favorited" : "סומן כמועדף",
     "Favorite" : "סימון כמועדף",
     "Remove" : "הסרה",
+    "OK" : "OK",
+    "Cancel" : "ביטול",
     "URL" : "כתובת",
     "Unknown" : "לא ידוע",
     "Favorites" : "מועדפים",
-    "Cancel" : "ביטול",
     "Close" : "סגירה",
     "Settings" : "הגדרות",
     "Advanced Settings" : "הגדרות מתקדמות"

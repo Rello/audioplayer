@@ -8,10 +8,11 @@ OC.L10N.register(
     "Tags" : "ປ້າຍກຳກັບ",
     "Favorite" : "ລາຍການທີ່ມັກ",
     "Remove" : "ຍ້າຍອອກ",
+    "OK" : "OK",
+    "Cancel" : "ຍົກເລີກ",
     "URL" : "URL",
     "Unknown" : "ບໍ່ຮູ້",
     "Favorites" : "ລາຍການທີ່ມັກ",
-    "Cancel" : "ຍົກເລີກ",
     "Close" : "ປິດ",
     "Settings" : "ການຕັ້ງຄ່າ",
     "Advanced Settings" : "ຕັ້ງ​ຄ່າ​ຂັ້ນ​ສູງ"

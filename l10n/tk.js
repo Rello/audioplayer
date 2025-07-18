@@ -5,9 +5,10 @@ OC.L10N.register(
     "Tags" : "Bellikler",
     "Favorite" : "Halaýan",
     "Remove" : "Aýyrmak",
+    "OK" : "OK",
+    "Cancel" : "ýatyrmak",
     "Unknown" : "Näbelli",
     "Favorites" : "Halanýanlar",
-    "Cancel" : "ýatyrmak",
     "Close" : "Ýap",
     "Settings" : "Sazlamalar"
 },

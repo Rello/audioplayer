@@ -9,10 +9,11 @@ OC.L10N.register(
     "Favorited" : "Favoriséiert",
     "Favorite" : "Favorit",
     "Remove" : "Läschen",
+    "OK" : "OK",
+    "Cancel" : "Ofbriechen",
     "URL" : "URL",
     "Unknown" : "Onbekannt",
     "Favorites" : "Favoriten",
-    "Cancel" : "Ofbriechen",
     "Close" : "Zoumaachen",
     "Settings" : "Astellungen",
     "Advanced Settings" : "Fortgeschratt astellungen"

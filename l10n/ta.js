@@ -7,10 +7,11 @@ OC.L10N.register(
     "Title" : "தலைப்பு",
     "Favorite" : "விருப்பமான",
     "Remove" : "அகற்றுக",
+    "OK" : "OK",
+    "Cancel" : "இரத்து செய்க",
     "URL" : "URL",
     "Unknown" : "தெரியாத",
     "Favorites" : "விருப்பங்கள்",
-    "Cancel" : "இரத்து செய்க",
     "Close" : "மூடுக",
     "Settings" : "அமைப்புகள்"
 },

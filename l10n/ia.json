@@ -7,10 +7,11 @@
     "Copyright" : "Copyright",
     "Favorited" : "Favorite",
     "Favorite" : "Favorite",
+    "OK" : "OK",
+    "Cancel" : "Cancellar",
     "URL" : "URL",
     "Unknown" : "Incognite",
     "Favorites" : "Favoritos",
-    "Cancel" : "Cancellar",
     "Close" : "Clauder",
     "Settings" : "Configurationes"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

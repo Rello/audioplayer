@@ -17,11 +17,12 @@ OC.L10N.register(
     "Favorited" : "Adăugate la favorite",
     "Favorite" : "Favorite",
     "Remove" : "Elimină",
+    "OK" : "OK",
+    "Cancel" : "Anulare",
     "URL" : "URL",
     "Unknown" : "Necunoscut",
     "Favorites" : "Favorite",
     "Playback speed" : "Viteză de redare",
-    "Cancel" : "Anulare",
     "Close" : "Închide",
     "Settings" : "Setări",
     "Advanced Settings" : "Setări avansate"

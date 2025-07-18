@@ -7,9 +7,10 @@ OC.L10N.register(
     "Saved" : "Disimpan",
     "Title" : "Judul",
     "Remove" : "Buang",
+    "OK" : "OK",
+    "Cancel" : "Batal",
     "URL" : "URL",
     "Favorites" : "Favorites",
-    "Cancel" : "Batal",
     "Close" : "Tutup",
     "Settings" : "Tetapan"
 },
