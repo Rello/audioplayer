@@ -5,8 +5,9 @@ OC.L10N.register(
     "Tags" : "نښکې",
     "Favorited" : "په نښه شو",
     "Favorite" : "په نښه شوی",
-    "Favorites" : "په نښه شوي",
+    "OK" : "OK",
     "Cancel" : "پرېښول",
+    "Favorites" : "په نښه شوي",
     "Close" : "بندول",
     "Settings" : "سمونې"
 },

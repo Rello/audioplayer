@@ -5,10 +5,11 @@ OC.L10N.register(
     "Help" : "Օգնություն",
     "Saved" : "Պահված",
     "Title" : "Վերնագիր",
+    "OK" : "OK",
+    "Cancel" : "ընդհատել",
     "URL" : "URL",
     "Unknown" : "Անհայտ",
     "Favorites" : "Սիրվածներ",
-    "Cancel" : "ընդհատել",
     "Close" : "Փակել",
     "Settings" : "կարգավորումներ"
 },

@@ -23,10 +23,11 @@ OC.L10N.register(
     "Favorited" : "Омилени",
     "Favorite" : "Омилени",
     "Remove" : "Отстрани ",
+    "OK" : "OK",
+    "Cancel" : "Откажи",
     "URL" : "Адреса",
     "Unknown" : "Непознат",
     "Favorites" : "Омилени",
-    "Cancel" : "Откажи",
     "Close" : "Затвори",
     "Settings" : "Параметри",
     "Advanced Settings" : "Напредни параметри"

@@ -18,11 +18,12 @@ OC.L10N.register(
     "Favorited" : "Difavoritkan",
     "Favorite" : "Favorit",
     "Remove" : "Buang",
+    "OK" : "OK",
+    "Cancel" : "Membatalkan",
     "URL" : "URL",
     "Unknown" : "Tidak diketahui",
     "Favorites" : "Disukai",
     "Playback speed" : "Kecepatan pemutaran",
-    "Cancel" : "Membatalkan",
     "Close" : "Tutup",
     "Settings" : "Setelan",
     "Advanced Settings" : "Pengaturan Tambahan"

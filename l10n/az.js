@@ -9,9 +9,9 @@ OC.L10N.register(
     "Favorited" : "İstəkləndi",
     "Favorite" : "İstəkli",
     "Remove" : "Sil",
+    "Cancel" : "Dayandır",
     "URL" : "URL",
     "Favorites" : "Sevimlilər",
-    "Cancel" : "Dayandır",
     "Close" : "Bağla",
     "Settings" : "Quraşdırmalar"
 },

@@ -13,10 +13,11 @@ OC.L10N.register(
     "Favorited" : "U kalua e parapëlqyer",
     "Favorite" : "I/E Preferuar",
     "Remove" : "Hiq",
+    "OK" : "OK",
+    "Cancel" : "Anullo",
     "URL" : "Url",
     "Unknown" : "I/E panjohur",
     "Favorites" : "Favorites",
-    "Cancel" : "Anullo",
     "Close" : "Mbylleni",
     "Settings" : "Rregullimet",
     "Advanced Settings" : "Cilësime të Avancuara"

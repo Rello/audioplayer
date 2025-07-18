@@ -13,10 +13,11 @@ OC.L10N.register(
     "Favorited" : "Pliŝatitaj",
     "Favorite" : "Pliŝatati",
     "Remove" : "Forigi",
+    "OK" : "OK",
+    "Cancel" : "Nuligi",
     "URL" : "Retadreso",
     "Unknown" : "Nekonata",
     "Favorites" : "Pliŝataĵoj",
-    "Cancel" : "Nuligi",
     "Close" : "Malfermi",
     "Settings" : "Agordoj",
     "Advanced Settings" : "Detalaj agordoj"

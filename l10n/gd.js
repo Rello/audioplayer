@@ -5,9 +5,10 @@ OC.L10N.register(
     "Tags" : "Tagaichean",
     "Favorite" : "Annsachd",
     "Remove" : "Thoir air falbh",
+    "OK" : "OK",
+    "Cancel" : "Sguir dheth",
     "Unknown" : "Chan eil fhios",
     "Favorites" : "Annsachdan",
-    "Cancel" : "Sguir dheth",
     "Close" : "Dùin",
     "Settings" : "Roghainnean"
 },

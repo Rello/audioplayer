@@ -25,11 +25,12 @@ OC.L10N.register(
     "Favorited" : "Sett í eftirlæti",
     "Favorite" : "Eftirlæti",
     "Remove" : "Fjarlægja",
+    "OK" : "OK",
+    "Cancel" : "Hætta við",
     "URL" : "Slóð",
     "Unknown" : "Óþekkt",
     "Favorites" : "Eftirlæti",
     "Playback speed" : "Hraði afspilunar",
-    "Cancel" : "Hætta við",
     "Close" : "Loka",
     "Settings" : "Stillingar",
     "Advanced Settings" : "Ítarlegar stillingar"

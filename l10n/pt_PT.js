@@ -20,10 +20,11 @@ OC.L10N.register(
     "Favorited" : "Nos Favoritos",
     "Favorite" : "Favorito",
     "Remove" : "Remover",
+    "OK" : "OK",
+    "Cancel" : "Cancelar",
     "URL" : "URL",
     "Unknown" : "Desconhecido",
     "Favorites" : "Favoritos",
-    "Cancel" : "Cancelar",
     "Close" : "Fechar",
     "Settings" : "Configurações",
     "Advanced Settings" : "Configurações avançadas "

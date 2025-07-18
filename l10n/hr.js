@@ -22,10 +22,11 @@ OC.L10N.register(
     "Favorited" : "Favorit",
     "Favorite" : "Favorit",
     "Remove" : "Ukloni",
+    "OK" : "OK",
+    "Cancel" : "Odustani",
     "URL" : "URL",
     "Unknown" : "Nepoznato",
     "Favorites" : "Favoriti",
-    "Cancel" : "Odustani",
     "Close" : "Zatvori",
     "Settings" : "Postavke",
     "Advanced Settings" : "Napredne postavke"

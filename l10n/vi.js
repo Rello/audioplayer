@@ -17,11 +17,12 @@ OC.L10N.register(
     "Favorited" : "Được ưa thích",
     "Favorite" : "Ưa thích",
     "Remove" : "Xoá",
+    "OK" : "OK",
+    "Cancel" : "Hủy",
     "URL" : "URL",
     "Unknown" : "Không xác định",
     "Favorites" : "Ưa thích",
     "Playback speed" : "Tốc độ phát",
-    "Cancel" : "Hủy",
     "Close" : "Đóng",
     "Settings" : "Cài đặt",
     "Advanced Settings" : "Cài đặt nâng cao"
