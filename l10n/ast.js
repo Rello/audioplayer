@@ -48,6 +48,7 @@ OC.L10N.register(
     "Favorite" : "Meter en Favoritos",
     "Remove" : "Quitar",
     "SONOS playback" : "Reproducción SONOS",
+    "OK" : "OK",
     "Cancel" : "Encaboxar",
     "URL" : "URL",
     "Scanning finished!" : "¡La busca finó!",

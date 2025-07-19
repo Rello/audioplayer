@@ -67,6 +67,7 @@ OC.L10N.register(
     "No playlist entry" : "لا مداخل في قائمة التشغيل",
     "Available Audio Player Add-Ons:" : "إضافات Add-ons مُتاحةٌ للمشغل الصوتي:",
     "SONOS playback" : "تشغيل صوتي بالتطبيق SONOS",
+    "OK" : "OK",
     "Cancel" : "إلغاء",
     "URL" : "رابط URL",
     "Sorting Playlist success! Playlist reloaded!" : "تمّ ترتيب قائمة التشغيل بنجاحٍ! تمّت إعادة تحميل القائمة بنجاح!",
