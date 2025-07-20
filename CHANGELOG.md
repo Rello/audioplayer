@@ -1,11 +1,13 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.5.2 - pending
+### Changed
+- optimized album art search to reduce filesystem access
+
 ## 3.5.1 - 2025-07-18
 ### Fixed
 - [BUG] TypeError when running occ without user context #633
-### Changed
-- optimized album art search to reduce filesystem access
 
 ## 3.5.0 - 2025-07-17
 ### Added
