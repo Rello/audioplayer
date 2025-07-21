@@ -147,14 +147,16 @@ OCA.Audioplayer.Player = {
      */
     preloadNext: function () {
         const nextIndex = OCA.Audioplayer.Player.currentTrackIndex + 1;
+        const preload = OCA.Audioplayer.Player.preloadAudio;
         if (nextIndex < OCA.Audioplayer.Player.html5Audio.childElementCount) {
             const nextTrack = OCA.Audioplayer.Player.html5Audio.children[nextIndex];
             if (nextTrack.dataset.canPlayMime !== 'false') {
-                OCA.Audioplayer.Player.preloadAudio.setAttribute('src', nextTrack.src);
-                OCA.Audioplayer.Player.preloadAudio.load();
+                preload.pause();
+                preload.src = nextTrack.src;
+                preload.load();
             }
         } else {
-            OCA.Audioplayer.Player.preloadAudio.removeAttribute('src');
+            preload.removeAttribute('src');
         }
     },
 
