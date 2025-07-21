@@ -88,6 +88,7 @@ OC.L10N.register(
     "Most Played" : "播放最多",
     "50 Random Tracks" : "50 條隨機曲目",
     "play / stream / organize" : "播放/流/組織",
+    "A music player supporting FLAC, MP3, MP4, AIF, and streaming formats, featuring playlist capabilities and SONOS integration.\n\n- Gapless play\n- Waveform visualization\n- Cover or list view by categories\n- Optimized for large audio collections\n- Smart lists and playlists\n- Stream URLs\n- Favorites, search, and collaborative tag integration\n- Specify media folder with exclude option\n- Hardware media keys and Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n- Genre classification using the Recognize app with machine learning\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "這是一個支持 FLAC、MP3、MP4、AIF 和串流格式的音樂播放器，具備播放列表功能及 SONOS 整合。\n\n- 無間隙播放\n- 波形可視化\n- 按類別的封面或列表視圖\n- 優化大型音頻收藏\n- 智能列表和播放列表\n- 串流 URL\n- 收藏、搜索和協作標籤整合\n- 指定媒體資料夾並選擇排除選項\n- 硬件媒體鍵和 Chrome/Android/macOS 整合\n- 透過附加功能支持 [SONOS 播放器]（https://github.com/rello/audioplayer_sonos）\n- 使用 Recognize 應用進行的機器學習類別分類\n\n查看更多支持的 MIME 類型和其他信息，請參閱 [README] 文件。",
     "Repeat title/list" : "重複標題/清單",
     "Shuffle playlist" : "隨機播放音樂播放表",
     "Volume" : "音量",
