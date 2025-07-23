@@ -3,9 +3,12 @@ OC.L10N.register(
     {
     "Selected" : "Выбрана",
     "Help" : "Даведка",
+    "Albums" : "Альбомы",
     "Folders" : "Папкі",
     "Tags" : "Тэгі",
+    "Saved" : "Захавана",
     "Title" : "Загаловак",
+    "Favorite" : "Абранае",
     "OK" : "OK",
     "Cancel" : "Скасаваць",
     "URL" : "URL-адрас",
