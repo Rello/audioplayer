@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Selecionado",
     "Options" : "Opciones",
-    "Album Covers" : "Cubiertas de álbumes",
+    "Album Covers" : "Portadas de álbumes",
     "List View" : "Vista de lista",
     "Welcome to" : "Bienvenido/a a",
     "Audio Player" : "Reproductor de audio",
@@ -88,6 +88,7 @@ OC.L10N.register(
     "Most Played" : "Más reproducidas",
     "50 Random Tracks" : "50 Pistas aleatorias",
     "play / stream / organize" : "reproduce / retransmite / organiza",
+    "A music player supporting FLAC, MP3, MP4, AIF, and streaming formats, featuring playlist capabilities and SONOS integration.\n\n- Gapless play\n- Waveform visualization\n- Cover or list view by categories\n- Optimized for large audio collections\n- Smart lists and playlists\n- Stream URLs\n- Favorites, search, and collaborative tag integration\n- Specify media folder with exclude option\n- Hardware media keys and Chrome/Android/macOS integration\n- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on\n- Genre classification using the Recognize app with machine learning\n\nSee [README](https://github.com/rello/audioplayer/blob/master/README.md) file for all supported MIME types and additional information." : "Un reproductor de música para FLAC, MP3, MP4, AIF, y para formatos de difusión, que cuenta con soporte a listas de reproducción e integración con SONOS.\n\n- Reproducción sin silencios entre pistas\n- Visualización de la onda de sonido\n- Vista de Portadas o Lista por categorías\n- Optimizado para grandes colecciones de audio\n- Listas inteligentes y listas de reproducción\n- Hacer streaming URLs\n- Integración con Favoritos, Búsqueda y Etiquetas Colaborativas.\n- Especificar una carpeta de medios (con funcionalidad de exclusión)\n- Integración de teclas multimedia por hardware y Chrome/Android/macOS\n- Complemento [SONOS player](https://github.com/rello/audioplayer_sonos) descargable\n- Utiliza la app Recognize para clasificar los géneros mediante machine learning\n\nConsulte el archivo [README](https://github.com/rello/audioplayer/blob/master/README.md) para ver la lista de tipos MIME soportados y para información adicional.",
     "Repeat title/list" : "Repetir título/lista",
     "Shuffle playlist" : "Mezclar la lista de reproducción",
     "Volume" : "Volumen",
