@@ -13,6 +13,7 @@ OC.L10N.register(
     "Favorited" : "Lakaet evel pennroll",
     "Favorite" : "Pennrollañ",
     "Remove" : "Lemel",
+    "OK" : "OK",
     "Cancel" : "Nullañ",
     "URL" : "URL",
     "Unknown" : "Dianv",
