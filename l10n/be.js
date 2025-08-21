@@ -16,6 +16,7 @@ OC.L10N.register(
     "URL" : "URL-адрас",
     "Unknown" : "Невядомы",
     "Favorites" : "Абранае",
+    "Volume" : "Гучнасць",
     "Close" : "Закрыць",
     "Settings" : "Налады"
 },
