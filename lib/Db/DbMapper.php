@@ -72,7 +72,7 @@ class DbMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('id', 'name')
             ->from('audioplayer_albums')
-            ->where($qb->expr()->like('LOWER(`name`)', $qb->createNamedParameter('%' . addslashes($searchquery) . '%')))
+            ->where($qb->expr()->like($qb->func()->lower('name'), $qb->createNamedParameter('%' . strtolower(addslashes($searchquery)) . '%')))
             ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)));
         $result = $qb->execute();
         $albums = $result->fetchAll();
@@ -88,7 +88,7 @@ class DbMapper
         $qb->select('AA.id', 'AA.name')
             ->from('audioplayer_artists', 'AA')
             ->join('AA', 'audioplayer_tracks', 'AT', $qb->expr()->eq('AA.id', 'AT.artist_id'))
-            ->where($qb->expr()->like('LOWER(`AA`.`name`)', $qb->createNamedParameter('%' . addslashes($searchquery) . '%')))
+            ->where($qb->expr()->like($qb->func()->lower('AA.name'), $qb->createNamedParameter('%' . strtolower(addslashes($searchquery)) . '%')))
             ->andWhere($qb->expr()->eq('AA.user_id', $qb->createNamedParameter($this->userId)));
         $result = $qb->execute();
         $artists = $result->fetchAll();
@@ -103,7 +103,7 @@ class DbMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('album_id', 'title')
             ->from('audioplayer_tracks')
-            ->where($qb->expr()->like('LOWER(`title`)', $qb->createNamedParameter('%' . addslashes($searchquery) . '%')))
+            ->where($qb->expr()->like($qb->func()->lower('title'), $qb->createNamedParameter('%' . strtolower(addslashes($searchquery)) . '%')))
             ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)));
         $result = $qb->execute();
         $tracks = $result->fetchAll();
