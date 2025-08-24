@@ -8,6 +8,7 @@ OC.L10N.register(
     "Tags" : "Тэгі",
     "Saved" : "Захавана",
     "Title" : "Загаловак",
+    "Subtitle" : "Падзагаловак",
     "Copyright" : "Аўтарскае права",
     "Favorite" : "Абранае",
     "Remove" : "Выдаліць",
