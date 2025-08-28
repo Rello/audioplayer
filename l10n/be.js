@@ -35,6 +35,7 @@ OC.L10N.register(
     "Volume" : "Гучнасць",
     "Close" : "Закрыць",
     "Settings" : "Налады",
+    "Advanced Settings" : "Пашыраныя налады",
     "Do you like this app?" : "Вам падабаецца гэта праграма?",
     "Scanner Settings" : "Налады сканера"
 },
