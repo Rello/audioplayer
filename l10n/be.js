@@ -2,6 +2,7 @@ OC.L10N.register(
     "audioplayer",
     {
     "Selected" : "Выбрана",
+    "Options" : "Параметры",
     "Help" : "Даведка",
     "View changelog" : "Праглядзець спіс змяненняў",
     "Are you sure?" : "Вы ўпэўнены?",
