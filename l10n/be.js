@@ -4,6 +4,7 @@ OC.L10N.register(
     "Selected" : "Выбрана",
     "Options" : "Параметры",
     "Help" : "Даведка",
+    "New in" : "Новае ў",
     "View changelog" : "Праглядзець спіс змяненняў",
     "Are you sure?" : "Вы ўпэўнены?",
     "Selection" : "Выбар",
