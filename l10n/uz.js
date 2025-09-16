@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected" : "Tanlangan",
     "Options" : "Variantlar",
     "Help" : "Help",
     "New in" : "Yangi kiritish",
