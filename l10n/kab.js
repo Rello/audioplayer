@@ -4,6 +4,8 @@ OC.L10N.register(
     "Selected" : "Yettwafren",
     "Options" : "Iɣewwaṛen",
     "Help" : "Tallalt",
+    "New in" : "Amaynut deg",
+    "Folders" : "Ikaramen",
     "Tags" : "Tibzimin",
     "Title" : "Azwel",
     "Year" : "Aseggas",
