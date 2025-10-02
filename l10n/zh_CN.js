@@ -67,7 +67,7 @@ OC.L10N.register(
     "No playlist entry" : "无播放列表项",
     "Available Audio Player Add-Ons:" : "可用的音频播放器附加组件：",
     "SONOS playback" : "SONOS 播放",
-    "OK" : "OK",
+    "OK" : "确定",
     "Cancel" : "取消",
     "URL" : "URL",
     "Sorting Playlist success! Playlist reloaded!" : "成功对播放列表进行了排序！播放列表已重新加载！",
