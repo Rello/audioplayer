@@ -6,6 +6,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - optimized album art search to reduce filesystem access
 ### Fixed
 - next track was not preloaded for gapless playback
+- scan path selection failing with "invalid path" error due to uncaught InvalidPathException
 
 ## 3.5.1 - 2025-07-18
 ### Fixed

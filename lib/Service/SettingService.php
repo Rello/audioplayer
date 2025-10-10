@@ -53,6 +53,8 @@ class SettingService
             $this->rootFolder->getUserFolder($userId)->get($path);
         } catch (\OCP\Files\NotFoundException $e) {
             return false;
+        } catch (\OCP\Files\InvalidPathException $e) {
+            return false;
         }
 
         if ($path[0] !== '/') {
