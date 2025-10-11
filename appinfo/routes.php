@@ -37,7 +37,6 @@ return [
 	['name' => 'setting#userPath', 'url' => '/userpath', 'verb' => 'POST'],
     ['name' => 'setting#setFavorite', 'url' => '/setfavorite', 'verb' => 'GET'],
     ['name' => 'setting#setStatistics', 'url' => '/setstatistics', 'verb' => 'GET'],
-    ['name' => 'setting#admin', 'url' => '/admin', 'verb' => 'POST'],
 
     ['name' => 'category#getCategoryItems', 'url' => '/getcategoryitems', 'verb' => 'GET'],
     ['name' => 'category#getCategoryItemCovers', 'url' => '/getcategoryitemcovers', 'verb' => 'GET'],
