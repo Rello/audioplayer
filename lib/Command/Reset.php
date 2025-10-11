@@ -8,8 +8,9 @@
  * @author Marcel Scherello <audioplayer@scherello.de>
  * @copyright 2016-2021 Marcel Scherello
  */
- 
+
 namespace OCA\audioplayer\Command;
+
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,33 +20,20 @@ use OCA\audioplayer\Db\DbMapper;
 
 class Reset extends Command {
 	private $userManager;
-    private $dbMapper;
+	private $dbMapper;
 
-    public function __construct(\OCP\IUserManager $userManager, DbMapper $dbMapper)
-    {
+	public function __construct(\OCP\IUserManager $userManager, DbMapper $dbMapper) {
 		$this->userManager = $userManager;
-        $this->dbMapper = $dbMapper;
+		$this->dbMapper = $dbMapper;
 		parent::__construct();
 	}
-	
+
 	protected function configure() {
-		$this
-			->setName('audioplayer:reset')
-			->setDescription('reset audio player library')
-			->addArgument(
-					'user_id',
-					InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-					'reset the whole library of the given user(s)'
-			)
-			->addOption(
-					'all',
-					null,
-					InputOption::VALUE_NONE,
-					'reset the whole library of all known users'
-			)
-		;
+		$this->setName('audioplayer:reset')->setDescription('reset audio player library')
+			 ->addArgument('user_id', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'reset the whole library of the given user(s)')
+			 ->addOption('all', null, InputOption::VALUE_NONE, 'reset the whole library of all known users');
 	}
-	
+
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		if ($input->getOption('all')) {
 			$users = $this->userManager->search('');
@@ -55,21 +43,20 @@ class Reset extends Command {
 
 		if (count($users) === 0) {
 			$output->writeln("<error>Please specify a valid user id to reset, \"--all\" to scan for all users<error>");
-            return 1;
+			return 1;
 		}
-		
+
 		foreach ($users as $userId) {
-			if (is_object($userId)) $user = $userId;
-			else $user = $this->userManager->get($userId);
+			if (is_object($userId)) $user = $userId; else $user = $this->userManager->get($userId);
 
 			if ($user === null) {
 				$output->writeln("<error>User $userId does not exist</error>");
 			} else {
 				$userId = $user->getUID();
 				$output->writeln("<info>Reset library for $userId</info>");
-                $this->dbMapper->resetMediaLibrary($userId, $output);
+				$this->dbMapper->resetMediaLibrary($userId, $output);
 			}
 		}
-        return 0;
+		return 0;
 	}
 }
