@@ -1,9 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.5.2 - pending
+## 3.6.0 - pending
 ### Changed
 - optimized album art search to reduce filesystem access
+- update command registration
 ### Fixed
 - next track was not preloaded for gapless playback
 
