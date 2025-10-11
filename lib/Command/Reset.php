@@ -29,9 +29,10 @@ class Reset extends Command {
 	}
 
 	protected function configure() {
-		$this->setName('audioplayer:reset')->setDescription('reset audio player library')
+		$this->setName('audioplayer:reset')
+			 ->setDescription('reset audio player library')
 			 ->addArgument('user_id', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'reset the whole library of the given user(s)')
-			 ->addOption('all', null, InputOption::VALUE_NONE, 'reset the whole library of all known users');
+			 ->addOption('all', 'a', InputOption::VALUE_NONE, 'reset the whole library of all known users');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output) {

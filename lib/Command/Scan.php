@@ -32,9 +32,11 @@ class Scan extends Command {
 	}
 
 	protected function configure() {
-		$this->setName('audioplayer:scan')->setDescription('scan for new audio files; use -v for debugging')
-			 ->addArgument('user_id', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'scan all audio files of the given user(s)')
-			 ->addOption('all', null, InputOption::VALUE_NONE, 'scan all audio files of all known users');
+		$this
+			->setName('audioplayer:scan')
+			->setDescription('scan for new audio files; use -v for debugging')
+			->addArgument('user_id', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'scan all audio files of the given user(s)')
+			->addOption('all', 'a', InputOption::VALUE_NONE, 'scan all audio files of all known users');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
