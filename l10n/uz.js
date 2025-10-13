@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Selected" : "Tanlangan",
     "Options" : "Variantlar",
     "Help" : "Help",
     "New in" : "Yangi kiritish",
@@ -14,13 +15,14 @@ OC.L10N.register(
     "Year" : "Yil",
     "Favorited" : "Favorited",
     "Favorite" : "Favorite",
-    "Remove" : "Remove",
-    "OK" : "OK",
-    "Cancel" : "Cancel",
+    "Remove" : "O'chirish",
+    "OK" : "Yaxshi",
+    "Cancel" : "Bekor qilish",
+    "URL" : "URL",
     "Unknown" : "Unknown",
     "Favorites" : "Favorites",
-    "Close" : "Close",
-    "Settings" : "Settings",
+    "Close" : "Yopish",
+    "Settings" : "Sozlamalar",
     "Advanced Settings" : "Kengaytirilgan sozlamalar",
     "Do you like this app?" : "Bu ilova sizga yoqdimi?",
     "More information …" : "Batafsil ma'lumot…"

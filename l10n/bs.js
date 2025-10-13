@@ -7,6 +7,7 @@ OC.L10N.register(
     "Title" : "Naslov",
     "Favorited" : "Favorizovano",
     "Favorite" : "Favorit",
+    "OK" : "OK",
     "Cancel" : "Otkaži",
     "URL" : "Url",
     "Unknown" : "Nepoznato",
