@@ -10,13 +10,30 @@
 
 'use strict';
 
+if (!OCA.Audioplayer) {
+    /**
+     * @namespace
+     */
+    OCA.Audioplayer = {};
+    /**
+     * Build common request headers for backend calls
+     */
+    OCA.Audioplayer.headers = function () {
+        let headers = new Headers();
+        headers.append('requesttoken', OC.requestToken);
+        headers.append('OCS-APIREQUEST', 'true');
+        headers.append('Content-Type', 'application/json');
+        return headers;
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     var cyrillic = document.getElementById('cyrillic_user');
     cyrillic.addEventListener('click', function () {
         var user_value = cyrillic.checked ? 'checked' : '';
         var params = new URLSearchParams({ type: 'cyrillic', value: user_value });
         fetch(OC.generateUrl('apps/audioplayer/setvalue') + '?' + params.toString(), {
-            method: 'GET'
+            method: 'GET', headers: OCA.Audioplayer.headers()
         }).then(function () {
             OCP.Toast.success(t('audioplayer', 'Saved'));
         });
@@ -34,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     pathInput.value = path;
                     fetch(OC.generateUrl('apps/audioplayer/userpath'), {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: new URLSearchParams({ value: path })
+                        headers: OCA.Audioplayer.headers(),
+                        body: JSON.stringify({value: path})
                     }).then(function (response) { return response.json(); }).then(function (data) {
                         if (!data.success) {
                             OCP.Toast.error(t('audioplayer', 'Invalid path!'));
@@ -47,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             false,
             'httpd/unix-directory',
-            true
+            true,
+            1
         );
     });
 
