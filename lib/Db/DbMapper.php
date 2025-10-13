@@ -194,7 +194,7 @@ class DbMapper
 
     public function deleteFromDB(int $fileId, ?string $userId = null): bool
     {
-        if ($userId !== null) {
+		if ($userId !== null) {
             $this->userId = $userId;
         }
         $this->logger->debug('deleteFromDB: ' . $fileId, ['app' => 'audioplayer']);

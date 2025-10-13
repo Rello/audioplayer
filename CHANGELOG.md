@@ -5,6 +5,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - optimized album art search to reduce filesystem access
 - compatibility occ commands
+- compatibility event listeners
 
 ### Fixed
 - next track was not preloaded for gapless playback

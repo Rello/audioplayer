@@ -412,36 +412,36 @@ OCA.Audioplayer.Category = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                if (jsondata.status === 'success') {
-                    let categoryRows = document.createDocumentFragment();
+            if (jsondata.status === 'success') {
+                let categoryRows = document.createDocumentFragment();
 
-                    for (let categoryData of jsondata.data) {
-                        let li = document.createElement('li');
-                        li.dataset.id = categoryData.id;
-                        li.dataset.name = categoryData.name;
+                for (let categoryData of jsondata.data) {
+                    let li = document.createElement('li');
+                    li.dataset.id = categoryData.id;
+                    li.dataset.name = categoryData.name;
 
-                        if (category === 'Playlist' && categoryData.id.toString()[0] !== 'X' && categoryData.id.toString()[0] !== 'S' && categoryData.id !== '') {
-                            OCA.Audioplayer.Playlists.buildCategoryRow(categoryData, li);
-                        } else {
-                            OCA.Audioplayer.Category.buildCategoryRow(categoryData, li);
-                        }
-
-                        let spanCounter = document.createElement('span');
-                        spanCounter.classList.add('counter');
-                        spanCounter.innerText = categoryData['cnt'] ? categoryData['cnt'] : '';
-                        li.appendChild(spanCounter);
-                        categoryRows.appendChild(li);
+                    if (category === 'Playlist' && categoryData.id.toString()[0] !== 'X' && categoryData.id.toString()[0] !== 'S' && categoryData.id !== '') {
+                        OCA.Audioplayer.Playlists.buildCategoryRow(categoryData, li);
+                    } else {
+                        OCA.Audioplayer.Category.buildCategoryRow(categoryData, li);
                     }
 
-                    let categoryList = document.getElementById('myCategory');
-                    categoryList.appendChild(categoryRows);
-                    categoryList.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
-                    if (typeof callback === 'function') {
-                        callback();
-                    }
-                } else {
-                    OCA.Audioplayer.UI.showInitScreen();
+                    let spanCounter = document.createElement('span');
+                    spanCounter.classList.add('counter');
+                    spanCounter.innerText = categoryData['cnt'] ? categoryData['cnt'] : '';
+                    li.appendChild(spanCounter);
+                    categoryRows.appendChild(li);
                 }
+
+                let categoryList = document.getElementById('myCategory');
+                categoryList.appendChild(categoryRows);
+                categoryList.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            } else {
+                OCA.Audioplayer.UI.showInitScreen();
+            }
         });
         if (category === 'Playlist') {
             document.getElementById('addPlaylist').classList.remove('hidden');
@@ -535,35 +535,35 @@ OCA.Audioplayer.Category = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                document.getElementById('loading').style.display = 'none';
-                if (jsondata.status === 'success') {
-                    document.getElementById('sm2-bar-ui').style.display = 'block';
-                    let itemRows = document.createDocumentFragment();
-                    for (let itemData of jsondata.data) {
-                        let tempItem = OCA.Audioplayer.UI.buildTrackRow(itemData, covers);
-                        itemRows.appendChild(tempItem);
-                    }
-
-                    document.getElementById('playlist-container').dataset.playlist = category + '-' + categoryItem;
-                    document.querySelector('.albumwrapper').appendChild(itemRows);
-                    OCA.Audioplayer.UI.addTitleClickEvents(callback);
-
-                    if (albumDirectPlay === true) {
-                        document.querySelector('.albumwrapper').getElementsByClassName('title')[0].click();
-                        return;
-                    }
-                    OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
-
-                    document.querySelector('.header-title').innerText = jsondata['header']['col1'];
-                    document.querySelector('.header-artist').innerText = jsondata['header']['col2'];
-                    document.querySelector('.header-album').innerText = jsondata['header']['col3'];
-                    document.querySelector('.header-time').innerText = jsondata['header']['col4'];
-
-                } else if (categoryItem[0] === 'X' || categoryItem[0] === 'S') {
-                    OCA.Audioplayer.UI.showInitScreen('smart');
-                } else {
-                    OCA.Audioplayer.UI.showInitScreen('playlist');
+            document.getElementById('loading').style.display = 'none';
+            if (jsondata.status === 'success') {
+                document.getElementById('sm2-bar-ui').style.display = 'block';
+                let itemRows = document.createDocumentFragment();
+                for (let itemData of jsondata.data) {
+                    let tempItem = OCA.Audioplayer.UI.buildTrackRow(itemData, covers);
+                    itemRows.appendChild(tempItem);
                 }
+
+                document.getElementById('playlist-container').dataset.playlist = category + '-' + categoryItem;
+                document.querySelector('.albumwrapper').appendChild(itemRows);
+                OCA.Audioplayer.UI.addTitleClickEvents(callback);
+
+                if (albumDirectPlay === true) {
+                    document.querySelector('.albumwrapper').getElementsByClassName('title')[0].click();
+                    return;
+                }
+                OCA.Audioplayer.UI.indicateCurrentPlayingTrack();
+
+                document.querySelector('.header-title').innerText = jsondata['header']['col1'];
+                document.querySelector('.header-artist').innerText = jsondata['header']['col2'];
+                document.querySelector('.header-album').innerText = jsondata['header']['col3'];
+                document.querySelector('.header-time').innerText = jsondata['header']['col4'];
+
+            } else if (categoryItem[0] === 'X' || categoryItem[0] === 'S') {
+                OCA.Audioplayer.UI.showInitScreen('smart');
+            } else {
+                OCA.Audioplayer.UI.showInitScreen('playlist');
+            }
         });
         let category_title = document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').firstChild['title'] : false;
         if (category !== 'Title') {
@@ -872,7 +872,9 @@ OCA.Audioplayer.UI = {
             return OCA.Audioplayer.UI.compareTracks(a, b, reg_check, column) * factor;
         });
         let playlist = document.getElementById('individual-playlist');
-        elems.forEach(function (el) { playlist.appendChild(el); });
+        elems.forEach(function (el) {
+            playlist.appendChild(el);
+        });
 
         if (document.getElementById('playlist-container').dataset.playlist === OCA.Audioplayer.Player.currentPlaylist) {
             let playlistItems = document.querySelectorAll('.albumwrapper li');
@@ -1167,7 +1169,9 @@ OCA.Audioplayer.Playlists = {
                 headers: OCA.Audioplayer.headers(),
                 body: JSON.stringify({playlist: playlistName})
             }
-        ).then(function (response) { return response.json(); }).then(function (jsondata) {
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
             if (jsondata.status === 'success') {
                 OCA.Audioplayer.Category.load();
             }
@@ -1227,7 +1231,9 @@ OCA.Audioplayer.Playlists = {
                 headers: OCA.Audioplayer.headers(),
                 body: JSON.stringify({plId: playlistId, newname: playlistName})
             }
-        ).then(function (response) { return response.json(); }).then(function (jsondata) {
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
             if (jsondata.status === 'success') {
                 OCA.Audioplayer.Category.load();
                 playlistClone.remove();
@@ -1258,7 +1264,9 @@ OCA.Audioplayer.Playlists = {
                             headers: OCA.Audioplayer.headers(),
                             body: JSON.stringify({playlistid: plId, songids: idsInOrder.join(';')})
                         }
-                    ).then(function (response) { return response.json(); }).then(function (jsondata) {
+                    ).then(function (response) {
+                        return response.json();
+                    }).then(function (jsondata) {
                         if (jsondata.status === 'success') {
                             OCP.Toast.info(jsondata['msg']);
                             document.getElementById('myCategory').getElementsByClassName('active')[0].click();
@@ -1305,7 +1313,9 @@ OCA.Audioplayer.Playlists = {
                             headers: OCA.Audioplayer.headers(),
                             body: JSON.stringify({playlistid: plId})
                         }
-                    ).then(function (response) { return response.json(); }).then(function (jsondata) {
+                    ).then(function (response) {
+                        return response.json();
+                    }).then(function (jsondata) {
                         if (jsondata.status === 'success') {
                             OCA.Audioplayer.Category.load();
                             OCP.Toast.success(t('audioplayer', 'Playlist successfully deleted!'));
@@ -1364,7 +1374,9 @@ OCA.Audioplayer.Playlists = {
                 headers: OCA.Audioplayer.headers(),
                 body: JSON.stringify({playlistid: playlistId, trackid: trackid})
             }
-        ).then(function (response) { return response.json(); }).then(function (jsondata) {
+        ).then(function (response) {
+            return response.json();
+        }).then(function (jsondata) {
             if (jsondata) {
                 let currentCount = document.querySelector('#myCategory li[data-id="' + playlistId + '"] .counter');
                 if (currentCount) {

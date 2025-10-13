@@ -13,8 +13,12 @@ namespace OCA\audioplayer\AppInfo;
 
 use OCA\audioplayer\Dashboard\Widget;
 use OCA\audioplayer\Listener\LoadAdditionalScripts;
+use OCA\audioplayer\Listener\UserDeletedListener;
+use OCA\audioplayer\Listener\FileDeletedListener;
 use OCA\audioplayer\Search\Provider;
 use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
+use OCP\User\Events\UserDeletedEvent;
+use OCP\Files\Events\Node\NodeDeletedEvent;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -35,22 +39,8 @@ class Application extends App implements IBootstrap
         $context->registerDashboardWidget(Widget::class);
         $context->registerEventListener(BeforeTemplateRenderedEvent::class, LoadAdditionalScripts::class);
         $context->registerSearchProvider(Provider::class);
-        $this->registerFileHooks();
-        $this->registerUserHooks();
-    }
-
-    protected function registerFileHooks()
-    {
-        Util::connectHook(
-            'OC_Filesystem', 'delete', '\OCA\audioplayer\Hooks\FileHooks', 'deleteTrack'
-        );
-    }
-
-    protected function registerUserHooks()
-    {
-        Util::connectHook(
-            'OC_User', 'post_deleteUser', '\OCA\audioplayer\Hooks\UserHooks', 'deleteUser'
-        );
+		$context->registerEventListener(UserDeletedEvent::class, UserDeletedListener::class);
+		$context->registerEventListener(NodeDeletedEvent::class, FileDeletedListener::class);
     }
 
     public function boot(IBootContext $context): void
