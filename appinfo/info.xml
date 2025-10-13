@@ -40,10 +40,13 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 		<nextcloud min-version="21" max-version="99"/>
 	</dependencies>
 	<settings>
-		<admin-section>OCA\audioplayer\Settings\AdminSection</admin-section>
 		<personal>OCA\audioplayer\Settings\Personal</personal>
 		<personal-section>OCA\audioplayer\Settings\PersonalSection</personal-section>
 	</settings>
+	<commands>
+		<command>OCA\audioplayer\Command\Reset</command>
+		<command>OCA\audioplayer\Command\Scan</command>
+	</commands>
 	<navigations>
 		<navigation>
 			<id>audioplayer</id>

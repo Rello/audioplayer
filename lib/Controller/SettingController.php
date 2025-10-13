@@ -38,17 +38,6 @@ class SettingController extends Controller {
     }
 
     /**
-     * @param $type
-     * @param $value
-     * @return JSONResponse
-     */
-    public function admin($type, $value)
-    {
-        $this->settingService->admin($type, $value);
-        return new JSONResponse(['success' => 'true']);
-    }
-
-    /**
      * @NoAdminRequired
      * @param $type
      * @param $value
