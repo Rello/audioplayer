@@ -11,6 +11,8 @@ All notable changes to the Audio Player project will be documented in this file.
 - next track was not preloaded for gapless playback
 - removed obsolete admin settings
 - Scan folder selection
+- Fix search SQL syntax error with malformed column escaping #637
+- Dashboard widget not working #639
 
 ## 3.5.1 - 2025-07-18
 ### Fixed

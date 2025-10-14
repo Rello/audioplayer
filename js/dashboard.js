@@ -20,6 +20,13 @@ if (!OCA.Audioplayer) {
      * @namespace
      */
     OCA.Audioplayer = {};
+    OCA.Audioplayer.headers = function () {
+        let headers = new Headers();
+        headers.append('requesttoken', OC.requestToken);
+        headers.append('OCS-APIREQUEST', 'true');
+        headers.append('Content-Type', 'application/json');
+        return headers;
+    };
 }
 OCA.Audioplayer.Player = {
     html5Audio: null,
@@ -139,7 +146,7 @@ OCA.Audioplayer.Player = {
             })
                 .catch(error => {
                     OCA.Audioplayer.Player.stop();
-                    document.getElementById('playerPlay').classList.replace('icon-loading','icon-loading');
+                    document.getElementById('playerPlay').classList.replace('icon-loading', 'icon-loading');
                     //document.getElementById('playerPlay').classList.replace('APplay-pause','play');
                 });
         }
@@ -182,7 +189,7 @@ OCA.Audioplayer.Player = {
             document.getElementById('audioplayerCover').setAttribute('style', addCss);
             document.getElementById('audioplayerCover').innerText = addDescr;
 
-            let currentCount = this.currentTrackIndex+1 + '/' + this.html5Audio.childElementCount + ': ';
+            let currentCount = this.currentTrackIndex + 1 + '/' + this.html5Audio.childElementCount + ': ';
             document.getElementById('audioplayerTitle').innerHTML = currentCount + currentTrack.dataset.title;
         }
     },
@@ -322,18 +329,18 @@ OCA.Audioplayer.Dashboard = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                if (jsondata.status === 'success') {
-                    let select = document.getElementById('audioplayerItem')
-                    select.innerHTML = '<option value="" selected>' + t('audioplayer', 'Selection') + '</option>';
+            if (jsondata.status === 'success') {
+                let select = document.getElementById('audioplayerItem')
+                select.innerHTML = '<option value="" selected>' + t('audioplayer', 'Selection') + '</option>';
 
-                    for (var categoryData of jsondata.data) {
-                        var optionElement = document.createElement('option');
-                        optionElement.value = categoryData.id;
-                        optionElement.innerHTML = categoryData.name;
-                        select.appendChild(optionElement);
-                    }
-                    OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
+                for (var categoryData of jsondata.data) {
+                    var optionElement = document.createElement('option');
+                    optionElement.value = categoryData.id;
+                    optionElement.innerHTML = categoryData.name;
+                    select.appendChild(optionElement);
                 }
+                OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
+            }
         });
         return true;
     },
@@ -364,47 +371,46 @@ OCA.Audioplayer.Dashboard = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
-                //document.getElementById('loading').style.display = 'none';
-                if (jsondata.status === 'success') {
+            //document.getElementById('loading').style.display = 'none';
+            if (jsondata.status === 'success') {
 
-                    player.innerHTML = '';
-                    for (let itemData of jsondata.data) {
+                player.innerHTML = '';
+                for (let itemData of jsondata.data) {
 
-                        let streamUrl;
-                        if (itemData['mim'] === 'audio/mpegurl' || itemData['mim'] === 'audio/x-scpls' || itemData['mim'] === 'application/xspf+xml') {
-                            streamUrl = itemData['lin'];
-                            jsondata.data = [];
-                            break;
-                        } else {
-                            streamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?t=' + itemData['id'];
-                        }
-
-                        let canPlayMime
-                        if (canPlayMimeType.includes(itemData['mim'])) {
-                            canPlayMime = true;
-                        } else {
-                            canPlayMime = 'false';
-                        }
-
-                        let audioSource = document.createElement('source');
-                        audioSource.src = streamUrl;
-                        audioSource.dataset.trackid = itemData['id'];
-                        audioSource.dataset.title = itemData['cl1'];
-                        audioSource.dataset.artist = itemData['cl2'];
-                        audioSource.dataset.album = itemData['cl3'];
-                        audioSource.dataset.cover = itemData['cid'];
-                        audioSource.dataset.canPlayMime = canPlayMime;
-                        player.appendChild(audioSource);
+                    let streamUrl;
+                    if (itemData['mim'] === 'audio/mpegurl' || itemData['mim'] === 'audio/x-scpls' || itemData['mim'] === 'application/xspf+xml') {
+                        streamUrl = itemData['lin'];
+                        jsondata.data = [];
+                        break;
+                    } else {
+                        streamUrl = OC.generateUrl('apps/audioplayer/getaudiostream') + '?t=' + itemData['id'];
                     }
-                    document.getElementById('audioplayerTitle').innerHTML = jsondata.data.length + ' ' + t('audioplayer', 'Titles');
-                } else {
-                    document.getElementById('audioplayerTitle').innerHTML = t('audioplayer', 'No data');
+
+                    let canPlayMime
+                    if (canPlayMimeType.includes(itemData['mim'])) {
+                        canPlayMime = true;
+                    } else {
+                        canPlayMime = 'false';
+                    }
+
+                    let audioSource = document.createElement('source');
+                    audioSource.src = streamUrl;
+                    audioSource.dataset.trackid = itemData['id'];
+                    audioSource.dataset.title = itemData['cl1'];
+                    audioSource.dataset.artist = itemData['cl2'];
+                    audioSource.dataset.album = itemData['cl3'];
+                    audioSource.dataset.cover = itemData['cid'];
+                    audioSource.dataset.canPlayMime = canPlayMime;
+                    player.appendChild(audioSource);
                 }
-                OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
-                document.getElementById('audioplayerCover').removeAttribute('style');
-                document.getElementById('audioplayerCover').innerText = '';
-                OCA.Audioplayer.Player.currentTrackIndex = 0;
+                document.getElementById('audioplayerTitle').innerHTML = jsondata.data.length + ' ' + t('audioplayer', 'Titles');
+            } else {
+                document.getElementById('audioplayerTitle').innerHTML = t('audioplayer', 'No data');
             }
-        });
-    },
+            OCA.Audioplayer.Dashboard.hideElement('audioplayerLoading');
+            document.getElementById('audioplayerCover').removeAttribute('style');
+            document.getElementById('audioplayerCover').innerText = '';
+            OCA.Audioplayer.Player.currentTrackIndex = 0;
+        })
+    }
 }
