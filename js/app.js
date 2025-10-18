@@ -150,8 +150,8 @@ OCA.Audioplayer.Core = {
                 if (OCA.Audioplayer.Core.CategorySelectors[2]) {
                     let item = document.querySelector('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]');
                     //item.querySelector('.icon').style.display = 'none';
-                    //item.querySelector('.ioc').classList.remove('ioc-volume-up');
-                    //item.querySelector('.ioc').classList.add('ioc-volume-off');
+                    //item.querySelector('.ap-icon').classList.remove('ap-icon-volume-up');
+                    //item.querySelector('.ap-icon').classList.add('ap-icon-volume-off');
                     item.scrollIntoView({
                         behavior: 'smooth',
                         block: 'center',
@@ -600,10 +600,11 @@ OCA.Audioplayer.UI = {
 
         let spanAction = document.createElement('span');
         spanAction.classList.add('actionsSong');
-        let iAction = document.createElement('i');
-        iAction.classList.add('ioc', 'ioc-volume-off');
+        let actionIcon = document.createElement('span');
+        actionIcon.classList.add('ap-icon', 'ap-icon-volume-off');
+        actionIcon.setAttribute('aria-hidden', 'true');
         spanAction.appendChild(favAction);
-        spanAction.appendChild(iAction);
+        spanAction.appendChild(actionIcon);
 
         let streamUrl = document.createElement('a');
         streamUrl.hidden = true;
@@ -694,15 +695,15 @@ OCA.Audioplayer.UI = {
             }
 
             // reset all playing icons
-            let iocIcon = document.querySelectorAll('.albumwrapper li i.ioc');
-            for (let i = 0; i < iocIcon.length; ++i) {
+            let trackIcons = document.querySelectorAll('.albumwrapper li .ap-icon');
+            for (let i = 0; i < trackIcons.length; ++i) {
             }
             let iconIcon = document.querySelectorAll('.albumwrapper li i.icon');
             for (let j = 0; j < iconIcon.length; ++j) {
             }
 
-            document.getElementById('nowPlayingTitle').textContent = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
-            document.getElementById('nowPlayingArtist').textContent = iocIcon[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.artist;
+            document.getElementById('nowPlayingTitle').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
+            document.getElementById('nowPlayingArtist').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.artist;
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].scrollIntoView(
                 {
@@ -830,7 +831,7 @@ OCA.Audioplayer.UI = {
             OCA.Audioplayer.UI.EmptyContainer.innerHTML = '<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>';
         } else {
             let html = '<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>';
-            html += '<span class="no-songs-found"><i class="ioc ioc-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></i> ' + t('audioplayer', 'Add new tracks to library') + '</span>';
+            html += '<span class="no-songs-found"><span class="ap-icon ap-icon-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></span> ' + t('audioplayer', 'Add new tracks to library') + '</span>';
             html += '<a class="no-songs-found" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>';
             OCA.Audioplayer.UI.EmptyContainer.innerHTML = html;
         }
@@ -1282,15 +1283,15 @@ OCA.Audioplayer.Playlists = {
                     document.querySelectorAll('#individual-playlist li').forEach(function (li) {
                         li.classList.remove('isActive');
                     });
-                    document.querySelectorAll('#individual-playlist li i.ioc').forEach(function (i) {
-                        i.style.display = 'none';
+                    document.querySelectorAll('#individual-playlist li .ap-icon').forEach(function (icon) {
+                        icon.style.display = 'none';
                     });
                 } else {
                     document.querySelectorAll('#individual-playlist li').forEach(function (li) {
                         li.classList.remove('isActive');
                     });
-                    document.querySelectorAll('#individual-playlist li i.ioc').forEach(function (i) {
-                        i.style.display = 'none';
+                    document.querySelectorAll('#individual-playlist li .ap-icon').forEach(function (icon) {
+                        icon.style.display = 'none';
                     });
                 }
 
@@ -1334,8 +1335,8 @@ OCA.Audioplayer.Playlists = {
         spanName.setAttribute('title', el.name);
         spanName.innerText = el.name;
 
-        let iSort = document.createElement('i');
-        iSort.classList.add('ioc', 'ioc-sort');
+        let iSort = document.createElement('span');
+        iSort.classList.add('ap-icon', 'ap-icon-sort');
         iSort.setAttribute('title', t('audioplayer', 'Sort playlist'));
         iSort.dataset.sortid = el.id;
         iSort.addEventListener('click', OCA.Audioplayer.Playlists.sortPlaylist);
@@ -1347,8 +1348,8 @@ OCA.Audioplayer.Playlists = {
         iEdit.dataset.editid = el.id;
         iEdit.addEventListener('click', OCA.Audioplayer.Playlists.renamePlaylist);
 
-        let iDelete = document.createElement('i');
-        iDelete.classList.add('ioc', 'ioc-delete');
+        let iDelete = document.createElement('span');
+        iDelete.classList.add('ap-icon', 'ap-icon-delete');
         iDelete.setAttribute('title', t('audioplayer', 'Delete playlist'));
         iDelete.dataset.deleteid = el.id;
         iDelete.addEventListener('click', OCA.Audioplayer.Playlists.deletePlaylist);

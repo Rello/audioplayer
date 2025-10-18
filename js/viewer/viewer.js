@@ -41,7 +41,7 @@ function playFile(file, data) {
     audioPlayer.mime = fileRow.getAttribute('data-mime');
     var thumb = fileRow.querySelector('.thumbnail');
     if (thumb) {
-        thumb.innerHTML = '<i class="ioc ioc-volume-up"  style="color:#fff;margin-left:5px; text-align:center;line-height:32px;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;font-size: 24px;"></i>';
+        thumb.innerHTML = '<span class="ap-icon ap-icon-volume-up" style="color:#fff;margin-left:5px;display:inline-block;width:24px;height:24px;filter: drop-shadow(-1px 0 0 black) drop-shadow(0 1px 0 black) drop-shadow(1px 0 0 black) drop-shadow(0 -1px 0 black);"></span>';
     }
 
     if (audioPlayer.player === null) {
@@ -51,7 +51,7 @@ function playFile(file, data) {
         audioPlayer.player.play();
     } else {
         audioPlayer.player.pause();
-        document.querySelectorAll('#filestable .thumbnail i.ioc-volume-up').forEach(function (el) {
+        document.querySelectorAll('#filestable .thumbnail .ap-icon-volume-up').forEach(function (el) {
             el.style.display = 'none';
         });
         audioPlayer.player = null;

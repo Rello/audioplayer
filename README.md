@@ -44,6 +44,9 @@ English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polis
 - Eventdispatcher 'OCA\audioplayer::loadAdditionalScripts'
 - Sidebar Tabs: OCA.Audioplayer.Sidebar.registerSidebarTab
 
+### Frontend assets
+- Interface controls use bundled SVG icons stored in `img/icons/`.
+
 ## Maintainers
 - [Marcel Scherello](https://github.com/rello) (author, project leader)
 - [r4sas](https://github.com/r4sas)

@@ -1,0 +1,64 @@
+.ap-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+.ap-icon-volume-off {
+    -webkit-mask-image: url('../img/icons/volume-off.svg');
+    mask-image: url('../img/icons/volume-off.svg');
+}
+
+.ap-icon-volume-up {
+    -webkit-mask-image: url('../img/icons/volume-up.svg');
+    mask-image: url('../img/icons/volume-up.svg');
+}
+
+.ap-icon-refresh {
+    -webkit-mask-image: url('../img/icons/refresh.svg');
+    mask-image: url('../img/icons/refresh.svg');
+}
+
+.ap-icon-sort {
+    -webkit-mask-image: url('../img/icons/sort.svg');
+    mask-image: url('../img/icons/sort.svg');
+}
+
+.ap-icon-delete {
+    -webkit-mask-image: url('../img/icons/delete.svg');
+    mask-image: url('../img/icons/delete.svg');
+}
+
+.ap-icon-spinner {
+    width: 32px;
+    height: 32px;
+    -webkit-mask-image: url('../img/icons/spinner.svg');
+    mask-image: url('../img/icons/spinner.svg');
+    -webkit-animation: ap-icon-spin 1s linear infinite;
+    animation: ap-icon-spin 1s linear infinite;
+}
+
+@-webkit-keyframes ap-icon-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes ap-icon-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
