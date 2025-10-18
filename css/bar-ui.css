@@ -830,8 +830,8 @@
 #sm2-bar-ui.redesign .ap-controls .sm2-inline-button,
 #sm2-bar-ui.redesign .ap-right .sm2-inline-button {
   position: static;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
 }
 #sm2-bar-ui.redesign .ap-right input[type=range] { flex: 0 0 60%; }
 #sm2-bar-ui.redesign .ap-right #playerSpeed {

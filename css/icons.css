@@ -1,7 +1,7 @@
 .ap-icon {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     background-color: currentColor;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
@@ -9,11 +9,6 @@
     mask-position: center;
     -webkit-mask-size: contain;
     mask-size: contain;
-}
-
-.ap-icon-volume-off {
-    -webkit-mask-image: url('../img/icons/volume-off.svg');
-    mask-image: url('../img/icons/volume-off.svg');
 }
 
 .ap-icon-volume-up {

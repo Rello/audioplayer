@@ -149,9 +149,6 @@ OCA.Audioplayer.Core = {
             OCA.Audioplayer.Category.handleCategoryClicked(null, function () {                        // select the last played title
                 if (OCA.Audioplayer.Core.CategorySelectors[2]) {
                     let item = document.querySelector('#individual-playlist li[data-trackid="' + OCA.Audioplayer.Core.CategorySelectors[2] + '"]');
-                    //item.querySelector('.icon').style.display = 'none';
-                    //item.querySelector('.ap-icon').classList.remove('ap-icon-volume-up');
-                    //item.querySelector('.ap-icon').classList.add('ap-icon-volume-off');
                     item.scrollIntoView({
                         behavior: 'smooth',
                         block: 'center',
@@ -600,11 +597,7 @@ OCA.Audioplayer.UI = {
 
         let spanAction = document.createElement('span');
         spanAction.classList.add('actionsSong');
-        let actionIcon = document.createElement('span');
-        actionIcon.classList.add('ap-icon', 'ap-icon-volume-off');
-        actionIcon.setAttribute('aria-hidden', 'true');
         spanAction.appendChild(favAction);
-        spanAction.appendChild(actionIcon);
 
         let streamUrl = document.createElement('a');
         streamUrl.hidden = true;
@@ -694,13 +687,7 @@ OCA.Audioplayer.UI = {
                 document.getElementsByClassName('isActive')[0].classList.remove('isActive');
             }
 
-            // reset all playing icons
             let trackIcons = document.querySelectorAll('.albumwrapper li .ap-icon');
-            for (let i = 0; i < trackIcons.length; ++i) {
-            }
-            let iconIcon = document.querySelectorAll('.albumwrapper li i.icon');
-            for (let j = 0; j < iconIcon.length; ++j) {
-            }
 
             document.getElementById('nowPlayingTitle').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
             document.getElementById('nowPlayingArtist').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.artist;

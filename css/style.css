@@ -57,7 +57,7 @@
 #audio-settings li.audio-settings-item {
     background-size: 15px 15px;
     background-position: 0 center;
-    opacity: .57;
+    opacity: 0.8;
 }
 
 #loading {
@@ -291,11 +291,8 @@ i#scanAudiosFirst {
     position: absolute;
     right: 57px;
     color: #cccccc;
-}
-
-#myCategory li .ap-icon-sort {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }
 
@@ -316,11 +313,8 @@ i#scanAudiosFirst {
     position: absolute;
     right: 38px;
     color: #cccccc;
-}
-
-#myCategory li .ap-icon-delete {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }
 
