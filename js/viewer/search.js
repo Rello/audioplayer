@@ -5,7 +5,7 @@
      * Construct a new FileActions instance
      * @constructs Files
      */
-    var Audiplayer = function() {
+    let Audiplayer = function() {
         this.initialize();
     };
     /**
@@ -19,8 +19,8 @@
             search.setRenderer('audioplayer', this.renderResult);
         },
         renderResult: function(row, item) {
-            var element = row instanceof HTMLElement ? row : row[0];
-            var icon = element.querySelector('td.icon');
+            let element = row instanceof HTMLElement ? row : row[0];
+            let icon = element.querySelector('td.icon');
             if (icon) {
                 icon.style.backgroundImage = 'url(' + OC.imagePath('audioplayer', 'app-dark') + ')';
                 icon.style.opacity = '.4';

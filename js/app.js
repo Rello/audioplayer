@@ -266,7 +266,7 @@ OCA.Audioplayer.Cover = {
         let activeAlbum = document.querySelector('.album[data-album="' + AlbumId + '"]');
 
         if (activeAlbum.classList.contains('is-active')) {
-            var sc = document.querySelector('.songcontainer');
+            const sc = document.querySelector('.songcontainer');
             if (sc) {
                 sc.remove();
             }
@@ -793,7 +793,7 @@ OCA.Audioplayer.UI = {
                 OCA.Audioplayer.Player.currentPlaylist = document.getElementById('playlist-container').dataset.playlist;
             }
             let k = 0, e = activeLi;
-            while (e = e.previousSibling) {
+            while ((e = e.previousSibling) !== null) {
                 ++k;
             }
             // when a new title is played, the old playtime will be reset
@@ -873,7 +873,7 @@ OCA.Audioplayer.UI = {
             let e = document.querySelectorAll('[src="' + OCA.Audioplayer.Player.html5Audio.src + '"]')[1];
             if (e) {
                 let k = 0;
-                while (e = e.previousSibling) {
+                while ((e = e.previousSibling) !== null) {
                     ++k;
                 }
                 OCA.Audioplayer.Player.currentTrackIndex = k;
@@ -1413,7 +1413,7 @@ OCA.Audioplayer.Playlists = {
 
     isBefore: function (el1, el2) {
         if (el2.parentNode === el1.parentNode)
-            for (var cur = el1.previousSibling; cur && cur.nodeType !== 9; cur = cur.previousSibling)
+            for (let cur = el1.previousSibling; cur && cur.nodeType !== 9; cur = cur.previousSibling)
                 if (cur === el2)
                     return true;
         return false;
@@ -1457,7 +1457,7 @@ document.addEventListener('DOMContentLoaded', function () {
     OCA.Audioplayer.Core.initKeyListener();
     OCA.Audioplayer.Backend.checkNewTracks();
     OCA.Audioplayer.Playlists.initPlaylistActions();
-    OCA.Audioplayer.Backend.whatsnew();
+    //OCA.Audioplayer.Backend.whatsnew();
 
     OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist, 250);
     document.getElementById('app-content').addEventListener('appresized', OCA.Audioplayer.UI.resizePlaylist);

@@ -13,7 +13,7 @@
     <?php $_['audioplayer_view'] === 'pictures' ? p($l->t('Album Covers')) : p($l->t('List View')); ?>
 </div>
 		<div id="category_area">
-			<select id="category_selector">
+            <label for="category_selector"></label><select id="category_selector">
 				<option value=""selected><?php p($l->t('Selection')); ?></option>
 				<option value="Playlist"><?php p($l->t('Playlists')); ?></option>
 				<option value="Album"><?php p($l->t('Albums')); ?></option>
@@ -31,8 +31,8 @@
 		</ul>
         <!--my playlist clone -->
 <li class="plclone" id="pl-clone" data-pl="">
-			<div id="playlist_controls">	
-				<input type="text" name="playlist" id="playlist" value=""  />
+			<div id="playlist_controls">
+                <label for="playlist"></label><input type="text" name="playlist" id="playlist" value=""  />
 				<button class="icon-checkmark"></button>
 				<button class="icon-close"></button>
 			</div>
@@ -40,7 +40,7 @@
 		<!--my playlist clone -->
 <div class="ap_hidden" id="newPlaylist">
 			<div id="newPlaylist_controls">
-				<input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist')); ?>" /> 
+                <label for="newPlaylistTxt"></label><input type="text" name="newPlaylistTxt" id="newPlaylistTxt" placeholder="<?php p($l->t('Create new playlist')); ?>" />
 				<button class="icon-checkmark" id="newPlaylistBtn_ok"></button>
 				<button class="icon-close" id="newPlaylistBtn_cancel"></button>
 			</div>

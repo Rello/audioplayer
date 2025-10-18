@@ -61,13 +61,13 @@ OCA.Audioplayer.Player = {
     next: function () {
         OCA.Audioplayer.Player.trackStartPosition = 0;
         OCA.Audioplayer.Player.lastSavedSecond = 0;
-        var numberOfTracks = OCA.Audioplayer.Player.html5Audio.childElementCount - 1; // index stats counting at 0
+        let numberOfTracks = OCA.Audioplayer.Player.html5Audio.childElementCount - 1; // index stats counting at 0
         if (OCA.Audioplayer.Player.shuffle === true) {
             // shuffle => get random track index
-            var minimum = 0;
-            var maximum = numberOfTracks;
-            var randomIndex = 0;
-            var foundPlayedTrack = false;
+            let minimum = 0;
+            let maximum = numberOfTracks;
+            let randomIndex = 0;
+            let foundPlayedTrack = false;
 
             if (OCA.Audioplayer.Player.shuffleHistory.length === OCA.Audioplayer.Player.html5Audio.childElementCount) {
                 OCA.Audioplayer.Player.stop();
@@ -121,7 +121,7 @@ OCA.Audioplayer.Player = {
      * play/pause when the same track is selected or get a new one
      */
     setTrack: function () {
-        var trackToPlay = this.html5Audio.children[this.currentTrackIndex];
+        let trackToPlay = this.html5Audio.children[this.currentTrackIndex];
         if (trackToPlay.dataset.canPlayMime === 'false') {
             this.next();
             return;
@@ -155,13 +155,13 @@ OCA.Audioplayer.Player = {
 
     indicateCurrentPlayingTrack: function () {
         //in every case, update the playbar and medaservices
-        var coverUrl = OC.generateUrl('apps/audioplayer/getcover/');
-        var currentTrack = this.html5Audio.children[this.currentTrackIndex];
+        let coverUrl = OC.generateUrl('apps/audioplayer/getcover/');
+        let currentTrack = this.html5Audio.children[this.currentTrackIndex];
 
         if (currentTrack) {
-            var addCss;
-            var addDescr;
-            var coverID = currentTrack.dataset.cover;
+            let addCss;
+            let addDescr;
+            let coverID = currentTrack.dataset.cover;
             if (coverID === 'null') {
                 addCss = 'background-color: #D3D3D3;color: #333333;';
                 addDescr = currentTrack.dataset.title[0];
@@ -319,7 +319,7 @@ OCA.Audioplayer.Dashboard = {
     },
 
     loadCategory: function () {
-        var category = document.getElementById('audiplayerCategory').value;
+        let category = document.getElementById('audiplayerCategory').value;
         OCA.Audioplayer.Dashboard.showElement('audioplayerLoading');
 
         fetch(
@@ -333,8 +333,8 @@ OCA.Audioplayer.Dashboard = {
                 let select = document.getElementById('audioplayerItem')
                 select.innerHTML = '<option value="" selected>' + t('audioplayer', 'Selection') + '</option>';
 
-                for (var categoryData of jsondata.data) {
-                    var optionElement = document.createElement('option');
+                for (let categoryData of jsondata.data) {
+                    let optionElement = document.createElement('option');
                     optionElement.value = categoryData.id;
                     optionElement.innerHTML = categoryData.name;
                     select.appendChild(optionElement);

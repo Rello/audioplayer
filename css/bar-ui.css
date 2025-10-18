@@ -8,10 +8,7 @@
   width: 100%;
   font-family: helvetica, arial, verdana, sans-serif;
   font-weight: normal;
-  -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-width: 20em;
   max-width: 30em;
@@ -352,9 +349,7 @@
 }
 
 .playing .sm2-progress .sm2-progress-ball {
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-  cursor: grab;
+  cursor: pointer;
 }
 
 .sm2-progress .sm2-progress-ball {
@@ -380,13 +375,10 @@
 
 .playing.grabbing .sm2-progress .sm2-progress-track,
 .playing.grabbing .sm2-progress .sm2-progress-ball {
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
 .sm2-bar-ui.grabbing .sm2-progress .sm2-progress-ball {
-  -webkit-transform: scale(1.15);
   transform: scale(1.15);
 }
 
@@ -396,7 +388,6 @@
   line-height: 10em;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  -ms-interpolation-mode: bicubic;
   opacity: 0.4;
     cursor: pointer;
 }

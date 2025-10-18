@@ -11,7 +11,7 @@
  */
 'use strict';
 
-var audioPlayer = {
+let audioPlayer = {
     mime: null,
     file: null,
     location: null,
@@ -23,9 +23,9 @@ function playFile(file, data) {
     file = encodeURIComponent(file);
     audioPlayer.file = file;
     audioPlayer.dir = data.dir;
-    var sharingToken = document.getElementById('sharingToken');
-    var token = (sharingToken && sharingToken.value !== undefined) ? sharingToken.value : '';
-    var dirLoad = data.dir.substr(1);
+    let sharingToken = document.getElementById('sharingToken');
+    let token = (sharingToken && sharingToken.value !== undefined) ? sharingToken.value : '';
+    let dirLoad = data.dir.substring(1);
     if (dirLoad !== '') {
         dirLoad = dirLoad + '/';
     }
@@ -37,9 +37,9 @@ function playFile(file, data) {
     } else {
         audioPlayer.location = OC.generateUrl('apps/audioplayer/getaudiostream?file={file}', {'file': dirLoad + file}, {escape: true});
     }
-    var fileRow = data.$file && data.$file[0] ? data.$file[0] : data.file;
+    let fileRow = data.$file && data.$file[0] ? data.$file[0] : data.file;
     audioPlayer.mime = fileRow.getAttribute('data-mime');
-    var thumb = fileRow.querySelector('.thumbnail');
+    let thumb = fileRow.querySelector('.thumbnail');
     if (thumb) {
         thumb.innerHTML = '<span class="ap-icon ap-icon-volume-up" style="color:#fff;margin-left:5px;display:inline-block;width:24px;height:24px;filter: drop-shadow(-1px 0 0 black) drop-shadow(0 1px 0 black) drop-shadow(1px 0 0 black) drop-shadow(0 -1px 0 black);"></span>';
     }
@@ -59,8 +59,8 @@ function playFile(file, data) {
 }
 
 function registerFileActions() {
-    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
-    var icon_url = OC.imagePath('core', 'actions/sound');
+    let mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
+    let icon_url = OC.imagePath('core', 'actions/sound');
     const audio = document.createElement('audio');
 
     mimeTypes.forEach((element) => {
@@ -79,7 +79,7 @@ function registerFileActions() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var header = document.getElementById('header');
+    let header = document.getElementById('header');
     if (typeof OCA !== 'undefined' && typeof OCA.Files !== 'undefined' && typeof OCA.Files.fileActions !== 'undefined' && header && !header.classList.contains('share-file')) {
         registerFileActions();
     }

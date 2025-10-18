@@ -28,10 +28,10 @@ if (!OCA.Audioplayer) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var cyrillic = document.getElementById('cyrillic_user');
+    let cyrillic = document.getElementById('cyrillic_user');
     cyrillic.addEventListener('click', function () {
-        var user_value = cyrillic.checked ? 'checked' : '';
-        var params = new URLSearchParams({ type: 'cyrillic', value: user_value });
+        let user_value = cyrillic.checked ? 'checked' : '';
+        let params = new URLSearchParams({ type: 'cyrillic', value: user_value });
         fetch(OC.generateUrl('apps/audioplayer/setvalue') + '?' + params.toString(), {
             method: 'GET', headers: OCA.Audioplayer.headers()
         }).then(function () {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /*
  * Collection path
  */
-    var pathInput = document.getElementById('audio-path');
+    let pathInput = document.getElementById('audio-path');
     pathInput.addEventListener('click', function () {
         OC.dialogs.filepicker(
             t('audioplayer', 'Select a single folder with audio files'),
@@ -69,10 +69,10 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     });
 
-    var supported_types = '';
-    var nsupported_types = '';
-    var mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
-    var audio = document.createElement('audio');
+    let supported_types = '';
+    let nsupported_types = '';
+    let mimeTypes = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
+    let audio = document.createElement('audio');
 
     mimeTypes.forEach(function (element) {
         if (audio.canPlayType(element)) {
