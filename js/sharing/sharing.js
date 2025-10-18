@@ -13,45 +13,45 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-    var mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
-    var mimeType = document.getElementById('mimetype').value;
-    var sharingToken = document.getElementById('sharingToken');
+    let mime_array = ['audio/mpeg', 'audio/mp4', 'audio/m4b', 'audio/ogg', 'audio/wav', 'audio/flac', 'audio/x-aiff', 'audio/aac'];
+    let mimeType = document.getElementById('mimetype').value;
+    let sharingToken = document.getElementById('sharingToken');
 
-    var token = sharingToken ? sharingToken.value : '';
+    let token = sharingToken ? sharingToken.value : '';
     if (mime_array.indexOf(mimeType) !== -1) {
-        var imgFrame = document.getElementById('imgframe');
+        let imgFrame = document.getElementById('imgframe');
         imgFrame.style.maxWidth = '450px';
 
         if (imgFrame.querySelectorAll('audio').length === 0) {
-            var downloadURL = document.getElementById('downloadURL').value;
-            var audioTag = document.createElement('audio');
+            let downloadURL = document.getElementById('downloadURL').value;
+            let audioTag = document.createElement('audio');
             audioTag.tabIndex = 0;
             audioTag.controls = true;
             audioTag.preload = 'none';
             audioTag.style.width = '100%';
-            var source = document.createElement('source');
+            let source = document.createElement('source');
             source.src = downloadURL;
             source.type = mimeType;
             audioTag.appendChild(source);
             imgFrame.appendChild(audioTag);
         }
 
-        var id3 = document.createElement('div');
+        let id3 = document.createElement('div');
         id3.id = 'id3';
         imgFrame.insertAdjacentElement('afterend', id3);
-        var ajaxurl = OC.generateUrl('apps/audioplayer/getpublicaudioinfo?token={token}', { 'token': token }, { escape: false });
+        let ajaxurl = OC.generateUrl('apps/audioplayer/getpublicaudioinfo?token={token}', { 'token': token }, { escape: false });
 
         fetch(ajaxurl)
             .then(function (response) { return response.json(); })
             .then(function (jsondata) {
                 if (jsondata.status === 'success') {
-                    var id3elem = document.getElementById('id3');
-                    var addRow = function (label, value) {
+                    let id3elem = document.getElementById('id3');
+                    let addRow = function (label, value) {
                         if (value !== '') {
-                            var div = document.createElement('div');
-                            var bold = document.createElement('b');
+                            let div = document.createElement('div');
+                            let bold = document.createElement('b');
                             bold.textContent = label + ': ';
-                            var span = document.createElement('span');
+                            let span = document.createElement('span');
                             span.textContent = value;
                             div.appendChild(bold);
                             div.appendChild(span);
@@ -76,10 +76,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     addRow(t('audioplayer', 'MIME type'), jsondata.data.mimetype);
                     addRow(t('audioplayer', 'ISRC'), jsondata.data.isrc);
                     if (jsondata.data.copyright !== '') {
-                        var div = document.createElement('div');
-                        var span1 = document.createElement('span');
+                        let div = document.createElement('div');
+                        let span1 = document.createElement('span');
                         span1.textContent = t('audioplayer', 'Copyright') + ' © ';
-                        var span2 = document.createElement('span');
+                        let span2 = document.createElement('span');
                         span2.textContent = jsondata.data.copyright;
                         div.appendChild(span1);
                         div.appendChild(span2);

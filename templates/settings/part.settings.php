@@ -22,12 +22,12 @@
     <div id="app-settings-content">
         <ul id="audio-settings">
             <li class="audio-settings-item icon-search">
-                <a href="#" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios" style="padding: 0 20px;">
+                <a href="#" title="<?php p($l->t('Scan for audio files')); ?>" id="scanAudios" style="padding: 0 25px;">
                     <?php p($l->t('Scan for audio files')); ?>
                 </a>
             </li>
             <li class="audio-settings-item icon-delete">
-                <a href="#" title="<?php p($l->t('Reset library')); ?>" id="resetAudios" style="padding: 0 20px;">
+                <a href="#" title="<?php p($l->t('Reset library')); ?>" id="resetAudios" style="padding: 0 25px;">
                     <?php p($l->t('Reset library')); ?>
                 </a>
             </li>
@@ -36,17 +36,17 @@
                 <label for="sonos">&nbsp;<?php p($l->t('SONOS Playback')); ?></label>
             </li>
             <li class="audio-settings-item icon-settings">
-                <a href="#" style="padding: 0 20px;" id="audioplayerSettings">
+                <a href="#" title="<?php p($l->t('Advanced Settings')); ?>" id="audioplayerSettings" style="padding: 0 25px;">
                     <?php p($l->t('Advanced Settings')); ?>
                 </a>
             </li>
             <li class="audio-settings-item icon-external">
-                <a href="https://github.com/rello/audioplayer/wiki/donate" target="_blank" style="padding: 0 20px;">
+                <a href="https://github.com/rello/audioplayer/wiki/donate" title="<?php p($l->t('Do you like this app?')); ?>" target="_blank" style="padding: 0 25px;">
                     <?php p($l->t('Do you like this app?')); ?>
                 </a>
             </li>
             <li class="audio-settings-item icon-info">
-                <a href="https://github.com/rello/audioplayer/wiki" target="_blank" style="padding: 0 20px;">
+                <a href="https://github.com/rello/audioplayer/wiki" target="_blank" style="padding: 0 25px;">
                     <?php p($l->t('More information …')); ?>
                 </a>
             </li>

@@ -36,7 +36,7 @@ OCA.Audioplayer.Settings = {
     },
 
     resetLibrary: function () {
-        var bar = document.querySelector('.sm2-bar-ui');
+        let bar = document.querySelector('.sm2-bar-ui');
         if (bar && bar.classList.contains('playing')) {
             OCA.Audioplayer.Player.currentTrackIndex = 0;
             OCA.Audioplayer.Player.stop();
@@ -44,29 +44,29 @@ OCA.Audioplayer.Settings = {
 
         OCA.Audioplayer.UI.showInitScreen();
 
-        var category = document.getElementById('category_selector');
+        let category = document.getElementById('category_selector');
         if (category) {
             category.value = '';
         }
         OCA.Audioplayer.Backend.setUserValue('category', OCA.Audioplayer.Core.CategorySelectors[0] + '-');
 
-        var myCategory = document.getElementById('myCategory');
+        let myCategory = document.getElementById('myCategory');
         if (myCategory) {
             myCategory.innerHTML = '';
         }
-        var alben = document.getElementById('alben');
+        let alben = document.getElementById('alben');
         if (alben) {
             alben.classList.add('active');
         }
-        var indPlaylist = document.getElementById('individual-playlist');
+        let indPlaylist = document.getElementById('individual-playlist');
         if (indPlaylist) {
             indPlaylist.remove();
         }
-        var info = document.getElementById('individual-playlist-info');
+        let info = document.getElementById('individual-playlist-info');
         if (info) {
             info.style.display = 'none';
         }
-        var header = document.getElementById('individual-playlist-header');
+        let header = document.getElementById('individual-playlist-header');
         if (header) {
             header.style.display = 'none';
         }
@@ -76,7 +76,7 @@ OCA.Audioplayer.Settings = {
         document.querySelectorAll('.songcontainer').forEach(function (el) {
             el.remove();
         });
-        var active = document.getElementById('activePlaylist');
+        let active = document.getElementById('activePlaylist');
         if (active) {
             active.innerHTML = '';
         }
@@ -104,7 +104,7 @@ OCA.Audioplayer.Settings = {
     },
 
     prepareScanDialog: function () {
-        var container = document.createElement('div');
+        let container = document.createElement('div');
         container.id = 'audios_import';
         document.body.appendChild(container);
 
@@ -129,14 +129,14 @@ OCA.Audioplayer.Settings = {
         );
 
         // remove the normal dialog buttons as this dialog is special
-        var analyticsElem = document.querySelector('.analyticsDialogButtonrow');
+        let analyticsElem = document.querySelector('.analyticsDialogButtonrow');
         if (analyticsElem) {
             analyticsElem.remove();
         }
 
         const container = document.importNode(document.getElementById('templateScanDialog').content, true);
 
-        var closeBtn = container.getElementById('audios_import_done_close');
+        let closeBtn = container.getElementById('audios_import_done_close');
         closeBtn.addEventListener('click', function () {
             OCA.Audioplayer.Settings.percentage = 0;
             OCA.Audioplayer.Settings.stopScan();
@@ -144,17 +144,17 @@ OCA.Audioplayer.Settings = {
         });
 
 
-        var cancelBtn = container.getElementById('audios_import_progress_cancel');
+        let cancelBtn = container.getElementById('audios_import_progress_cancel');
         cancelBtn.addEventListener('click', function () {
             OCA.Audioplayer.Settings.stopScan();
         });
 
-        var submitBtn = container.getElementById('audios_import_submit');
+        let submitBtn = container.getElementById('audios_import_submit');
         submitBtn.addEventListener('click', function () {
             OCA.Audioplayer.Settings.processScan();
         });
 
-        var progressBar = container.getElementById('audios_import_progressbar');
+        let progressBar = container.getElementById('audios_import_progressbar');
         if (progressBar) {
             progressBar.value = 0;
         }
@@ -167,8 +167,8 @@ OCA.Audioplayer.Settings = {
     },
 
     processScan: function () {
-        var form = document.getElementById('audios_import_form');
-        var process = document.getElementById('audios_import_process');
+        let form = document.getElementById('audios_import_form');
+        let process = document.getElementById('audios_import_process');
         if (form) {
             form.style.display = 'none';
         }
@@ -179,8 +179,8 @@ OCA.Audioplayer.Settings = {
     },
 
     startScan: function () {
-        var scanUrl = OC.generateUrl('apps/audioplayer/scanforaudiofiles');
-        var source = new OC.EventSource(scanUrl);
+        let scanUrl = OC.generateUrl('apps/audioplayer/scanforaudiofiles');
+        let source = new OC.EventSource(scanUrl);
         source.listen('progress', OCA.Audioplayer.Settings.updateScanProgress);
         source.listen('done', OCA.Audioplayer.Settings.scanDone);
         source.listen('error', OCA.Audioplayer.Settings.scanError);
@@ -188,51 +188,51 @@ OCA.Audioplayer.Settings = {
 
     stopScan: function () {
         OCA.Audioplayer.Settings.percentage = 0;
-        var url = OC.generateUrl('apps/audioplayer/scanforaudiofiles') + '?scanstop=true';
+        let url = OC.generateUrl('apps/audioplayer/scanforaudiofiles') + '?scanstop=true';
         fetch(url, {method: 'GET'});
     },
 
     updateScanProgress: function (message) {
-        var data = JSON.parse(message);
+        let data = JSON.parse(message);
         OCA.Audioplayer.Settings.percentage = data.filesProcessed / data.filesTotal * 100;
-        var progressBar = document.getElementById('audios_import_progressbar');
+        let progressBar = document.getElementById('audios_import_progressbar');
         if (progressBar) {
             progressBar.value = OCA.Audioplayer.Settings.percentage;
         }
-        var progress = document.getElementById('audios_import_process_progress');
+        let progress = document.getElementById('audios_import_process_progress');
         if (progress) {
             progress.textContent = `${data.filesProcessed}/${data.filesTotal}`;
         }
-        var messageBox = document.getElementById('audios_import_process_message');
+        let messageBox = document.getElementById('audios_import_process_message');
         if (messageBox) {
             messageBox.textContent = data.currentFile;
         }
     },
 
     scanDone: function (message) {
-        var data = JSON.parse(message);
-        var process = document.getElementById('audios_import_process');
-        var done = document.getElementById('audios_import_done');
+        let data = JSON.parse(message);
+        let process = document.getElementById('audios_import_process');
+        let done = document.getElementById('audios_import_done');
         if (process) {
             process.style.display = 'none';
         }
         if (done) {
             done.style.display = 'block';
         }
-        var message = document.getElementById('audios_import_done_message');
-        if (message) {
-            message.innerHTML = data.message;
+        let messageNew = document.getElementById('audios_import_done_message');
+        if (messageNew) {
+            messageNew.innerHTML = data.message;
         }
         OCA.Audioplayer.Core.init();
     },
 
     scanError: function (message) {
-        var data = JSON.parse(message);
-        var progressBar = document.getElementById('audios_import_progressbar');
+        let data = JSON.parse(message);
+        let progressBar = document.getElementById('audios_import_progressbar');
         if (progressBar) {
             progressBar.value = 100;
         }
-        var msg = document.getElementById('audios_import_done_message');
+        let msg = document.getElementById('audios_import_done_message');
         if (msg) {
             msg.textContent = data.message;
         }
@@ -241,7 +241,7 @@ OCA.Audioplayer.Settings = {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    var settings_link;
+    let settings_link;
     if (OC.config.versionstring.split('.')[0] <= 10) //ownCloud
     {
         settings_link = OC.generateUrl('settings/personal?sectionid=audioplayer');
@@ -249,14 +249,14 @@ document.addEventListener('DOMContentLoaded', function () {
         settings_link = OC.generateUrl('settings/user/audioplayer');
     }
 
-    var sonos = document.getElementById('sonos');
+    let sonos = document.getElementById('sonos');
     if (sonos) {
         sonos.addEventListener('click', function () {
             document.location = settings_link;
         });
     }
 
-    var settingsBtn = document.getElementById('audioplayerSettings');
+    let settingsBtn = document.getElementById('audioplayerSettings');
     if (settingsBtn) {
         settingsBtn.addEventListener('click', function () {
             document.location = settings_link;

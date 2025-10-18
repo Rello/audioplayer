@@ -35,9 +35,8 @@ body.theme--dark .icon-audioplayer {
 .panel--content .APcoverBar,
 .panel--content .APitemBar,
 .panel--content .APtitleBar {
-    margin: auto;
     width: 180px;
-    margin-top: 10px;
+    margin: 10px auto auto;
 }
 
 .panel--content .APtitleBar {

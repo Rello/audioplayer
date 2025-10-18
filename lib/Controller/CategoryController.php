@@ -11,9 +11,11 @@
 
 namespace OCA\audioplayer\Controller;
 
+use Doctrine\DBAL\Exception;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\InvalidPathException;
+use OCP\Files\NotPermittedException;
 use OCP\IRequest;
 use OCP\IL10N;
 use OCP\IDBConnection;
@@ -144,14 +146,17 @@ class CategoryController extends Controller
         return new JSONResponse($result);
     }
 
-    /**
-     * Get the tracks for a selected category or album
-     *
-     * @param string $category
-     * @param string $categoryId
-     * @return array
-     * @throws InvalidPathException
-     */
+	/**
+	 * Get the tracks for a selected category or album
+	 *
+	 * @param string $category
+	 * @param string $categoryId
+	 * @return array
+	 * @throws InvalidPathException
+	 * @throws NotPermittedException
+	 * @throws Exception
+	 * @throws \OCP\DB\Exception
+	 */
     private function getTracksDetails($category, $categoryId)
     {
         $SQL = null;
@@ -293,13 +298,14 @@ class CategoryController extends Controller
         return $aTracks;
     }
 
-    /**
-     * Extract steam urls from playlist files
-     *
-     * @param integer $fileId
-     * @return array
-     * @throws InvalidPathException
-     */
+	/**
+	 * Extract steam urls from playlist files
+	 *
+	 * @param integer $fileId
+	 * @return array
+	 * @throws InvalidPathException
+	 * @throws NotPermittedException
+	 */
     private function StreamParser($fileId)
     {
         $tracks = array();

@@ -185,7 +185,7 @@ OCA.Audioplayer.Notification = {
      * @param {string} message - The notification message.
      */
     notification: function (type, message) {
-        if (parseInt(OC.config.versionstring.substr(0, 2)) >= 17) {
+        if (parseInt(OC.config.versionstring.substring(0, 2)) >= 17) {
             if (type === 'success') {
                 OCP.Toast.success(message)
             } else if (type === 'error') {
