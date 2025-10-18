@@ -287,36 +287,40 @@ i#scanAudiosFirst {
     background-color: transparent;
 }
 
-#myCategory li i.ioc-sort {
+#myCategory li .ap-icon-sort {
     display: none;
     float: right;
     position: absolute;
     right: 57px;
-    font-size: 18px;
     color: #cccccc;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
 
-#myCategory li.active i.ioc-sort,
-#myCategory li.active i.ioc-delete,
+#myCategory li.active .ap-icon-sort,
+#myCategory li.active .ap-icon-delete,
 #myCategory li.active i.icon-rename {
     display: block;
 }
 
-#myCategory li.active i.ioc-sort:hover,
-#myCategory li.active i.ioc-sort.sortActive {
+#myCategory li.active .ap-icon-sort:hover,
+#myCategory li.active .ap-icon-sort.sortActive {
     color: #008000;
 }
 
-#myCategory li i.ioc-delete {
+#myCategory li .ap-icon-delete {
     display: none;
     float: right;
     position: absolute;
     right: 38px;
-    font-size: 16px;
     color: #cccccc;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
 
-#myCategory li.active i.ioc-delete:hover {
+#myCategory li.active .ap-icon-delete:hover {
     color: #A9302A;
 }
 
@@ -358,7 +362,7 @@ i#scanAudiosFirst {
     line-height: 26px;
 }
 
-#individual-playlist li .ioc-delete {
+#individual-playlist li .ap-icon-delete {
     display: none;
 }
 
@@ -368,7 +372,7 @@ i#scanAudiosFirst {
     opacity: 0.3;
 }
 
-#individual-playlist li:hover .ioc-delete {
+#individual-playlist li:hover .ap-icon-delete {
     display: block;
 }
 
@@ -436,8 +440,7 @@ i#scanAudiosFirst {
     width: 22px;
 }
 
-.albumwrapper li .ioc {
-    font-size: 16px;
+.albumwrapper li .ap-icon {
     line-height: 22px;
     display: none;
 }
@@ -515,7 +518,7 @@ i#scanAudiosFirst {
     color: var(--color-text-lighter);
 }
 
-#individual-playlist li span.ioc-delete {
+#individual-playlist li span.ap-icon-delete {
     position: absolute;
     float: right;
     right: 5px;
@@ -529,7 +532,7 @@ i#scanAudiosFirst {
     cursor: pointer;
 }
 
-#individual-playlist li span.ioc-delete:hover {
+#individual-playlist li span.ap-icon-delete:hover {
     color: #A9302A;
 }
 
@@ -558,6 +561,11 @@ i#scanAudiosFirst {
     line-height: 28px;
     display: block;
     text-align: center;
+}
+
+.no-songs-found .ap-icon-refresh {
+    margin-right: 6px;
+    cursor: pointer;
 }
 
 .coverrow {
@@ -1260,7 +1268,7 @@ li.activeHover {
         height: 24px;
     }
 
-    .songcontainer span.actionsSong i.ioc {
+    .songcontainer span.actionsSong .ap-icon {
         margin-left: 0;
         margin-top: 2px;
         line-height: 20px;

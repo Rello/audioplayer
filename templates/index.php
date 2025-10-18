@@ -13,8 +13,8 @@ use OCP\Util;
 
 Util::addStyle('audioplayer', 'bar-ui');
 Util::addStyle('audioplayer', 'style');
+Util::addStyle('audioplayer', 'icons');
 //Util::addStyle('files', 'detailsView');
-Util::addStyle('audioplayer', '3rdparty/fontello/css/fontello');
 Util::addScript('audioplayer', 'app');
 Util::addScript('audioplayer', 'sidebar');
 Util::addScript('audioplayer', 'userGuidance');
@@ -40,7 +40,7 @@ if ($_['audioplayer_sonos'] !== 'checked') {
 
 <div id="app-content">
     <div id="loading">
-        <i class="ioc-spinner ioc-spin"></i>
+        <span class="ap-icon ap-icon-spinner" aria-hidden="true"></span>
     </div>
 
     <?php if ($_['audioplayer_sonos'] !== 'checked') print_unescaped($this->inc('part.audio')); ?>
