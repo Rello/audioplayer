@@ -477,7 +477,7 @@ class ScannerController extends Controller
      * Add track to db if not exist
      *
      * @param OutputInterface $output
-     * @return array
+     * @return array|void
      * @throws NotFoundException
      * @throws \OCP\Files\InvalidPathException
      */
@@ -572,7 +572,7 @@ class ScannerController extends Controller
      * Add track to db if not exist
      *
      * @param OutputInterface $output
-     * @return array
+     * @return array|void
      * @throws NotFoundException
      */
     private function getStreamObjects(?OutputInterface $output = null)

@@ -40,6 +40,7 @@
   cursor: help;
 }
 
+/*noinspection ALL*/
 .sm2-bar-ui.full-width {
   max-width: 100%;
   z-index: 5;
@@ -89,6 +90,7 @@
   background-color: #2288cc;
 }
 
+/*noinspection ALL*/
 .sm2-bar-ui .sm2-inline-gradient {
   position: absolute;
   left: 0;
@@ -333,6 +335,7 @@
   border-radius: 0.65em;
 }
 
+/*noinspection ALL*/
 .sm2-progress .sm2-progress-bar {
   /* element which follows the progres "ball" as it moves */
   position: absolute;
@@ -396,6 +399,7 @@
     opacity: 1;
 }
 
+/*noinspection ALL*/
 .play-pause,
 .play-pause:hover,
 .paused .play-pause:hover {
@@ -405,6 +409,7 @@
   background-position: 40% 53%;
 }
 
+/*noinspection ALL*/
 .playing .play-pause {
   background-image: url(../img/pause.svg);
   filter: var(--background-invert-if-dark);
@@ -413,6 +418,7 @@
   opacity: 1;
 }
 
+/*noinspection ALL*/
 .sm2-volume-control {
   background-image: url(../img/volume.svg);
   filter: var(--background-invert-if-dark);
@@ -432,6 +438,7 @@
   @include icon-color('volume', 'audioplayer', $color-black, 1);*/
 }
 
+/*noinspection ALL*/
 .sm2-inline-button.menu {
   background-image: url(../img/list2.svg);
   filter: var(--background-invert-if-dark);
@@ -439,11 +446,13 @@
   background-position: 54% 51%;
 }
 
+/*noinspection ALL*/
 .sm2-inline-button.previous {
   background-image: url(../img/previous.svg);
   filter: var(--background-invert-if-dark);
 }
 
+/*noinspection ALL*/
 .sm2-inline-button.next {
   background-image: url(../img/next.svg);
   filter: var(--background-invert-if-dark);
@@ -460,6 +469,7 @@
   background-size: 80%;
 }
 
+/*noinspection ALL*/
 .sm2-inline-button.shuffle {
   background-image: url(../img/shuffle.svg);
   filter: var(--background-invert-if-dark);
@@ -467,6 +477,7 @@
   background-position: 50% 50%;
 }
 
+/*noinspection ALL*/
 .sm2-inline-button.repeat {
   background-image: url(../img/repeat.svg);
   filter: var(--background-invert-if-dark);
@@ -474,6 +485,7 @@
   background-size: 60%;
 }
 
+/*noinspection ALL*/
 .sm2-inline-button.repeat-single {
   background-image: url(../img/repeat-single.svg);
   filter: var(--background-invert-if-dark);
@@ -493,6 +505,7 @@
   background-position: 50% 45%;
 }
 
+/*noinspection ALL*/
 .sm2-progress-ball .icon-overlay {
   position: absolute;
   width: 100%;
@@ -757,6 +770,7 @@
   overflow: hidden;
 }
 
+/*noinspection ALL*/
 .sm2-bar-ui .sm2-main-controls,
 .sm2-bar-ui .sm2-playlist-drawer {
   background-color: var(--color-main-background);

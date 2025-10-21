@@ -207,6 +207,7 @@ i#scanAudiosFirst {
     padding: 0 6px 0 12px;
     opacity: 0.57;
     cursor: pointer;
+    width: 100%;
 }
 
 #myCategory .ui-droppable {
@@ -230,7 +231,7 @@ i#scanAudiosFirst {
 #myCategory li span.pl-name {
     float: left;
     position: relative;
-    width: 185px;
+    width: 100%;
     min-height: 10px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -251,6 +252,7 @@ i#scanAudiosFirst {
 #albenoverview li:hover,
 #myCategory li:hover {
     opacity: 1;
+    background-color: var(--color-background-hover);
 }
 
 #myCategory li span.counter {
@@ -292,10 +294,8 @@ i#scanAudiosFirst {
     float: right;
     position: absolute;
     right: 57px;
-    color: #cccccc;
-    width: 24px;
-    height: 24px;
     cursor: pointer;
+    opacity: 0.3;
 }
 
 #myCategory li.active .ap-icon-sort,
@@ -304,28 +304,24 @@ i#scanAudiosFirst {
     display: block;
 }
 
-#myCategory li.active .ap-icon-sort:hover,
-#myCategory li.active .ap-icon-sort.sortActive {
-    color: #008000;
-}
-
 #myCategory li .ap-icon-delete {
     display: none;
     float: right;
     position: absolute;
     right: 38px;
-    color: #cccccc;
-    width: 24px;
-    height: 24px;
     cursor: pointer;
+    opacity: 0.3;
 }
 
+#myCategory li.active .ap-icon-sort:hover,
+#myCategory li.active .ap-icon-sort.sortActive,
 #myCategory li.active .ap-icon-delete:hover {
-    color: #A9302A;
+    opacity: 1;
 }
 
 #myCategory li.active {
     font-weight: bold;
+    opacity: 0.8;
 }
 
 #empty-container {
@@ -523,10 +519,8 @@ i#scanAudiosFirst {
     float: right;
     right: 5px;
     margin-right: 5px;
-    width: 20px;
     text-align: right;
     margin-top: 0;
-    height: 24px;
     line-height: 24px;
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
@@ -553,18 +547,21 @@ i#scanAudiosFirst {
 }
 
 .no-songs-found {
-    font-size: 20px;
+    font-size: 22px;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
-    line-height: 28px;
+    line-height: 32px;
     display: block;
     text-align: center;
 }
 
 .no-songs-found .ap-icon-refresh {
     margin-right: 6px;
+}
+
+#scanAudiosFirst {
     cursor: pointer;
 }
 
@@ -920,7 +917,6 @@ input[type=range].volume-slider::-ms-thumb {
     text-align: center;
     text-transform: capitalize;
     background-size: cover;
-    border: 1px solid lightgray;
     border-radius: 5px;
 }
 

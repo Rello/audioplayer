@@ -427,12 +427,17 @@ OCA.Audioplayer.Category = {
                     spanCounter.classList.add('counter');
                     spanCounter.innerText = categoryData['cnt'] ? categoryData['cnt'] : '';
                     li.appendChild(spanCounter);
+
+                    if (categoryData.id !== '') {
+                        li.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
+                    }
+
                     categoryRows.appendChild(li);
                 }
 
                 let categoryList = document.getElementById('myCategory');
                 categoryList.appendChild(categoryRows);
-                categoryList.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
+                //categoryList.addEventListener('click', OCA.Audioplayer.Category.handleCategoryClicked);
                 if (typeof callback === 'function') {
                     callback();
                 }
@@ -456,7 +461,7 @@ OCA.Audioplayer.Category = {
 
     handleCategoryClicked: function (evt, callback) {
         // do not react when playlist edit input window is active or when pressing sort button
-        if (evt && (evt.target.nodeName === 'INPUT' || evt.target.nodeName === 'I')) {
+        if (evt && (evt.target.nodeName === 'INPUT' || evt.target.nodeName === 'I' || evt.target.nodeName === 'I')) {
             return;
         }
 
@@ -687,10 +692,10 @@ OCA.Audioplayer.UI = {
                 document.getElementsByClassName('isActive')[0].classList.remove('isActive');
             }
 
-            let trackIcons = document.querySelectorAll('.albumwrapper li .ap-icon');
+            let trackIcons = document.querySelectorAll('.albumwrapper li');
 
-            document.getElementById('nowPlayingTitle').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.title;
-            document.getElementById('nowPlayingArtist').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].parentElement.parentElement.dataset.artist;
+            document.getElementById('nowPlayingTitle').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].dataset.title;
+            document.getElementById('nowPlayingArtist').textContent = trackIcons[OCA.Audioplayer.Player.currentTrackIndex].dataset.artist;
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].classList.add('isActive');
             document.querySelectorAll('.albumwrapper li')[OCA.Audioplayer.Player.currentTrackIndex].scrollIntoView(
                 {
@@ -818,7 +823,7 @@ OCA.Audioplayer.UI = {
             OCA.Audioplayer.UI.EmptyContainer.innerHTML = '<span class="no-songs-found">' + t('audioplayer', 'Add new tracks to playlist by drag and drop') + '</span>';
         } else {
             let html = '<span class="no-songs-found">' + t('audioplayer', 'Welcome to') + ' ' + t('audioplayer', 'Audio Player') + '</span>';
-            html += '<span class="no-songs-found"><span class="ap-icon ap-icon-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '" id="scanAudiosFirst"></span> ' + t('audioplayer', 'Add new tracks to library') + '</span>';
+            html += '<span class="no-songs-found" id="scanAudiosFirst"><span class="ap-icon ap-icon-refresh" title="' + t('audioplayer', 'Scan for new audio files') + '"></span> ' + t('audioplayer', 'Add new tracks to library') + '</span>';
             html += '<a class="no-songs-found" href="https://github.com/rello/audioplayer/wiki" target="_blank">' + t('audioplayer', 'Help') + '</a>';
             OCA.Audioplayer.UI.EmptyContainer.innerHTML = html;
         }

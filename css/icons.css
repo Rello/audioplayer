@@ -3,12 +3,6 @@
     width: 24px;
     height: 24px;
     background-color: currentColor;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
 }
 
 .ap-icon-volume-up {

@@ -35,7 +35,7 @@
                 <input class="checkbox" type="checkbox" id="sonos" <?php p($_['audioplayer_sonos']) ?>/>
                 <label for="sonos">&nbsp;<?php p($l->t('SONOS Playback')); ?></label>
             </li>
-            <li class="audio-settings-item icon-settings">
+            <li class="audio-settings-item icon-settings-dark">
                 <a href="#" title="<?php p($l->t('Advanced Settings')); ?>" id="audioplayerSettings" style="padding: 0 25px;">
                     <?php p($l->t('Advanced Settings')); ?>
                 </a>
