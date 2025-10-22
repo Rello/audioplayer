@@ -1,19 +1,19 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.6.0 - pending
+## 3.6.0 - 2025-10-22
 ### Changed
 - replaced the Fontello icon font with bundled SVG controls and removed the unused font assets
 - optimized album art search to reduce filesystem access
-- compatibility occ commands
-- compatibility event listeners
 
 ### Fixed
 - next track was not preloaded for gapless playback
 - removed obsolete admin settings
-- Scan folder selection
+- Scan folder selection #638
 - Fix search SQL syntax error with malformed column escaping #637
 - Dashboard widget not working #639
+- compatibility occ commands
+- compatibility event listeners
 
 ## 3.5.1 - 2025-07-18
 ### Fixed
