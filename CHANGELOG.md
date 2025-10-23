@@ -14,6 +14,7 @@ All notable changes to the Audio Player project will be documented in this file.
 - Dashboard widget not working #639
 - compatibility occ commands
 - compatibility event listeners
+- eliminated header warnings during streaming scan progress updates
 
 ## 3.5.1 - 2025-07-18
 ### Fixed

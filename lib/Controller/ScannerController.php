@@ -29,6 +29,7 @@ use OCP\Image;
 use OCP\PreconditionNotMetException;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -37,8 +38,6 @@ use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use OCP\IDateTimeZone;
-use OCP\IEventSource;
-use OCP\IEventSourceFactory;
 use OCA\audioplayer\Db\DbMapper;
 
 /**
@@ -66,7 +65,7 @@ class ScannerController extends Controller
     private $dbMapper;
     private $IDateTimeZone;
     private $SettingController;
-    private $eventSource;
+    private $eventStreamCallback;
     private $lastUpdated;
 
     public function __construct(
@@ -97,13 +96,7 @@ class ScannerController extends Controller
         $this->SettingController = $SettingController;
         $this->IDateTimeZone = $IDateTimeZone;
         $this->lastUpdated = time();
-
-        // @TODO: Remove method_exists when min-version="28"
-		if (method_exists(\OC::$server, 'createEventSource')) {
-			$this->eventSource = \OC::$server->createEventSource();
-		} else {
-			$this->eventSource = \OCP\Server::get(IEventSourceFactory::class)->create();
-		}
+        $this->eventStreamCallback = null;
     }
 
     /**
@@ -135,16 +128,50 @@ class ScannerController extends Controller
             return new JSONResponse($params);
         }
 
-        // check if scanner is started from web or occ
         if ($userId !== null) {
             $this->occJob = true;
             $this->userId = $userId;
             $languageCode = $this->configManager->getUserValue($userId, 'core', 'lang');
             $this->l10n = $this->languageFactory->get('audioplayer', $languageCode);
-        } else {
-            $output = new NullOutput();
+            if (!$output instanceof OutputInterface) {
+                $output = new NullOutput();
+            }
+
+            $this->runScan($output);
+            return true;
         }
 
+        $this->occJob = false;
+
+        $response = new StreamedResponse(function () {
+            $output = new NullOutput();
+
+            $this->eventStreamCallback = function (string $event, string $payload): void {
+                echo 'event: ' . $event . "\n";
+                echo 'data: ' . $payload . "\n\n";
+                if (function_exists('ob_flush')) {
+                    @ob_flush();
+                }
+                @flush();
+            };
+
+            try {
+                $this->runScan($output);
+            } finally {
+                $this->eventStreamCallback = null;
+            }
+        });
+
+        $response->headers->set('Content-Type', 'text/event-stream; charset=UTF-8');
+        $response->headers->set('Cache-Control', 'no-cache');
+        $response->headers->set('Connection', 'keep-alive');
+        $response->headers->set('X-Accel-Buffering', 'no');
+
+        return $response;
+    }
+
+    private function runScan(OutputInterface $output): void
+    {
         $this->iAlbumCount = 0;
         $this->iDublicate = 0;
         $this->numOfSongs = 0;
@@ -166,7 +193,8 @@ class ScannerController extends Controller
             require_once __DIR__ . '/../../3rdparty/getid3/getid3.php';
         }
         $getID3 = new getID3;
-        $getID3->setOption(['encoding' => 'UTF-8',
+        $getID3->setOption([
+            'encoding' => 'UTF-8',
             'option_tag_id3v1' => false,
             'option_tag_id3v2' => true,
             'option_tag_lyrics3' => false,
@@ -178,14 +206,18 @@ class ScannerController extends Controller
         $audios = $this->getAudioObjects($output);
         $streams = $this->getStreamObjects($output);
 
-        if ($this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated", OutputInterface::VERBOSITY_VERBOSE);
+        if ($this->cyrillic === 'checked') {
+            $output->writeln("Cyrillic processing activated", OutputInterface::VERBOSITY_VERBOSE);
+        }
         $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
 
         $commitThreshold = max(200, intdiv(count($audios), 10));
         $this->dbMapper->beginTransaction();
         try {
             foreach ($audios as &$audio) {
-                if ($this->scanCancelled()) { break; }
+                if ($this->scanCancelled()) {
+                    break;
+                }
 
                 $counter++;
                 try {
@@ -193,19 +225,19 @@ class ScannerController extends Controller
                     if ($scanResult === 'error') {
                         $error_file .= $audio->getPath() . '<br />';
                         $error_count++;
-                    } else if ($scanResult === 'duplicate') {
+                    } elseif ($scanResult === 'duplicate') {
                         $duplicate_tracks .= $audio->getPath() . '<br />';
                         $this->iDublicate++;
                     }
                 } catch (getid3_exception $e) {
-                    $this->logger->error('getID3 error while building library: '. $e);
+                    $this->logger->error('getID3 error while building library: ' . $e);
                     continue;
                 }
 
                 if ($this->timeForUpdate()) {
                     $this->updateProgress($counter, $audio->getPath(), $output);
                 }
-                if ($counter % $commitThreshold == 0) {
+                if ($counter % $commitThreshold === 0) {
                     $this->dbMapper->commit();
                     $output->writeln("Status committed to database", OutputInterface::VERBOSITY_VERBOSE);
                     $this->dbMapper->beginTransaction();
@@ -214,7 +246,9 @@ class ScannerController extends Controller
 
             $output->writeln("Start processing of <info>stream files</info>", OutputInterface::VERBOSITY_VERBOSE);
             foreach ($streams as &$stream) {
-                if ($this->scanCancelled()) { break; }
+                if ($this->scanCancelled()) {
+                    break;
+                }
 
                 $counter++;
                 $scanResult = $this->scanStream($stream, $output);
@@ -230,32 +264,38 @@ class ScannerController extends Controller
             $this->setScannerTimestamp();
             $this->dbMapper->commit();
         } catch (DBALException $e) {
-            $this->logger->error('DB error while building library: '. $e);
+            $this->logger->error('DB error while building library: ' . $e);
             $this->dbMapper->rollBack();
         } catch (Exception $e) {
-            $this->logger->error('Error while building library: '. $e);
+            $this->logger->error('Error while building library: ' . $e);
             $this->dbMapper->commit();
         }
 
-        // different outputs when web or occ
-        if (!$this->occJob) {
+        if ($this->eventStreamCallback !== null) {
             $message = $this->composeResponseMessage($counter, $error_count, $duplicate_tracks, $error_file);
             $this->dbMapper->setSessionValue('scanner_running', '', $this->userId);
-            $response = [
-                'message' => $message
-            ];
-            $response = json_encode($response);
-            $this->eventSource->send('done', $response);
-            $this->eventSource->close();
-            return new JSONResponse();
+            $this->sendEvent('done', ['message' => $message]);
         } else {
-            $output->writeln("Audios found: " . ($counter) . "");
-            $output->writeln("Duplicates found: " . ($this->iDublicate) . "");
-            $output->writeln("Written to library: " . ($counter - $this->iDublicate - $error_count) . "");
-            $output->writeln("Albums found: " . ($this->iAlbumCount) . "");
-            $output->writeln("Errors: " . ($error_count) . "");
-            return true;
+            $output->writeln('Audios found: ' . ($counter));
+            $output->writeln('Duplicates found: ' . ($this->iDublicate));
+            $output->writeln('Written to library: ' . ($counter - $this->iDublicate - $error_count));
+            $output->writeln('Albums found: ' . ($this->iAlbumCount));
+            $output->writeln('Errors: ' . ($error_count));
         }
+    }
+
+    private function sendEvent(string $event, array $payload): void
+    {
+        if ($this->eventStreamCallback === null) {
+            return;
+        }
+
+        $encoded = json_encode($payload);
+        if ($encoded === false) {
+            return;
+        }
+
+        ($this->eventStreamCallback)($event, $encoded);
     }
 
     /**
@@ -428,15 +468,16 @@ class ScannerController extends Controller
      */
     private function updateProgress($filesProcessed, $currentFile, ?OutputInterface $output = null)
     {
-        if (!$this->occJob) {
-            $response = [
+        if (!$this->occJob && $this->eventStreamCallback !== null) {
+            $this->sendEvent('progress', [
                 'filesProcessed' => $filesProcessed,
                 'filesTotal' => $this->numOfSongs,
-                'currentFile' => $currentFile
-            ];
-            $response = json_encode($response);
-            $this->eventSource->send('progress', $response);
-        } else {
+                'currentFile' => $currentFile,
+            ]);
+            return;
+        }
+
+        if ($output instanceof OutputInterface) {
             $output->writeln("   " . $currentFile . "</info>", OutputInterface::VERBOSITY_VERY_VERBOSE);
         }
     }
