@@ -5,6 +5,7 @@ All notable changes to the Audio Player project will be documented in this file.
 ### Changed
 - replaced the Fontello icon font with bundled SVG controls and removed the unused font assets
 - optimized album art search to reduce filesystem access
+- switched the scan dialog cache-backed polling progress updates
 
 ### Fixed
 - next track was not preloaded for gapless playback

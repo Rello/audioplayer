@@ -22,8 +22,8 @@ return [
     ['name' => 'playlist#sortPlaylist', 'url' => '/sortplaylist', 'verb' => 'POST'],
     ['name' => 'playlist#removePlaylist', 'url' => '/removeplaylist', 'verb' => 'POST'],
     ['name' => 'playlist#removeTrackFromPlaylist', 'url' => '/removetrackfromplaylist', 'verb' => 'POST'],
-	['name' => 'scanner#getImportTpl', 'url' => '/getimporttpl', 'verb' => 'GET'],
-	['name' => 'scanner#scanForAudios', 'url' => '/scanforaudiofiles', 'verb' => 'GET'],
+    ['name' => 'scanner#scanForAudios', 'url' => '/scanforaudiofiles', 'verb' => 'GET'],
+    ['name' => 'scanner#getScanProgress', 'url' => '/scanprogress', 'verb' => 'GET'],
 	['name' => 'scanner#checkNewTracks', 'url' => '/checknewtracks', 'verb' => 'POST'],
 
 	['name' => 'music#getAudioStream', 'url' => '/getaudiostream', 'verb' => 'GET'],

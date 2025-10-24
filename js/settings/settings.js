@@ -23,6 +23,9 @@ if (!OCA.Audioplayer) {
 OCA.Audioplayer.Settings = {
 
     percentage: 0,
+    scanId: null,
+    pollingTimer: null,
+    pollingInterval: 500,
 
     openResetDialog: function () {
         OCA.Audioplayer.Notification.confirm(
@@ -103,25 +106,6 @@ OCA.Audioplayer.Settings = {
             });
     },
 
-    prepareScanDialog: function () {
-        let container = document.createElement('div');
-        container.id = 'audios_import';
-        document.body.appendChild(container);
-
-        let requestUrl = OC.generateUrl('apps/audioplayer/getimporttpl');
-        fetch(requestUrl, {
-            method: 'GET',
-            headers: OCA.Audioplayer.headers()
-        })
-            .then(function (response) {
-                return response.text();
-            })
-            .then(function (html) {
-                container.innerHTML = html;
-                OCA.Audioplayer.Settings.openScanDialog();
-            });
-    },
-
     openScanDialog: function () {
         OCA.Audioplayer.Notification.htmlDialogInitiate(
             t('analytics', 'Scan for audio files'),
@@ -151,13 +135,8 @@ OCA.Audioplayer.Settings = {
 
         let submitBtn = container.getElementById('audios_import_submit');
         submitBtn.addEventListener('click', function () {
-            OCA.Audioplayer.Settings.processScan();
+            OCA.Audioplayer.Settings.startScan();
         });
-
-        let progressBar = container.getElementById('audios_import_progressbar');
-        if (progressBar) {
-            progressBar.value = 0;
-        }
 
         OCA.Audioplayer.Notification.htmlDialogUpdate(
             container,
@@ -166,76 +145,146 @@ OCA.Audioplayer.Settings = {
 
     },
 
-    processScan: function () {
-        let form = document.getElementById('audios_import_form');
-        let process = document.getElementById('audios_import_process');
-        if (form) {
-            form.style.display = 'none';
-        }
-        if (process) {
-            process.style.display = 'block';
-        }
-        OCA.Audioplayer.Settings.startScan();
-    },
-
     startScan: function () {
+        document.getElementById('audios_import_form').style.display = 'none';
+        document.getElementById('audios_import_process').style.display = 'block';
+
         let scanUrl = OC.generateUrl('apps/audioplayer/scanforaudiofiles');
-        let source = new OC.EventSource(scanUrl);
-        source.listen('progress', OCA.Audioplayer.Settings.updateScanProgress);
-        source.listen('done', OCA.Audioplayer.Settings.scanDone);
-        source.listen('error', OCA.Audioplayer.Settings.scanError);
+        OCA.Audioplayer.Settings.scanId = OC.requestToken + '-' + Date.now();
+        OCA.Audioplayer.Settings.startPolling();
+        fetch(scanUrl + '?scanToken=' + encodeURIComponent(OCA.Audioplayer.Settings.scanId), {
+            method: 'GET',
+            headers: OCA.Audioplayer.headers()
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.status === 'error') {
+                    OCA.Audioplayer.Settings.scanError(data);
+                } else if (data.status === 'stopped') {
+                    OCA.Audioplayer.Settings.scanStopped(data);
+                } else {
+                    OCA.Audioplayer.Settings.scanDone(data);
+                }
+            })
+            .catch(function (error) {
+                OCA.Audioplayer.Settings.scanError({message: error.message});
+            });
     },
 
     stopScan: function () {
         OCA.Audioplayer.Settings.percentage = 0;
-        let url = OC.generateUrl('apps/audioplayer/scanforaudiofiles') + '?scanstop=true';
-        fetch(url, {method: 'GET'});
+        OCA.Audioplayer.Settings.stopPolling();
+        if (!OCA.Audioplayer.Settings.scanId) {
+            return;
+        }
+        let url = OC.generateUrl('apps/audioplayer/scanforaudiofiles') + '?scanstop=true&scanToken=' + encodeURIComponent(OCA.Audioplayer.Settings.scanId);
+        fetch(url, {
+            method: 'GET',
+            headers: OCA.Audioplayer.headers()
+        });
     },
 
-    updateScanProgress: function (message) {
-        let data = JSON.parse(message);
-        OCA.Audioplayer.Settings.percentage = data.filesProcessed / data.filesTotal * 100;
-        let progressBar = document.getElementById('audios_import_progressbar');
-        if (progressBar) {
-            progressBar.value = OCA.Audioplayer.Settings.percentage;
+    startPolling: function () {
+        OCA.Audioplayer.Settings.stopPolling();
+        OCA.Audioplayer.Settings.pollScanProgress();
+        OCA.Audioplayer.Settings.pollingTimer = window.setInterval(OCA.Audioplayer.Settings.pollScanProgress, OCA.Audioplayer.Settings.pollingInterval);
+    },
+
+    stopPolling: function () {
+        if (OCA.Audioplayer.Settings.pollingTimer) {
+            window.clearInterval(OCA.Audioplayer.Settings.pollingTimer);
+            OCA.Audioplayer.Settings.pollingTimer = null;
         }
+    },
+
+    pollScanProgress: function () {
+        if (!OCA.Audioplayer.Settings.scanId) {
+            return;
+        }
+        let url = OC.generateUrl('apps/audioplayer/scanprogress') + '?scanToken=' + encodeURIComponent(OCA.Audioplayer.Settings.scanId);
+        fetch(url, {
+            method: 'GET',
+            headers: OCA.Audioplayer.headers()
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                OCA.Audioplayer.Settings.handleProgressResponse(data);
+            })
+            .catch(function () {
+                // ignore polling errors, next interval will retry
+            });
+    },
+
+    handleProgressResponse: function (data) {
+        if (!data || !data.status) {
+            return;
+        }
+        if (data.status === 'running') {
+            OCA.Audioplayer.Settings.updateScanProgress(data);
+        } else if (data.status === 'done') {
+            OCA.Audioplayer.Settings.scanDone(data);
+        } else if (data.status === 'stopped') {
+            OCA.Audioplayer.Settings.scanStopped(data);
+        } else if (data.status === 'error') {
+            OCA.Audioplayer.Settings.scanError(data);
+        }
+    },
+
+    updateScanProgress: function (data) {
+        if (!data) {
+            return;
+        }
+
         let progress = document.getElementById('audios_import_process_progress');
-        if (progress) {
+        if (data.filesTotal) {
             progress.textContent = `${data.filesProcessed}/${data.filesTotal}`;
+        } else {
+            progress.textContent = '';
         }
+
         let messageBox = document.getElementById('audios_import_process_message');
-        if (messageBox) {
-            messageBox.textContent = data.currentFile;
-        }
+        messageBox.textContent = data.currentFile || '';
+
     },
 
-    scanDone: function (message) {
-        let data = JSON.parse(message);
-        let process = document.getElementById('audios_import_process');
-        let done = document.getElementById('audios_import_done');
-        if (process) {
-            process.style.display = 'none';
-        }
-        if (done) {
-            done.style.display = 'block';
-        }
+    scanDone: function (data) {
+        OCA.Audioplayer.Settings.stopPolling();
+        OCA.Audioplayer.Settings.scanId = null;
+        document.getElementById('audios_import_process').style.display = 'none';
+        document.getElementById('audios_import_done').style.display = 'block';
+
         let messageNew = document.getElementById('audios_import_done_message');
-        if (messageNew) {
+        if (messageNew && data && data.message) {
             messageNew.innerHTML = data.message;
         }
         OCA.Audioplayer.Core.init();
     },
 
-    scanError: function (message) {
-        let data = JSON.parse(message);
-        let progressBar = document.getElementById('audios_import_progressbar');
-        if (progressBar) {
-            progressBar.value = 100;
-        }
+    scanStopped: function (data) {
+        OCA.Audioplayer.Settings.stopPolling();
+        OCA.Audioplayer.Settings.scanId = null;
+        document.getElementById('audios_import_process').style.display = 'none';
+        document.getElementById('audios_import_done').style.display = 'block';
         let msg = document.getElementById('audios_import_done_message');
         if (msg) {
-            msg.textContent = data.message;
+            msg.textContent = data && data.message ? data.message : t('audioplayer', 'Scanning was cancelled.');
         }
+    },
+
+    scanError: function (data) {
+        OCA.Audioplayer.Settings.stopPolling();
+        OCA.Audioplayer.Settings.scanId = null;
+
+        let msg = document.getElementById('audios_import_done_message');
+        if (msg) {
+            msg.textContent = data && data.message ? data.message : t('audioplayer', 'An error occurred while scanning.');
+        }
+        document.getElementById('audios_import_process').style.display = 'none';
+        document.getElementById('audios_import_done').style.display = 'block';
     },
 };
 
@@ -265,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('click', function (e) {
         if (e.target && (e.target.id === 'scanAudios' || e.target.id === 'scanAudiosFirst')) {
-            OCA.Audioplayer.Settings.prepareScanDialog();
+            OCA.Audioplayer.Settings.openScanDialog();
         }
         if (e.target && e.target.id === 'resetAudios') {
             OCA.Audioplayer.Settings.openResetDialog();

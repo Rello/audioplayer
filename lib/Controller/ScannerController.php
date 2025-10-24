@@ -22,7 +22,6 @@ use getid3_lib;
 use OC;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Image;
@@ -37,9 +36,9 @@ use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use OCP\IDateTimeZone;
-use OCP\IEventSource;
-use OCP\IEventSourceFactory;
 use OCA\audioplayer\Db\DbMapper;
+use OCP\ICache;
+use OCP\ICacheFactory;
 
 /**
  * Controller class for main page.
@@ -66,8 +65,10 @@ class ScannerController extends Controller
     private $dbMapper;
     private $IDateTimeZone;
     private $SettingController;
-    private $eventSource;
     private $lastUpdated;
+    private $cacheFactory;
+    private $cache;
+    private $currentScanToken;
 
     public function __construct(
         $appName,
@@ -81,7 +82,8 @@ class ScannerController extends Controller
         LoggerInterface $logger,
         \OCA\audioplayer\Db\DbMapper $dbMapper,
         SettingController $SettingController,
-        IDateTimeZone $IDateTimeZone
+        IDateTimeZone $IDateTimeZone,
+        ICacheFactory $cacheFactory
     )
     {
         parent::__construct($appName, $request);
@@ -97,23 +99,9 @@ class ScannerController extends Controller
         $this->SettingController = $SettingController;
         $this->IDateTimeZone = $IDateTimeZone;
         $this->lastUpdated = time();
-
-        // @TODO: Remove method_exists when min-version="28"
-		if (method_exists(\OC::$server, 'createEventSource')) {
-			$this->eventSource = \OC::$server->createEventSource();
-		} else {
-			$this->eventSource = \OCP\Server::get(IEventSourceFactory::class)->create();
-		}
-    }
-
-    /**
-     * @NoAdminRequired
-     *
-     */
-    public function getImportTpl()
-    {
-        $params = [];
-        return new TemplateResponse('audioplayer', 'part.import', $params, '');
+        $this->cacheFactory = $cacheFactory;
+        $this->cache = $this->cacheFactory->createLocal('audioplayer_scanner');
+        $this->currentScanToken = null;
     }
 
     /**
@@ -129,9 +117,17 @@ class ScannerController extends Controller
     public function scanForAudios($userId = null, $output = null, $scanstop = null)
     {
         set_time_limit(0);
+        $this->currentScanToken = $this->resolveScanToken();
         if (isset($scanstop)) {
             $this->dbMapper->setSessionValue('scanner_running', 'stopped', $this->userId);
-            $params = ['status' => 'stopped'];
+            $this->updateProgressCache([
+                'status' => 'stopped',
+                'message' => (string)$this->l10n->t('Scanning was cancelled.')
+            ]);
+            $params = [
+                'status' => 'stopped',
+                'message' => (string)$this->l10n->t('Scanning was cancelled.')
+            ];
             return new JSONResponse($params);
         }
 
@@ -177,6 +173,15 @@ class ScannerController extends Controller
 
         $audios = $this->getAudioObjects($output);
         $streams = $this->getStreamObjects($output);
+
+        if ($this->currentScanToken !== null) {
+            $this->updateProgressCache([
+                'status' => 'running',
+                'filesProcessed' => 0,
+                'filesTotal' => $this->numOfSongs,
+                'currentFile' => ''
+            ]);
+        }
 
         if ($this->cyrillic === 'checked') $output->writeln("Cyrillic processing activated", OutputInterface::VERBOSITY_VERBOSE);
         $output->writeln("Start processing of <info>audio files</info>", OutputInterface::VERBOSITY_VERBOSE);
@@ -242,12 +247,13 @@ class ScannerController extends Controller
             $message = $this->composeResponseMessage($counter, $error_count, $duplicate_tracks, $error_file);
             $this->dbMapper->setSessionValue('scanner_running', '', $this->userId);
             $response = [
-                'message' => $message
+                'status' => 'done',
+                'message' => $message,
+                'filesProcessed' => $counter,
+                'filesTotal' => $this->numOfSongs
             ];
-            $response = json_encode($response);
-            $this->eventSource->send('done', $response);
-            $this->eventSource->close();
-            return new JSONResponse();
+            $this->updateProgressCache($response);
+            return new JSONResponse($response);
         } else {
             $output->writeln("Audios found: " . ($counter) . "");
             $output->writeln("Duplicates found: " . ($this->iDublicate) . "");
@@ -268,6 +274,81 @@ class ScannerController extends Controller
             $scan_running = $this->dbMapper->getSessionValue('scanner_running');
             return ($scan_running !== 'active');
         }
+    }
+
+    private function resolveScanToken(): ?string
+    {
+        $token = $this->request->getParam('scanToken');
+        if (!is_string($token) || $token === '') {
+            return null;
+        }
+        return $this->sanitizeScanToken($token);
+    }
+
+    private function sanitizeScanToken(string $token): ?string
+    {
+        $filtered = preg_replace('/[^A-Za-z0-9._-]/', '', $token);
+        if ($filtered === null || $filtered === '') {
+            return null;
+        }
+        return $filtered;
+    }
+
+    private function buildCacheKey(string $token): ?string
+    {
+        $sanitized = $this->sanitizeScanToken($token);
+        if ($sanitized === null) {
+            return null;
+        }
+        return $this->userId . ':' . $sanitized;
+    }
+
+    private function updateProgressCache(array $data, ?string $token = null): void
+    {
+        if (!$this->cache instanceof ICache) {
+            return;
+        }
+        $tokenToUse = $token ?? $this->currentScanToken;
+        if ($tokenToUse === null) {
+            return;
+        }
+        $key = $this->buildCacheKey($tokenToUse);
+        if ($key === null) {
+            return;
+        }
+        $existing = $this->cache->get($key);
+        $existingData = [];
+        if (is_string($existing)) {
+            $decoded = json_decode($existing, true);
+            if (is_array($decoded)) {
+                $existingData = $decoded;
+            }
+        } elseif (is_array($existing)) {
+            $existingData = $existing;
+        }
+        $payload = array_merge($existingData, $data);
+        $this->cache->set($key, json_encode($payload), 3600);
+    }
+
+    private function readProgressCache($token): array
+    {
+        if (!$this->cache instanceof ICache || !is_string($token) || $token === '') {
+            return ['status' => 'unknown'];
+        }
+        $key = $this->buildCacheKey($token);
+        if ($key === null) {
+            return ['status' => 'unknown'];
+        }
+        $stored = $this->cache->get($key);
+        if (is_string($stored)) {
+            $decoded = json_decode($stored, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+        } elseif (is_array($stored)) {
+            return $stored;
+        }
+        return ['status' => 'unknown'];
     }
 
     /**
@@ -434,11 +515,22 @@ class ScannerController extends Controller
                 'filesTotal' => $this->numOfSongs,
                 'currentFile' => $currentFile
             ];
-            $response = json_encode($response);
-            $this->eventSource->send('progress', $response);
+            $this->updateProgressCache(array_merge($response, ['status' => 'running']));
         } else {
             $output->writeln("   " . $currentFile . "</info>", OutputInterface::VERBOSITY_VERY_VERBOSE);
         }
+    }
+
+    /**
+     * @NoAdminRequired
+     */
+    public function getScanProgress($scanToken)
+    {
+        $data = $this->readProgressCache($scanToken);
+        if (!isset($data['status'])) {
+            $data['status'] = 'unknown';
+        }
+        return new JSONResponse($data);
     }
 
     /**
@@ -704,7 +796,7 @@ class ScannerController extends Controller
                 // Check, if this tag was win1251 before the incorrect "8859->utf" convertion by the getid3 lib
                 foreach (array('album', 'artist', 'title', 'band', 'genre') as $tkey) {
                     if (isset($ThisFileInfo['tags'][$ttype][$tkey])) {
-                        if (preg_match('#[\\xA8\\B8\\x80-\\xFF]{4,}#', iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $ThisFileInfo['tags'][$ttype][$tkey][0]))) {
+                        if (preg_match('#[\\xA8\\xB8\\x80-\\xFF]{4,}#', iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $ThisFileInfo['tags'][$ttype][$tkey][0]))) {
                             $ruTag = 1;
                             break;
                         }
