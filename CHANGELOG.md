@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.6.1 - 2025-10-24
+### Changed
+- switched the scan dialog cache-backed polling progress updates
+
+### Fixed
+- prevent null user context from breaking cover retrieval
+
 ## 3.6.0 - 2025-10-22
 ### Changed
 - replaced the Fontello icon font with bundled SVG controls and removed the unused font assets

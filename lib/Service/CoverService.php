@@ -20,7 +20,7 @@ COVER;
     private $userId;
 
     public function __construct(
-        string $userId,
+        ?string $userId,
         IL10N $l10n,
         CoverMapper $mapper,
         DbMapper $dbMapper,
@@ -35,6 +35,11 @@ COVER;
 
     public function getCover(int $album): string
     {
+		if ($this->userId === null) {
+			$this->logger->warning('Requested album cover without user context, returning fallback cover.', ['album' => $album]);
+			return self::UNKNOWN_COVER;
+		}
+
         $data = $this->mapper->findCoverData($this->userId, $album);
         if ($data === null) {
             return self::UNKNOWN_COVER;
