@@ -25,7 +25,7 @@ OCA.Audioplayer.Settings = {
     percentage: 0,
     scanId: null,
     pollingTimer: null,
-    pollingInterval: 5000,
+    pollingInterval: 500,
 
     openResetDialog: function () {
         OCA.Audioplayer.Notification.confirm(
@@ -106,36 +106,6 @@ OCA.Audioplayer.Settings = {
             });
     },
 
-    prepareScanDialog: function () {
-        let template = document.getElementById('templateScanDialog');
-        if (!template) {
-            template = document.createElement('template');
-            template.id = 'templateScanDialog';
-            template.innerHTML = `
-                <div id="audios_import_dialog" title="${t('audioplayer', 'Scan for audio files')}">
-                    <div id="audios_import_form">
-                        <input id="audios_import_submit" type="button" class="button" value="${t('audioplayer', 'Start scanning …')}">
-                    </div>
-                    <div id="audios_import_process" style="display:none;">
-                        <div id="audios_import_process_progress"></div>
-                        <div id="audios_import_process_message"></div>
-                        <br>
-                        <div id="audios_import_progressbar"></div>
-                        <br>
-                        <input id="audios_import_progress_cancel" type="button" class="button" value="${t('audioplayer', 'Cancel')}">
-                    </div>
-                    <div id="audios_import_done" style="display:none;">
-                        <div id="audios_import_done_message" class="hint"></div>
-                        <br>
-                        <input id="audios_import_done_close" type="button" class="button" value="${t('audioplayer', 'Close')}">
-                    </div>
-                </div>`;
-            document.body.appendChild(template);
-        }
-
-        OCA.Audioplayer.Settings.openScanDialog();
-    },
-
     openScanDialog: function () {
         OCA.Audioplayer.Notification.htmlDialogInitiate(
             t('analytics', 'Scan for audio files'),
@@ -165,23 +135,8 @@ OCA.Audioplayer.Settings = {
 
         let submitBtn = container.getElementById('audios_import_submit');
         submitBtn.addEventListener('click', function () {
-            OCA.Audioplayer.Settings.processScan();
+            OCA.Audioplayer.Settings.startScan();
         });
-
-        let progressBar = container.getElementById('audios_import_progressbar');
-        if (progressBar) {
-            progressBar.value = 0;
-        }
-
-        let process = container.getElementById('audios_import_process');
-        if (process) {
-            process.style.display = 'none';
-        }
-
-        let done = container.getElementById('audios_import_done');
-        if (done) {
-            done.style.display = 'none';
-        }
 
         OCA.Audioplayer.Notification.htmlDialogUpdate(
             container,
@@ -190,35 +145,10 @@ OCA.Audioplayer.Settings = {
 
     },
 
-    processScan: function () {
-        let form = document.getElementById('audios_import_form');
-        let process = document.getElementById('audios_import_process');
-        let done = document.getElementById('audios_import_done');
-        if (form) {
-            form.style.display = 'none';
-        }
-        if (process) {
-            process.style.display = 'block';
-        }
-        if (done) {
-            done.style.display = 'none';
-        }
-        let doneMessage = document.getElementById('audios_import_done_message');
-        if (doneMessage) {
-            doneMessage.innerHTML = '';
-        }
-        let progress = document.getElementById('audios_import_process_progress');
-        if (progress) {
-            progress.textContent = '';
-        }
-        let messageBox = document.getElementById('audios_import_process_message');
-        if (messageBox) {
-            messageBox.textContent = '';
-        }
-        OCA.Audioplayer.Settings.startScan();
-    },
-
     startScan: function () {
+        document.getElementById('audios_import_form').style.display = 'none';
+        document.getElementById('audios_import_process').style.display = 'block';
+
         let scanUrl = OC.generateUrl('apps/audioplayer/scanforaudiofiles');
         OCA.Audioplayer.Settings.scanId = OC.requestToken + '-' + Date.now();
         OCA.Audioplayer.Settings.startPolling();
@@ -250,7 +180,10 @@ OCA.Audioplayer.Settings = {
             return;
         }
         let url = OC.generateUrl('apps/audioplayer/scanforaudiofiles') + '?scanstop=true&scanToken=' + encodeURIComponent(OCA.Audioplayer.Settings.scanId);
-        fetch(url, {method: 'GET'});
+        fetch(url, {
+            method: 'GET',
+            headers: OCA.Audioplayer.headers()
+        });
     },
 
     startPolling: function () {
@@ -305,40 +238,25 @@ OCA.Audioplayer.Settings = {
         if (!data) {
             return;
         }
-        if (data.filesTotal > 0) {
-            OCA.Audioplayer.Settings.percentage = data.filesProcessed / data.filesTotal * 100;
-        } else {
-            OCA.Audioplayer.Settings.percentage = 0;
-        }
-        let progressBar = document.getElementById('audios_import_progressbar');
-        if (progressBar) {
-            progressBar.value = OCA.Audioplayer.Settings.percentage;
-        }
+
         let progress = document.getElementById('audios_import_process_progress');
-        if (progress) {
-            if (data.filesTotal) {
-                progress.textContent = `${data.filesProcessed}/${data.filesTotal}`;
-            } else {
-                progress.textContent = '';
-            }
+        if (data.filesTotal) {
+            progress.textContent = `${data.filesProcessed}/${data.filesTotal}`;
+        } else {
+            progress.textContent = '';
         }
+
         let messageBox = document.getElementById('audios_import_process_message');
-        if (messageBox) {
-            messageBox.textContent = data.currentFile || '';
-        }
+        messageBox.textContent = data.currentFile || '';
+
     },
 
     scanDone: function (data) {
         OCA.Audioplayer.Settings.stopPolling();
         OCA.Audioplayer.Settings.scanId = null;
-        let process = document.getElementById('audios_import_process');
-        let done = document.getElementById('audios_import_done');
-        if (process) {
-            process.style.display = 'none';
-        }
-        if (done) {
-            done.style.display = 'block';
-        }
+        document.getElementById('audios_import_process').style.display = 'none';
+        document.getElementById('audios_import_done').style.display = 'block';
+
         let messageNew = document.getElementById('audios_import_done_message');
         if (messageNew && data && data.message) {
             messageNew.innerHTML = data.message;
@@ -349,14 +267,8 @@ OCA.Audioplayer.Settings = {
     scanStopped: function (data) {
         OCA.Audioplayer.Settings.stopPolling();
         OCA.Audioplayer.Settings.scanId = null;
-        let process = document.getElementById('audios_import_process');
-        let done = document.getElementById('audios_import_done');
-        if (process) {
-            process.style.display = 'none';
-        }
-        if (done) {
-            done.style.display = 'block';
-        }
+        document.getElementById('audios_import_process').style.display = 'none';
+        document.getElementById('audios_import_done').style.display = 'block';
         let msg = document.getElementById('audios_import_done_message');
         if (msg) {
             msg.textContent = data && data.message ? data.message : t('audioplayer', 'Scanning was cancelled.');
@@ -366,22 +278,13 @@ OCA.Audioplayer.Settings = {
     scanError: function (data) {
         OCA.Audioplayer.Settings.stopPolling();
         OCA.Audioplayer.Settings.scanId = null;
-        let progressBar = document.getElementById('audios_import_progressbar');
-        if (progressBar) {
-            progressBar.value = 100;
-        }
+
         let msg = document.getElementById('audios_import_done_message');
         if (msg) {
             msg.textContent = data && data.message ? data.message : t('audioplayer', 'An error occurred while scanning.');
         }
-        let process = document.getElementById('audios_import_process');
-        if (process) {
-            process.style.display = 'none';
-        }
-        let done = document.getElementById('audios_import_done');
-        if (done) {
-            done.style.display = 'block';
-        }
+        document.getElementById('audios_import_process').style.display = 'none';
+        document.getElementById('audios_import_done').style.display = 'block';
     },
 };
 
@@ -411,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('click', function (e) {
         if (e.target && (e.target.id === 'scanAudios' || e.target.id === 'scanAudiosFirst')) {
-            OCA.Audioplayer.Settings.prepareScanDialog();
+            OCA.Audioplayer.Settings.openScanDialog();
         }
         if (e.target && e.target.id === 'resetAudios') {
             OCA.Audioplayer.Settings.openResetDialog();

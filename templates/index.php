@@ -20,7 +20,7 @@ Util::addScript('audioplayer', 'sidebar');
 Util::addScript('audioplayer', 'userGuidance');
 Util::addScript('audioplayer', 'settings/settings');
 if ($_['audioplayer_sonos'] !== 'checked') {
-    Util::addScript('audioplayer', 'player');
+	Util::addScript('audioplayer', 'player');
 }
 
 ?>
@@ -32,9 +32,9 @@ if ($_['audioplayer_sonos'] !== 'checked') {
 
 <div id="app-navigation" <?php if ($_['audioplayer_navigationShown'] === 'false') echo 'class="hidden"'; ?>>
 
-    <?php print_unescaped($this->inc('part.navigation')); ?>
+	<?php print_unescaped($this->inc('part.navigation')); ?>
 
-    <?php print_unescaped($this->inc('settings/part.settings')); ?>
+	<?php print_unescaped($this->inc('settings/part.settings')); ?>
 
 </div>
 
@@ -43,15 +43,34 @@ if ($_['audioplayer_sonos'] !== 'checked') {
         <span class="ap-icon ap-icon-spinner" aria-hidden="true"></span>
     </div>
 
-    <?php if ($_['audioplayer_sonos'] !== 'checked') print_unescaped($this->inc('part.audio')); ?>
-    <?php if ($_['audioplayer_sonos'] === 'checked') print_unescaped($this->inc('part.sonos-bar')); ?>
+	<?php if ($_['audioplayer_sonos'] !== 'checked') print_unescaped($this->inc('part.audio')); ?>
+	<?php if ($_['audioplayer_sonos'] === 'checked') print_unescaped($this->inc('part.sonos-bar')); ?>
 
     <div id="searchresults" class="hidden" data-appfilter="audioplayer"></div>
 
-    <?php print_unescaped($this->inc('part.container')); ?>
+	<?php print_unescaped($this->inc('part.container')); ?>
 
 </div>
 
 <div id="app-sidebar" class="app-sidebar details-view scroll-container disappear" data-trackid="">
-    <?php print_unescaped($this->inc('part.sidebar')); ?>
+	<?php print_unescaped($this->inc('part.sidebar')); ?>
 </div>
+
+<template id="templateScanDialog">
+    <div id="audios_import_dialog" title="Scan for audio files">
+        <div id="audios_import_form" style="display: block">
+            <input id="audios_import_submit" type="button" class="button" value="Start scanning …">
+        </div>
+        <div id="audios_import_process" style="display:none;">
+            <div id="audios_import_process_progress"></div>
+            <div id="audios_import_process_message"></div>
+            <br>
+            <input id="audios_import_progress_cancel" type="button" class="button" value="Cancel">
+        </div>
+        <div id="audios_import_done" style="display:none;">
+            <div id="audios_import_done_message" class="hint"></div>
+            <br>
+            <input id="audios_import_done_close" type="button" class="button" value="Close">
+        </div>
+    </div>
+</template>
