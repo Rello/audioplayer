@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Suaitheadh ​​seinmliosta",
     "Volume" : "Toirt",
     "Playback speed" : "Luas athsheinm",
-    "Start scanning …" : "Tosaigh scanadh…",
-    "Close" : "Dún",
     "Create new playlist" : "Cruthaigh seinmliosta nua",
     "Repeat playlist" : "Seinn an seinmliosta arís",
     "Volume up" : "Imleabhar suas",

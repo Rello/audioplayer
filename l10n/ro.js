@@ -23,7 +23,6 @@ OC.L10N.register(
     "Unknown" : "Necunoscut",
     "Favorites" : "Favorite",
     "Playback speed" : "Viteză de redare",
-    "Close" : "Închide",
     "Settings" : "Setări",
     "Advanced Settings" : "Setări avansate"
 },

@@ -18,7 +18,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Unknown",
     "Favorites" : "Favorites",
-    "Close" : "Close",
     "Settings" : "Settings",
     "Advanced Settings" : "Advanced Settings",
     "Do you like this app?" : "მოგწონთ ეს აპლიკაცია?",

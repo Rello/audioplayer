@@ -14,7 +14,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Incognite",
     "Favorites" : "Favoritos",
-    "Close" : "Clauder",
     "Settings" : "Configurationes"
 },
 "nplurals=2; plural=(n != 1);");

@@ -16,7 +16,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Arussin",
     "Favorites" : "Imenyafen",
-    "Close" : "Mdel",
     "Settings" : "Iɣewwaṛen",
     "Advanced Settings" : "Iɣewwaren leqqayen"
 },

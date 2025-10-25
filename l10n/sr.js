@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Промешај плејлисту",
     "Volume" : "Јачина",
     "Playback speed" : "Брзина репродукције",
-    "Start scanning …" : "Скенирање је почело ...",
-    "Close" : "Затвори",
     "Create new playlist" : "Креирај нову плејлисту",
     "Repeat playlist" : "Понови плејлисту",
     "Volume up" : "Појачај",

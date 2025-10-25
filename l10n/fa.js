@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Shuffle playlist",
     "Volume" : "Volume",
     "Playback speed" : "سرعت پخش",
-    "Start scanning …" : "Start scanning …",
-    "Close" : "بسته",
     "Create new playlist" : "Create new playlist",
     "Repeat playlist" : "Repeat playlist",
     "Volume up" : "Volume up",

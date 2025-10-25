@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Sekoita soittolista",
     "Volume" : "Äänenvoimakkuus",
     "Playback speed" : "Toistonopeus",
-    "Start scanning …" : "Aloita kartoitus…",
-    "Close" : "Sulje",
     "Create new playlist" : "Luo uusi soittolista",
     "Repeat playlist" : "Kertaa soittolista",
     "Volume up" : "Lisää äänenvoimakkuutta",

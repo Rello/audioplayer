@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Перемешать список воспроизведения",
     "Volume" : "Громкость",
     "Playback speed" : "Скорость воспроизведения",
-    "Start scanning …" : "Начать сканирование ...",
-    "Close" : "Закрыть",
     "Create new playlist" : "Создать новый плейлист",
     "Repeat playlist" : "Повторить плейлист",
     "Volume up" : "Увеличить громкость",

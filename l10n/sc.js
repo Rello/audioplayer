@@ -90,8 +90,6 @@ OC.L10N.register(
     "Repeat title/list" : "Torra a reproduire su tìtulu/sa lista",
     "Shuffle playlist" : "Mistura sa lista de riprodutzione",
     "Volume" : "Volùmene",
-    "Start scanning …" : "Cumintza iscansione...",
-    "Close" : "Serra",
     "Create new playlist" : "Crea una lista de riprodutzione noa",
     "Repeat playlist" : "Torra a reproduire sa lista",
     "Volume up" : "Àrtzia su volùmene",

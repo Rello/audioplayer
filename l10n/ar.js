@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "قائمة تشغيل عشوائية",
     "Volume" : "عُلُوُ الصّوت",
     "Playback speed" : "سرعة التشغيل",
-    "Start scanning …" : "بدءُ الفحص ...",
-    "Close" : "إغلاق",
     "Create new playlist" : "إنشاء قائمة تشغيل جديدة",
     "Repeat playlist" : "كرّر قائمة التشغيل",
     "Volume up" : "إرفَع الصوت",

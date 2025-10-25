@@ -13,7 +13,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "অজানা",
     "Favorites" : "প্রিয়জন",
-    "Close" : "বন্ধ",
     "Settings" : "সেটিংস"
 },
 "nplurals=2; plural=(n != 1);");

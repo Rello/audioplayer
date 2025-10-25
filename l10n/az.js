@@ -13,7 +13,6 @@ OC.L10N.register(
     "Cancel" : "Dayandır",
     "URL" : "URL",
     "Favorites" : "Sevimlilər",
-    "Close" : "Bağla",
     "Settings" : "Quraşdırmalar"
 },
 "nplurals=2; plural=(n != 1);");

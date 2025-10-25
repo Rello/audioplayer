@@ -27,7 +27,6 @@ OC.L10N.register(
     "URL" : "כתובת",
     "Unknown" : "לא ידוע",
     "Favorites" : "מועדפים",
-    "Close" : "סגירה",
     "Settings" : "הגדרות",
     "Advanced Settings" : "הגדרות מתקדמות"
 },

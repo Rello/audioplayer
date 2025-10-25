@@ -24,7 +24,6 @@ OC.L10N.register(
     "Unknown" : "Tidak diketahui",
     "Favorites" : "Disukai",
     "Playback speed" : "Kecepatan pemutaran",
-    "Close" : "Tutup",
     "Settings" : "Setelan",
     "Advanced Settings" : "Pengaturan Tambahan"
 },

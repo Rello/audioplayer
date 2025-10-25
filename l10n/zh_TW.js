@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "隨機播放清單中的曲目",
     "Volume" : "音量",
     "Playback speed" : "播放速度",
-    "Start scanning …" : "開始掃描……",
-    "Close" : "關閉",
     "Create new playlist" : "建立新播放清單",
     "Repeat playlist" : "重複播放清單",
     "Volume up" : "提高音量",

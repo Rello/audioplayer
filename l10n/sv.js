@@ -35,7 +35,6 @@ OC.L10N.register(
     "Unknown" : "Okänd",
     "Favorites" : "Favoriter",
     "Playback speed" : "Uppspelningshastighet",
-    "Close" : "Stäng",
     "Settings" : "Inställningar",
     "Advanced Settings" : "Avancerade inställningar",
     "Do you like this app?" : "Gillar du den här appen?",

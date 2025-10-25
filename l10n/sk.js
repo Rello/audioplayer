@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Zamiešať zoznam skladieb",
     "Volume" : "Hlasitosť",
     "Playback speed" : "Rýchlosť prehrávania",
-    "Start scanning …" : "Spúšťam skenovanie ...",
-    "Close" : "Zatvoriť",
     "Create new playlist" : "Vytvoriť nový zoznam skladieb",
     "Repeat playlist" : "Opakovať zoznam skladieb",
     "Volume up" : "Zvýšiť hlasitosť",

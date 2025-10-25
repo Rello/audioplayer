@@ -11,7 +11,6 @@ OC.L10N.register(
     "Cancel" : "Batal",
     "URL" : "URL",
     "Favorites" : "Favorites",
-    "Close" : "Tutup",
     "Settings" : "Tetapan"
 },
 "nplurals=1; plural=0;");

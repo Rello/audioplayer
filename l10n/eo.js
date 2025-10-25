@@ -18,7 +18,6 @@ OC.L10N.register(
     "URL" : "Retadreso",
     "Unknown" : "Nekonata",
     "Favorites" : "Pliŝataĵoj",
-    "Close" : "Malfermi",
     "Settings" : "Agordoj",
     "Advanced Settings" : "Detalaj agordoj"
 },

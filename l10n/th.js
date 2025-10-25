@@ -52,8 +52,6 @@ OC.L10N.register(
     "Repeat title/list" : "เล่นเพลง/ลิสต์ซ้ำ",
     "Shuffle playlist" : "สุ่มเพลลิสต์",
     "Volume" : "ระดับเสียง",
-    "Start scanning …" : "เริ่มต้นแสกน ...",
-    "Close" : "ปิด",
     "Create new playlist" : "สร้างเพลลิสต์ใหม่",
     "Repeat playlist" : "วนซ้ำทั้งเพลลิสต์",
     "Volume up" : "เพิ่มเสียง",

@@ -8,7 +8,6 @@ OC.L10N.register(
     "OK" : "OK",
     "Cancel" : "Cancelar",
     "Favorites" : "Favoritos",
-    "Close" : "Zarrar",
     "Settings" : "Configuración"
 },
 "nplurals=2; plural=(n != 1);");

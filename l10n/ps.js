@@ -8,7 +8,6 @@ OC.L10N.register(
     "OK" : "OK",
     "Cancel" : "پرېښول",
     "Favorites" : "په نښه شوي",
-    "Close" : "بندول",
     "Settings" : "سمونې"
 },
 "nplurals=2; plural=(n != 1);");

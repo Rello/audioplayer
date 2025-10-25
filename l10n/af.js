@@ -14,7 +14,6 @@ OC.L10N.register(
     "URL" : "Bronadres",
     "Unknown" : "Onbekend",
     "Favorites" : "Gunstelinge",
-    "Close" : "Sluit",
     "Settings" : "Instellings"
 },
 "nplurals=2; plural=(n != 1);");

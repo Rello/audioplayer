@@ -23,7 +23,6 @@ OC.L10N.register(
     "Unknown" : "Không xác định",
     "Favorites" : "Ưa thích",
     "Playback speed" : "Tốc độ phát",
-    "Close" : "Đóng",
     "Settings" : "Cài đặt",
     "Advanced Settings" : "Cài đặt nâng cao"
 },

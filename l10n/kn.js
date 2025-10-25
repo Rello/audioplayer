@@ -12,7 +12,6 @@ OC.L10N.register(
     "Cancel" : "﻿ರದ್ದು",
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
     "Favorites" : "ಅಚ್ಚುಮೆಚ್ಚಿನ",
-    "Close" : "ಮುಚ್ಚು",
     "Settings" : "ಆಯ್ಕೆ"
 },
 "nplurals=2; plural=(n > 1);");

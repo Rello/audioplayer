@@ -40,7 +40,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Desconegut",
     "Favorites" : "Favorits",
-    "Close" : "Tampar",
     "Settings" : "Paramètres",
     "Advanced Settings" : "Paramètres avançats",
     "Scanner Settings" : "Paramètres del numerizador"

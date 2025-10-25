@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Bland spilleliste",
     "Volume" : "Volum",
     "Playback speed" : "Avspillingshastighet",
-    "Start scanning …" : "Start skanning ...",
-    "Close" : "Lukk",
     "Create new playlist" : "Lag ny spilleliste",
     "Repeat playlist" : "Gjenta spilleliste",
     "Volume up" : "Volum opp",

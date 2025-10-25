@@ -11,7 +11,6 @@ OC.L10N.register(
     "URL" : "Url",
     "Unknown" : "Nepoznato",
     "Favorites" : "Omiljene",
-    "Close" : "Zatvori",
     "Settings" : "Поставке",
     "Advanced Settings" : "Napredna podešavanja"
 },

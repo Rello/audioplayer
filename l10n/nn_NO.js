@@ -15,7 +15,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Ukjend",
     "Favorites" : "Favorittar",
-    "Close" : "Lukk",
     "Settings" : "Innstillingar",
     "More information …" : "Meir informasjon…"
 },

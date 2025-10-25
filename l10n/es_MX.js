@@ -42,7 +42,6 @@ OC.L10N.register(
     "Recently Played" : "Reproducido recientemente",
     "Most Played" : "Más reproducidas",
     "50 Random Tracks" : "50 Pistas aleatorias",
-    "Close" : "Cerrar",
     "Settings" : "Ajustes",
     "Advanced Settings" : "Configuraciones Avanzadas",
     "Do you like this app?" : "¿Le gusta esta aplicación?",

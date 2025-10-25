@@ -21,7 +21,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Unknown",
     "Favorites" : "Favorites",
-    "Close" : "Yopish",
     "Settings" : "Sozlamalar",
     "Advanced Settings" : "Kengaytirilgan sozlamalar",
     "Do you like this app?" : "Bu ilova sizga yoqdimi?",

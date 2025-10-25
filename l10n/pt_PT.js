@@ -25,7 +25,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Desconhecido",
     "Favorites" : "Favoritos",
-    "Close" : "Fechar",
     "Settings" : "Configurações",
     "Advanced Settings" : "Configurações avançadas "
 },

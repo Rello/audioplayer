@@ -86,8 +86,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Premešaj seznam predvajanja",
     "Volume" : "Glasnost",
     "Playback speed" : "Hitrost predvajanja",
-    "Start scanning …" : "Začni iskanje ...",
-    "Close" : "Zapri",
     "Create new playlist" : "Ustvari nov seznam predvajanja",
     "Repeat playlist" : "Ponovi seznam predvajanja",
     "Volume up" : "Povečaj glasnost",

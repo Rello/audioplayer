@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Lejátszási lista keverése",
     "Volume" : "Hangerő",
     "Playback speed" : "Lejátszási sebesség",
-    "Start scanning …" : "Átvizsgálás indítása…",
-    "Close" : "Bezárás",
     "Create new playlist" : "Új lejátszási lista létrehozása",
     "Repeat playlist" : "Lejátszási lista ismétlése",
     "Volume up" : "Hangerő fel",

@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Sega esitusloendit",
     "Volume" : "Helivaljus",
     "Playback speed" : "Taasesituse kiirus",
-    "Start scanning …" : "Alusta skaneerimist…",
-    "Close" : "Sulge",
     "Create new playlist" : "Koosta uus esitusloend",
     "Repeat playlist" : "Korda esitusloendit",
     "Volume up" : "Heli valjemaks",

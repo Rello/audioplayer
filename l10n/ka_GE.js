@@ -16,7 +16,6 @@ OC.L10N.register(
     "URL" : "მისამართი",
     "Unknown" : "ამოუცნობი",
     "Favorites" : "რჩეულები",
-    "Close" : "დახურვა",
     "Settings" : "პარამეტრები"
 },
 "nplurals=2; plural=(n!=1);");

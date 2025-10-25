@@ -31,7 +31,6 @@ OC.L10N.register(
     "Unknown" : "Óþekkt",
     "Favorites" : "Eftirlæti",
     "Playback speed" : "Hraði afspilunar",
-    "Close" : "Loka",
     "Settings" : "Stillingar",
     "Advanced Settings" : "Ítarlegar stillingar"
 },

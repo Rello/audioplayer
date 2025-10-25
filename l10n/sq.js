@@ -18,7 +18,6 @@ OC.L10N.register(
     "URL" : "Url",
     "Unknown" : "I/E panjohur",
     "Favorites" : "Favorites",
-    "Close" : "Mbylleni",
     "Settings" : "Rregullimet",
     "Advanced Settings" : "Cilësime të Avancuara"
 },

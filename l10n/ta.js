@@ -12,7 +12,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "தெரியாத",
     "Favorites" : "விருப்பங்கள்",
-    "Close" : "மூடுக",
     "Settings" : "அமைப்புகள்"
 },
 "nplurals=2; plural=(n != 1);");

@@ -91,8 +91,6 @@ OC.L10N.register(
     "Shuffle playlist" : "プレイリストをシャッフル",
     "Volume" : "音量",
     "Playback speed" : "再生速度",
-    "Start scanning …" : "スキャンを開始します...",
-    "Close" : "閉じる",
     "Create new playlist" : "プレイリストを新規作成",
     "Repeat playlist" : "プレイリストをリピート",
     "Volume up" : "音量アップ",

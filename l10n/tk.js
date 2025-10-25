@@ -9,7 +9,6 @@ OC.L10N.register(
     "Cancel" : "ýatyrmak",
     "Unknown" : "Näbelli",
     "Favorites" : "Halanýanlar",
-    "Close" : "Ýap",
     "Settings" : "Sazlamalar"
 },
 "nplurals=2; plural=(n != 1);");

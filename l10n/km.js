@@ -19,7 +19,6 @@ OC.L10N.register(
     "Cancel" : "បោះបង់",
     "URL" : "URL",
     "Favorites" : "Favorites",
-    "Close" : "បិទ",
     "Volume up" : "បន្ថែមសម្លេង",
     "Volume down" : "បន្ថយសម្លេង",
     "Settings" : "ការកំណត់",

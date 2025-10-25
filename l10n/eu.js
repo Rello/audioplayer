@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Ausazko erreprodukzio-zerrenda",
     "Volume" : "Bolumena",
     "Playback speed" : "Erreprodukzio abiadura",
-    "Start scanning …" : "Hasi bilaketa ...",
-    "Close" : "Itxi",
     "Create new playlist" : "Sortu erreprodukzio-zerrenda berria",
     "Repeat playlist" : "Errepikatu erreprodukzio-zerrenda",
     "Volume up" : "Igo bolumena",

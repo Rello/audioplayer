@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Oynatma listesini karıştır",
     "Volume" : "Ses düzeyi",
     "Playback speed" : "Oynatma hızı",
-    "Start scanning …" : "Taramayı başlat…",
-    "Close" : "Kapat",
     "Create new playlist" : "Oynatma listesi ekle",
     "Repeat playlist" : "Oynatma listesini yinele",
     "Volume up" : "Sesi artır",

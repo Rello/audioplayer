@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Wiedergabeliste mischen",
     "Volume" : "Lautstärke",
     "Playback speed" : "Wiedergabegeschwindigkeit",
-    "Start scanning …" : "Durchsuchen starten …",
-    "Close" : "Schließen",
     "Create new playlist" : "Neue Playlist erstellen",
     "Repeat playlist" : "Playlist wiederholen",
     "Volume up" : "Lauter",

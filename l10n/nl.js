@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Shuffle afspeelijst",
     "Volume" : "Volume",
     "Playback speed" : "Afspeelsnelheid",
-    "Start scanning …" : "Start scannen ...",
-    "Close" : "Sluiten",
     "Create new playlist" : "Creëer nieuwe afspeellijst",
     "Repeat playlist" : "Herhaal afspeellijst",
     "Volume up" : "Volume omhoog",

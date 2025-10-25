@@ -8,7 +8,6 @@ OC.L10N.register(
     "Cancel" : "منسوخ کریں",
     "URL" : "یو ار ایل",
     "Favorites" : "Favorites",
-    "Close" : "بند ",
     "Settings" : "سیٹینگز"
 },
 "nplurals=2; plural=(n != 1);");

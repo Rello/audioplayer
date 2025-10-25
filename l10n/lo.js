@@ -13,7 +13,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "ບໍ່ຮູ້",
     "Favorites" : "ລາຍການທີ່ມັກ",
-    "Close" : "ປິດ",
     "Settings" : "ການຕັ້ງຄ່າ",
     "Advanced Settings" : "ຕັ້ງ​ຄ່າ​ຂັ້ນ​ສູງ"
 },

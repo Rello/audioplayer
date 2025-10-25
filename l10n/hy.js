@@ -10,7 +10,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Անհայտ",
     "Favorites" : "Սիրվածներ",
-    "Close" : "Փակել",
     "Settings" : "կարգավորումներ"
 },
 "nplurals=2; plural=(n != 1);");

@@ -93,8 +93,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Changanya orodha ya kucheza",
     "Volume" : "Sauti",
     "Playback speed" : "Kasi ya mshindo nyuma",
-    "Start scanning …" : " Anza kuchanganua...",
-    "Close" : "Funga",
     "Create new playlist" : "Unda orodha mpya ya kucheza",
     "Repeat playlist" : "Rudia orodha ya kucheza",
     "Volume up" : " Kuongeza sauti",

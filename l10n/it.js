@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Riproduzione casuale",
     "Volume" : "Volume",
     "Playback speed" : "Velocità di riproduzione",
-    "Start scanning …" : "Avvia scansione",
-    "Close" : "Chiudi",
     "Create new playlist" : "Crea nuova scaletta",
     "Repeat playlist" : "Ripeti scaletta",
     "Volume up" : "Alza il volume",

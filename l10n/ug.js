@@ -92,8 +92,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Shuffle playlist",
     "Volume" : "ھەجىم",
     "Playback speed" : "قويۇش سۈرئىتى",
-    "Start scanning …" : "سايىلەشنى باشلاڭ…",
-    "Close" : "ياپ",
     "Create new playlist" : "يېڭى قويۇش تىزىملىكى قۇر",
     "Repeat playlist" : "قويۇش تىزىملىكىنى تەكرارلاڭ",
     "Volume up" : "Volume up",

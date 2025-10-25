@@ -18,7 +18,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Dianv",
     "Favorites" : "Pennrolloù",
-    "Close" : "Seriñ",
     "Settings" : "Arventennoù",
     "Advanced Settings" : "Arventennoù araokaet"
 },

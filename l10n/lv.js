@@ -25,7 +25,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Nezināms",
     "Favorites" : "Izlases vienumi",
-    "Close" : "Aizvērt",
     "Settings" : "Iestatījumi",
     "Advanced Settings" : "Paplašināti iestatījumi",
     "Search for audio files in" : "Meklēt skaņu datnes"

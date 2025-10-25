@@ -14,7 +14,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Onbekannt",
     "Favorites" : "Favoriten",
-    "Close" : "Zoumaachen",
     "Settings" : "Astellungen",
     "Advanced Settings" : "Fortgeschratt astellungen"
 },

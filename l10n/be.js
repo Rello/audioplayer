@@ -35,7 +35,6 @@ OC.L10N.register(
     "Unknown" : "Невядомы",
     "Favorites" : "Абранае",
     "Volume" : "Гучнасць",
-    "Close" : "Закрыць",
     "Settings" : "Налады",
     "Advanced Settings" : "Пашыраныя налады",
     "Do you like this app?" : "Вам падабаецца гэта праграма?",

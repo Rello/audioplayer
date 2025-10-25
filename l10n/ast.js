@@ -62,7 +62,6 @@ OC.L10N.register(
     "50 Random Tracks" : "50 pistes aleatories",
     "Volume" : "Volume",
     "Playback speed" : "Velocidá de la reproducción",
-    "Close" : "Zarrar",
     "Settings" : "Configuración",
     "Advanced Settings" : "Configuración avanzada",
     "Do you like this app?" : "¿Préstate esta aplicación?",

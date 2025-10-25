@@ -71,7 +71,6 @@ OC.L10N.register(
     "Shuffle playlist" : "Maišyti grojaraštį",
     "Volume" : "Garsis",
     "Playback speed" : "Atkūrimo greitis",
-    "Close" : "Užverti",
     "Create new playlist" : "Sukurti naują grojaraštį",
     "Repeat playlist" : "Kartoti grojaraštį",
     "Volume up" : "Garsinti",

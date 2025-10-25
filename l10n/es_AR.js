@@ -23,7 +23,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Desconocido",
     "Favorites" : "Favoritos",
-    "Close" : "Cerrar",
     "Settings" : "Ajustes",
     "Advanced Settings" : "Configuración avanzada",
     "Do you like this app?" : "¿Te gusta esta aplicación?",

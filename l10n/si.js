@@ -13,7 +13,6 @@ OC.L10N.register(
     "Cancel" : "අවලංගු කරන්න",
     "Unknown" : "නොදන්නා",
     "Favorites" : "ප්‍රියතම",
-    "Close" : "වසන්න",
     "Settings" : "සැකසුම්"
 },
 "nplurals=2; plural=(n != 1);");

@@ -16,7 +16,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Үл танигдах зүйл",
     "Favorites" : "Онцолсон",
-    "Close" : "Хаах",
     "Settings" : "Тохиргоо"
 },
 "nplurals=2; plural=(n != 1);");
