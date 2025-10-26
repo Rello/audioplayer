@@ -20,6 +20,7 @@ use getID3;
 use getid3_exception;
 use getid3_lib;
 use OC;
+use OCP\AppFramework\Attributes\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\InvalidPathException;
@@ -105,8 +106,6 @@ class ScannerController extends Controller
     }
 
     /**
-     * @NoAdminRequired
-     *
      * @param $userId
      * @param $output
      * @param $scanstop
@@ -114,6 +113,7 @@ class ScannerController extends Controller
      * @throws NotFoundException
      * @throws getid3_exception
      */
+    #[NoAdminRequired]
     public function scanForAudios($userId = null, $output = null, $scanstop = null)
     {
         set_time_limit(0);
@@ -521,9 +521,7 @@ class ScannerController extends Controller
         }
     }
 
-    /**
-     * @NoAdminRequired
-     */
+    #[NoAdminRequired]
     public function getScanProgress($scanToken)
     {
         $data = $this->readProgressCache($scanToken);
@@ -946,10 +944,9 @@ class ScannerController extends Controller
     }
 
     /**
-     * @NoAdminRequired
-     *
      * @throws NotFoundException
      */
+    #[NoAdminRequired]
     public function checkNewTracks()
     {
         // get only the relevant audio files

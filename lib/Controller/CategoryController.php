@@ -12,6 +12,7 @@
 namespace OCA\audioplayer\Controller;
 
 use Doctrine\DBAL\Exception;
+use OCP\AppFramework\Attributes\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\InvalidPathException;
@@ -75,10 +76,10 @@ class CategoryController extends Controller
     /**
      * Get the items for the selected category
      *
-     * @NoAdminRequired
      * @param $category
      * @return JSONResponse
      */
+    #[NoAdminRequired]
     public function getCategoryItems($category)
     {
         $items = $this->categoryService->getCategoryItems($category);
@@ -91,11 +92,11 @@ class CategoryController extends Controller
     /**
      * Get the covers for the "Album Covers" view
      *
-     * @NoAdminRequired
      * @param $category
      * @param $categoryId
      * @return JSONResponse
      */
+    #[NoAdminRequired]
     public function getCategoryItemCovers($category, $categoryId)
     {
         $items = $this->categoryService->getCategoryItemCovers($category, $categoryId);
@@ -119,16 +120,16 @@ class CategoryController extends Controller
         return $this->categoryService->getTrackCount($category, $categoryId);
     }
 
-        /**
+    /**
      * get the tracks for a selected category or album
      *
-     * @NoAdminRequired
      * @param string $category
      * @param string $categoryId
      * @return JSONResponse
      * @throws InvalidPathException
      * @throws NotFoundException
      */
+    #[NoAdminRequired]
     public function getTracks($category, $categoryId)
     {
         if ($categoryId[0] === 'S') $category = 'Stream';

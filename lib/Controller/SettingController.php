@@ -11,6 +11,7 @@
 
 namespace OCA\audioplayer\Controller;
 
+use OCP\AppFramework\Attributes\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
@@ -38,22 +39,22 @@ class SettingController extends Controller {
     }
 
     /**
-     * @NoAdminRequired
      * @param $type
      * @param $value
      * @return JSONResponse
      * @throws \OCP\PreConditionNotMetException
      */
+    #[NoAdminRequired]
     public function setValue($type, $value) {
         $this->settingService->setValue($this->userId, $type, $value);
         return new JSONResponse(['success' => 'true']);
     }
 
     /**
-     * @NoAdminRequired
      * @param $type
      * @return JSONResponse
      */
+    #[NoAdminRequired]
     public function getValue($type) {
         $value = $this->settingService->getValue($this->userId, $type);
 
@@ -74,33 +75,33 @@ class SettingController extends Controller {
     }
 
     /**
-     * @NoAdminRequired
      * @param $value
      * @return JSONResponse
      * @throws \OCP\PreConditionNotMetException
      */
+    #[NoAdminRequired]
     public function userPath($value) {
         $success = $this->settingService->userPath($this->userId, $value);
         return new JSONResponse(['success' => $success]);
     }
 
     /**
-     * @NoAdminRequired
      * @param $trackid
      * @param $isFavorite
      * @return bool
      */
+    #[NoAdminRequired]
     public function setFavorite($trackid, $isFavorite)
     {
         return $this->settingService->setFavorite($this->userId, $trackid, $isFavorite);
     }
 
     /**
-     * @NoAdminRequired
      * @param $track_id
      * @return int|string
      * @throws \Exception
      */
+    #[NoAdminRequired]
     public function setStatistics($track_id) {
         return $this->settingService->setStatistics($this->userId, $track_id);
     }

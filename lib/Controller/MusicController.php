@@ -13,6 +13,9 @@
 
 namespace OCA\audioplayer\Controller;
 
+use OCP\AppFramework\Attributes\NoAdminRequired;
+use OCP\AppFramework\Attributes\NoCSRFRequired;
+use OCP\AppFramework\Attributes\PublicPage;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
@@ -32,13 +35,13 @@ class MusicController extends Controller
     }
 
     /**
-     * @PublicPage
-     * @NoCSRFRequired
      * @param $token
      * @return JSONResponse
      * @throws \OCP\Files\NotFoundException
      * @throws \OCP\Share\Exceptions\ShareNotFound
      */
+    #[PublicPage]
+    #[NoCSRFRequired]
     public function getPublicAudioInfo($token)
     {
         if (empty($token)) {
@@ -57,12 +60,12 @@ class MusicController extends Controller
 
     /**
      * Stream files in OCP withing link-shared folder
-     * @PublicPage
-     * @NoCSRFRequired
      * @param $token
      * @param $file
      * @throws \OCP\Files\NotFoundException
      */
+    #[PublicPage]
+    #[NoCSRFRequired]
     public function getPublicAudioStream($token, $file)
     {
         if (empty($token)) {
@@ -75,11 +78,11 @@ class MusicController extends Controller
     }
 
     /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
      * @param $file
      * @param $t
      */
+    #[NoAdminRequired]
+    #[NoCSRFRequired]
     public function getAudioStream($file, $t)
     {
         $stream = $this->service->createAudioStream($file, $t);

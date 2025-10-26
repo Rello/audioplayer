@@ -2,6 +2,7 @@
 namespace OCA\audioplayer\Controller;
 
 use OCA\audioplayer\Db\DbMapper;
+use OCP\AppFramework\Attributes\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
@@ -16,9 +17,7 @@ class DbController extends Controller
         $this->mapper = $mapper;
     }
 
-    /**
-     * @NoAdminRequired
-     */
+    #[NoAdminRequired]
     public function resetMediaLibrary(): JSONResponse
     {
         $this->mapper->resetMediaLibrary();
