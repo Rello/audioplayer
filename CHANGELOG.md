@@ -7,6 +7,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Fixed
 - prevent null user context from breaking cover retrieval
+- fix streaming playlists showing empty columns in list view
 
 ## 3.6.0 - 2025-10-22
 ### Changed
