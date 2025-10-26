@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "Kõik muusikakogu kirjed kustutatakse!",
     "Resetting finished!" : "Lähtestamine on lõppenud!",
     "Scan for audio files" : "Otsi skaneerides helifaile ",
+    "Scanning was cancelled." : "Skaneerimispäring on katkestatud",
+    "An error occurred while scanning." : "Skaneerimisel tekkis viga.",
     "Title" : "Pealkiri",
     "Subtitle" : "Alapealkiri",
     "Artist" : "Esitaja",

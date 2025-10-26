@@ -41,6 +41,8 @@
     "All library entries will be deleted!" : "Scriosfar gach iontráil leabharlainne!",
     "Resetting finished!" : "Athshocrú críochnaithe!",
     "Scan for audio files" : "Scanadh le haghaidh comhaid fuaime",
+    "Scanning was cancelled." : "Cuireadh an scanadh ar ceal.",
+    "An error occurred while scanning." : "Tharla earráid agus an scanadh á dhéanamh.",
     "Title" : "Teideal",
     "Subtitle" : "Fotheideal",
     "Artist" : "Ealaíontóir",

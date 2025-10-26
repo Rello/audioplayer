@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "Veškeré položky knihovny budou smazány!",
     "Resetting finished!" : "Vrácení do výchozího stavu dokončeno!",
     "Scan for audio files" : "Skenovat na audio soubory",
+    "Scanning was cancelled." : "Skenování bylo zrušeno.",
+    "An error occurred while scanning." : "Při skenování došlo k chybě",
     "Title" : "Titul",
     "Subtitle" : "Podtitul",
     "Artist" : "Umělec",
