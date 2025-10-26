@@ -14,6 +14,8 @@
 namespace OCA\audioplayer\Controller;
 
 use OCA\audioplayer\Service\CoverService;
+use OCP\AppFramework\Attributes\NoAdminRequired;
+use OCP\AppFramework\Attributes\NoCSRFRequired;
 use OCP\AppFramework\Controller;
 use OCP\IRequest;
 use OCA\audioplayer\Http\ImageResponse;
@@ -32,11 +34,11 @@ class CoverController extends Controller
     }
 
     /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
      * @param int $album
      * @return ImageResponse
      */
+    #[NoAdminRequired]
+    #[NoCSRFRequired]
     public function getCover(int $album)
     {
         $cover = $this->coverService->getCover($album);

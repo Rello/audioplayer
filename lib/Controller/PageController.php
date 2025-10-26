@@ -14,6 +14,8 @@
 namespace OCA\audioplayer\Controller;
 
 use OCA\audioplayer\Event\LoadAdditionalScriptsEvent;
+use OCP\AppFramework\Attributes\NoAdminRequired;
+use OCP\AppFramework\Attributes\NoCSRFRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
@@ -53,10 +55,10 @@ class PageController extends Controller
     }
 
     /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
      * @throws \OCP\PreConditionNotMetException
      */
+    #[NoAdminRequired]
+    #[NoCSRFRequired]
     public function index()
     {
 

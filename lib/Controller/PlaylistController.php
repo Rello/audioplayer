@@ -13,6 +13,7 @@
 
 namespace OCA\audioplayer\Controller;
 
+use OCP\AppFramework\Attributes\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
@@ -47,10 +48,10 @@ class PlaylistController extends Controller
     }
 
     /**
-     * @NoAdminRequired
      * @param $playlist
      * @return null|JSONResponse
      */
+    #[NoAdminRequired]
     public function addPlaylist($playlist)
     {
         if ($playlist !== '') {
@@ -74,12 +75,11 @@ class PlaylistController extends Controller
 
 
     /**
-     * @NoAdminRequired
-     *
      * @param integer $plId
      * @param string $newname
      * @return JSONResponse
      */
+    #[NoAdminRequired]
     public function updatePlaylist($plId, $newname)
     {
 
@@ -98,23 +98,23 @@ class PlaylistController extends Controller
 
 
     /**
-     * @NoAdminRequired
      * @param $playlistid
      * @param $songid
      * @param $sorting
      * @return bool
      */
+    #[NoAdminRequired]
     public function addTrackToPlaylist($playlistid, $songid, $sorting)
     {
         return $this->service->addTrackToPlaylist((int)$playlistid, (int)$songid, (int)$sorting);
     }
 
     /**
-     * @NoAdminRequired
      * @param $playlistid
      * @param $songids
      * @return JSONResponse
      */
+    #[NoAdminRequired]
     public function sortPlaylist($playlistid, $songids)
     {
         $iTrackIds = explode(';', $songids);
@@ -127,21 +127,21 @@ class PlaylistController extends Controller
     }
 
     /**
-     * @NoAdminRequired
      * @param $playlistid
      * @param $trackid
      * @return bool
      */
+    #[NoAdminRequired]
     public function removeTrackFromPlaylist($playlistid, $trackid)
     {
         return $this->service->removeTrackFromPlaylist((int)$playlistid, (int)$trackid);
     }
 
     /**
-     * @NoAdminRequired
      * @param $playlistid
      * @return bool|JSONResponse
      */
+    #[NoAdminRequired]
     public function removePlaylist($playlistid)
     {
         if (!$this->service->removePlaylist((int)$playlistid)) {

@@ -11,6 +11,7 @@
 
 namespace OCA\audioplayer\Controller;
 
+use OCP\AppFramework\Attributes\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
@@ -39,10 +40,10 @@ class SidebarController extends Controller
     }
 
     /**
-     * @NoAdminRequired
      * @param $trackid
      * @return JSONResponse
      */
+    #[NoAdminRequired]
     public function getAudioInfo($trackid)
     {
 
@@ -63,10 +64,10 @@ class SidebarController extends Controller
     }
 
     /**
-     * @NoAdminRequired
      * @param $trackid
      * @return JSONResponse
      */
+    #[NoAdminRequired]
     public function getPlaylists($trackid)
     {
         $playlists = $this->service->getPlaylists((int)$trackid);

@@ -14,6 +14,7 @@
 namespace OCA\audioplayer\Controller;
 
 use OCA\audioplayer\WhatsNew\WhatsNewCheck;
+use OCP\AppFramework\Attributes\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -57,9 +58,7 @@ class WhatsNewController extends Controller
         $this->logger = $logger;
     }
 
-    /**
-     * @NoAdminRequired
-     */
+    #[NoAdminRequired]
     public function get(): DataResponse
     {
         $user = $this->userSession->getUser();
@@ -97,13 +96,12 @@ class WhatsNewController extends Controller
     }
 
     /**
-     * @NoAdminRequired
-     *
      * @param string $version
      * @return DataResponse
      * @throws DoesNotExistException
      * @throws \OCP\PreConditionNotMetException
      */
+    #[NoAdminRequired]
     public function dismiss($version)
     {
         $user = $this->userSession->getUser();
