@@ -2,7 +2,7 @@
 namespace OCA\audioplayer\Controller;
 
 use OCA\audioplayer\Db\DbMapper;
-use OCP\AppFramework\Attributes\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;

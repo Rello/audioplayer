@@ -14,8 +14,8 @@
 namespace OCA\audioplayer\Controller;
 
 use OCA\audioplayer\Event\LoadAdditionalScriptsEvent;
-use OCP\AppFramework\Attributes\NoAdminRequired;
-use OCP\AppFramework\Attributes\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;

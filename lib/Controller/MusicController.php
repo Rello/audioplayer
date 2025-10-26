@@ -13,9 +13,9 @@
 
 namespace OCA\audioplayer\Controller;
 
-use OCP\AppFramework\Attributes\NoAdminRequired;
-use OCP\AppFramework\Attributes\NoCSRFRequired;
-use OCP\AppFramework\Attributes\PublicPage;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;

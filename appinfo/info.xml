@@ -37,7 +37,7 @@ See [README](https://github.com/rello/audioplayer/blob/master/README.md) file fo
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_logo.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png</screenshot>
 	<dependencies>
-		<nextcloud min-version="21" max-version="99"/>
+		<nextcloud min-version="29" max-version="99"/>
 	</dependencies>
 	<settings>
 		<personal>OCA\audioplayer\Settings\Personal</personal>

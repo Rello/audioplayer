@@ -12,7 +12,7 @@
 namespace OCA\audioplayer\Controller;
 
 use Doctrine\DBAL\Exception;
-use OCP\AppFramework\Attributes\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\InvalidPathException;

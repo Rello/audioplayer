@@ -20,7 +20,7 @@ use getID3;
 use getid3_exception;
 use getid3_lib;
 use OC;
-use OCP\AppFramework\Attributes\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\InvalidPathException;

@@ -14,8 +14,8 @@
 namespace OCA\audioplayer\Controller;
 
 use OCA\audioplayer\Service\CoverService;
-use OCP\AppFramework\Attributes\NoAdminRequired;
-use OCP\AppFramework\Attributes\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Controller;
 use OCP\IRequest;
 use OCA\audioplayer\Http\ImageResponse;
