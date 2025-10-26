@@ -489,7 +489,8 @@ OCA.Audioplayer.Category = {
     },
 
     buildListView: function () {
-        document.getElementById('playlist-container').style.display = 'block';
+        let playlistContainer = document.getElementById('playlist-container');
+        playlistContainer.style.display = 'block';
         document.getElementById('empty-container').style.display = 'none';
         document.getElementById('loading').style.display = 'block';
         if (document.querySelector('.coverrow')) {
@@ -507,11 +508,20 @@ OCA.Audioplayer.Category = {
         let ul = document.createElement('ul');
         ul.id = 'individual-playlist';
         ul.classList.add('albumwrapper');
-        document.getElementById('playlist-container').appendChild(ul);
+        playlistContainer.appendChild(ul);
 
         document.querySelector('.header-title').dataset.order = '';
         document.querySelector('.header-artist').dataset.order = '';
         document.querySelector('.header-album').dataset.order = '';
+
+        playlistContainer.classList.remove('is-stream-playlist');
+        if (
+            OCA.Audioplayer.Core.CategorySelectors[0] === 'Playlist' &&
+            OCA.Audioplayer.Core.CategorySelectors[1] &&
+            OCA.Audioplayer.Core.CategorySelectors[1][0] === 'S'
+        ) {
+            playlistContainer.classList.add('is-stream-playlist');
+        }
 
         return true;
     },

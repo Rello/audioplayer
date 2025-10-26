@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.7.0 - 2025-10-xx
+### Changed
+- reduced playlist columns for streams
+
 ## 3.6.1 - 2025-10-24
 ### Changed
 - switched the scan dialog cache-backed polling progress updates

@@ -428,6 +428,17 @@ i#scanAudiosFirst {
     right: 0;
 }
 
+#playlist-container.is-stream-playlist #individual-playlist-header span.header-title {
+    min-width: calc(100% - 52px);
+    width: calc(100% - 52px);
+}
+
+#playlist-container.is-stream-playlist #individual-playlist-header span.header-artist,
+#playlist-container.is-stream-playlist #individual-playlist-header span.header-album,
+#playlist-container.is-stream-playlist #individual-playlist-header span.header-time {
+    display: none;
+}
+
 .albumwrapper li .actionsSong {
     position: relative;
     float: left;
@@ -482,6 +493,10 @@ i#scanAudiosFirst {
     overflow: hidden;
 }
 
+#playlist-container.is-stream-playlist #individual-playlist li span.title {
+    width: calc(100% - 52px);
+}
+
 #individual-playlist li span.interpret {
     position: relative;
     float: left;
@@ -491,6 +506,12 @@ i#scanAudiosFirst {
     text-overflow: ellipsis;
     overflow: hidden;
     color: var(--color-text-lighter);
+}
+
+#playlist-container.is-stream-playlist #individual-playlist li span.interpret,
+#playlist-container.is-stream-playlist #individual-playlist li span.album-indi,
+#playlist-container.is-stream-playlist #individual-playlist li span.time {
+    display: none;
 }
 
 #individual-playlist li span.album-indi {
