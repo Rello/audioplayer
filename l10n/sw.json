@@ -41,6 +41,8 @@
     "All library entries will be deleted!" : "Maingizo yote ya maktaba yatafutwa!",
     "Resetting finished!" : " Kuweka upya kumekamilika!",
     "Scan for audio files" : "Changanua faili za sauti",
+    "Scanning was cancelled." : "Uchanganuzi umeghairiwa.",
+    "An error occurred while scanning." : "Hitilafu ilitokea wakati wa kuchanganua.",
     "Title" : "Kichwa cha habari",
     "Subtitle" : " Manukuu",
     "Artist" : "Msanii",

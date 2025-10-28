@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "Tüm kitaplık kayıtları silinecek!",
     "Resetting finished!" : "Sıfırlama tamamlandı!",
     "Scan for audio files" : "Ses dosyalarını tara",
+    "Scanning was cancelled." : "Tarama iptal edildi.",
+    "An error occurred while scanning." : "Tarama sırasında bir sorun çıktı.",
     "Title" : "Başlık",
     "Subtitle" : "Alt başlık",
     "Artist" : "Sanatçı",

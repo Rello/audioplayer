@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "所有媒體庫條目將被刪除！",
     "Resetting finished!" : "重設完成！",
     "Scan for audio files" : "掃描音訊檔案",
+    "Scanning was cancelled." : "已取消掃描。",
+    "An error occurred while scanning." : "掃描時發生錯誤。",
     "Title" : "標題",
     "Subtitle" : "副標題",
     "Artist" : "藝術家",
