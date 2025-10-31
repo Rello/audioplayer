@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "Eliminaranse todas as entradas da fonoteca!",
     "Resetting finished!" : "Rematou o restabelecemento!",
     "Scan for audio files" : "Explorar na busca de ficheiros de son",
+    "Scanning was cancelled." : "Cancelouse a exploración.",
+    "An error occurred while scanning." : "Produciuse un erro durante a exploración.",
     "Title" : "Título",
     "Subtitle" : "Subtítulo",
     "Artist" : "Artista",

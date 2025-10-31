@@ -41,6 +41,8 @@
     "All library entries will be deleted!" : "Wszystkie wpisy w bibliotece zostaną usunięte!",
     "Resetting finished!" : "Resetowanie zakończone!",
     "Scan for audio files" : "Skanuj w poszukiwaniu plików audio",
+    "Scanning was cancelled." : "Skanowanie przerwane.",
+    "An error occurred while scanning." : "Wystąpił błąd podczas skanowania.",
     "Title" : "Tytuł",
     "Subtitle" : "Podtytuł",
     "Artist" : "Artysta",
