@@ -69,7 +69,7 @@ OC.L10N.register(
     "No playlist entry" : "Non hai ningunha entrada na lista de reprodución",
     "Available Audio Player Add-Ons:" : "Engadidos do reprodutor de son dispoñíbeis:",
     "SONOS playback" : "Reprodución de SONOS",
-    "OK" : "OK",
+    "OK" : "Aceptar",
     "Cancel" : "Cancelar",
     "URL" : "URL",
     "Sorting Playlist success! Playlist reloaded!" : "Lista de reprodución ordenada satisfactoriamente! Lista de reprodución recargada!",
