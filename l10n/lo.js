@@ -2,10 +2,13 @@ OC.L10N.register(
     "audioplayer",
     {
     "Selected" : "ເລືອກ",
+    "Options" : "ຕົວເລືອກ",
     "Help" : "ການຊ່ວຍເຫຼືອ",
     "New in" : "ໃຫມ່",
     "View changelog" : "ເບິ່ງການປ່ຽນແປງ",
     "Tags" : "ປ້າຍກຳກັບ",
+    "Title" : "ຫົວຂໍ້",
+    "Year" : "ປີ",
     "Favorite" : "ລາຍການທີ່ມັກ",
     "Remove" : "ຍ້າຍອອກ",
     "OK" : "OK",
