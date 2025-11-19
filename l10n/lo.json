@@ -4,9 +4,14 @@
     "Help" : "ການຊ່ວຍເຫຼືອ",
     "New in" : "ໃຫມ່",
     "View changelog" : "ເບິ່ງການປ່ຽນແປງ",
+    "Are you sure?" : "Are you sure?",
+    "Selection" : "Selection",
+    "Folders" : "Folders",
     "Tags" : "ປ້າຍກຳກັບ",
+    "Saved" : "Saved",
     "Title" : "ຫົວຂໍ້",
     "Year" : "ປີ",
+    "Metadata" : "Metadata",
     "Favorite" : "ລາຍການທີ່ມັກ",
     "Remove" : "ຍ້າຍອອກ",
     "OK" : "OK",
@@ -14,6 +19,7 @@
     "URL" : "URL",
     "Unknown" : "ບໍ່ຮູ້",
     "Favorites" : "ລາຍການທີ່ມັກ",
+    "Playback speed" : "Playback speed",
     "Settings" : "ການຕັ້ງຄ່າ",
     "Advanced Settings" : "ຕັ້ງ​ຄ່າ​ຂັ້ນ​ສູງ"
 },"pluralForm" :"nplurals=1; plural=0;"
