@@ -10,8 +10,10 @@ OC.L10N.register(
     "Selection" : "Selection",
     "Folders" : "Folders",
     "Tags" : "ປ້າຍກຳກັບ",
+    "No data" : "ບໍ່ມີຂໍ້ມູນ",
     "Saved" : "Saved",
     "Title" : "ຫົວຂໍ້",
+    "Subtitle" : "ຫົວຂໍ້ຮອງ",
     "Year" : "ປີ",
     "Metadata" : "Metadata",
     "Favorite" : "ລາຍການທີ່ມັກ",
@@ -23,6 +25,8 @@ OC.L10N.register(
     "Favorites" : "ລາຍການທີ່ມັກ",
     "Playback speed" : "Playback speed",
     "Settings" : "ການຕັ້ງຄ່າ",
-    "Advanced Settings" : "ຕັ້ງ​ຄ່າ​ຂັ້ນ​ສູງ"
+    "Advanced Settings" : "ຕັ້ງ​ຄ່າ​ຂັ້ນ​ສູງ",
+    "Do you like this app?" : "ທ່ານມັກແອັບນີ້ບໍ່?",
+    "More information …" : "ຂໍ້ມູນເພີ່ມເຕີມ..."
 },
 "nplurals=1; plural=0;");
