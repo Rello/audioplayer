@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "Обрисаће се све библиотеке!",
     "Resetting finished!" : "Завршено је ресетовање!",
     "Scan for audio files" : "Скенирај аудио фајлове",
+    "Scanning was cancelled." : "Скенирање је отказано.",
+    "An error occurred while scanning." : "Дошло је до грешке током скенирања.",
     "Title" : "Звање",
     "Subtitle" : "Поднаслов",
     "Artist" : "Уметник",
