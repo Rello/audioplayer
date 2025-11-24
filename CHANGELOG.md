@@ -1,14 +1,13 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.7.0 - 2025-10-xx
+## 3.7.0 - 2025-11-24
 ### Changed
 - reduced playlist columns for streams
 - migrated controller annotations to PHP attributes
 
 ### Fixed
 - Could not resolve OCA\audioplayer\DB\DbMapper #651
-
 
 ## 3.6.1 - 2025-10-24
 ### Changed

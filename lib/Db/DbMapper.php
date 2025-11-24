@@ -187,7 +187,7 @@ class DbMapper
         } elseif ($hook === null && $output) {
             $output->writeln('Reset finished');
         } else {
-            $this->logger->info('Library of "' . $userId . '" reset due to user deletion', ['app' => 'audioplayer']);
+            $this->logger->info('Deleting Audioplayer library for: ' . $userId , ['app' => 'audioplayer']);
         }
         return true;
     }
@@ -197,7 +197,7 @@ class DbMapper
 		if ($userId !== null) {
             $this->userId = $userId;
         }
-        $this->logger->debug('deleteFromDB: ' . $fileId, ['app' => 'audioplayer']);
+        // $this->logger->debug('deleteFromDB: ' . $fileId, ['app' => 'audioplayer']);
 
         $qb = $this->db->getQueryBuilder();
         $qb->select('album_id', 'id')
