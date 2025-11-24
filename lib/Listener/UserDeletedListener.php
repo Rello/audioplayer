@@ -16,7 +16,7 @@ namespace OCA\audioplayer\Listener;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\User\Events\UserDeletedEvent;
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 
 class UserDeletedListener implements IEventListener {
 

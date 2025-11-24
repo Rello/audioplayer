@@ -16,7 +16,7 @@ namespace OCA\audioplayer\Listener;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\NodeDeletedEvent;
-use OCA\audioplayer\DB\DbMapper;
+use OCA\audioplayer\Db\DbMapper;
 use OCP\Files\FileInfo;
 
 class FileDeletedListener implements IEventListener {

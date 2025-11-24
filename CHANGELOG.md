@@ -6,6 +6,10 @@ All notable changes to the Audio Player project will be documented in this file.
 - reduced playlist columns for streams
 - migrated controller annotations to PHP attributes
 
+### Fixed
+- Could not resolve OCA\audioplayer\DB\DbMapper #651
+
+
 ## 3.6.1 - 2025-10-24
 ### Changed
 - switched the scan dialog cache-backed polling progress updates
