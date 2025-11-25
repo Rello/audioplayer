@@ -102,7 +102,7 @@ OC.L10N.register(
     "SONOS Playback" : "Přehrávání přes SONOS",
     "Advanced Settings" : "Pokročilá nastavení",
     "Do you like this app?" : "Líbí se vám tato aplikace?",
-    "More information …" : "Další informace…",
+    "More information …" : "Další informace …",
     "Scanner Settings" : "Nastavení skeneru",
     "Search for audio files in" : "Hledat zvukové soubory v",
     "This setting specifies which folder is scanned for audio files. Without a selection, the whole data folder is scanned." : "Toto nastavení určuje kterou složku skenovat ohledně zvukových souborů. Pokud není vybráno, je skenována celá složka s daty.",
