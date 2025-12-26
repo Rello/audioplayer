@@ -8,6 +8,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ### Fixed
 - Could not resolve OCA\audioplayer\DB\DbMapper #651
+- hide playlist info when browsing within the selected category
 
 ## 3.6.1 - 2025-10-24
 ### Changed
