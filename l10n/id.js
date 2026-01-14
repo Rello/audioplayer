@@ -7,6 +7,7 @@ OC.L10N.register(
     "New in" : "Terbaru",
     "View changelog" : "Lihat log pembaruan",
     "Are you sure?" : "Apakah Anda yakin?",
+    "Selection" : "Pilihan",
     "Albums" : "Album",
     "Folders" : "Folder",
     "Tags" : "Tag",
