@@ -6,6 +6,7 @@ OC.L10N.register(
     "Help" : "Pomoć",
     "New in" : "Novo u",
     "View changelog" : "Prikaži zapis promjena",
+    "Selection" : "Odabrano",
     "Folders" : "Mape",
     "Tags" : "Oznake",
     "Years" : "Godina",
