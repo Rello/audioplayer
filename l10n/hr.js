@@ -7,6 +7,7 @@ OC.L10N.register(
     "New in" : "Novo u",
     "View changelog" : "Prikaži zapis promjena",
     "Selection" : "Odabrano",
+    "Albums" : "Albumi",
     "Folders" : "Mape",
     "Tags" : "Oznake",
     "Years" : "Godina",
