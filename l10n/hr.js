@@ -19,6 +19,7 @@ OC.L10N.register(
     "Genre" : "Žanr",
     "Year" : "Godina",
     "Length" : "Dužina",
+    "MIME type" : "MIME type",
     "Copyright" : "Autorsko pravo",
     "Metadata" : "Metapodaci",
     "Favorited" : "Favorit",
