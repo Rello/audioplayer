@@ -502,7 +502,7 @@ OCA.Audioplayer.Category = {
         if (document.getElementById('individual-playlist')) {
             document.getElementById('individual-playlist').remove();
         }
-        document.getElementById('individual-playlist-info').style.display = 'block';
+        document.getElementById('individual-playlist-info').style.display = 'none';
         document.getElementById('individual-playlist-header').style.display = 'block';
 
         let ul = document.createElement('ul');
@@ -578,11 +578,31 @@ OCA.Audioplayer.Category = {
             }
         });
         let category_title = document.querySelector('#myCategory .active') ? document.querySelector('#myCategory .active').firstChild['title'] : false;
-        if (category !== 'Title') {
-            document.getElementById('individual-playlist-info').innerHTML = t('audioplayer', 'Selected') + ' ' + category + ': ' + category_title;
-        } else {
-            document.getElementById('individual-playlist-info').innerHTML = t('audioplayer', 'Selected') + ': ' + category_title;
+
+        OCA.Audioplayer.Category.updatePlaylistInfo(category, category_title);
+    },
+
+    updatePlaylistInfo: function (category, categoryTitle) {
+        let info = document.getElementById('individual-playlist-info');
+        if (!info) {
+            return;
         }
+
+        if (!categoryTitle) {
+            info.style.display = 'none';
+            return;
+        }
+
+        if (category !== 'Title') {
+            info.innerHTML = t('audioplayer', 'Selected') + ' ' + category + ': ' + categoryTitle;
+        } else {
+            info.innerHTML = t('audioplayer', 'Selected') + ': ' + categoryTitle;
+        }
+
+        let selector = document.getElementById('category_selector');
+        let isSameCategory = selector && selector.value === category;
+
+        info.style.display = isSameCategory ? 'none' : 'block';
     },
 
 };
