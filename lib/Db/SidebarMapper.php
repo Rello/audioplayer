@@ -50,7 +50,7 @@ class SidebarMapper
         $qb->orderBy('AT.album_id')
             ->addOrderBy('AT.number');
 
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         return $row ?: [];
@@ -63,7 +63,7 @@ class SidebarMapper
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($trackId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         return $row['file_id'] ?? null;
@@ -78,7 +78,7 @@ class SidebarMapper
             ->where($qb->expr()->eq('AN.user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('AP.track_id', $qb->createNamedParameter($trackId)))
             ->orderBy($qb->func()->lower('AN.name'));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $rows = $result->fetchAll();
         $result->closeCursor();
         return $rows;
@@ -90,7 +90,7 @@ class SidebarMapper
         $qb->select('name')
             ->from('audioplayer_artists')
             ->where($qb->expr()->eq('id', $qb->createNamedParameter($artistId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         return $row['name'] ?? null;
@@ -102,7 +102,7 @@ class SidebarMapper
         $qb->select('DISTINCT(`artist_id`) AS artist_id')
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('album_id', $qb->createNamedParameter($albumId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $rows = $result->fetchAll();
         $result->closeCursor();
         return array_column($rows, 'artist_id');

@@ -22,7 +22,7 @@ class PlaylistMapper extends QBMapper
             ->from(self::PLAYLIST_TABLE)
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('name', $qb->createNamedParameter($name)));
-        $stmt = $qb->execute();
+        $stmt = $qb->executeQuery();
         $row = $stmt->fetch();
         $stmt->closeCursor();
         return $row ? (int)$row['id'] : null;
@@ -35,7 +35,7 @@ class PlaylistMapper extends QBMapper
             ->values([
                 'user_id' => $qb->createNamedParameter($userId),
                 'name' => $qb->createNamedParameter($name),
-            ])->execute();
+            ])->executeStatement();
         return (int)$this->db->lastInsertId('*PREFIX*' . self::PLAYLIST_TABLE);
     }
 
@@ -46,7 +46,7 @@ class PlaylistMapper extends QBMapper
             ->set('name', $qb->createNamedParameter($name))
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($id)))
-            ->execute();
+            ->executeStatement();
         return true;
     }
 
@@ -57,7 +57,7 @@ class PlaylistMapper extends QBMapper
             ->from(self::TRACK_TABLE)
             ->where($qb->expr()->eq('playlist_id', $qb->createNamedParameter($playlistId)))
             ->andWhere($qb->expr()->eq('track_id', $qb->createNamedParameter($trackId)));
-        $stmt = $qb->execute();
+        $stmt = $qb->executeQuery();
         $row = $stmt->fetch();
         $stmt->closeCursor();
         return (int)$row['tracks'] > 0;
@@ -71,7 +71,7 @@ class PlaylistMapper extends QBMapper
                 'playlist_id' => $qb->createNamedParameter($playlistId),
                 'track_id' => $qb->createNamedParameter($trackId),
                 'sortorder' => $qb->createNamedParameter($sortOrder),
-            ])->execute();
+            ])->executeStatement();
     }
 
     public function updateTrackOrder(int $playlistId, int $trackId, int $sortOrder): void
@@ -81,7 +81,7 @@ class PlaylistMapper extends QBMapper
             ->set('sortorder', $qb->createNamedParameter($sortOrder))
             ->where($qb->expr()->eq('playlist_id', $qb->createNamedParameter($playlistId)))
             ->andWhere($qb->expr()->eq('track_id', $qb->createNamedParameter($trackId)))
-            ->execute();
+            ->executeStatement();
     }
 
     public function deleteTrack(int $playlistId, int $trackId): void
@@ -90,7 +90,7 @@ class PlaylistMapper extends QBMapper
         $qb->delete(self::TRACK_TABLE)
             ->where($qb->expr()->eq('playlist_id', $qb->createNamedParameter($playlistId)))
             ->andWhere($qb->expr()->eq('track_id', $qb->createNamedParameter($trackId)))
-            ->execute();
+            ->executeStatement();
     }
 
     public function deletePlaylist(int $playlistId, string $userId): void
@@ -99,7 +99,7 @@ class PlaylistMapper extends QBMapper
         $qb->delete(self::PLAYLIST_TABLE)
             ->where($qb->expr()->eq('id', $qb->createNamedParameter($playlistId)))
             ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
-            ->execute();
+            ->executeStatement();
     }
 
     public function deletePlaylistTracks(int $playlistId): void
@@ -107,6 +107,6 @@ class PlaylistMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->delete(self::TRACK_TABLE)
             ->where($qb->expr()->eq('playlist_id', $qb->createNamedParameter($playlistId)))
-            ->execute();
+            ->executeStatement();
     }
 }

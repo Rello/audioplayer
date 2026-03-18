@@ -74,7 +74,7 @@ class Tag
                 ->from('audioplayer_tracks')
                 ->where($sql->expr()->in('file_id', $sql->createNamedParameter($fileChunk, IQueryBuilder::PARAM_INT_ARRAY)))
                 ->andWhere($sql->expr()->eq('user_id', $sql->createNamedParameter($this->userId)));
-            $statement = $sql->execute();
+            $statement = $sql->executeQuery();
             $statementResult = $statement->fetch();
             $result = $result + $statementResult['count'];
             $statement->closeCursor();
@@ -119,7 +119,7 @@ class Tag
             ->where($sql->expr()->in('AT.file_id', $sql->createNamedParameter($allFiles, IQueryBuilder::PARAM_INT_ARRAY)))
             ->andWhere($sql->expr()->eq('AT.user_id', $sql->createNamedParameter($this->userId)));
 
-        $statement = $sql->execute();
+        $statement = $sql->executeQuery();
         $result = $statement->fetchAll();
         $statement->closeCursor();
 
@@ -161,7 +161,7 @@ class Tag
             ->addGroupBy('AA.id')
             ->addGroupBy('AB.name');
 
-        $statement = $sql->execute();
+        $statement = $sql->executeQuery();
         $result = $statement->fetchAll();
         $statement->closeCursor();
 

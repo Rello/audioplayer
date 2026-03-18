@@ -28,7 +28,7 @@ class CategoryMapper
             ->groupBy('AT.artist_id')
             ->addGroupBy('AA.name')
             ->orderBy($qb->func()->lower('AA.name'), 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -43,7 +43,7 @@ class CategoryMapper
             ->from('audioplayer_genre')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->orderBy($qb->func()->lower('name'), 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -57,7 +57,7 @@ class CategoryMapper
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->orderBy('year', 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -72,7 +72,7 @@ class CategoryMapper
             ->from('audioplayer_streams')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->orderBy($qb->func()->lower('title'), 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -87,7 +87,7 @@ class CategoryMapper
             ->from('audioplayer_playlists')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->orderBy($qb->func()->lower('name'), 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -105,7 +105,7 @@ class CategoryMapper
             ->groupBy('FC.fileid')
             ->addGroupBy('FC.name')
             ->orderBy($qb->func()->lower('FC.name'), 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -120,7 +120,7 @@ class CategoryMapper
             ->from('audioplayer_albums', 'AB')
             ->where($qb->expr()->eq('AB.user_id', $qb->createNamedParameter($userId)))
             ->orderBy($qb->func()->lower('AB.name'), 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -136,7 +136,7 @@ class CategoryMapper
             ->join('AB', 'audioplayer_artists', 'AA', $qb->expr()->eq('AB.artist_id', 'AA.id'))
             ->where($qb->expr()->eq('AB.user_id', $qb->createNamedParameter($userId)))
             ->orderBy($qb->func()->lower('AA.name'), 'ASC');
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -170,7 +170,7 @@ class CategoryMapper
         if ($categoryId !== null && isset($columnMap[$category])) {
             $qb->andWhere($qb->expr()->eq($columnMap[$category], $qb->createNamedParameter($categoryId)));
         }
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $rows = $statement->fetchAll();
         $statement->closeCursor();
         return $rows;
@@ -231,7 +231,7 @@ class CategoryMapper
             default:
                 return 0;
         }
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $row = $statement->fetch();
         $statement->closeCursor();
         return (int)($row['count'] ?? 0);
@@ -244,7 +244,7 @@ class CategoryMapper
             $qb->select('name')
                 ->from('audioplayer_artists')
                 ->where($qb->expr()->eq('id', $qb->createNamedParameter($artistId)));
-            $statement = $qb->execute();
+            $statement = $qb->executeQuery();
             $row = $statement->fetch();
             $statement->closeCursor();
             return $row['name'] ?? '';
@@ -253,7 +253,7 @@ class CategoryMapper
         $qb->selectDistinct('artist_id')
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('album_id', $qb->createNamedParameter($albumId)));
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $artist = $statement->fetch();
         $rowCount = $statement->rowCount();
         $statement->closeCursor();
@@ -262,7 +262,7 @@ class CategoryMapper
             $qb->select('name')
                 ->from('audioplayer_artists')
                 ->where($qb->expr()->eq('id', $qb->createNamedParameter($artist['artist_id'])));
-            $statement = $qb->execute();
+            $statement = $qb->executeQuery();
             $row = $statement->fetch();
             $statement->closeCursor();
             return $row['name'] ?? '';

@@ -50,7 +50,7 @@ class MusicMapper
             ->orderBy('AT.album_id', 'ASC')
             ->addOrderBy('AT.number', 'ASC');
 
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $row = $statement->fetch();
         $statement->closeCursor();
 
@@ -65,7 +65,7 @@ class MusicMapper
                 ->from('audioplayer_artists')
                 ->where($qb->expr()->eq('id', $qb->createNamedParameter($artistId)));
 
-            $statement = $qb->execute();
+            $statement = $qb->executeQuery();
             $row = $statement->fetch();
             $statement->closeCursor();
 
@@ -77,7 +77,7 @@ class MusicMapper
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('album_id', $qb->createNamedParameter($albumId)));
 
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $artist = $statement->fetch();
         $rowCount = $statement->rowCount();
         $statement->closeCursor();
@@ -88,7 +88,7 @@ class MusicMapper
                 ->from('audioplayer_artists')
                 ->where($qb->expr()->eq('id', $qb->createNamedParameter($artist['artist_id'])));
 
-            $statement = $qb->execute();
+            $statement = $qb->executeQuery();
             $row = $statement->fetch();
             $statement->closeCursor();
 
@@ -106,7 +106,7 @@ class MusicMapper
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($trackId)));
 
-        $statement = $qb->execute();
+        $statement = $qb->executeQuery();
         $row = $statement->fetch();
         $statement->closeCursor();
 

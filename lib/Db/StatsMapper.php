@@ -20,7 +20,7 @@ class StatsMapper extends QBMapper
             ->from(self::TABLE_NAME)
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('track_id', $qb->createNamedParameter($trackId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $data = $result->fetch();
         $result->closeCursor();
 
@@ -34,7 +34,7 @@ class StatsMapper extends QBMapper
             ->set('playcount', $qb->createNamedParameter($playcount))
             ->set('playtime', $qb->createNamedParameter($playtime))
             ->where($qb->expr()->eq('id', $qb->createNamedParameter($id)));
-        $qb->execute();
+        $qb->executeStatement();
     }
 
     public function insertStat(string $userId, int $trackId, int $playtime, int $playcount): int
@@ -45,7 +45,7 @@ class StatsMapper extends QBMapper
             ->setValue('track_id', $qb->createNamedParameter($trackId))
             ->setValue('playtime', $qb->createNamedParameter($playtime))
             ->setValue('playcount', $qb->createNamedParameter($playcount));
-        $qb->execute();
+        $qb->executeStatement();
 
         return (int)$this->db->lastInsertId(self::TABLE_NAME);
     }

@@ -63,6 +63,6 @@ class Version2102Date20200712213332 extends SimpleMigrationStep
 "de":{"regular":["Hardware Medien Tasten","Besserer Repeat/Shuffle","AIF mime type","Titelposition werden gespeichert"],"admin":["Nur User Features"]}
 }}'),
             ])
-            ->execute();
+            ->executeStatement();
     }
 }

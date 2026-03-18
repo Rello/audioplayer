@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.8.0 - 2026-03-18
+### Fixed 
+- replaced deprecated QueryBuilder `execute()` calls with `executeQuery()`/`executeStatement()
+
 ## 3.7.0 - 2025-11-24
 ### Changed
 - reduced playlist columns for streams

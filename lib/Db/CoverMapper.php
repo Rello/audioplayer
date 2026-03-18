@@ -23,7 +23,7 @@ class CoverMapper extends QBMapper
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($albumId)));
 
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $data = $result->fetch();
         $result->closeCursor();
 

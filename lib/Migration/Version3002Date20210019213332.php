@@ -63,6 +63,6 @@ class Version3002Date20210019213332 extends SimpleMigrationStep
 "de":{"regular":["Collaborative tags support","Dashboard widget"],"admin":["Nur User Features"]}
 }}'),
             ])
-            ->execute();
+            ->executeStatement();
     }
 }

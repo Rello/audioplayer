@@ -39,7 +39,7 @@ class DbMapper
             $qb->select('name')
                 ->from('audioplayer_artists')
                 ->where($qb->expr()->eq('id', $qb->createNamedParameter($artistId)));
-            $result = $qb->execute();
+            $result = $qb->executeQuery();
             $row = $result->fetch();
             $result->closeCursor();
             return $row['name'] ?? '';
@@ -49,7 +49,7 @@ class DbMapper
         $qb->selectDistinct('artist_id')
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('album_id', $qb->createNamedParameter($albumId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $rows = $result->fetchAll();
         $result->closeCursor();
         if (count($rows) === 1) {
@@ -58,7 +58,7 @@ class DbMapper
             $qb->select('name')
                 ->from('audioplayer_artists')
                 ->where($qb->expr()->eq('id', $qb->createNamedParameter($artistId)));
-            $result = $qb->execute();
+            $result = $qb->executeQuery();
             $row = $result->fetch();
             $result->closeCursor();
             return $row['name'] ?? '';
@@ -74,7 +74,7 @@ class DbMapper
             ->from('audioplayer_albums')
             ->where($qb->expr()->like($qb->func()->lower('name'), $qb->createNamedParameter('%' . strtolower(addslashes($searchquery)) . '%')))
             ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $albums = $result->fetchAll();
         $result->closeCursor();
         foreach ($albums as $row) {
@@ -90,7 +90,7 @@ class DbMapper
             ->join('AA', 'audioplayer_tracks', 'AT', $qb->expr()->eq('AA.id', 'AT.artist_id'))
             ->where($qb->expr()->like($qb->func()->lower('AA.name'), $qb->createNamedParameter('%' . strtolower(addslashes($searchquery)) . '%')))
             ->andWhere($qb->expr()->eq('AA.user_id', $qb->createNamedParameter($this->userId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $artists = $result->fetchAll();
         $result->closeCursor();
         foreach ($artists as $row) {
@@ -105,7 +105,7 @@ class DbMapper
             ->from('audioplayer_tracks')
             ->where($qb->expr()->like($qb->func()->lower('title'), $qb->createNamedParameter('%' . strtolower(addslashes($searchquery)) . '%')))
             ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $tracks = $result->fetchAll();
         $result->closeCursor();
         foreach ($tracks as $row) {
@@ -129,51 +129,51 @@ class DbMapper
         $qb = $this->db->getQueryBuilder();
         $qb->delete('audioplayer_tracks')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-            ->execute();
+            ->executeStatement();
 
         $qb = $this->db->getQueryBuilder();
         $qb->delete('audioplayer_artists')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-            ->execute();
+            ->executeStatement();
 
         $qb = $this->db->getQueryBuilder();
         $qb->delete('audioplayer_genre')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-            ->execute();
+            ->executeStatement();
 
         $qb = $this->db->getQueryBuilder();
         $qb->delete('audioplayer_albums')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-            ->execute();
+            ->executeStatement();
 
         $qb = $this->db->getQueryBuilder();
         $qb->select('id')
             ->from('audioplayer_playlists')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $results = $result->fetchAll();
         $result->closeCursor();
         foreach ($results as $row) {
             $qb = $this->db->getQueryBuilder();
             $qb->delete('audioplayer_playlist_tracks')
                 ->where($qb->expr()->eq('playlist_id', $qb->createNamedParameter($row['id'])))
-                ->execute();
+                ->executeStatement();
         }
 
         $qb = $this->db->getQueryBuilder();
         $qb->delete('audioplayer_playlists')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-            ->execute();
+            ->executeStatement();
 
         $qb = $this->db->getQueryBuilder();
         $qb->delete('audioplayer_stats')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-            ->execute();
+            ->executeStatement();
 
         $qb = $this->db->getQueryBuilder();
         $qb->delete('audioplayer_streams')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-            ->execute();
+            ->executeStatement();
 
         $this->db->commit();
 
@@ -204,7 +204,7 @@ class DbMapper
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('file_id', $qb->createNamedParameter($fileId)))
             ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
 
@@ -216,7 +216,7 @@ class DbMapper
             $qb->selectAlias($qb->func()->count('album_id'), 'cnt')
                 ->from('audioplayer_tracks')
                 ->where($qb->expr()->eq('album_id', $qb->createNamedParameter($albumId)));
-            $result = $qb->execute();
+            $result = $qb->executeQuery();
             $countRow = $result->fetch();
             $result->closeCursor();
             if ((int)$countRow['cnt'] === 1) {
@@ -224,26 +224,26 @@ class DbMapper
                 $qb->delete('audioplayer_albums')
                     ->where($qb->expr()->eq('id', $qb->createNamedParameter($albumId)))
                     ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-                    ->execute();
+                    ->executeStatement();
             }
 
             $qb = $this->db->getQueryBuilder();
             $qb->delete('audioplayer_tracks')
                 ->where($qb->expr()->eq('file_id', $qb->createNamedParameter($fileId)))
                 ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-                ->execute();
+                ->executeStatement();
 
             $qb = $this->db->getQueryBuilder();
             $qb->delete('audioplayer_streams')
                 ->where($qb->expr()->eq('file_id', $qb->createNamedParameter($fileId)))
                 ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-                ->execute();
+                ->executeStatement();
 
             $qb = $this->db->getQueryBuilder();
             $qb->select('playlist_id')
                 ->from('audioplayer_playlist_tracks')
                 ->where($qb->expr()->eq('track_id', $qb->createNamedParameter($trackId)));
-            $result = $qb->execute();
+            $result = $qb->executeQuery();
             $row = $result->fetch();
             $result->closeCursor();
 
@@ -253,7 +253,7 @@ class DbMapper
                 $qb->selectAlias($qb->func()->count('playlist_id'), 'cnt')
                     ->from('audioplayer_playlist_tracks')
                     ->where($qb->expr()->eq('playlist_id', $qb->createNamedParameter($playlistId)));
-                $result = $qb->execute();
+                $result = $qb->executeQuery();
                 $countRow = $result->fetch();
                 $result->closeCursor();
                 if ((int)$countRow['cnt'] === 1) {
@@ -261,13 +261,13 @@ class DbMapper
                     $qb->delete('audioplayer_playlists')
                         ->where($qb->expr()->eq('id', $qb->createNamedParameter($playlistId)))
                         ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($this->userId)))
-                        ->execute();
+                        ->executeStatement();
                 }
             }
             $qb = $this->db->getQueryBuilder();
             $qb->delete('audioplayer_playlist_tracks')
                 ->where($qb->expr()->eq('track_id', $qb->createNamedParameter($trackId)))
-                ->execute();
+                ->executeStatement();
         }
 
         return true;
@@ -281,7 +281,7 @@ class DbMapper
             ->set('bgcolor', $qb->createNamedParameter(''))
             ->where($qb->expr()->eq('id', $qb->createNamedParameter($albumId)))
             ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
-            ->execute();
+            ->executeStatement();
         return true;
     }
     public function writeAlbumToDB($userId, $album, $year, $artistId, $parentId): array
@@ -296,7 +296,7 @@ class DbMapper
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('name', $qb->createNamedParameter($album)))
             ->andWhere($qb->expr()->eq('folder_id', $qb->createNamedParameter($parentId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
 
@@ -308,7 +308,7 @@ class DbMapper
                     ->set('artist_id', $qb->createNamedParameter($variousId))
                     ->where($qb->expr()->eq('id', $qb->createNamedParameter($row['id'])))
                     ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
-                    ->execute();
+                    ->executeStatement();
             }
             $insertId = (int)$row['id'];
         } else {
@@ -317,7 +317,7 @@ class DbMapper
                 ->setValue('user_id', $qb->createNamedParameter($userId))
                 ->setValue('name', $qb->createNamedParameter($album))
                 ->setValue('folder_id', $qb->createNamedParameter($parentId))
-                ->execute();
+                ->executeStatement();
             $insertId = (int)$this->db->lastInsertId('*PREFIX*audioplayer_albums');
             if ($artistId) {
                 $qb = $this->db->getQueryBuilder();
@@ -326,14 +326,14 @@ class DbMapper
                     ->set('artist_id', $qb->createNamedParameter($artistId))
                     ->where($qb->expr()->eq('id', $qb->createNamedParameter($insertId)))
                     ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
-                    ->execute();
+                    ->executeStatement();
             } else {
                 $qb = $this->db->getQueryBuilder();
                 $qb->update('audioplayer_albums')
                     ->set('year', $qb->createNamedParameter($year))
                     ->where($qb->expr()->eq('id', $qb->createNamedParameter($insertId)))
                     ->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
-                    ->execute();
+                    ->executeStatement();
             }
             $albumCount = 1;
         }
@@ -372,7 +372,7 @@ class DbMapper
             ->from('audioplayer_artists')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('name', $qb->createNamedParameter($artist)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         if ($row) {
@@ -382,7 +382,7 @@ class DbMapper
         $qb->insert('audioplayer_artists')
             ->setValue('user_id', $qb->createNamedParameter($userId))
             ->setValue('name', $qb->createNamedParameter($artist))
-            ->execute();
+            ->executeStatement();
         return (int)$this->db->lastInsertId('*PREFIX*audioplayer_artists');
     }
 
@@ -410,7 +410,7 @@ class DbMapper
             ->from('audioplayer_genre')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('name', $qb->createNamedParameter($genre)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         if ($row) {
@@ -420,7 +420,7 @@ class DbMapper
         $qb->insert('audioplayer_genre')
             ->setValue('user_id', $qb->createNamedParameter($userId))
             ->setValue('name', $qb->createNamedParameter($genre))
-            ->execute();
+            ->executeStatement();
         return (int)$this->db->lastInsertId('*PREFIX*audioplayer_genre');
     }
 
@@ -445,7 +445,7 @@ class DbMapper
             ->andWhere($qb->expr()->eq('composer', $qb->createNamedParameter($track['composer'])))
             ->andWhere($qb->expr()->eq('subtitle', $qb->createNamedParameter($track['subtitle'])))
             ->andWhere($qb->expr()->eq('comment', $qb->createNamedParameter($track['comment'])));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         if ($row) {
@@ -471,7 +471,7 @@ class DbMapper
                 ->setValue('comment', $qb->createNamedParameter($track['comment']))
                 ->setValue('isrc', $qb->createNamedParameter($track['isrc']))
                 ->setValue('copyright', $qb->createNamedParameter($track['copyright']))
-                ->execute();
+                ->executeStatement();
             $insertId = (int)$this->db->lastInsertId('*PREFIX*audioplayer_tracks');
         }
         return [
@@ -516,7 +516,7 @@ class DbMapper
         }
         $qb->orderBy('AT.album_id', 'ASC')
             ->addOrderBy('AT.number', 'ASC');
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
 
@@ -536,7 +536,7 @@ class DbMapper
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($trackId)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         return (int)($row['file_id'] ?? 0);
@@ -549,7 +549,7 @@ class DbMapper
             ->set($key, $qb->createNamedParameter($value))
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($trackId)))
-            ->execute();
+            ->executeStatement();
         return true;
     }
 
@@ -560,7 +560,7 @@ class DbMapper
             ->from('audioplayer_streams')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('file_id', $qb->createNamedParameter($stream['file_id'])));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         $duplicate = 0;
@@ -574,7 +574,7 @@ class DbMapper
                 ->setValue('title', $qb->createNamedParameter($stream['title']))
                 ->setValue('file_id', $qb->createNamedParameter($stream['file_id']))
                 ->setValue('mimetype', $qb->createNamedParameter($stream['mimetype']))
-                ->execute();
+                ->executeStatement();
             $insertId = (int)$this->db->lastInsertId('*PREFIX*audioplayer_streams');
         }
         return [
@@ -593,7 +593,7 @@ class DbMapper
             ->where($qb->expr()->eq('AN.user_id', $qb->createNamedParameter($userId)))
             ->andWhere($qb->expr()->eq('AP.track_id', $qb->createNamedParameter($trackId)))
             ->orderBy($qb->func()->lower('AN.name'));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $rows = $result->fetchAll();
         $result->closeCursor();
         return $rows;
@@ -610,7 +610,7 @@ class DbMapper
             ->where($qb->expr()->eq('userid', $qb->createNamedParameter($this->userId)))
             ->andWhere($qb->expr()->eq('appid', $qb->createNamedParameter('audioplayer')))
             ->andWhere($qb->expr()->eq('configkey', $qb->createNamedParameter($type)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         if (isset($row['configvalue'])) {
@@ -620,7 +620,7 @@ class DbMapper
                 ->where($qb->expr()->eq('userid', $qb->createNamedParameter($this->userId)))
                 ->andWhere($qb->expr()->eq('appid', $qb->createNamedParameter('audioplayer')))
                 ->andWhere($qb->expr()->eq('configkey', $qb->createNamedParameter($type)))
-                ->execute();
+                ->executeStatement();
             return 'update';
         }
         $qb = $this->db->getQueryBuilder();
@@ -629,7 +629,7 @@ class DbMapper
             ->setValue('appid', $qb->createNamedParameter('audioplayer'))
             ->setValue('configkey', $qb->createNamedParameter($type))
             ->setValue('configvalue', $qb->createNamedParameter($value))
-            ->execute();
+            ->executeStatement();
         return 'insert';
     }
 
@@ -641,7 +641,7 @@ class DbMapper
             ->where($qb->expr()->eq('userid', $qb->createNamedParameter($this->userId)))
             ->andWhere($qb->expr()->eq('appid', $qb->createNamedParameter('audioplayer')))
             ->andWhere($qb->expr()->eq('configkey', $qb->createNamedParameter($type)));
-        $result = $qb->execute();
+        $result = $qb->executeQuery();
         $row = $result->fetch();
         $result->closeCursor();
         return $row['configvalue'] ?? '';
