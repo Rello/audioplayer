@@ -1,7 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Selected" : "Selected",
+    "Selected" : "تاللاندى",
     "Options" : "تاللانما",
     "Album Covers" : "توپلام مۇقاۋىسى",
     "List View" : "تىزىملىك كۆرۈنۈشى",
@@ -61,7 +61,7 @@ OC.L10N.register(
     "ISRC" : "ISRC",
     "Copyright" : "نەشر ھوقۇقى",
     "Add-ons" : "قۇشۇمچە",
-    "Metadata" : "Metadata",
+    "Metadata" : "خام سانلىق-مەلۇمات",
     "Reading data" : "سانلىق مەلۇمات ئوقۇش",
     "Favorited" : "ياقتۇرىدىغان",
     "Favorite" : "يىغقۇچ",

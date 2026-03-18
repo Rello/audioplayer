@@ -7,6 +7,7 @@ OC.L10N.register(
     "New in" : "Novo em",
     "View changelog" : "Ver registo de alterações",
     "Are you sure?" : "Tem a certeza?",
+    "Selection" : "Seleção",
     "Albums" : "Álbuns",
     "Folders" : "Pastas",
     "Tags" : "Etiquetas",
