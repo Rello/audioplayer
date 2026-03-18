@@ -602,15 +602,17 @@ class ScannerController extends Controller
         $output->writeln("Checking audio files to be skipped", OutputInterface::VERBOSITY_VERBOSE);
 
         // get all fileids which are in an excluded folder
-        $stmt = $this->db->prepare('SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)');
-        $stmt->execute(array('.noAudio', '.noaudio'));
-        $results = $stmt->fetchAll();
+        $results = $this->fetchAllPrepared(
+            'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)',
+            array('.noAudio', '.noaudio')
+        );
         $resultExclude = array_column($results, 'fileid');
 
         // get all fileids which are already in the Audio Player Database
-        $stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ');
-        $stmt->execute(array($this->userId));
-        $results = $stmt->fetchAll();
+        $results = $this->fetchAllPrepared(
+            'SELECT `file_id` FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ',
+            array($this->userId)
+        );
         $resultExisting = array_column($results, 'file_id');
 
         foreach ($audios as $key => &$audio) {
@@ -691,15 +693,17 @@ class ScannerController extends Controller
         $output->writeln("Checking stream files to be skipped", OutputInterface::VERBOSITY_VERBOSE);
 
         // get all fileids which are in an excluded folder
-        $stmt = $this->db->prepare('SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)');
-        $stmt->execute(array('.noAudio', '.noaudio'));
-        $results = $stmt->fetchAll();
+        $results = $this->fetchAllPrepared(
+            'SELECT `fileid` from `*PREFIX*filecache` WHERE `parent` IN (SELECT `parent` FROM `*PREFIX*filecache` WHERE `name` = ? OR `name` = ? ORDER BY `fileid` ASC)',
+            array('.noAudio', '.noaudio')
+        );
         $resultExclude = array_column($results, 'fileid');
 
         // get all fileids which are already in the Audio Player Database
-        $stmt = $this->db->prepare('SELECT `file_id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? ');
-        $stmt->execute(array($this->userId));
-        $results = $stmt->fetchAll();
+        $results = $this->fetchAllPrepared(
+            'SELECT `file_id` FROM `*PREFIX*audioplayer_streams` WHERE `user_id` = ? ',
+            array($this->userId)
+        );
         $resultExisting = array_column($results, 'file_id');
 
         foreach ($audios as $key => &$audio) {
@@ -719,6 +723,29 @@ class ScannerController extends Controller
         $this->numOfSongs = $this->numOfSongs + count($audios);
         $output->writeln("Final stream files to be processed: " . count($audios_clean), OutputInterface::VERBOSITY_VERBOSE);
         return $audios;
+    }
+
+    /**
+     * Execute prepared statements across Nextcloud DB wrapper variants.
+     */
+    private function fetchAllPrepared(string $sql, array $params): array
+    {
+        $stmt = $this->db->prepare($sql);
+        if (method_exists($stmt, 'executeQuery')) {
+            $result = $stmt->executeQuery($params);
+            $rows = method_exists($result, 'fetchAllAssociative') ? $result->fetchAllAssociative() : $result->fetchAll();
+            if (method_exists($result, 'closeCursor')) {
+                $result->closeCursor();
+            }
+            return $rows;
+        }
+
+        $stmt->execute($params);
+        $rows = $stmt->fetchAll();
+        if (method_exists($stmt, 'closeCursor')) {
+            $stmt->closeCursor();
+        }
+        return $rows;
     }
 
     /**

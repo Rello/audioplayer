@@ -256,8 +256,19 @@ class CategoryController extends Controller
 
         if (isset($SQL)) {
             $stmt = $this->db->prepare($SQL);
-            $stmt->execute(array($categoryId, $this->userId));
-            $results = $stmt->fetchAll();
+            if (method_exists($stmt, 'executeQuery')) {
+                $result = $stmt->executeQuery(array($categoryId, $this->userId));
+                $results = method_exists($result, 'fetchAllAssociative') ? $result->fetchAllAssociative() : $result->fetchAll();
+                if (method_exists($result, 'closeCursor')) {
+                    $result->closeCursor();
+                }
+            } else {
+                $stmt->execute(array($categoryId, $this->userId));
+                $results = $stmt->fetchAll();
+                if (method_exists($stmt, 'closeCursor')) {
+                    $stmt->closeCursor();
+                }
+            }
         }
 
         $this->tagger = $this->tagManager->load('files');
