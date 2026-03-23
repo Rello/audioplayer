@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "Toutes les éléments de la bibliothèque seront supprimés !",
     "Resetting finished!" : "Réinitialisation terminée !",
     "Scan for audio files" : "Rechercher des fichiers audio ",
+    "Scanning was cancelled." : "L'analyse a été annulée.",
+    "An error occurred while scanning." : "Une erreur est survenue lors de l'analyse.",
     "Title" : "Titre",
     "Subtitle" : "Sous-titre",
     "Artist" : "Artiste",
