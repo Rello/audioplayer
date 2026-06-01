@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Selected" : "Selected",
     "Help" : "Hjelp",
+    "Folders" : "Mapper",
     "Tags" : "Emneord",
     "Saved" : "Lagra",
     "Title" : "Tittel",
