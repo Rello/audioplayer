@@ -12,43 +12,33 @@
  */
  
 namespace OCA\audioplayer\Http;
-use \OC\Files\View;
+
+use OCP\Files\File;
  
 class AudioStream
 {
-    private $path = "";
+    private File $file;
     private $stream;
     private $iStart = -1;
     private $iEnd = -1;
     private $iSize = 0;
-    private $mimeType = 0;
+    private string $mimeType = '';
     private $buffer = 8192;
     private $mTime = 0;
-    private $userView;
-    private $isStream = false;
 
-    public function __construct($filePath, $user = null)
+    public function __construct(File $file)
     {
-
-        if (is_null($user) || $user === '') {
-            $user = \OC::$server->getUserSession()->getUser()->getUID();
-        }
-        $this->userView = new View('/' . $user . '/files/');
-
-        $this->path = $filePath;
-        $fileInfo = $this->userView->getFileInfo($filePath);
-		$this -> mimeType = $fileInfo['mimetype'];
-		$this -> mTime = $fileInfo['mtime'];
-		$this -> iSize = $fileInfo['size'];
-        //\OCP\Util::writeLog('audioplayer','path:'.$filePath,\OCP\Util::DEBUG);
-
+        $this->file = $file;
+		$this -> mimeType = $file->getMimeType();
+		$this -> mTime = $file->getMTime();
+		$this -> iSize = $file->getSize();
 	}
 
 	/**
 	 * Open stream
 	 */
 	private function openStream() {
-		if (!($this -> stream = $this->userView->fopen($this -> path, 'rb'))) {
+		if (!($this -> stream = $this->file->fopen('rb'))) {
 			die('Could not open stream for reading');
 		}
 	}
@@ -67,7 +57,6 @@ class AudioStream
 
 		if (isset($_SERVER['HTTP_RANGE'])) {
 			$c_end = $this -> iEnd;
-			$this->isStream = true;
 		
 			list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 			
@@ -102,7 +91,6 @@ class AudioStream
 			//\OCP\Util::writeLog('audioplayer','SEQ:'.$this->iStart."-".$this->iEnd."/".$this->iSize.'length:'.$length,\OCP\Util::DEBUG);
 		} else {
 			header("Content-Length: " . $this -> iSize);
-			$this->isStream = false;
 			
 		}
 	}
@@ -119,28 +107,21 @@ class AudioStream
 	 * perform the streaming
 	 */
 	private function stream() {
-		if($this->isStream){
-			//$data = stream_get_contents($this -> stream);
-			//echo $data;
-			
-			$curPos = $this->iStart;
-	        set_time_limit(0);
-	        while(!feof($this->stream) && $curPos <= $this->iEnd) {
-	           if( connection_aborted() || connection_status() !== 0 ) {
-				   $this->closeStream();
-			  	}
-			    $bytesToRead = $this->buffer;
-	            if(($curPos+$bytesToRead) > ($this->iEnd + 1)) {
-	                $bytesToRead = $this->iEnd - $curPos + 1;
-	            }
-	            $data = fread($this->stream, $bytesToRead);
-	            echo $data;
-	            flush();
-	            $curPos += strlen($data);
-	        }
-		}else{
-			 \OC\Files\Filesystem::readfile($this -> path);
-		}	
+		$curPos = $this->iStart;
+        set_time_limit(0);
+        while(!feof($this->stream) && $curPos <= $this->iEnd) {
+           if( connection_aborted() || connection_status() !== 0 ) {
+			   $this->closeStream();
+			}
+		    $bytesToRead = $this->buffer;
+            if(($curPos+$bytesToRead) > ($this->iEnd + 1)) {
+                $bytesToRead = $this->iEnd - $curPos + 1;
+            }
+            $data = fread($this->stream, $bytesToRead);
+            echo $data;
+            flush();
+            $curPos += strlen($data);
+        }
 	}
 
 	/**

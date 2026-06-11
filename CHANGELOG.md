@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## 3.9.0 - 2026-06-xx
+### Fixed
+- NC34 compatibility
+- NC31/NC33 compatibility for cover responses, audio streaming, and scanner prepared statement reads
+
 ## 3.8.0 - 2026-03-18
 ### Fixed 
 - NC33: replaced deprecated QueryBuilder `execute()` calls with `executeQuery()`/`executeStatement()

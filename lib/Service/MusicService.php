@@ -3,7 +3,9 @@ namespace OCA\audioplayer\Service;
 
 use OCA\audioplayer\Db\MusicMapper;
 use OCA\audioplayer\Http\AudioStream;
+use OCP\Files\File;
 use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
 use OCP\IL10N;
 use OCP\Share\IManager;
 
@@ -48,7 +50,8 @@ class MusicService
         $share = $this->shareManager->getShareByToken($token);
         $fileOwner = $share->getShareOwner();
 
-        $nodes = $this->rootFolder->getUserFolder($fileOwner)->getById($share->getNodeId());
+        $userFolder = $this->rootFolder->getUserFolder($fileOwner);
+        $nodes = $userFolder->getById($share->getNodeId());
         $pfile = array_shift($nodes);
         $path = $pfile->getPath();
         $segments = explode('/', trim($path, '/'), 3);
@@ -56,22 +59,30 @@ class MusicService
 
         $filenameAudio = $startPath . '/' . rawurldecode($file);
 
-        return new AudioStream($filenameAudio, $fileOwner);
+        $node = $userFolder->get($filenameAudio);
+        if (!$node instanceof File) {
+            throw new NotFoundException($filenameAudio);
+        }
+
+        return new AudioStream($node);
     }
 
     public function createAudioStream(?string $file, ?string $t): AudioStream
     {
+        $userFolder = $this->rootFolder->getUserFolder($this->userId);
         if ($t) {
             $fileId = $this->mapper->getFileId($this->userId, (int)$t);
-            $nodes = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
-            $fileNode = array_shift($nodes);
-            $path = $fileNode->getPath();
-            $segments = explode('/', trim($path, '/'), 3);
-            $filename = $segments[2];
+            $nodes = $userFolder->getById($fileId);
+            $node = array_shift($nodes);
         } else {
             $filename = rawurldecode($file);
+            $node = $userFolder->get($filename);
         }
 
-        return new AudioStream($filename, $this->userId);
+        if (!$node instanceof File) {
+            throw new NotFoundException((string)($file ?? $t));
+        }
+
+        return new AudioStream($node);
     }
 }

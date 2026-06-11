@@ -18,6 +18,7 @@ use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\ISession;
 use OCP\IRequest;
 use OCA\audioplayer\Service\MusicService;
 
@@ -27,11 +28,13 @@ use OCA\audioplayer\Service\MusicService;
 class MusicController extends Controller
 {
     private MusicService $service;
+    private ISession $session;
 
-    public function __construct(string $appName, IRequest $request, MusicService $service)
+    public function __construct(string $appName, IRequest $request, MusicService $service, ISession $session)
     {
         parent::__construct($appName, $request);
         $this->service = $service;
+        $this->session = $session;
     }
 
     /**
@@ -73,7 +76,7 @@ class MusicController extends Controller
         }
 
         $stream = $this->service->createPublicAudioStream($token, $file);
-        \OC::$server->getSession()->close();
+        $this->session->close();
         $stream->start();
     }
 
@@ -86,7 +89,7 @@ class MusicController extends Controller
     public function getAudioStream($file, $t)
     {
         $stream = $this->service->createAudioStream($file, $t);
-        \OC::$server->getSession()->close();
+        $this->session->close();
         $stream->start();
     }
 }

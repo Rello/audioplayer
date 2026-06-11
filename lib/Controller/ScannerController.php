@@ -19,7 +19,6 @@ use TypeError;
 use getID3;
 use getid3_exception;
 use getid3_lib;
-use OC;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
@@ -554,10 +553,7 @@ class ScannerController extends Controller
      */
     private function setScannerVersion()
     {
-        $stmt = $this->db->prepare('SELECT COUNT(`id`) AS `TRACKCOUNT`  FROM `*PREFIX*audioplayer_tracks` WHERE `user_id` = ? ');
-        $stmt->execute(array($this->userId));
-        $row = $stmt->fetch();
-        if ((int)$row['TRACKCOUNT'] === 0) {
+        if ($this->dbMapper->countTracks($this->userId) === 0) {
             $app_version = $this->configManager->getAppValue($this->appName, 'installed_version', '0.0.0');
             $this->configManager->setUserValue($this->userId, $this->appName, 'scanner_version', $app_version);
         }

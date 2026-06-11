@@ -116,6 +116,21 @@ class DbMapper
         }
         return $searchresult;
     }
+
+    public function countTracks(?string $userId = null): int
+    {
+        $qb = $this->db->getQueryBuilder();
+        $qb->selectAlias($qb->func()->count('id'), 'track_count')
+            ->from('audioplayer_tracks')
+            ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId ?? $this->userId)));
+
+        $result = $qb->executeQuery();
+        $count = $result->fetchOne();
+        $result->closeCursor();
+
+        return (int)$count;
+    }
+
     public function resetMediaLibrary(?string $userId = null, $output = null, $hook = null)
     {
         if ($userId !== null) {
