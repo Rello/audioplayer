@@ -5,6 +5,7 @@ OC.L10N.register(
     "Options" : "Iɣewwaṛen",
     "Help" : "Tallalt",
     "New in" : "Amaynut deg",
+    "Selection" : "Tafrant",
     "Folders" : "Ikaramen",
     "Tags" : "Tibzimin",
     "Title" : "Azwel",
