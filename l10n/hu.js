@@ -43,6 +43,8 @@ OC.L10N.register(
     "All library entries will be deleted!" : "Az összes zenetárbejegyzés törölve lesz.",
     "Resetting finished!" : "Visszaállítás befejezve.",
     "Scan for audio files" : "Hangfájlok keresése",
+    "Scanning was cancelled." : "Az átvizsgálást megszakították.",
+    "An error occurred while scanning." : "Hiba történt az átvizsgálás során.",
     "Title" : "Cím",
     "Subtitle" : "Alcím",
     "Artist" : "Előadó",
