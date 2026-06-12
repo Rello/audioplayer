@@ -136,21 +136,27 @@ OCA.Audioplayer.WhatsNew = {
 OCA.Audioplayer.Notification = {
     draggedItem: null,
 
+    closeExistingDialog: function () {
+        if (document.getElementById('analyticsDialogContainer') || document.getElementById('analyticsDialogOverlay')) {
+            OCA.Audioplayer.Notification.dialogClose();
+        }
+    },
+
     info: function (header, text, guidance) {
+        OCA.Audioplayer.Notification.closeExistingDialog();
         document.body.insertAdjacentHTML('beforeend',
             '<div id="analyticsDialogOverlay" class="analyticsDialogDim"></div>'
             + '<div id="analyticsDialogContainer" class="analyticsDialog">'
             + '<a class="analyticsDialogClose" id="analyticsDialogBtnClose"></a>'
-            + '<div class="analyticsDialogHeader"><span class="analyticsDialogHeaderIcon"></span><span id="analyticsDialogHeader" style="margin-left: 10px;">'
-            + header
-            + '</span></div>'
+            + '<div class="analyticsDialogHeader"><span class="analyticsDialogHeaderIcon"></span><span id="analyticsDialogHeader" style="margin-left: 10px;"></span></div>'
             + '<span id="analyticsDialogGuidance" class="userGuidance"></span><br><br>'
             + '<div id="analyticsDialogContent">'
             + '</div>'
-            + '<br><div class="analyticsDialogButtonrow">'
+            + '<div class="analyticsDialogButtonrow">'
             + '<a class="button analyticsPrimary" id="analyticsDialogBtnGo">' + t('analytics', 'OK') + '</a>'
             + '</div></div>'
         );
+        document.getElementById('analyticsDialogHeader').textContent = header;
         document.getElementById('analyticsDialogGuidance').innerHTML = guidance;
         document.getElementById('analyticsDialogContent').innerHTML = text;
         document.getElementById("analyticsDialogBtnClose").addEventListener("click", OCA.Audioplayer.Notification.dialogClose);
@@ -158,21 +164,21 @@ OCA.Audioplayer.Notification = {
     },
 
     confirm: function (header, text, callback) {
+        OCA.Audioplayer.Notification.closeExistingDialog();
         document.body.insertAdjacentHTML('beforeend',
             '<div id="analyticsDialogOverlay" class="analyticsDialogDim"></div>'
             + '<div id="analyticsDialogContainer" class="analyticsDialog">'
             + '<a class="analyticsDialogClose" id="analyticsDialogBtnClose"></a>'
-            + '<div class="analyticsDialogHeader"><span class="analyticsDialogHeaderIcon"></span><span id="analyticsDialogHeader" style="margin-left: 10px;">'
-            + header
-            + '</span></div>'
+            + '<div class="analyticsDialogHeader"><span class="analyticsDialogHeaderIcon"></span><span id="analyticsDialogHeader" style="margin-left: 10px;"></span></div>'
             + '<div id="analyticsDialogContent">'
             + '<div style="text-align:center; padding-top:100px" class="get-metadata icon-loading"></div>'
             + '</div>'
-            + '<br><div class="analyticsDialogButtonrow">'
+            + '<div class="analyticsDialogButtonrow">'
             + '<a class="button" id="analyticsDialogBtnCancel">' + t('analytics', 'Cancel') + '</a>'
             + '<a class="button analyticsPrimary" id="analyticsDialogBtnGo">' + t('analytics', 'OK') + '</a>'
             + '</div></div>'
         );
+        document.getElementById('analyticsDialogHeader').textContent = header;
         document.getElementById('analyticsDialogContent').innerHTML = text;
         document.getElementById("analyticsDialogBtnClose").addEventListener("click", OCA.Audioplayer.Notification.dialogClose);
         document.getElementById("analyticsDialogBtnCancel").addEventListener("click", OCA.Audioplayer.Notification.dialogClose);
@@ -203,32 +209,41 @@ OCA.Audioplayer.Notification = {
      * @param callback Callback function of the OK button
      */
     htmlDialogInitiate: function (header, callback) {
+        OCA.Audioplayer.Notification.closeExistingDialog();
         document.body.insertAdjacentHTML('beforeend',
             '<div id="analyticsDialogOverlay" class="analyticsDialogDim"></div>'
             + '<div id="analyticsDialogContainer" class="analyticsDialog">'
             + '<a class="analyticsDialogClose" id="analyticsDialogBtnClose"></a>'
-            + '<div class="analyticsDialogHeader"><span class="analyticsDialogHeaderIcon"></span><span id="analyticsDialogHeader" style="margin-left: 10px;">'
-            + header
-            + '</span></div>'
+            + '<div class="analyticsDialogHeader"><span class="analyticsDialogHeaderIcon"></span><span id="analyticsDialogHeader" style="margin-left: 10px;"></span></div>'
             + '<span id="analyticsDialogGuidance" class="userGuidance"></span><br><br>'
             + '<div id="analyticsDialogContent">'
             + '<div style="text-align:center; padding-top:100px" class="get-metadata icon-loading"></div>'
             + '</div>'
-            + '<br><div class="analyticsDialogButtonrow">'
+            + '<div class="analyticsDialogButtonrow">'
             + '<a class="button" id="analyticsDialogBtnCancel">' + t('analytics', 'Cancel') + '</a>'
             + '<a class="button analyticsPrimary" id="analyticsDialogBtnGo">' + t('analytics', 'OK') + '</a>'
             + '</div></div>'
         );
 
+        document.getElementById('analyticsDialogHeader').textContent = header;
         document.getElementById("analyticsDialogBtnClose").addEventListener("click", OCA.Audioplayer.Notification.dialogClose);
         document.getElementById("analyticsDialogBtnCancel").addEventListener("click", OCA.Audioplayer.Notification.dialogClose);
-        document.getElementById("analyticsDialogBtnGo").addEventListener("click", callback);
+        if (typeof callback === 'function') {
+            document.getElementById("analyticsDialogBtnGo").addEventListener("click", callback);
+        }
     },
 
     htmlDialogUpdate: function (content, guidance) {
-        document.getElementById('analyticsDialogContent').innerHTML = '';
-        document.getElementById('analyticsDialogContent').appendChild(content);
-        document.getElementById('analyticsDialogGuidance').innerHTML = guidance;
+        const contentElement = document.getElementById('analyticsDialogContent');
+        const guidanceElement = document.getElementById('analyticsDialogGuidance');
+        if (!contentElement || !guidanceElement) {
+            return;
+        }
+
+        contentElement.innerHTML = '';
+        contentElement.appendChild(content);
+        guidanceElement.innerHTML = guidance;
+        guidanceElement.hidden = guidance === '';
     },
 
     htmlDialogUpdateAdd: function (guidance) {
@@ -236,8 +251,8 @@ OCA.Audioplayer.Notification = {
     },
 
     dialogClose: function () {
-        document.getElementById('analyticsDialogContainer').remove();
-        document.getElementById('analyticsDialogOverlay').remove();
+        document.getElementById('analyticsDialogContainer')?.remove();
+        document.getElementById('analyticsDialogOverlay')?.remove();
     },
 
     handleDragStart: function (e) {

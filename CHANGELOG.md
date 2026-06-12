@@ -2,9 +2,14 @@
 All notable changes to the Audio Player project will be documented in this file.
 
 ## 3.9.0 - 2026-06-xx
+### Changed
+- refined the album view song container and arrow styling
+- refreshed modal dialog styling and lifecycle handling
+
 ### Fixed
 - NC34 compatibility
 - NC31/NC33 compatibility for cover responses, audio streaming, and scanner prepared statement reads
+- various fixes
 
 ## 3.8.0 - 2026-03-18
 ### Fixed 

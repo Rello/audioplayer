@@ -11,6 +11,10 @@
  * @copyright 2015 Sebastian Doell
  */
 
+:root {
+    --audioplayer-surface-radius: 5px;
+}
+
 .ap_hidden {
     display: none !important;
 
@@ -146,10 +150,29 @@ i#scanAudiosFirst {
 }
 
 #app-navigation-toggle_alternative {
-    position: fixed;
+    display: block;
     opacity: 1;
     height: 40px;
     width: 45px;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+#sm2-bar-ui.redesign #toggle_alternative {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1000;
+    width: 45px;
+    height: 40px;
+    cursor: pointer;
+    pointer-events: auto;
+    flex: 0 0 45px;
+}
+
+#sm2-bar-ui.redesign.navigation-toggle-hidden #toggle_alternative {
+    display: none;
 }
 
 #app-navigation {
@@ -583,7 +606,10 @@ i#scanAudiosFirst {
 }
 
 #scanAudiosFirst {
+    align-items: center;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
 }
 
 .coverrow {
@@ -634,6 +660,7 @@ i#scanAudiosFirst {
     line-height: 150px;
     text-transform: capitalize;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
 .albumdescr span.artist {
@@ -668,10 +695,11 @@ i#scanAudiosFirst {
     min-height: 200px;
     padding: 5px;
     display: none;
-    background-color: #E6E6E6;
+    background: linear-gradient(180deg, #f7f7f7 0%, #e9e9e9 100%);
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
     color: #555;
-    box-shadow: 0 0 4px #ccc;
-
+    box-shadow: inset 0 2px 0 #fff, 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
 .songcontainer .open-arrow {
@@ -693,7 +721,7 @@ i#scanAudiosFirst {
     margin-left: -6px;
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
-    border-bottom: 11px solid transparent;
+    border-bottom: 11px solid #fff;
     transition: all 0.2s ease-in;
 }
 
@@ -701,7 +729,7 @@ i#scanAudiosFirst {
     margin-left: -7px;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-bottom: 12px solid #E6E6E6;
+    border-bottom: 12px solid #d6d6d6;
     transition: all 0.2s ease-in;
 }
 
@@ -970,6 +998,7 @@ li.activeHover {
 }
 
 #audios_import_dialog {
+    text-align: center;
     padding: 0;
     margin: 0;
 }
@@ -1049,6 +1078,7 @@ li.activeHover {
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 12px;
+    padding-right: 44px;
     line-height: 23px;
 }
 
@@ -1092,8 +1122,29 @@ li.activeHover {
     max-width: calc(100% - 20px);
     overflow: auto;
     position: fixed;
+    border-radius: var(--audioplayer-surface-radius);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     animation: analyticsDialogEnter .25s ease-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.analyticsDialogScan {
+    min-width: 360px;
+    width: auto;
+}
+
+.analyticsDialogScan #analyticsDialogContent {
+    padding: 0 10px;
+}
+
+.analyticsDialogScan .analyticsDialogHeader {
+    margin-bottom: 24px;
+}
+
+.analyticsDialogScan .analyticsDialogButtonrow {
+    justify-content: center;
+    margin-top: 0;
 }
 
 .analyticsDialogDim {
@@ -1109,11 +1160,13 @@ li.activeHover {
 }
 
 .analyticsDialogButtonrow {
+    align-items: center;
     justify-content: flex-end;
     position: relative;
     display: flex;
     gap: 8px;
-    padding-top: 10px;
+    margin-top: auto;
+    padding-top: 16px;
 }
 
 .analyticsDialogButtonrow .button:not(.analyticsPrimary):hover {
@@ -1141,10 +1194,6 @@ li.activeHover {
 }
 
 @media only screen and (max-width: 768px) {
-
-    #app-navigation-toggle_alternative {
-        display: none;
-    }
 
     #app-navigation {
         display: unset;

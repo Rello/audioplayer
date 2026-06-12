@@ -208,6 +208,7 @@ OCA.Audioplayer.Cover = {
             if (jsondata.status === 'success') {
                 document.getElementById('sm2-bar-ui').style.display = 'block';
                 OCA.Audioplayer.Cover.buildCoverRow(jsondata.data);
+                OCA.Audioplayer.UI.resizePlaylistAfterRender();
             }
         });
     },
@@ -381,8 +382,18 @@ OCA.Audioplayer.Cover = {
     },
 
     shiftAlbumsAfter: function (activeAlbum, container) {
-        const shift = container.offsetHeight;
         const activeTop = activeAlbum.offsetTop;
+        const rowGap = 20;
+        let rowOffset = 0;
+
+        document.querySelectorAll('.coverrow .album').forEach(function (album) {
+            if (album.offsetTop > activeTop && rowOffset === 0) {
+                rowOffset = album.offsetTop - activeTop;
+            }
+        });
+
+        const shift = Math.max(0, container.offsetHeight - rowOffset + rowGap);
+
         document.querySelectorAll('.coverrow .album').forEach(function (album) {
             if (album.offsetTop > activeTop) {
                 album.style.transform = 'translate(0,' + shift + 'px)';
@@ -559,6 +570,7 @@ OCA.Audioplayer.Category = {
                 document.getElementById('playlist-container').dataset.playlist = category + '-' + categoryItem;
                 document.querySelector('.albumwrapper').appendChild(itemRows);
                 OCA.Audioplayer.UI.addTitleClickEvents(callback);
+                OCA.Audioplayer.UI.resizePlaylistAfterRender();
 
                 if (albumDirectPlay === true) {
                     document.querySelector('.albumwrapper').getElementsByClassName('title')[0].click();
@@ -917,10 +929,19 @@ OCA.Audioplayer.UI = {
     },
 
     resizePlaylist: function () {
-        document.getElementById('sm2-bar-ui').style.width = document.getElementById('playlist-container').offsetWidth + 'px';
+        OCA.Audioplayer.UI.updateNavigationToggle();
+        let playlistContainer = document.getElementById('playlist-container');
+        let appContent = document.getElementById('app-content');
+        let playerWidth = playlistContainer.offsetWidth;
+
+        if (appContent) {
+            playerWidth = Math.max(playerWidth, appContent.getBoundingClientRect().width);
+        }
+
+        document.getElementById('sm2-bar-ui').style.width = playerWidth + 'px';
         document.getElementById('progressBar').width = document.getElementById('progressContainer').offsetWidth;
         if (document.querySelector('.is-active')) {
-            if (document.getElementById('playlist-container').offsetWidth < 850) {
+            if (playlistContainer.offsetWidth < 850) {
                 document.querySelector('.songcontainer-cover').classList.add('cover-small');
                 document.querySelector('.songlist').classList.add('one-column');
                 document.querySelector('.songlist').classList.remove('two-column');
@@ -930,6 +951,41 @@ OCA.Audioplayer.UI = {
                 document.querySelector('.songlist').classList.add('two-column');
             }
         }
+    },
+
+    resizePlaylistAfterRender: function () {
+        window.requestAnimationFrame(function () {
+            OCA.Audioplayer.UI.resizePlaylist();
+            window.setTimeout(OCA.Audioplayer.UI.resizePlaylist, 250);
+        });
+    },
+
+    isNavigationVisible: function () {
+        let navigation = document.getElementById('app-navigation');
+        if (!navigation) {
+            return false;
+        }
+
+        let navigationStyle = window.getComputedStyle(navigation);
+        let navigationRect = navigation.getBoundingClientRect();
+        return !navigation.classList.contains('hidden') &&
+            navigationStyle.display !== 'none' &&
+            navigationStyle.visibility !== 'hidden' &&
+            navigationRect.width > 0 &&
+            navigationRect.height > 0 &&
+            navigationRect.right > 0 &&
+            navigationRect.left < window.innerWidth &&
+            navigationRect.bottom > 0 &&
+            navigationRect.top < window.innerHeight;
+    },
+
+    updateNavigationToggle: function () {
+        let player = document.getElementById('sm2-bar-ui');
+        if (!player) {
+            return;
+        }
+
+        player.classList.toggle('navigation-toggle-hidden', OCA.Audioplayer.UI.isNavigationVisible());
     },
 
     indicateFavorite: function (fav, id) {
@@ -1498,17 +1554,26 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('app-content').addEventListener('appresized', OCA.Audioplayer.UI.resizePlaylist);
     document.getElementById('view-toggle').addEventListener('click', OCA.Audioplayer.UI.handleViewToggleClicked);
 
-    document.getElementById('app-navigation-toggle_alternative').addEventListener('click', function () {
+    let toggleNavigation = function (event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
         document.getElementById('newPlaylist').classList.add('ap_hidden');
-        if (document.getElementById('app-navigation').classList.contains('hidden')) {
+        if (!OCA.Audioplayer.UI.isNavigationVisible()) {
             document.getElementById('app-navigation').classList.remove('hidden');
             OCA.Audioplayer.Backend.setUserValue('navigation', 'true');
         } else {
             document.getElementById('app-navigation').classList.add('hidden');
             OCA.Audioplayer.Backend.setUserValue('navigation', 'false');
         }
+        OCA.Audioplayer.UI.updateNavigationToggle();
         OCA.Audioplayer.UI.resizePlaylist();
-    });
+    };
+
+    document.getElementById('toggle_alternative').addEventListener('pointerdown', toggleNavigation);
+    document.getElementById('app-navigation-toggle_alternative').addEventListener('pointerdown', toggleNavigation);
 
     document.getElementById('category_selector').addEventListener('change', function () {
         document.getElementById('newPlaylist').classList.add('ap_hidden');
@@ -1523,10 +1588,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.header-title').addEventListener('click', OCA.Audioplayer.UI.sortPlaylist);
     document.querySelector('.header-artist').addEventListener('click', OCA.Audioplayer.UI.sortPlaylist);
     document.querySelector('.header-album').addEventListener('click', OCA.Audioplayer.UI.sortPlaylist);
+    OCA.Audioplayer.UI.updateNavigationToggle();
 
     window.setTimeout(function () {
-        document.getElementById('sm2-bar-ui').style.width = document.getElementById('playlist-container').offsetWidth + 'px';
-        document.getElementById('progressBar').width = document.getElementById('progressContainer').offsetWidth;
+        OCA.Audioplayer.UI.resizePlaylist();
     }, 1000);
 
     let resizeTimeout;

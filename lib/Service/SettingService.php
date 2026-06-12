@@ -59,7 +59,7 @@ class SettingService {
 
 	public function setFavorite(string $userId, int $trackId, string $isFavorite) {
 		$tagger = $this->tagManager->load('files');
-		$fileId = $this->dbMapper->getFileId($this->userId, $trackId);
+		$fileId = $this->dbMapper->getFileId($userId, $trackId);
 
 		if ($isFavorite === 'true') {
 			return $tagger->removeFromFavorites($fileId);

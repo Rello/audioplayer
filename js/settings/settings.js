@@ -111,12 +111,7 @@ OCA.Audioplayer.Settings = {
             t('analytics', 'Scan for audio files'),
             null
         );
-
-        // remove the normal dialog buttons as this dialog is special
-        let analyticsElem = document.querySelector('.analyticsDialogButtonrow');
-        if (analyticsElem) {
-            analyticsElem.remove();
-        }
+        document.getElementById('analyticsDialogContainer').classList.add('analyticsDialogScan');
 
         const container = document.importNode(document.getElementById('templateScanDialog').content, true);
 
@@ -142,12 +137,25 @@ OCA.Audioplayer.Settings = {
             container,
             ''
         );
+        OCA.Audioplayer.Settings.setScanDialogAction('audios_import_submit');
 
+    },
+
+    setScanDialogAction: function (buttonId) {
+        let footer = document.querySelector('.analyticsDialogButtonrow');
+        let button = document.getElementById(buttonId);
+        if (!footer || !button) {
+            return;
+        }
+
+        footer.innerHTML = '';
+        footer.appendChild(button);
     },
 
     startScan: function () {
         document.getElementById('audios_import_form').style.display = 'none';
         document.getElementById('audios_import_process').style.display = 'block';
+        OCA.Audioplayer.Settings.setScanDialogAction('audios_import_progress_cancel');
 
         let scanUrl = OC.generateUrl('apps/audioplayer/scanforaudiofiles');
         OCA.Audioplayer.Settings.scanId = OC.requestToken + '-' + Date.now();
@@ -261,6 +269,7 @@ OCA.Audioplayer.Settings = {
         if (messageNew && data && data.message) {
             messageNew.innerHTML = data.message;
         }
+        OCA.Audioplayer.Settings.setScanDialogAction('audios_import_done_close');
         OCA.Audioplayer.Core.init();
     },
 
@@ -273,6 +282,7 @@ OCA.Audioplayer.Settings = {
         if (msg) {
             msg.textContent = data && data.message ? data.message : t('audioplayer', 'Scanning was cancelled.');
         }
+        OCA.Audioplayer.Settings.setScanDialogAction('audios_import_done_close');
     },
 
     scanError: function (data) {
@@ -285,10 +295,28 @@ OCA.Audioplayer.Settings = {
         }
         document.getElementById('audios_import_process').style.display = 'none';
         document.getElementById('audios_import_done').style.display = 'block';
+        OCA.Audioplayer.Settings.setScanDialogAction('audios_import_done_close');
+    },
+
+    initSidebarSettingsToggle: function () {
+        let button = document.getElementById('appSettingsButton');
+        let content = document.getElementById('app-settings-content');
+        if (!button || !content) {
+            return;
+        }
+
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            let isHidden = window.getComputedStyle(content).display === 'none';
+            content.style.display = isHidden ? 'block' : 'none';
+            button.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+        });
     },
 };
 
 document.addEventListener('DOMContentLoaded', function () {
+    OCA.Audioplayer.Settings.initSidebarSettingsToggle();
 
     let settings_link;
     if (OC.config.versionstring.split('.')[0] <= 10) //ownCloud

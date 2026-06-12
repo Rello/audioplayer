@@ -15,7 +15,7 @@
 
     <div class="bd sm2-main-controls">
 
-        <div id="toggle_alternative" class="menu-icon" hidden>
+        <div id="toggle_alternative" class="menu-icon">
             <div id="app-navigation-toggle_alternative" class="icon-menu"></div>
         </div>
 

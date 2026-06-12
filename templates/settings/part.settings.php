@@ -12,9 +12,10 @@
 
 <div id="app-settings">
     <div id="app-settings-header">
-        <button name="app settings"  id="appSettingsButton"
+        <button name="app settings" type="button" id="appSettingsButton"
                 class="settings-button"
-                data-apps-slide-toggle="#app-settings-content">
+                aria-expanded="false"
+                aria-controls="app-settings-content">
             <?php p($l->t('Settings')); ?>
         </button>
     </div>

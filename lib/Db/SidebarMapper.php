@@ -99,7 +99,7 @@ class SidebarMapper
     public function getDistinctArtistIdsForAlbum(int $albumId): array
     {
         $qb = $this->db->getQueryBuilder();
-        $qb->select('DISTINCT(`artist_id`) AS artist_id')
+        $qb->selectDistinct('artist_id')
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('album_id', $qb->createNamedParameter($albumId)));
         $result = $qb->executeQuery();
