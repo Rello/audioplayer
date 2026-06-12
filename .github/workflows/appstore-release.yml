@@ -1,0 +1,105 @@
+# SPDX-FileCopyrightText: 2026 Marcel Scherello
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Build and publish appstore release
+
+on:
+  release:
+    types: [published]
+
+env:
+  APP_NAME: audioplayer
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout app repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_sqlite,zip
+          coverage: none
+
+      - name: Set up local Nextcloud server
+        uses: SMillerDev/nextcloud-actions/setup-nextcloud@fae87e29aa7cdf1ea0b8033c67f60e75b10be2cd
+        with:
+          version: stable29
+          database-type: sqlite
+          cron: false
+
+      - name: Install app into local Nextcloud server
+        uses: SMillerDev/nextcloud-actions/setup-nextcloud-app@fae87e29aa7cdf1ea0b8033c67f60e75b10be2cd
+        with:
+          app: ${{ env.APP_NAME }}
+          check-code: false
+
+      - name: Create signing key and certificate files from secrets
+        run: |
+          cert_dir="$HOME/.nextcloud/certificates"
+          mkdir -p "$cert_dir"
+          printf '%s\n' "$APP_PRIVATE_KEY" > "$cert_dir/${APP_NAME}.key"
+          printf '%s\n' "$APP_PUBLIC_CRT" > "$cert_dir/${APP_NAME}.crt"
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_PUBLIC_CRT: ${{ secrets.APP_PUBLIC_CRT }}
+
+      - name: Build signed app archive (without Makefile)
+        run: |
+          cert_dir="$HOME/.nextcloud/certificates"
+          app_dir="../server/apps/${APP_NAME}"
+          signed_dir="$app_dir/build/artifacts/appstore/sign/${APP_NAME}"
+
+          mkdir -p "$signed_dir"
+          rsync -a --delete \
+            --exclude '.DS_Store' \
+            --exclude '.eslintrc.js' \
+            --exclude '.gitignore' \
+            --exclude '.l10nignore' \
+            --exclude '.phpunit.result.cache' \
+            --exclude '.git' \
+            --exclude '.tx' \
+            --exclude '.tx' \
+            --exclude 'phpunit.xml' \
+            --exclude '.github' \
+            --exclude 'sample_data' \
+            --exclude 'screenshots' \
+            --exclude 'tests' \
+            --exclude 'tests/ui-artifacts' \
+            ./ "$signed_dir/"
+
+          cd "$app_dir"
+          php ../../occ integrity:sign-app \
+            --privateKey="$cert_dir/${APP_NAME}.key" \
+            --certificate="$cert_dir/${APP_NAME}.crt" \
+            --path="$signed_dir"
+
+          tar -C "build/artifacts/appstore/sign" \
+            -czf "build/artifacts/appstore/${APP_NAME}.tar.gz" \
+            "${APP_NAME}"
+
+      - name: Upload app tarball to release
+        id: attach_to_release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ../server/apps/${{ env.APP_NAME }}/build/artifacts/appstore/${{ env.APP_NAME }}.tar.gz
+          asset_name: ${{ env.APP_NAME }}.tar.gz
+          tag: ${{ github.ref }}
+          overwrite: true
+
+      - name: Upload app to Nextcloud appstore
+        uses: R0Wi/nextcloud-appstore-push-action@v1.0.4
+        with:
+          app_name: ${{ env.APP_NAME }}
+          appstore_token: ${{ secrets.APPSTORE_TOKEN }}
+          download_url: ${{ steps.attach_to_release.outputs.browser_download_url }}
+          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          nightly: ${{ github.event.release.prerelease }}
+
+      - name: Remove local key material
+        if: always()
+        run: rm -f "$HOME/.nextcloud/certificates/${APP_NAME}.key" "$HOME/.nextcloud/certificates/${APP_NAME}.crt"
