@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## 3.9.0 - 2026-06-xx
+## 3.9.0 - 2026-06-12
 ### Changed
 - refined the album view song container and arrow styling
 - refreshed modal dialog styling and lifecycle handling
