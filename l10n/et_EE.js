@@ -2,7 +2,7 @@ OC.L10N.register(
     "audioplayer",
     {
     "Selected" : "Valitud",
-    "Options" : "Sätted",
+    "Options" : "Valikud",
     "Album Covers" : "Kaanepildid",
     "List View" : "Loendivaade",
     "Welcome to" : "Tere tulemast, see on ",
