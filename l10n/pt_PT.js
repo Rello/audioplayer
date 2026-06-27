@@ -11,6 +11,7 @@ OC.L10N.register(
     "Albums" : "Álbuns",
     "Folders" : "Pastas",
     "Tags" : "Etiquetas",
+    "Years" : "Anos",
     "Saved" : "Guardado",
     "Title" : "Título",
     "Subtitle" : "Subtítulo ",
