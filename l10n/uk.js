@@ -40,7 +40,7 @@ OC.L10N.register(
     "Select a single folder with audio files" : "Виберіть один каталог з аудіофайлами ",
     "Invalid path!" : "Помилковий шлях!",
     "Reset library" : "Скидання бібліотеки",
-    "All library entries will be deleted!" : "Всі записи бібліотеки будуть видалені!",
+    "All library entries will be deleted!" : "Всі записи бібліотеки буде вилучено!",
     "Resetting finished!" : "Перезавантаження завершено!",
     "Scan for audio files" : "Сканування аудіофайлів",
     "Title" : "Назва",
