@@ -31,7 +31,7 @@ class Scan extends Command {
 		parent::__construct();
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$this
 			->setName('audioplayer:scan')
 			->setDescription('scan for new audio files; use -v for debugging')
@@ -39,7 +39,7 @@ class Scan extends Command {
 			->addOption('all', 'a', InputOption::VALUE_NONE, 'scan all audio files of all known users');
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output) {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		# restrict the verbosity level to VERBOSITY_VERY_VERBOSE
 		if ($output->getVerbosity() > OutputInterface::VERBOSITY_VERY_VERBOSE) {
 			$output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE);
