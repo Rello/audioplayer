@@ -9,6 +9,7 @@ OC.L10N.register(
     "Help" : "Ajutor",
     "New in" : "Nou în",
     "View changelog" : "Vezi changelog",
+    "Selection" : "Selecție",
     "Folders" : "Director",
     "Tags" : "Etichete",
     "Saved" : "Salvat",
