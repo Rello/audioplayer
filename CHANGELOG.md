@@ -2,6 +2,9 @@
 All notable changes to the Audio Player project will be documented in this file.
 
 ## 3.9.0 - 2026-06-12
+### Added
+- added a root-level Hello World test file for commit-message testing
+
 ### Changed
 - refined the album view song container and arrow styling
 - refreshed modal dialog styling and lifecycle handling
