@@ -1784,9 +1784,9 @@ class getid3_lib
 			$commandline = 'ls -l '.escapeshellarg($path).' | awk \'{print $5}\'';
 		}
 		if (isset($commandline)) {
-			$output = trim(`$commandline`);
-			if (ctype_digit($output)) {
-				$filesize = (float) $output;
+			$stat = stat($path);
+			if ($stat !== false) {
+				$filesize = (float) $stat['size'];
 			}
 		}
 		return $filesize;
