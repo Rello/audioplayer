@@ -6,6 +6,7 @@ OC.L10N.register(
     "Tags" : "Tags",
     "Saved" : "Gespäichert",
     "Title" : "Titel",
+    "Subtitle" : "Ënnertitel",
     "Favorited" : "Favoriséiert",
     "Favorite" : "Favorit",
     "Remove" : "Läschen",
