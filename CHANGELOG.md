@@ -3,6 +3,7 @@ All notable changes to the Audio Player project will be documented in this file.
 
 ## Unreleased
 ### Fixed
+- restore the mobile navigation menu toggle and edge swipe on Nextcloud 34 #660
 - backported getID3's shell_exec() replacement for the deprecated backtick operator
 
 ## 3.9.0 - 2026-06-12

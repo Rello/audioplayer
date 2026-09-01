@@ -175,6 +175,10 @@ i#scanAudiosFirst {
     display: none;
 }
 
+#sm2-bar-ui.uses-core-navigation-toggle #toggle_alternative {
+    display: none;
+}
+
 #app-navigation {
     overflow-y: auto;
 }
@@ -1229,6 +1233,21 @@ li.activeHover {
 
     #individual-playlist li {
         font-weight: 200;
+    }
+}
+
+@media only screen and (max-width: 1023px) {
+
+    #app-navigation.audioplayer-navigation-open {
+        transform: translateX(0);
+    }
+
+    #app-navigation.audioplayer-navigation-open + #app-content {
+        transform: translateX(300px);
+    }
+
+    #sm2-bar-ui.redesign.navigation-toggle-hidden #toggle_alternative {
+        display: flex;
     }
 }
 

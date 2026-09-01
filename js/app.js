@@ -979,6 +979,28 @@ OCA.Audioplayer.UI = {
             navigationRect.top < window.innerHeight;
     },
 
+    isMobileNavigation: function () {
+        return window.matchMedia('(width < 1024px)').matches;
+    },
+
+    usesCustomMobileNavigation: function () {
+        return OCA.Audioplayer.UI.isMobileNavigation() &&
+            parseInt(OC.config.versionstring.split('.')[0], 10) >= 34;
+    },
+
+    setNavigationVisible: function (visible) {
+        let navigation = document.getElementById('app-navigation');
+        if (!navigation) {
+            return;
+        }
+
+        navigation.classList.toggle('hidden', !visible);
+        navigation.classList.toggle('audioplayer-navigation-open', visible && OCA.Audioplayer.UI.usesCustomMobileNavigation());
+        OCA.Audioplayer.Backend.setUserValue('navigation', visible ? 'true' : 'false');
+        OCA.Audioplayer.UI.updateNavigationToggle();
+        OCA.Audioplayer.UI.resizePlaylist();
+    },
+
     updateNavigationToggle: function () {
         let player = document.getElementById('sm2-bar-ui');
         if (!player) {
@@ -1551,6 +1573,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //OCA.Audioplayer.Backend.whatsnew();
 
     OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist, 250);
+    if (parseInt(OC.config.versionstring.split('.')[0], 10) < 34) {
+        document.getElementById('sm2-bar-ui').classList.add('uses-core-navigation-toggle');
+    }
     document.getElementById('app-content').addEventListener('appresized', OCA.Audioplayer.UI.resizePlaylist);
     document.getElementById('view-toggle').addEventListener('click', OCA.Audioplayer.UI.handleViewToggleClicked);
 
@@ -1561,19 +1586,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         document.getElementById('newPlaylist').classList.add('ap_hidden');
-        if (!OCA.Audioplayer.UI.isNavigationVisible()) {
-            document.getElementById('app-navigation').classList.remove('hidden');
-            OCA.Audioplayer.Backend.setUserValue('navigation', 'true');
-        } else {
-            document.getElementById('app-navigation').classList.add('hidden');
-            OCA.Audioplayer.Backend.setUserValue('navigation', 'false');
-        }
-        OCA.Audioplayer.UI.updateNavigationToggle();
-        OCA.Audioplayer.UI.resizePlaylist();
+        OCA.Audioplayer.UI.setNavigationVisible(!OCA.Audioplayer.UI.isNavigationVisible());
     };
 
     document.getElementById('toggle_alternative').addEventListener('pointerdown', toggleNavigation);
     document.getElementById('app-navigation-toggle_alternative').addEventListener('pointerdown', toggleNavigation);
+
+    let swipeStartX = null;
+    document.addEventListener('pointerdown', function (event) {
+        if (!OCA.Audioplayer.UI.usesCustomMobileNavigation() || event.pointerType === 'mouse') {
+            return;
+        }
+
+        if (event.clientX <= 24 || OCA.Audioplayer.UI.isNavigationVisible()) {
+            swipeStartX = event.clientX;
+        }
+    });
+    document.addEventListener('pointerup', function (event) {
+        if (swipeStartX === null) {
+            return;
+        }
+
+        let swipeDistance = event.clientX - swipeStartX;
+        swipeStartX = null;
+        if (swipeDistance > 50) {
+            OCA.Audioplayer.UI.setNavigationVisible(true);
+        } else if (swipeDistance < -50 && OCA.Audioplayer.UI.isNavigationVisible()) {
+            OCA.Audioplayer.UI.setNavigationVisible(false);
+        }
+    });
+    document.addEventListener('pointercancel', function () {
+        swipeStartX = null;
+    });
 
     document.getElementById('category_selector').addEventListener('change', function () {
         document.getElementById('newPlaylist').classList.add('ap_hidden');
