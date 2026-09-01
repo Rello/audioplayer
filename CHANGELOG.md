@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
+## Unreleased
+### Fixed
+- backported getID3's shell_exec() replacement for the deprecated backtick operator
+
 ## 3.9.0 - 2026-06-12
 ### Changed
 - refined the album view song container and arrow styling
