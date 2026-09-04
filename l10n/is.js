@@ -30,6 +30,7 @@ OC.L10N.register(
     "URL" : "Slóð",
     "Unknown" : "Óþekkt",
     "Favorites" : "Eftirlæti",
+    "Volume" : "Hljóðstyrkur",
     "Playback speed" : "Hraði afspilunar",
     "Settings" : "Stillingar",
     "Advanced Settings" : "Ítarlegar stillingar"
