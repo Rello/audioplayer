@@ -10,7 +10,7 @@
  * @copyright 2015 Sebastian Doell
  */
 
-/* global OCA, OCP, OC, t, generateUrl, _, MediaMetadata, Sonos, playSonos, requestToken */
+/* global OCA, OCP, OC, t, generateUrl, MediaMetadata, Sonos, playSonos, requestToken */
 'use strict';
 
 if (!OCA.Audioplayer) {
@@ -1094,7 +1094,7 @@ OCA.Audioplayer.UI = {
             menuItem.appendChild(icon);
 
             text = document.createElement('p');
-            text.innerHTML = _.escape(whatsNewTextItem);
+            text.textContent = whatsNewTextItem;
             menuItem.appendChild(text);
 
             item.appendChild(menuItem);
@@ -1102,7 +1102,7 @@ OCA.Audioplayer.UI = {
         }
 
         // Changelog URL
-        if (!_.isUndefined(data['changelogURL'])) {
+        if (data['changelogURL'] !== undefined) {
             item = document.createElement('li');
 
             menuItem = document.createElement('a');
@@ -1572,7 +1572,12 @@ document.addEventListener('DOMContentLoaded', function () {
     OCA.Audioplayer.Playlists.initPlaylistActions();
     //OCA.Audioplayer.Backend.whatsnew();
 
-    OCA.Audioplayer.UI.resizePlaylist = _.debounce(OCA.Audioplayer.UI.resizePlaylist, 250);
+    const resizePlaylist = OCA.Audioplayer.UI.resizePlaylist;
+    let resizePlaylistTimeout;
+    OCA.Audioplayer.UI.resizePlaylist = function (...args) {
+        clearTimeout(resizePlaylistTimeout);
+        resizePlaylistTimeout = setTimeout(() => resizePlaylist.apply(this, args), 250);
+    };
     if (parseInt(OC.config.versionstring.split('.')[0], 10) < 34) {
         document.getElementById('sm2-bar-ui').classList.add('uses-core-navigation-toggle');
     }

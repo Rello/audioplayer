@@ -98,7 +98,7 @@ OCA.Audioplayer.WhatsNew = {
             menuItem.appendChild(icon)
 
             text = document.createElement('p')
-            text.innerHTML = _.escape(whatsNewTextItem)
+            text.textContent = whatsNewTextItem
             menuItem.appendChild(text)
 
             item.appendChild(menuItem)
@@ -106,7 +106,7 @@ OCA.Audioplayer.WhatsNew = {
         }
 
         // Changelog URL
-        if (!_.isUndefined(data['changelogURL'])) {
+        if (data['changelogURL'] !== undefined) {
             item = document.createElement('li')
 
             menuItem = document.createElement('a')

@@ -2,7 +2,11 @@
 All notable changes to the Audio Player project will be documented in this file.
 
 ## Unreleased
+
+## 3.9.1 - 2026-09-26
 ### Fixed
+- restore console command compatibility with Nextcloud 35 #662 #663
+- replace the removed global Underscore dependency to restore initialization, sidebar tabs, and release highlights on Nextcloud 35
 - restore the mobile navigation menu toggle and edge swipe on Nextcloud 34 #660
 - backported getID3's shell_exec() replacement for the deprecated backtick operator
 

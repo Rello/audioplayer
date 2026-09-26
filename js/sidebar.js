@@ -117,9 +117,7 @@ OCA.Audioplayer.Sidebar = {
             action: OCA.Audioplayer.Sidebar.playlistsTabView,
         });
 
-        let items = _.map(OCA.Audioplayer.Sidebar.sidebar_tabs, function (item) {
-            return item;
-        });
+        let items = Object.values(OCA.Audioplayer.Sidebar.sidebar_tabs);
         items.sort(OCA.Audioplayer.Sidebar.sortByName);
 
         for (tab in items) {
