@@ -52,8 +52,9 @@ class CategoryMapper
     public function getYears(string $userId): array
     {
         $qb = $this->db->getQueryBuilder();
-        $qb->selectDistinct('year', 'id')
-            ->addSelect('year', 'name')
+        $qb->selectDistinct('year')
+            ->selectAlias('year', 'id')
+            ->selectAlias('year', 'name')
             ->from('audioplayer_tracks')
             ->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
             ->orderBy('year', 'ASC');

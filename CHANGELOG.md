@@ -1,7 +1,17 @@
 # Changelog
 All notable changes to the Audio Player project will be documented in this file.
 
-## Unreleased
+## 4.0.0 - 2026-09-27
+### Changed
+- Complete interface redesign with permanent library navigation, refreshed cover and list views, streamlined playlists, and a new player and sidebar layout
+- Improved mobile experience with responsive navigation and an expandable compact player
+- Improved keyboard accessibility for playback, library navigation, favorites, and dialogs
+
+### Added
+- Guided music-folder setup and a searchable track picker for playlists
+
+### Fixed
+- Restored browsing by year and cover playback in Favorites
 
 ## 3.9.1 - 2026-09-26
 ### Fixed

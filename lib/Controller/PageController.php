@@ -76,6 +76,8 @@ class PageController extends Controller
         $csp->addAllowedMediaDomain('*'); //required for external m3u playlists
         $response->setContentSecurityPolicy($csp);
         $response->setParams([
+            'audioplayer_libraryView' => $this->configManager->getUserValue($this->userId, $this->appName, 'libraryView'),
+            'audioplayer_path' => $this->configManager->getUserValue($this->userId, $this->appName, 'path'),
             'audioplayer_navigationShown' => $this->configManager->getUserValue($this->userId, $this->appName, 'navigation'),
             'audioplayer_view' => $this->configManager->getUserValue($this->userId, $this->appName, 'view') ?: 'pictures',
             'audioplayer_volume' => $this->configManager->getUserValue($this->userId, $this->appName, 'volume') ?: '1',

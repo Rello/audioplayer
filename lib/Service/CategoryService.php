@@ -31,7 +31,7 @@ class CategoryService {
 	public function getCategoryItems(string $category): array {
 		$items = [];
 		$totalCount = $this->mapper->getTrackCount('Title', '', $this->userId);
-		if ($totalCount === 0) {return $items;}
+		if ($totalCount === 0 && $category !== 'Stream') {return $items;}
 
 		switch ($category) {
 			case 'Artist':
@@ -53,14 +53,15 @@ class CategoryService {
 				$items[] = ['id' => 'X4', 'name' => $this->l10n->t('Most Played')];
 				$items[] = ['id' => 'X5', 'name' => $this->l10n->t('50 Random Tracks')];
 				$items[] = ['id' => '', 'name' => ' '];
+				$items = array_merge($items, $this->mapper->getPlaylists($this->userId));
+				break;
+			case 'Stream':
 				foreach ($this->mapper->getStreams($this->userId) as $row) {
 					unset($row['lower']);
 					$row['id'] = 'S' . $row['id'];
 					$items[] = $row;
 				}
-				$items[] = ['id' => '', 'name' => ' '];
-				$items = array_merge($items, $this->mapper->getPlaylists($this->userId));
-				break;
+				return $items;
 			case 'Folder':
 				$items = $this->mapper->getFolders($this->userId);
 				break;

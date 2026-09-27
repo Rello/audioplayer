@@ -2,56 +2,34 @@
 
 [![Version](https://img.shields.io/github/release/rello/audioplayer.svg)](https://github.com/rello/audioplayer/blob/master/CHANGELOG.md)&#160;[![License: AGPLv3](https://img.shields.io/badge/license-AGPLv3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)&#160;&#160;&#160;[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/Rello) [![Bitcoin](https://img.shields.io/badge/donate-Bitcoin-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)&#160;[![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://github.com/rello/audioplayer/wiki/donate)
 
-A music player supporting FLAC, MP3, MP4, AIF, and streaming formats, featuring playlist capabilities and SONOS integration.
+A music player for Nextcloud with playlists, online streams, and SONOS integration.
 
 <img src="https://raw.githubusercontent.com/rello/audioplayer/master/screenshots/audioplayer_screen.png" alt="Main" width="350" height="261" title="Main view with navigation, settings, and sidebar.">
 
 ## Features
-- Gapless play
+
+- Gapless playback
 - Waveform visualization
-- Cover or list view by categories
+- Browse your library by category in cover or list view
 - Optimized for large audio collections
 - Smart lists and playlists
-- Stream URLs
-- Favorites, search, and collaborative tag integration
-- Specify media folder with exclude option
-- Hardware media keys and Chrome/Android/macOS integration
-- [SONOS player](https://github.com/rello/audioplayer_sonos) via add-on
-- Genre classification using the Recognize app with machine learning
+- Online radio and other audio streams
+- Favorites, search, and collaborative tags
+- Choose a music folder and exclude folders from scanning
+- Hardware media keys and system media controls
+- SONOS playback through the [SONOS add-on](https://github.com/rello/audioplayer_sonos)
+- Automatic genre classification with the Recognize app
 
-### Supported Formats
-FLAC, MP3, MP4, Ogg Vorbis, Opus, AIF, AAC and Waveform Audio as well as M3U and PLS playlist files. Playing the formats supported by Audio Player depends on the browser. [More information…](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types)
+### Supported formats
 
-### Supported Browsers
-Latest versions of Google Chrome, Mozilla Firefox, and Apple Safari. Mobile browsers and Microsoft Edge may be restricted in functionality and handling. Microsoft Internet Explorer is not supported.
-
-### Languages
-English (en), Czech (cs), German (Informal) (de), German (Formal) (de_DE), Polish (pl), Russian (ru), Turkish (tr), Ukrainian (uk), Chinese (Simplified) (zh_CN), Chinese (Traditional) (zh_TW), French (fr), Spain (es)
-
+FLAC, MP3, MP4, Ogg Vorbis, Opus, AIF, AAC, and WAV audio files, plus M3U and PLS playlists. Playback support depends on your browser. See [audio formats and MIME types](https://github.com/rello/audioplayer/wiki/audio-files-and-mime-types) for details.
 ## Documentation
-- [User Documentation](https://github.com/rello/audioplayer/wiki#user-documentation)
-- [Admin Documentation](https://github.com/rello/audioplayer/wiki#admin-documentation)
 
-## Installation
-- [Nextcloud App Store](https://apps.nextcloud.com/apps/audioplayer)
-- [ownCloud Marketplace](https://marketplace.owncloud.com/apps/audioplayer)
-
-### Add-ons
-- [ID3 editor](https://github.com/rello/audioplayer_editor "ID3 editor for the Audio Player") – ID3 editor for the Audio Player
-- [SONOS](https://github.com/rello/audioplayer_sonos "SONOS Playback for the Audio Player") – SONOS Playback for the Audio Player
-
-### APIs
-- Eventdispatcher 'OCA\audioplayer::loadAdditionalScripts'
-- Sidebar Tabs: OCA.Audioplayer.Sidebar.registerSidebarTab
-
-### Frontend assets
-- Interface controls use bundled SVG icons stored in `img/icons/`.
+- [User guide](https://github.com/rello/audioplayer/wiki#user-documentation)
+- [Administration guide](https://github.com/rello/audioplayer/wiki#admin-documentation)
 
 ## Maintainers
-- [Marcel Scherello](https://github.com/rello) (author, project leader)
+
+- [Marcel Scherello](https://github.com/rello) (author and project lead)
 - [r4sas](https://github.com/r4sas)
 - [Martin Matous](https://github.com/mmatous)
-
-## Support
-Thank you to PhpStorm from [JetBrains](https://www.jetbrains.com/?from=AudioPlayerforNextcloudandownCloud) <br>
-<img src="https://raw.githubusercontent.com/rello/data/master/screenshots/jetbrains.svg" alt="Main" width="100" title="Analytics">

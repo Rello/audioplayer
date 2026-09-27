@@ -99,7 +99,7 @@ class CategoryController extends Controller
     #[NoAdminRequired]
     public function getCategoryItemCovers($category, $categoryId)
     {
-        $items = $this->categoryService->getCategoryItemCovers($category, $categoryId);
+        $items = $this->categoryService->getCategoryItemCovers($category, $categoryId === '' ? null : $categoryId);
         if (empty($items)) {
             return new JSONResponse(['status' => 'nodata']);
         }

@@ -13,18 +13,12 @@
 <div class="detailFileInfoContainer">
     <div class="mainFileInfoView">
         <div class="thumbnailContainer">
-            <a id="sidebarThumbnail" href="#" class="thumbnail">
+            <div id="sidebarThumbnail" class="thumbnail" aria-hidden="true">
                 <div class="stretcher"></div>
-            </a>
+            </div>
         </div>
         <div class="file-details-container">
             <div class="fileName"><h3 id="sidebarTitle"></h3>
-            </div>
-            <div class="file-details ellipsis">
-                <a class="action action-favorite favorite permanent">
-                    <span id="sidebarFavorite" class="icon icon-star" title=""></span>
-                </a>
-                <span id="sidebarMime"></span>
             </div>
         </div>
     </div>
@@ -33,4 +27,4 @@
 </ul>
 <div class="tabsContainer">
 </div>
-<a id="sidebarClose" class="close icon-close" href="#"></a>
+<button type="button" id="sidebarClose" class="close icon-close" aria-label="<?php p($l->t('Close')); ?>"></button>

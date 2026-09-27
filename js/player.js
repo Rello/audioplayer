@@ -38,8 +38,9 @@ OCA.Audioplayer.Player = {
      * set the track to the selected track index and check if it can be played at all
      * play/pause when the same track is selected or get a new one
      */
-    setTrack: function () {
+    setTrack: function (autoplay = true) {
         let trackToPlay = this.html5Audio.children[this.currentTrackIndex];
+        if (!trackToPlay) return;
         if (trackToPlay.dataset.canPlayMime === 'false') {
             this.next();
             return;
@@ -57,6 +58,10 @@ OCA.Audioplayer.Player = {
                 this.playbackSpeeds[this.currentSpeedIndex];
         } else if (!OCA.Audioplayer.Player.isPaused()) {
             OCA.Audioplayer.Player.stop();
+            return;
+        }
+        if (!autoplay) {
+            document.getElementById('playerPlay').classList.replace('icon-loading', 'play-pause');
             return;
         }
         let playPromise = this.html5Audio.play();
@@ -108,6 +113,7 @@ OCA.Audioplayer.Player = {
     next: function () {
         OCA.Audioplayer.Player.trackStartPosition = 0;
         OCA.Audioplayer.Player.lastSavedSecond = 0;
+        if (!OCA.Audioplayer.Player.html5Audio.childElementCount) return;
         let numberOfTracks = OCA.Audioplayer.Player.html5Audio.childElementCount - 1; // index stats counting at 0
         if (OCA.Audioplayer.Player.currentTrackIndex === numberOfTracks) {
             // if end is reached, either stop or restart the list
@@ -127,6 +133,7 @@ OCA.Audioplayer.Player = {
      * select the previous track and play it
      */
     prev: function () {
+        if (!OCA.Audioplayer.Player.html5Audio.childElementCount) return;
         OCA.Audioplayer.Player.trackStartPosition = 0;
         OCA.Audioplayer.Player.lastSavedSecond = 0;
         if (OCA.Audioplayer.Player.currentTrackIndex === 0) {
@@ -191,6 +198,8 @@ OCA.Audioplayer.Player = {
             repeatIcon.style.removeProperty('opacity');
             OCA.Audioplayer.Backend.setUserValue('repeat', 'none');
         }
+        repeatIcon.setAttribute('aria-pressed', String(OCA.Audioplayer.Player.repeatMode !== null));
+        repeatIcon.setAttribute('aria-label', OCA.Audioplayer.Player.repeatMode === 'single' ? t('audioplayer', 'Repeat track') : OCA.Audioplayer.Player.repeatMode === 'list' ? t('audioplayer', 'Repeat playlist') : t('audioplayer', 'Repeat off'));
     },
 
     /**
@@ -198,6 +207,7 @@ OCA.Audioplayer.Player = {
      */
     shuffleTitles: function () {
         let playlist = document.getElementById('individual-playlist');
+        if (!playlist || !playlist.children.length) return;
 
         let classes = document.getElementById('view-toggle').classList;
         if (classes.contains('icon-toggle-pictures')) {
@@ -219,7 +229,8 @@ OCA.Audioplayer.Player = {
     /**
      * set the playback volume
      */
-    setVolume: function () {
+    setVolume: function (value) {
+        if (typeof value === 'number') document.getElementById('playerVolume').value = value;
         OCA.Audioplayer.Player.html5Audio.volume = document.getElementById('playerVolume').value;
         OCA.Audioplayer.Backend.setUserValue('volume', document.getElementById('playerVolume').value   );
     },
@@ -336,6 +347,12 @@ OCA.Audioplayer.Player = {
             // document.getElementById('endTime').innerHTML = '';
         }
 
+        const seek = document.getElementById('playerSeek');
+        const duration = Number.isFinite(player.duration) ? player.duration : 0;
+        seek.disabled = duration <= 0;
+        seek.max = duration;
+        seek.value = player.currentTime || 0;
+        seek.setAttribute('aria-valuetext', OCA.Audioplayer.Player.formatSecondsToTime(player.currentTime) + ' / ' + OCA.Audioplayer.Player.formatSecondsToTime(duration));
         let elapsedTime = Math.round(player.currentTime);
         if (canvas.getContext) {
             let ctx = canvas.getContext('2d');
@@ -370,9 +387,8 @@ OCA.Audioplayer.Player = {
         if (Math.round(positionCalc) === positionCalc && positionCalc !== 0 && OCA.Audioplayer.Player.lastSavedSecond !== positionCalc) {
             OCA.Audioplayer.Player.lastSavedSecond = Math.round(positionCalc);
             OCA.Audioplayer.Backend.setUserValue('category',
-                OCA.Audioplayer.Core.CategorySelectors[0]
-                + '-' + OCA.Audioplayer.Core.CategorySelectors[1]
-                + '-' + OCA.Audioplayer.Core.CategorySelectors[2]
+                OCA.Audioplayer.Player.currentPlaylist
+                + '-' + OCA.Audioplayer.Player.currentTrackId
                 + '-' + Math.round(player.currentTime)
             );
         }
@@ -386,7 +402,9 @@ OCA.Audioplayer.Player = {
     seek: function (evt) {
         let progressbar = document.getElementById('progressBar');
         let player = OCA.Audioplayer.Player.html5Audio;
-        player.currentTime = player.duration * (evt.offsetX / progressbar.clientWidth);
+        if (Number.isFinite(player.duration) && player.duration > 0 && progressbar.clientWidth) {
+            player.currentTime = player.duration * (evt.offsetX / progressbar.clientWidth);
+        }
     },
 
     /**
@@ -415,19 +433,33 @@ OCA.Audioplayer.Player = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
+    OCA.Audioplayer.Player.html5Audio.addEventListener('loadedmetadata', OCA.Audioplayer.Player.initProgressBar);
+    OCA.Audioplayer.Player.html5Audio.addEventListener('play', function () { document.getElementById('playerPlay').setAttribute('aria-label', t('audioplayer', 'Pause')); });
+    OCA.Audioplayer.Player.html5Audio.addEventListener('pause', function () { document.getElementById('playerPlay').setAttribute('aria-label', t('audioplayer', 'Play')); });
     OCA.Audioplayer.Player.html5Audio.addEventListener('ended', OCA.Audioplayer.Player.next, true);
     OCA.Audioplayer.Player.html5Audio.addEventListener('timeupdate', OCA.Audioplayer.Player.initProgressBar, true);
     OCA.Audioplayer.Player.html5Audio.addEventListener('canplay', function () {
         if (parseInt(OCA.Audioplayer.Player.trackStartPosition) !== 0 && OCA.Audioplayer.Player.html5Audio.currentTime !== parseInt(OCA.Audioplayer.Player.trackStartPosition)) {
+            const wasPaused = OCA.Audioplayer.Player.html5Audio.paused;
             OCA.Audioplayer.Player.html5Audio.pause();
             OCA.Audioplayer.Player.html5Audio.currentTime = parseInt(OCA.Audioplayer.Player.trackStartPosition);
-            OCA.Audioplayer.Player.html5Audio.play();
+            if (!wasPaused) OCA.Audioplayer.Player.html5Audio.play();
             OCA.Audioplayer.Player.trackStartPosition = 0; // reset the time to avoid that is being set again and again when seeking
         }
         document.getElementById('startTime').style.visibility = 'visible';
         document.getElementById('endTime').style.visibility = 'visible';
     });
 
+    document.getElementById('playerSeek').addEventListener('input', function () {
+        if (Number.isFinite(OCA.Audioplayer.Player.html5Audio.duration)) {
+            OCA.Audioplayer.Player.html5Audio.currentTime = Number(this.value);
+        }
+    });
+    document.getElementById('playerExpand').addEventListener('click', function () {
+        const expanded = document.getElementById('sm2-bar-ui').classList.toggle('ap-expanded');
+        this.setAttribute('aria-expanded', String(expanded));
+        this.setAttribute('aria-label', expanded ? t('audioplayer', 'Collapse player') : t('audioplayer', 'Expand player'));
+    });
     document.getElementById('progressBar').addEventListener('click', OCA.Audioplayer.Player.seek, true);
     document.getElementById('playerPrev').addEventListener('click', OCA.Audioplayer.Player.prev);
     document.getElementById('playerNext').addEventListener('click', OCA.Audioplayer.Player.next);

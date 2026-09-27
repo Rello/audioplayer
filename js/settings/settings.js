@@ -115,6 +115,12 @@ OCA.Audioplayer.Settings = {
 
         const container = document.importNode(document.getElementById('templateScanDialog').content, true);
 
+        const folderLabel = container.getElementById('scanFolderPath');
+        folderLabel.textContent = document.getElementById('libraryPath').value || t('audioplayer', 'All Nextcloud files');
+        container.getElementById('scanChooseFolder').addEventListener('click', function () {
+            OCA.Audioplayer.Library.chooseFolder(folderLabel);
+        });
+
         let closeBtn = container.getElementById('audios_import_done_close');
         closeBtn.addEventListener('click', function () {
             OCA.Audioplayer.Settings.percentage = 0;
@@ -168,6 +174,7 @@ OCA.Audioplayer.Settings = {
                 return response.json();
             })
             .then(function (data) {
+                if (!document.getElementById('audios_import_process')) return;
                 if (data.status === 'error') {
                     OCA.Audioplayer.Settings.scanError(data);
                 } else if (data.status === 'stopped') {
@@ -177,7 +184,7 @@ OCA.Audioplayer.Settings = {
                 }
             })
             .catch(function (error) {
-                OCA.Audioplayer.Settings.scanError({message: error.message});
+                if (document.getElementById('audios_import_process')) OCA.Audioplayer.Settings.scanError({message: error.message});
             });
     },
 
@@ -304,6 +311,13 @@ OCA.Audioplayer.Settings = {
         if (!button || !content) {
             return;
         }
+
+        content.addEventListener('click', function (event) {
+            if (event.target.closest('a, button, input, label')) {
+                content.style.display = 'none';
+                button.setAttribute('aria-expanded', 'false');
+            }
+        }, true);
 
         button.addEventListener('click', function (event) {
             event.preventDefault();

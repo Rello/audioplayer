@@ -28,6 +28,7 @@ if (!OCA.Audioplayer.Sidebar) {
  */
 OCA.Audioplayer.Sidebar = {
     sidebar_tabs: {},
+    previousFocus: null,
 
     showSidebar: function (evt, trkid) {
         let trackid;
@@ -57,13 +58,7 @@ OCA.Audioplayer.Sidebar = {
                 sidebarThumbnail.setAttribute('style', 'display: none;');
             }
 
-            document.getElementById('sidebarTitle').innerHTML = decodeURIComponent(trackData.getAttribute('data-title'));
-            document.getElementById('sidebarMime').innerHTML = trackData.getAttribute('data-mimetype');
-
-            let starIcon = document.getElementById('sidebarFavorite');
-            starIcon.dataset.trackid = trackid;
-            starIcon.removeEventListener('click', OCA.Audioplayer.Core.toggleFavorite);
-            starIcon.addEventListener('click', OCA.Audioplayer.Core.toggleFavorite);
+            document.getElementById('sidebarTitle').textContent = trackData.getAttribute('data-title');
 
             if (appsidebar.dataset.trackid === '') {
                 document.getElementById('sidebarClose').addEventListener('click', OCA.Audioplayer.Sidebar.hideSidebar);
@@ -79,6 +74,10 @@ OCA.Audioplayer.Sidebar = {
                 selectedHeader.click();
             }
             OCA.Audioplayer.UI.resizePlaylist();
+            if (evt && evt.detail === 0) {
+                OCA.Audioplayer.Sidebar.previousFocus = document.activeElement;
+                document.getElementById('sidebarClose').focus();
+            }
         }
     },
 
@@ -124,7 +123,8 @@ OCA.Audioplayer.Sidebar = {
             let li = document.createElement('li');
             li.classList.add('tabHeader');
             li.setAttribute('id', items[tab].id);
-            li.setAttribute('tabindex', items[tab].tabindex);
+            li.setAttribute('tabindex', '0');
+            li.setAttribute('role', 'button');
             let atag = document.createElement('a');
             atag.textContent = items[tab].name;
             atag.title = items[tab].name;
@@ -142,6 +142,9 @@ OCA.Audioplayer.Sidebar = {
     hideSidebar: function () {
         document.getElementById('app-sidebar').dataset.trackid = '';
         document.getElementById('app-sidebar').classList.add('disappear');
+        const previous = OCA.Audioplayer.Sidebar.previousFocus;
+        if (previous && previous.isConnected) previous.focus();
+        OCA.Audioplayer.Sidebar.previousFocus = null;
         document.querySelector('.tabHeaders').innerHTML = '';
         document.querySelector('.tabsContainer').innerHTML = '';
         OCA.Audioplayer.UI.resizePlaylist();
@@ -162,6 +165,7 @@ OCA.Audioplayer.Sidebar = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
+            if (document.getElementById('app-sidebar').dataset.trackid !== trackid || !document.getElementById('metadataTabView')) return;
             let table;
             if (jsondata.status === 'success') {
                 table = document.createElement('div');
@@ -188,19 +192,7 @@ OCA.Audioplayer.Sidebar = {
                     tablerow.appendChild(tablekey);
                     tablerow.appendChild(tablevalue);
 
-                    if (m === 'fav' && audioinfo[m] === 't') {
-                        let fav = document.getElementById('sidebarFavorite');
-                        fav.classList.remove('icon-star');
-                        fav.classList.add('icon-starred');
-                        fav.title = t('files', 'Favorited');
-                        audioinfo[m] = '';
-                    } else if (m === 'fav') {
-                        let fav2 = document.getElementById('sidebarFavorite');
-                        fav2.classList.remove('icon-starred');
-                        fav2.classList.add('icon-star');
-                        fav2.title = t('files', 'Favorite');
-                        audioinfo[m] = '';
-                    }
+                    if (m === 'fav') continue;
 
                     if (audioinfo[m] !== '' && audioinfo[m] !== null) {
                         table.appendChild(tablerow);
@@ -238,6 +230,7 @@ OCA.Audioplayer.Sidebar = {
         ).then(function (response) {
             return response.json();
         }).then(function (jsondata) {
+            if (document.getElementById('app-sidebar').dataset.trackid !== trackid || !document.getElementById('playlistsTabView')) return;
             let table;
             if (jsondata.status === 'success') {
                 table = document.createElement('div');
@@ -250,6 +243,9 @@ OCA.Audioplayer.Sidebar = {
                     spanDelete.dataset.listid = audioinfo[m].playlist_id;
                     spanDelete.dataset.trackid = trackid;
                     spanDelete.title = t('audioplayer', 'Remove');
+                    spanDelete.setAttribute('role', 'button');
+                    spanDelete.tabIndex = 0;
+                    spanDelete.setAttribute('aria-label', t('audioplayer', 'Remove') + ': ' + audioinfo[m].name);
                     spanDelete.addEventListener('click', OCA.Audioplayer.Playlists.removeSongFromPlaylist);
 
                     let tablerow = document.createElement('div');
