@@ -1,6 +1,8 @@
 { "translations": {
+    "Play" : "Luaje",
     "Selected" : "Selected",
-    "Help" : "Ndihmë",
+    "Favorite" : "I/E Preferuar",
+    "Pause" : "Pauzë",
     "New in" : "I ri në ",
     "Folders" : "Dosjet",
     "Tags" : "Etiketat",
@@ -8,14 +10,16 @@
     "Title" : "Titulli",
     "Subtitle" : "Nëntitull",
     "Copyright" : "Të drejta kopjimi",
-    "Favorited" : "U kalua e parapëlqyer",
-    "Favorite" : "I/E Preferuar",
     "Remove" : "Hiq",
+    "Close" : "Mbylleni",
     "OK" : "OK",
     "Cancel" : "Anullo",
     "URL" : "Url",
     "Unknown" : "I/E panjohur",
     "Favorites" : "Favorites",
+    "View" : "Shiko",
+    "More" : "Më tepër",
+    "Save" : "Save",
     "Settings" : "Rregullimet",
     "Advanced Settings" : "Cilësime të Avancuara"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

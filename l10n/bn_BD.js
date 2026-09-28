@@ -1,18 +1,20 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Play" : "বাজাও",
     "Selected" : "Selected",
-    "Help" : "সহায়িকা",
+    "Favorite" : "প্রিয়জন",
     "Tags" : "ট্যাগ",
     "Saved" : "সংরক্ষণ করা হলো",
     "Title" : "শিরোনাম",
-    "Favorite" : "প্রিয়জন",
     "Remove" : "অপসারণ",
+    "Close" : "বন্ধ",
     "OK" : "OK",
     "Cancel" : "বাতির",
     "URL" : "URL",
     "Unknown" : "অজানা",
     "Favorites" : "প্রিয়জন",
+    "More" : "আরও",
     "Settings" : "সেটিংস"
 },
 "nplurals=2; plural=(n != 1);");

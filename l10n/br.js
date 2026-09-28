@@ -1,8 +1,9 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Play" : "C'hoari",
     "Selected" : "Choazet",
-    "Help" : "Skoazell",
+    "Favorite" : "Pennrollañ",
     "New in" : "Nevez e-bazh",
     "View changelog" : "Sellet al levr kemmoù",
     "Tags" : "Klavioù",
@@ -10,14 +11,14 @@ OC.L10N.register(
     "Saved" : "Enrollet",
     "Title" : "Titl",
     "Copyright" : "Copyright",
-    "Favorited" : "Lakaet evel pennroll",
-    "Favorite" : "Pennrollañ",
     "Remove" : "Lemel",
+    "Close" : "Serriñ",
     "OK" : "OK",
     "Cancel" : "Nullañ",
     "URL" : "URL",
     "Unknown" : "Dianv",
     "Favorites" : "Pennrolloù",
+    "More" : "Muioc'h",
     "Settings" : "Arventennoù",
     "Advanced Settings" : "Arventennoù araokaet"
 },

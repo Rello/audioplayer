@@ -1,7 +1,8 @@
 { "translations": {
     "Selected" : "Selected",
+    "Favorite" : "Дуртай",
     "Options" : "Сонголтууд",
-    "Help" : "Туслах",
+    "Pause" : "–¢“Ø—Ä –∑–æ–≥—Å–æ–æ—Ö",
     "New in" : "Шинээр",
     "View changelog" : "Өөрчлөлтийн бүртгэл харах",
     "Selection" : "Сонголт",
@@ -17,14 +18,16 @@
     "Length" : "Урт",
     "Copyright" : "Зохиогчийн эрх",
     "Metadata" : "Мета өгөгдөл",
-    "Favorited" : "Онцолсон",
-    "Favorite" : "Дуртай",
     "Remove" : "Устгах",
+    "Close" : "‚Äì‚Ä¢‚Äì‚àû‚Äì‚àû‚Äî√ñ",
     "OK" : "OK",
     "Cancel" : "болиулах",
     "URL" : "URL",
     "Unknown" : "Үл танигдах зүйл",
     "Favorites" : "Онцолсон",
+    "View" : "Харах",
+    "More" : "Дэлгэрэнгүй",
+    "Save" : "–•–∞–¥–≥–∞–ª–∞—Ö",
     "Settings" : "Тохиргоо"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

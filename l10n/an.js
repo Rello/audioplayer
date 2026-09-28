@@ -1,10 +1,8 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Help" : "Aduya",
-    "Tags" : "Etiquetas",
-    "Favorited" : "Favoritos",
     "Favorite" : "Favorito",
+    "Tags" : "Etiquetas",
     "OK" : "OK",
     "Cancel" : "Cancelar",
     "Favorites" : "Favoritos",

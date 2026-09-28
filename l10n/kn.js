@@ -2,16 +2,16 @@ OC.L10N.register(
     "audioplayer",
     {
     "Selected" : "Selected",
-    "Help" : "﻿ಸಹಾಯ",
+    "Favorite" : "ಅಚ್ಚುಮೆಚ್ಚಿನ",
     "Saved" : "﻿ಉಳಿಸಿದ",
     "Title" : "ಶೀರ್ಷಿಕೆ",
-    "Favorited" : "ಅಚ್ಚುಮೆಚ್ಚಿನವು",
-    "Favorite" : "ಅಚ್ಚುಮೆಚ್ಚಿನ",
     "Remove" : "ತೆಗೆದುಹಾಕಿ",
+    "Close" : "ಮುಚ್ಚು",
     "OK" : "OK",
     "Cancel" : "﻿ರದ್ದು",
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
     "Favorites" : "ಅಚ್ಚುಮೆಚ್ಚಿನ",
+    "Save" : "Save",
     "Settings" : "ಆಯ್ಕೆ"
 },
 "nplurals=2; plural=(n > 1);");

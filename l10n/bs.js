@@ -1,12 +1,12 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Play" : "Play",
     "Selected" : "Selected",
-    "Help" : "Pomoć",
+    "Favorite" : "Favorit",
     "Saved" : "Spremljeno",
     "Title" : "Naslov",
-    "Favorited" : "Favorizovano",
-    "Favorite" : "Favorit",
+    "Close" : "Zatvori",
     "OK" : "OK",
     "Cancel" : "Otkaži",
     "URL" : "Url",

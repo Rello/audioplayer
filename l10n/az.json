@@ -1,16 +1,15 @@
 { "translations": {
     "Selected" : "Selected",
-    "Help" : "Kömək",
+    "Favorite" : "İstəkli",
     "Tags" : "Işarələr",
     "Saved" : "Saxlanıldı",
     "Title" : "Başlıq",
-    "Favorited" : "İstəkləndi",
-    "Favorite" : "İstəkli",
     "Remove" : "Sil",
     "OK" : "OK",
     "Cancel" : "Dayandır",
     "URL" : "URL",
     "Favorites" : "Sevimlilər",
+    "More" : "Yenə",
     "Settings" : "Quraşdırmalar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

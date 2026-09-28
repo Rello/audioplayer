@@ -1,20 +1,22 @@
 { "translations": {
     "Selected" : "Seleccionado",
-    "Help" : "Ayuda",
+    "Favorite" : "Hacer favorito",
+    "Pause" : "Pausar",
     "Are you sure?" : "¿Estás seguro?",
     "Folders" : "Carpetas",
     "Tags" : "Etiquetas",
     "Saved" : "Guardado",
     "Title" : "Título",
     "Copyright" : "Derechos de autor",
-    "Favorited" : "Marcado como favorito",
-    "Favorite" : "Hacer favorito",
     "Remove" : "Eliminar",
+    "Close" : "Cerrar",
     "OK" : "OK",
     "Cancel" : "Cancelar",
     "URL" : "URL",
     "Unknown" : "Desconocido",
     "Favorites" : "Favoritos",
+    "More" : "Mas",
+    "Save" : "Save",
     "Settings" : "Ajustes"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

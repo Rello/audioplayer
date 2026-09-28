@@ -1,13 +1,13 @@
 OC.L10N.register(
     "audioplayer",
     {
-    "Help" : "مرسته",
-    "Tags" : "نښکې",
-    "Favorited" : "په نښه شو",
     "Favorite" : "په نښه شوی",
+    "Tags" : "نښکې",
+    "Close" : "بندول",
     "OK" : "OK",
     "Cancel" : "پرېښول",
     "Favorites" : "په نښه شوي",
+    "Save" : "Save",
     "Settings" : "سمونې"
 },
 "nplurals=2; plural=(n != 1);");
