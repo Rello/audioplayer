@@ -4,6 +4,7 @@ OC.L10N.register(
     "Play" : "C'hoari",
     "Selected" : "Choazet",
     "Favorite" : "Pennrollañ",
+    "Pause" : "Ehanañ",
     "New in" : "Nevez e-bazh",
     "View changelog" : "Sellet al levr kemmoù",
     "Tags" : "Klavioù",
@@ -18,7 +19,9 @@ OC.L10N.register(
     "URL" : "URL",
     "Unknown" : "Dianv",
     "Favorites" : "Pennrolloù",
+    "View" : "Gwell",
     "More" : "Muioc'h",
+    "Save" : "Save",
     "Settings" : "Arventennoù",
     "Advanced Settings" : "Arventennoù araokaet"
 },

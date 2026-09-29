@@ -93,6 +93,7 @@ OC.L10N.register(
     "Playback speed" : "Rychlost přehrávání",
     "More" : "Další",
     "Create new playlist" : "Vytvořit nový seznam stop k přehrávání",
+    "Save" : "Uložit",
     "Volume up" : "Zesílit hlasitost",
     "Volume down" : "Zeslabit hlasitost",
     "Settings" : "Nastavení",

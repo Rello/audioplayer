@@ -91,6 +91,7 @@ OC.L10N.register(
     "Playback speed" : "Velocitat de reproducció",
     "More" : "Més",
     "Create new playlist" : "Crea una llista de reproducció nova",
+    "Save" : "Desa",
     "Volume up" : "Apuja el volum",
     "Volume down" : "Abaixa el volum",
     "Settings" : "Paràmetres",

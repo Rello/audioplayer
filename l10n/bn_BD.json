@@ -2,6 +2,7 @@
     "Play" : "বাজাও",
     "Selected" : "Selected",
     "Favorite" : "প্রিয়জন",
+    "Pause" : "বিরতি",
     "Tags" : "ট্যাগ",
     "Saved" : "সংরক্ষণ করা হলো",
     "Title" : "শিরোনাম",
@@ -13,6 +14,7 @@
     "Unknown" : "অজানা",
     "Favorites" : "প্রিয়জন",
     "More" : "আরও",
+    "Save" : "Save",
     "Settings" : "সেটিংস"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

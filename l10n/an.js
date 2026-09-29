@@ -3,9 +3,11 @@ OC.L10N.register(
     {
     "Favorite" : "Favorito",
     "Tags" : "Etiquetas",
+    "Close" : "Zarrar",
     "OK" : "OK",
     "Cancel" : "Cancelar",
     "Favorites" : "Favoritos",
+    "Save" : "Save",
     "Settings" : "Configuración"
 },
 "nplurals=2; plural=(n != 1);");

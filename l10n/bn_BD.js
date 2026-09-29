@@ -4,6 +4,7 @@ OC.L10N.register(
     "Play" : "বাজাও",
     "Selected" : "Selected",
     "Favorite" : "প্রিয়জন",
+    "Pause" : "বিরতি",
     "Tags" : "ট্যাগ",
     "Saved" : "সংরক্ষণ করা হলো",
     "Title" : "শিরোনাম",
@@ -15,6 +16,7 @@ OC.L10N.register(
     "Unknown" : "অজানা",
     "Favorites" : "প্রিয়জন",
     "More" : "আরও",
+    "Save" : "Save",
     "Settings" : "সেটিংস"
 },
 "nplurals=2; plural=(n != 1);");

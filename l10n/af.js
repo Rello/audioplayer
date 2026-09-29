@@ -7,12 +7,15 @@ OC.L10N.register(
     "Saved" : "Bewaar",
     "Title" : "Titel",
     "Remove" : "Verwyder",
+    "Close" : "Close",
     "OK" : "OK",
     "Cancel" : "Kanselleer",
     "URL" : "Bronadres",
     "Unknown" : "Onbekend",
     "Favorites" : "Gunstelinge",
+    "View" : "Bekyk",
     "More" : "Meer",
+    "Save" : "Save",
     "Settings" : "Instellings"
 },
 "nplurals=2; plural=(n != 1);");

@@ -92,6 +92,7 @@ OC.L10N.register(
     "Playback speed" : "Afspilningshastighed",
     "More" : "Mere",
     "Create new playlist" : "Opret ny spilleliste",
+    "Save" : "Gem",
     "Volume up" : "Skru lyden op",
     "Volume down" : "Skru lyden ned",
     "Settings" : "Indstillinger",
