@@ -18,7 +18,7 @@ OC.L10N.register(
     "Sort playlist" : "Playlist sortieren",
     "Rename playlist" : "Playlist umbenennen",
     "Previous track" : "Vorheriger Track",
-    "Play/Pause" : "Abspielen/Anhalten",
+    "Play/Pause" : "Abspielen/Pausieren",
     "Next track" : "Nächster Track",
     "Selection" : "Auswahl",
     "Playlists" : "Playlisten",
