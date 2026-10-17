@@ -30,6 +30,7 @@ OC.L10N.register(
     "Unknown" : "Непознат",
     "Favorites" : "Омилени",
     "View" : "Поглед",
+    "Volume" : "Јачина",
     "More" : "Повеќе",
     "Save" : "Save",
     "Settings" : "Параметри",
