@@ -23,6 +23,7 @@ OC.L10N.register(
     "Audio Player" : "Player audio",
     "Favorites" : "Favorite",
     "View" : "Vizualizare",
+    "Volume" : "Volum",
     "Playback speed" : "Viteză de redare",
     "More" : "Mai mult",
     "Save" : "Save",
