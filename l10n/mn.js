@@ -1,6 +1,7 @@
 OC.L10N.register(
     "audioplayer",
     {
+    "Play" : "Тоглуулах",
     "Selected" : "Selected",
     "Favorite" : "Дуртай",
     "Options" : "Сонголтууд",
@@ -28,6 +29,7 @@ OC.L10N.register(
     "Unknown" : "Үл танигдах зүйл",
     "Favorites" : "Онцолсон",
     "View" : "Харах",
+    "Volume" : "Дуун хэмжээ",
     "More" : "Дэлгэрэнгүй",
     "Save" : "–•–∞–¥–≥–∞–ª–∞—Ö",
     "Settings" : "Тохиргоо"

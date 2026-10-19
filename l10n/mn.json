@@ -1,4 +1,5 @@
 { "translations": {
+    "Play" : "Тоглуулах",
     "Selected" : "Selected",
     "Favorite" : "Дуртай",
     "Options" : "Сонголтууд",
@@ -26,6 +27,7 @@
     "Unknown" : "Үл танигдах зүйл",
     "Favorites" : "Онцолсон",
     "View" : "Харах",
+    "Volume" : "Дуун хэмжээ",
     "More" : "Дэлгэрэнгүй",
     "Save" : "–•–∞–¥–≥–∞–ª–∞—Ö",
     "Settings" : "Тохиргоо"
