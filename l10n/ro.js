@@ -8,6 +8,7 @@ OC.L10N.register(
     "Pause" : "Pauză",
     "New in" : "Nou în",
     "View changelog" : "Vezi changelog",
+    "Are you sure?" : "Ești sigur?",
     "Selection" : "Selecție",
     "Albums" : "Albume",
     "Folders" : "Director",
