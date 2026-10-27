@@ -2,15 +2,18 @@
     "Play" : "Atskaņot",
     "Selected" : "Atlasītās",
     "Favorite" : "Izlasē",
+    "Options" : "Iespējas",
     "Pause" : "Pauzēt",
     "New in" : "Jauns",
     "View changelog" : "Skatīt izmaiņu sarakstu",
     "Are you sure?" : "Vai tiešām?",
     "Rename playlist" : "Pārdēvēt atskaņošanas sarakstu",
+    "Selection" : "Atlase",
     "Albums" : "Albumi",
     "Folders" : "Mapes",
     "Tags" : "Birkas",
     "Years" : "Gadi",
+    "No data" : "Nav datu",
     "Saved" : "Saglabāts",
     "Title" : "Amats",
     "Subtitle" : "Apakšvirsraksts",
@@ -32,6 +35,8 @@
     "Save" : "Save",
     "Settings" : "Iestatījumi",
     "Advanced Settings" : "Paplašināti iestatījumi",
+    "Do you like this app?" : "Vai šī lietotne patīk?",
+    "More information …" : "Vairāk informācijas …",
     "Search for audio files in" : "Meklēt skaņu datnes"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

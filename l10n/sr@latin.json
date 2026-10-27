@@ -1,7 +1,14 @@
 { "translations": {
     "Selected" : "Selected",
     "Favorite" : "Omiljene",
+    "Options" : "Izbori",
+    "New in" : "Novo u",
+    "View changelog" : "Pogledajte dnevnik izmena",
+    "Are you sure?" : "Da li ste sigurni?",
+    "Selection" : "Izbor",
     "Tags" : "Oznake",
+    "No data" : "Nema podataka",
+    "Saved" : "Sačuvano",
     "Title" : "Naslov",
     "Remove" : "Ukloni",
     "Close" : "Zatvori",
@@ -12,6 +19,8 @@
     "More" : "Ostalo",
     "Save" : "Sačuvaj",
     "Settings" : "Поставке",
-    "Advanced Settings" : "Napredna podešavanja"
+    "Advanced Settings" : "Napredna podešavanja",
+    "Do you like this app?" : "Da li vam se dopada ova aplikacija?",
+    "More information …" : "Više informacija …"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

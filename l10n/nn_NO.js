@@ -4,9 +4,15 @@ OC.L10N.register(
     "Play" : "Spel",
     "Selected" : "Selected",
     "Favorite" : "Favoritt",
+    "Options" : "Alternativ",
     "Pause" : "Pause",
+    "New in" : "Nytt i",
+    "View changelog" : "Vis endringslogg",
+    "Are you sure?" : "Er du sikker?",
+    "Selection" : "Utval",
     "Folders" : "Mapper",
     "Tags" : "Emneord",
+    "No data" : "Ingen data",
     "Saved" : "Lagra",
     "Title" : "Tittel",
     "Year" : "År",
@@ -20,6 +26,7 @@ OC.L10N.register(
     "View" : "Vis",
     "Save" : "Save",
     "Settings" : "Innstillingar",
+    "Do you like this app?" : "Likar du denne appen?",
     "More information …" : "Meir informasjon…"
 },
 "nplurals=2; plural=(n != 1);");

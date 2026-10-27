@@ -8,11 +8,13 @@ OC.L10N.register(
     "Pause" : "Pauza",
     "New in" : "Novo u",
     "View changelog" : "Prikaži zapis promjena",
+    "Are you sure?" : "Jeste li sigurni?",
     "Selection" : "Odabrano",
     "Albums" : "Albumi",
     "Folders" : "Mape",
     "Tags" : "Oznake",
     "Years" : "Godina",
+    "No data" : "Nema podataka",
     "Saved" : "Spremljeno",
     "Title" : "Naslov",
     "Subtitle" : "Podnaslov",
@@ -35,6 +37,8 @@ OC.L10N.register(
     "More" : "Više",
     "Save" : "Spremi",
     "Settings" : "Postavke",
-    "Advanced Settings" : "Napredne postavke"
+    "Advanced Settings" : "Napredne postavke",
+    "Do you like this app?" : "Sviđa li vam se ova aplikacija?",
+    "More information …" : "Više informacija …"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

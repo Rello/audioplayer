@@ -14,6 +14,7 @@ OC.L10N.register(
     "Folders" : "Möppur",
     "Tags" : "Merki",
     "Years" : "Ár",
+    "No data" : "Engin gögn",
     "Saved" : "Vistað",
     "Title" : "Titill",
     "Subtitle" : "Undirtexti",
@@ -37,6 +38,8 @@ OC.L10N.register(
     "More" : "Meira",
     "Save" : "Vista",
     "Settings" : "Stillingar",
-    "Advanced Settings" : "Ítarlegar stillingar"
+    "Advanced Settings" : "Ítarlegar stillingar",
+    "Do you like this app?" : "Líkar þér þetta forrit?",
+    "More information …" : "Frekari upplýsingar …"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

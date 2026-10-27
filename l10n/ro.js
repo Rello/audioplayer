@@ -14,6 +14,8 @@ OC.L10N.register(
     "Folders" : "Director",
     "Tags" : "Etichete",
     "Years" : "Ani",
+    "No data" : "Nu există date",
+    "Repeat off" : "Fără repetare",
     "Saved" : "Salvat",
     "Title" : "Titlu",
     "Artist" : "Artist",
@@ -33,11 +35,14 @@ OC.L10N.register(
     "Audio Player" : "Player audio",
     "Favorites" : "Favorite",
     "View" : "Vizualizare",
+    "Playback position" : "Poziția redării",
     "Volume" : "Volum",
     "Playback speed" : "Viteză de redare",
     "More" : "Mai mult",
     "Save" : "Save",
     "Settings" : "Setări",
-    "Advanced Settings" : "Setări avansate"
+    "Advanced Settings" : "Setări avansate",
+    "Do you like this app?" : "Îți place această aplicație?",
+    "More information …" : "Mai multe informații …"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

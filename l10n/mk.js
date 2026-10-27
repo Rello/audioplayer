@@ -8,10 +8,12 @@ OC.L10N.register(
     "Pause" : "Пауза",
     "New in" : "Ново во",
     "View changelog" : "Видете ги проммените",
+    "Are you sure?" : "Дали сте сигурни?",
     "Selection" : "Селектирање",
     "Albums" : "Албуми",
     "Folders" : "Папки",
     "Tags" : "Ознаки",
+    "No data" : "Нема податоци",
     "Saved" : "Зачувано",
     "Title" : "Наслов",
     "Artist" : "Изведувач",
@@ -34,6 +36,8 @@ OC.L10N.register(
     "More" : "Повеќе",
     "Save" : "Save",
     "Settings" : "Параметри",
-    "Advanced Settings" : "Напредни параметри"
+    "Advanced Settings" : "Напредни параметри",
+    "Do you like this app?" : "Дали ви се допаѓа оваа апликација?",
+    "More information …" : "Повеќе информации …"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

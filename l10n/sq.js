@@ -4,10 +4,15 @@ OC.L10N.register(
     "Play" : "Luaje",
     "Selected" : "Selected",
     "Favorite" : "I/E Preferuar",
+    "Options" : "Opsione",
     "Pause" : "Pauzë",
     "New in" : "I ri në ",
+    "View changelog" : "Shiko regjistrin e ndryshimeve",
+    "Are you sure?" : "Jeni i sigurt?",
+    "Selection" : "Zgjedhja",
     "Folders" : "Dosjet",
     "Tags" : "Etiketat",
+    "No data" : "Nuk ka të dhëna",
     "Saved" : "Ruajtur",
     "Title" : "Titulli",
     "Subtitle" : "Nëntitull",
@@ -23,6 +28,8 @@ OC.L10N.register(
     "More" : "Më tepër",
     "Save" : "Save",
     "Settings" : "Rregullimet",
-    "Advanced Settings" : "Cilësime të Avancuara"
+    "Advanced Settings" : "Cilësime të Avancuara",
+    "Do you like this app?" : "Ju pëlqen ky aplikacion?",
+    "More information …" : "Më shumë informacion …"
 },
 "nplurals=2; plural=(n != 1);");

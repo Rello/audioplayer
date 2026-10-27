@@ -4,9 +4,16 @@ OC.L10N.register(
     "Play" : "Play",
     "Selected" : "Selected",
     "Favorite" : "Favorit",
+    "Options" : "Opcije",
     "Pause" : "Pauza",
+    "New in" : "Novo u",
+    "View changelog" : "Pogledaj zapisnik promjena",
+    "Are you sure?" : "Jeste li sigurni?",
+    "Selection" : "Odabir",
+    "No data" : "Nema podataka",
     "Saved" : "Spremljeno",
     "Title" : "Naslov",
+    "Remove" : "Ukloni",
     "Close" : "Zatvori",
     "OK" : "OK",
     "Cancel" : "Otkaži",
@@ -14,6 +21,8 @@ OC.L10N.register(
     "Unknown" : "Nepoznato",
     "Favorites" : "Favoriti",
     "Save" : "Save",
-    "Settings" : "Podešavanje"
+    "Settings" : "Podešavanje",
+    "Do you like this app?" : "Sviđa li vam se ova aplikacija?",
+    "More information …" : "Više informacija …"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
