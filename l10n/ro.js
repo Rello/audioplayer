@@ -18,6 +18,7 @@ OC.L10N.register(
     "Repeat off" : "Fără repetare",
     "Saved" : "Salvat",
     "Title" : "Titlu",
+    "Subtitle" : "Subtitlu",
     "Artist" : "Artist",
     "Album" : "Album",
     "Genre" : "Gen",
