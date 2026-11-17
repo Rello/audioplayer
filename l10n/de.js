@@ -85,7 +85,7 @@ OC.L10N.register(
     "Bitrate" : "Bitrate",
     "MIME type" : "MIME-Typ",
     "ISRC" : "ISRC",
-    "Copyright" : "Uhrheberrecht",
+    "Copyright" : "Urheberrecht",
     "Add-ons" : "Add-ons",
     "Metadata" : "Metadaten",
     "Reading data" : "Lese Daten",
